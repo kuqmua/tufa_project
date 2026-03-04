@@ -127,12 +127,12 @@ impl IsNullable {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum ImportPath {
+pub enum Import {
     Crate,
     PgCrud,
     PgCrudCommon,
 }
-impl ImportPath {
+impl Import {
     fn all_vrts_default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
             Self::Crate => &CrateAllEnumVrtsArrDefaultOptSomeVecOneEl,
@@ -178,7 +178,7 @@ impl ImportPath {
         }
     }
 }
-impl ToTokens for ImportPath {
+impl ToTokens for Import {
     fn to_tokens(&self, tokens: &mut Ts2) {
         self.sc_str()
             .parse::<Ts2>()
@@ -432,12 +432,12 @@ pub enum EqualOperatorHandle {
 }
 impl EqualOperatorHandle {
     #[must_use]
-    pub fn to_tokens_path(&self, import_path: &ImportPath) -> Ts2 {
+    pub fn to_tokens_path(&self, import: &Import) -> Ts2 {
         let ts = match &self {
             Self::Equal => quote! {Equal},
             Self::IsNull => quote! {IsNull},
         };
-        quote! {#import_path::#EqualOperatorUcc::#ts}
+        quote! {#import::#EqualOperatorUcc::#ts}
     }
 }
 //todo mb reuse with other structs
@@ -660,7 +660,7 @@ pub fn gen_pg_type_where_ts(
                     }
                 }
             },
-            &ImportPath::PgCrudCommon,
+            &Import::PgCrudCommon,
         );
     let impl_location_lib_to_err_string_for_pg_type_tokens_where_ts = gen_impl_to_err_string_ts(
         &Ts2::new(),
@@ -720,7 +720,7 @@ pub fn gen_serde_deserialize_dq_ts(
     )
 }
 pub fn gen_impl_pg_json_type_ts(
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     table_type_type_ts: &dyn ToTokens,
     create_type_ts: &dyn ToTokens,
@@ -750,7 +750,7 @@ pub fn gen_impl_pg_json_type_ts(
     is_select_only_created_ids_query_bind_mutable: &IsSelectOnlyCreatedIdsQueryBindMutable,
     select_only_created_ids_query_bind_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_ts = quote! {#import_path ::};
+    let path_ts = quote! {#import ::};
     let reference_mut_u64_ts = quote! {&mut #U64};
     let query_pg_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
@@ -778,7 +778,7 @@ pub fn gen_impl_pg_json_type_ts(
             type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
             fn #SelectOnlyIdsQueryPartSc(
                 #ColumnFieldSc: #RefStr,
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #read_inner_type_ts;
@@ -807,7 +807,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
@@ -821,7 +821,7 @@ pub fn gen_impl_pg_json_type_ts(
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_created_ids_query_part_ts
             }
             fn #SelectOnlyCreatedIdsQueryBindSc<'lifetime>(
@@ -835,12 +835,12 @@ pub fn gen_impl_pg_json_type_ts(
 }
 pub fn gen_impl_default_opt_some_vec_one_el_ts(
     impl_generic_ts: &dyn ToTokens,
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.default_opt_some_vec_one_el();
+    let path_trait_ts = import.default_opt_some_vec_one_el();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
             fn #DefaultOptSomeVecOneElSc() -> Self {
@@ -850,11 +850,11 @@ pub fn gen_impl_default_opt_some_vec_one_el_ts(
     }
 }
 pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_ts(
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.all_vrts_default_opt_some_vec_one_el();
+    let path_trait_ts = import.all_vrts_default_opt_some_vec_one_el();
     quote! {
         impl #path_trait_ts for #ident {
             fn #AllVrtsDefaultOptSomeVecOneElSc() -> Vec<Self> {
@@ -865,12 +865,12 @@ pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_ts(
 }
 pub fn gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
     impl_generic_ts: &dyn ToTokens,
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.default_opt_some_vec_one_el_max_page_size();
+    let path_trait_ts = import.default_opt_some_vec_one_el_max_page_size();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
             fn #DefaultOptSomeVecOneElMaxPageSizeSc() -> Self {
@@ -880,11 +880,11 @@ pub fn gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
     }
 }
 pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import_path.all_vrts_default_opt_some_vec_one_el_max_page_size();
+    let path_trait_ts = import.all_vrts_default_opt_some_vec_one_el_max_page_size();
     let all_vrts_default_opt_some_vec_one_el_max_page_size_sc =
         AllVrtsDefaultOptSomeVecOneElMaxPageSizeSc;
     quote! {
@@ -901,7 +901,7 @@ pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(
 ) -> Ts2 {
     gen_impl_default_opt_some_vec_one_el_ts(
         &Ts2::new(),
-        &ImportPath::PgCrudCommon,
+        &Import::PgCrudCommon,
         ident,
         &Ts2::new(),
         ts,
@@ -912,25 +912,19 @@ pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
     lifetime_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_opt_some_vec_one_el_ts(
-        &Ts2::new(),
-        &ImportPath::PgCrud,
-        ident,
-        lifetime_ts,
-        ts,
-    )
+    gen_impl_default_opt_some_vec_one_el_ts(&Ts2::new(), &Import::PgCrud, ident, lifetime_ts, ts)
 }
 pub fn gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&ImportPath::PgCrudCommon, ident, ts)
+    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&Import::PgCrudCommon, ident, ts)
 }
 pub fn gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&ImportPath::PgCrud, ident, ts)
+    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&Import::PgCrud, ident, ts)
 }
 pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
@@ -938,7 +932,7 @@ pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts(
 ) -> Ts2 {
     gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
-        &ImportPath::PgCrudCommon,
+        &Import::PgCrudCommon,
         ident,
         &Ts2::new(),
         ts,
@@ -951,7 +945,7 @@ pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
 ) -> Ts2 {
     gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
-        &ImportPath::PgCrud,
+        &Import::PgCrud,
         ident,
         lifetime_ts,
         ts,
@@ -961,7 +955,7 @@ pub fn gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(&ImportPath::PgCrud, ident, ts)
+    gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(&Import::PgCrud, ident, ts)
 }
 pub fn impl_pg_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
@@ -973,17 +967,17 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     query_part_ts: &dyn ToTokens,
     is_query_bind_mutable: &IsQueryBindMutable,
     query_bind_ts: &dyn ToTokens,
-    import_path: &ImportPath,
+    import: &Import,
 ) -> Ts2 {
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
-        impl #impl_generic_ts #import_path ::#PgTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
+        impl #impl_generic_ts #import ::#PgTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
             fn #QueryPartSc(
                 &self,
                 #incr_param_underscore: &mut #U64,
                 #column_param_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_operator_underscore: #Bool
-            ) -> Result<#StringTs, #import_path::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import::#QueryPartErUcc> {
                 #query_part_ts
             }
             fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -1036,7 +1030,7 @@ pub fn gen_impl_sqlx_type_for_ident_ts(ident_ts: &dyn ToTokens, type_ts: &dyn To
     }
 }
 pub fn gen_impl_pg_type_ts(
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     ident_table_type_ucc: &dyn ToTokens,
     is_pk_underscore: &IsPkUnderscore,
@@ -1075,7 +1069,7 @@ pub fn gen_impl_pg_type_ts(
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
-        impl #import_path :: #PgTypeUcc for #ident {
+        impl #import :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
             fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_underscore: #Bool) -> impl #StdFmtDisplay {
                 #create_table_column_query_part_ts
@@ -1084,7 +1078,7 @@ pub fn gen_impl_pg_type_ts(
             fn #CreateQueryPartSc(
                 #create_query_part_v_underscore: &Self::#CreateUcc,
                 #create_query_part_incr_underscore: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #create_query_part_ts
             }
             fn #CreateQueryBindSc(
@@ -1100,7 +1094,7 @@ pub fn gen_impl_pg_type_ts(
             fn #SelectQueryPartSc(
                 #select_query_part_v_underscore: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_query_part_ts
             }
             type #WhereUcc = #ident_where_ucc;
@@ -1111,7 +1105,7 @@ pub fn gen_impl_pg_type_ts(
             type #ReadOnlyIdsUcc = #read_only_ids_ts;
             fn #SelectOnlyIdsQueryPartSc(
                 #ColumnSc: #RefStr
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_ids_query_part_ts
             }
             type #ReadInnerUcc = #ident_read_inner_ucc;
@@ -1126,7 +1120,7 @@ pub fn gen_impl_pg_type_ts(
                 #update_query_part_jsonb_set_target_underscore: #RefStr,
                 #update_query_part_jsonb_set_path_underscore: #RefStr,
                 #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #update_query_part_ts
             }
             fn #UpdateQueryBindSc(
@@ -1142,7 +1136,7 @@ pub fn gen_impl_pg_type_ts(
                 #VSc: &Self::#UpdateForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrSc: &mut #U64,
-            ) -> Result<#StringTs, #import_path ::#QueryPartErUcc> {
+            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
             fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
@@ -1154,18 +1148,18 @@ pub fn gen_impl_pg_type_ts(
         }
     }
 }
-pub fn gen_impl_pg_type_not_pk_for_ident_ts(import_path: &ImportPath, ident: &dyn ToTokens) -> Ts2 {
+pub fn gen_impl_pg_type_not_pk_for_ident_ts(import: &Import, ident: &dyn ToTokens) -> Ts2 {
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
-        impl #import_path::#PgTypeNotPkUcc for #ident {
+        impl #import::#PgTypeNotPkUcc for #ident {
             type #PgTypeUcc = Self;
             type #CreateUcc = #ident_create_ucc;
         }
     }
 }
 // fn gen_read_only_ids_merged_with_create_into_where_method_ts(
-//     import_path: &ImportPath,
+//     import: &Import,
 //     method_name_ts: &dyn ToTokens,
 //     ts: &dyn ToTokens,
 //     pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
@@ -1182,7 +1176,7 @@ pub fn gen_impl_pg_type_not_pk_for_ident_ts(import_path: &ImportPath, ident: &dy
 //             PgTypeOrPgJsonType::PgJsonType => &PgJsonTypeUcc,
 //         };
 //         quote! {
-//             <#SelfUcc::#pg_type_or_pg_json_type_ts as #import_path::#pg_type_or_pg_json_type_ts>
+//             <#SelfUcc::#pg_type_or_pg_json_type_ts as #import::#pg_type_or_pg_json_type_ts>
 //         }
 //     };
 //     quote!{
@@ -1247,14 +1241,14 @@ fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> 
     }
 }
 fn gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc(
             #VSc: &#path_ts::#ReadOnlyIdsUcc
-        ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
+        ) -> Option<#import::#VUcc<#path_ts::#ReadUcc>> {
             #ts
         }
     }
@@ -1286,7 +1280,7 @@ fn gen_read_only_ids_merged_with_create_into_read_ts(
     }
 }
 fn gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
@@ -1294,7 +1288,7 @@ fn gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
         fn #ReadOnlyIdsMergedWithCreateIntoOptVReadSc(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
-        ) -> Option<#import_path::#VUcc<#path_ts::#ReadUcc>> {
+        ) -> Option<#import::#VUcc<#path_ts::#ReadUcc>> {
             #ts
         }
     }
@@ -1328,7 +1322,7 @@ pub fn gen_read_only_ids_merged_with_create_into_where_equal_ts(
     }
 }
 pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts(
-    import_path: &ImportPath,
+    import: &Import,
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
@@ -1338,13 +1332,13 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts
         fn #ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
             #ReadOnlyIdsSc: #read_only_ids_ts,
             #CreateSc: #create_ts
-        ) -> #import_path::NotEmptyUniqueVec<#where_ts> {
+        ) -> #import::NotEmptyUniqueVec<#where_ts> {
             #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
-    import_path: ImportPath,
+    import: Import,
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
@@ -1352,7 +1346,7 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_
     pg_type_or_pg_json_type: PgTypeOrPgJsonType,
 ) -> Ts2 {
     let return_type_ts = {
-        let return_type_handle_ts = quote! {#import_path::NotEmptyUniqueVec<#where_ts>};
+        let return_type_handle_ts = quote! {#import::NotEmptyUniqueVec<#where_ts>};
         match &pg_type_or_pg_json_type {
             PgTypeOrPgJsonType::PgType => gen_opt_type_decl_ts(&return_type_handle_ts),
             PgTypeOrPgJsonType::PgJsonType => return_type_handle_ts,
@@ -1374,14 +1368,14 @@ fn gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_
     }
 }
 pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts(
-    import_path: ImportPath,
+    import: Import,
     read_only_ids_ts: &dyn ToTokens,
     create_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
-        import_path,
+        import,
         &read_only_ids_ts,
         &create_ts,
         &where_ts,
@@ -1390,7 +1384,7 @@ pub fn gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_t
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
-    import_path: ImportPath,
+    import: Import,
     name_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
@@ -1399,88 +1393,88 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_
         fn #name_ts(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
+        ) -> Option<#import::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
-        import_path,
+        import,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimOneEqualSc,
         &path_ts,
         &ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
-        import_path,
+        import,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimTwoEqualSc,
         &path_ts,
         &ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
-        import_path,
+        import,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimThreeEqualSc,
         &path_ts,
         &ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_ts(
-        import_path,
+        import,
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereDimFourEqualSc,
         &path_ts,
         &ts,
     )
 }
 fn gen_create_into_pg_json_type_opt_vec_where_length_equal_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #CreateIntoPgJsonTypeOptVecWhereLengthEqualSc(
             #CreateSc: #path_ts::#CreateUcc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
+        ) -> Option<#import::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
 fn gen_create_into_pg_json_type_opt_vec_where_length_greater_than_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         fn #CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc(
             #CreateSc: #path_ts::#CreateUcc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
+        ) -> Option<#import::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
     method_name_ts: &dyn ToTokens,
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
@@ -1488,86 +1482,86 @@ fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_v
         fn #method_name_ts(
             #ReadOnlyIdsSc: #path_ts::#ReadOnlyIdsUcc,
             #CreateSc: #path_ts::#CreateUcc
-        ) -> Option<#import_path::NotEmptyUniqueVec<#import_path::SingleOrMultiple<#path_ts::#WhereUcc>>> {
+        ) -> Option<#import::NotEmptyUniqueVec<#import::SingleOrMultiple<#path_ts::#WhereUcc>>> {
             #ts
         }
     }
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
-        import_path,
+        import,
         path_ts,
         ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
-        import_path,
+        import,
         path_ts,
         ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereInSc,
-        import_path,
+        import,
         path_ts,
         ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereRegexSc,
-        import_path,
+        import,
         path_ts,
         ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
-        import_path,
+        import,
         path_ts,
         ts,
     )
 }
 fn gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts(
-    import_path: ImportPath,
+    import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_read_only_ids_merged_with_create_into_pg_json_type_opt_not_empty_unique_vec_single_or_multiple_where_ts(
         &ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
-        import_path,
+        import,
         path_ts,
         ts,
     )
 }
 pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     cfg_ts: &dyn ToTokens,
-    import_path: &ImportPath,
+    import: &Import,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
     opt_vec_create_ts: &dyn ToTokens,
@@ -1599,7 +1593,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let self_pg_type_as_pg_type_ts = quote! {<#SelfUcc::#PgTypeUcc as #import_path::#PgTypeUcc>};
+    let self_pg_type_as_pg_type_ts = quote! {<#SelfUcc::#PgTypeUcc as #import::#PgTypeUcc>};
     let self_pg_type_as_pg_type_read_only_ids_ts =
         quote! {#self_pg_type_as_pg_type_ts::#ReadOnlyIdsUcc};
     let self_pg_type_as_pg_type_create_ts = quote! {#self_pg_type_as_pg_type_ts::#CreateUcc};
@@ -1628,7 +1622,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         gen_update_to_read_only_ids_ts(&self_pg_type_as_pg_type_ts, &update_to_read_only_ids_ts);
     let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_18ef45e8 =
         gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
         );
@@ -1644,7 +1638,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         );
     let read_only_ids_merged_with_create_into_opt_v_read_ts_8b7e9688 =
         gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_opt_v_read_ts,
         );
@@ -1662,14 +1656,14 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         );
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_076c6ebd =
         gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts(
-            import_path,
+            import,
             &self_pg_type_as_pg_type_read_only_ids_ts,
             &self_pg_type_as_pg_type_create_ts,
             &self_pg_type_as_pg_type_where_ts,
             &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
         );
     let read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts_948ce180 = gen_read_only_ids_merged_with_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_type_ts(
-        *import_path,
+        *import,
         &self_pg_type_as_pg_type_read_only_ids_ts,
         &self_pg_type_as_pg_type_create_ts,
         &self_pg_type_as_pg_type_where_ts,
@@ -1682,73 +1676,73 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc;
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_33093313 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_9522c7a5 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts_81696b49 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts_2631549b =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
         );
     let create_into_pg_json_type_opt_vec_where_length_equal_ts_34b74d66 =
         gen_create_into_pg_json_type_opt_vec_where_length_equal_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &create_into_pg_json_type_opt_vec_where_length_equal_ts,
         );
     let create_into_pg_json_type_opt_vec_where_length_greater_than_ts_b196c70f =
         gen_create_into_pg_json_type_opt_vec_where_length_greater_than_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts_498680a8 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts_b685b98f =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts_ac82295e =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts_bfe19de1 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts_ff2d3a76 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts(
-            *import_path,
+            *import,
             &self_pg_type_as_pg_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
         );
@@ -1758,7 +1752,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         #AllowClippyArbitrarySourceItemOrdering
         #cfg_ts
         #[allow(clippy::float_arithmetic)]
-        impl #import_path::#PgTypeTestCasesUcc for #ident {
+        impl #import::#PgTypeTestCasesUcc for #ident {
             type #PgTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
             #opt_vec_create_ts_2d58042f
@@ -1776,12 +1770,12 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field_ts_948ce180
             fn #create_into_pg_type_opt_vec_where_dim_one_equal_sc(
                 #CreateSc: #self_pg_type_as_pg_type_ts::#CreateUcc
-            ) -> Option<#import_path::NotEmptyUniqueVec<#self_pg_type_as_pg_type_ts::#WhereUcc>> {
+            ) -> Option<#import::NotEmptyUniqueVec<#self_pg_type_as_pg_type_ts::#WhereUcc>> {
                 #create_into_pg_type_opt_vec_where_dim_one_equal_ts
             }
             fn #PgTypeOptVecWhereGreaterThanTestSc() -> Option<
-                #import_path::NotEmptyUniqueVec<
-                    #import_path::PgTypeGreaterThanTest<
+                #import::NotEmptyUniqueVec<
+                    #import::PgTypeGreaterThanTest<
                         #SelfUcc::#PgTypeUcc
                     >
                 >
@@ -1789,7 +1783,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
                 #pg_type_opt_vec_where_greater_than_test_ts
             }
             fn #read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_sc(
-                greater_than_vrt: #import_path::PgTypeGreaterThanVrt,
+                greater_than_vrt: #import::PgTypeGreaterThanVrt,
                 #ReadOnlyIdsSc: #self_pg_type_as_pg_type_ts::#ReadOnlyIdsUcc,
                 #TableTypeSc: #self_pg_type_as_pg_type_ts::#TableTypeUcc,
             ) -> Option<#self_pg_type_as_pg_type_ts::#WhereUcc> {
@@ -1812,7 +1806,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
 }
 pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     cfg_ts: &dyn ToTokens,
-    import_path: &ImportPath,
+    import: &Import,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
     opt_vec_create_ts: &dyn ToTokens,
@@ -1843,7 +1837,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts: &dyn ToTokens,
 ) -> Ts2 {
     let self_pg_json_type_as_pg_json_type_ts =
-        quote! {<#SelfUcc::#PgJsonTypeUcc as #import_path::#PgJsonTypeUcc>};
+        quote! {<#SelfUcc::#PgJsonTypeUcc as #import::#PgJsonTypeUcc>};
     let self_pg_json_type_as_pg_json_type_read_only_ids_ts =
         quote! {#self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc};
     let self_pg_json_type_as_pg_json_type_create_ts =
@@ -1876,7 +1870,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     );
     let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_f5d1b395 =
         gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
         );
@@ -1892,7 +1886,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         );
     let read_only_ids_merged_with_create_into_opt_v_read_ts_1f54e2bf =
         gen_read_only_ids_merged_with_create_into_opt_v_read_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_opt_v_read_ts,
         );
@@ -1910,7 +1904,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         );
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts_876245c5 =
         gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts(
-            import_path,
+            import,
             &self_pg_json_type_as_pg_json_type_read_only_ids_ts,
             &self_pg_json_type_as_pg_json_type_create_ts,
             &self_pg_json_type_as_pg_json_type_where_ts,
@@ -1918,7 +1912,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         );
     let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts_11560e7f =
         gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_read_only_ids_ts,
             &self_pg_json_type_as_pg_json_type_create_ts,
             &self_pg_json_type_as_pg_json_type_where_ts,
@@ -1926,73 +1920,73 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts_aaaa85b2 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts_6da8ece7 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts_6b473c12 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts_b427508f =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
         );
     let create_into_pg_json_type_opt_vec_where_length_equal_ts_5266addf =
         gen_create_into_pg_json_type_opt_vec_where_length_equal_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &create_into_pg_json_type_opt_vec_where_length_equal_ts,
         );
     let create_into_pg_json_type_opt_vec_where_length_greater_than_ts_93196cce =
         gen_create_into_pg_json_type_opt_vec_where_length_greater_than_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts_e0be3ff7 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts_9bdb444a =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts_09ea1f4b =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts_1b1057eb =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
         );
     let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts_972d3e87 =
         gen_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts(
-            *import_path,
+            *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
         );
@@ -2002,7 +1996,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         #AllowClippyArbitrarySourceItemOrdering
         #cfg_ts
         #[allow(clippy::float_arithmetic)]
-        impl #import_path::#PgJsonTypeTestCasesUcc for #ident {
+        impl #import::#PgJsonTypeTestCasesUcc for #ident {
             type #PgJsonTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
             #opt_vec_create_ts_a442630a
@@ -2011,7 +2005,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72
             fn #ReadOnlyIdsIntoOptVReadInnerSc(
                 #VSc: #self_pg_json_type_as_pg_json_type_ts::#ReadOnlyIdsUcc
-            ) -> Option<#import_path::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
+            ) -> Option<#import::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
                 #read_only_ids_into_opt_v_read_inner_ts
             }
             #update_to_read_only_ids_ts_d7e0cbf0
@@ -2357,33 +2351,33 @@ pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
         quote! {#ts}
     }
 }
-pub fn gen_v_init_ts(import_path: &ImportPath, ts: &dyn ToTokens) -> Ts2 {
-    quote! {#import_path::V { #VSc: #ts }}
+pub fn gen_v_init_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
+    quote! {#import::V { #VSc: #ts }}
 }
 pub fn impl_pg_type_equal_operator_for_ident_ts(
-    import_path: &ImportPath,
+    import: &Import,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        impl #import_path::#PgTypeEqualOperatorUcc for #ident {
-            fn operator(&self) -> #import_path::#EqualOperatorUcc {
+        impl #import::#PgTypeEqualOperatorUcc for #ident {
+            fn operator(&self) -> #import::#EqualOperatorUcc {
                 #ts
             }
         }
     }
 }
 #[must_use]
-pub fn gen_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
+pub fn gen_query_part_er_write_into_buffer_ts(import: Import) -> Ts2 {
     quote! {
-        #import_path::QueryPartEr::WriteIntoBuffer {
+        #import::QueryPartEr::WriteIntoBuffer {
             loc: location_lib::loc!()
         }
     }
 }
 #[must_use]
-pub fn gen_return_err_query_part_er_write_into_buffer_ts(import_path: ImportPath) -> Ts2 {
-    let ts = gen_query_part_er_write_into_buffer_ts(import_path);
+pub fn gen_return_err_query_part_er_write_into_buffer_ts(import: Import) -> Ts2 {
+    let ts = gen_query_part_er_write_into_buffer_ts(import);
     quote! {return Err(#ts);}
 }
 #[must_use]

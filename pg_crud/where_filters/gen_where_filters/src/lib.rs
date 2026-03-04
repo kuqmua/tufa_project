@@ -11,7 +11,7 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, ImportPath, IncrParamUnderscore, IsNeedToAddOperatorUnderscore,
+    ColumnParamUnderscore, Import, IncrParamUnderscore, IsNeedToAddOperatorUnderscore,
     IsQueryBindMutable, PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType,
     gen_impl_default_opt_some_vec_one_el_ts, impl_pg_type_where_filter_for_ident_ts,
 };
@@ -113,13 +113,13 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     panic_location();
     let gen_where_filters_config =
         from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
-    let import_path = ImportPath::PgCrudCommon;
+    let import = Import::PgCrudCommon;
     let t_ts = quote! {T};
     let t_annotation_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
     let pub_v_t_ts = quote! {pub #VSc: T};
-    let unsigned_part_of_i32_ts = quote! {#import_path::UnsignedPartOfI32};
-    let not_zero_unsigned_part_of_i32_ts = quote! {#import_path::NotZeroUnsignedPartOfI32};
+    let unsigned_part_of_i32_ts = quote! {#import::UnsignedPartOfI32};
+    let not_zero_unsigned_part_of_i32_ts = quote! {#import::NotZeroUnsignedPartOfI32};
     let v_default_opt_some_vec_one_el_ts = quote! {
         #VSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
@@ -156,7 +156,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     }
                 },
                 &quote::quote! {{
-                    #mb_pub_ts operator: #import_path::Operator,
+                    #mb_pub_ts operator: #import::Operator,
                     #struct_extra_fields_ts
                 }},
             )
@@ -175,7 +175,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     )
                 }
             },
-            &ImportPath::PgCrudCommon,
+            &Import::PgCrudCommon,
             &ident,
             match &generic {
                 Generic::False => &proc_macro2_ts_new,
@@ -234,7 +234,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &query_part_ts,
                 is_query_bind_mutable,
                 &query_bind_ts,
-                &ImportPath::PgCrudCommon,
+                &Import::PgCrudCommon,
             )
         };
     let regex_case_and_v_decl_ts = quote! {
@@ -296,11 +296,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pg_type_pattern_handle_arr_dim4 = PgTypePatternHandle::ArrDim4;
     let gen_pub_dims_bounded_vec_ts =
         |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
-            quote! {pub #DimsSc: BoundedVec<#import_path::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
+            quote! {pub #DimsSc: BoundedVec<#import::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
         };
     let gen_match_incr_checked_add_one_init_ts = |ident_ts: &dyn ToTokens| {
         quote! {
-            let #ident_ts = match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
+            let #ident_ts = match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                 Ok(v_25d59e01) => v_25d59e01,
                 Err(#ErSc) => {
                     return Err(#ErSc);
@@ -553,7 +553,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 let #VSc = {
                                     let mut acc_14596a52 = String::default();
                                     for _ in #SelfSc.#VSc.to_vec() {
-                                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
+                                        match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                                             Ok(v_daedba9c) => {
                                                 #if_write_is_err_ts
                                             },
@@ -824,7 +824,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             let format_ts =
                                 dq_ts(&format!("{{}}(arr_length({{}}, 1) {operator} ${{}})"));
                             quote! {
-                                match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
+                                match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                                     Ok(v_f7988de8) => Ok(format!(#format_ts, &self.operator.to_query_part(is_need_to_add_operator), #ColumnSc, v_f7988de8)),
                                     Err(#ErSc) => Err(#ErSc),
                                 }
@@ -975,7 +975,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             Generic::True {
                                 mb_extra_traits_ts: Some(
-                                    quote! {#sqlx_type_pg_encode_ts + #import_path::PgTypeEqualOperator},
+                                    quote! {#sqlx_type_pg_encode_ts + #import::PgTypeEqualOperator},
                                 ),
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
@@ -983,25 +983,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             IncrParamUnderscore::False,
                             quote! {
                                 #mb_dims_ies_init_ts
-                                let operator = <T as #import_path::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
+                                let operator = <T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
                                 let operator_query_str = operator.to_query_str();
                                 Ok(format!(
                                     "{}({} {})",
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     match operator {
-                                        #import_path::EqualOperator::Equal => {
+                                        #import::EqualOperator::Equal => {
                                             #v_match_incr_checked_add_one_init_ts
                                             format!("{operator_query_str} ${v}")
                                         },
-                                        #import_path::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                        #import::EqualOperator::IsNull => operator_query_str.to_owned(),
                                     }
                                 ))
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #mb_dims_query_bind_ts
-                                if let #import_path::EqualOperator::Equal = &<T as #import_path::PgTypeEqualOperator>::operator(&#SelfSc.#VSc) {
+                                if let #import::EqualOperator::Equal = &<T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc) {
                                     #if_let_err_query_try_bind_self_v_ts
                                 }
                                 Ok(#QuerySc)
@@ -1020,7 +1020,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             Generic::True {
                                 mb_extra_traits_ts: Some(
-                                    quote! {#sqlx_type_pg_encode_ts + #import_path::PgTypeEqualOperator},
+                                    quote! {#sqlx_type_pg_encode_ts + #import::PgTypeEqualOperator},
                                 ),
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
@@ -1028,25 +1028,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             IncrParamUnderscore::False,
                             quote! {
                                 #mb_dims_ies_init_ts
-                                let operator = <T as #import_path::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
+                                let operator = <T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
                                 let operator_query_str = operator.to_query_str();
                                 Ok(format!(
                                     "{}({}{dims_ies} {})",
                                     &#SelfSc.operator.to_query_part(is_need_to_add_operator),
                                     #ColumnSc,
                                     match operator {
-                                        #import_path::EqualOperator::Equal => {
+                                        #import::EqualOperator::Equal => {
                                             #v_match_incr_checked_add_one_init_ts
                                             format!("{operator_query_str} ${v}")
                                         }
-                                        #import_path::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                        #import::EqualOperator::IsNull => operator_query_str.to_owned(),
                                     }
                                 ))
                             },
                             is_query_bind_mutable_true,
                             quote! {
                                 #mb_dims_query_bind_ts
-                                if let #import_path::EqualOperator::Equal = &<T as #import_path::PgTypeEqualOperator>::operator(
+                                if let #import::EqualOperator::Equal = &<T as #import::PgTypeEqualOperator>::operator(
                                     &#SelfSc.#VSc
                                 ) {
                                     #if_let_err_query_try_bind_self_v_ts

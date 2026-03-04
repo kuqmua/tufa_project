@@ -35,7 +35,7 @@ use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOperatorHandle, ImportPath, IncrParamUnderscore, IsCreateQueryBindMutable,
+    EqualOperatorHandle, Import, IncrParamUnderscore, IsCreateQueryBindMutable,
     IsNeedToAddOperatorUnderscore, IsNullable, IsPkUnderscore, IsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsStdrtNotNull, IsUpdateQueryBindMutable, PgFilter,
     PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
@@ -1033,8 +1033,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let arr_dims_nbr = pg_type_pattern.arr_dims_nbr();
         let range_try_from_pg_type = Range::try_from(pg_type);
         let range_try_from_pg_type_is_ok = range_try_from_pg_type.is_ok();
-        let import_path = ImportPath::PgCrudCommon;
-        let import_path_non_pk_pg_type_read_only_ids_ts = quote! {#import_path::NonPkPgTypeReadOnlyIds};
+        let import = Import::PgCrudCommon;
+        let import_non_pk_pg_type_read_only_ids_ts = quote! {#import::NonPkPgTypeReadOnlyIds};
         let none_ts = quote!{None};
         let dot_clone_ts = quote!{.clone()};
         let mb_dot_clone_ts: &dyn ToTokens = if matches!(&pg_type_pattern, PgTypePattern::Stdrt) &&
@@ -1047,7 +1047,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         } else {
             &dot_clone_ts
         };
-        let gen_import_path_v_init_ts = |ts: &dyn ToTokens| gen_v_init_ts(&import_path, &ts);
+        let gen_import_v_init_ts = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
         let gen_ident_str = |
             pg_type_73b7c8af: &PgType,
             is_nullable_a5a792df: &IsNullable,
@@ -1099,7 +1099,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgTypeOrPgTypeTestCases::PgType => quote! {PgType},
                 PgTypeOrPgTypeTestCases::PgTypeTestCases => quote! {PgTypeTestCases},
             };
-            quote! {<#ts as #import_path::#trait_ts>}
+            quote! {<#ts as #import::#trait_ts>}
         };
         let gen_as_pg_type_ts = |ts: &dyn ToTokens| gen_as_trait_ts(&ts, &PgTypeOrPgTypeTestCases::PgType);
         let gen_as_pg_type_test_cases_ts = |ts: &dyn ToTokens| gen_as_trait_ts(&ts, &PgTypeOrPgTypeTestCases::PgTypeTestCases);
@@ -4021,7 +4021,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     <
                                         #ident_ts_87626b85
                                         as
-                                        #import_path::DefaultOptSomeVecOneEl
+                                        #import::DefaultOptSomeVecOneEl
                                     >::default_opt_some_vec_one_el()
                                 }
                             };
@@ -4242,12 +4242,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_decode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &ident_origin_ucc, &quote! {Ok(Self(v))});
             //todo rewrite as dependency of PgType trait?
             let impl_pg_type_equal_operator_for_ident_table_type_ts = impl_pg_type_equal_operator_for_ident_ts(
-                &import_path,
+                &import,
                 &ident_table_type_ucc,
                 //todo
                 &{
-                    let equal_ts = EqualOperatorHandle::Equal.to_tokens_path(&import_path);
-                    let is_null_ts = EqualOperatorHandle::IsNull.to_tokens_path(&import_path);
+                    let equal_ts = EqualOperatorHandle::Equal.to_tokens_path(&import);
+                    let is_null_ts = EqualOperatorHandle::IsNull.to_tokens_path(&import);
                     match &pg_type_pattern {
                         PgTypePattern::Stdrt => match &is_nullable {
                             IsNullable::False => equal_ts,
@@ -4762,14 +4762,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ColumnParamUnderscore::False,
                     &IsNeedToAddOperatorUnderscore::True,
                     &quote! {
-                        match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
+                        match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
                             Err(er) => Err(er)
                         }
                     },
                     &IsQueryBindMutable::True,
                     &gen_typical_query_bind_ts(&SelfSc),
-                    &import_path,
+                    &import,
                 )
             } else {
                 Ts2::new()
@@ -4877,11 +4877,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let typical_query_part_ts = {
                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                     &quote! {acc_c7df00f5, "${v_ba581e0f}"},
-                    &gen_return_err_query_part_er_write_into_buffer_ts(import_path)
+                    &gen_return_err_query_part_er_write_into_buffer_ts(import)
                 );
                 quote! {
                     let mut acc_c7df00f5 = String::default();
-                    match #import_path::incr_checked_add_one_returning_incr(#IncrSc) {
+                    match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                         Ok(v_ba581e0f) => {
                             #if_write_is_err_ts
                         },
@@ -4932,7 +4932,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Ok(format!(#format_ts))}
             };
             gen_impl_pg_type_ts(
-                &import_path,
+                &import,
                 &ident,
                 &ident_table_type_ucc,
                 &match &can_be_pk {
@@ -5220,7 +5220,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     <
                                         #ident_stdrt_not_null_ucc
                                         as
-                                        #import_path::PgType
+                                        #import::PgType
                                     >::normalize(
                                         #ident_stdrt_not_null_read_ucc(v_4561270e)
                                     ).0
@@ -5260,7 +5260,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         <
                                             #ident_arr_dim1_not_null_not_null_ucc
                                             as
-                                            #import_path::PgType
+                                            #import::PgType
                                         >::normalize(
                                             #ident_arr_dim1_not_null_not_null_read_ucc(v_b4d912fb),
                                         ).0
@@ -5282,7 +5282,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         <
                                             #ident_arr_dim1_not_null_nullable_ucc
                                             as
-                                            #import_path::PgType
+                                            #import::PgType
                                         >::normalize(
                                             #ident_arr_dim1_not_null_nullable_read_ucc(v_dd042db2),
                                         ).0
@@ -5295,7 +5295,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
                     quote! {#ident_read_only_ids_ucc}
                 } else {
-                    quote! {#import_path_non_pk_pg_type_read_only_ids_ts}
+                    quote! {#import_non_pk_pg_type_read_only_ids_ts}
                 },
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
                 &ident_read_inner_ucc,
@@ -5405,7 +5405,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {<#SelfUcc::#PgTypeUcc
                     as
-                #import_path::#PgTypeUcc>::#read_or_update_ucc:: #ts}
+                #import::#PgTypeUcc>::#read_or_update_ucc:: #ts}
             };
             let gen_stdrt_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
                 let gen_range_read_only_ids_to_two_dims_vec_read_inner_ts =
@@ -5614,7 +5614,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         IsNeedToUseInto::True => quote! {.into()},
                         IsNeedToUseInto::False => Ts2::new(),
                     };
-                    quote! {#import_path::#v()#ts}
+                    quote! {#import::#v()#ts}
                 };
                 match &pg_type {
                     PgType::I16AsInt2 => gen_typical_test_cases_vec_ts(&quote! {i16_test_cases_vec}),
@@ -5624,7 +5624,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::F64AsFloat8 => gen_typical_test_cases_vec_ts(&quote! {f64_test_cases_vec}),
                     PgType::I16AsSmallSerialInitByPg | PgType::I32AsSerialInitByPg | PgType::I64AsBigSerialInitByPg => empty_vec_ts,
                     PgType::SqlxPgTypesPgMoneyAsMoney => quote! {
-                        #import_path::i64_test_cases_vec().into_iter().map(
+                        #import::i64_test_cases_vec().into_iter().map(
                             #inner_type_stdrt_not_null_ts
                         ).collect::<Vec<#inner_type_stdrt_not_null_ts>>()
                     },
@@ -6149,14 +6149,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     #ident_read_only_ids_ucc(#ident_read_ucc(#VSc.0 #mb_dot_clone_ts))//todo its not correct. must be only for pk but it for all types what van be pk
                 }
             } else {
-                let ts = gen_import_path_v_init_ts(&none_ts);
+                let ts = gen_import_v_init_ts(&none_ts);
                 quote! {
-                    #import_path_non_pk_pg_type_read_only_ids_ts(#ts)
+                    #import_non_pk_pg_type_read_only_ids_ts(#ts)
                 }
             };
             let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
                 //todo that is not correct for arr of generated by pg pks but mb just need to remove this vrts and thats it?
-                let ts = gen_import_path_v_init_ts(&{
+                let ts = gen_import_v_init_ts(&{
                     let ts: &dyn ToTokens = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
                         &quote! {#VSc.0 #mb_dot_clone_ts}
                     } else {
@@ -6180,8 +6180,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let read_only_ids_merged_with_create_into_opt_v_read_ts = {
-                let ts = gen_import_path_v_init_ts(&quote! {
-                    <Self as #import_path::PgTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
+                let ts = gen_import_v_init_ts(&quote! {
+                    <Self as #import::PgTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                         #ReadOnlyIdsSc,
                         #CreateSc
                     )
@@ -6208,13 +6208,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {
                     #ident_where_ucc::#EqualUcc(where_filters::PgTypeWhereEqual {
-                        operator: #import_path::Operator::Or,
+                        operator: #import::Operator::Or,
                         #VSc: #ident_table_type_ucc(#ts),
                     })
                 }
             };
             let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = quote! {
-                #import_path::NotEmptyUniqueVec::try_new(vec![
+                #import::NotEmptyUniqueVec::try_new(vec![
                     #read_only_ids_merged_with_create_into_where_equal_ts
                 ]).expect("4c08b551")
             };
@@ -6232,13 +6232,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             IsNullable::True => &quote! {v_09152b2e.0},
                         };
                         quote! {
-                            match #import_path::NotEmptyUniqueVec::try_new({
+                            match #import::NotEmptyUniqueVec::try_new({
                                 let mut acc_74c71d5d = Vec::new();
                                 for (i_7702518c, el_081d735b) in #ts.into_iter().enumerate() {
                                     acc_74c71d5d.push(
                                         #ident_where_ucc::DimOneEqual(
                                             where_filters::PgTypeWhereDimOneEqual {
-                                                operator: #import_path::Operator::Or,
+                                                operator: #import::Operator::Or,
                                                 dims: where_filters::BoundedVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
@@ -6255,8 +6255,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }) {
                                 Ok(v_2218be19) => Some(v_2218be19),
                                 Err(er) => match er {
-                                    #import_path::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("45c8de3c")
+                                    #import::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => None,
+                                    #import::NotEmptyUniqueVecTryNewEr::NotUnique {..} => panic!("45c8de3c")
                                 }
                             }
                         }
@@ -6278,8 +6278,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let equal_not_greater_than = PgTypeGreaterThanVrt::EqualNotGreaterThan;
                 let gen_greater_than_test_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, table_type_ts: &dyn ToTokens| {
                     quote! {
-                        #import_path::PgTypeGreaterThanTest {
-                            vrt: #import_path::PgTypeGreaterThanVrt::#greater_than_vrt_ts,
+                        #import::PgTypeGreaterThanTest {
+                            vrt: #import::PgTypeGreaterThanVrt::#greater_than_vrt_ts,
                             create: #self_as_pg_type_ts::Create::#create_ts,
                             greater_than: #self_as_pg_type_ts::TableType::#table_type_ts,
                         }
@@ -6353,7 +6353,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
                             let wrap_into_not_empty_unique_vec_ts = |ts: &dyn ToTokens| quote! {Some(
-                                #import_path::NotEmptyUniqueVec::try_new(vec![#ts]).expect("3ad4b6bf")
+                                #import::NotEmptyUniqueVec::try_new(vec![#ts]).expect("3ad4b6bf")
                             )};
                             let sqlx_types_chrono_naive_time_as_time_stdrt_not_null_ts = &gen_ident_ts(
                                 &PgType::SqlxTypesChronoNaiveTimeAsTime,
@@ -6478,13 +6478,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         IsNullable::True => quote! {
-                            <#ident_stdrt_not_null_ucc as #import_path::PgTypeTestCases>::pg_type_opt_vec_where_greater_than_test().map(
+                            <#ident_stdrt_not_null_ucc as #import::PgTypeTestCases>::pg_type_opt_vec_where_greater_than_test().map(
                                 |el_e4af7fd9|
-                                #import_path::NotEmptyUniqueVec::try_new(
+                                #import::NotEmptyUniqueVec::try_new(
                                     el_e4af7fd9
                                     .into_vec()
                                     .into_iter()
-                                    .map(|el_504739e6| #import_path::PgTypeGreaterThanTest {
+                                    .map(|el_504739e6| #import::PgTypeGreaterThanTest {
                                         vrt: el_504739e6.vrt,
                                         create: #ident_create_ucc(#ident_origin_ucc(Some(el_504739e6.create.0))),
                                         greater_than: #ident_table_type_ucc(#ident_origin_ucc(Some(el_504739e6.greater_than.0))),
@@ -6585,7 +6585,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = none_ts;
             gen_impl_pg_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
-                &import_path,
+                &import,
                 &ident_inner_type_ts,
                 &ident,
                 &opt_vec_create_ts,
@@ -6622,7 +6622,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let v_as_read_only_ids_ts = quote! {#VSc: #self_as_pg_type_ts::#ReadOnlyIdsUcc};
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
-                impl #import_path::#PgTypePkUcc for #ident_stdrt_not_null_ucc {
+                impl #import::#PgTypePkUcc for #ident_stdrt_not_null_ucc {
                     type #PgTypeUcc = Self;
                     type #TableTypeUcc = #ident_stdrt_not_null_table_type_ucc;
                     fn #ReadOnlyIdsIntoTableTypeSc(#v_as_read_only_ids_ts) -> #self_as_pg_type_ts::#TableTypeUcc {
@@ -6647,7 +6647,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let mb_impl_pg_type_not_pk_for_ident_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
             Ts2::new()
         } else {
-            gen_impl_pg_type_not_pk_for_ident_ts(&import_path, &ident)
+            gen_impl_pg_type_not_pk_for_ident_ts(&import, &ident)
         };
         let generated = quote! {
             #ident_ts
