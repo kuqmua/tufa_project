@@ -4544,9 +4544,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ]).expect("5e82ac66");
             }
         };
+        let pk_ft_as_pg_type_pk_ts = quote! {<#pk_ft as #import_ts PgTypePk>::};
         let gen_pk_ft_as_pg_type_pk_method_call_ts =
             |method_ts: &dyn ToTokens, params_ts: &dyn ToTokens| {
-                quote! {<#pk_ft as #import_ts PgTypePk>::#method_ts(#params_ts)}
+                quote! {#pk_ft_as_pg_type_pk_ts #method_ts(#params_ts)}
             };
         let pk_ft_read_into_table_type_el_pk_fi_clone_ts =
             gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadIntoTableTypeSc, &quote! {el_adcc8db3});
@@ -6319,9 +6320,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let assert_ts_48ca54b1 = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
         let ts_e698d734 = gen_pk_where_equal_into_inner_ts(&quote! {
-            <#pk_ft as #import_ts PgTypePk>::read_only_ids_into_read(
-                el_9530b728.#pk_fi
-            )
+            #pk_ft_as_pg_type_pk_ts read_only_ids_into_read(el_9530b728.#pk_fi)
         });
         quote! {
             #[cfg(test)]
