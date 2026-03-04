@@ -4,46 +4,34 @@
 
 ## Workspace Discipline
 
-* Keep workspace compiling at all times.
 * Run checks before completing any task.
-* Respect crate boundaries.
-* Use path dependencies for internal crates.
 * Keep dependency graph acyclic.
 * Place shared logic in a dedicated shared crate.
 * Keep Cargo.toml files clean and minimal.
-* Use workspace-level dependency versions when possible.
-* Maintain deterministic builds.
+* Use workspace-level dependencies.
 
 ## Cargo & Tooling
 
-* Run `cargo fmt --all`.
-* Run `cargo check --workspace`.
-* Run `cargo test --features test-utils -- --nocapture --workspace`.
-* Run `cargo clippy --all-targets --all-features -D warnings`.
-* Fix all warnings before completion.
-* Ensure new features compile with `--all-features`.
+* Run `cargo fmt`.
+* Run `cargo clippy --all-targets --all-features`.
+* Run `cargo test --features test-utils -- --nocapture`.
+* Fix all problems before completion.
 * Ensure no feature flag breaks compilation.
 
 ## Dependencies
 
-* Add dependencies only when necessary.
+* Add dependencies only when propmt says so.
 * Disable default features unless required.
-* Prefer minimal dependency trees.
 * Avoid multiple crates solving the same problem.
 * Prefer std over external crates.
-* Justify any heavy dependency.
 * Keep versions consistent across workspace.
 
 ## Code Style
 
-* Follow Rust idioms strictly.
 * Use snake_case for functions and variables.
 * Use UpperCamelCase for types.
 * Use SCREAMING_SNAKE_CASE for constants.
-* Keep functions small and focused.
 * Prefer early returns over deep nesting.
-* Avoid overly clever code.
-* Prefer readability over micro-optimizations.
 
 ## Ownership & Memory
 
@@ -61,6 +49,7 @@
 * Never use expect() in production code, unless if it a 'proc-macro' crate.
 * Return typed errors.
 * Use thiserror for domain errors.
+* use enums for errors.
 * Do not use anyhow.
 * Propagate errors properly.
 * Provide meaningful error messages or use first 8 symbols of random uuid v4 for message.
@@ -123,8 +112,6 @@
 
 ## Public API
 
-* Document all public items.
-* Keep API stable unless instructed otherwise.
 * Avoid breaking changes.
 * Avoid leaking internal types.
 * Use explicit return types.
@@ -147,8 +134,9 @@
 
 ## Documentation
 
+* Do not add documention to code.
+* Do not add comments to code.
 * Keep README accurate.
-* Do not add documentation in the code.
 * Ensure examples compile.
 
 ---
@@ -213,7 +201,6 @@
 
 ## API Violations
 
-* Do not expose internal modules publicly.
 * Do not change signatures without instruction.
 * Do not widen trait bounds unnecessarily.
 * Do not leak generics to users.
