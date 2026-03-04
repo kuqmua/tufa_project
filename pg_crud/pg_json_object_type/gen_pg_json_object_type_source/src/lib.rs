@@ -51,7 +51,7 @@ use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, ImportPath,
     IncrParamUnderscore, IsCreateQueryBindMutable, IsNeedToAddOperatorUnderscore, IsNullable,
-    IsPrimaryKUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
+    IsPkUnderscore, IsQueryBindMutable, IsSelectOnlyCreatedIdsQueryBindMutable,
     IsSelectOnlyUpdatedIdsQueryBindMutable, IsSelectQueryPartColumnFieldForErMessageUsed,
     IsSelectQueryPartIsPgTypeUsed, IsSelectQueryPartSelfSelectUsed, IsUpdateQueryBindMutable,
     IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgTypeOrPgJsonType,
@@ -62,7 +62,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_pg_json_type_test_cases_for_ident_ts,
-    gen_impl_pg_json_type_ts, gen_impl_pg_type_not_primary_k_for_ident_ts,
+    gen_impl_pg_json_type_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_serde_deserialize_for_struct_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
@@ -4626,7 +4626,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &ImportPath::PgCrud,
                 &ident,
                 &ident_table_type_ucc,
-                &IsPrimaryKUnderscore::True,
+                &IsPkUnderscore::True,
                 &{
                     let format_ts = dq_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                     quote! {
@@ -7020,7 +7020,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             )
         };
-        let impl_pg_type_not_primary_k_for_ident_ts = gen_impl_pg_type_not_primary_k_for_ident_ts(&import_path, &ident);
+        let impl_pg_type_not_pk_for_ident_ts = gen_impl_pg_type_not_pk_for_ident_ts(&import_path, &ident);
         let generated = quote! {
             #ident_ts
             #ident_table_type_ts
@@ -7037,7 +7037,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #mb_impl_pg_crud_pg_types_pg_type_pg_type_ts
             #impl_pg_json_type_test_cases_for_ident_ts
             #impl_pg_type_test_cases_for_ident_ts
-            #impl_pg_type_not_primary_k_for_ident_ts
+            #impl_pg_type_not_pk_for_ident_ts
         };
         (
             {

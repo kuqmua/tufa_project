@@ -10,9 +10,9 @@ use naming::{
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
-    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddOperatorSc, IsPrimaryKSc, JsonbSetAccumulatorSc,
+    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddOperatorSc, IsPkSc, JsonbSetAccumulatorSc,
     JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
-    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPrimaryKUcc,
+    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPkUcc,
     PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
     PreviousReadMergedWithOptUpdateIntoReadSc, QueryBindSc, QueryPartErUcc, QueryPartSc, QuerySc,
     ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
@@ -398,14 +398,14 @@ impl ReadOrUpdate {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsPrimaryKUnderscore {
+pub enum IsPkUnderscore {
     False,
     True,
 }
-impl ToTokens for IsPrimaryKUnderscore {
+impl ToTokens for IsPkUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IsPrimaryKSc.to_tokens(tokens),
+            Self::False => IsPkSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -1039,7 +1039,7 @@ pub fn gen_impl_pg_type_ts(
     import_path: &ImportPath,
     ident: &dyn ToTokens,
     ident_table_type_ucc: &dyn ToTokens,
-    is_primary_k_underscore: &IsPrimaryKUnderscore,
+    is_pk_underscore: &IsPkUnderscore,
     create_table_column_query_part_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
     create_query_part_v_underscore: &CreateQueryPartValueUnderscore,
@@ -1077,7 +1077,7 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySourceItemOrdering
         impl #import_path :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
-            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_primary_k_underscore: #Bool) -> impl #StdFmtDisplay {
+            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_underscore: #Bool) -> impl #StdFmtDisplay {
                 #create_table_column_query_part_ts
             }
             type #CreateUcc = #ident_create_ucc;
@@ -1154,14 +1154,11 @@ pub fn gen_impl_pg_type_ts(
         }
     }
 }
-pub fn gen_impl_pg_type_not_primary_k_for_ident_ts(
-    import_path: &ImportPath,
-    ident: &dyn ToTokens,
-) -> Ts2 {
+pub fn gen_impl_pg_type_not_pk_for_ident_ts(import_path: &ImportPath, ident: &dyn ToTokens) -> Ts2 {
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
-        impl #import_path::#PgTypeNotPrimaryKUcc for #ident {
+        impl #import_path::#PgTypeNotPkUcc for #ident {
             type #PgTypeUcc = Self;
             type #CreateUcc = #ident_create_ucc;
         }

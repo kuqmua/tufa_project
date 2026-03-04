@@ -150,7 +150,7 @@ pub trait PgJsonType {
     ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-pub trait PgTypePrimaryK {
+pub trait PgTypePk {
     type PgType: PgType;
     type TableType: TableTypeAl + PartialOrd;
     fn read_only_ids_into_table_type(
@@ -167,7 +167,7 @@ pub trait PgTypePrimaryK {
     ) -> <Self::PgType as PgType>::TableType;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-pub trait PgTypeNotPrimaryK {
+pub trait PgTypeNotPk {
     type PgType: PgType;
     type Create: CreateAl + SqlxEncodePgSqlxTypePgAl;
 }
@@ -1299,8 +1299,8 @@ pub struct JsonFieldRights {
     can_update: bool,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
-pub struct NonPrimaryKPgTypeReadOnlyIds(pub V<Option<()>>);
-impl Decode<'_, Postgres> for NonPrimaryKPgTypeReadOnlyIds {
+pub struct NonPkPgTypeReadOnlyIds(pub V<Option<()>>);
+impl Decode<'_, Postgres> for NonPkPgTypeReadOnlyIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
         match <Json<Self> as Decode<Postgres>>::decode(value) {
             Ok(v0) => Ok(v0.0),
@@ -1308,7 +1308,7 @@ impl Decode<'_, Postgres> for NonPrimaryKPgTypeReadOnlyIds {
         }
     }
 }
-impl Type<Postgres> for NonPrimaryKPgTypeReadOnlyIds {
+impl Type<Postgres> for NonPkPgTypeReadOnlyIds {
     fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <Json<Self> as Type<Postgres>>::compatible(ty)
     }
@@ -1316,7 +1316,7 @@ impl Type<Postgres> for NonPrimaryKPgTypeReadOnlyIds {
         <Json<Self> as Type<Postgres>>::type_info()
     }
 }
-impl Default for NonPrimaryKPgTypeReadOnlyIds {
+impl Default for NonPkPgTypeReadOnlyIds {
     fn default() -> Self {
         Self(V { v: None })
     }

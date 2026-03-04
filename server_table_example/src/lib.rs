@@ -41,10 +41,10 @@ use optimal_pack::OptimalPack;
 #[pg_crud::delete_one_extra_logic{}]
 #[pg_crud::common_extra_logic{}]
 pub struct TableExample {
-    // #[gen_pg_crud_primary_k]
-    // pub primary_k: pg_crud::I64AsNotNullBigSerialInitByPg,
-    #[gen_pg_table_primary_k]
-    pub primary_k_column: pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitByPg,
+    // #[gen_pg_crud_pk]
+    // pub pk: pg_crud::I64AsNotNullBigSerialInitByPg,
+    #[gen_pg_table_pk]
+    pub pk_column: pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitByPg,
     pub column_0: pg_crud::I16AsNotNullInt2,
     // pub column_1: pg_crud::OptI16AsNullableInt2,
     // pub column_2: pg_crud::VecOfI16AsNotNullArrOfNotNullInt2,
