@@ -113,1038 +113,1038 @@ walkdir = {version = "=2.5.0"}
 itertools = {version = "=0.14.0"}
 
 [workspace.lints.rust]
-unsafe_code = { level = "deny" }
-absolute_paths_not_starting_with_crate = { level = "deny" }
-deprecated_in_future = { level = "deny" }
-elided_lifetimes_in_paths = { level = "deny" }
-explicit_outlives_requirements = { level = "deny" }
-ffi_unwind_calls = { level = "deny" }
-let_underscore_drop = { level = "deny" }
-macro_use_extern_crate = { level = "deny" }
-meta_variable_misuse = { level = "deny" }
-missing_abi = { level = "deny" }
-missing_copy_implementations = { level = "allow" } #GenPostgresJsonObjectType cannot simply know impl or not for Select for fields
-missing_debug_implementations = { level = "deny" }
-missing_docs = { level = "allow" } #too lazy to write docs now and i think this is not necessary now
-non_ascii_idents = { level = "deny" }
-rust_2021_incompatible_closure_captures = { level = "deny" }
-rust_2021_incompatible_or_patterns = { level = "deny" }
-rust_2021_prefixes_incompatible_syntax = { level = "deny" }
-rust_2021_prelude_collisions = { level = "deny" }
-single_use_lifetimes = { level = "deny" }
-trivial_casts = { level = "deny" }
-trivial_numeric_casts = { level = "deny" }
-unnameable_types = { level = "deny" }
-unreachable_pub = { level = "deny" }
-unsafe_op_in_unsafe_fn = { level = "deny" }
-unstable_features = { level = "deny" }
-unused_crate_dependencies = { level = "warn" }
-unused_extern_crates = { level = "deny" }
-unused_import_braces = { level = "deny" }
-unused_lifetimes = { level = "deny" }
-unused_macro_rules = { level = "deny" }
-unused_qualifications = { level = "deny" }
-unused_results = { level = "deny" }
-dead_code = { level = "warn" }
-variant_size_differences = { level = "deny" }
-ambiguous_glob_imports = { level = "deny" }
-ambiguous_glob_reexports = { level = "deny" }
-anonymous_parameters = { level = "deny" }
-array_into_iter = { level = "deny" }
-asm_sub_register = { level = "deny" }
-async_fn_in_trait = { level = "deny" }
-bad_asm_style = { level = "deny" }
-bare_trait_objects = { level = "deny" }
-break_with_label_and_loop = { level = "deny" }
-clashing_extern_declarations = { level = "deny" }
-coherence_leak_check = { level = "deny" }
-confusable_idents = { level = "deny" }
-const_evaluatable_unchecked = { level = "deny" }
-const_item_mutation = { level = "deny" }
-deprecated = { level = "deny" }
-deprecated_where_clause_location = { level = "deny" }
-deref_into_dyn_supertrait = { level = "deny" }
-deref_nullptr = { level = "deny" }
-dropping_copy_types = { level = "deny" }
-dropping_references = { level = "deny" }
-drop_bounds = { level = "deny" }
-duplicate_macro_attributes = { level = "deny" }
-dyn_drop = { level = "deny" }
-elided_lifetimes_in_associated_constant = { level = "deny" }
-ellipsis_inclusive_range_patterns = { level = "deny" }
-exported_private_dependencies = { level = "deny" }
-forbidden_lint_groups = { level = "deny" }
-forgetting_copy_types = { level = "deny" }
-forgetting_references = { level = "deny" }
-for_loops_over_fallibles = { level = "deny" }
-function_item_references = { level = "deny" }
-hidden_glob_reexports = { level = "deny" }
-improper_ctypes = { level = "deny" }
-improper_ctypes_definitions = { level = "deny" }
-incomplete_features = { level = "deny" }
-inline_no_sanitize = { level = "deny" }
-internal_features = { level = "deny" }
-invalid_doc_attributes = { level = "deny" }
-invalid_from_utf8 = { level = "deny" }
-invalid_macro_export_arguments = { level = "deny" }
-invalid_nan_comparisons = { level = "deny" }
-invalid_value = { level = "deny" }
-irrefutable_let_patterns = { level = "deny" }
-large_assignments = { level = "deny" }
-late_bound_lifetime_arguments = { level = "deny" }
-legacy_derive_helpers = { level = "deny" }
-map_unit_fn = { level = "deny" }
-mixed_script_confusables = { level = "deny" }
-named_arguments_used_positionally = { level = "deny" }
-non_camel_case_types = { level = "deny" }
-non_fmt_panics = { level = "deny" }
-non_shorthand_field_patterns = { level = "deny" }
-non_snake_case = { level = "deny" }
-non_upper_case_globals = { level = "deny" }
-noop_method_call = { level = "deny" }
-no_mangle_generic_items = { level = "deny" }
-opaque_hidden_inferred_bound = { level = "deny" }
-overlapping_range_endpoints = { level = "deny" }
-path_statements = { level = "deny" }
-private_bounds = { level = "deny" }
-private_interfaces = { level = "deny" }
-redundant_semicolons = { level = "deny" }
-renamed_and_removed_lints = { level = "deny" }
-semicolon_in_expressions_from_macros = { level = "deny" }
-special_module_name = { level = "deny" }
-stable_features = { level = "deny" }
-suspicious_double_ref_op = { level = "deny" }
-dangling_pointers_from_temporaries = { level = "deny" }
-trivial_bounds = { level = "deny" }
-type_alias_bounds = { level = "deny" }
-tyvar_behind_raw_pointer = { level = "deny" }
-uncommon_codepoints = { level = "deny" }
-unconditional_recursion = { level = "deny" }
-unexpected_cfgs = { level = "deny" }
-ungated_async_fn_track_caller = { level = "deny" }
-uninhabited_static = { level = "deny" }
-unknown_lints = { level = "deny" }
-unnameable_test_items = { level = "deny" }
-unreachable_code = { level = "deny" }
-unreachable_patterns = { level = "deny" }
-unstable_name_collisions = { level = "deny" }
-unstable_syntax_pre_expansion = { level = "deny" }
-unused_allocation = { level = "deny" }
-unused_assignments = { level = "deny" }
-unused_associated_type_bounds = { level = "deny" }
-unused_attributes = { level = "deny" }
-unused_braces = { level = "deny" }
-unused_comparisons = { level = "deny" }
-unused_doc_comments = { level = "deny" }
-unused_features = { level = "deny" }
-unused_imports = { level = "deny" }
-unused_labels = { level = "deny" }
-unused_macros = { level = "deny" }
-unused_must_use = { level = "deny" }
-unused_mut = { level = "deny" }
-unused_parens = { level = "deny" }
-unused_unsafe = { level = "deny" }
-unused_variables = { level = "warn" }
-useless_ptr_null_checks = { level = "deny" }
-warnings = { level = "warn" }
-while_true = { level = "deny" }
-ambiguous_associated_items = { level = "deny" }
-arithmetic_overflow = { level = "deny" }
-bindings_with_variant_name = { level = "deny" }
-conflicting_repr_hints = { level = "deny" }
-enum_intrinsics_non_enums = { level = "deny" }
-ill_formed_attribute_input = { level = "deny" }
-incomplete_include = { level = "deny" }
-ineffective_unstable_trait_impl = { level = "deny" }
-invalid_atomic_ordering = { level = "deny" }
-invalid_from_utf8_unchecked = { level = "deny" }
-invalid_reference_casting = { level = "deny" }
-invalid_type_param_default = { level = "deny" }
-integer_to_ptr_transmutes = { level = "deny" }
-let_underscore_lock = { level = "deny" }
-long_running_const_eval = { level = "deny" }
-macro_expanded_macro_exports_accessed_by_absolute_paths = { level = "deny" }
-mutable_transmutes = { level = "deny" }
-named_asm_labels = { level = "deny" }
-no_mangle_const_items = { level = "deny" }
-overflowing_literals = { level = "deny" }
-patterns_in_fns_without_body = { level = "deny" }
-proc_macro_derive_resolution_fallback = { level = "deny" }
-pub_use_of_private_extern_crate = { level = "deny" }
-soft_unstable = { level = "deny" }
-text_direction_codepoint_in_comment = { level = "deny" }
-text_direction_codepoint_in_literal = { level = "deny" }
-unconditional_panic = { level = "deny" }
-undropped_manually_drops = { level = "deny" }
-unknown_crate_types = { level = "deny" }
-useless_deprecated = { level = "deny" }
-redundant_lifetimes = { level = "deny" }
-unit_bindings = { level = "deny" }
-non_contiguous_range_endpoints = { level = "deny" }
-non_local_definitions = { level = "deny" }
-refining_impl_trait_internal = { level = "deny" }
-refining_impl_trait_reachable = { level = "deny" }
-static_mut_refs = { level = "deny" }
-unpredictable_function_pointer_comparisons = { level = "deny" }
-double_negations = { level = "deny" }
-ambiguous_negative_literals = { level = "deny" }
-closure_returning_async_block = { level = "deny" }
-deprecated_safe_2024 = { level = "deny" }
-edition_2024_expr_fragment_specifier = { level = "deny" }
-if_let_rescope = { level = "deny" }
-impl_trait_overcaptures = { level = "deny" }
-impl_trait_redundant_captures = { level = "deny" }
-keyword_idents_2018 = { level = "deny" }
-keyword_idents_2024 = { level = "deny" }
-linker_messages = { level = "deny" }
-missing_unsafe_on_extern = { level = "deny" }
-redundant_imports = { level = "deny" }
-rust_2024_guarded_string_incompatible_syntax = { level = "deny" }
-rust_2024_incompatible_pat = { level = "deny" }
-rust_2024_prelude_collisions = { level = "deny" }
-tail_expr_drop_order = { level = "deny" }
-unsafe_attr_outside_unsafe = { level = "deny" }
-ambiguous_wide_pointer_comparisons = { level = "deny" }
-boxed_slice_into_iter = { level = "deny" }
-const_item_interior_mutations = { level = "deny" }
-dangling_pointers_from_locals = { level = "deny" }
-function_casts_as_integer = { level = "deny" }
-malformed_diagnostic_attributes = { level = "deny" }
-malformed_diagnostic_format_literals = { level = "deny" }
-mismatched_lifetime_syntaxes = { level = "deny" }
-misplaced_diagnostic_attributes = { level = "deny" }
-ptr_to_integer_transmute_in_consts = { level = "deny" }
-repr_c_enums_larger_than_int = { level = "deny" }
-rtsan_nonblocking_async = { level = "deny" }
-self_constructor_from_outer_item = { level = "deny" }
-uncovered_param_in_projection = { level = "deny" }
-unfulfilled_lint_expectations = { level = "deny" }
-unknown_diagnostic_attributes = { level = "deny" }
-unnecessary_transmutes = { level = "deny" }
-unsupported_calling_conventions = { level = "deny" }
-uses_power_alignment = { level = "deny" }
-varargs_without_pattern = { level = "deny" }
-binary_asm_labels = { level = "deny" }
-dangerous_implicit_autorefs = { level = "deny" }
-dependency_on_unit_never_type_fallback = { level = "deny" }
-explicit_builtin_cfgs_in_flags = { level = "deny" }
-invalid_null_arguments = { level = "deny" }
-never_type_fallback_flowing_into_unsafe = { level = "deny" }
-out_of_scope_macro_calls = { level = "deny" }
-repr_transparent_non_zst_fields = { level = "deny" }
-unused_visibilities = { level = "deny" }
-aarch64_softfloat_neon = { level = "deny" }
-inline_always_mismatching_target_features = { level = "deny" } 
-improper_gpu_kernel_arg = { level = "deny" }
-missing_gpu_kernel_export_name = { level = "deny" }
-ambiguous_panic_imports = { level = "deny" }
-ambiguous_glob_imported_traits = { level = "deny" }
-ambiguous_import_visibilities = { level = "deny" }
-ambiguous_derive_helpers = { level = "deny" }
-internal_eq_trait_method_impls = { level = "deny" }
+unsafe_code = "deny"
+absolute_paths_not_starting_with_crate = "deny"
+deprecated_in_future = "deny"
+elided_lifetimes_in_paths = "deny"
+explicit_outlives_requirements = "deny"
+ffi_unwind_calls = "deny"
+let_underscore_drop = "deny"
+macro_use_extern_crate = "deny"
+meta_variable_misuse = "deny"
+missing_abi = "deny"
+missing_copy_implementations = "allow" #GenPostgresJsonObjectType cannot simply know impl or not for Select for fields
+missing_debug_implementations = "deny"
+missing_docs = "allow" #too lazy to write docs now and i think this is not necessary now
+non_ascii_idents = "deny"
+rust_2021_incompatible_closure_captures = "deny"
+rust_2021_incompatible_or_patterns = "deny"
+rust_2021_prefixes_incompatible_syntax = "deny"
+rust_2021_prelude_collisions = "deny"
+single_use_lifetimes = "deny"
+trivial_casts = "deny"
+trivial_numeric_casts = "deny"
+unnameable_types = "deny"
+unreachable_pub = "deny"
+unsafe_op_in_unsafe_fn = "deny"
+unstable_features = "deny"
+unused_crate_dependencies = "warn" 
+unused_extern_crates = "deny"
+unused_import_braces = "deny"
+unused_lifetimes = "deny"
+unused_macro_rules = "deny"
+unused_qualifications = "deny"
+unused_results = "deny"
+dead_code = "warn" 
+variant_size_differences = "deny"
+ambiguous_glob_imports = "deny"
+ambiguous_glob_reexports = "deny"
+anonymous_parameters = "deny"
+array_into_iter = "deny"
+asm_sub_register = "deny"
+async_fn_in_trait = "deny"
+bad_asm_style = "deny"
+bare_trait_objects = "deny"
+break_with_label_and_loop = "deny"
+clashing_extern_declarations = "deny"
+coherence_leak_check = "deny"
+confusable_idents = "deny"
+const_evaluatable_unchecked = "deny"
+const_item_mutation = "deny"
+deprecated = "deny"
+deprecated_where_clause_location = "deny"
+deref_into_dyn_supertrait = "deny"
+deref_nullptr = "deny"
+dropping_copy_types = "deny"
+dropping_references = "deny"
+drop_bounds = "deny"
+duplicate_macro_attributes = "deny"
+dyn_drop = "deny"
+elided_lifetimes_in_associated_constant = "deny"
+ellipsis_inclusive_range_patterns = "deny"
+exported_private_dependencies = "deny"
+forbidden_lint_groups = "deny"
+forgetting_copy_types = "deny"
+forgetting_references = "deny"
+for_loops_over_fallibles = "deny"
+function_item_references = "deny"
+hidden_glob_reexports = "deny"
+improper_ctypes = "deny"
+improper_ctypes_definitions = "deny"
+incomplete_features = "deny"
+inline_no_sanitize = "deny"
+internal_features = "deny"
+invalid_doc_attributes = "deny"
+invalid_from_utf8 = "deny"
+invalid_macro_export_arguments = "deny"
+invalid_nan_comparisons = "deny"
+invalid_value = "deny"
+irrefutable_let_patterns = "deny"
+large_assignments = "deny"
+late_bound_lifetime_arguments = "deny"
+legacy_derive_helpers = "deny"
+map_unit_fn = "deny"
+mixed_script_confusables = "deny"
+named_arguments_used_positionally = "deny"
+non_camel_case_types = "deny"
+non_fmt_panics = "deny"
+non_shorthand_field_patterns = "deny"
+non_snake_case = "deny"
+non_upper_case_globals = "deny"
+noop_method_call = "deny"
+no_mangle_generic_items = "deny"
+opaque_hidden_inferred_bound = "deny"
+overlapping_range_endpoints = "deny"
+path_statements = "deny"
+private_bounds = "deny"
+private_interfaces = "deny"
+redundant_semicolons = "deny"
+renamed_and_removed_lints = "deny"
+semicolon_in_expressions_from_macros = "deny"
+special_module_name = "deny"
+stable_features = "deny"
+suspicious_double_ref_op = "deny"
+dangling_pointers_from_temporaries = "deny"
+trivial_bounds = "deny"
+type_alias_bounds = "deny"
+tyvar_behind_raw_pointer = "deny"
+uncommon_codepoints = "deny"
+unconditional_recursion = "deny"
+unexpected_cfgs = "deny"
+ungated_async_fn_track_caller = "deny"
+uninhabited_static = "deny"
+unknown_lints = "deny"
+unnameable_test_items = "deny"
+unreachable_code = "deny"
+unreachable_patterns = "deny"
+unstable_name_collisions = "deny"
+unstable_syntax_pre_expansion = "deny"
+unused_allocation = "deny"
+unused_assignments = "deny"
+unused_associated_type_bounds = "deny"
+unused_attributes = "deny"
+unused_braces = "deny"
+unused_comparisons = "deny"
+unused_doc_comments = "deny"
+unused_features = "deny"
+unused_imports = "deny"
+unused_labels = "deny"
+unused_macros = "deny"
+unused_must_use = "deny"
+unused_mut = "deny"
+unused_parens = "deny"
+unused_unsafe = "deny"
+unused_variables = "warn" 
+useless_ptr_null_checks = "deny"
+warnings = "warn" 
+while_true = "deny"
+ambiguous_associated_items = "deny"
+arithmetic_overflow = "deny"
+bindings_with_variant_name = "deny"
+conflicting_repr_hints = "deny"
+enum_intrinsics_non_enums = "deny"
+ill_formed_attribute_input = "deny"
+incomplete_include = "deny"
+ineffective_unstable_trait_impl = "deny"
+invalid_atomic_ordering = "deny"
+invalid_from_utf8_unchecked = "deny"
+invalid_reference_casting = "deny"
+invalid_type_param_default = "deny"
+integer_to_ptr_transmutes = "deny"
+let_underscore_lock = "deny"
+long_running_const_eval = "deny"
+macro_expanded_macro_exports_accessed_by_absolute_paths = "deny"
+mutable_transmutes = "deny"
+named_asm_labels = "deny"
+no_mangle_const_items = "deny"
+overflowing_literals = "deny"
+patterns_in_fns_without_body = "deny"
+proc_macro_derive_resolution_fallback = "deny"
+pub_use_of_private_extern_crate = "deny"
+soft_unstable = "deny"
+text_direction_codepoint_in_comment = "deny"
+text_direction_codepoint_in_literal = "deny"
+unconditional_panic = "deny"
+undropped_manually_drops = "deny"
+unknown_crate_types = "deny"
+useless_deprecated = "deny"
+redundant_lifetimes = "deny"
+unit_bindings = "deny"
+non_contiguous_range_endpoints = "deny"
+non_local_definitions = "deny"
+refining_impl_trait_internal = "deny"
+refining_impl_trait_reachable = "deny"
+static_mut_refs = "deny"
+unpredictable_function_pointer_comparisons = "deny"
+double_negations = "deny"
+ambiguous_negative_literals = "deny"
+closure_returning_async_block = "deny"
+deprecated_safe_2024 = "deny"
+edition_2024_expr_fragment_specifier = "deny"
+if_let_rescope = "deny"
+impl_trait_overcaptures = "deny"
+impl_trait_redundant_captures = "deny"
+keyword_idents_2018 = "deny"
+keyword_idents_2024 = "deny"
+linker_messages = "deny"
+missing_unsafe_on_extern = "deny"
+redundant_imports = "deny"
+rust_2024_guarded_string_incompatible_syntax = "deny"
+rust_2024_incompatible_pat = "deny"
+rust_2024_prelude_collisions = "deny"
+tail_expr_drop_order = "deny"
+unsafe_attr_outside_unsafe = "deny"
+ambiguous_wide_pointer_comparisons = "deny"
+boxed_slice_into_iter = "deny"
+const_item_interior_mutations = "deny"
+dangling_pointers_from_locals = "deny"
+function_casts_as_integer = "deny"
+malformed_diagnostic_attributes = "deny"
+malformed_diagnostic_format_literals = "deny"
+mismatched_lifetime_syntaxes = "deny"
+misplaced_diagnostic_attributes = "deny"
+ptr_to_integer_transmute_in_consts = "deny"
+repr_c_enums_larger_than_int = "deny"
+rtsan_nonblocking_async = "deny"
+self_constructor_from_outer_item = "deny"
+uncovered_param_in_projection = "deny"
+unfulfilled_lint_expectations = "deny"
+unknown_diagnostic_attributes = "deny"
+unnecessary_transmutes = "deny"
+unsupported_calling_conventions = "deny"
+uses_power_alignment = "deny"
+varargs_without_pattern = "deny"
+binary_asm_labels = "deny"
+dangerous_implicit_autorefs = "deny"
+dependency_on_unit_never_type_fallback = "deny"
+explicit_builtin_cfgs_in_flags = "deny"
+invalid_null_arguments = "deny"
+never_type_fallback_flowing_into_unsafe = "deny"
+out_of_scope_macro_calls = "deny"
+repr_transparent_non_zst_fields = "deny"
+unused_visibilities = "deny"
+aarch64_softfloat_neon = "deny"
+inline_always_mismatching_target_features = "deny" 
+improper_gpu_kernel_arg = "deny"
+missing_gpu_kernel_export_name = "deny"
+ambiguous_panic_imports = "deny"
+ambiguous_glob_imported_traits = "deny"
+ambiguous_import_visibilities = "deny"
+ambiguous_derive_helpers = "deny"
+internal_eq_trait_method_impls = "deny"
 
 [workspace.lints.clippy]
-absolute_paths = { level = "deny" }
-absurd_extreme_comparisons = { level = "deny" }
-alloc_instead_of_core = { level = "deny" }
-allow_attributes = { level = "allow" } #serde used too much allow_attributes.
-allow_attributes_without_reason = { level = "allow" } #serde used too much allow_attributes.
-almost_complete_range = { level = "deny" }
-almost_swapped = { level = "deny" }
-approx_constant = { level = "deny" }
-arc_with_non_send_sync = { level = "deny" }
-arithmetic_side_effects = { level = "deny" }
-as_conversions = { level = "deny" }
-as_ptr_cast_mut = { level = "deny" }
-as_underscore = { level = "deny" }
-assertions_on_constants = { level = "deny" }
-assertions_on_result_states = { level = "deny" }
-assign_op_pattern = { level = "deny" }
-assigning_clones = { level = "deny" }
-async_yields_async = { level = "deny" }
-await_holding_invalid_type = { level = "deny" }
-await_holding_lock = { level = "deny" }
-await_holding_refcell_ref = { level = "deny" }
-bad_bit_mask = { level = "deny" }
-big_endian_bytes = { level = "deny" }
-bind_instead_of_map = { level = "deny" }
-blanket_clippy_restriction_lints = { level = "deny" }
-blocks_in_conditions = { level = "deny" }
-bool_assert_comparison = { level = "deny" }
-bool_comparison = { level = "deny" }
-bool_to_int_with_if = { level = "deny" }
-borrow_as_ptr = { level = "deny" }
-borrow_deref_ref = { level = "deny" }
-borrow_interior_mutable_const = { level = "deny" }
-borrowed_box = { level = "deny" }
-box_collection = { level = "deny" }
-box_default = { level = "deny" }
-boxed_local = { level = "deny" }
-branches_sharing_code = { level = "deny" }
-builtin_type_shadow = { level = "deny" }
-bytes_count_to_len = { level = "deny" }
-bytes_nth = { level = "deny" }
-cargo_common_metadata = { level = "deny" }
-case_sensitive_file_extension_comparisons = { level = "deny" }
-cast_abs_to_unsigned = { level = "deny" }
-cast_enum_constructor = { level = "deny" }
-cast_enum_truncation = { level = "deny" }
-cast_lossless = { level = "deny" }
-cast_nan_to_int = { level = "deny" }
-cast_possible_truncation = { level = "deny" }
-cast_possible_wrap = { level = "deny" }
-cast_precision_loss = { level = "deny" }
-cast_ptr_alignment = { level = "deny" }
-cast_sign_loss = { level = "deny" }
-cast_slice_different_sizes = { level = "deny" }
-cast_slice_from_raw_parts = { level = "deny" }
-char_lit_as_u8 = { level = "deny" }
-chars_last_cmp = { level = "deny" }
-chars_next_cmp = { level = "deny" }
-checked_conversions = { level = "deny" }
-clear_with_drain = { level = "deny" }
-clone_on_copy = { level = "allow" } #allow coz in proc macroses unknown which syn::Field type implements clone+copy.
-clone_on_ref_ptr = { level = "deny" }
-cloned_instead_of_copied = { level = "deny" }
-cmp_null = { level = "deny" }
-cmp_owned = { level = "deny" }
-cognitive_complexity = { level = "allow" } #breaks some code
-collapsible_else_if = { level = "deny" }
-collapsible_if = { level = "deny" }
-collapsible_match = { level = "deny" }
-collapsible_str_replace = { level = "deny" }
-collection_is_never_read = { level = "deny" }
-comparison_chain = { level = "deny" }
-comparison_to_empty = { level = "deny" }
-const_is_empty = { level = "deny" }
-copy_iterator = { level = "deny" }
-crate_in_macro_def = { level = "deny" }
-create_dir = { level = "deny" }
-crosspointer_transmute = { level = "deny" }
-dbg_macro = { level = "deny" }
-debug_assert_with_mut_call = { level = "deny" }
-decimal_literal_representation = { level = "allow" }#dont think its more readable
-declare_interior_mutable_const = { level = "deny" }
-default_constructed_unit_structs = { level = "deny" }
-default_instead_of_iter_empty = { level = "deny" }
-default_numeric_fallback = { level = "deny" }
-default_trait_access = { level = "deny" }
-default_union_representation = { level = "deny" }
-deprecated_cfg_attr = { level = "deny" }
-deprecated_clippy_cfg_attr = { level = "deny" }
-deprecated_semver = { level = "deny" }
-deref_addrof = { level = "deny" }
-deref_by_slicing = { level = "deny" }
-derivable_impls = { level = "deny" }
-derive_ord_xor_partial_ord = { level = "deny" }
-derive_partial_eq_without_eq = { level = "allow" }#todo deny after macro refactoring
-derived_hash_with_manual_eq = { level = "deny" }
-disallowed_macros = { level = "deny" }
-disallowed_methods = { level = "deny" }
-disallowed_names = { level = "deny" }
-disallowed_script_idents = { level = "deny" }
-disallowed_types = { level = "deny" }
-diverging_sub_expression = { level = "deny" }
-doc_link_with_quotes = { level = "deny" }
-doc_markdown = { level = "deny" }
-double_comparisons = { level = "deny" }
-double_must_use = { level = "deny" }
-double_parens = { level = "deny" }
-drain_collect = { level = "deny" }
-drop_non_drop = { level = "deny" }
-duplicate_mod = { level = "deny" }
-duplicate_underscore_argument = { level = "deny" }
-duplicated_attributes = { level = "deny" }
-duration_subsec = { level = "deny" }
-eager_transmute = { level = "deny" }
-else_if_without_else = { level = "deny" }
-empty_docs = { level = "deny" }
-empty_drop = { level = "deny" }
-empty_enum_variants_with_brackets = { level = "deny" }
-empty_line_after_doc_comments = { level = "deny" }
-empty_line_after_outer_attr = { level = "deny" }
-empty_loop = { level = "deny" }
-empty_structs_with_brackets = { level = "deny" }
-enum_clike_unportable_variant = { level = "deny" }
-enum_glob_use = { level = "deny" }
-enum_variant_names = { level = "deny" }
-eq_op = { level = "deny" }
-equatable_if_let = { level = "deny" }
-erasing_op = { level = "deny" }
-err_expect = { level = "deny" }
-error_impl_error = { level = "deny" }
-excessive_nesting = { level = "deny" }
-excessive_precision = { level = "deny" }
-exhaustive_enums = { level = "allow" } #not need if all binaries would recompile for each version
-exhaustive_structs = { level = "allow" } #not need if all binaries would recompile for each version
-exit = { level = "deny" }
-expect_fun_call = { level = "deny" }
-expect_used = { level = "allow" } #todo if there is a lot of time then deny
-expl_impl_clone_on_copy = { level = "deny" }
-explicit_auto_deref = { level = "deny" }
-explicit_counter_loop = { level = "deny" }
-explicit_deref_methods = { level = "deny" }
-explicit_into_iter_loop = { level = "deny" }
-explicit_iter_loop = { level = "deny" }
-explicit_write = { level = "deny" }
-extend_with_drain = { level = "deny" }
-extra_unused_lifetimes = { level = "deny" }
-extra_unused_type_parameters = { level = "deny" }
-fallible_impl_from = { level = "deny" }
-field_reassign_with_default = { level = "deny" }
-filetype_is_file = { level = "deny" }
-filter_map_bool_then = { level = "deny" }
-filter_map_identity = { level = "deny" }
-filter_map_next = { level = "deny" }
-filter_next = { level = "deny" }
-flat_map_identity = { level = "deny" }
-flat_map_option = { level = "deny" }
-float_arithmetic = { level = "deny" }
-float_cmp = { level = "deny" }
-float_cmp_const = { level = "deny" }
-float_equality_without_abs = { level = "deny" }
-fn_params_excessive_bools = { level = "deny" }
-fn_to_numeric_cast = { level = "deny" }
-fn_to_numeric_cast_any = { level = "deny" }
-fn_to_numeric_cast_with_truncation = { level = "deny" }
-for_kv_map = { level = "deny" }
-forget_non_drop = { level = "deny" }
-format_collect = { level = "deny" }
-format_in_format_args = { level = "deny" }
-format_push_string = { level = "deny" }
-four_forward_slashes = { level = "deny" }
-from_iter_instead_of_collect = { level = "deny" }
-from_over_into = { level = "deny" }
-from_raw_with_void_ptr = { level = "deny" }
-from_str_radix_10 = { level = "deny" }
-future_not_send = { level = "deny" }
-get_first = { level = "deny" }
-get_last_with_len = { level = "deny" }
-get_unwrap = { level = "deny" }
-host_endian_bytes = { level = "deny" }
-identity_op = { level = "deny" }
-if_let_mutex = { level = "deny" }
-if_not_else = { level = "deny" }
-if_same_then_else = { level = "deny" }
-if_then_some_else_none = { level = "deny" }
-ifs_same_cond = { level = "deny" }
-ignored_unit_patterns = { level = "deny" }
-impl_hash_borrow_with_str_and_bytes = { level = "deny" }
-impl_trait_in_params = { level = "deny" }
-implicit_clone = { level = "deny" }
-implicit_hasher = { level = "deny" }
-implicit_return = { level = "allow" } #not need
-implicit_saturating_add = { level = "deny" }
-implicit_saturating_sub = { level = "deny" }
-implied_bounds_in_impls = { level = "deny" }
-impossible_comparisons = { level = "deny" }
-imprecise_flops = { level = "deny" }
-incompatible_msrv = { level = "deny" }
-inconsistent_digit_grouping = { level = "deny" }
-inconsistent_struct_constructor = { level = "deny" }
-index_refutable_slice = { level = "deny" }
-indexing_slicing = { level = "deny" }
-ineffective_bit_mask = { level = "deny" }
-ineffective_open_options = { level = "deny" }
-inefficient_to_string = { level = "deny" }
-infallible_destructuring_match = { level = "deny" }
-infinite_iter = { level = "deny" }
-inherent_to_string = { level = "deny" }
-inherent_to_string_shadow_display = { level = "deny" }
-init_numbered_fields = { level = "deny" }
-inline_always = { level = "deny" }
-inline_asm_x86_att_syntax = { level = "deny" }
-inline_asm_x86_intel_syntax = { level = "deny" }
-inline_fn_without_body = { level = "deny" }
-inspect_for_each = { level = "deny" }
-int_plus_one = { level = "deny" }
-integer_division = { level = "deny" }
-into_iter_on_ref = { level = "deny" }
-into_iter_without_iter = { level = "deny" }
-invalid_regex = { level = "deny" }
-invalid_upcast_comparisons = { level = "deny" }
-invisible_characters = { level = "deny" }
-is_digit_ascii_radix = { level = "deny" }
-items_after_statements = { level = "deny" }
-items_after_test_module = { level = "deny" }
-iter_cloned_collect = { level = "deny" }
-iter_count = { level = "deny" }
-iter_kv_map = { level = "deny" }
-iter_next_loop = { level = "deny" }
-iter_next_slice = { level = "deny" }
-iter_not_returning_iterator = { level = "deny" }
-iter_nth = { level = "deny" }
-iter_nth_zero = { level = "deny" }
-iter_on_empty_collections = { level = "deny" }
-iter_on_single_items = { level = "deny" }
-iter_out_of_bounds = { level = "deny" }
-iter_over_hash_type = { level = "deny" }
-iter_overeager_cloned = { level = "deny" }
-iter_skip_next = { level = "deny" }
-iter_skip_zero = { level = "deny" }
-iter_with_drain = { level = "deny" }
-iter_without_into_iter = { level = "deny" }
-iterator_step_by_zero = { level = "deny" }
-join_absolute_paths = { level = "deny" }
-just_underscores_and_digits = { level = "deny" }
-large_const_arrays = { level = "deny" }
-large_digit_groups = { level = "deny" }
-large_enum_variant = { level = "deny" }
-large_futures = { level = "deny" }
-large_include_file = { level = "deny" }
-large_stack_arrays = { level = "deny" }
-large_stack_frames = { level = "deny" }
-large_types_passed_by_value = { level = "deny" }
-len_without_is_empty = { level = "deny" }
-len_zero = { level = "deny" }
-let_and_return = { level = "deny" }
-let_underscore_future = { level = "deny" }
-let_underscore_lock = { level = "deny" }
-let_underscore_must_use = { level = "deny" }
-let_underscore_untyped = { level = "deny" }
-let_unit_value = { level = "deny" }
-let_with_type_underscore = { level = "deny" }
-lines_filter_map_ok = { level = "deny" }
-linkedlist = { level = "deny" }
-little_endian_bytes = { level = "deny" }
-lossy_float_literal = { level = "deny" }
-macro_use_imports = { level = "deny" }
-main_recursion = { level = "deny" }
-manual_assert = { level = "deny" }
-manual_async_fn = { level = "deny" }
-manual_bits = { level = "deny" }
-manual_clamp = { level = "deny" }
-manual_filter = { level = "deny" }
-manual_filter_map = { level = "deny" }
-manual_find = { level = "deny" }
-manual_find_map = { level = "deny" }
-manual_flatten = { level = "deny" }
-manual_hash_one = { level = "deny" }
-manual_instant_elapsed = { level = "deny" }
-manual_is_ascii_check = { level = "deny" }
-manual_is_finite = { level = "deny" }
-manual_is_infinite = { level = "deny" }
-manual_let_else = { level = "deny" }
-manual_main_separator_str = { level = "deny" }
-manual_map = { level = "deny" }
-manual_memcpy = { level = "deny" }
-manual_next_back = { level = "deny" }
-manual_non_exhaustive = { level = "deny" }
-manual_ok_or = { level = "deny" }
-manual_range_contains = { level = "deny" }
-manual_range_patterns = { level = "deny" }
-manual_rem_euclid = { level = "deny" }
-manual_retain = { level = "deny" }
-manual_saturating_arithmetic = { level = "deny" }
-manual_slice_size_calculation = { level = "deny" }
-manual_split_once = { level = "deny" }
-manual_str_repeat = { level = "deny" }
-manual_string_new = { level = "deny" }
-manual_strip = { level = "deny" }
-manual_swap = { level = "deny" }
-manual_try_fold = { level = "deny" }
-manual_unwrap_or = { level = "deny" }
-manual_while_let_some = { level = "deny" }
-many_single_char_names = { level = "deny" }
-map_clone = { level = "deny" }
-map_collect_result_unit = { level = "deny" }
-map_entry = { level = "deny" }
-map_err_ignore = { level = "deny" }
-map_flatten = { level = "deny" }
-map_identity = { level = "deny" }
-map_unwrap_or = { level = "deny" }
-match_as_ref = { level = "deny" }
-match_bool = { level = "deny" }
-match_like_matches_macro = { level = "deny" }
-match_overlapping_arm = { level = "deny" }
-match_ref_pats = { level = "deny" }
-match_result_ok = { level = "deny" }
-match_same_arms = { level = "deny" }
-match_single_binding = { level = "deny" }
-match_str_case_mismatch = { level = "deny" }
-match_wild_err_arm = { level = "deny" }
-match_wildcard_for_single_variants = { level = "deny" }
-maybe_infinite_iter = { level = "deny" }
-mem_forget = { level = "deny" }
-mem_replace_option_with_none = { level = "deny" }
-mem_replace_with_default = { level = "deny" }
-mem_replace_with_uninit = { level = "deny" }
-min_ident_chars = { level = "allow" } #enable for llm context window optimization
-min_max = { level = "deny" }
-mismatching_type_param_order = { level = "deny" }
-misnamed_getters = { level = "deny" }
-misrefactored_assign_op = { level = "deny" }
-missing_assert_message = { level = "deny" }
-missing_asserts_for_indexing = { level = "deny" }
-missing_const_for_fn = { level = "deny" }
-missing_docs_in_private_items = { level = "allow" } #too lazy to do it on dev stage
-missing_enforced_import_renames = { level = "deny" }
-missing_errors_doc = { level = "allow" } #too lazy to do it on dev stage
-missing_fields_in_debug = { level = "deny" }
-missing_inline_in_public_items = { level = "allow" } #its not so clear where to add #[inline] and where not
-missing_panics_doc = { level = "allow" } #too lazy to do it on dev stage
-missing_safety_doc = { level = "deny" }
-missing_spin_loop = { level = "deny" }
-missing_trait_methods = { level = "allow" } #serde and other crates do not implement this feature. too much time to refactor that
-mistyped_literal_suffixes = { level = "deny" }
-mixed_case_hex_literals = { level = "deny" }
-mixed_read_write_in_expression = { level = "deny" }
-mod_module_files = { level = "deny" }
-module_inception = { level = "deny" }
-module_name_repetitions = { level = "deny" }
-modulo_arithmetic = { level = "deny" }
-modulo_one = { level = "deny" }
-multi_assignments = { level = "deny" }
-multiple_crate_versions = { level = "allow" } #dont know how to fix it
-multiple_inherent_impl = { level = "deny" }
-multiple_unsafe_ops_per_block = { level = "deny" }
-must_use_candidate = { level = "deny" }
-must_use_unit = { level = "deny" }
-mut_from_ref = { level = "deny" }
-mut_mut = { level = "deny" }
-mut_mutex_lock = { level = "deny" }
-mut_range_bound = { level = "deny" }
-mutable_key_type = { level = "deny" }
-mutex_atomic = { level = "deny" }
-mutex_integer = { level = "deny" }
-naive_bytecount = { level = "deny" }
-needless_arbitrary_self_type = { level = "deny" }
-needless_bitwise_bool = { level = "deny" }
-needless_bool = { level = "deny" }
-needless_bool_assign = { level = "deny" }
-needless_borrow = { level = "deny" }
-needless_borrowed_reference = { level = "deny" }
-needless_borrows_for_generic_args = { level = "deny" }
-needless_collect = { level = "deny" }
-needless_continue = { level = "deny" }
-needless_doctest_main = { level = "deny" }
-needless_else = { level = "deny" }
-needless_for_each = { level = "deny" }
-needless_late_init = { level = "deny" }
-needless_lifetimes = { level = "deny" }
-needless_match = { level = "deny" }
-needless_option_as_deref = { level = "deny" }
-needless_option_take = { level = "deny" }
-needless_parens_on_range_literals = { level = "deny" }
-needless_pass_by_ref_mut = { level = "deny" }
-needless_pass_by_value = { level = "deny" }
-needless_pub_self = { level = "deny" }
-needless_question_mark = { level = "deny" }
-needless_range_loop = { level = "deny" }
-needless_raw_string_hashes = { level = "deny" }
-needless_raw_strings = { level = "deny" }
-needless_return = { level = "deny" }
-needless_return_with_question_mark = { level = "deny" }
-needless_splitn = { level = "deny" }
-needless_update = { level = "deny" }
-neg_cmp_op_on_partial_ord = { level = "deny" }
-neg_multiply = { level = "deny" }
-negative_feature_names = { level = "deny" }
-never_loop = { level = "deny" }
-new_ret_no_self = { level = "deny" }
-new_without_default = { level = "deny" }
-no_effect = { level = "deny" }
-no_effect_replace = { level = "deny" }
-no_effect_underscore_binding = { level = "deny" }
-no_mangle_with_rust_abi = { level = "deny" }
-non_ascii_literal = { level = "deny" }
-non_canonical_clone_impl = { level = "deny" }
-non_canonical_partial_ord_impl = { level = "deny" }
-non_minimal_cfg = { level = "deny" }
-non_octal_unix_permissions = { level = "deny" }
-non_send_fields_in_send_ty = { level = "deny" }
-nonminimal_bool = { level = "deny" }
-nonsensical_open_options = { level = "deny" }
-nonstandard_macro_braces = { level = "deny" }
-not_unsafe_ptr_arg_deref = { level = "deny" }
-obfuscated_if_else = { level = "deny" }
-octal_escapes = { level = "deny" }
-ok_expect = { level = "deny" }
-only_used_in_recursion = { level = "deny" }
-op_ref = { level = "deny" }
-option_as_ref_deref = { level = "deny" }
-option_env_unwrap = { level = "deny" }
-option_filter_map = { level = "deny" }
-option_if_let_else = { level = "deny" }
-option_map_or_none = { level = "deny" }
-option_map_unit_fn = { level = "deny" }
-option_option = { level = "deny" }
-or_fun_call = { level = "deny" }
-or_then_unwrap = { level = "deny" }
-out_of_bounds_indexing = { level = "deny" }
-panicking_overflow_checks = { level = "deny" }
-overly_complex_bool_expr = { level = "deny" }
-panic = { level = "allow" }
-panic_in_result_fn = { level = "deny" }
-panicking_unwrap = { level = "deny" }
-partial_pub_fields = { level = "deny" }
-partialeq_ne_impl = { level = "deny" }
-partialeq_to_none = { level = "deny" }
-path_buf_push_overwrite = { level = "deny" }
-path_ends_with_ext = { level = "deny" }
-pattern_type_mismatch = { level = "allow" } #dont know how to refactor that. forces to use ref pattern or (.clone with conflict with other lints)
-permissions_set_readonly_false = { level = "deny" }
-possible_missing_comma = { level = "deny" }
-precedence = { level = "deny" }
-print_in_format_impl = { level = "deny" }
-print_literal = { level = "deny" }
-print_stderr = { level = "allow" } #need for dev
-print_stdout = { level = "allow" } #need for dev
-print_with_newline = { level = "deny" }
-println_empty_string = { level = "deny" }
-ptr_arg = { level = "deny" }
-ptr_as_ptr = { level = "deny" }
-ptr_cast_constness = { level = "deny" }
-ptr_eq = { level = "deny" }
-ptr_offset_with_cast = { level = "deny" }
-pub_use = { level = "allow" } #its limitation, not a rule. annoying but not so usefull
-pub_with_shorthand = { level = "allow" } #conflicts with pub_without_shorthand
-pub_without_shorthand = { level = "deny" }
-question_mark = { level = "deny" }
-question_mark_used = { level = "allow" } #not against it
-range_minus_one = { level = "deny" }
-range_plus_one = { level = "deny" }
-range_zip_with_len = { level = "deny" }
-rc_buffer = { level = "deny" }
-rc_clone_in_vec_init = { level = "deny" }
-rc_mutex = { level = "deny" }
-read_line_without_trim = { level = "deny" }
-read_zero_byte_vec = { level = "deny" }
-readonly_write_lock = { level = "deny" }
-recursive_format_impl = { level = "deny" }
-redundant_allocation = { level = "deny" }
-redundant_as_str = { level = "deny" }
-redundant_async_block = { level = "deny" }
-redundant_at_rest_pattern = { level = "deny" }
-redundant_clone = { level = "deny" }
-redundant_closure = { level = "deny" }
-redundant_closure_call = { level = "deny" }
-redundant_closure_for_method_calls = { level = "deny" }
-redundant_comparisons = { level = "deny" }
-redundant_else = { level = "deny" }
-redundant_feature_names = { level = "deny" }
-redundant_field_names = { level = "deny" }
-redundant_guards = { level = "deny" }
-redundant_locals = { level = "deny" }
-redundant_pattern = { level = "deny" }
-redundant_pattern_matching = { level = "deny" }
-redundant_pub_crate = { level = "allow" } #dont understand how to use correctly. conflicts with "unreachable pub"
-redundant_slicing = { level = "deny" }
-redundant_static_lifetimes = { level = "deny" }
-redundant_type_annotations = { level = "deny" }
-ref_binding_to_reference = { level = "deny" }
-ref_option_ref = { level = "deny" }
-ref_patterns = { level = "deny" }
-repeat_once = { level = "deny" }
-reserve_after_initialization = { level = "deny" }
-rest_pat_in_fully_bound_structs = { level = "deny" }
-result_large_err = { level = "allow" } #not sure how to fix it
-result_map_or_into_option = { level = "deny" }
-result_map_unit_fn = { level = "deny" }
-result_unit_err = { level = "deny" }
-return_self_not_must_use = { level = "deny" }
-reversed_empty_ranges = { level = "deny" }
-same_functions_in_if_condition = { level = "deny" }
-same_item_push = { level = "deny" }
-same_name_method = { level = "deny" }
-search_is_some = { level = "deny" }
-seek_from_current = { level = "deny" }
-seek_to_start_instead_of_rewind = { level = "deny" }
-self_assignment = { level = "deny" }
-self_named_constructors = { level = "deny" }
-self_named_module_files = { level = "allow" } #old rust style guide. conflicts with mod_module_files (which is Rust 2018+ style guide)
-semicolon_if_nothing_returned = { level = "deny" }
-semicolon_inside_block = { level = "deny" }
-semicolon_outside_block = { level = "deny" }
-separated_literal_suffix = { level = "deny" }
-serde_api_misuse = { level = "deny" }
-shadow_reuse = { level = "deny" }
-shadow_same = { level = "deny" }
-shadow_unrelated = { level = "deny" }
-short_circuit_statement = { level = "deny" }
-should_implement_trait = { level = "deny" }
-should_panic_without_expect = { level = "deny" }
-significant_drop_in_scrutinee = { level = "deny" }
-significant_drop_tightening = { level = "deny" }
-similar_names = { level = "allow" } # not so usefull. too much to refactor.
-single_call_fn = { level = "deny" } # utoipa function code gen problems with that lint
-single_char_add_str = { level = "deny" }
-single_char_lifetime_names = { level = "deny" }
-single_char_pattern = { level = "deny" }
-single_component_path_imports = { level = "deny" }
-single_element_loop = { level = "deny" }
-single_match = { level = "deny" }
-single_match_else = { level = "deny" }
-single_range_in_vec_init = { level = "deny" }
-size_of_in_element_count = { level = "deny" }
-size_of_ref = { level = "deny" }
-skip_while_next = { level = "deny" }
-slow_vector_initialization = { level = "deny" }
-stable_sort_primitive = { level = "deny" }
-std_instead_of_alloc = { level = "allow" } #not using no_std
-std_instead_of_core = { level = "allow" } #not using no_std
-str_to_string = { level = "deny" }
-string_add = { level = "deny" }
-string_add_assign = { level = "deny" }
-string_extend_chars = { level = "deny" }
-string_from_utf8_as_bytes = { level = "deny" }
-string_lit_as_bytes = { level = "deny" }
-string_lit_chars_any = { level = "deny" }
-string_slice = { level = "deny" }
-strlen_on_c_strings = { level = "deny" }
-struct_excessive_bools = { level = "deny" }
-struct_field_names = { level = "allow" } #just makes no sense. very annoying if u generating similar fields
-suboptimal_flops = { level = "deny" }
-suspicious_arithmetic_impl = { level = "deny" }
-suspicious_assignment_formatting = { level = "deny" }
-suspicious_command_arg_space = { level = "deny" }
-suspicious_doc_comments = { level = "deny" }
-suspicious_else_formatting = { level = "deny" }
-suspicious_map = { level = "deny" }
-suspicious_op_assign_impl = { level = "deny" }
-suspicious_operation_groupings = { level = "deny" }
-suspicious_splitn = { level = "deny" }
-suspicious_to_owned = { level = "deny" }
-suspicious_unary_op_formatting = { level = "deny" }
-suspicious_xor_used_as_pow = { level = "deny" }
-swap_ptr_to_ref = { level = "deny" }
-tabs_in_doc_comments = { level = "deny" }
-temporary_assignment = { level = "deny" }
-tests_outside_test_module = { level = "deny" }
-to_digit_is_some = { level = "deny" }
-to_string_in_format_args = { level = "deny" }
-todo = { level = "deny" }
-too_many_arguments = { level = "allow" } #useless
-too_many_lines = { level = "allow" } #useless
-toplevel_ref_arg = { level = "deny" }
-trailing_empty_array = { level = "deny" }
-trait_duplication_in_bounds = { level = "deny" }
-transmute_bytes_to_str = { level = "deny" }
-transmute_int_to_bool = { level = "deny" }
-transmute_int_to_non_zero = { level = "deny" }
-transmute_null_to_fn = { level = "deny" }
-transmute_ptr_to_ptr = { level = "deny" }
-transmute_ptr_to_ref = { level = "deny" }
-transmute_undefined_repr = { level = "deny" }
-transmutes_expressible_as_ptr_casts = { level = "deny" }
-transmuting_null = { level = "deny" }
-trim_split_whitespace = { level = "deny" }
-trivial_regex = { level = "deny" }
-trivially_copy_pass_by_ref = { level = "deny" }
-try_err = { level = "deny" }
-tuple_array_conversions = { level = "deny" }
-type_complexity = { level = "allow" } #annoying for code generation
-type_id_on_box = { level = "deny" }
-type_repetition_in_bounds = { level = "deny" }
-undocumented_unsafe_blocks = { level = "deny" }
-unicode_not_nfc = { level = "deny" }
-unimplemented = { level = "deny" }
-uninit_assumed_init = { level = "deny" }
-uninit_vec = { level = "deny" }
-uninlined_format_args = { level = "deny" }
-unit_arg = { level = "deny" }
-unit_cmp = { level = "deny" }
-unit_hash = { level = "deny" }
-unit_return_expecting_ord = { level = "deny" }
-unnecessary_box_returns = { level = "deny" }
-unnecessary_cast = { level = "deny" }
-unnecessary_fallible_conversions = { level = "deny" }
-unnecessary_filter_map = { level = "deny" }
-unnecessary_find_map = { level = "deny" }
-unnecessary_fold = { level = "deny" }
-unnecessary_join = { level = "deny" }
-unnecessary_lazy_evaluations = { level = "deny" }
-unnecessary_literal_unwrap = { level = "deny" }
-unnecessary_map_on_constructor = { level = "deny" }
-unnecessary_mut_passed = { level = "deny" }
-unnecessary_operation = { level = "deny" }
-unnecessary_owned_empty_strings = { level = "deny" }
-unnecessary_safety_comment = { level = "deny" }
-unnecessary_safety_doc = { level = "deny" }
-unnecessary_self_imports = { level = "deny" }
-unnecessary_sort_by = { level = "deny" }
-unnecessary_struct_initialization = { level = "deny" }
-unnecessary_to_owned = { level = "deny" }
-unnecessary_unwrap = { level = "deny" }
-unnecessary_wraps = { level = "deny" }
-unneeded_field_pattern = { level = "deny" }
-unneeded_wildcard_pattern = { level = "deny" }
-unnested_or_patterns = { level = "deny" }
-unreachable = { level = "deny" }
-unreadable_literal = { level = "deny" }
-unsafe_derive_deserialize = { level = "deny" }
-unsafe_removed_from_name = { level = "deny" }
-unseparated_literal_suffix = { level = "allow" }#separated_literal_suffix deny, unseparated_literal_suffix allow
-unsound_collection_transmute = { level = "deny" }
-unused_async = { level = "deny" }
-unused_enumerate_index = { level = "deny" }
-unused_format_specs = { level = "deny" }
-unused_io_amount = { level = "deny" }
-unused_peekable = { level = "deny" }
-unused_rounding = { level = "deny" }
-unused_self = { level = "deny" }
-unused_unit = { level = "deny" }
-unusual_byte_groupings = { level = "deny" }
-unwrap_in_result = { level = "deny" }
-unwrap_or_default = { level = "deny" }
-unwrap_used = { level = "deny" }
-upper_case_acronyms = { level = "deny" }
-use_debug = { level = "allow" } #too much code to refactor, maybe for size of binary and longer compile times
-use_self = { level = "deny" }
-used_underscore_binding = { level = "deny" }
-useless_asref = { level = "deny" }
-useless_attribute = { level = "deny" }
-useless_conversion = { level = "deny" }
-useless_format = { level = "deny" }
-useless_let_if_seq = { level = "deny" }
-useless_transmute = { level = "deny" }
-useless_vec = { level = "deny" }
-vec_box = { level = "deny" }
-vec_init_then_push = { level = "deny" }
-vec_resize_to_zero = { level = "deny" }
-verbose_bit_mask = { level = "deny" }
-verbose_file_reads = { level = "deny" }
-waker_clone_wake = { level = "deny" }
-while_immutable_condition = { level = "deny" }
-while_let_loop = { level = "deny" }
-while_let_on_iterator = { level = "deny" }
-wildcard_dependencies = { level = "deny" }
-wildcard_enum_match_arm = { level = "deny" }
-wildcard_imports = { level = "deny" }
-wildcard_in_or_patterns = { level = "deny" }
-write_literal = { level = "deny" }
-write_with_newline = { level = "deny" }
-writeln_empty_string = { level = "deny" }
-wrong_self_convention = { level = "deny" }
-wrong_transmute = { level = "deny" }
-zero_divided_by_zero = { level = "deny" }
-zero_prefixed_literal = { level = "deny" }
-zero_ptr = { level = "deny" }
-zero_sized_map_values = { level = "deny" }
-zst_offset = { level = "deny" }
-infinite_loop = { level = "deny" }# didnt wasted for for order declaration(a,b,c...)
-integer_division_remainder_used = { level = "deny" }
-iter_filter_is_ok = { level = "deny" }
-iter_filter_is_some = { level = "deny" }
-legacy_numeric_constants = { level = "deny" }
-lint_groups_priority = { level = "deny" }
-manual_c_str_literals = { level = "deny" }
-manual_is_variant_and = { level = "deny" }
-manual_unwrap_or_default = { level = "deny" }
-missing_transmute_annotations = { level = "deny" }
-mixed_attributes_style = { level = "deny" }
-multiple_bound_locations = { level = "deny" }
-option_as_ref_cloned = { level = "deny" }
-pub_underscore_fields = { level = "deny" }
-ref_as_ptr = { level = "deny" }
-repeat_vec_with_capacity = { level = "deny" }
-result_filter_map = { level = "deny" }
-str_split_at_newline = { level = "deny" }
-suspicious_open_options = { level = "deny" }
-test_attr_in_doctest = { level = "deny" }
-missing_const_for_thread_local = { level = "deny" }
-to_string_trait_impl = { level = "deny" }
-unconditional_recursion = { level = "deny" }
-uninhabited_references = { level = "deny" }
-unnecessary_clippy_cfg = { level = "deny" }
-unnecessary_get_then_check = { level = "deny" }
-unnecessary_result_map_or_else = { level = "deny" }
-zero_repeat_side_effects = { level = "deny" }
-doc_lazy_continuation = { level = "deny" }
-macro_metavars_in_unsafe = { level = "deny" }
-manual_pattern_char_comparison = { level = "deny" }
-needless_character_iteration = { level = "deny" }
-needless_maybe_sized = { level = "deny" }
-renamed_function_params = { level = "deny" }
-while_float = { level = "deny" }
-arbitrary_source_item_ordering = { level = "deny" }
-as_pointer_underscore = { level = "deny" }
-byte_char_slices = { level = "deny" }
-cfg_not_test = { level = "deny" }
-char_indices_as_byte_indices = { level = "deny" }
-cloned_ref_to_slice_refs = { level = "deny" }
-coerce_container_to_any = { level = "deny" }
-confusing_method_to_numeric_cast = { level = "deny" }
-doc_broken_link = { level = "deny" }
-doc_comment_double_space_linebreaks = { level = "deny" }
-doc_include_without_cfg = { level = "deny" }
-doc_link_code = { level = "deny" }
-doc_nested_refdefs = { level = "deny" }
-doc_overindented_list_items = { level = "deny" }
-doc_paragraphs_missing_punctuation = { level = "deny" }
-doc_suspicious_footnotes = { level = "deny" }
-double_ended_iterator_last = { level = "deny" }
-elidable_lifetime_names = { level = "deny" }
-empty_enums = { level = "deny" }
-field_scoped_visibility_modifiers = { level = "deny" }
-ignore_without_reason = { level = "deny" }
-infallible_try_from = { level = "deny" }
-inverted_saturating_sub = { level = "deny" }
-io_other_error = { level = "deny" }
-ip_constant = { level = "deny" }
-literal_string_with_formatting_args = { level = "allow" }#in proc macros for generating formatting content is not correct
-manual_abs_diff = { level = "deny" }
-manual_contains = { level = "deny" }
-manual_dangling_ptr = { level = "deny" }
-manual_div_ceil = { level = "deny" }
-manual_ignore_case_cmp = { level = "deny" }
-manual_inspect = { level = "deny" }
-manual_is_multiple_of = { level = "deny" }
-manual_is_power_of_two = { level = "deny" }
-manual_midpoint = { level = "deny" }
-manual_ok_err = { level = "deny" }
-manual_option_as_slice = { level = "deny" }
-manual_repeat_n = { level = "deny" }
-manual_rotate = { level = "deny" }
-manual_slice_fill = { level = "deny" }
-map_all_any_identity = { level = "deny" }
-map_with_unused_argument_over_ranges = { level = "deny" }
-mem_replace_option_with_some = { level = "deny" }
-needless_as_bytes = { level = "deny" }
-needless_ifs = { level = "deny" }
-non_std_lazy_statics = { level = "deny" }
-non_zero_suggestions = { level = "deny" }
-owned_cow = { level = "deny" }
-pathbuf_init_then_push = { level = "deny" }
-pointer_format = { level = "deny" }
-pointers_in_nomem_asm_block = { level = "deny" }
-possible_missing_else = { level = "deny" }
-precedence_bits = { level = "deny" }
-redundant_iter_cloned = { level = "deny" }
-redundant_test_prefix = { level = "deny" }
-ref_option = { level = "deny" }
-regex_creation_in_loops = { level = "deny" }
-replace_box = { level = "deny" }
-repr_packed_without_abi = { level = "deny" }
-return_and_then = { level = "deny" }
-self_only_used_in_recursion = { level = "deny" }
-set_contains_or_insert = { level = "deny" }
-single_option_map = { level = "deny" }
-sliced_string_as_bytes = { level = "deny" }
-swap_with_temporary = { level = "deny" }
-too_long_first_doc_paragraph = { level = "deny" }
-unbuffered_bytes = { level = "deny" }
-unchecked_time_subtraction = { level = "deny" }
-unnecessary_debug_formatting = { level = "deny" }
-unnecessary_first_then_check = { level = "deny" }
-unnecessary_literal_bound = { level = "deny" }
-unnecessary_map_or = { level = "deny" }
-unnecessary_min_or_max = { level = "deny" }
-unnecessary_option_map_or_else = { level = "deny" }
-unnecessary_semicolon = { level = "deny" }
-unneeded_struct_pattern = { level = "deny" }
-unused_result_ok = { level = "deny" }
-unused_trait_names = { level = "deny" }
-used_underscore_items = { level = "deny" }
-useless_concat = { level = "deny" }
-useless_nonzero_new_unchecked = { level = "deny" }
-volatile_composites = { level = "deny" }
-zombie_processes = { level = "deny" }
-decimal_bitwise_operands = { level = "deny" }
-manual_ilog2 = { level = "deny" }
-ptr_offset_by_literal = { level = "deny" }
-needless_type_cast = { level = "deny" }
-same_length_and_capacity = { level = "deny" }
-duration_suboptimal_units = { level = "deny" }
-manual_take = { level = "deny" }
-manual_checked_ops = { level = "deny" }
+absolute_paths = "deny"
+absurd_extreme_comparisons = "deny"
+alloc_instead_of_core = "deny"
+allow_attributes = "allow" #serde used too much allow_attributes.
+allow_attributes_without_reason = "allow" #serde used too much allow_attributes.
+almost_complete_range = "deny"
+almost_swapped = "deny"
+approx_constant = "deny"
+arc_with_non_send_sync = "deny"
+arithmetic_side_effects = "deny"
+as_conversions = "deny"
+as_ptr_cast_mut = "deny"
+as_underscore = "deny"
+assertions_on_constants = "deny"
+assertions_on_result_states = "deny"
+assign_op_pattern = "deny"
+assigning_clones = "deny"
+async_yields_async = "deny"
+await_holding_invalid_type = "deny"
+await_holding_lock = "deny"
+await_holding_refcell_ref = "deny"
+bad_bit_mask = "deny"
+big_endian_bytes = "deny"
+bind_instead_of_map = "deny"
+blanket_clippy_restriction_lints = "deny"
+blocks_in_conditions = "deny"
+bool_assert_comparison = "deny"
+bool_comparison = "deny"
+bool_to_int_with_if = "deny"
+borrow_as_ptr = "deny"
+borrow_deref_ref = "deny"
+borrow_interior_mutable_const = "deny"
+borrowed_box = "deny"
+box_collection = "deny"
+box_default = "deny"
+boxed_local = "deny"
+branches_sharing_code = "deny"
+builtin_type_shadow = "deny"
+bytes_count_to_len = "deny"
+bytes_nth = "deny"
+cargo_common_metadata = "deny"
+case_sensitive_file_extension_comparisons = "deny"
+cast_abs_to_unsigned = "deny"
+cast_enum_constructor = "deny"
+cast_enum_truncation = "deny"
+cast_lossless = "deny"
+cast_nan_to_int = "deny"
+cast_possible_truncation = "deny"
+cast_possible_wrap = "deny"
+cast_precision_loss = "deny"
+cast_ptr_alignment = "deny"
+cast_sign_loss = "deny"
+cast_slice_different_sizes = "deny"
+cast_slice_from_raw_parts = "deny"
+char_lit_as_u8 = "deny"
+chars_last_cmp = "deny"
+chars_next_cmp = "deny"
+checked_conversions = "deny"
+clear_with_drain = "deny"
+clone_on_copy = "allow" #allow coz in proc macroses unknown which syn::Field type implements clone+copy.
+clone_on_ref_ptr = "deny"
+cloned_instead_of_copied = "deny"
+cmp_null = "deny"
+cmp_owned = "deny"
+cognitive_complexity = "allow" #breaks some code
+collapsible_else_if = "deny"
+collapsible_if = "deny"
+collapsible_match = "deny"
+collapsible_str_replace = "deny"
+collection_is_never_read = "deny"
+comparison_chain = "deny"
+comparison_to_empty = "deny"
+const_is_empty = "deny"
+copy_iterator = "deny"
+crate_in_macro_def = "deny"
+create_dir = "deny"
+crosspointer_transmute = "deny"
+dbg_macro = "deny"
+debug_assert_with_mut_call = "deny"
+decimal_literal_representation = "allow"#dont think its more readable
+declare_interior_mutable_const = "deny"
+default_constructed_unit_structs = "deny"
+default_instead_of_iter_empty = "deny"
+default_numeric_fallback = "deny"
+default_trait_access = "deny"
+default_union_representation = "deny"
+deprecated_cfg_attr = "deny"
+deprecated_clippy_cfg_attr = "deny"
+deprecated_semver = "deny"
+deref_addrof = "deny"
+deref_by_slicing = "deny"
+derivable_impls = "deny"
+derive_ord_xor_partial_ord = "deny"
+derive_partial_eq_without_eq = "allow"#todo deny after macro refactoring
+derived_hash_with_manual_eq = "deny"
+disallowed_macros = "deny"
+disallowed_methods = "deny"
+disallowed_names = "deny"
+disallowed_script_idents = "deny"
+disallowed_types = "deny"
+diverging_sub_expression = "deny"
+doc_link_with_quotes = "deny"
+doc_markdown = "deny"
+double_comparisons = "deny"
+double_must_use = "deny"
+double_parens = "deny"
+drain_collect = "deny"
+drop_non_drop = "deny"
+duplicate_mod = "deny"
+duplicate_underscore_argument = "deny"
+duplicated_attributes = "deny"
+duration_subsec = "deny"
+eager_transmute = "deny"
+else_if_without_else = "deny"
+empty_docs = "deny"
+empty_drop = "deny"
+empty_enum_variants_with_brackets = "deny"
+empty_line_after_doc_comments = "deny"
+empty_line_after_outer_attr = "deny"
+empty_loop = "deny"
+empty_structs_with_brackets = "deny"
+enum_clike_unportable_variant = "deny"
+enum_glob_use = "deny"
+enum_variant_names = "deny"
+eq_op = "deny"
+equatable_if_let = "deny"
+erasing_op = "deny"
+err_expect = "deny"
+error_impl_error = "deny"
+excessive_nesting = "deny"
+excessive_precision = "deny"
+exhaustive_enums = "allow" #not need if all binaries would recompile for each version
+exhaustive_structs = "allow" #not need if all binaries would recompile for each version
+exit = "deny"
+expect_fun_call = "deny"
+expect_used = "allow" #todo if there is a lot of time then deny
+expl_impl_clone_on_copy = "deny"
+explicit_auto_deref = "deny"
+explicit_counter_loop = "deny"
+explicit_deref_methods = "deny"
+explicit_into_iter_loop = "deny"
+explicit_iter_loop = "deny"
+explicit_write = "deny"
+extend_with_drain = "deny"
+extra_unused_lifetimes = "deny"
+extra_unused_type_parameters = "deny"
+fallible_impl_from = "deny"
+field_reassign_with_default = "deny"
+filetype_is_file = "deny"
+filter_map_bool_then = "deny"
+filter_map_identity = "deny"
+filter_map_next = "deny"
+filter_next = "deny"
+flat_map_identity = "deny"
+flat_map_option = "deny"
+float_arithmetic = "deny"
+float_cmp = "deny"
+float_cmp_const = "deny"
+float_equality_without_abs = "deny"
+fn_params_excessive_bools = "deny"
+fn_to_numeric_cast = "deny"
+fn_to_numeric_cast_any = "deny"
+fn_to_numeric_cast_with_truncation = "deny"
+for_kv_map = "deny"
+forget_non_drop = "deny"
+format_collect = "deny"
+format_in_format_args = "deny"
+format_push_string = "deny"
+four_forward_slashes = "deny"
+from_iter_instead_of_collect = "deny"
+from_over_into = "deny"
+from_raw_with_void_ptr = "deny"
+from_str_radix_10 = "deny"
+future_not_send = "deny"
+get_first = "deny"
+get_last_with_len = "deny"
+get_unwrap = "deny"
+host_endian_bytes = "deny"
+identity_op = "deny"
+if_let_mutex = "deny"
+if_not_else = "deny"
+if_same_then_else = "deny"
+if_then_some_else_none = "deny"
+ifs_same_cond = "deny"
+ignored_unit_patterns = "deny"
+impl_hash_borrow_with_str_and_bytes = "deny"
+impl_trait_in_params = "deny"
+implicit_clone = "deny"
+implicit_hasher = "deny"
+implicit_return = "allow" #not need
+implicit_saturating_add = "deny"
+implicit_saturating_sub = "deny"
+implied_bounds_in_impls = "deny"
+impossible_comparisons = "deny"
+imprecise_flops = "deny"
+incompatible_msrv = "deny"
+inconsistent_digit_grouping = "deny"
+inconsistent_struct_constructor = "deny"
+index_refutable_slice = "deny"
+indexing_slicing = "deny"
+ineffective_bit_mask = "deny"
+ineffective_open_options = "deny"
+inefficient_to_string = "deny"
+infallible_destructuring_match = "deny"
+infinite_iter = "deny"
+inherent_to_string = "deny"
+inherent_to_string_shadow_display = "deny"
+init_numbered_fields = "deny"
+inline_always = "deny"
+inline_asm_x86_att_syntax = "deny"
+inline_asm_x86_intel_syntax = "deny"
+inline_fn_without_body = "deny"
+inspect_for_each = "deny"
+int_plus_one = "deny"
+integer_division = "deny"
+into_iter_on_ref = "deny"
+into_iter_without_iter = "deny"
+invalid_regex = "deny"
+invalid_upcast_comparisons = "deny"
+invisible_characters = "deny"
+is_digit_ascii_radix = "deny"
+items_after_statements = "deny"
+items_after_test_module = "deny"
+iter_cloned_collect = "deny"
+iter_count = "deny"
+iter_kv_map = "deny"
+iter_next_loop = "deny"
+iter_next_slice = "deny"
+iter_not_returning_iterator = "deny"
+iter_nth = "deny"
+iter_nth_zero = "deny"
+iter_on_empty_collections = "deny"
+iter_on_single_items = "deny"
+iter_out_of_bounds = "deny"
+iter_over_hash_type = "deny"
+iter_overeager_cloned = "deny"
+iter_skip_next = "deny"
+iter_skip_zero = "deny"
+iter_with_drain = "deny"
+iter_without_into_iter = "deny"
+iterator_step_by_zero = "deny"
+join_absolute_paths = "deny"
+just_underscores_and_digits = "deny"
+large_const_arrays = "deny"
+large_digit_groups = "deny"
+large_enum_variant = "deny"
+large_futures = "deny"
+large_include_file = "deny"
+large_stack_arrays = "deny"
+large_stack_frames = "deny"
+large_types_passed_by_value = "deny"
+len_without_is_empty = "deny"
+len_zero = "deny"
+let_and_return = "deny"
+let_underscore_future = "deny"
+let_underscore_lock = "deny"
+let_underscore_must_use = "deny"
+let_underscore_untyped = "deny"
+let_unit_value = "deny"
+let_with_type_underscore = "deny"
+lines_filter_map_ok = "deny"
+linkedlist = "deny"
+little_endian_bytes = "deny"
+lossy_float_literal = "deny"
+macro_use_imports = "deny"
+main_recursion = "deny"
+manual_assert = "deny"
+manual_async_fn = "deny"
+manual_bits = "deny"
+manual_clamp = "deny"
+manual_filter = "deny"
+manual_filter_map = "deny"
+manual_find = "deny"
+manual_find_map = "deny"
+manual_flatten = "deny"
+manual_hash_one = "deny"
+manual_instant_elapsed = "deny"
+manual_is_ascii_check = "deny"
+manual_is_finite = "deny"
+manual_is_infinite = "deny"
+manual_let_else = "deny"
+manual_main_separator_str = "deny"
+manual_map = "deny"
+manual_memcpy = "deny"
+manual_next_back = "deny"
+manual_non_exhaustive = "deny"
+manual_ok_or = "deny"
+manual_range_contains = "deny"
+manual_range_patterns = "deny"
+manual_rem_euclid = "deny"
+manual_retain = "deny"
+manual_saturating_arithmetic = "deny"
+manual_slice_size_calculation = "deny"
+manual_split_once = "deny"
+manual_str_repeat = "deny"
+manual_string_new = "deny"
+manual_strip = "deny"
+manual_swap = "deny"
+manual_try_fold = "deny"
+manual_unwrap_or = "deny"
+manual_while_let_some = "deny"
+many_single_char_names = "deny"
+map_clone = "deny"
+map_collect_result_unit = "deny"
+map_entry = "deny"
+map_err_ignore = "deny"
+map_flatten = "deny"
+map_identity = "deny"
+map_unwrap_or = "deny"
+match_as_ref = "deny"
+match_bool = "deny"
+match_like_matches_macro = "deny"
+match_overlapping_arm = "deny"
+match_ref_pats = "deny"
+match_result_ok = "deny"
+match_same_arms = "deny"
+match_single_binding = "deny"
+match_str_case_mismatch = "deny"
+match_wild_err_arm = "deny"
+match_wildcard_for_single_variants = "deny"
+maybe_infinite_iter = "deny"
+mem_forget = "deny"
+mem_replace_option_with_none = "deny"
+mem_replace_with_default = "deny"
+mem_replace_with_uninit = "deny"
+min_ident_chars = "allow" #enable for llm context window optimization
+min_max = "deny"
+mismatching_type_param_order = "deny"
+misnamed_getters = "deny"
+misrefactored_assign_op = "deny"
+missing_assert_message = "deny"
+missing_asserts_for_indexing = "deny"
+missing_const_for_fn = "deny"
+missing_docs_in_private_items = "allow" #too lazy to do it on dev stage
+missing_enforced_import_renames = "deny"
+missing_errors_doc = "allow" #too lazy to do it on dev stage
+missing_fields_in_debug = "deny"
+missing_inline_in_public_items = "allow" #its not so clear where to add #[inline] and where not
+missing_panics_doc = "allow" #too lazy to do it on dev stage
+missing_safety_doc = "deny"
+missing_spin_loop = "deny"
+missing_trait_methods = "allow" #serde and other crates do not implement this feature. too much time to refactor that
+mistyped_literal_suffixes = "deny"
+mixed_case_hex_literals = "deny"
+mixed_read_write_in_expression = "deny"
+mod_module_files = "deny"
+module_inception = "deny"
+module_name_repetitions = "deny"
+modulo_arithmetic = "deny"
+modulo_one = "deny"
+multi_assignments = "deny"
+multiple_crate_versions = "allow" #dont know how to fix it
+multiple_inherent_impl = "deny"
+multiple_unsafe_ops_per_block = "deny"
+must_use_candidate = "deny"
+must_use_unit = "deny"
+mut_from_ref = "deny"
+mut_mut = "deny"
+mut_mutex_lock = "deny"
+mut_range_bound = "deny"
+mutable_key_type = "deny"
+mutex_atomic = "deny"
+mutex_integer = "deny"
+naive_bytecount = "deny"
+needless_arbitrary_self_type = "deny"
+needless_bitwise_bool = "deny"
+needless_bool = "deny"
+needless_bool_assign = "deny"
+needless_borrow = "deny"
+needless_borrowed_reference = "deny"
+needless_borrows_for_generic_args = "deny"
+needless_collect = "deny"
+needless_continue = "deny"
+needless_doctest_main = "deny"
+needless_else = "deny"
+needless_for_each = "deny"
+needless_late_init = "deny"
+needless_lifetimes = "deny"
+needless_match = "deny"
+needless_option_as_deref = "deny"
+needless_option_take = "deny"
+needless_parens_on_range_literals = "deny"
+needless_pass_by_ref_mut = "deny"
+needless_pass_by_value = "deny"
+needless_pub_self = "deny"
+needless_question_mark = "deny"
+needless_range_loop = "deny"
+needless_raw_string_hashes = "deny"
+needless_raw_strings = "deny"
+needless_return = "deny"
+needless_return_with_question_mark = "deny"
+needless_splitn = "deny"
+needless_update = "deny"
+neg_cmp_op_on_partial_ord = "deny"
+neg_multiply = "deny"
+negative_feature_names = "deny"
+never_loop = "deny"
+new_ret_no_self = "deny"
+new_without_default = "deny"
+no_effect = "deny"
+no_effect_replace = "deny"
+no_effect_underscore_binding = "deny"
+no_mangle_with_rust_abi = "deny"
+non_ascii_literal = "deny"
+non_canonical_clone_impl = "deny"
+non_canonical_partial_ord_impl = "deny"
+non_minimal_cfg = "deny"
+non_octal_unix_permissions = "deny"
+non_send_fields_in_send_ty = "deny"
+nonminimal_bool = "deny"
+nonsensical_open_options = "deny"
+nonstandard_macro_braces = "deny"
+not_unsafe_ptr_arg_deref = "deny"
+obfuscated_if_else = "deny"
+octal_escapes = "deny"
+ok_expect = "deny"
+only_used_in_recursion = "deny"
+op_ref = "deny"
+option_as_ref_deref = "deny"
+option_env_unwrap = "deny"
+option_filter_map = "deny"
+option_if_let_else = "deny"
+option_map_or_none = "deny"
+option_map_unit_fn = "deny"
+option_option = "deny"
+or_fun_call = "deny"
+or_then_unwrap = "deny"
+out_of_bounds_indexing = "deny"
+panicking_overflow_checks = "deny"
+overly_complex_bool_expr = "deny"
+panic = "allow"
+panic_in_result_fn = "deny"
+panicking_unwrap = "deny"
+partial_pub_fields = "deny"
+partialeq_ne_impl = "deny"
+partialeq_to_none = "deny"
+path_buf_push_overwrite = "deny"
+path_ends_with_ext = "deny"
+pattern_type_mismatch = "allow" #dont know how to refactor that. forces to use ref pattern or (.clone with conflict with other lints)
+permissions_set_readonly_false = "deny"
+possible_missing_comma = "deny"
+precedence = "deny"
+print_in_format_impl = "deny"
+print_literal = "deny"
+print_stderr = "allow" #need for dev
+print_stdout = "allow" #need for dev
+print_with_newline = "deny"
+println_empty_string = "deny"
+ptr_arg = "deny"
+ptr_as_ptr = "deny"
+ptr_cast_constness = "deny"
+ptr_eq = "deny"
+ptr_offset_with_cast = "deny"
+pub_use = "allow" #its limitation, not a rule. annoying but not so usefull
+pub_with_shorthand = "allow" #conflicts with pub_without_shorthand
+pub_without_shorthand = "deny"
+question_mark = "deny"
+question_mark_used = "allow" #not against it
+range_minus_one = "deny"
+range_plus_one = "deny"
+range_zip_with_len = "deny"
+rc_buffer = "deny"
+rc_clone_in_vec_init = "deny"
+rc_mutex = "deny"
+read_line_without_trim = "deny"
+read_zero_byte_vec = "deny"
+readonly_write_lock = "deny"
+recursive_format_impl = "deny"
+redundant_allocation = "deny"
+redundant_as_str = "deny"
+redundant_async_block = "deny"
+redundant_at_rest_pattern = "deny"
+redundant_clone = "deny"
+redundant_closure = "deny"
+redundant_closure_call = "deny"
+redundant_closure_for_method_calls = "deny"
+redundant_comparisons = "deny"
+redundant_else = "deny"
+redundant_feature_names = "deny"
+redundant_field_names = "deny"
+redundant_guards = "deny"
+redundant_locals = "deny"
+redundant_pattern = "deny"
+redundant_pattern_matching = "deny"
+redundant_pub_crate = "allow" #dont understand how to use correctly. conflicts with "unreachable pub"
+redundant_slicing = "deny"
+redundant_static_lifetimes = "deny"
+redundant_type_annotations = "deny"
+ref_binding_to_reference = "deny"
+ref_option_ref = "deny"
+ref_patterns = "deny"
+repeat_once = "deny"
+reserve_after_initialization = "deny"
+rest_pat_in_fully_bound_structs = "deny"
+result_large_err = "allow" #not sure how to fix it
+result_map_or_into_option = "deny"
+result_map_unit_fn = "deny"
+result_unit_err = "deny"
+return_self_not_must_use = "deny"
+reversed_empty_ranges = "deny"
+same_functions_in_if_condition = "deny"
+same_item_push = "deny"
+same_name_method = "deny"
+search_is_some = "deny"
+seek_from_current = "deny"
+seek_to_start_instead_of_rewind = "deny"
+self_assignment = "deny"
+self_named_constructors = "deny"
+self_named_module_files = "allow" #old rust style guide. conflicts with mod_module_files (which is Rust 2018+ style guide)
+semicolon_if_nothing_returned = "deny"
+semicolon_inside_block = "deny"
+semicolon_outside_block = "deny"
+separated_literal_suffix = "deny"
+serde_api_misuse = "deny"
+shadow_reuse = "deny"
+shadow_same = "deny"
+shadow_unrelated = "deny"
+short_circuit_statement = "deny"
+should_implement_trait = "deny"
+should_panic_without_expect = "deny"
+significant_drop_in_scrutinee = "deny"
+significant_drop_tightening = "deny"
+similar_names = "allow" # not so usefull. too much to refactor.
+single_call_fn = "deny" # utoipa function code gen problems with that lint
+single_char_add_str = "deny"
+single_char_lifetime_names = "deny"
+single_char_pattern = "deny"
+single_component_path_imports = "deny"
+single_element_loop = "deny"
+single_match = "deny"
+single_match_else = "deny"
+single_range_in_vec_init = "deny"
+size_of_in_element_count = "deny"
+size_of_ref = "deny"
+skip_while_next = "deny"
+slow_vector_initialization = "deny"
+stable_sort_primitive = "deny"
+std_instead_of_alloc = "allow" #not using no_std
+std_instead_of_core = "allow" #not using no_std
+str_to_string = "deny"
+string_add = "deny"
+string_add_assign = "deny"
+string_extend_chars = "deny"
+string_from_utf8_as_bytes = "deny"
+string_lit_as_bytes = "deny"
+string_lit_chars_any = "deny"
+string_slice = "deny"
+strlen_on_c_strings = "deny"
+struct_excessive_bools = "deny"
+struct_field_names = "allow" #just makes no sense. very annoying if u generating similar fields
+suboptimal_flops = "deny"
+suspicious_arithmetic_impl = "deny"
+suspicious_assignment_formatting = "deny"
+suspicious_command_arg_space = "deny"
+suspicious_doc_comments = "deny"
+suspicious_else_formatting = "deny"
+suspicious_map = "deny"
+suspicious_op_assign_impl = "deny"
+suspicious_operation_groupings = "deny"
+suspicious_splitn = "deny"
+suspicious_to_owned = "deny"
+suspicious_unary_op_formatting = "deny"
+suspicious_xor_used_as_pow = "deny"
+swap_ptr_to_ref = "deny"
+tabs_in_doc_comments = "deny"
+temporary_assignment = "deny"
+tests_outside_test_module = "deny"
+to_digit_is_some = "deny"
+to_string_in_format_args = "deny"
+todo = "deny"
+too_many_arguments = "allow" #useless
+too_many_lines = "allow" #useless
+toplevel_ref_arg = "deny"
+trailing_empty_array = "deny"
+trait_duplication_in_bounds = "deny"
+transmute_bytes_to_str = "deny"
+transmute_int_to_bool = "deny"
+transmute_int_to_non_zero = "deny"
+transmute_null_to_fn = "deny"
+transmute_ptr_to_ptr = "deny"
+transmute_ptr_to_ref = "deny"
+transmute_undefined_repr = "deny"
+transmutes_expressible_as_ptr_casts = "deny"
+transmuting_null = "deny"
+trim_split_whitespace = "deny"
+trivial_regex = "deny"
+trivially_copy_pass_by_ref = "deny"
+try_err = "deny"
+tuple_array_conversions = "deny"
+type_complexity = "allow" #annoying for code generation
+type_id_on_box = "deny"
+type_repetition_in_bounds = "deny"
+undocumented_unsafe_blocks = "deny"
+unicode_not_nfc = "deny"
+unimplemented = "deny"
+uninit_assumed_init = "deny"
+uninit_vec = "deny"
+uninlined_format_args = "deny"
+unit_arg = "deny"
+unit_cmp = "deny"
+unit_hash = "deny"
+unit_return_expecting_ord = "deny"
+unnecessary_box_returns = "deny"
+unnecessary_cast = "deny"
+unnecessary_fallible_conversions = "deny"
+unnecessary_filter_map = "deny"
+unnecessary_find_map = "deny"
+unnecessary_fold = "deny"
+unnecessary_join = "deny"
+unnecessary_lazy_evaluations = "deny"
+unnecessary_literal_unwrap = "deny"
+unnecessary_map_on_constructor = "deny"
+unnecessary_mut_passed = "deny"
+unnecessary_operation = "deny"
+unnecessary_owned_empty_strings = "deny"
+unnecessary_safety_comment = "deny"
+unnecessary_safety_doc = "deny"
+unnecessary_self_imports = "deny"
+unnecessary_sort_by = "deny"
+unnecessary_struct_initialization = "deny"
+unnecessary_to_owned = "deny"
+unnecessary_unwrap = "deny"
+unnecessary_wraps = "deny"
+unneeded_field_pattern = "deny"
+unneeded_wildcard_pattern = "deny"
+unnested_or_patterns = "deny"
+unreachable = "deny"
+unreadable_literal = "deny"
+unsafe_derive_deserialize = "deny"
+unsafe_removed_from_name = "deny"
+unseparated_literal_suffix = "allow"#separated_literal_suffix deny, unseparated_literal_suffix allow
+unsound_collection_transmute = "deny"
+unused_async = "deny"
+unused_enumerate_index = "deny"
+unused_format_specs = "deny"
+unused_io_amount = "deny"
+unused_peekable = "deny"
+unused_rounding = "deny"
+unused_self = "deny"
+unused_unit = "deny"
+unusual_byte_groupings = "deny"
+unwrap_in_result = "deny"
+unwrap_or_default = "deny"
+unwrap_used = "deny"
+upper_case_acronyms = "deny"
+use_debug = "allow" #too much code to refactor, maybe for size of binary and longer compile times
+use_self = "deny"
+used_underscore_binding = "deny"
+useless_asref = "deny"
+useless_attribute = "deny"
+useless_conversion = "deny"
+useless_format = "deny"
+useless_let_if_seq = "deny"
+useless_transmute = "deny"
+useless_vec = "deny"
+vec_box = "deny"
+vec_init_then_push = "deny"
+vec_resize_to_zero = "deny"
+verbose_bit_mask = "deny"
+verbose_file_reads = "deny"
+waker_clone_wake = "deny"
+while_immutable_condition = "deny"
+while_let_loop = "deny"
+while_let_on_iterator = "deny"
+wildcard_dependencies = "deny"
+wildcard_enum_match_arm = "deny"
+wildcard_imports = "deny"
+wildcard_in_or_patterns = "deny"
+write_literal = "deny"
+write_with_newline = "deny"
+writeln_empty_string = "deny"
+wrong_self_convention = "deny"
+wrong_transmute = "deny"
+zero_divided_by_zero = "deny"
+zero_prefixed_literal = "deny"
+zero_ptr = "deny"
+zero_sized_map_values = "deny"
+zst_offset = "deny"
+infinite_loop = "deny"# didnt wasted for for order declaration(a,b,c...)
+integer_division_remainder_used = "deny"
+iter_filter_is_ok = "deny"
+iter_filter_is_some = "deny"
+legacy_numeric_constants = "deny"
+lint_groups_priority = "deny"
+manual_c_str_literals = "deny"
+manual_is_variant_and = "deny"
+manual_unwrap_or_default = "deny"
+missing_transmute_annotations = "deny"
+mixed_attributes_style = "deny"
+multiple_bound_locations = "deny"
+option_as_ref_cloned = "deny"
+pub_underscore_fields = "deny"
+ref_as_ptr = "deny"
+repeat_vec_with_capacity = "deny"
+result_filter_map = "deny"
+str_split_at_newline = "deny"
+suspicious_open_options = "deny"
+test_attr_in_doctest = "deny"
+missing_const_for_thread_local = "deny"
+to_string_trait_impl = "deny"
+unconditional_recursion = "deny"
+uninhabited_references = "deny"
+unnecessary_clippy_cfg = "deny"
+unnecessary_get_then_check = "deny"
+unnecessary_result_map_or_else = "deny"
+zero_repeat_side_effects = "deny"
+doc_lazy_continuation = "deny"
+macro_metavars_in_unsafe = "deny"
+manual_pattern_char_comparison = "deny"
+needless_character_iteration = "deny"
+needless_maybe_sized = "deny"
+renamed_function_params = "deny"
+while_float = "deny"
+arbitrary_source_item_ordering = "deny"
+as_pointer_underscore = "deny"
+byte_char_slices = "deny"
+cfg_not_test = "deny"
+char_indices_as_byte_indices = "deny"
+cloned_ref_to_slice_refs = "deny"
+coerce_container_to_any = "deny"
+confusing_method_to_numeric_cast = "deny"
+doc_broken_link = "deny"
+doc_comment_double_space_linebreaks = "deny"
+doc_include_without_cfg = "deny"
+doc_link_code = "deny"
+doc_nested_refdefs = "deny"
+doc_overindented_list_items = "deny"
+doc_paragraphs_missing_punctuation = "deny"
+doc_suspicious_footnotes = "deny"
+double_ended_iterator_last = "deny"
+elidable_lifetime_names = "deny"
+empty_enums = "deny"
+field_scoped_visibility_modifiers = "deny"
+ignore_without_reason = "deny"
+infallible_try_from = "deny"
+inverted_saturating_sub = "deny"
+io_other_error = "deny"
+ip_constant = "deny"
+literal_string_with_formatting_args = "allow"#in proc macros for generating formatting content is not correct
+manual_abs_diff = "deny"
+manual_contains = "deny"
+manual_dangling_ptr = "deny"
+manual_div_ceil = "deny"
+manual_ignore_case_cmp = "deny"
+manual_inspect = "deny"
+manual_is_multiple_of = "deny"
+manual_is_power_of_two = "deny"
+manual_midpoint = "deny"
+manual_ok_err = "deny"
+manual_option_as_slice = "deny"
+manual_repeat_n = "deny"
+manual_rotate = "deny"
+manual_slice_fill = "deny"
+map_all_any_identity = "deny"
+map_with_unused_argument_over_ranges = "deny"
+mem_replace_option_with_some = "deny"
+needless_as_bytes = "deny"
+needless_ifs = "deny"
+non_std_lazy_statics = "deny"
+non_zero_suggestions = "deny"
+owned_cow = "deny"
+pathbuf_init_then_push = "deny"
+pointer_format = "deny"
+pointers_in_nomem_asm_block = "deny"
+possible_missing_else = "deny"
+precedence_bits = "deny"
+redundant_iter_cloned = "deny"
+redundant_test_prefix = "deny"
+ref_option = "deny"
+regex_creation_in_loops = "deny"
+replace_box = "deny"
+repr_packed_without_abi = "deny"
+return_and_then = "deny"
+self_only_used_in_recursion = "deny"
+set_contains_or_insert = "deny"
+single_option_map = "deny"
+sliced_string_as_bytes = "deny"
+swap_with_temporary = "deny"
+too_long_first_doc_paragraph = "deny"
+unbuffered_bytes = "deny"
+unchecked_time_subtraction = "deny"
+unnecessary_debug_formatting = "deny"
+unnecessary_first_then_check = "deny"
+unnecessary_literal_bound = "deny"
+unnecessary_map_or = "deny"
+unnecessary_min_or_max = "deny"
+unnecessary_option_map_or_else = "deny"
+unnecessary_semicolon = "deny"
+unneeded_struct_pattern = "deny"
+unused_result_ok = "deny"
+unused_trait_names = "deny"
+used_underscore_items = "deny"
+useless_concat = "deny"
+useless_nonzero_new_unchecked = "deny"
+volatile_composites = "deny"
+zombie_processes = "deny"
+decimal_bitwise_operands = "deny"
+manual_ilog2 = "deny"
+ptr_offset_by_literal = "deny"
+needless_type_cast = "deny"
+same_length_and_capacity = "deny"
+duration_suboptimal_units = "deny"
+manual_take = "deny"
+manual_checked_ops = "deny"
