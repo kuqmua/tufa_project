@@ -406,7 +406,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     }
     panic_location();
     let import_path = ImportPath::PgCrud;
-    let import_path_scope_ts = quote! {#import_path::};
+    let ipath_scope_ts = quote! {#import_path::};
     let return_err_query_part_er_write_into_buffer_ts =
         gen_return_err_query_part_er_write_into_buffer_ts(import_path);
     let di: DeriveInput = parse2(input).expect("991c614f");
@@ -483,7 +483,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     //todo must remove this and use trait type instead
     let pk_ft_table_type_ts = SelfTableTypeUcc::from_type_last_segment(&pk_field.type0);
     let gen_as_pg_type_ts = |ts: &dyn ToTokens| {
-        quote! {<#ts as pg_crud::#PgTypeUcc>}
+        quote! {<#ts as #ipath_scope_ts #PgTypeUcc>}
     };
     let gen_as_pg_type_path_ts = |ts: &dyn ToTokens| {
         let ts0 = gen_as_pg_type_ts(ts);
@@ -497,7 +497,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {#as_pg_type_ts #tokens}
     };
     let gen_as_pg_type_test_cases_path_ts = |ts: &dyn ToTokens| {
-        quote! {<#ts as pg_crud::PgTypeTestCases>::}
+        quote! {<#ts as #ipath_scope_ts PgTypeTestCases>::}
     };
     let pk_as_pg_type_test_cases_path_ts = gen_as_pg_type_test_cases_path_ts(&pk_ft);
     let gen_as_pg_type_create_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &CreateUcc);
@@ -537,7 +537,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let gen_select_pg_crud_not_empty_unique_vec_ident_select_ts =
         |should_add_borrow: &ShouldAddBorrow| {
-            quote! {#SelectSc: #should_add_borrow pg_crud::NotEmptyUniqueVec<#ident_select_ucc>}
+            quote! {#SelectSc: #should_add_borrow #ipath_scope_ts NotEmptyUniqueVec<#ident_select_ucc>}
         };
     let select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts =
         gen_select_pg_crud_not_empty_unique_vec_ident_select_ts(&ShouldAddBorrow::True);
@@ -714,7 +714,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
             let opt_char_ts = gen_opt_type_decl_ts(&Char);
             quote! {
-                fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_path_scope_ts #QueryPartErUcc> {
+                fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #ipath_scope_ts #QueryPartErUcc> {
                     let mut acc_37c883c3 = #StringTs::default();
                     for el in #SelectSc.to_vec() {
                         acc_37c883c3.push_str(&match el {
@@ -936,7 +936,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
     let gen_v_decl_ts = |ts: &dyn ToTokens| {
-        quote! {#import_path_scope_ts #VUcc<#ts>}
+        quote! {#ipath_scope_ts #VUcc<#ts>}
     };
     let gen_import_path_v_init_ts = |ts: &dyn ToTokens| gen_v_init_ts(&import_path, &ts);
     let gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts =
@@ -967,7 +967,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let pk_ft_as_pg_type_create_ts = gen_as_pg_type_create_ts(&pk_ft);
                 quote! {
                     <
-                        #pk_ft_as_pg_type_create_ts as #import_path_scope_ts #DefaultOptSomeVecOneElUcc
+                        #pk_ft_as_pg_type_create_ts as #ipath_scope_ts #DefaultOptSomeVecOneElUcc
                     >::#DefaultOptSomeVecOneElSc()
                 }
             };
@@ -1005,7 +1005,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         })
                     });
                 quote! {
-                    fn #CreateQueryPartSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, pg_crud::#QueryPartErUcc> {
+                    fn #CreateQueryPartSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #ipath_scope_ts #QueryPartErUcc> {
                         let mut acc_a097110b = String::default();
                         #pk_ts
                         #column_incrs_ts
@@ -1089,7 +1089,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let fi = &el.ident;
             let el_syn_field_ty_as_pg_type_where_ts = gen_as_pg_type_where_ts(&el.type0);
             let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_decl_ts(
-                &quote! {pg_crud::PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
+                &quote! {#ipath_scope_ts PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
             );
             quote! {
                 #fi: #opt_pg_type_where_syn_field_ty_as_pg_type_where_ts
@@ -1162,7 +1162,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &|_: &Ident, syn_type: &Type| {
                     let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
                     gen_opt_type_decl_ts(
-                        &quote! {pg_crud::PgTypeWhere<#syn_type_as_pg_type_where_ts>},
+                        &quote! {#ipath_scope_ts PgTypeWhere<#syn_type_as_pg_type_where_ts>},
                     )
                 },
             );
@@ -1223,7 +1223,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             };
                         quote! {
                             if let Some(v_da0f0616) = &#VSc.#fi {
-                                match pg_crud::PgTypeWhereFilter::query_part(
+                                match #ipath_scope_ts PgTypeWhereFilter::query_part(
                                     v_da0f0616,
                                     incr,
                                     &#fi_dq_ts,
@@ -1259,7 +1259,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let fi = &el.ident;
                             quote! {
                                 if let Some(v_b12d6fe0) = v_27176ffb.#fi {
-                                    match pg_crud::PgTypeWhereFilter::query_bind(v_b12d6fe0, #QuerySc) {
+                                    match #ipath_scope_ts PgTypeWhereFilter::query_bind(v_b12d6fe0, #QuerySc) {
                                         Ok(v_edaee3b2) => {
                                             #QuerySc = v_edaee3b2;
                                         },
@@ -1306,7 +1306,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 column!(),
             );
             quote! {
-                match pg_crud::PgTypeWhereFilter::query_part(
+                match #ipath_scope_ts PgTypeWhereFilter::query_part(
                     &#ParamsSc.#PayloadSc.#WhereManySc,
                     &mut #IncrSc,
                     &"",//useless //todo check if can be optimized
@@ -1341,7 +1341,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 column!(),
             );
             quote! {
-                match pg_crud::PgTypeWhereFilter::query_bind(#ParamsSc.#PayloadSc.#WhereManySc, #QuerySc) {
+                match #ipath_scope_ts PgTypeWhereFilter::query_bind(#ParamsSc.#PayloadSc.#WhereManySc, #QuerySc) {
                     Ok(v_03a58371) => {
                         #QuerySc = v_03a58371;
                     },
@@ -1518,7 +1518,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #pk_fi_string_dq_ts
                         ) {
                             Ok(v_dccdf117) => {
-                                #pk_fi = Some(#import_path_scope_ts #VUcc { #VSc: v_dccdf117});
+                                #pk_fi = Some(#ipath_scope_ts #VUcc { #VSc: v_dccdf117});
                             },
                             Err(#Er0) => {
                                 return Err(#Er0);
@@ -1542,7 +1542,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #fi_string_dq_ts
                             ) {
                                 Ok(v_09b0fc09) => {
-                                    #fi = Some(#import_path_scope_ts #VUcc { #VSc: v_09b0fc09});
+                                    #fi = Some(#ipath_scope_ts #VUcc { #VSc: v_09b0fc09});
                                 },
                                 Err(#Er0) => {
                                     return Err(#Er0);
@@ -1693,7 +1693,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .parse::<Ts2>()
             .expect("f9e053d1")
     };
-    let pg_crud_order_by_ts = quote! {#import_path_scope_ts #OrderByUcc};
+    let pg_crud_order_by_ts = quote! {#ipath_scope_ts #OrderByUcc};
     let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
     let ident_update_many_params_ucc = SelfUpdateManyParamsUcc::from_tokens(&ident);
     let ident_update_many_payload_ucc = SelfUpdateManyPayloadUcc::from_tokens(&ident);
@@ -1803,15 +1803,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &ident_update_ucc,
                 &{
                     let pk_field_with_default_opt_some_vec_one_el_ts = {
-                        quote! {
-                            #pk_fi: #PgCrudDefaultOptSomeVecOneElCall
-                        }
+                        quote! { #pk_fi: #PgCrudDefaultOptSomeVecOneElCall}
                     };
                     let fields_without_pk_with_default_opt_some_vec_one_el_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                             let fi = &el.ident;
-                            quote! {
-                                #fi: Some(pg_crud::V{
+                            quote! {//todo reuse V init function
+                                #fi: Some(#ipath_scope_ts V{
                                     #VSc: #PgCrudDefaultOptSomeVecOneElCall
                                 })
                             }
@@ -1866,7 +1864,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_ident_update_for_query_ts = {
             let update_query_part_pk_ts = {
                 quote! {
-                    fn #UpdateQueryPartPkSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #import_path_scope_ts #QueryPartErUcc> {
+                    fn #UpdateQueryPartPkSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #ipath_scope_ts #QueryPartErUcc> {
                         match #pk_ft_as_pg_type_ts #UpdateQueryPartSc(
                             &self.#pk_fi,
                             "",
@@ -1880,17 +1878,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }
             };
-            let update_query_part_fields_ts =
-                gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+            let update_query_part_fields_ts = gen_fields_named_without_pk_without_comma_ts(
+                &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let fi_dq_ts = dq_ts(&fi);
                     let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
                     let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                     quote! {
                         fn #update_query_part_fi_sc(
-                            #VSc: &pg_crud::V<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
+                            #VSc: &#ipath_scope_ts V<#ft_as_pg_crud_pg_type_pg_type_ts #UpdateForQueryUcc>,
                             #IncrSc: &mut u64
-                        ) -> Result<#StringTs, #import_path_scope_ts #QueryPartErUcc> {
+                        ) -> Result<#StringTs, #ipath_scope_ts #QueryPartErUcc> {
                             match #ft_as_pg_crud_pg_type_pg_type_ts #UpdateQueryPartSc(
                                 &#VSc.#VSc,
                                 #fi_dq_ts,
@@ -1903,7 +1901,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }
                     }
-                });
+                },
+            );
             let select_only_updated_ids_query_part_ts = {
                 let pk_ts = {
                     let pk_fi_dq_ts = dq_ts(&pk_fi);
@@ -1940,7 +1939,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 });
                 quote! {
-                    fn #SelectOnlyUpdatedIdsQueryPartSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, pg_crud::QueryPartEr> {
+                    fn #SelectOnlyUpdatedIdsQueryPartSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #ipath_scope_ts QueryPartEr> {
                         let mut acc_88c91f52 = String::new();
                         #pk_ts
                         #(#ts)*
@@ -2019,7 +2018,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     );
     let sqlx_query_sqlx_pg_ts = quote! {sqlx::query::<sqlx::Postgres>};
     let (pg_crud_pg_type_where_filter_query_part_ts, pg_crud_pg_type_where_filter_query_bind_ts) = {
-        let gen_ts = |ts: &dyn ToTokens| quote! {#import_path_scope_ts PgTypeWhereFilter::#ts};
+        let gen_ts = |ts: &dyn ToTokens| quote! {#ipath_scope_ts PgTypeWhereFilter::#ts};
         (gen_ts(&QueryPartSc), gen_ts(&QueryBindSc))
     };
     let vec_struct_opts_ident_ts = gen_vec_tokens_decl_ts(&ident_read_ucc);
@@ -2249,7 +2248,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ts = quote! {
             let mut #RowsSc = #BindedQuerySc.fetch(#fetch_ts.as_mut());
             let mut acc_d16ac269 = Vec::new();
-            while let Some(v_d9cc2c36) = match #import_path_scope_ts TryStreamExt::try_next(&mut #RowsSc).await {
+            while let Some(v_d9cc2c36) = match #ipath_scope_ts TryStreamExt::try_next(&mut #RowsSc).await {
                 Ok(v_19f3d6e1) => match v_19f3d6e1 {
                     Some(v_b27d7d79) => #some_ts,
                     None => None,
@@ -2574,7 +2573,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
-        quote! {std::sync::Arc<dyn #import_path_scope_ts CombinationOfAppStateLogicTraits>};
+        quote! {std::sync::Arc<dyn #ipath_scope_ts CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
                             extra_logic_ts_20466f5c: &dyn ToTokens,
                             params_logic_ts: &dyn ToTokens,
@@ -2628,7 +2627,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 //         println!("HttpBody::size_hint is None");
                 //     }
                 // }
-                let body_bytes = match #import_path_scope_ts check_body_size::check_body_size(#BodySc, *#AppStateSc.get_maximum_size_of_http_body_in_bytes()).await {
+                let body_bytes = match #ipath_scope_ts check_body_size::check_body_size(#BodySc, *#AppStateSc.get_maximum_size_of_http_body_in_bytes()).await {
                     Ok(v_cfac9140) => v_cfac9140,
                     Err(#Er0) => {
                         #check_body_size_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
@@ -2996,7 +2995,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let wraped_into_axum_res_ts = wrap_into_axum_res_ts(
             &{
                 let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-                quote! {<#ident_operation_payload_ucc as pg_crud::#DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()}
+                quote! {<#ident_operation_payload_ucc as #ipath_scope_ts #DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()}
             },
             &quote! {http::StatusCode::OK},
             &ShouldAddReturn::False,
@@ -3118,7 +3117,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let select_only_ids_query_part_ts =
                         gen_select_only_ids_query_part_ts(&operation);
-                    quote! {#import_path_scope_ts gen_create_many_query_string(
+                    quote! {#ipath_scope_ts gen_create_many_query_string(
                         #TableSc,
                         #column_names_dq_ts,
                         &{
@@ -3238,7 +3237,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let select_only_ids_query_part_ts =
                         gen_select_only_ids_query_part_ts(&operation);
                     quote! {
-                        #import_path_scope_ts gen_create_one_query_string(
+                        #ipath_scope_ts gen_create_one_query_string(
                             #TableSc,
                             #column_names_dq_ts,
                             &match #ParamsSc.#PayloadSc.#CreateQueryPartSc(&mut 0) {
@@ -3363,12 +3362,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #pub_where_many_opt_ident_where_many_ts,
                     #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
                     pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
-                    pub #PaginationSc: pg_crud::PaginationStartsWithZero,
+                    pub #PaginationSc: #ipath_scope_ts PaginationStartsWithZero,
                 }},
                 &quote! {{
                     #where_many_pg_crud_default_opt_some_vec_one_el_call_ts,
                     #select_pg_crud_default_opt_some_vec_one_el_call_ts,
-                    #OrderBySc: pg_crud::OrderBy {
+                    #OrderBySc: #ipath_scope_ts OrderBy {
                         #ColumnSc: #ident_select_ucc::#pk_fi_ucc_ts(
                             #PgCrudDefaultOptSomeVecOneElCall
                         ),
@@ -3421,8 +3420,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #order_by_column_match_ts
                             },
                             #ParamsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
-                                || pg_crud::Order::default().to_sc_str(),
-                                #import_path_scope_ts Order::to_sc_str
+                                || #ipath_scope_ts Order::default().to_sc_str(),
+                                #ipath_scope_ts Order::to_sc_str
                             )
                         },
                         &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
@@ -3449,7 +3448,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &operation,
                         ),
                     );
-                    quote! {#import_path_scope_ts gen_read_many_query_string(
+                    quote! {#ipath_scope_ts gen_read_many_query_string(
                         #TableSc,
                         &#select_query_part_params_payload_select_ts,
                         &{
@@ -3600,7 +3599,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         line!(),
                         column!(),
                     );
-                    quote! {#import_path_scope_ts gen_read_one_query_string(
+                    quote! {#ipath_scope_ts gen_read_one_query_string(
                         #TableSc,
                         &#select_query_part_params_payload_select_ts,
                         &match #pg_crud_pg_type_where_filter_query_part_ts(
@@ -3889,13 +3888,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                     if #is_fi_update_exists_sc {
                                         acc_b86a253a.push_str(&
-                                            pg_crud::gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
+                                            #ipath_scope_ts gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
                                                 #fi_dq_ts,
                                                 &{
                                                     let mut acc_8ad06c8c = #StringTs::default();
                                                     for el_defbc401 in &#UpdateForQueryVecSc {
                                                         if let Some(v_3ea04126) = &el_defbc401.#fi {
-                                                            acc_8ad06c8c.push_str(&#import_path_scope_ts #gen_when_column_id_then_v_update_many_query_part_sc(
+                                                            acc_8ad06c8c.push_str(&#ipath_scope_ts #gen_when_column_id_then_v_update_many_query_part_sc(
                                                                 Self::#PkSc(),
                                                                 &match el_defbc401.#UpdateQueryPartPkSc(&mut #IncrSc) {
                                                                     Ok(v_00890100) => v_00890100,
@@ -3965,7 +3964,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                                 acc_fd44b0aa
                             };
-                            pg_crud::gen_update_many_query_string(
+                            #ipath_scope_ts gen_update_many_query_string(
                                 #TableSc,
                                 &els,
                                 Self::#PkSc(),
@@ -4141,7 +4140,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
                             quote! {
                                 if let Some(v_2d144436) = &#UpdateForQuerySc.#fi {
-                                    acc_683e37b8.push_str(&#import_path_scope_ts #gen_column_queals_v_comma_update_one_query_part_sc(
+                                    acc_683e37b8.push_str(&#ipath_scope_ts #gen_column_queals_v_comma_update_one_query_part_sc(
                                         #fi_dq_ts,
                                         &match #ident_update_for_query_ucc::#update_query_part_fi_sc(v_2d144436, &mut #IncrSc) {
                                             Ok(v_1ec12051) => v_1ec12051,
@@ -4179,7 +4178,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     #ts_255ad2f1
                                 }
                             };
-                            #import_path_scope_ts gen_update_one_query_string(
+                            #ipath_scope_ts gen_update_one_query_string(
                                 #TableSc,
                                 &#ColumnsSc,
                                 Self::#PkSc(),
@@ -4360,7 +4359,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
                         &ReadManyOrDeleteMany::DeleteMany,
                     );
-                    quote! {#import_path_scope_ts gen_delete_many_query_string(
+                    quote! {#ipath_scope_ts gen_delete_many_query_string(
                         #TableSc,
                         &{
                             #incr_init_ts
@@ -4456,7 +4455,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
-                let query_string_ts = quote! {#import_path_scope_ts gen_delete_one_query_string(
+                let query_string_ts = quote! {#ipath_scope_ts gen_delete_one_query_string(
                     #TableSc,
                     Self::#PkSc(),
                 )};
@@ -4469,7 +4468,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         column!(),
                     );
                     quote! {
-                        match pg_crud::PgTypeWhereFilter::query_bind(
+                        match #ipath_scope_ts PgTypeWhereFilter::query_bind(
                             #ParamsSc.#PayloadSc.#pk_fi,
                             #QuerySc
                         ) {
@@ -4566,7 +4565,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .route(#slash_operation_dq_ts, axum::routing::#method_ts({
                         let table_owned = table.to_owned();
                         async move |
-                            app_state_99328dfe: axum::extract::State<std::sync::Arc<dyn pg_crud::CombinationOfAppStateLogicTraits>>,
+                            app_state_99328dfe: axum::extract::State<std::sync::Arc<dyn #ipath_scope_ts CombinationOfAppStateLogicTraits>>,
                             req: axum::extract::Request
                         | Self::#operation_sc_ts(app_state_99328dfe, req, &table_owned).await
                     }))
@@ -4605,8 +4604,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let gen_pk_where_equal_ts = |ts0: &dyn ToTokens| {
             quote! {
                 #pk_ft_as_pg_type_where_ts::Equal(
-                    pg_crud::PgTypeWhereEqual {
-                        operator: pg_crud::Operator::Or,
+                    #ipath_scope_ts PgTypeWhereEqual {
+                        operator: #ipath_scope_ts Operator::Or,
                         #VSc: #ts0,
                     },
                 )
@@ -4635,7 +4634,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let gen_some_pg_type_where_try_new_ts = |operator_ts: &dyn ToTokens, ts: &dyn ToTokens| {
             quote! {
                 Some(
-                    #import_path_scope_ts PgTypeWhere::try_new(
+                    #ipath_scope_ts PgTypeWhere::try_new(
                         #operator_ts,
                         #ts
                     ).expect("6b0491b2"),
@@ -4643,10 +4642,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let gen_some_pg_type_where_try_new_and_ts = |ts: &dyn ToTokens| {
-            gen_some_pg_type_where_try_new_ts(&quote! {#import_path_scope_ts Operator::And}, ts)
+            gen_some_pg_type_where_try_new_ts(&quote! {#ipath_scope_ts Operator::And}, ts)
         };
         let gen_pg_type_where_try_new_pk_ts = quote! {
-            #import_path_scope_ts PgTypeWhere::try_new(
+            #ipath_scope_ts PgTypeWhere::try_new(
                 operator,
                 vec
             ).expect("fd20ad6d")
@@ -4656,7 +4655,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fi = &el.ident;
                 let ft_as_pg_type_create_ts = gen_as_pg_type_create_ts(&el.type0);
                 quote! {
-                    #fi: <#ft_as_pg_type_create_ts as pg_crud::DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()
+                    #fi: <#ft_as_pg_type_create_ts as #ipath_scope_ts DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()
                 }
             });
         let fields_none_init_ts =
@@ -4672,35 +4671,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
                 quote! {
                     #ident_select_ucc::#fi_ucc(
-                        <
-                            <
-                                #ft
-                                as
-                                pg_crud::PgType
-                            >::Select
-                            as
-                            pg_crud::#DefaultOptSomeVecOneElMaxPageSizeUcc
-                        >::#DefaultOptSomeVecOneElMaxPageSizeSc()
+                        <<#ft as #ipath_scope_ts PgType>::Select as #ipath_scope_ts #DefaultOptSomeVecOneElMaxPageSizeUcc>::#DefaultOptSomeVecOneElMaxPageSizeSc()
                     )
                 }
             });
             quote! {
-                let select_default_all_with_max_page_size = pg_crud::NotEmptyUniqueVec::try_new(vec![
+                let select_default_all_with_max_page_size = #ipath_scope_ts NotEmptyUniqueVec::try_new(vec![
                     #ts
                 ]).expect("5e82ac66");
             }
         };
         let gen_pk_ft_as_pg_type_pk_method_call_ts =
             |method_ts: &dyn ToTokens, params_ts: &dyn ToTokens| {
-                quote! {
-                    <
-                        #pk_ft
-                        as
-                        pg_crud::PgTypePk
-                    >::#method_ts(
-                        #params_ts
-                    )
-                }
+                quote! {<#pk_ft as #ipath_scope_ts PgTypePk>::#method_ts(#params_ts)}
             };
         let pk_ft_read_into_table_type_el_pk_fi_clone_ts =
             gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadIntoTableTypeSc, &quote! {el_adcc8db3});
@@ -4849,9 +4832,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {#ts}
                 } else {
                     let ts1 = gen_as_pg_type_path_ts(&ft0);
-                    quote! {<
-                        #ts1 Create as pg_crud::DefaultOptSomeVecOneEl
-                    >::default_opt_some_vec_one_el()}
+                    quote! {<#ts1 Create as #ipath_scope_ts DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()}
                 };
                 quote! {#fi0: #ts0}
             })
@@ -5013,7 +4994,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_ident_where_many_pripery_k_others_none(
                                 Some(
                                     gen_pg_type_where_try_new_pk(
-                                        pg_crud::Operator::Or,
+                                        #ipath_scope_ts Operator::Or,
                                         read_only_ids_els_efeed554 #ts_ffb964de
                                     )
                                 )
@@ -5037,7 +5018,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 async fn gen_read_only_ids_els_8a1ef027(
                     url: &str,
                     table_9c259e1c: &str,
-                    select_default_all_with_max_page_size: pg_crud::NotEmptyUniqueVec<#ident_select_ucc>,
+                    select_default_all_with_max_page_size: #ipath_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
                     read_only_ids_to_two_dims_vec_read_inner_acc: Vec<#ident_create_ucc>
                 ) -> Vec<#ident_read_only_ids_ucc> {
                     let read_only_ids_els_efeed554 = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_ucc>>>(
@@ -5164,7 +5145,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_ident_where_many_pripery_k_others_none(
                                     Some(
                                         gen_pg_type_where_try_new_pk(
-                                            pg_crud::Operator::Or,
+                                            #ipath_scope_ts Operator::Or,
                                             read_only_ids_from_try_create_many #ts_ffb964de
                                         )
                                     )
@@ -5190,7 +5171,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     gen_ident_where_many_pripery_k_others_none(
                                         Some(
                                             gen_pg_type_where_try_new_pk(
-                                                pg_crud::Operator::Or,
+                                                #ipath_scope_ts Operator::Or,
                                                 {
                                                     let mut acc_87ea12c9 = Vec::new();
                                                     for el_a37bca54 in &read_only_ids_from_try_delete_many {
@@ -5361,7 +5342,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_ident_where_many_pripery_k_others_none(
                                     Some(
                                         gen_pg_type_where_try_new_pk(
-                                            pg_crud::Operator::Or,
+                                            #ipath_scope_ts Operator::Or,
                                             std::iter::repeat_with(|| #pk_where_equal_uuid_new_v_ts)
                                             .take(el_30614c66)
                                             .collect::<Vec<_>>()
@@ -5398,7 +5379,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    pg_crud::Operator::Or,
+                                                    #ipath_scope_ts Operator::Or,
                                                     read_only_ids_from_try_create_many #ts_ffb964de
                                                 )
                                             )
@@ -5423,7 +5404,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             gen_ident_where_many_pripery_k_others_none(
                                                 Some(
                                                     gen_pg_type_where_try_new_pk(
-                                                        pg_crud::Operator::Or,
+                                                        #ipath_scope_ts Operator::Or,
                                                         read_only_ids_from_try_delete_many
                                                         .iter()
                                                         .map(|el_1e9c87ce| #ts)
@@ -5530,7 +5511,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    pg_crud::Operator::Or,
+                                                    #ipath_scope_ts Operator::Or,
                                                     vec![#ts_75998fa9]
                                                 )
                                             )
@@ -5551,7 +5532,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote! {table_7e35b1ce},
                             &quote! {
                                 gen_pg_type_where_try_new_pk(
-                                    pg_crud::Operator::Or,
+                                    #ipath_scope_ts Operator::Or,
                                     vec![#ts_490b2aa3]
                                 )
                             },
@@ -5584,7 +5565,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let some_pk_where_init_ts = quote! {
                 Some(
                     gen_pg_type_where_try_new_pk(
-                        pg_crud::Operator::And,
+                        #ipath_scope_ts Operator::And,
                         vec![
                             #pk_as_pg_type_test_cases_path_ts read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_create_one.#pk_fi,
@@ -5646,8 +5627,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 }
                                                 EqualOrEqualUsingFields::EqualUsingFields => {
                                                     quote! {
-                                                        Some(#import_path_scope_ts PgTypeWhere::new(
-                                                            #import_path_scope_ts Operator::And,
+                                                        Some(#ipath_scope_ts PgTypeWhere::new(
+                                                            #ipath_scope_ts Operator::And,
                                                             #method_ts
                                                         ))
                                                     }
@@ -5710,7 +5691,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 table_read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than_name,
                 &|_: &Ident, ft: &Type| {
                     quote! {
-                        <#ft as #import_path_scope_ts PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
+                        <#ft as #ipath_scope_ts PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
                         .map_or_else(Vec::new, Into::into)
                     }
                 },
@@ -5845,8 +5826,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &gen_ts_ccbfdac5(
                                         fi,
                                         &quote! {match el_feacc53b {
-                                            #import_path_scope_ts SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
-                                            #import_path_scope_ts SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
+                                            #ipath_scope_ts SingleOrMultiple::Multiple(multiple) => multiple.into_vec().into_iter().collect(),
+                                            #ipath_scope_ts SingleOrMultiple::Single(single) => std::iter::once(single).collect(),
                                         }},
                                     ),
                                 );
@@ -5982,7 +5963,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     gen_ident_where_many_pripery_k_others_none(
                                         Some(
                                             gen_pg_type_where_try_new_pk(
-                                                pg_crud::Operator::Or,
+                                                #ipath_scope_ts Operator::Or,
                                                 vec![#ts]
                                             )
                                         )
@@ -6105,7 +6086,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    pg_crud::Operator::Or,
+                                                    #ipath_scope_ts Operator::Or,
                                                     vec![#ts]
                                                 )
                                             )
@@ -6284,7 +6265,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &quote!{
                                     #pk_fi: Some(
                                         gen_pg_type_where_try_new_pk(
-                                            pg_crud::Operator::Or,
+                                            #ipath_scope_ts Operator::Or,
                                             std::iter::repeat_with(|| #pk_where_equal_uuid_new_v_ts)
                                             .take(el_39819198)
                                             .collect()
@@ -6330,7 +6311,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    pg_crud::Operator::Or,
+                                                    #ipath_scope_ts Operator::Or,
                                                     read_only_ids_from_try_delete_many.into_iter().map(|el_adcc8db3| #ts).collect()
                                                 )
                                             )
@@ -6349,7 +6330,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{
                                 #pk_fi: Some(
                                     gen_pg_type_where_try_new_pk(
-                                        pg_crud::Operator::Or,
+                                        #ipath_scope_ts Operator::Or,
                                         read_only_ids_from_try_create_many.iter().map(|el_3bb88958| #ts_212f8aca).collect()
                                     )
                                 ),
@@ -6475,7 +6456,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let assert_ts_48ca54b1 = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
         let ts_e698d734 = gen_pk_where_equal_into_inner_ts(&quote! {
-            <#pk_ft as #import_path_scope_ts PgTypePk>::read_only_ids_into_read(
+            <#pk_ft as #ipath_scope_ts PgTypePk>::read_only_ids_into_read(
                 el_9530b728.#pk_fi
             )
         });
@@ -6490,7 +6471,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #[test]
                 fn crud() {
                     fn gen_ident_where_many_pripery_k_others_none(
-                        opt_pg_type_where: Option<#import_path_scope_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts>>,
+                        opt_pg_type_where: Option<#ipath_scope_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts>>,
                     ) -> #ident_where_many_ucc {
                         #ident_where_many_ucc::try_new(
                             opt_pg_type_where,
@@ -6499,23 +6480,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .expect("5fb2b219")
                     }
                     fn gen_pg_type_where_try_new_pk(
-                        operator: #import_path_scope_ts Operator,
+                        operator: #ipath_scope_ts Operator,
                         vec: Vec<#pk_ft_as_pg_type_where_ts>
-                    ) -> #import_path_scope_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
+                    ) -> #ipath_scope_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
                         #gen_pg_type_where_try_new_pk_ts
                     }
                     fn gen_pg_type_where_try_new_or_pks(
                         vec_read_only_ids: &[#ident_read_only_ids_ucc]
-                    ) -> #import_path_scope_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
+                    ) -> #ipath_scope_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
                         gen_pg_type_where_try_new_pk(
-                            #import_path_scope_ts Operator::Or,
+                            #ipath_scope_ts Operator::Or,
                             vec_read_only_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
                         )
                     }
                     async fn gen_try_read_many_order_by_pk_with_big_pagination(
                         endpoint_location: &str,
                         ident_where_many_6b1fab92: #ident_where_many_ucc,
-                        select: #import_path_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                        select: #ipath_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
                         table: &str
                     ) -> Result<Vec<#ident_read_ucc>, #ident_try_read_many_er_ucc> {
                         #ident::try_read_many_handle(
@@ -6526,13 +6507,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         ident_where_many_6b1fab92
                                     )),
                                     select,
-                                    order_by: #import_path_scope_ts OrderBy {
+                                    order_by: #ipath_scope_ts OrderBy {
                                         column: #ident_select_ucc::#pk_fi_ucc_ts(
                                             #pk_ft_as_pg_type_select_ts::default()
                                         ),
-                                        order: Some(#import_path_scope_ts Order::Asc)
+                                        order: Some(#ipath_scope_ts Order::Asc)
                                     },
-                                    pagination: #import_path_scope_ts PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
+                                    pagination: #ipath_scope_ts PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
                                 }
                             },
                             table
@@ -6542,7 +6523,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     async fn gen_ident_try_read_one_handle_pk(
                         url: &str,
                         pk_column: #pk_ft_as_pg_type_read_ts,
-                        select: #import_path_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                        select: #ipath_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
                         table: &str,
                     ) -> Result<#ident_read_ucc, #ident_try_read_one_er_ucc> {
                         #ident::try_read_one_handle(
@@ -6560,7 +6541,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     async fn gen_check_no_rows_returned_from_ident_try_read_one_handle_pk(
                         url: &str,
                         pk_column: #pk_ft_as_pg_type_read_ts,
-                        select: #import_path_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                        select: #ipath_scope_ts NotEmptyUniqueVec<#ident_select_ucc>,
                         table: &str,
                     ) {
                         if let Err(#ErSc) = gen_ident_try_read_one_handle_pk(
@@ -6765,7 +6746,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .expect("71c1bc30");
                         });
                         started_rx.await.expect("87003141");
-                        let #SelectPkSc = pg_crud::NotEmptyUniqueVec::try_new(vec![
+                        let #SelectPkSc = #ipath_scope_ts NotEmptyUniqueVec::try_new(vec![
                             #ident_select_ucc::#pk_fi_ucc_ts(
                                 #pk_ft_as_pg_type_select_ts::default(),
                             )
