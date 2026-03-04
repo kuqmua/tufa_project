@@ -2165,10 +2165,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             Ts2::new()
         }
     };
-    let gen_pub_handle_pk_fi_pk_inner_type_handle_ts = |pk_type_ts: &dyn ToTokens| {
+    let gen_pub_handle_pk_fi_pk_inner_type_handle_ts = |ts: &dyn ToTokens| {
         let is_pub = true;
         let pub_handle_ts = gen_pub_handle_ts(is_pub);
-        quote! {#pub_handle_ts #pk_fi: #pk_type_ts}
+        quote! {#pub_handle_ts #pk_fi: #ts}
     };
     let gen_match_pg_transaction_rollback_await_ts =
         |operation: &Operation, location: &'static Location<'_>| {
@@ -5317,7 +5317,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             );
             let gen_read_only_ids_merged_with_create_into_where_assert_eq_ts =
-                |ident_where_many_try_new_params_ts: &dyn ToTokens| {
+                |ts: &dyn ToTokens| {
                     gen_assert_eq_ts(
                         &quote! {vec![
                             #ident_read_ucc {
@@ -5330,7 +5330,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {
                             gen_try_read_many_order_by_pk_with_big_pagination(
                                 &url_cloned,
-                                #ident_where_many_ucc::try_new(#ident_where_many_try_new_params_ts).expect("83c2d430"),
+                                #ident_where_many_ucc::try_new(#ts).expect("83c2d430"),
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
                                 &table_7e35b1ce
                             ).await.expect("c3e316c0")

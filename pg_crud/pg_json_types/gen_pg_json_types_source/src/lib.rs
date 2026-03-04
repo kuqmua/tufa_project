@@ -585,7 +585,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             IsStdrtNotNullUuid::False
         };
         let import = Import::PgCrudCommon;
-        let gen_import_v_init_ts = |content_ts: &dyn ToTokens| gen_v_init_ts(&import, &content_ts);
+        let gen_import_v_init_ts = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
         let gen_ident_ts = |is_nullable_ddf79d44: &IsNullable, pattern_2c09ee59: &Pattern| {
             let is_nullable_rust = is_nullable_ddf79d44.rust();
             let (rust_part, pg_part) = match &pattern_2c09ee59 {
@@ -686,15 +686,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_read_inner_ucc = SelfReadInnerUcc::from_tokens(&ident);
         let v_ident_read_inner_ts = quote! {#VSc: #ident_read_inner_ucc};
-        let gen_pub_fn_new_v_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_new_ts(
+        let gen_pub_fn_new_v_ident_read_inner_content_ts = |ts: &dyn ToTokens| gen_pub_new_ts(
             &MustUse,
             &v_ident_read_inner_ts,
-            &content_ts
+            &ts
         );
-        let gen_pub_const_fn_new_v_ident_read_inner_content_ts = |content_ts: &dyn ToTokens| gen_pub_const_new_ts(
+        let gen_pub_const_fn_new_v_ident_read_inner_content_ts = |ts: &dyn ToTokens| gen_pub_const_new_ts(
             &MustUse,
             &v_ident_read_inner_ts,
-            &content_ts
+            &ts
         );
         let self_ident_origin_new_v_ts = quote! {Self(#ident_origin_ucc::new(#VSc))};
         let mb_const_fn = match &pattern {
@@ -828,10 +828,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 );
             let ident_origin_impl_new_self_content_ts = {
-                let gen_v_map_type_new_ts = |type_ts: &dyn ToTokens| quote! {#VSc.map(#type_ts::#NewSc)};
-                let gen_arr_dims_init_ts = |type_ts: &dyn ToTokens| match &is_nullable {
-                    IsNullable::False => quote! {#VSc.into_iter().map(#type_ts::#NewSc).collect()},
-                    IsNullable::True => gen_v_map_type_new_ts(&type_ts),
+                let gen_v_map_type_new_ts = |ts: &dyn ToTokens| quote! {#VSc.map(#ts::#NewSc)};
+                let gen_arr_dims_init_ts = |ts: &dyn ToTokens| match &is_nullable {
+                    IsNullable::False => quote! {#VSc.into_iter().map(#ts::#NewSc).collect()},
+                    IsNullable::True => gen_v_map_type_new_ts(&ts),
                 };
                 match &pattern {
                     Pattern::Stdrt => match &is_nullable {
@@ -1620,7 +1620,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &Ts2::new(),
                 &{
                     let opt_unit_ts = gen_opt_type_decl_ts(&quote! {()});
-                    let vec_ts = |v: &dyn ToTokens| gen_vec_tokens_decl_ts(&v);
+                    let vec_ts = |ts: &dyn ToTokens| gen_vec_tokens_decl_ts(&ts);
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                         match &pattern {
                             Pattern::Stdrt => {
@@ -2408,8 +2408,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             let read_only_ids_to_two_dims_vec_read_inner_ts = {
                 let (has_len_greater_than_one_ts, has_len_greater_than_one_for_for_ts) = {
-                    let gen_ts = |content_ts: &dyn ToTokens| {
-                        quote! {let has_len_greater_than_one = #content_ts;}
+                    let gen_ts = |ts: &dyn ToTokens| {
+                        quote! {let has_len_greater_than_one = #ts;}
                     };
                     (
                         gen_ts(&quote! {read_only_ids_to_two_dims_vec_read_inner.len() > 1}),
@@ -2434,7 +2434,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let (first_content_ts, second_content_ts) = match &is_nullable {
                             IsNullable::False => (first, second),
                             IsNullable::True => {
-                                let gen_ts = |content_ts: &dyn ToTokens| quote! {Some(#content_ts)};
+                                let gen_ts = |ts: &dyn ToTokens| quote! {Some(#ts)};
                                 (gen_ts(&first), gen_ts(&second))
                             }
                         };
@@ -2697,19 +2697,19 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Some(#ts)}
             };
             let read_only_ids_merged_with_create_into_table_type_ts = {
-                let content_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
+                let ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
                     quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#VSc)}
                 } else {
                     quote! {#CreateSc.into()}
                 };
-                quote! {#ident_table_type_ucc(#content_ts)}
+                quote! {#ident_table_type_ucc(#ts)}
             };
             let read_only_ids_merged_with_create_into_where_equal_ts = {
-                let gen_equal_ts = |content_ts: &dyn ToTokens| {
+                let gen_equal_ts = |ts: &dyn ToTokens| {
                     quote! {
                         where_filters::PgJsonTypeWhereEqual {
                             operator: #import::Operator::Or,
-                            #VSc: #content_ts
+                            #VSc: #ts
                         }
                     }
                 };
@@ -3158,7 +3158,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     &quote!{panic!("497359a5")},
                 ),
             };
-            let gen_dot_checked_sub_one_ts = |content_ts: &dyn ToTokens|quote!{#content_ts.checked_sub(1)};
+            let gen_dot_checked_sub_one_ts = |ts: &dyn ToTokens|quote!{#ts.checked_sub(1)};
             let gen_minus_one_is_finite_then_some_ts = |
                 f32_or_f64: F32OrF64,
                 content_ts: &dyn ToTokens
@@ -3288,15 +3288,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     };
                     (
                         {
-                            let gen_ts0 = |content_ts: &dyn ToTokens|quote!{create.0.0.#content_ts(1)};
+                            let gen_ts0 = |ts: &dyn ToTokens|quote!{create.0.0.#ts(1)};
                             gen_ts(
                                 &gen_ts0(&quote!{checked_sub}),
                                 &gen_ts0(&quote!{checked_add})
                             )
                         },
                         {
-                            let gen_ts0 = |content_ts: &dyn ToTokens|quote!{{
-                                let #VSc = create.0.0 #content_ts 1.0;
+                            let gen_ts0 = |ts: &dyn ToTokens|quote!{{
+                                let #VSc = create.0.0 #ts 1.0;
                                 #VSc.is_finite().then_some(#VSc)
                             }};
                             gen_ts(
@@ -3414,11 +3414,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             float_32_greater_than_one_less_ts,
                             float_64_greater_than_one_less_ts,
                         ) = {
-                            let gen_ts = |content_ts: &dyn ToTokens|gen_not_empty_unique_vec_try_new_match_ts(
+                            let gen_ts = |ts: &dyn ToTokens|gen_not_empty_unique_vec_try_new_match_ts(
                                 &quote!{{
                                     let mut acc_f95ec4f2 = vec![];
                                     for el_ba78af60 in create.0.0 {
-                                        let v_027d0d3a = #content_ts;
+                                        let v_027d0d3a = #ts;
                                         match v_027d0d3a {
                                             Some(v_0cd93c25) => {
                                                 acc_f95ec4f2.push(
