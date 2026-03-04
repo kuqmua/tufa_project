@@ -5189,9 +5189,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .expect("716e470e")
             }
         };
+        let gen_read_only_ids_from_try_delete_many_ts = |ts: &dyn ToTokens| {
+            quote! {
+                let read_only_ids_from_try_delete_many = #ts;
+            }
+        };
         let gen_read_only_ids_from_try_delete_many_sorted_pk_ts =
             |table_ts: &dyn ToTokens, some_ts: &dyn ToTokens| {
-                let ts = gen_vec_primary_k_sorted_read_ts(&{
+                gen_read_only_ids_from_try_delete_many_ts(&gen_vec_primary_k_sorted_read_ts(&{
                     let ts = gen_try_delete_many_handle_ts(
                         &quote! {
                             #primary_k_fi: Some(#some_ts),
@@ -5200,8 +5205,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &table_ts,
                     );
                     quote! {#ts.into_iter()}
-                });
-                quote! {let read_only_ids_from_try_delete_many = #ts;}
+                }))
             };
         let create_many_tests_ts = {
             let create_many_tests_ts = gen_fields_named_without_primary_k_without_comma_ts(
@@ -6411,18 +6415,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{"77f038b0"}
                         );
                         let ts_212f8aca = gen_primary_k_where_equal_ts(&primary_k_ft_read_only_ids_into_table_type_el_primary_k_fi_clone_ts);
-                        let ts_6f76ccd4 = gen_try_delete_many_handle_ts(
+                        let ts_6f76ccd4 = gen_read_only_ids_from_try_delete_many_ts(&gen_try_delete_many_handle_ts(
                             &quote!{
                                 #primary_k_fi: Some(
                                     gen_pg_type_where_try_new_primary_k(
-                                        pg_crud::Operator::Or,//here
+                                        pg_crud::Operator::Or,
                                         read_only_ids_from_try_create_many.iter().map(|el_3bb88958| #ts_212f8aca).collect()
                                     )
                                 ),
                                 #fields_none_init_ts
                             },
                             &quote!{table_7e35b1ce}
-                        );
+                        ));
                         quote! {
                             let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
                                 &url_cloned,
@@ -6433,7 +6437,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 },
                                 &table_7e35b1ce
                             ).await.expect("b8695890");
-                            let read_only_ids_from_try_delete_many = #ts_6f76ccd4;
+                            #ts_6f76ccd4
                             #assert_eq_ts_ea7edbc4
                             #assert_ts_d6ec39a3
                         }
