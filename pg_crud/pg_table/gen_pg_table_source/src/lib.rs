@@ -5207,6 +5207,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {#ts.into_iter()}
                 }))
             };
+        let gen_acc_push_future_ts = |ts0: &dyn ToTokens,
+                                      ts1: &dyn ToTokens,
+                                      ts2: &dyn ToTokens| {
+            quote! {
+                let #ts0 = #ts1.clone();
+                let url_cloned = url.clone();
+                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                acc_9189f86e.push(futures::FutureExt::boxed(async move {
+                    #ts2
+                }));
+            }
+        };
         let create_many_tests_ts = {
             let create_many_tests_ts = gen_fields_named_without_primary_k_without_comma_ts(
                 &|el: &SynFieldWrapper| {
@@ -5281,36 +5293,38 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_pg_type_where_try_new_or_primary_ks(&read_only_ids_from_try_create_many)
                         },
                     );
+                    let ts_f318a803 = gen_acc_push_future_ts(
+                        &quote! {table_create_many_cloned},
+                        &quote! {table_create_many},
+                        &quote! {
+                            let ident_vec_create = {
+                                let mut acc_92d248f7 = Vec::new();
+                                for el_03a4f4ee in el_fce0969c {
+                                    acc_92d248f7.push(#ident_create_ucc {
+                                        #ident_create_ts_910fa600
+                                    });
+                                }
+                                acc_92d248f7
+                            };
+                            let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
+                                &url_cloned,
+                                #ident_create_many_params_ucc {
+                                    #PayloadSc: #ident_create_many_payload_ucc(ident_vec_create.clone())
+                                },
+                                &table_create_many_cloned.clone()
+                            ).await.expect("5eecedc4");
+                            #assert_eq_ts_b47328e3
+                            #ts_08a18039
+                            #assert_eq_ts_78d9a1bd
+                            #assert_ts_56d830a6
+                        },
+                    );
                     quote! {
                         for el_fce0969c in #ft_opt_vec_create_or_vec_ts
                             .chunks(10)
                             .map(Vec::from)
                         {
-                            let table_create_many_cloned = table_create_many.clone();
-                            let url_cloned = url.clone();
-                            let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                            acc_9189f86e.push(futures::FutureExt::boxed(async move {
-                                let ident_vec_create = {
-                                    let mut acc_92d248f7 = Vec::new();
-                                    for el_03a4f4ee in el_fce0969c {
-                                        acc_92d248f7.push(#ident_create_ucc {
-                                            #ident_create_ts_910fa600
-                                        });
-                                    }
-                                    acc_92d248f7
-                                };
-                                let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
-                                    &url_cloned,
-                                    #ident_create_many_params_ucc {
-                                        #PayloadSc: #ident_create_many_payload_ucc(ident_vec_create.clone())
-                                    },
-                                    &table_create_many_cloned.clone()
-                                ).await.expect("5eecedc4");
-                                #assert_eq_ts_b47328e3
-                                #ts_08a18039
-                                #assert_eq_ts_78d9a1bd
-                                #assert_ts_56d830a6
-                            }));
+                            #ts_f318a803
                         }
                     }
                 },
@@ -5356,29 +5370,52 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {#primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts},
                         &quote! {"4f563faf"},
                     );
+                    let ts_eb57f4ce = gen_acc_push_future_ts(
+                        &quote! {table_create_one_cloned},
+                        &quote! {table_create_one},
+                        &quote! {
+                            let ident_create = #ident_create_ucc {
+                                #ident_create_ts_f75e4ef0
+                            };
+                            let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one(
+                                &url_cloned,
+                                ident_create.clone(),
+                                &table_create_one_cloned
+                            ).await;
+                            #assert_eq_ts_e2916686
+                            #assert_eq_ts_f5d5140f
+                            gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
+                                &url_cloned,
+                                #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
+                                select_default_all_with_max_page_size_cloned,
+                                &table_create_one_cloned,
+                            ).await;
+                        },
+                    );
                     quote! {
                         for el_7632d698 in #ft_opt_vec_create_or_vec_ts {
-                            let table_create_one_cloned = table_create_one.clone();
-                            let url_cloned = url.clone();
-                            let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                            acc_9189f86e.push(futures::FutureExt::boxed(async move {
-                                let ident_create = #ident_create_ucc {
-                                    #ident_create_ts_f75e4ef0
-                                };
-                                let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one(
-                                    &url_cloned,
-                                    ident_create.clone(),
-                                    &table_create_one_cloned
-                                ).await;
-                                #assert_eq_ts_e2916686
-                                #assert_eq_ts_f5d5140f
-                                gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
-                                    &url_cloned,
-                                    #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
-                                    select_default_all_with_max_page_size_cloned,
-                                    &table_create_one_cloned,
-                                ).await;
-                            }));
+                            #ts_eb57f4ce
+                            // let table_create_one_cloned = table_create_one.clone();
+                            // let url_cloned = url.clone();
+                            // let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                            // acc_9189f86e.push(futures::FutureExt::boxed(async move {
+                            //     let ident_create = #ident_create_ucc {
+                            //         #ident_create_ts_f75e4ef0
+                            //     };
+                            //     let read_only_ids_from_try_create_one = gen_read_only_ids_from_try_create_one(
+                            //         &url_cloned,
+                            //         ident_create.clone(),
+                            //         &table_create_one_cloned
+                            //     ).await;
+                            //     #assert_eq_ts_e2916686
+                            //     #assert_eq_ts_f5d5140f
+                            //     gen_check_no_rows_returned_from_ident_try_read_one_handle_primary_k(
+                            //         &url_cloned,
+                            //         #primary_k_ft_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_k_fi_ts,
+                            //         select_default_all_with_max_page_size_cloned,
+                            //         &table_create_one_cloned,
+                            //     ).await;
+                            // }));
                         }
                     }
                 },
@@ -5434,9 +5471,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote!{"06df4025"}
                     ));
                     quote! {
+                        let table_7e35b1ce = table_test_read_many_by_non_existent_primary_ks.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let table_7e35b1ce = table_test_read_many_by_non_existent_primary_ks.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #ts
                         }));
@@ -5527,10 +5564,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     });
                     quote! {
+                        let ident_create_default_cloned = ident_create_default.clone();
+                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_ks.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_ks.clone();
-                        let ident_create_default_cloned = ident_create_default.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #ts
                         }));
@@ -6236,9 +6273,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
                                 let fi0 = &el0.ident;
-                                let ft0 = &el0.type0;
                                 let ts = if fi == fi0 {
-                                    let ts0 = gen_as_pg_type_test_cases_path_ts(&ft0);
+                                    let ts0 = gen_as_pg_type_test_cases_path_ts(&el0.type0);
                                     quote! {Some(#ts0 update_to_read_only_ids(&update))}
                                 } else {
                                     quote! {None}
@@ -6262,10 +6298,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_primary_k_with_comma_ts(
                             &|el0: &SynFieldWrapper| {
                                 let fi0 = &el0.ident;
-                                let ft0 = &el0.type0;
                                 let ts = if fi == fi0 {
                                     let ts_0ec756e2 = gen_import_path_v_init_ts(&{
-                                        let ts0 = gen_as_pg_type_test_cases_path_ts(&ft);
+                                        let ts0 = gen_as_pg_type_test_cases_path_ts(&el0.type0);
                                         quote! {
                                             #ts0 previous_read_merged_with_opt_update_into_read(
                                                 #ts0 read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
@@ -6364,9 +6399,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote!{"51d14103"}
                     ));
                     quote! {
+                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_ks.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
-                        let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_ks.clone();
                         acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #ts
                         }));
@@ -6443,11 +6478,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     });
                 quote! {
-                    let url_cloned = url.clone();
-                    let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                    let ident_create_default_cloned = ident_create_default.clone();
                     //todo is table name correct?
                     let table_7e35b1ce = table_test_read_many_by_equal_to_created_primary_ks.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
+                    let url_cloned = url.clone();
+                    let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                     acc_9189f86e.push(futures::FutureExt::boxed(async move {
                         #ts
                     }));
