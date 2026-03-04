@@ -4454,7 +4454,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #routes_ts
         }
     });
-    let operator_or_ts = quote! {#import_ts Operator::Or};
+    let (operator_or_ts, operator_and_ts) = {
+        let operator_ts = quote! {#import_ts Operator::};
+        (quote! {#operator_ts Or}, quote! {#operator_ts And})
+    };
     let ident_tests_ts = {
         fn gen_assert_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens) -> Ts2 {
             quote! {assert!(#ts0,#ts1);}
@@ -4502,9 +4505,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )
             }
         };
-        let gen_some_pg_type_where_try_new_and_ts = |ts: &dyn ToTokens| {
-            gen_some_pg_type_where_try_new_ts(&quote! {#import_ts Operator::And}, ts)
-        };
+        let gen_some_pg_type_where_try_new_and_ts =
+            |ts: &dyn ToTokens| gen_some_pg_type_where_try_new_ts(&operator_and_ts, ts);
         let gen_pg_type_where_try_new_pk_ts = quote! {
             #import_ts PgTypeWhere::try_new(
                 operator,
@@ -5426,7 +5428,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let some_pk_where_init_ts = quote! {
                 Some(
                     gen_pg_type_where_try_new_pk(
-                        #import_ts Operator::And,
+                        #operator_and_ts,
                         vec![
                             #pk_as_pg_type_test_cases_path_ts read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_create_one.#pk_fi,
@@ -5489,7 +5491,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 EqualOrEqualUsingFields::EqualUsingFields => {
                                                     quote! {
                                                         Some(#import_ts PgTypeWhere::new(
-                                                            #import_ts Operator::And,
+                                                            #operator_and_ts,
                                                             #method_ts
                                                         ))
                                                     }
