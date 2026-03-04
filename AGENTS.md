@@ -63,7 +63,8 @@
 * Use thiserror for domain errors.
 * Do not use anyhow.
 * Propagate errors properly.
-* Provide meaningful error messages.
+* Provide meaningful error messages or use first 8 symbols of random uuid v4 for message.
+* if error message contains 8 random symbols - try to find this error id in workspace
 
 ## Async
 
