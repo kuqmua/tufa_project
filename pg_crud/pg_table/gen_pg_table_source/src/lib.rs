@@ -2520,7 +2520,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>};
-    let gen_operation_ts = |operation: &Operation, binded_query_ts: &dyn ToTokens| -> Ts2 {
+    let gen_operation_ts = |operation: &Operation| -> Ts2 {
         let operation_handle_sc_ts = operation.self_handle_sc_ts();
         let operation_sc_ts = operation.self_sc_ts();
         let req_parts_preparation_ts = {
@@ -3028,6 +3028,255 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )},
             }
         };
+        let binded_query_ts = {
+            match &operation {
+                Operation::CreateMany => {
+                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                    quote! {
+                        for el_7f862135 in #ParamsSc.#PayloadSc.0 {
+                            match el_7f862135.#CreateQueryBindSc(#QuerySc) {
+                                Ok(v_011a3eb4) => {
+                                    #QuerySc = v_011a3eb4;
+                                },
+                                Err(#Er0) => {
+                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                }
+                            }
+                        }
+                    }
+                }
+                Operation::CreateOne => {
+                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                    quote! {
+                        match #ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
+                            Ok(v_06f852cd) => {
+                                #QuerySc = v_06f852cd;
+                            },
+                            Err(#Er0) => {
+                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                            }
+                        }
+                    }
+                }
+                Operation::ReadMany => {
+                    let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(operation);
+                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                    quote! {
+                        #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
+                        match #pg_crud_pg_type_where_filter_query_bind_ts(
+                            #ParamsSc.#PayloadSc.pagination,
+                            #QuerySc,
+                        ) {
+                            Ok(v_9f7e487b) => {
+                                #QuerySc = v_9f7e487b;
+                            },
+                            Err(#Er0) => {
+                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                            }
+                        }
+                    }
+                }
+                Operation::ReadOne => {
+                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                    quote! {
+                        match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc) {
+                            Ok(v_80ee6983) => {
+                                #QuerySc = v_80ee6983;
+                            },
+                            Err(#Er0) => {
+                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                            }
+                        }
+                    }
+                }
+                Operation::UpdateMany => {
+                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                    let fields_named_without_pk_update_assignment_ts =
+                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                            let fi = &el.ident;
+                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                            quote! {
+                                for el_4b24f8f0 in &#UpdateForQueryVecSc {
+                                    if let Some(v_2edaa480) = &el_4b24f8f0.#fi {
+                                        if let Err(er_981062db) = #QuerySc.try_bind(el_4b24f8f0.#pk_fi) {
+                                            let #Er0 = er_981062db.to_string();
+                                            #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                        }
+                                        match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
+                                            v_2edaa480.#VSc.clone(),
+                                            #QuerySc,
+                                        ) {
+                                            Ok(v_600e67dc) => {
+                                                #QuerySc = v_600e67dc;
+                                            },
+                                            Err(#Er0) => {
+                                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    let pk_update_assignment_ts = quote! {
+                        for el_323f7dfc in &#UpdateForQueryVecSc {
+                            match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
+                                el_323f7dfc.#pk_fi,
+                                #QuerySc,
+                            ) {
+                                Ok(v_c40a4522) => {
+                                    #QuerySc = v_c40a4522;
+                                },
+                                Err(#Er0) => {
+                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                }
+                            }
+                        }
+                    };
+                    let binded_query_select_only_updated_ids_query_bind_ts =
+                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                            let fi = &el.ident;
+                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                            quote! {
+                                for el_a1660ed1 in &#UpdateForQueryVecSc {
+                                    if let Some(v_47030ac2) = &el_a1660ed1.#fi {
+                                        match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
+                                            &v_47030ac2.#VSc,
+                                            #QuerySc
+                                        ) {
+                                            Ok(v_c5b79b95) => {
+                                                #QuerySc = v_c5b79b95;
+                                            },
+                                            Err(#Er0) => {
+                                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    quote! {
+                        #fields_named_without_pk_update_assignment_ts
+                        #pk_update_assignment_ts
+                        #binded_query_select_only_updated_ids_query_bind_ts
+                    }
+                }
+                Operation::UpdateOne => {
+                    let ts_1bdf01cd = gen_operation_er_init_eprintln_res_creation_ts(
+                        operation,
+                        &try_bind_syn_vrt_wrapper,
+                        Location::caller(),
+                    );
+                    let binded_query_modifications_ts =
+                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                            let fi = &el.ident;
+                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                            quote! {
+                                if let Some(v_ed87c152) = &#UpdateForQuerySc.#fi {
+                                    match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
+                                        v_ed87c152.#VSc.clone(),//todo is there a way to remove .clone here?
+                                        #QuerySc
+                                    ) {
+                                        Ok(v_c3c1b857) => {
+                                            #QuerySc = v_c3c1b857;
+                                        }
+                                        Err(#Er0) => {
+                                            #ts_1bdf01cd
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    let binded_query_pk_modification_ts = quote! {
+                        match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
+                            #UpdateForQuerySc.#pk_fi,
+                            #QuerySc,
+                        ) {
+                            Ok(v_d64bac39) => {
+                                #QuerySc = v_d64bac39;
+                            },
+                            Err(#Er0) => {
+                                #ts_1bdf01cd
+                            }
+                        }
+                    };
+                    let binded_query_select_only_updated_ids_query_bind_ts =
+                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                            let fi = &el.ident;
+                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                            quote! {
+                                if let Some(v_b2902425) = &#UpdateForQuerySc.#fi {
+                                    match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
+                                        &v_b2902425.#VSc,
+                                        #QuerySc
+                                    ) {
+                                        Ok(v_cc6145f8) => {
+                                            #QuerySc = v_cc6145f8;
+                                        },
+                                        Err(#Er0) => {
+                                            #ts_1bdf01cd
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    quote! {
+                        #binded_query_modifications_ts
+                        #binded_query_pk_modification_ts
+                        #binded_query_select_only_updated_ids_query_bind_ts
+                    }
+                }
+                Operation::DeleteMany => {
+                    gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(
+                        operation,
+                    )
+                }
+                Operation::DeleteOne => {
+                    let ts_1319f705 = gen_operation_er_init_eprintln_res_creation_ts(
+                        operation,
+                        &try_bind_syn_vrt_wrapper,
+                        Location::caller(),
+                    );
+                    quote! {
+                        match #import_ts PgTypeWhereFilter::query_bind(
+                            #ParamsSc.#PayloadSc.#pk_fi,
+                            #QuerySc
+                        ) {
+                            Ok(v_3099ea0f) => {
+                                #QuerySc = v_3099ea0f;
+                            },
+                            Err(#Er0) => {
+                                #ts_1319f705
+                            }
+                        }
+                    }
+                }
+            }
+        };
         let acquire_pool_and_connection_ts = {
             let pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
                 gen_operation_er_init_eprintln_res_creation_ts(
@@ -3410,36 +3659,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {(vec![#PgCrudDefaultOptSomeVecOneElCall])},
             ),
         );
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            &operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        for el_7f862135 in #ParamsSc.#PayloadSc.0 {
-                            match el_7f862135.#CreateQueryBindSc(#QuerySc) {
-                                Ok(v_011a3eb4) => {
-                                    #QuerySc = v_011a3eb4;
-                                },
-                                Err(#Er0) => {
-                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                }
-                            }
-                        }
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &vec_ident_read_only_ids_ts,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &vec_ident_read_only_ids_ts,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -3478,34 +3703,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &operation,
         );
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            &operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        match #ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
-                            Ok(v_06f852cd) => {
-                                #QuerySc = v_06f852cd;
-                            },
-                            Err(#Er0) => {
-                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                            }
-                        }
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &ident_read_only_ids_ucc,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &ident_read_only_ids_ucc,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -3571,39 +3774,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             ),
         );
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(&operation);
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            &operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
-                        match #pg_crud_pg_type_where_filter_query_bind_ts(
-                            #ParamsSc.#PayloadSc.pagination,
-                            #QuerySc,
-                        ) {
-                            Ok(v_9f7e487b) => {
-                                #QuerySc = v_9f7e487b;
-                            },
-                            Err(#Er0) => {
-                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                            }
-                        }
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &vec_struct_opts_ident_ts,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &vec_struct_opts_ident_ts,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
                 let mut acc = common_http_req_syn_vrts.clone();
@@ -3667,34 +3843,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             ),
         );
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            &operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc) {
-                            Ok(v_80ee6983) => {
-                                #QuerySc = v_80ee6983;
-                            },
-                            Err(#Er0) => {
-                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                            }
-                        }
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &ident_read_ucc,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &ident_read_ucc,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
                 let mut acc = common_http_req_syn_vrts.clone();
@@ -3883,92 +4037,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
             }
         });
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            &operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    let fields_named_without_pk_update_assignment_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                for el_4b24f8f0 in &#UpdateForQueryVecSc {
-                                    if let Some(v_2edaa480) = &el_4b24f8f0.#fi {
-                                        if let Err(er_981062db) = #QuerySc.try_bind(el_4b24f8f0.#pk_fi) {
-                                            let #Er0 = er_981062db.to_string();
-                                            #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                        }
-                                        match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                            v_2edaa480.#VSc.clone(),
-                                            #QuerySc,
-                                        ) {
-                                            Ok(v_600e67dc) => {
-                                                #QuerySc = v_600e67dc;
-                                            },
-                                            Err(#Er0) => {
-                                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    let pk_update_assignment_ts = quote! {
-                        for el_323f7dfc in &#UpdateForQueryVecSc {
-                            match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
-                                el_323f7dfc.#pk_fi,
-                                #QuerySc,
-                            ) {
-                                Ok(v_c40a4522) => {
-                                    #QuerySc = v_c40a4522;
-                                },
-                                Err(#Er0) => {
-                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                }
-                            }
-                        }
-                    };
-                    let binded_query_select_only_updated_ids_query_bind_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                for el_a1660ed1 in &#UpdateForQueryVecSc {
-                                    if let Some(v_47030ac2) = &el_a1660ed1.#fi {
-                                        match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                            &v_47030ac2.#VSc,
-                                            #QuerySc
-                                        ) {
-                                            Ok(v_c5b79b95) => {
-                                                #QuerySc = v_c5b79b95;
-                                            },
-                                            Err(#Er0) => {
-                                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    quote! {
-                        #fields_named_without_pk_update_assignment_ts
-                        #pk_update_assignment_ts
-                        #binded_query_select_only_updated_ids_query_bind_ts
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &vec_ident_read_only_ids_ts,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &vec_ident_read_only_ids_ts,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4007,81 +4081,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &operation,
         );
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let ts_1bdf01cd = gen_operation_er_init_eprintln_res_creation_ts(
-                        &operation,
-                        &try_bind_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    let binded_query_modifications_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                if let Some(v_ed87c152) = &#UpdateForQuerySc.#fi {
-                                    match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                        v_ed87c152.#VSc.clone(),//todo is there a way to remove .clone here?
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_c3c1b857) => {
-                                            #QuerySc = v_c3c1b857;
-                                        }
-                                        Err(#Er0) => {
-                                            #ts_1bdf01cd
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    let binded_query_pk_modification_ts = quote! {
-                        match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
-                            #UpdateForQuerySc.#pk_fi,
-                            #QuerySc,
-                        ) {
-                            Ok(v_d64bac39) => {
-                                #QuerySc = v_d64bac39;
-                            },
-                            Err(#Er0) => {
-                                #ts_1bdf01cd
-                            }
-                        }
-                    };
-                    let binded_query_select_only_updated_ids_query_bind_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                if let Some(v_b2902425) = &#UpdateForQuerySc.#fi {
-                                    match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                        &v_b2902425.#VSc,
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_cc6145f8) => {
-                                            #QuerySc = v_cc6145f8;
-                                        },
-                                        Err(#Er0) => {
-                                            #ts_1bdf01cd
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    quote! {
-                        #binded_query_modifications_ts
-                        #binded_query_pk_modification_ts
-                        #binded_query_select_only_updated_ids_query_bind_ts
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &ident_read_only_ids_ucc,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &ident_read_only_ids_ucc,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4128,20 +4133,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
             ),
         );
-        let operation_ts = {
-            {
-                let binded_query_ts =
-                    gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(
-                        &operation,
-                    );
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &vec_pk_ft_read_ts,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &vec_pk_ft_read_ts,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4194,36 +4191,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             ),
         );
-        let operation_ts = {
-            {
-                let binded_query_ts = {
-                    let ts_1319f705 = gen_operation_er_init_eprintln_res_creation_ts(
-                        &operation,
-                        &try_bind_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {
-                        match #import_ts PgTypeWhereFilter::query_bind(
-                            #ParamsSc.#PayloadSc.#pk_fi,
-                            #QuerySc
-                        ) {
-                            Ok(v_3099ea0f) => {
-                                #QuerySc = v_3099ea0f;
-                            },
-                            Err(#Er0) => {
-                                #ts_1319f705
-                            }
-                        }
-                    }
-                };
-                impl_ident_vec_ts.push(gen_operation_ts(&operation, &binded_query_ts));
-            };
-            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                &operation,
-                &pk_ft_as_pg_type_read_ucc,
-                &type_vrts_from_req_res_syn_vrts,
-            )
-        };
+        impl_ident_vec_ts.push(gen_operation_ts(&operation));
+        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+            &operation,
+            &pk_ft_as_pg_type_read_ucc,
+            &type_vrts_from_req_res_syn_vrts,
+        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
