@@ -2143,10 +2143,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
         acc
     };
-    let common_extra_logic_ts = get_macro_attr_meta_list_ts(
-        &di.attrs,
-        &GenPgTableAttr::CommonExtraLogic.gen_path_to_attr(),
-    );
     let gen_pub_handle_ts = |is_pub: bool| {
         if is_pub {
             quote! {pub}
@@ -2525,7 +2521,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>};
     let gen_operation_ts = |operation: &Operation,
-                            extra_logic_ts_20466f5c: &dyn ToTokens,
                             query_string_ts: &dyn ToTokens,
                             binded_query_ts: &dyn ToTokens|
      -> Ts2 {
@@ -2579,12 +2574,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let extra_validators_ts = {
+            let common_extra_logic_ts = get_macro_attr_meta_list_ts(
+                &di.attrs,
+                &GenPgTableAttr::CommonExtraLogic.gen_path_to_attr(),
+            );
             let operation_extra_logic_ts = get_macro_attr_meta_list_ts(
                 &di.attrs,
                 &operation.gen_pg_table_attr_extra_logic().gen_path_to_attr(),
             );
             quote! {
-                #extra_logic_ts_20466f5c
+                #common_extra_logic_ts
                 #operation_extra_logic_ts
             }
         };
@@ -3128,7 +3127,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -3221,7 +3219,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -3395,7 +3392,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -3515,7 +3511,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -3907,7 +3902,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -4086,7 +4080,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -4164,7 +4157,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
@@ -4255,7 +4247,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
-                    &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
                 ));
