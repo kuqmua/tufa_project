@@ -2528,8 +2528,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_operation_ts = |operation: &Operation,
                             extra_logic_ts_20466f5c: &dyn ToTokens,
                             query_string_ts: &dyn ToTokens,
-                            binded_query_ts: &dyn ToTokens,
-                            pg_logic_ts: &dyn ToTokens|
+                            binded_query_ts: &dyn ToTokens|
      -> Ts2 {
         let operation_handle_sc_ts = operation.self_handle_sc_ts();
         let operation_sc_ts = operation.self_sc_ts();
@@ -2661,6 +2660,123 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &operation.desirable_status_code().to_http_status_code_ts(),
             &ShouldAddReturn::False,
         );
+        let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
+            quote! {
+                match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79) {
+                    Ok(v_33759463) => v_33759463,
+                    Err(#Er0) => #ts
+                }
+            }
+        };
+        let gen_create_update_delete_many_fetch_ts =
+            |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
+                let operation_d1960edc = Operation::from(create_or_update_or_delete_many);
+                gen_fetch_ts(
+                    &ExecutorSc,
+                    &match &create_or_update_or_delete_many {
+                        CreateOrUpdateOrDeleteMany::Create | CreateOrUpdateOrDeleteMany::Update => {
+                            let ts = gen_match_ident_read_only_ids_as_from_row_from_row_ts(&{
+                                let ts =
+                                    gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                        &operation_d1960edc,
+                                        Location::caller(),
+                                    );
+                                quote! {{#ts}}
+                            });
+                            quote! {Some(#ts)}
+                        }
+                        CreateOrUpdateOrDeleteMany::Delete => gen_sqlx_row_try_get_pk_ts(
+                            &pk_ft_as_pg_type_read_ucc,
+                            &quote! {Some(v_69ecb6a9)},
+                            &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                &operation_d1960edc,
+                                Location::caller(),
+                            ),
+                        ),
+                    },
+                    &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                        &operation_d1960edc,
+                        Location::caller(),
+                    ),
+                    &ShouldWrapIntoV::True,
+                )
+            };
+        let gen_create_update_delete_one_fetch_ts =
+            |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
+                wrap_into_v_ts(&{
+                    let operation0 = Operation::from(create_or_update_or_delete_one);
+                    let ts =
+                        gen_match_pg_transaction_rollback_await_ts(&operation0, Location::caller());
+                    gen_fetch_one_ts(
+                        &ExecutorSc,
+                        &match create_or_update_or_delete_one {
+                            CreateOrUpdateOrDeleteOne::Create => {
+                                gen_match_ident_read_only_ids_as_from_row_from_row_ts(
+                                    &quote! {{#ts}},
+                                )
+                            }
+                            CreateOrUpdateOrDeleteOne::Update => {
+                                gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
+                            }
+                            CreateOrUpdateOrDeleteOne::Delete => gen_sqlx_row_try_get_pk_ts(
+                                &quote! {#pk_ft_as_pg_type_read_ucc},
+                                &quote! {v_69ecb6a9},
+                                &ts,
+                            ),
+                        },
+                        &ts,
+                    )
+                })
+            };
+        let pg_logic_ts = match &operation {
+            Operation::CreateMany => wrap_into_pg_transaction_begin_commit_ts(
+                operation,
+                &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Create),
+            ),
+            Operation::CreateOne => wrap_into_pg_transaction_begin_commit_ts(
+                operation,
+                &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create),
+            ),
+            Operation::ReadMany => {
+                let fetch_ts = gen_fetch_ts(
+                    &ExecutorAcquireSc,
+                    &{
+                        let match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadMany);
+                        quote! {Some(#match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts)}
+                    },
+                    &gen_operation_er_init_eprintln_res_creation_ts(
+                        operation,
+                        &pg_syn_vrt_wrapper,
+                        Location::caller(),
+                    ),
+                    &ShouldWrapIntoV::False,
+                );
+                quote! {{
+                    #fetch_ts
+                }}
+            },
+            Operation::ReadOne => gen_fetch_one_ts(
+                &ExecutorAcquireSc,
+                &gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadOne),
+                &gen_operation_er_init_eprintln_res_creation_ts(operation, &pg_syn_vrt_wrapper, Location::caller()),
+            ),
+            Operation::UpdateMany => wrap_into_pg_transaction_begin_commit_ts(
+                operation,
+                &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Update),
+            ),
+            Operation::UpdateOne => wrap_into_pg_transaction_begin_commit_ts(
+                operation,
+                &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
+            ),
+            Operation::DeleteMany => wrap_into_pg_transaction_begin_commit_ts(
+                operation,
+                &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Delete),
+            ),
+            Operation::DeleteOne => wrap_into_pg_transaction_begin_commit_ts(
+                operation,
+                &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Delete),
+            ),
+        };
         quote! {
             #[allow(clippy::single_call_fn)]
             async fn #operation_handle_sc_ts(
@@ -2851,71 +2967,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
-        quote! {
-            match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79) {
-                Ok(v_33759463) => v_33759463,
-                Err(#Er0) => #ts
-            }
-        }
-    };
-    let gen_create_update_delete_many_fetch_ts =
-        |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
-            let operation_d1960edc = Operation::from(create_or_update_or_delete_many);
-            gen_fetch_ts(
-                &ExecutorSc,
-                &match &create_or_update_or_delete_many {
-                    CreateOrUpdateOrDeleteMany::Create | CreateOrUpdateOrDeleteMany::Update => {
-                        let ts = gen_match_ident_read_only_ids_as_from_row_from_row_ts(&{
-                            let ts = gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
-                                &operation_d1960edc,
-                                Location::caller(),
-                            );
-                            quote! {{#ts}}
-                        });
-                        quote! {Some(#ts)}
-                    }
-                    CreateOrUpdateOrDeleteMany::Delete => gen_sqlx_row_try_get_pk_ts(
-                        &pk_ft_as_pg_type_read_ucc,
-                        &quote! {Some(v_69ecb6a9)},
-                        &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
-                            &operation_d1960edc,
-                            Location::caller(),
-                        ),
-                    ),
-                },
-                &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
-                    &operation_d1960edc,
-                    Location::caller(),
-                ),
-                &ShouldWrapIntoV::True,
-            )
-        };
-    let gen_create_update_delete_one_fetch_ts =
-        |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
-            wrap_into_v_ts(&{
-                let operation0 = Operation::from(create_or_update_or_delete_one);
-                let ts =
-                    gen_match_pg_transaction_rollback_await_ts(&operation0, Location::caller());
-                gen_fetch_one_ts(
-                    &ExecutorSc,
-                    &match create_or_update_or_delete_one {
-                        CreateOrUpdateOrDeleteOne::Create => {
-                            gen_match_ident_read_only_ids_as_from_row_from_row_ts(&quote! {{#ts}})
-                        }
-                        CreateOrUpdateOrDeleteOne::Update => {
-                            gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
-                        }
-                        CreateOrUpdateOrDeleteOne::Delete => gen_sqlx_row_try_get_pk_ts(
-                            &quote! {#pk_ft_as_pg_type_read_ucc},
-                            &quote! {v_69ecb6a9},
-                            &ts,
-                        ),
-                    },
-                    &ts,
-                )
-            })
-        };
     let gen_operation_payload_example_ts = |operation: &Operation| {
         let operation_payload_example_sc = operation.operation_payload_example_sc();
         let wraped_into_axum_res_ts = wrap_into_axum_res_ts(
@@ -3071,16 +3122,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
-                    &operation,
-                    &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Create),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -3169,16 +3215,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
-                    &operation,
-                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -3348,30 +3389,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let pg_logic_ts = {
-                    let fetch_ts = gen_fetch_ts(
-                        &ExecutorAcquireSc,
-                        &{
-                            let match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadMany);
-                            quote! {Some(#match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts)}
-                        },
-                        &gen_operation_er_init_eprintln_res_creation_ts(
-                            &operation,
-                            &pg_syn_vrt_wrapper,
-                            Location::caller(),
-                        ),
-                        &ShouldWrapIntoV::False,
-                    );
-                    quote! {{
-                        #fetch_ts
-                    }}
-                };
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -3487,17 +3509,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let pg_logic_ts = gen_fetch_one_ts(
-                    &ExecutorAcquireSc,
-                    &gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadOne),
-                    &gen_operation_er_init_eprintln_res_creation_ts(&operation, &pg_syn_vrt_wrapper, Location::caller()),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -3885,16 +3901,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #binded_query_select_only_updated_ids_query_bind_ts
                     }
                 };
-                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
-                    &operation,
-                    &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Update),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -4069,16 +4080,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #binded_query_select_only_updated_ids_query_bind_ts
                     }
                 };
-                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
-                    &operation,
-                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -4152,16 +4158,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(
                         &operation,
                     );
-                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
-                    &operation,
-                    &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Delete),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
@@ -4248,16 +4249,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
-                    &operation,
-                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Delete),
-                );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
                     &query_string_ts,
                     &binded_query_ts,
-                    &pg_logic_ts,
                 ));
             };
             gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
