@@ -32,8 +32,8 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_sqlx_types_json_type_decl_ts, gen_v_init_ts,
-    gen_vec_tokens_decl_ts,
+    gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_sqlx_types_json_type_decl_ts, gen_v_decl_ts,
+    gen_v_init_ts, gen_vec_tokens_decl_ts,
 };
 use pg_crud_macros_common::{gen_jsonb_build_object, gen_jsonb_build_object_v};
 use proc_macro2::TokenStream as Ts2;
@@ -585,7 +585,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             IsStdrtNotNullUuid::False
         };
         let import = Import::PgCrudCommon;
-        let gen_import_v_init_ts = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
+        let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
         let gen_ident_ts = |is_nullable_ddf79d44: &IsNullable, pattern_2c09ee59: &Pattern| {
             let is_nullable_rust = is_nullable_ddf79d44.rust();
             let (rust_part, pg_part) = match &pattern_2c09ee59 {
@@ -1621,7 +1621,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &{
                     let opt_unit_ts = gen_opt_type_decl_ts(&quote! {()});
                     let vec_ts = |ts: &dyn ToTokens| gen_vec_tokens_decl_ts(&ts);
-                    let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+                    let content_ts = gen_v_decl_ts(&import, &if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                         match &pattern {
                             Pattern::Stdrt => {
                                 let ts1 = match &is_nullable {
@@ -1710,8 +1710,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     } else {
                         opt_unit_ts
-                    };
-                    quote!{(pub #import::V<#content_ts>);}
+                    });
+                    quote!{(pub #content_ts);}
                 }
             );
         let ident_read_inner_ts = {
@@ -2548,7 +2548,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let read_inner_into_read_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Read);
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
             let read_only_ids_into_opt_v_read_inner_ts = {
-                let content_ts = gen_import_v_init_ts(&if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
+                let content_ts = gen_v_init_ts0(&if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
                     quote! {#VSc.0.#VSc}
                 } else {
                     quote! {
@@ -2564,7 +2564,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Some(#content_ts)}
             };
             let update_to_read_only_ids_ts = {
-                let ts = gen_import_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+                let ts = gen_v_init_ts0(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                     let gen_iter_or_match_ts = |
                         is_nullable_1d9cc9dd: &IsNullable,
                         ident_ts_36d8e080: &dyn ToTokens,
@@ -2669,7 +2669,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {#ident_read_only_ids_ucc(#ts)}
             };
             let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
-                let ts = gen_import_v_init_ts(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+                let ts = gen_v_init_ts0(&if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                     quote! {#ident_read_ucc::new(#VSc.0.#VSc.clone())}
                 } else {
                     quote! {#PgCrudCommonDefaultOptSomeVecOneElCall}
@@ -2688,7 +2688,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote! {#ident_read_ucc(#content_ts)}
             };
             let read_only_ids_merged_with_create_into_opt_v_read_ts = {
-                let ts = gen_import_v_init_ts(&quote! {
+                let ts = gen_v_init_ts0(&quote! {
                     <Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                         #ReadOnlyIdsSc,
                         #CreateSc

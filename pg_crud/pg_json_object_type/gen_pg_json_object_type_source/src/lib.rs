@@ -257,12 +257,6 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let cfg_feature_test_utils = quote! {#[cfg(feature = "test-utils")]};
         let return_err_query_part_er_write_into_buffer_ts = gen_return_err_query_part_er_write_into_buffer_ts(import);
         let none_ts = quote!{None};
-        let gen_import_v_init_ts = |ts: &dyn ToTokens|{
-            gen_v_init_ts(
-                &import,
-                &ts
-            )
-        };
         let import_query_part_er_ts = quote! {#import::#QueryPartErUcc};
         let vec_pg_crud_default_opt_some_vec_one_el_call_ts = quote!{vec![#PgCrudDefaultOptSomeVecOneElCall]};
         let default_but_opt_is_some_ts = quote!{
@@ -3488,7 +3482,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let vrts_ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
                             let vrt_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
-                            let ts = gen_import_v_init_ts(&{
+                            let ts = gen_v_init_ts0(&{
                                 let ft_as_json_type_update_for_query_ts = gen_type_as_pg_json_type_update_for_query_ts(
                                     &el0.type0
                                 );
@@ -5380,7 +5374,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote!{#ident_read_only_ids_ucc(#ts)}
             };
             let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
-                let ts = gen_import_v_init_ts(&match &pattern {
+                let ts = gen_v_init_ts0(&match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
                             let params_ts = vec_syn_field.iter().map(|el0| {
@@ -5476,7 +5470,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let gen_struct_init_ts = |fn0: &dyn Fn(&dyn ToTokens) -> Ts2|{
                     let ts = vec_syn_field.iter().map(|el0| {
                         let fi = &el0.ident;
-                        let ts0 = gen_import_v_init_ts(&{
+                        let ts0 = gen_v_init_ts0(&{
                             let ts = fn0(&fi);
                             let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                             quote!{
@@ -5673,7 +5667,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 }
             };
             let read_only_ids_merged_with_create_into_opt_v_read_ts = {
-                let ts = gen_import_v_init_ts(&quote!{
+                let ts = gen_v_init_ts0(&quote!{
                     <#SelfUcc as #import::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                         #ReadOnlyIdsSc,
                         #CreateSc
