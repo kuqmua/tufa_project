@@ -1281,7 +1281,18 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     )
                 })
             };
-            let gen_ae2fa44d_ts = |pg_type_pattern_handle: &PgTypePatternHandle,
+            let gen_ts_e527a806 = |format_ts: &dyn ToTokens, mb_extra_params_ts: &dyn ToTokens| {
+                quote! {
+                    Ok(format!(
+                        #format_ts,
+                        #self_operator_to_query_part_ts
+                        #ColumnSc,
+                        #mb_extra_params_ts
+                        #VSc
+                    ))
+                }
+            };
+            let gen_ts_ae2fa44d = |pg_type_pattern_handle: &PgTypePatternHandle,
                                    operation: &dyn Display| {
                 let (
                     mb_dims_decl_ts,
@@ -1306,16 +1317,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
                             pg_type_kind.format_argument()
                         ));
+                        let ts = gen_ts_e527a806(&format_ts, &mb_extra_params_ts);
                         quote! {
                             #mb_dims_ies_init_ts
                             #v_match_incr_checked_add_one_init_ts
-                            Ok(format!(
-                                #format_ts,
-                                #self_operator_to_query_part_ts
-                                #ColumnSc,
-                                #mb_extra_params_ts
-                                #VSc
-                            ))
+                            #ts
                         }
                     },
                     is_query_bind_mutable_true,
@@ -1326,10 +1332,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 )
             };
             let gen_length_equal_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_ae2fa44d_ts(pg_type_pattern_handle, &"=")
+                gen_ts_ae2fa44d(pg_type_pattern_handle, &"=")
             };
             let gen_length_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
-                gen_ae2fa44d_ts(pg_type_pattern_handle, &">")
+                gen_ts_ae2fa44d(pg_type_pattern_handle, &">")
             };
             let gen_greater_than_ts = |pg_type_pattern_handle: &PgTypePatternHandle| {
                 gen_7cc8e29b_ts(pg_type_pattern_handle, &">")
@@ -1385,20 +1391,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             | PgTypePatternHandle::ArrDim3
                             | PgTypePatternHandle::ArrDim4 => &v_match_incr_checked_add_one_init_ts,
                         };
-                        let format_ts = dq_ts(&format!(
-                            "{{}}({{}}{} {{}})",
-                            pg_type_kind.format_argument()
-                        ));
+                        let ts0 = gen_ts_e527a806(
+                            &dq_ts(&format!(
+                                "{{}}({{}}{} {{}})",
+                                pg_type_kind.format_argument()
+                            )),
+                            &mb_extra_params_ts,
+                        );
                         quote! {
                             #mb_dims_ies_init_ts
                             #ts
-                            Ok(format!(
-                                #format_ts,
-                                #self_operator_to_query_part_ts
-                                #ColumnSc,
-                                #mb_extra_params_ts
-                                #VSc
-                            ))
+                            #ts0
                         }
                     },
                     is_query_bind_mutable_true,
@@ -1444,25 +1447,22 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
                     {
-                        let format_ts = dq_ts(&format!(
-                            "{{}}({{}}{} in ({{}}))",
-                            pg_type_kind.format_argument()
-                        ));
                         let v_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
                             &VSc,
                             &VSc,
                             &quote! {query_part_one_by_one},
                         );
+                        let ts = gen_ts_e527a806(
+                            &dq_ts(&format!(
+                                "{{}}({{}}{} in ({{}}))",
+                                pg_type_kind.format_argument()
+                            )),
+                            &mb_extra_params_ts,
+                        );
                         quote! {
                             #mb_dims_ies_init_ts
                             #v_init_ts
-                            Ok(format!(
-                                #format_ts,
-                                #self_operator_to_query_part_ts
-                                #ColumnSc,
-                                #mb_extra_params_ts
-                                #VSc
-                            ))
+                            #ts
                         }
                     },
                     is_query_bind_mutable_true,
@@ -1627,20 +1627,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #v_default_opt_some_vec_one_el_ts
                     },
                     {
-                        let format_ts = dq_ts(&format!(
-                            "{{}}({{}}{} @> {{}})",
-                            pg_type_kind.format_argument()
-                        ));
+                        let ts = gen_ts_e527a806(
+                            &dq_ts(&format!(
+                                "{{}}({{}}{} @> {{}})",
+                                pg_type_kind.format_argument()
+                            )),
+                            &mb_extra_params_ts,
+                        );
                         quote! {
                             #mb_dims_ies_init_ts
                             #v_match_self_v_query_part_init_ts
-                            Ok(format!(
-                                #format_ts,
-                                #self_operator_to_query_part_ts
-                                #ColumnSc,
-                                #mb_extra_params_ts
-                                #VSc
-                            ))
+                            #ts
                         }
                     },
                     is_query_bind_mutable_true,
@@ -1670,20 +1667,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #v_default_opt_some_vec_one_el_ts
                     },
                     {
-                        let format_ts = dq_ts(&format!(
-                            "{{}}(exists (select 1 from jsonb_arr_els_text({{}}{}) as e1 join jsonb_arr_els_text({{}}) as e2 on e1.v = e2.v))",
-                            pg_type_kind.format_argument()
-                        ));
+                        let ts = gen_ts_e527a806(
+                            &dq_ts(&format!(
+                                "{{}}(exists (select 1 from jsonb_arr_els_text({{}}{}) as e1 join jsonb_arr_els_text({{}}) as e2 on e1.v = e2.v))",
+                                pg_type_kind.format_argument()
+                            )),
+                            &mb_extra_params_ts,
+                        );
                         quote! {
                             #mb_dims_ies_init_ts
                             #v_match_self_v_query_part_init_ts
-                            Ok(format!(
-                                #format_ts,
-                                #self_operator_to_query_part_ts
-                                #ColumnSc,
-                                #mb_extra_params_ts
-                                #VSc
-                            ))
+                            #ts
                         }
                     },
                     is_query_bind_mutable_true,
