@@ -4,176 +4,167 @@
 
 ## Workspace Discipline
 
-* Keep dependency graph acyclic.
-* Place shared logic in a dedicated shared crate.
-* Use workspace-level dependencies.
+- Keep dependency graph acyclic.
+- Place shared logic in a dedicated shared crate.
+- Use workspace-level dependencies.
 
 ## Dependencies
 
-* Add dependencies only when propmt says so.
-* Disable default features unless required.
-* Avoid multiple crates solving the same problem.
-* Prefer std over external crates.
-* Keep versions consistent across workspace.
+- Add dependencies only when prompt explicitly requests it.
+- Disable default features unless required.
+- Avoid multiple crates solving the same problem.
+- Prefer `std` over external crates.
+- Keep versions consistent across workspace.
 
 ## Ownership & Memory
 
-* Prefer borrowing over cloning.
-* Avoid unnecessary Arc and Mutex.
-* Prefer immutable data.
-* Avoid Arc unless cross-thread sharing is required.
-* Avoid Mutex unless interior mutability is required.
-* Prefer immutable data structures.
-* Avoid leaking memory via static state.
+- Prefer borrowing over cloning.
+- Use `Arc` only for cross-thread sharing.
+- Use `Mutex` only for interior mutability.
+- Prefer immutable data.
+- Avoid memory leaks via static state.
 
 ## Error Handling
 
-* Use enums and thiserror for errors.
-* Do not use anyhow.
+- Use enums and `thiserror` for errors.
 
 ## Async
 
-* Use one async runtime across workspace.
-* Do not block async executors.
-* Use spawn_blocking for CPU-heavy tasks.
-* Avoid unnecessary async functions.
+- Use a single async runtime across workspace.
+- Use `spawn_blocking` for CPU-heavy work.
 
 ## Traits & Generics
 
-* Avoid unnecessary generics.
-* Keep trait bounds explicit.
-* Avoid trait objects unless dynamic dispatch is required.
+- Avoid unnecessary generics.
+- Keep trait bounds explicit.
+- Use trait objects only when dynamic dispatch is required.
 
 ## Modules & Files
 
-* Avoid deep module nesting.
-* Avoid god modules.
-* Keep public API minimal.
+- Avoid deep module nesting.
+- Avoid god modules.
+- Keep public API minimal.
 
 ## Testing
 
-* Add unit tests for public logic.
-* Avoid duplicating test logic.
-* Use test helpers for repeated setup.
-* Keep tests deterministic.
-* Avoid sleeping in tests.
-* Avoid network access in tests.
-* if error message in tests contains 8 random symbols - try to find this error id in workspace
+- Add unit tests for public logic.
+- Use test helpers for repeated setup.
+- Keep tests deterministic.
+- Avoid sleeping in tests.
+- Avoid network access in tests.
+- If error message contains 8 random symbols — search workspace for that id.
 
 ## Performance
 
-* Avoid unnecessary allocations.
-* Avoid cloning large structures.
-* Do not allocate inside hot loops.
+- Avoid unnecessary allocations.
+- Avoid cloning large structures.
+- Avoid allocations inside hot loops.
 
 ## Public API
 
-* Avoid breaking changes.
-* Avoid leaking internal types.
-* Use explicit return types.
-* Avoid exposing generic complexity publicly.
+- Avoid breaking changes.
+- Avoid leaking internal types.
+- Use explicit return types.
 
 ## Refactoring
 
-* Preserve behavior unless asked to change it.
-* Keep diffs minimal.
-* Do not reformat unrelated files.
-* Avoid changing public API silently.
-* generated function and closures must not be declared outside scope of usage
+- Preserve behavior unless change is requested.
+- Keep diffs minimal.
+- Avoid reformatting unrelated files.
+- Keep generated functions and closures inside usage scope.
 
 ## Documentation
 
-* Do not add documention to code.
-* Do not add comments to code.
-* Keep README accurate.
-* Ensure examples compile.
+- Keep README accurate.
+- Ensure examples compile.
 
 ---
 
 # WHAT AGENT MUST NOT DO
 
-## Architecture Violations
+The agent must **not** perform the following actions:
 
-* Do not introduce cyclic dependencies.
-* Do not merge unrelated crates.
-* Do not collapse boundaries between layers.
-* Do not create hidden coupling.
-* Do not edit Cargo.toml of unrelated crates.
-* Do not modify workspace structure.
-* Do not add new crates unless explicitly requested.
+## Architecture
 
-## Code Quality Violations
+- Introduce cyclic dependencies.
+- Merge unrelated crates.
+- Collapse architecture layers.
+- Create hidden coupling.
+- Edit Cargo.toml of unrelated crates.
+- Modify workspace structure.
+- Add new crates unless explicitly requested.
 
-* Do not silence clippy without justification.
-* Do not add TODO without instruction.
-* Do not leave commented dead code.
-* Do not commit debug prints unless if they will be removed after debug.
+## Code Quality
 
-## Safety Violations
+- Silence clippy without justification.
+- Introduce TODO markers without instruction.
+- Leave commented dead code.
+- Commit debug prints.
 
-* Do not use unwrap().
-* Do not use expect() and panic!() in library code unless if its 'proc-macro' crate or test or inside quote!{} unless if it is a part of generated test by macro.
-* expect() message must be 8 symbols of random uuid v4.
-* Do not ignore Result.
-* Do not swallow errors.
-* Do not use functions and methods and do not write unsafe code.
-* Do not assume Send/Sync without proof.
-* Never introduce UB.
+## Safety
 
-## Dependency Violations
+- Use `unwrap()`.
+- Use `expect()` or `panic!()` in library code except in `proc-macro`, tests, or generated test code inside `quote!`.
+- Ignore `Result`.
+- Swallow errors.
+- Use or write `unsafe`.
+- Assume `Send` or `Sync` without proof.
+- Introduce undefined behavior.
 
-* Do not add heavy frameworks casually.
-* Do not duplicate functionality.
-* Do not use outdated crates.
+`expect()` messages must contain **8 random symbols from UUID v4**.
 
-## Performance Violations
+## Dependencies
 
-* Do not allocate in hot paths unnecessarily.
-* Do not clone blindly.
-* Do not block async executors.
-* Do not hold locks across await.
+- Add heavy frameworks casually.
+- Duplicate existing functionality.
+- Use outdated crates.
 
-## Async Violations
+## Performance
 
-* Do not mix async runtimes.
-* Do not call blocking IO in async.
-* Do not use async when not needed.
-* Do not ignore cancellation safety.
+- Allocate unnecessarily in hot paths.
+- Clone blindly.
+- Block async executors.
+- Hold locks across `.await`.
 
-## Testing Violations
+## Async
 
-* Do not rely on external services in tests.
-* Do not use flaky time-based tests.
-* Do not skip tests silently.
+- Mix async runtimes.
+- Perform blocking IO in async code.
+- Use async where it is unnecessary.
+- Ignore cancellation safety.
 
-## API Violations
+## Testing
 
-* Do not change signatures without instruction.
-* Do not widen trait bounds unnecessarily.
-* Do not leak generics to users.
+- Depend on external services.
+- Use flaky time-based tests.
+- Skip tests silently.
 
-## Refactor Violations
+## API
 
-* Do not refactor entire workspace without request.
-* Do not reformat whole repo unnecessarily.
-* Do not rename public items casually.
-* Do not change semantics silently.
+- Change function signatures without instruction.
+- Widen trait bounds unnecessarily.
+- Leak generics to users.
 
-## Git Violations
+## Refactoring
 
-* Do not squash unrelated changes.
-* Do not commit broken code.
-* Do not include generated artifacts.
-* Do not modify Cargo.lock unless required.
+- Refactor the entire workspace without request.
+- Reformat the whole repository.
+- Rename public items casually.
+- Change semantics silently.
+
+## Git
+
+- Squash unrelated changes.
+- Commit broken code.
+- Include generated artifacts.
+- Modify `Cargo.lock` unless required.
 
 ---
 
 # Run before completion
 
+```bash
 cargo fmt
 cargo clippy --all-targets --all-features -- -D warnings
 cargo test --features test-utils
-
-Fix all issues before finishing the task.
-
-End of file.
+```
