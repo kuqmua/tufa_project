@@ -6206,24 +6206,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 });
             }
         };
-        let assert_eq_ts_9addc33d = gen_assert_eq_ts(
-            &quote! {std::mem::size_of::<#ident>()},
-            &quote! {0},
-            &quote! {"e8eed4b3"},
-        );
-        let assert_eq_ts_7ac0df1c = gen_assert_eq_ts(
-            &quote! {read_only_ids_from_try_create_many.len()},
-            &quote! {ident_vec_create.len()},
-            &quote! {"88fb286c"},
-        );
-        let assert_ts_10482044 = gen_assert_ts(
-            &quote! {pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row()},
-            &quote! {"58b9a6a4"},
-        );
         let assert_ts_48ca54b1 = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
         let ts_e698d734 = gen_pk_where_equal_into_inner_ts(&quote! {
             #pk_ft_as_pg_type_pk_ts read_only_ids_into_read(el_9530b728.#pk_fi)
         });
+        let size_of_ts = {
+            let ts = gen_assert_eq_ts(
+                &quote! {std::mem::size_of::<#ident>()},
+                &quote! {0},
+                &quote! {"e8eed4b3"},
+            );
+            quote! {
+                #[test]
+                fn size_of() {
+                    #ts
+                }
+            }
+        };
         let gen_ident_where_many_pripery_k_others_none_fn_ts = quote! {
             fn gen_ident_where_many_pripery_k_others_none(
                 opt_pg_type_where: Option<#import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts>>,
@@ -6302,33 +6301,39 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .await
             }
         };
-        let gen_check_no_rows_returned_from_ident_try_read_one_handle_pk_fn_ts = quote! {
-            async fn gen_check_no_rows_returned_from_ident_try_read_one_handle_pk(
-                url: &str,
-                pk_column: #pk_ft_as_pg_type_read_ts,
-                select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
-                table: &str,
-            ) {
-                if let Err(#ErSc) = gen_ident_try_read_one_handle_pk(
-                    url,
-                    pk_column,
-                    select,
-                    table
-                ).await {
-                    if let #ident_try_read_one_er_ucc::#ident_read_one_er_with_serde_ucc {
-                        read_one_er_with_serde,
-                        ..
-                    } = er {
-                        if let #ident_read_one_er_with_serde_ucc::Pg { pg, .. } = read_one_er_with_serde {
-                            #assert_ts_10482044
+        let gen_check_no_rows_returned_from_ident_try_read_one_handle_pk_fn_ts = {
+            let ts = gen_assert_ts(
+                &quote! {pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row()},
+                &quote! {"58b9a6a4"},
+            );
+            quote! {
+                async fn gen_check_no_rows_returned_from_ident_try_read_one_handle_pk(
+                    url: &str,
+                    pk_column: #pk_ft_as_pg_type_read_ts,
+                    select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                    table: &str,
+                ) {
+                    if let Err(#ErSc) = gen_ident_try_read_one_handle_pk(
+                        url,
+                        pk_column,
+                        select,
+                        table
+                    ).await {
+                        if let #ident_try_read_one_er_ucc::#ident_read_one_er_with_serde_ucc {
+                            read_one_er_with_serde,
+                            ..
+                        } = er {
+                            if let #ident_read_one_er_with_serde_ucc::Pg { pg, .. } = read_one_er_with_serde {
+                                #ts
+                            } else {
+                                panic!("0ad0117b");
+                            }
                         } else {
-                            panic!("0ad0117b");
+                            panic!("c6695392")
                         }
                     } else {
-                        panic!("c6695392")
+                        panic!("67e43b7a")
                     }
-                } else {
-                    panic!("67e43b7a")
                 }
             }
         };
@@ -6388,39 +6393,43 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 "no rows returned by a query that expected to return at least one row"
             }
         };
-        let gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts = quote! {
-            fn gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                read_only_ids_from_try_create_many: Vec<#ident_read_only_ids_ucc>,
-                ident_vec_create: Vec<#ident_create_ucc>
-            ) -> Vec<#ident_read_ucc> {
-                let mut acc_1debe8fb = Vec::new();
-                #assert_eq_ts_7ac0df1c
-                for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
-                    acc_1debe8fb.push(#ident_read_ucc {
-                        #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                            &read_only_ids.#pk_fi
-                        ),
-                        #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts
-                    });
-                }
-                acc_1debe8fb.sort_by(|first, second| {
-                    if let (Some(first_handle), Some(second_handle)) = (&first.#pk_fi, &second.#pk_fi) {
-                        first_handle.#VSc.cmp(&second_handle.#VSc)
-                    } else {
-                        panic!("d760ffa3");
+        let gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts = {
+            let ts = gen_assert_eq_ts(
+                &quote! {read_only_ids_from_try_create_many.len()},
+                &quote! {ident_vec_create.len()},
+                &quote! {"88fb286c"},
+            );
+            quote! {
+                fn gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                    read_only_ids_from_try_create_many: Vec<#ident_read_only_ids_ucc>,
+                    ident_vec_create: Vec<#ident_create_ucc>
+                ) -> Vec<#ident_read_ucc> {
+                    let mut acc_1debe8fb = Vec::new();
+                    #ts
+                    for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
+                        acc_1debe8fb.push(#ident_read_ucc {
+                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                &read_only_ids.#pk_fi
+                            ),
+                            #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts
+                        });
                     }
-                });
-                acc_1debe8fb
+                    acc_1debe8fb.sort_by(|first, second| {
+                        if let (Some(first_handle), Some(second_handle)) = (&first.#pk_fi, &second.#pk_fi) {
+                            first_handle.#VSc.cmp(&second_handle.#VSc)
+                        } else {
+                            panic!("d760ffa3");
+                        }
+                    });
+                    acc_1debe8fb
+                }
             }
         };
         quote! {
             #[cfg(test)]
             mod #ident_tests_sc {
                 use super::*;
-                #[test]
-                fn size_of() {
-                    #assert_eq_ts_9addc33d
-                }
+                #size_of_ts
                 #[test]
                 fn crud() {
                     #gen_ident_where_many_pripery_k_others_none_fn_ts
