@@ -985,6 +985,15 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             ))
                         }
                     };
+                let gen_ts_eeee6e79 = |ts: &dyn ToTokens| {
+                    quote! {
+                        #ts
+                        if let #import::EqualOperator::Equal = &<T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc) {
+                            #if_let_err_query_try_bind_self_v_ts
+                        }
+                        Ok(#QuerySc)
+                    }
+                };
                 match &filter {
                     PgTypeFilter::Equal { .. } => {
                         let (
@@ -1006,13 +1015,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             IncrParamUnderscore::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
                             is_query_bind_mutable_true,
-                            quote! {
-                                #mb_dims_query_bind_ts
-                                if let #import::EqualOperator::Equal = &<T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc) {
-                                    #if_let_err_query_try_bind_self_v_ts
-                                }
-                                Ok(#QuerySc)
-                            },
+                            gen_ts_eeee6e79(&mb_dims_query_bind_ts),
                         )
                     }
                     PgTypeFilter::DimOneEqual { .. } => {
@@ -1035,15 +1038,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             IncrParamUnderscore::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
                             is_query_bind_mutable_true,
-                            quote! {
-                                #mb_dims_query_bind_ts
-                                if let #import::EqualOperator::Equal = &<T as #import::PgTypeEqualOperator>::operator(
-                                    &#SelfSc.#VSc
-                                ) {
-                                    #if_let_err_query_try_bind_self_v_ts
-                                }
-                                Ok(#QuerySc)
-                            },
+                            gen_ts_eeee6e79(&mb_dims_query_bind_ts),
                         )
                     }
                     PgTypeFilter::GreaterThan { .. } => {
