@@ -4,19 +4,9 @@
 
 ## Workspace Discipline
 
-* Run checks before completing any task.
 * Keep dependency graph acyclic.
 * Place shared logic in a dedicated shared crate.
-* Keep Cargo.toml files clean and minimal.
 * Use workspace-level dependencies.
-
-## Cargo & Tooling
-
-* Run `cargo fmt`.
-* Run `cargo clippy --all-targets --all-features`.
-* Run `cargo test --features test-utils -- --nocapture`.
-* Fix all problems before completion or end task with message saying what you cannot achieve result.
-* Ensure no feature flag breaks compilation.
 
 ## Dependencies
 
@@ -26,89 +16,55 @@
 * Prefer std over external crates.
 * Keep versions consistent across workspace.
 
-## Code Style
-
-* Use snake_case for functions and variables.
-* Use UpperCamelCase for types.
-* Use SCREAMING_SNAKE_CASE for constants.
-* Prefer early returns over deep nesting.
-
 ## Ownership & Memory
 
-* Avoid unnecessary cloning.
-* Prefer borrowing over owning when possible.
+* Prefer borrowing over cloning.
+* Avoid unnecessary Arc and Mutex.
+* Prefer immutable data.
 * Avoid Arc unless cross-thread sharing is required.
-* Avoid Rc in multithreaded contexts.
 * Avoid Mutex unless interior mutability is required.
 * Prefer immutable data structures.
 * Avoid leaking memory via static state.
 
 ## Error Handling
 
-* Never use unwrap() in production code.
-* Never use expect() in production code, unless if it a 'proc-macro' crate.
-* Return typed errors.
-* Use thiserror for domain errors.
-* use enums for errors.
+* Use enums and thiserror for errors.
 * Do not use anyhow.
-* Propagate errors properly.
-* Provide meaningful error messages or use first 8 symbols of random uuid v4 for message.
-* if error message contains 8 random symbols - try to find this error id in workspace
 
 ## Async
 
 * Use one async runtime across workspace.
-* Do not mix runtimes.
-* Avoid blocking calls in async code.
+* Do not block async executors.
 * Use spawn_blocking for CPU-heavy tasks.
 * Avoid unnecessary async functions.
-* Prefer structured concurrency.
-* Ensure Send + Sync correctness.
 
 ## Traits & Generics
 
 * Avoid unnecessary generics.
-* Prefer concrete types internally.
 * Keep trait bounds explicit.
-* Avoid overly complex trait hierarchies.
-* Avoid blanket implementations unless necessary.
 * Avoid trait objects unless dynamic dispatch is required.
 
 ## Modules & Files
 
-* Keep files under 10000 lines when possible.
 * Avoid deep module nesting.
-* Group related logic logically.
-* Avoid god-modules.
+* Avoid god modules.
 * Keep public API minimal.
-* Hide internal implementation details.
 
 ## Testing
 
 * Add unit tests for public logic.
-* Cover edge cases.
-* Cover error paths.
 * Avoid duplicating test logic.
 * Use test helpers for repeated setup.
 * Keep tests deterministic.
 * Avoid sleeping in tests.
 * Avoid network access in tests.
+* if error message in tests contains 8 random symbols - try to find this error id in workspace
 
 ## Performance
 
-* Avoid unnecessary heap allocations.
-* Prefer iterators over temporary Vec.
-* Avoid repeated allocations in loops.
+* Avoid unnecessary allocations.
 * Avoid cloning large structures.
-* Benchmark before optimizing.
-* Optimize only measurable bottlenecks.
-
-## Unsafe
-
-* Do not write unsafe code.
-* Do not use unsafe code.
-* Do not use unsafe functions and methods.
-* Never introduce UB.
+* Do not allocate inside hot loops.
 
 ## Public API
 
@@ -121,17 +77,9 @@
 
 * Preserve behavior unless asked to change it.
 * Keep diffs minimal.
-* Avoid mass renaming without reason.
 * Do not reformat unrelated files.
 * Avoid changing public API silently.
 * generated function and closures must not be declared outside scope of usage
-
-## Git Hygiene
-
-* Make one logical change per commit.
-* Write meaningful commit messages.
-* Do not mix formatting with logic changes.
-* Keep commits reviewable.
 
 ## Documentation
 
@@ -150,10 +98,12 @@
 * Do not merge unrelated crates.
 * Do not collapse boundaries between layers.
 * Do not create hidden coupling.
+* Do not edit Cargo.toml of unrelated crates.
+* Do not modify workspace structure.
+* Do not add new crates unless explicitly requested.
 
 ## Code Quality Violations
 
-* Do not introduce warnings.
 * Do not silence clippy without justification.
 * Do not add TODO without instruction.
 * Do not leave commented dead code.
@@ -161,22 +111,19 @@
 
 ## Safety Violations
 
-* Do not introduce unwrap() in library code.
-* Do not introduce expect() in library code unless if its 'proc-macro' crate or test.
-* Do not introduce panic!() in library code unless if its 'proc-macro' crate or test.
-* Do not introduce unwrap() inside quote!{} block.
-* Do not introduce expect() inside quote!{} unless if it is a part of generated test by macro.
-* Do not introduce panic!() inside quote!{} unless if it is a part of generated test by macro.
+* Do not use unwrap().
+* Do not use expect() and panic!() in library code unless if its 'proc-macro' crate or test or inside quote!{} unless if it is a part of generated test by macro.
+* expect() message must be 8 symbols of random uuid v4.
 * Do not ignore Result.
 * Do not swallow errors.
-* Do not use unsafe.
+* Do not use functions and methods and do not write unsafe code.
 * Do not assume Send/Sync without proof.
+* Never introduce UB.
 
 ## Dependency Violations
 
 * Do not add heavy frameworks casually.
 * Do not duplicate functionality.
-* Do not add unused dependencies.
 * Do not use outdated crates.
 
 ## Performance Violations
@@ -197,7 +144,6 @@
 
 * Do not rely on external services in tests.
 * Do not use flaky time-based tests.
-* Do not leave failing tests.
 * Do not skip tests silently.
 
 ## API Violations
@@ -222,19 +168,12 @@
 
 ---
 
-# Completion Checklist
+# Run before completion
 
-Before finishing:
+cargo fmt
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --features test-utils
 
-* Workspace compiles.
-* Tests pass.
-* Clippy passes with zero warnings.
-* Formatting applied.
-* No unwrap in production code.
-* No unused imports.
-* No debug prints.
-* No TODOs left unintentionally.
-* if rust code was generated make sure it's valid
-* if rust macro code for quote!{} scope was generated - make sure it's valid 
+Fix all issues before finishing the task.
 
 End of file.
