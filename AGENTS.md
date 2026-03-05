@@ -12,13 +12,12 @@
 
 - Add dependencies only when prompt explicitly requests it.
 - Disable default features unless required.
-- Avoid multiple crates solving the same problem.
 - Prefer `std` over external crates.
 - Keep versions consistent across workspace.
 
 ## Ownership & Memory
 
-- Prefer borrowing over cloning.
+- Prefer borrowing over cloning, especially for large structures.
 - Use `Arc` only for cross-thread sharing.
 - Use `Mutex` only for interior mutability.
 - Prefer immutable data.
@@ -31,7 +30,6 @@
 ## Async
 
 - Use a single async runtime across workspace.
-- Use `spawn_blocking` for CPU-heavy work.
 
 ## Traits & Generics
 
@@ -56,13 +54,10 @@
 
 ## Performance
 
-- Avoid unnecessary allocations.
-- Avoid cloning large structures.
 - Avoid allocations inside hot loops.
 
 ## Public API
 
-- Avoid breaking changes.
 - Avoid leaking internal types.
 - Use explicit return types.
 
@@ -86,12 +81,9 @@ The agent must **not** perform the following actions:
 
 ## Architecture
 
-- Introduce cyclic dependencies.
 - Merge unrelated crates.
-- Collapse architecture layers.
-- Create hidden coupling.
+- Break architecture boundaries or introduce hidden coupling.
 - Edit Cargo.toml of unrelated crates.
-- Modify workspace structure.
 - Add new crates unless explicitly requested.
 
 ## Code Quality
@@ -115,13 +107,12 @@ The agent must **not** perform the following actions:
 
 ## Dependencies
 
-- Add heavy frameworks casually.
 - Duplicate existing functionality.
 - Use outdated crates.
 
 ## Performance
 
-- Allocate unnecessarily in hot paths.
+- Allocate unnecessarily.
 - Clone blindly.
 - Block async executors.
 - Hold locks across `.await`.
@@ -129,7 +120,6 @@ The agent must **not** perform the following actions:
 ## Async
 
 - Mix async runtimes.
-- Perform blocking IO in async code.
 - Use async where it is unnecessary.
 - Ignore cancellation safety.
 
@@ -141,7 +131,7 @@ The agent must **not** perform the following actions:
 
 ## API
 
-- Change function signatures without instruction.
+- Change public API without instruction.
 - Widen trait bounds unnecessarily.
 - Leak generics to users.
 
