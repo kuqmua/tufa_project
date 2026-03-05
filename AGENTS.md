@@ -124,6 +124,7 @@
 * Avoid mass renaming without reason.
 * Do not reformat unrelated files.
 * Avoid changing public API silently.
+* generated function and closures must not be declared outside scope of usage
 
 ## Git Hygiene
 
@@ -233,5 +234,7 @@ Before finishing:
 * No unused imports.
 * No debug prints.
 * No TODOs left unintentionally.
+* if rust code was generated make sure it's valid
+* if rust macro code for quote!{} scope was generated - make sure it's valid 
 
 End of file.
