@@ -2893,22 +2893,28 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let gen_create_update_delete_one_fetch_ts =
         |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
-            let operation_c85ff6d4 = Operation::from(create_or_update_or_delete_one);
-            wrap_into_v_ts(&gen_fetch_one_ts(
-                &ExecutorSc,
-                &gen_sqlx_row_try_get_pk_ts(
-                    &quote! {#pk_ft_as_pg_type_read_ucc},
-                    &quote! {v_69ecb6a9},
-                    &gen_match_pg_transaction_rollback_await_ts(
-                        &operation_c85ff6d4,
-                        Location::caller(),
-                    ),
-                ),
-                &gen_match_pg_transaction_rollback_await_ts(
-                    &operation_c85ff6d4,
-                    Location::caller(),
-                ),
-            ))
+            wrap_into_v_ts(&{
+                let operation0 = Operation::from(create_or_update_or_delete_one);
+                let ts =
+                    gen_match_pg_transaction_rollback_await_ts(&operation0, Location::caller());
+                gen_fetch_one_ts(
+                    &ExecutorSc,
+                    &match create_or_update_or_delete_one {
+                        CreateOrUpdateOrDeleteOne::Create => {
+                            gen_match_ident_read_only_ids_as_from_row_from_row_ts(&quote! {{#ts}})
+                        }
+                        CreateOrUpdateOrDeleteOne::Update => {
+                            gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
+                        }
+                        CreateOrUpdateOrDeleteOne::Delete => gen_sqlx_row_try_get_pk_ts(
+                            &quote! {#pk_ft_as_pg_type_read_ucc},
+                            &quote! {v_69ecb6a9},
+                            &ts,
+                        ),
+                    },
+                    &ts,
+                )
+            })
         };
     let gen_operation_payload_example_ts = |operation: &Operation| {
         let operation_payload_example_sc = operation.operation_payload_example_sc();
@@ -3165,26 +3171,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
-                    //todo maybe reuse
-                    // &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create)
-                    &{
-                        let operation_34462e2a =
-                            Operation::from(&CreateOrUpdateOrDeleteOne::Create);
-                        wrap_into_v_ts(&gen_fetch_one_ts(
-                            &ExecutorSc,
-                            &gen_match_ident_read_only_ids_as_from_row_from_row_ts(&{
-                                let ts = gen_match_pg_transaction_rollback_await_ts(
-                                    &operation_34462e2a,
-                                    Location::caller(),
-                                );
-                                quote! {{#ts}}
-                            }),
-                            &gen_match_pg_transaction_rollback_await_ts(
-                                &operation_34462e2a,
-                                Location::caller(),
-                            ),
-                        ))
-                    },
+                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create),
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
@@ -4084,24 +4071,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let pg_logic_ts = wrap_into_pg_transaction_begin_commit_ts(
                     &operation,
-                    // &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update)
-                    &{
-                        let operation_6ab94855 =
-                            Operation::from(&CreateOrUpdateOrDeleteOne::Update);
-                        wrap_into_v_ts(&gen_fetch_one_ts(
-                            &ExecutorSc,
-                            &gen_match_ident_read_only_ids_as_from_row_from_row_ts(
-                                &gen_match_pg_transaction_rollback_await_ts(
-                                    &operation_6ab94855,
-                                    Location::caller(),
-                                ),
-                            ),
-                            &gen_match_pg_transaction_rollback_await_ts(
-                                &operation_6ab94855,
-                                Location::caller(),
-                            ),
-                        ))
-                    },
+                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
                 );
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
