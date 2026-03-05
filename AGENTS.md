@@ -50,7 +50,7 @@
 - Keep tests deterministic.
 - Avoid sleeping in tests.
 - Avoid network access in tests.
-- If error message contains 8 random symbols — search workspace for that id.
+- If error message contains 8 random symbols than search workspace for that id.
 
 ## Performance
 
