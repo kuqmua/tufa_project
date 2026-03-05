@@ -2525,9 +2525,31 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>};
+    let gen_params_logic_ts = |operation: &Operation| -> Ts2 {
+        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+        let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
+            gen_operation_er_init_eprintln_res_creation_ts(
+                operation,
+                &serde_json_syn_vrt_wrapper,
+                Location::caller(),
+            );
+        let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
+        //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
+        quote! {
+            let #ParamsSc = #ident_operation_params_ucc {
+                #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
+                    &#BodyBytesSc,
+                ) {
+                    Ok(v_9e6fcd2d) => v_9e6fcd2d,
+                    Err(#Er0) => {
+                        #serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                    }
+                },
+            };
+        }
+    };
     let gen_operation_ts = |operation: &Operation,
                             extra_logic_ts_20466f5c: &dyn ToTokens,
-                            params_logic_ts: &dyn ToTokens,
                             expected_updated_pks_ts: &dyn ToTokens,
                             query_string_ts: &dyn ToTokens,
                             binded_query_ts: &dyn ToTokens,
@@ -2592,6 +2614,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #operation_extra_logic_ts
             }
         };
+        let params_logic_ts0 = gen_params_logic_ts(operation);
+        let params_logic_ts = match &operation {
+            Operation::CreateMany
+            | Operation::CreateOne
+            | Operation::ReadMany
+            | Operation::ReadOne
+            | Operation::DeleteMany
+            | Operation::DeleteOne => params_logic_ts0,
+            Operation::UpdateMany => quote! {
+                #params_logic_ts0
+                let #UpdateForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
+                .map(#ident_update_for_query_ucc::#FromHandleSc)
+                .collect::<Vec<#ident_update_for_query_ucc>>();
+            },
+            Operation::UpdateOne => quote! {
+                #params_logic_ts0
+                let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
+            },
+        };
         let acquire_pool_and_connection_ts = {
             let pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
                 gen_operation_er_init_eprintln_res_creation_ts(
@@ -2653,29 +2694,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ) -> axum::response::Response {
                 Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
             }
-        }
-    };
-    let gen_params_logic_ts = |operation: &Operation| -> Ts2 {
-        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-        let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-            gen_operation_er_init_eprintln_res_creation_ts(
-                operation,
-                &serde_json_syn_vrt_wrapper,
-                Location::caller(),
-            );
-        let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
-        //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
-        quote! {
-            let #ParamsSc = #ident_operation_params_ucc {
-                #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
-                    &#BodyBytesSc,
-                ) {
-                    Ok(v_9e6fcd2d) => v_9e6fcd2d,
-                    Err(#Er0) => {
-                        #serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
-                    }
-                },
-            };
         }
     };
     let gen_try_operation_ts = |operation: &Operation,
@@ -2991,7 +3009,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let operation_ts = {
             {
-                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let if_write_is_err_ts = gen_if_write_is_err_ts(
                         &quote! {
@@ -3058,7 +3075,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3111,7 +3127,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
             {
-                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let ts_cfcf1c2a = gen_operation_er_init_eprintln_res_creation_ts(
                         &operation,
@@ -3178,7 +3193,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3258,7 +3272,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let operation_ts = {
             {
-                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let select_query_part_params_payload_select_ts =
                         gen_select_query_part_params_payload_select_ts(&operation);
@@ -3374,7 +3387,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3452,7 +3464,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let operation_ts = {
             {
-                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let select_query_part_params_payload_select_ts =
                         gen_select_query_part_params_payload_select_ts(&operation);
@@ -3503,7 +3514,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3706,15 +3716,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         });
         let operation_ts = {
             {
-                let params_logic_ts = {
-                    let params_logic_ts = gen_params_logic_ts(&operation);
-                    quote! {
-                        #params_logic_ts
-                        let #UpdateForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
-                        .map(#ident_update_for_query_ucc::#FromHandleSc)
-                        .collect::<Vec<#ident_update_for_query_ucc>>();
-                    }
-                };
                 let query_string_ts = {
                     let ts_1b64e228 = gen_operation_er_init_eprintln_res_creation_ts(
                         &operation,
@@ -3911,7 +3912,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -3964,13 +3964,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
             {
-                let params_logic_ts = {
-                    let params_logic_ts = gen_params_logic_ts(&operation);
-                    quote! {
-                        #params_logic_ts
-                        let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
-                    }
-                };
                 let query_string_ts = {
                     let extra_params_modification_ts = gen_fields_named_without_pk_without_comma_ts(
                         &|el: &SynFieldWrapper| {
@@ -4121,7 +4114,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -4182,7 +4174,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let operation_ts = {
             {
-                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
                     let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
                         &ReadManyOrDeleteMany::DeleteMany,
@@ -4207,7 +4198,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
@@ -4274,7 +4264,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let operation_ts = {
             {
-                let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = quote! {#import_ts gen_delete_one_query_string(
                     #TableSc,
                     Self::#PkSc(),
@@ -4306,7 +4295,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &params_logic_ts,
                     &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
