@@ -1493,51 +1493,49 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let mut #fi: #opt_v_ft_as_pg_type_read_ts = None;
                         }
                     });
-                //todo reuse code?
-                let assignment_vrt_pk_ts = {
-                    let pk_fi_string_dq_ts = dq_ts(&pk_fi);
-                    quote! {
-                        #ident_select_ucc::#pk_fi_ucc_ts(_) => match sqlx::Row::try_get::<
-                            #pk_ft_as_pg_type_read_ucc,
-                            #RefStr
-                        >(
-                            #VSc,
-                            #pk_fi_string_dq_ts
-                        ) {
-                            Ok(v_dccdf117) => {
-                                #pk_fi = Some(#import_ts #VUcc { #VSc: v_dccdf117});
-                            },
-                            Err(#Er0) => {
-                                return Err(#Er0);
-                            }
-                        }
-                    }
-                };
-                let assignment_vrts_without_pk_ts = fields_without_pk
-                    .iter()
-                    .map(|el| {
-                        let fi = &el.ident;
-                        let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
-                        let fi_string_dq_ts = dq_ts(&el.ident);
-                        let el_syn_field_ty_as_pg_type_read_ts = gen_as_pg_type_read_ts(&el.type0);
-                        quote! {
-                            #ident_select_ucc::#fi_ucc_ts(_) => match sqlx::Row::try_get::<
-                                #el_syn_field_ty_as_pg_type_read_ts,
-                                #RefStr
-                            >(
-                                #VSc,
-                                #fi_string_dq_ts
-                            ) {
-                                Ok(v_09b0fc09) => {
-                                    #fi = Some(#import_ts #VUcc { #VSc: v_09b0fc09});
-                                },
-                                Err(#Er0) => {
-                                    return Err(#Er0);
+                let (assignment_vrt_pk_ts, assignment_vrts_without_pk_ts) = {
+                    let gen_assignment_ts =
+                        |variant_ucc_ts: &dyn ToTokens,
+                         pg_type_read_ts: &dyn ToTokens,
+                         fi_string_dq_ts: &dyn ToTokens,
+                         fi: &dyn ToTokens| {
+                            quote! {
+                                #ident_select_ucc::#variant_ucc_ts(_) => match sqlx::Row::try_get::<
+                                    #pg_type_read_ts,
+                                    #RefStr
+                                >(
+                                    #VSc,
+                                    #fi_string_dq_ts
+                                ) {
+                                    Ok(v_470178a2) => {
+                                        #fi = Some(#import_ts #VUcc { #VSc: v_470178a2 });
+                                    },
+                                    Err(#Er0) => {
+                                        return Err(#Er0);
+                                    }
                                 }
                             }
-                        }
-                    })
-                    .collect::<Vec<Ts2>>();
+                        };
+                    (
+                        gen_assignment_ts(
+                            &pk_fi_ucc_ts,
+                            &pk_ft_as_pg_type_read_ucc,
+                            &dq_ts(&pk_fi),
+                            &pk_fi,
+                        ),
+                        fields_without_pk
+                            .iter()
+                            .map(|el| {
+                                gen_assignment_ts(
+                                    &ToTokensToUccTs::case_or_panic(&el.ident),
+                                    &gen_as_pg_type_read_ts(&el.type0),
+                                    &dq_ts(&el.ident),
+                                    &el.ident,
+                                )
+                            })
+                            .collect::<Vec<Ts2>>(),
+                    )
+                };
                 let fields_init_ts = &fields.iter().map(|el| &el.ident).collect::<Vec<&Ident>>();
                 quote! {
                     fn #try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc(
