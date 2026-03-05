@@ -15,7 +15,7 @@
 * Run `cargo fmt`.
 * Run `cargo clippy --all-targets --all-features`.
 * Run `cargo test --features test-utils -- --nocapture`.
-* Fix all problems before completion.
+* Fix all problems before completion or end task with message saying what you cannot achieve result.
 * Ensure no feature flag breaks compilation.
 
 ## Dependencies
