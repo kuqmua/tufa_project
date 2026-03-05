@@ -965,6 +965,26 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         },
                     )
                 };
+                let gen_ts_c7811da6 =
+                    |mb_dims_ies_init_ts: &dyn ToTokens, format_ts: &dyn ToTokens| {
+                        quote! {
+                            #mb_dims_ies_init_ts
+                            let operator = <T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
+                            let operator_query_str = operator.to_query_str();
+                            Ok(format!(
+                                #format_ts,
+                                #self_operator_to_query_part_ts
+                                #ColumnSc,
+                                match operator {
+                                    #import::EqualOperator::Equal => {
+                                        #v_match_incr_checked_add_one_init_ts
+                                        format!("{operator_query_str} ${v}")
+                                    },
+                                    #import::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                }
+                            ))
+                        }
+                    };
                 match &filter {
                     PgTypeFilter::Equal { .. } => {
                         let (
@@ -984,23 +1004,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
                             gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
                             IncrParamUnderscore::False,
-                            quote! {
-                                #mb_dims_ies_init_ts
-                                let operator = <T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
-                                let operator_query_str = operator.to_query_str();
-                                Ok(format!(
-                                    "{}({} {})",
-                                    #self_operator_to_query_part_ts
-                                    #ColumnSc,
-                                    match operator {
-                                        #import::EqualOperator::Equal => {
-                                            #v_match_incr_checked_add_one_init_ts
-                                            format!("{operator_query_str} ${v}")
-                                        },
-                                        #import::EqualOperator::IsNull => operator_query_str.to_owned(),
-                                    }
-                                ))
-                            },
+                            gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
                             is_query_bind_mutable_true,
                             quote! {
                                 #mb_dims_query_bind_ts
@@ -1029,23 +1033,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
                             gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
                             IncrParamUnderscore::False,
-                            quote! {
-                                #mb_dims_ies_init_ts
-                                let operator = <T as #import::PgTypeEqualOperator>::operator(&#SelfSc.#VSc);
-                                let operator_query_str = operator.to_query_str();
-                                Ok(format!(
-                                    "{}({}{dims_ies} {})",
-                                    #self_operator_to_query_part_ts
-                                    #ColumnSc,
-                                    match operator {
-                                        #import::EqualOperator::Equal => {
-                                            #v_match_incr_checked_add_one_init_ts
-                                            format!("{operator_query_str} ${v}")
-                                        }
-                                        #import::EqualOperator::IsNull => operator_query_str.to_owned(),
-                                    }
-                                ))
-                            },
+                            gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
                             is_query_bind_mutable_true,
                             quote! {
                                 #mb_dims_query_bind_ts
