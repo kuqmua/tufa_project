@@ -4895,6 +4895,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }));
             }
         };
+        let ts_611ddc2e = quote! {
+            gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                read_only_ids_from_try_create_many.clone(),
+                ident_vec_create.clone()
+            )
+        };
         let create_many_tests_ts = {
             let create_many_tests_ts = gen_fields_named_without_pk_without_comma_ts(
                 &|el: &SynFieldWrapper| {
@@ -4904,12 +4910,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_03a4f4ee});
                     let ft_opt_vec_create_or_vec_ts = gen_ft_opt_vec_create_or_vec_ts(ft);
                     let assert_eq_ts_b47328e3 = gen_assert_eq_ts(
-                        &quote! {
-                            gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                                read_only_ids_from_try_create_many.clone(),
-                                ident_vec_create.clone()
-                            )
-                        },
+                        &ts_611ddc2e,
                         &quote! {
                             gen_try_read_many_order_by_pk_with_big_pagination(
                                 &url_cloned,
@@ -5138,12 +5139,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote!{table_test_read_many_by_equal_to_created_pks},
                         &add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                             let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
-                                &quote! {
-                                    gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                                        read_only_ids_from_try_create_many.clone(),
-                                        ident_vec_create.clone()
-                                    )
-                                },
+                                &ts_611ddc2e,
                                 &quote! {
                                     gen_try_read_many_order_by_pk_with_big_pagination(
                                         &url_cloned,
