@@ -6224,6 +6224,195 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ts_e698d734 = gen_pk_where_equal_into_inner_ts(&quote! {
             #pk_ft_as_pg_type_pk_ts read_only_ids_into_read(el_9530b728.#pk_fi)
         });
+        let gen_ident_where_many_pripery_k_others_none_fn_ts = quote! {
+            fn gen_ident_where_many_pripery_k_others_none(
+                opt_pg_type_where: Option<#import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts>>,
+            ) -> #ident_where_many_ucc {
+                #ident_where_many_ucc::try_new(
+                    opt_pg_type_where,
+                    #fields_named_without_pk_with_comma_none_ts
+                )
+                .expect("5fb2b219")
+            }
+        };
+        let gen_pg_type_where_try_new_pk_fn_ts = quote! {
+            fn gen_pg_type_where_try_new_pk(
+                operator: #import_ts Operator,
+                vec: Vec<#pk_ft_as_pg_type_where_ts>
+            ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
+                #gen_pg_type_where_try_new_pk_ts
+            }
+        };
+        let gen_pg_type_where_try_new_or_pks_fn_ts = quote! {
+            fn gen_pg_type_where_try_new_or_pks(
+                vec_read_only_ids: &[#ident_read_only_ids_ucc]
+            ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
+                gen_pg_type_where_try_new_pk(
+                    #operator_or_ts,
+                    vec_read_only_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
+                )
+            }
+        };
+        let gen_try_read_many_order_by_pk_with_big_pagination_fn_ts = quote! {
+            async fn gen_try_read_many_order_by_pk_with_big_pagination(
+                endpoint_location: &str,
+                ident_where_many_6b1fab92: #ident_where_many_ucc,
+                select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                table: &str
+            ) -> Result<Vec<#ident_read_ucc>, #ident_try_read_many_er_ucc> {
+                #ident::try_read_many_handle(
+                    endpoint_location,
+                    #ident_read_many_params_ucc {
+                        payload: #ident_read_many_payload_ucc {
+                            where_many: #opt_ident_where_many_ucc(Some(
+                                ident_where_many_6b1fab92
+                            )),
+                            select,
+                            order_by: #import_ts OrderBy {
+                                column: #ident_select_ucc::#pk_fi_ucc_ts(
+                                    #pk_ft_as_pg_type_select_ts::default()
+                                ),
+                                order: Some(#import_ts Order::Asc)
+                            },
+                            pagination: #import_ts PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
+                        }
+                    },
+                    table
+                )
+                .await
+            }
+        };
+        let gen_ident_try_read_one_handle_pk_fn_ts = quote! {
+            async fn gen_ident_try_read_one_handle_pk(
+                url: &str,
+                pk_column: #pk_ft_as_pg_type_read_ts,
+                select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                table: &str,
+            ) -> Result<#ident_read_ucc, #ident_try_read_one_er_ucc> {
+                #ident::try_read_one_handle(
+                    url,
+                    #ident_read_one_params_ucc {
+                        payload: #ident_read_one_payload_ucc {
+                            pk_column,
+                            select,
+                        },
+                    },
+                    table,
+                )
+                .await
+            }
+        };
+        let gen_check_no_rows_returned_from_ident_try_read_one_handle_pk_fn_ts = quote! {
+            async fn gen_check_no_rows_returned_from_ident_try_read_one_handle_pk(
+                url: &str,
+                pk_column: #pk_ft_as_pg_type_read_ts,
+                select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                table: &str,
+            ) {
+                if let Err(#ErSc) = gen_ident_try_read_one_handle_pk(
+                    url,
+                    pk_column,
+                    select,
+                    table
+                ).await {
+                    if let #ident_try_read_one_er_ucc::#ident_read_one_er_with_serde_ucc {
+                        read_one_er_with_serde,
+                        ..
+                    } = er {
+                        if let #ident_read_one_er_with_serde_ucc::Pg { pg, .. } = read_one_er_with_serde {
+                            #assert_ts_10482044
+                        } else {
+                            panic!("0ad0117b");
+                        }
+                    } else {
+                        panic!("c6695392")
+                    }
+                } else {
+                    panic!("67e43b7a")
+                }
+            }
+        };
+        let ident_create_default_fn_ts = quote! {
+            fn ident_create_default() -> #ident_create_ucc {
+                #ident_create_ucc {
+                    #ident_create_default_fields_init_without_pk_ts
+                }
+            }
+        };
+        let gen_read_only_ids_from_try_create_one_fn_ts = quote! {
+            async fn gen_read_only_ids_from_try_create_one(
+                #UrlSc: &str,
+                #PayloadSc: #ident_create_ucc,
+                table: &str,
+            ) -> #ident_read_only_ids_ucc {
+                #ident::try_create_one_handle(
+                    #UrlSc,
+                    #ident_create_one_params_ucc {
+                        #PayloadSc
+                    },
+                    table
+                ).await.expect("32e30b87")
+            }
+        };
+        let gen_read_only_ids_from_try_create_one_default_fn_ts = quote! {
+            async fn gen_read_only_ids_from_try_create_one_default(
+                #UrlSc: &str,
+                table: &str,
+            ) -> #ident_read_only_ids_ucc {
+                gen_read_only_ids_from_try_create_one(
+                    #UrlSc,
+                    ident_create_default(),
+                    table
+                ).await
+            }
+        };
+        let gen_try_delete_one_handle_fn_ts = quote! {
+            async fn gen_try_delete_one_handle(
+                #UrlSc: &str,
+                #pk_fi: #pk_ft_as_pg_type_read_ts,
+                table: &str,
+            ) -> Result<#pk_ft_as_pg_type_read_ts, #ident_try_delete_one_er_ucc> {
+                #ident::try_delete_one_handle(
+                    #UrlSc,
+                    #ident_delete_one_params_ucc {
+                        payload: #ident_delete_one_payload_ucc {
+                            #pk_fi
+                        }
+                    },
+                    table
+                ).await
+            }
+        };
+        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts = quote! {
+            fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
+                "no rows returned by a query that expected to return at least one row"
+            }
+        };
+        let gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts = quote! {
+            fn gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                read_only_ids_from_try_create_many: Vec<#ident_read_only_ids_ucc>,
+                ident_vec_create: Vec<#ident_create_ucc>
+            ) -> Vec<#ident_read_ucc> {
+                let mut acc_1debe8fb = Vec::new();
+                #assert_eq_ts_7ac0df1c
+                for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
+                    acc_1debe8fb.push(#ident_read_ucc {
+                        #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                            &read_only_ids.#pk_fi
+                        ),
+                        #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts
+                    });
+                }
+                acc_1debe8fb.sort_by(|first, second| {
+                    if let (Some(first_handle), Some(second_handle)) = (&first.#pk_fi, &second.#pk_fi) {
+                        first_handle.#VSc.cmp(&second_handle.#VSc)
+                    } else {
+                        panic!("d760ffa3");
+                    }
+                });
+                acc_1debe8fb
+            }
+        };
         quote! {
             #[cfg(test)]
             mod #ident_tests_sc {
@@ -6234,171 +6423,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
                 #[test]
                 fn crud() {
-                    fn gen_ident_where_many_pripery_k_others_none(
-                        opt_pg_type_where: Option<#import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts>>,
-                    ) -> #ident_where_many_ucc {
-                        #ident_where_many_ucc::try_new(
-                            opt_pg_type_where,
-                            #fields_named_without_pk_with_comma_none_ts
-                        )
-                        .expect("5fb2b219")
-                    }
-                    fn gen_pg_type_where_try_new_pk(
-                        operator: #import_ts Operator,
-                        vec: Vec<#pk_ft_as_pg_type_where_ts>
-                    ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
-                        #gen_pg_type_where_try_new_pk_ts
-                    }
-                    fn gen_pg_type_where_try_new_or_pks(
-                        vec_read_only_ids: &[#ident_read_only_ids_ucc]
-                    ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
-                        gen_pg_type_where_try_new_pk(
-                            #operator_or_ts,
-                            vec_read_only_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
-                        )
-                    }
-                    async fn gen_try_read_many_order_by_pk_with_big_pagination(
-                        endpoint_location: &str,
-                        ident_where_many_6b1fab92: #ident_where_many_ucc,
-                        select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
-                        table: &str
-                    ) -> Result<Vec<#ident_read_ucc>, #ident_try_read_many_er_ucc> {
-                        #ident::try_read_many_handle(
-                            endpoint_location,
-                            #ident_read_many_params_ucc {
-                                payload: #ident_read_many_payload_ucc {
-                                    where_many: #opt_ident_where_many_ucc(Some(
-                                        ident_where_many_6b1fab92
-                                    )),
-                                    select,
-                                    order_by: #import_ts OrderBy {
-                                        column: #ident_select_ucc::#pk_fi_ucc_ts(
-                                            #pk_ft_as_pg_type_select_ts::default()
-                                        ),
-                                        order: Some(#import_ts Order::Asc)
-                                    },
-                                    pagination: #import_ts PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
-                                }
-                            },
-                            table
-                        )
-                        .await
-                    }
-                    async fn gen_ident_try_read_one_handle_pk(
-                        url: &str,
-                        pk_column: #pk_ft_as_pg_type_read_ts,
-                        select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
-                        table: &str,
-                    ) -> Result<#ident_read_ucc, #ident_try_read_one_er_ucc> {
-                        #ident::try_read_one_handle(
-                            url,
-                            #ident_read_one_params_ucc {
-                                payload: #ident_read_one_payload_ucc {
-                                    pk_column,
-                                    select,
-                                },
-                            },
-                            table,
-                        )
-                        .await
-                    }
-                    async fn gen_check_no_rows_returned_from_ident_try_read_one_handle_pk(
-                        url: &str,
-                        pk_column: #pk_ft_as_pg_type_read_ts,
-                        select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
-                        table: &str,
-                    ) {
-                        if let Err(#ErSc) = gen_ident_try_read_one_handle_pk(
-                            url,
-                            pk_column,
-                            select,
-                            table
-                        ).await {
-                            if let #ident_try_read_one_er_ucc::#ident_read_one_er_with_serde_ucc {
-                                read_one_er_with_serde,
-                                ..
-                            } = er {
-                                if let #ident_read_one_er_with_serde_ucc::Pg { pg, .. } = read_one_er_with_serde {
-                                    #assert_ts_10482044
-                                } else {
-                                    panic!("0ad0117b");
-                                }
-                            } else {
-                                panic!("c6695392")
-                            }
-                        } else {
-                            panic!("67e43b7a")
-                        }
-                    }
-                    fn ident_create_default() -> #ident_create_ucc {
-                        #ident_create_ucc {
-                            #ident_create_default_fields_init_without_pk_ts
-                        }
-                    }
-                    async fn gen_read_only_ids_from_try_create_one(
-                        #UrlSc: &str,
-                        #PayloadSc: #ident_create_ucc,
-                        table: &str,
-                    ) -> #ident_read_only_ids_ucc {
-                        #ident::try_create_one_handle(
-                            #UrlSc,
-                            #ident_create_one_params_ucc {
-                                #PayloadSc
-                            },
-                            table
-                        ).await.expect("32e30b87")
-                    }
-                    async fn gen_read_only_ids_from_try_create_one_default(
-                        #UrlSc: &str,
-                        table: &str,
-                    ) -> #ident_read_only_ids_ucc {
-                        gen_read_only_ids_from_try_create_one(
-                            #UrlSc,
-                            ident_create_default(),
-                            table
-                        ).await
-                    }
-                    async fn gen_try_delete_one_handle(
-                        #UrlSc: &str,
-                        #pk_fi: #pk_ft_as_pg_type_read_ts,
-                        table: &str,
-                    ) -> Result<#pk_ft_as_pg_type_read_ts, #ident_try_delete_one_er_ucc> {
-                        #ident::try_delete_one_handle(
-                            #UrlSc,
-                            #ident_delete_one_params_ucc {
-                                payload: #ident_delete_one_payload_ucc {
-                                    #pk_fi
-                                }
-                            },
-                            table
-                        ).await
-                    }
-                    fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
-                        "no rows returned by a query that expected to return at least one row"
-                    }
-                    fn gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                        read_only_ids_from_try_create_many: Vec<#ident_read_only_ids_ucc>,
-                        ident_vec_create: Vec<#ident_create_ucc>
-                    ) -> Vec<#ident_read_ucc> {
-                        let mut acc_1debe8fb = Vec::new();
-                        #assert_eq_ts_7ac0df1c
-                        for (read_only_ids, create) in read_only_ids_from_try_create_many.into_iter().zip(ident_vec_create) {
-                            acc_1debe8fb.push(#ident_read_ucc {
-                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
-                                    &read_only_ids.#pk_fi
-                                ),
-                                #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts
-                            });
-                        }
-                        acc_1debe8fb.sort_by(|first, second| {
-                            if let (Some(first_handle), Some(second_handle)) = (&first.#pk_fi, &second.#pk_fi) {
-                                first_handle.#VSc.cmp(&second_handle.#VSc)
-                            } else {
-                                panic!("d760ffa3");
-                            }
-                        });
-                        acc_1debe8fb
-                    }
+                    #gen_ident_where_many_pripery_k_others_none_fn_ts
+                    #gen_pg_type_where_try_new_pk_fn_ts
+                    #gen_pg_type_where_try_new_or_pks_fn_ts
+                    #gen_try_read_many_order_by_pk_with_big_pagination_fn_ts
+                    #gen_ident_try_read_one_handle_pk_fn_ts
+                    #gen_check_no_rows_returned_from_ident_try_read_one_handle_pk_fn_ts
+                    #ident_create_default_fn_ts
+                    #gen_read_only_ids_from_try_create_one_fn_ts
+                    #gen_read_only_ids_from_try_create_one_default_fn_ts
+                    #gen_try_delete_one_handle_fn_ts
+                    #no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
+                    #gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts
                     #gen_read_only_ids_els_ts_fe29ff70
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21").block_on(async {
