@@ -2351,6 +2351,9 @@ pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
         quote! {#ts}
     }
 }
+pub fn gen_v_decl_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
+    quote! {#import::V<#ts>}
+}
 pub fn gen_v_init_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
     quote! {#import::V { #VSc: #ts }}
 }

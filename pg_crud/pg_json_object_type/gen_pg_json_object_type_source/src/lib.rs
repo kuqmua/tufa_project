@@ -35,7 +35,7 @@ use naming::{
     SelectOnlyCreatedIdsQueryBindSc, SelectOnlyCreatedIdsQueryPartSc, SelectOnlyIdsQueryPartSc,
     SelectOnlyUpdatedIdsQueryBindSc, SelectOnlyUpdatedIdsQueryPartSc, SelectQueryPartPgTypeSc,
     SelectQueryPartSc, SelfSc, SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdateQueryBindSc,
-    UpdateQueryPartSc, UpdateSc, UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, VSc, VUcc,
+    UpdateQueryPartSc, UpdateSc, UpdateToReadOnlyIdsSc, UuidUuidAsNotNullJsonbStringUcc, VSc,
     ValueSc, VecOfUcc, WithIdUcc,
     param::{
         ElSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc,
@@ -66,15 +66,15 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_serde_deserialize_for_struct_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts,
+    gen_jsonb_build_object, gen_jsonb_build_object_v, gen_match_try_new_in_deserialize_ts,
+    gen_opt_type_decl_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
     gen_return_err_query_part_er_write_into_buffer_ts, gen_sqlx_types_json_type_decl_ts,
-    gen_v_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
+    gen_v_decl_ts, gen_v_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
     mb_wrap_into_braces_ts, wrap_into_scopes_ts,
 };
-use pg_crud_macros_common::{gen_jsonb_build_object, gen_jsonb_build_object_v};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde::{Deserialize, Serialize};
@@ -276,9 +276,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let ts0 = gen_ident_as_default_but_opt_is_some_ts(ts);
             quote!{#ts0()}
         };
-        let import_v_ts = quote!{#import::#VUcc};
-        let wrap_into_v_decl_ts = |ts: &dyn ToTokens|{
-            quote!{#import_v_ts<#ts>}
+        let gen_v_decl_ts0 = |ts: &dyn ToTokens|{
+            gen_v_decl_ts(&import, ts)
         };
         let gen_v_init_ts0 = |ts: &dyn ToTokens|{
             gen_v_init_ts(&import, ts)
@@ -1950,7 +1949,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     ),
                 };
                 let opt_v_ft_as_json_type_read_ts = gen_opt_type_decl_ts(
-                    &wrap_into_v_decl_ts(&ft_as_json_type_read_ts)
+                    &gen_v_decl_ts0(&ft_as_json_type_read_ts)
                 );
                 quote! {
                     #mb_serde_skip_serializing_if_opt_is_none_ts
@@ -2159,7 +2158,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &|_: &Ident, syn_type: &Type| {
                         let type_read_ts = gen_type_as_pg_json_type_read_ts(&syn_type);
                         gen_opt_type_decl_ts(
-                            &wrap_into_v_decl_ts(&type_read_ts)
+                            &gen_v_decl_ts0(&type_read_ts)
                         )
                     }
                 )
@@ -2343,7 +2342,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &ident_read_only_ids_ucc,
                     &Ts2::new(),
                     &{
-                        let ts = wrap_into_v_decl_ts(&match &is_nullable {
+                        let ts = gen_v_decl_ts0(&match &is_nullable {
                             IsNullable::False => match &pattern {
                                 Pattern::Stdrt => quote!{#ident_read_only_ids_handle_ucc},
                                 Pattern::Arr => gen_vec_tokens_decl_ts(
@@ -2394,7 +2393,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &ident_with_id_stdrt_not_null_read_only_ids_ucc,
                             &Ts2::new(),
                             &{
-                                let ts = wrap_into_v_decl_ts(
+                                let ts = gen_v_decl_ts0(
                                     &ident_with_id_stdrt_not_null_read_only_ids_handle_ucc
                                 );
                                 quote!{(pub #ts);}
@@ -2979,7 +2978,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let vrt_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
                                 let fi_dq_ts = gen_fi_dq_ts(el0);
-                                let v_ft_as_json_type_update_ts = wrap_into_v_decl_ts(
+                                let v_ft_as_json_type_update_ts = gen_v_decl_ts0(
                                     &gen_type_as_pg_json_type_update_ts(&el0.type0)
                                 );
                                 quote! {
@@ -3473,7 +3472,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let vrt_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
                                 let fi_dq_ts = gen_fi_dq_ts(el0);
-                                let v_ft_as_json_type_update_for_query_ts = wrap_into_v_decl_ts(&gen_type_as_pg_json_type_update_for_query_ts(&el0.type0));
+                                let v_ft_as_json_type_update_for_query_ts = gen_v_decl_ts0(&gen_type_as_pg_json_type_update_for_query_ts(&el0.type0));
                                 quote! {
                                     #[serde(rename(serialize = #fi_dq_ts, deserialize = #fi_dq_ts))]
                                     #vrt_ident_ucc_ts(#v_ft_as_json_type_update_for_query_ts)
