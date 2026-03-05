@@ -2990,12 +2990,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ),
         );
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &vec_ident_read_only_ids_ts,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
@@ -3071,9 +3065,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &vec_ident_read_only_ids_ts,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts =
@@ -3114,12 +3110,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &ident_read_only_ids_ucc,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
@@ -3195,9 +3185,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &ident_read_only_ids_ucc,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts =
@@ -3265,12 +3257,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ),
         );
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &vec_struct_opts_ident_ts,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
@@ -3395,9 +3381,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &vec_struct_opts_ident_ts,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
@@ -3463,12 +3451,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ),
         );
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &ident_read_ucc,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
@@ -3528,9 +3510,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &ident_read_ucc,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
@@ -3721,12 +3705,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         });
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &vec_ident_read_only_ids_ts,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = {
                     let params_logic_ts = gen_params_logic_ts(&operation);
@@ -3940,9 +3918,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &vec_ident_read_only_ids_ts,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts =
@@ -3983,12 +3963,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         );
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &ident_read_only_ids_ucc,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = {
                     let params_logic_ts = gen_params_logic_ts(&operation);
@@ -4154,9 +4128,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &ident_read_only_ids_ucc,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts =
@@ -4205,12 +4181,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ),
         );
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &vec_pk_ft_read_ts,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = {
@@ -4244,9 +4214,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &vec_pk_ft_read_ts,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts =
@@ -4301,12 +4273,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             ),
         );
         let operation_ts = {
-            let try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts =
-                gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-                    &operation,
-                    &pk_ft_as_pg_type_read_ucc,
-                    &type_vrts_from_req_res_syn_vrts,
-                );
             {
                 let params_logic_ts = gen_params_logic_ts(&operation);
                 let query_string_ts = quote! {#import_ts gen_delete_one_query_string(
@@ -4347,9 +4313,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &pg_logic_ts,
                 ));
             };
-            quote! {
-                #try_operation_logic_res_vrts_impl_from_try_operation_logic_er_for_try_operation_logic_res_vrts_try_operation_logic_er_ts
-            }
+            gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
+                &operation,
+                &pk_ft_as_pg_type_read_ucc,
+                &type_vrts_from_req_res_syn_vrts,
+            )
         };
         let try_operation_ts = {
             let try_operation_er_ts =
