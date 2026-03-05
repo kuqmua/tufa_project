@@ -10,6 +10,15 @@ use std::fmt::Write as _;
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StringTs;
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
+fn gen_impl_to_tokens_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens) -> Ts2 {
+    quote! {
+        impl ToTokens for #ts0 {
+            fn to_tokens(&self, tokens: &mut Ts2) {
+                #ts1
+            }
+        }
+    }
+}
 #[proc_macro]
 pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
@@ -74,13 +83,10 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             };
             let (impl_to_tokens_ucc_ts, impl_to_tokens_snake_ts) = {
                 let gen_ts = |struct_name_ts: &dyn ToTokens, quote_ts: &dyn ToTokens| {
-                    quote! {
-                        impl ToTokens for #struct_name_ts {
-                            fn to_tokens(&self, tokens: &mut Ts2) {
-                                quote!{#quote_ts}.to_tokens(tokens);
-                            }
-                        }
-                    }
+                    gen_impl_to_tokens_ts(
+                        struct_name_ts,
+                        &quote! {quote!{#quote_ts}.to_tokens(tokens);},
+                    )
                 };
                 (
                     gen_ts(
@@ -186,6 +192,10 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 };
                 quote!{naming_common::#ts}
             };
+            let impl_to_tokens_ts = gen_impl_to_tokens_ts(
+                &struct_ident_ts,
+                &quote!{self.to_string().parse::<Ts2>().expect("71c8d26b").to_tokens(tokens);}
+            );
             quote! {
                 #[derive(Debug, optimal_pack::OptimalPack)]
                 pub struct #struct_ident_ts(String);
@@ -229,12 +239,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                         write!(f, "{}", self.0)
                     }
                 }
-                impl ToTokens for #struct_ident_ts {
-                    fn to_tokens(&self, tokens: &mut Ts2) {
-                        self.to_string().parse::<Ts2>()
-                            .expect("71c8d26b").to_tokens(tokens);
-                    }
-                }
+                #impl_to_tokens_ts
                 pub trait #trait_ident_ts: std::fmt::Display + ToTokens {}
                 impl #trait_ident_ts for #struct_ident_ts {}
             }
