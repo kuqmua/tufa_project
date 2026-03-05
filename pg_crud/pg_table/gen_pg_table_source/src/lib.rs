@@ -2525,32 +2525,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>};
-    let gen_params_logic_ts = |operation: &Operation| -> Ts2 {
-        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-        let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-            gen_operation_er_init_eprintln_res_creation_ts(
-                operation,
-                &serde_json_syn_vrt_wrapper,
-                Location::caller(),
-            );
-        let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
-        //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
-        quote! {
-            let #ParamsSc = #ident_operation_params_ucc {
-                #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
-                    &#BodyBytesSc,
-                ) {
-                    Ok(v_9e6fcd2d) => v_9e6fcd2d,
-                    Err(#Er0) => {
-                        #serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
-                    }
-                },
-            };
-        }
-    };
     let gen_operation_ts = |operation: &Operation,
                             extra_logic_ts_20466f5c: &dyn ToTokens,
-                            expected_updated_pks_ts: &dyn ToTokens,
                             query_string_ts: &dyn ToTokens,
                             binded_query_ts: &dyn ToTokens,
                             pg_logic_ts: &dyn ToTokens|
@@ -2614,7 +2590,29 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #operation_extra_logic_ts
             }
         };
-        let params_logic_ts0 = gen_params_logic_ts(operation);
+        let params_logic_ts0 = {
+            let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+            let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
+                gen_operation_er_init_eprintln_res_creation_ts(
+                    operation,
+                    &serde_json_syn_vrt_wrapper,
+                    Location::caller(),
+                );
+            let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
+            //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
+            quote! {
+                let #ParamsSc = #ident_operation_params_ucc {
+                    #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
+                        &#BodyBytesSc,
+                    ) {
+                        Ok(v_9e6fcd2d) => v_9e6fcd2d,
+                        Err(#Er0) => {
+                            #serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                        }
+                    },
+                };
+            }
+        };
         let params_logic_ts = match &operation {
             Operation::CreateMany
             | Operation::CreateOne
@@ -2673,7 +2671,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #req_parts_preparation_ts
                 #extra_validators_ts
                 #params_logic_ts
-                #expected_updated_pks_ts
                 let #QueryStringSc = #query_string_ts;
                 // println!("{}", #QueryStringSc);
                 let #BindedQuerySc = {
@@ -3075,7 +3072,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3193,7 +3189,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3387,7 +3382,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3514,7 +3508,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -3912,7 +3905,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4114,7 +4106,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4198,7 +4189,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
@@ -4295,7 +4285,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 impl_ident_vec_ts.push(gen_operation_ts(
                     &operation,
                     &common_extra_logic_ts,
-                    &Ts2::new(),
                     &query_string_ts,
                     &binded_query_ts,
                     &pg_logic_ts,
