@@ -1793,11 +1793,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fields_without_pk_with_default_opt_some_vec_one_el_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                             let fi = &el.ident;
-                            quote! {//todo reuse V init function
-                                #fi: Some(#import_ts V{
-                                    #VSc: #PgCrudDefaultOptSomeVecOneElCall
-                                })
-                            }
+                            let ts0 = gen_v_init_ts0(&PgCrudDefaultOptSomeVecOneElCall);
+                            quote! {#fi: Some(#ts0)}
                         });
                     quote! {Self{
                         #ts,
