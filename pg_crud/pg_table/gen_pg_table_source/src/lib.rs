@@ -939,6 +939,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         |ident_4d69a809: &dyn ToTokens, ts: &dyn ToTokens| {
             gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&ident_4d69a809, &Ts2::new(), &ts)
         };
+    let gen_fi_default_opt_some_vec_one_el_call_ts =
+        |ts: &dyn ToTokens| quote! {#ts: #PgCrudDefaultOptSomeVecOneElCall};
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     let ident_create_ts = {
         let ident_create_ts = StructOrEnumDeriveTsStreamBuilder::new()
@@ -1064,8 +1066,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &{
                     let fields_init_without_pk_with_default_opt_some_vec_one_el_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            quote! {#fi: #PgCrudDefaultOptSomeVecOneElCall}
+                            gen_fi_default_opt_some_vec_one_el_call_ts(&el.ident)
                         });
                     quote! {
                         Self{#fields_init_without_pk_with_default_opt_some_vec_one_el_ts}
@@ -1289,9 +1290,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let pub_where_many_opt_ident_where_many_ts =
         quote! {pub #WhereManySc: #opt_ident_where_many_ucc};
-    let where_many_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {
-        #WhereManySc: #PgCrudDefaultOptSomeVecOneElCall
-    };
+    let where_many_pg_crud_default_opt_some_vec_one_el_call_ts =
+        gen_fi_default_opt_some_vec_one_el_call_ts(&WhereManySc);
     let gen_read_or_delete_many_extra_params_init_ts =
         |read_many_or_delete_many: &ReadManyOrDeleteMany| {
             let ts_b34ec240 = gen_operation_er_init_eprintln_res_creation_ts(
@@ -1435,9 +1435,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_ts
         }
     };
-    let select_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {
-        #SelectSc: #PgCrudDefaultOptSomeVecOneElCall
-    };
+    let select_pg_crud_default_opt_some_vec_one_el_call_ts =
+        gen_fi_default_opt_some_vec_one_el_call_ts(&SelectSc);
     let ident_read_ts = {
         let ident_read_ts = {
             let ts_f80f1f3e = StructOrEnumDeriveTsStreamBuilder::new()
@@ -1792,9 +1791,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_update_ucc,
                 &{
-                    let pk_field_with_default_opt_some_vec_one_el_ts = {
-                        quote! { #pk_fi: #PgCrudDefaultOptSomeVecOneElCall}
-                    };
+                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
                     let fields_without_pk_with_default_opt_some_vec_one_el_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                             let fi = &el.ident;
@@ -1805,7 +1802,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         });
                     quote! {Self{
-                        #pk_field_with_default_opt_some_vec_one_el_ts,
+                        #ts,
                         #fields_without_pk_with_default_opt_some_vec_one_el_ts
                     }}
                 },
@@ -3256,19 +3253,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
                     pub #PaginationSc: #import_ts PaginationStartsWithZero,
                 }},
-                &quote! {{
-                    #where_many_pg_crud_default_opt_some_vec_one_el_call_ts,
-                    #select_pg_crud_default_opt_some_vec_one_el_call_ts,
-                    #OrderBySc: #import_ts OrderBy {
-                        #ColumnSc: #ident_select_ucc::#pk_fi_ucc_ts(
-                            #PgCrudDefaultOptSomeVecOneElCall
-                        ),
-                        #OrderSc: Some(
-                            #PgCrudDefaultOptSomeVecOneElCall
-                        ),
-                    },
-                    #PaginationSc: #PgCrudDefaultOptSomeVecOneElCall,
-                }},
+                &{
+                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&PaginationSc);
+                    quote! {{
+                        #where_many_pg_crud_default_opt_some_vec_one_el_call_ts,
+                        #select_pg_crud_default_opt_some_vec_one_el_call_ts,
+                        #OrderBySc: #import_ts OrderBy {
+                            #ColumnSc: #ident_select_ucc::#pk_fi_ucc_ts(
+                                #PgCrudDefaultOptSomeVecOneElCall
+                            ),
+                            #OrderSc: Some(
+                                #PgCrudDefaultOptSomeVecOneElCall
+                            ),
+                        },
+                        #ts,
+                    }}
+                },
             ),
         );
         let operation_ts = {
@@ -3460,10 +3460,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
                     }}
                 },
-                &quote! {{
-                    #pk_fi: #PgCrudDefaultOptSomeVecOneElCall,
-                    #select_pg_crud_default_opt_some_vec_one_el_call_ts
-                }},
+                &{
+                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
+                    quote! {{
+                        #ts,
+                        #select_pg_crud_default_opt_some_vec_one_el_call_ts
+                    }}
+                },
             ),
         );
         let operation_ts = {
@@ -4299,12 +4302,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {{#ts}}
                 },
                 &{
-                    let pk_field_with_default_opt_some_vec_one_el_ts = {
-                        quote! {
-                            #pk_fi: #PgCrudDefaultOptSomeVecOneElCall
-                        }
-                    };
-                    quote! {{#pk_field_with_default_opt_some_vec_one_el_ts}}
+                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
+                    quote! {{#ts}}
                 },
             ),
         );
