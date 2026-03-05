@@ -145,9 +145,9 @@ The agent must **not** perform the following actions:
 ## Git
 
 - Squash unrelated changes.
-- Commit broken code.
+- Commit code.
 - Include generated artifacts.
-- Modify `Cargo.lock` unless required.
+- Modify `Cargo.lock`.
 
 ---
 
