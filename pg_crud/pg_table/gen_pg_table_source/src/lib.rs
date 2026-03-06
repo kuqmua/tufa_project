@@ -2714,14 +2714,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         acc_a35168d8
                     }}
                 };
+                let gen_if_write_is_err_ts_f22b2dd2 = |ts: &dyn ToTokens|gen_if_write_is_err_ts(
+                    &ts,
+                    &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
+                );
                 match &operation {
                     Operation::CreateMany => {
-                        let if_write_is_err_ts = gen_if_write_is_err_ts(
+                        let if_write_is_err_ts = gen_if_write_is_err_ts_f22b2dd2(
                             &quote! {
                                 acc_8a58994e,
                                 "({v_f4fdd10d}),"
-                            },
-                            &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
+                            }
                         );
                         let ts_4b2a4911 = gen_operation_er_init_eprintln_res_creation_ts(
                             operation,
@@ -2937,7 +2940,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     }
                                 }
                             });
-                        let if_write_is_err_ts = gen_if_write_is_err_ts(
+                        let if_write_is_err_ts = gen_if_write_is_err_ts_f22b2dd2(
                             &{
                                 let match_update_query_part_pk_operation_ts =
                                     gen_match_update_query_part_pk_operation_ts(&quote! {el_9b2b56f8});
@@ -2946,8 +2949,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     "{},",
                                     #match_update_query_part_pk_operation_ts
                                 }
-                            },
-                            &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
+                            }
                         );
                         let ts0 = gen_acc_string_pop_ts(
                             &quote!{acc_b86a253a},
