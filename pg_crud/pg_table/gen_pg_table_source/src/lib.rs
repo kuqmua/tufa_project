@@ -2661,20 +2661,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let query_string_ts = {
-                let gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts =
-                    |operation0: &Operation| {
-                        let query_part_er_write_into_buffer_ts =
-                            gen_query_part_er_write_into_buffer_ts(import);
-                        let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
-                            operation0,
-                            &query_part_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                        quote! {
-                            let #Er0 = #query_part_er_write_into_buffer_ts;
-                            #ts_fa8795ea
-                        }
-                    };
+                let write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts = {
+                    let query_part_er_write_into_buffer_ts =
+                        gen_query_part_er_write_into_buffer_ts(import);
+                    let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
+                        operation,
+                        &query_part_syn_vrt_wrapper,
+                        Location::caller(),
+                    );
+                    quote! {
+                        let #Er0 = #query_part_er_write_into_buffer_ts;
+                        #ts_fa8795ea
+                    }
+                };
                 let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
                 let column_names_dq_ts = dq_ts(&{
                     let mut acc = fields.iter().fold(String::default(), |mut acc0, el| {
@@ -2722,9 +2721,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 acc_8a58994e,
                                 "({v_f4fdd10d}),"
                             },
-                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
-                                operation,
-                            ),
+                            &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
                         );
                         let ts_4b2a4911 = gen_operation_er_init_eprintln_res_creation_ts(
                             operation,
@@ -2798,43 +2795,48 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     #ident_select_ucc::#fi_ucc(_) => #fi_dq_ts
                                 }
                             });
-                        let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
-                            &quote! {
-                                #ExtraParamsSc,
-                                #extra_params_order_by_handle_ts,
-                                #PrefixSc,
-                                &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
-                                    #order_by_column_match_ts
-                                },
-                                #ParamsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
-                                    || #import_ts Order::default().to_sc_str(),
-                                    #import_ts Order::to_sc_str
+                        let (
+                            if_write_is_err_curly_braces_0_ts,
+                            if_write_is_err_curly_braces_1_ts
+                        ) = {
+                            let gen_if_write_is_err_curly_braces_ts_f9cf9cf2 = |ts: &dyn ToTokens|gen_if_write_is_err_curly_braces_ts(
+                                &ts,
+                                &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
+                            );
+                            (
+                                gen_if_write_is_err_curly_braces_ts_f9cf9cf2(
+                                    &quote! {
+                                        #ExtraParamsSc,
+                                        #extra_params_order_by_handle_ts,
+                                        #PrefixSc,
+                                        &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
+                                            #order_by_column_match_ts
+                                        },
+                                        #ParamsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
+                                            || #import_ts Order::default().to_sc_str(),
+                                            #import_ts Order::to_sc_str
+                                        )
+                                    }
+                                ),
+                                gen_if_write_is_err_curly_braces_ts_f9cf9cf2(
+                                    &quote! {
+                                        #ExtraParamsSc,
+                                        "{prefix}{}",
+                                        match #pg_crud_pg_type_where_filter_query_part_ts(
+                                            &#ParamsSc.#PayloadSc.pagination,
+                                            &mut #IncrSc,
+                                            &"",
+                                            bool::default()
+                                        ) {
+                                            Ok(v_742be6cf) => v_742be6cf,
+                                            Err(#Er0) => {
+                                                #ts_0ec756e2
+                                            },
+                                        }
+                                    }
                                 )
-                            },
-                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
-                                operation,
-                            ),
-                        );
-                        let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
-                            &quote! {
-                                #ExtraParamsSc,
-                                "{prefix}{}",
-                                match #pg_crud_pg_type_where_filter_query_part_ts(
-                                    &#ParamsSc.#PayloadSc.pagination,
-                                    &mut #IncrSc,
-                                    &"",
-                                    bool::default()
-                                ) {
-                                    Ok(v_742be6cf) => v_742be6cf,
-                                    Err(#Er0) => {
-                                        #ts_0ec756e2
-                                    },
-                                }
-                            },
-                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
-                                operation,
-                            ),
-                        );
+                            )
+                        };
                         quote! {#import_ts gen_read_many_query_string(
                             #TableSc,
                             &#select_query_part_params_payload_select_ts,
@@ -2945,9 +2947,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     #match_update_query_part_pk_operation_ts
                                 }
                             },
-                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
-                                operation,
-                            ),
+                            &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
                         );
                         let ts0 = gen_acc_string_pop_ts(
                             &quote!{acc_b86a253a},
