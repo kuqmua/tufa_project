@@ -2520,528 +2520,557 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>};
-    let gen_operation_ts = |operation: &Operation| -> Ts2 {
-        let operation_handle_sc_ts = operation.self_handle_sc_ts();
-        let operation_sc_ts = operation.self_sc_ts();
-        let req_parts_preparation_ts = {
-            let header_content_type_application_json_not_found_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-                &gen_operation_er_init_eprintln_res_creation_ts(
-                    operation,
-                    &header_content_type_application_json_not_found_syn_vrt_wrapper,
-                    Location::caller(),
-                );
-            let check_body_size_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-                &gen_operation_er_init_eprintln_res_creation_ts(
-                    operation,
-                    &check_body_size_syn_vrt_wrapper,
-                    Location::caller(),
-                );
-            quote! {
-                let (parts, #BodySc) = #ReqSc.into_parts();
-                let headers = parts.headers;
-                if !matches!(
-                    headers.get(http::header::CONTENT_TYPE),
-                    Some(v_e3f6eecd) if v_e3f6eecd == http::header::HeaderValue::from_static("application/json")
-                ) {
-                    #header_content_type_application_json_not_found_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
-                }
-                //todo
-                // match axum::body::HttpBody::size_hint(&#BodySc).exact() {
-                //     Some(v) => {
-                //         println!(
-                //             "HttpBody::size_hint {v} byte or {} kilobyte or {} megabyte",
-                //             v
-                //                 .checked_div(1024)
-                //                 .expect("111fd01a"),
-                //             v
-                //                 .checked_div(1_048_576)
-                //                 .expect("efbe0db4"), //(1024*1024)
-                //         );
-                //     }
-                //     None => {
-                //         println!("HttpBody::size_hint is None");
-                //     }
-                // }
-                let body_bytes = match #import_ts check_body_size::check_body_size(#BodySc, *#AppStateSc.get_maximum_size_of_http_body_in_bytes()).await {
-                    Ok(v_cfac9140) => v_cfac9140,
-                    Err(#Er0) => {
-                        #check_body_size_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
-                    }
-                };
-            }
-        };
-        let extra_validators_ts = {
-            let common_extra_logic_ts = get_macro_attr_meta_list_ts(
-                &di.attrs,
-                &GenPgTableAttr::CommonExtraLogic.gen_path_to_attr(),
-            );
-            let operation_extra_logic_ts = get_macro_attr_meta_list_ts(
-                &di.attrs,
-                &operation.gen_pg_table_attr_extra_logic().gen_path_to_attr(),
-            );
-            quote! {
-                #common_extra_logic_ts
-                #operation_extra_logic_ts
-            }
-        };
-        let params_logic_ts = {
-            let params_logic_ts0 = {
-                let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-                let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-                    gen_operation_er_init_eprintln_res_creation_ts(
+    impl_ident_vec_ts.push({
+        let ts = [
+            Operation::CreateMany,
+            Operation::CreateOne,
+            Operation::ReadMany,
+            Operation::ReadOne,
+            Operation::UpdateMany,
+            Operation::UpdateOne,
+            Operation::DeleteMany,
+            Operation::DeleteOne,
+        ].iter().map(|operation: &Operation|{
+            let operation_handle_sc_ts = operation.self_handle_sc_ts();
+            let operation_sc_ts = operation.self_sc_ts();
+            let req_parts_preparation_ts = {
+                let header_content_type_application_json_not_found_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
+                    &gen_operation_er_init_eprintln_res_creation_ts(
                         operation,
-                        &serde_json_syn_vrt_wrapper,
+                        &header_content_type_application_json_not_found_syn_vrt_wrapper,
                         Location::caller(),
                     );
-                let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
-                //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
+                let check_body_size_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
+                    &gen_operation_er_init_eprintln_res_creation_ts(
+                        operation,
+                        &check_body_size_syn_vrt_wrapper,
+                        Location::caller(),
+                    );
                 quote! {
-                    let #ParamsSc = #ident_operation_params_ucc {
-                        #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
-                            &#BodyBytesSc,
-                        ) {
-                            Ok(v_9e6fcd2d) => v_9e6fcd2d,
-                            Err(#Er0) => {
-                                #serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
-                            }
-                        },
+                    let (parts, #BodySc) = #ReqSc.into_parts();
+                    let headers = parts.headers;
+                    if !matches!(
+                        headers.get(http::header::CONTENT_TYPE),
+                        Some(v_e3f6eecd) if v_e3f6eecd == http::header::HeaderValue::from_static("application/json")
+                    ) {
+                        #header_content_type_application_json_not_found_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                    }
+                    //todo
+                    // match axum::body::HttpBody::size_hint(&#BodySc).exact() {
+                    //     Some(v) => {
+                    //         println!(
+                    //             "HttpBody::size_hint {v} byte or {} kilobyte or {} megabyte",
+                    //             v
+                    //                 .checked_div(1024)
+                    //                 .expect("111fd01a"),
+                    //             v
+                    //                 .checked_div(1_048_576)
+                    //                 .expect("efbe0db4"), //(1024*1024)
+                    //         );
+                    //     }
+                    //     None => {
+                    //         println!("HttpBody::size_hint is None");
+                    //     }
+                    // }
+                    let body_bytes = match #import_ts check_body_size::check_body_size(#BodySc, *#AppStateSc.get_maximum_size_of_http_body_in_bytes()).await {
+                        Ok(v_cfac9140) => v_cfac9140,
+                        Err(#Er0) => {
+                            #check_body_size_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                        }
                     };
                 }
             };
-            match &operation {
-                Operation::CreateMany
-                | Operation::CreateOne
-                | Operation::ReadMany
-                | Operation::ReadOne
-                | Operation::DeleteMany
-                | Operation::DeleteOne => params_logic_ts0,
-                Operation::UpdateMany => quote! {
-                    #params_logic_ts0
-                    let #UpdateForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
-                    .map(#ident_update_for_query_ucc::#FromHandleSc)
-                    .collect::<Vec<#ident_update_for_query_ucc>>();
-                },
-                Operation::UpdateOne => quote! {
-                    #params_logic_ts0
-                    let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
-                },
-            }
-        };
-        let query_string_ts = {
-            let gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts =
-                |operation0: &Operation| {
-                    let query_part_er_write_into_buffer_ts =
-                        gen_query_part_er_write_into_buffer_ts(import);
-                    let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation0,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {
-                        let #Er0 = #query_part_er_write_into_buffer_ts;
-                        #ts_fa8795ea
-                    }
-                };
-            let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
-            let column_names_dq_ts = dq_ts(&{
-                let mut acc = fields.iter().fold(String::default(), |mut acc0, el| {
-                    assert!(write!(acc0, "{}", &el.ident).is_ok(), "b9fe50dc");
-                    acc0.push(',');
-                    acc0
-                });
-                let _: Option<char> = acc.pop();
-                acc
-            });
-            let select_only_ids_query_part_ts = {
-                let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| {
-                    let fi = &el.ident;
-                    let fi_dq_ts = dq_ts(&fi);
-                    let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                    let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {
-                        match #ft_as_pg_crud_pg_type_pg_type_ts #SelectOnlyIdsQueryPartSc(#fi_dq_ts) {
-                            Ok(v_aa341baf) => {
-                                acc_a35168d8.push_str(&v_aa341baf);
-                            },
-                            Err(#Er0) => {
-                                #ts_00878df8
-                            }
-                        }
-                    }
-                });
+            let extra_validators_ts = {
+                let common_extra_logic_ts = get_macro_attr_meta_list_ts(
+                    &di.attrs,
+                    &GenPgTableAttr::CommonExtraLogic.gen_path_to_attr(),
+                );
+                let operation_extra_logic_ts = get_macro_attr_meta_list_ts(
+                    &di.attrs,
+                    &operation.gen_pg_table_attr_extra_logic().gen_path_to_attr(),
+                );
                 quote! {
-                    {
-                        let mut acc_a35168d8 = #StringTs::new();
-                        #(#select_only_ids_query_part_init_ts)*
-                        let _: Option<char> = acc_a35168d8.pop();
-                        acc_a35168d8
-                    }
+                    #common_extra_logic_ts
+                    #operation_extra_logic_ts
                 }
             };
-            match &operation {
-                Operation::CreateMany => {
-                    let if_write_is_err_ts = gen_if_write_is_err_ts(
-                        &quote! {
-                            acc_8a58994e,
-                            "({v_f4fdd10d}),"
-                        },
-                        &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
+            let params_logic_ts = {
+                let params_logic_ts0 = {
+                    let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+                    let serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
+                        gen_operation_er_init_eprintln_res_creation_ts(
                             operation,
-                        ),
-                    );
-                    let ts_4b2a4911 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {#import_ts gen_create_many_query_string(
-                        #TableSc,
-                        #column_names_dq_ts,
-                        &{
-                            #incr_init_ts
-                            let mut acc_8a58994e = #StringTs::default();
-                            for el_1651705d in &#ParamsSc.#PayloadSc.0 {
-                                match el_1651705d.#CreateQueryPartSc(&mut #IncrSc) {
-                                    Ok(v_f4fdd10d) => {
-                                        #if_write_is_err_ts
-                                    },
-                                    Err(#Er0) => {
-                                        #ts_4b2a4911
-                                    }
+                            &serde_json_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                    let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
+                    //todo in case of large type there is a stackoverflow. for example it was a 3.5md json file gend by create_many_payload_example. 3400 fields = success. 16000 = stackoverflow
+                    quote! {
+                        let #ParamsSc = #ident_operation_params_ucc {
+                            #PayloadSc: match serde_json::from_slice::<#ident_operation_payload_ucc>(
+                                &#BodyBytesSc,
+                            ) {
+                                Ok(v_9e6fcd2d) => v_9e6fcd2d,
+                                Err(#Er0) => {
+                                    #serde_json_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                                }
+                            },
+                        };
+                    }
+                };
+                match &operation {
+                    Operation::CreateMany
+                    | Operation::CreateOne
+                    | Operation::ReadMany
+                    | Operation::ReadOne
+                    | Operation::DeleteMany
+                    | Operation::DeleteOne => params_logic_ts0,
+                    Operation::UpdateMany => quote! {
+                        #params_logic_ts0
+                        let #UpdateForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
+                        .map(#ident_update_for_query_ucc::#FromHandleSc)
+                        .collect::<Vec<#ident_update_for_query_ucc>>();
+                    },
+                    Operation::UpdateOne => quote! {
+                        #params_logic_ts0
+                        let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
+                    },
+                }
+            };
+            let query_string_ts = {
+                let gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts =
+                    |operation0: &Operation| {
+                        let query_part_er_write_into_buffer_ts =
+                            gen_query_part_er_write_into_buffer_ts(import);
+                        let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation0,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {
+                            let #Er0 = #query_part_er_write_into_buffer_ts;
+                            #ts_fa8795ea
+                        }
+                    };
+                let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
+                let column_names_dq_ts = dq_ts(&{
+                    let mut acc = fields.iter().fold(String::default(), |mut acc0, el| {
+                        assert!(write!(acc0, "{}", &el.ident).is_ok(), "b9fe50dc");
+                        acc0.push(',');
+                        acc0
+                    });
+                    let _: Option<char> = acc.pop();
+                    acc
+                });
+                let select_only_ids_query_part_ts = {
+                    let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| {
+                        let fi = &el.ident;
+                        let fi_dq_ts = dq_ts(&fi);
+                        let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                        let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {
+                            match #ft_as_pg_crud_pg_type_pg_type_ts #SelectOnlyIdsQueryPartSc(#fi_dq_ts) {
+                                Ok(v_aa341baf) => {
+                                    acc_a35168d8.push_str(&v_aa341baf);
+                                },
+                                Err(#Er0) => {
+                                    #ts_00878df8
                                 }
                             }
-                            let _: Option<char> = acc_8a58994e.pop();
-                            acc_8a58994e
-                        },
-                        &#select_only_ids_query_part_ts
-                    )}
-                }
-                Operation::CreateOne => {
-                    let ts_cfcf1c2a = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
+                        }
+                    });
                     quote! {
-                        #import_ts gen_create_one_query_string(
+                        {
+                            let mut acc_a35168d8 = #StringTs::new();
+                            #(#select_only_ids_query_part_init_ts)*
+                            let _: Option<char> = acc_a35168d8.pop();
+                            acc_a35168d8
+                        }
+                    }
+                };
+                match &operation {
+                    Operation::CreateMany => {
+                        let if_write_is_err_ts = gen_if_write_is_err_ts(
+                            &quote! {
+                                acc_8a58994e,
+                                "({v_f4fdd10d}),"
+                            },
+                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
+                                operation,
+                            ),
+                        );
+                        let ts_4b2a4911 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {#import_ts gen_create_many_query_string(
                             #TableSc,
                             #column_names_dq_ts,
-                            &match #ParamsSc.#PayloadSc.#CreateQueryPartSc(&mut 0) {
-                                Ok(v_3267d57d) => v_3267d57d,
-                                Err(#Er0) => {
-                                    #ts_cfcf1c2a
+                            &{
+                                #incr_init_ts
+                                let mut acc_8a58994e = #StringTs::default();
+                                for el_1651705d in &#ParamsSc.#PayloadSc.0 {
+                                    match el_1651705d.#CreateQueryPartSc(&mut #IncrSc) {
+                                        Ok(v_f4fdd10d) => {
+                                            #if_write_is_err_ts
+                                        },
+                                        Err(#Er0) => {
+                                            #ts_4b2a4911
+                                        }
+                                    }
                                 }
+                                let _: Option<char> = acc_8a58994e.pop();
+                                acc_8a58994e
                             },
                             &#select_only_ids_query_part_ts
-                        )
+                        )}
                     }
-                }
-                Operation::ReadMany => {
-                    let select_query_part_params_payload_select_ts =
-                        gen_select_query_part_params_payload_select_ts(operation);
-                    let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
-                        &ReadManyOrDeleteMany::ReadMany,
-                    );
-                    let extra_params_order_by_handle_ts =
-                        dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
-                    let ts_0ec756e2 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    let order_by_column_match_ts =
-                        gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi_ucc = ToTokensToUccTs::case_or_panic(&el.ident);
-                            let fi_dq_ts = dq_ts(&el.ident);
-                            quote! {
-                                #ident_select_ucc::#fi_ucc(_) => #fi_dq_ts
-                            }
-                        });
-                    let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
-                        &quote! {
-                            #ExtraParamsSc,
-                            #extra_params_order_by_handle_ts,
-                            #PrefixSc,
-                            &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
-                                #order_by_column_match_ts
-                            },
-                            #ParamsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
-                                || #import_ts Order::default().to_sc_str(),
-                                #import_ts Order::to_sc_str
-                            )
-                        },
-                        &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
+                    Operation::CreateOne => {
+                        let ts_cfcf1c2a = gen_operation_er_init_eprintln_res_creation_ts(
                             operation,
-                        ),
-                    );
-                    let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
-                        &quote! {
-                            #ExtraParamsSc,
-                            "{prefix}{}",
-                            match #pg_crud_pg_type_where_filter_query_part_ts(
-                                &#ParamsSc.#PayloadSc.pagination,
-                                &mut #IncrSc,
-                                &"",
-                                bool::default()
-                            ) {
-                                Ok(v_742be6cf) => v_742be6cf,
-                                Err(#Er0) => {
-                                    #ts_0ec756e2
-                                },
-                            }
-                        },
-                        &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
-                            operation,
-                        ),
-                    );
-                    quote! {#import_ts gen_read_many_query_string(
-                        #TableSc,
-                        &#select_query_part_params_payload_select_ts,
-                        &{
-                            #incr_init_ts
-                            let mut #ExtraParamsSc = #extra_params_init_ts;
-                            let #PrefixSc = if extra_params.is_empty() {""} else {" "};
-                            #if_write_is_err_curly_braces_0_ts
-                            #if_write_is_err_curly_braces_1_ts
-                            #ExtraParamsSc
-                        }
-                    )}
-                }
-                Operation::ReadOne => {
-                    let select_query_part_params_payload_select_ts =
-                        gen_select_query_part_params_payload_select_ts(operation);
-                    let ts_1ead7cf9 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {#import_ts gen_read_one_query_string(
-                        #TableSc,
-                        &#select_query_part_params_payload_select_ts,
-                        &match #pg_crud_pg_type_where_filter_query_part_ts(
-                            &#ParamsSc.#PayloadSc.#pk_fi,
-                            &mut 0,
-                            &Self::#PkSc(),
-                            false
-                        ) {
-                            Ok(v_be9e7b7d) => v_be9e7b7d,
-                            Err(#Er0) => {
-                                #ts_1ead7cf9
-                            }
-                        }
-                    )}
-                }
-                Operation::UpdateMany => {
-                    let ts_1b64e228 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    let gen_match_update_query_part_pk_operation_ts =
-                        |ts: &dyn ToTokens| gen_match_update_query_part_pk_ts(operation, &ts);
-                    let fields_named_without_pk_update_assignment_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let fi_dq_ts = dq_ts(&fi);
-                            let is_fi_update_exists_sc = IsSelfUpdateExistSc::from_tokens(&fi);
-                            let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
-                            let gen_when_column_id_then_v_update_many_query_part_sc =
-                                GenWhenColumnIdThenVUpdateManyQueryPartSc;
-                            quote! {
-                                {
-                                    let mut #is_fi_update_exists_sc = false;
-                                    for el_a72f3eac in &#UpdateForQueryVecSc {
-                                        if el_a72f3eac.#fi.is_some() {
-                                            #is_fi_update_exists_sc = true;
-                                            break;
-                                        }
-                                    }
-                                    if #is_fi_update_exists_sc {
-                                        acc_b86a253a.push_str(&
-                                            #import_ts gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
-                                                #fi_dq_ts,
-                                                &{
-                                                    let mut acc_8ad06c8c = #StringTs::default();
-                                                    for el_defbc401 in &#UpdateForQueryVecSc {
-                                                        if let Some(v_3ea04126) = &el_defbc401.#fi {
-                                                            acc_8ad06c8c.push_str(&#import_ts #gen_when_column_id_then_v_update_many_query_part_sc(
-                                                                Self::#PkSc(),
-                                                                &match el_defbc401.#UpdateQueryPartPkSc(&mut #IncrSc) {
-                                                                    Ok(v_00890100) => v_00890100,
-                                                                    Err(#Er0) => {
-                                                                        #ts_1b64e228
-                                                                    }
-                                                                },
-                                                                &match #ident_update_for_query_ucc::#update_query_part_fi_sc(v_3ea04126, &mut #IncrSc) {
-                                                                    Ok(v_8797585c) => v_8797585c,
-                                                                    Err(#Er0) => {
-                                                                        #ts_1b64e228
-                                                                    }
-                                                                },
-                                                            ));
-                                                        }
-                                                    }
-                                                    acc_8ad06c8c
-                                                }
-                                            )
-                                        );
-                                    }
-                                }
-                            }
-                        });
-                    let if_write_is_err_ts = gen_if_write_is_err_ts(
-                        &{
-                            let match_update_query_part_pk_operation_ts =
-                                gen_match_update_query_part_pk_operation_ts(&quote! {el_9b2b56f8});
-                            quote! {
-                                acc_a95eb175,
-                                "{},",
-                                #match_update_query_part_pk_operation_ts
-                            }
-                        },
-                        &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
-                            operation,
-                        ),
-                    );
-                    quote! {
-                        {
-                            #incr_init_ts
-                            let els = {
-                                let mut acc_b86a253a = #StringTs::default();
-                                #fields_named_without_pk_update_assignment_ts
-                                let _: Option<char> = acc_b86a253a.pop();
-                                acc_b86a253a
-                            };
-                            let pks = {
-                                let mut acc_a95eb175 = #StringTs::default();
-                                for el_9b2b56f8 in &#UpdateForQueryVecSc {
-                                    #if_write_is_err_ts
-                                }
-                                let _: Option<char> = acc_a95eb175.pop();
-                                acc_a95eb175
-                            };
-                            let return_columns = {
-                                let mut acc_fd44b0aa = String::new();
-                                for el_bcf0dde4 in &#UpdateForQueryVecSc {
-                                    match el_bcf0dde4.select_only_updated_ids_query_part(&mut #IncrSc) {
-                                        Ok(v_4f536654) => {
-                                            acc_fd44b0aa.push_str(&v_4f536654);
-                                        },
-                                        Err(#Er0) => {
-                                            #ts_1b64e228
-                                        }
-                                    }
-                                }
-                                acc_fd44b0aa
-                            };
-                            #import_ts gen_update_many_query_string(
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {
+                            #import_ts gen_create_one_query_string(
                                 #TableSc,
-                                &els,
-                                Self::#PkSc(),
-                                &pks,
-                                &return_columns
+                                #column_names_dq_ts,
+                                &match #ParamsSc.#PayloadSc.#CreateQueryPartSc(&mut 0) {
+                                    Ok(v_3267d57d) => v_3267d57d,
+                                    Err(#Er0) => {
+                                        #ts_cfcf1c2a
+                                    }
+                                },
+                                &#select_only_ids_query_part_ts
                             )
                         }
                     }
-                }
-                Operation::UpdateOne => {
-                    let extra_params_modification_ts = gen_fields_named_without_pk_without_comma_ts(
-                        &|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let fi_dq_ts = dq_ts(&fi);
-                            let ts_9ec6b359 = gen_operation_er_init_eprintln_res_creation_ts(
+                    Operation::ReadMany => {
+                        let select_query_part_params_payload_select_ts =
+                            gen_select_query_part_params_payload_select_ts(operation);
+                        let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
+                            &ReadManyOrDeleteMany::ReadMany,
+                        );
+                        let extra_params_order_by_handle_ts =
+                            dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
+                        let ts_0ec756e2 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        let order_by_column_match_ts =
+                            gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
+                                let fi_ucc = ToTokensToUccTs::case_or_panic(&el.ident);
+                                let fi_dq_ts = dq_ts(&el.ident);
+                                quote! {
+                                    #ident_select_ucc::#fi_ucc(_) => #fi_dq_ts
+                                }
+                            });
+                        let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
+                            &quote! {
+                                #ExtraParamsSc,
+                                #extra_params_order_by_handle_ts,
+                                #PrefixSc,
+                                &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
+                                    #order_by_column_match_ts
+                                },
+                                #ParamsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
+                                    || #import_ts Order::default().to_sc_str(),
+                                    #import_ts Order::to_sc_str
+                                )
+                            },
+                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
                                 operation,
-                                &query_part_syn_vrt_wrapper,
+                            ),
+                        );
+                        let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
+                            &quote! {
+                                #ExtraParamsSc,
+                                "{prefix}{}",
+                                match #pg_crud_pg_type_where_filter_query_part_ts(
+                                    &#ParamsSc.#PayloadSc.pagination,
+                                    &mut #IncrSc,
+                                    &"",
+                                    bool::default()
+                                ) {
+                                    Ok(v_742be6cf) => v_742be6cf,
+                                    Err(#Er0) => {
+                                        #ts_0ec756e2
+                                    },
+                                }
+                            },
+                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
+                                operation,
+                            ),
+                        );
+                        quote! {#import_ts gen_read_many_query_string(
+                            #TableSc,
+                            &#select_query_part_params_payload_select_ts,
+                            &{
+                                #incr_init_ts
+                                let mut #ExtraParamsSc = #extra_params_init_ts;
+                                let #PrefixSc = if extra_params.is_empty() {""} else {" "};
+                                #if_write_is_err_curly_braces_0_ts
+                                #if_write_is_err_curly_braces_1_ts
+                                #ExtraParamsSc
+                            }
+                        )}
+                    }
+                    Operation::ReadOne => {
+                        let select_query_part_params_payload_select_ts =
+                            gen_select_query_part_params_payload_select_ts(operation);
+                        let ts_1ead7cf9 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {#import_ts gen_read_one_query_string(
+                            #TableSc,
+                            &#select_query_part_params_payload_select_ts,
+                            &match #pg_crud_pg_type_where_filter_query_part_ts(
+                                &#ParamsSc.#PayloadSc.#pk_fi,
+                                &mut 0,
+                                &Self::#PkSc(),
+                                false
+                            ) {
+                                Ok(v_be9e7b7d) => v_be9e7b7d,
+                                Err(#Er0) => {
+                                    #ts_1ead7cf9
+                                }
+                            }
+                        )}
+                    }
+                    Operation::UpdateMany => {
+                        let ts_1b64e228 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        let gen_match_update_query_part_pk_operation_ts =
+                            |ts: &dyn ToTokens| gen_match_update_query_part_pk_ts(operation, &ts);
+                        let fields_named_without_pk_update_assignment_ts =
+                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                                let fi = &el.ident;
+                                let fi_dq_ts = dq_ts(&fi);
+                                let is_fi_update_exists_sc = IsSelfUpdateExistSc::from_tokens(&fi);
+                                let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
+                                let gen_when_column_id_then_v_update_many_query_part_sc =
+                                    GenWhenColumnIdThenVUpdateManyQueryPartSc;
+                                quote! {
+                                    {
+                                        let mut #is_fi_update_exists_sc = false;
+                                        for el_a72f3eac in &#UpdateForQueryVecSc {
+                                            if el_a72f3eac.#fi.is_some() {
+                                                #is_fi_update_exists_sc = true;
+                                                break;
+                                            }
+                                        }
+                                        if #is_fi_update_exists_sc {
+                                            acc_b86a253a.push_str(&
+                                                #import_ts gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
+                                                    #fi_dq_ts,
+                                                    &{
+                                                        let mut acc_8ad06c8c = #StringTs::default();
+                                                        for el_defbc401 in &#UpdateForQueryVecSc {
+                                                            if let Some(v_3ea04126) = &el_defbc401.#fi {
+                                                                acc_8ad06c8c.push_str(&#import_ts #gen_when_column_id_then_v_update_many_query_part_sc(
+                                                                    Self::#PkSc(),
+                                                                    &match el_defbc401.#UpdateQueryPartPkSc(&mut #IncrSc) {
+                                                                        Ok(v_00890100) => v_00890100,
+                                                                        Err(#Er0) => {
+                                                                            #ts_1b64e228
+                                                                        }
+                                                                    },
+                                                                    &match #ident_update_for_query_ucc::#update_query_part_fi_sc(v_3ea04126, &mut #IncrSc) {
+                                                                        Ok(v_8797585c) => v_8797585c,
+                                                                        Err(#Er0) => {
+                                                                            #ts_1b64e228
+                                                                        }
+                                                                    },
+                                                                ));
+                                                            }
+                                                        }
+                                                        acc_8ad06c8c
+                                                    }
+                                                )
+                                            );
+                                        }
+                                    }
+                                }
+                            });
+                        let if_write_is_err_ts = gen_if_write_is_err_ts(
+                            &{
+                                let match_update_query_part_pk_operation_ts =
+                                    gen_match_update_query_part_pk_operation_ts(&quote! {el_9b2b56f8});
+                                quote! {
+                                    acc_a95eb175,
+                                    "{},",
+                                    #match_update_query_part_pk_operation_ts
+                                }
+                            },
+                            &gen_write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts(
+                                operation,
+                            ),
+                        );
+                        quote! {
+                            {
+                                #incr_init_ts
+                                let els = {
+                                    let mut acc_b86a253a = #StringTs::default();
+                                    #fields_named_without_pk_update_assignment_ts
+                                    let _: Option<char> = acc_b86a253a.pop();
+                                    acc_b86a253a
+                                };
+                                let pks = {
+                                    let mut acc_a95eb175 = #StringTs::default();
+                                    for el_9b2b56f8 in &#UpdateForQueryVecSc {
+                                        #if_write_is_err_ts
+                                    }
+                                    let _: Option<char> = acc_a95eb175.pop();
+                                    acc_a95eb175
+                                };
+                                let return_columns = {
+                                    let mut acc_fd44b0aa = String::new();
+                                    for el_bcf0dde4 in &#UpdateForQueryVecSc {
+                                        match el_bcf0dde4.select_only_updated_ids_query_part(&mut #IncrSc) {
+                                            Ok(v_4f536654) => {
+                                                acc_fd44b0aa.push_str(&v_4f536654);
+                                            },
+                                            Err(#Er0) => {
+                                                #ts_1b64e228
+                                            }
+                                        }
+                                    }
+                                    acc_fd44b0aa
+                                };
+                                #import_ts gen_update_many_query_string(
+                                    #TableSc,
+                                    &els,
+                                    Self::#PkSc(),
+                                    &pks,
+                                    &return_columns
+                                )
+                            }
+                        }
+                    }
+                    Operation::UpdateOne => {
+                        let extra_params_modification_ts = gen_fields_named_without_pk_without_comma_ts(
+                            &|el: &SynFieldWrapper| {
+                                let fi = &el.ident;
+                                let fi_dq_ts = dq_ts(&fi);
+                                let ts_9ec6b359 = gen_operation_er_init_eprintln_res_creation_ts(
+                                    operation,
+                                    &query_part_syn_vrt_wrapper,
+                                    Location::caller(),
+                                );
+                                let gen_column_queals_v_comma_update_one_query_part_sc =
+                                    GenColumnQuealsVCommaUpdateOneQueryPartSc;
+                                let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
+                                quote! {
+                                    if let Some(v_2d144436) = &#UpdateForQuerySc.#fi {
+                                        acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_update_one_query_part_sc(
+                                            #fi_dq_ts,
+                                            &match #ident_update_for_query_ucc::#update_query_part_fi_sc(v_2d144436, &mut #IncrSc) {
+                                                Ok(v_1ec12051) => v_1ec12051,
+                                                Err(#Er0) => {
+                                                    #ts_9ec6b359
+                                                }
+                                            }
+                                        ));
+                                    }
+                                }
+                            },
+                        );
+                        let extra_params_pk_modification_ts =
+                            gen_match_update_query_part_pk_ts(operation, &quote! {#UpdateForQuerySc});
+                        let ts_255ad2f1 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &query_part_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {
+                            {
+                                #incr_init_ts
+                                let #ColumnsSc = {
+                                    let mut acc_683e37b8 = #StringTs::default();
+                                    #extra_params_modification_ts
+                                    let _: Option<char> = acc_683e37b8.pop();
+                                    acc_683e37b8
+                                };
+                                let #PkQueryPartSc = #extra_params_pk_modification_ts;
+                                let return_columns = match #UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc) {
+                                    Ok(v_7f0d86a1) => v_7f0d86a1,
+                                    Err(#Er0) => {
+                                        #ts_255ad2f1
+                                    }
+                                };
+                                #import_ts gen_update_one_query_string(
+                                    #TableSc,
+                                    &#ColumnsSc,
+                                    Self::#PkSc(),
+                                    &#PkQueryPartSc,
+                                    &return_columns
+                                )
+                            }
+                        }
+                    }
+                    Operation::DeleteMany => {
+                        let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
+                            &ReadManyOrDeleteMany::DeleteMany,
+                        );
+                        quote! {#import_ts gen_delete_many_query_string(
+                            #TableSc,
+                            &{
+                                #incr_init_ts
+                                #extra_params_init_ts
+                            },
+                            Self::#PkSc(),
+                        )}
+                    }
+                    Operation::DeleteOne => quote! {#import_ts gen_delete_one_query_string(
+                        #TableSc,
+                        Self::#PkSc(),
+                    )},
+                }
+            };
+            let binded_query_ts = {
+                match &operation {
+                    Operation::CreateMany => {
+                        let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                            gen_operation_er_init_eprintln_res_creation_ts(
+                                operation,
+                                &try_bind_syn_vrt_wrapper,
                                 Location::caller(),
                             );
-                            let gen_column_queals_v_comma_update_one_query_part_sc =
-                                GenColumnQuealsVCommaUpdateOneQueryPartSc;
-                            let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
-                            quote! {
-                                if let Some(v_2d144436) = &#UpdateForQuerySc.#fi {
-                                    acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_update_one_query_part_sc(
-                                        #fi_dq_ts,
-                                        &match #ident_update_for_query_ucc::#update_query_part_fi_sc(v_2d144436, &mut #IncrSc) {
-                                            Ok(v_1ec12051) => v_1ec12051,
-                                            Err(#Er0) => {
-                                                #ts_9ec6b359
-                                            }
-                                        }
-                                    ));
+                        quote! {
+                            for el_7f862135 in #ParamsSc.#PayloadSc.0 {
+                                match el_7f862135.#CreateQueryBindSc(#QuerySc) {
+                                    Ok(v_011a3eb4) => {
+                                        #QuerySc = v_011a3eb4;
+                                    },
+                                    Err(#Er0) => {
+                                        #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                    }
                                 }
                             }
-                        },
-                    );
-                    let extra_params_pk_modification_ts =
-                        gen_match_update_query_part_pk_ts(operation, &quote! {#UpdateForQuerySc});
-                    let ts_255ad2f1 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {
-                        {
-                            #incr_init_ts
-                            let #ColumnsSc = {
-                                let mut acc_683e37b8 = #StringTs::default();
-                                #extra_params_modification_ts
-                                let _: Option<char> = acc_683e37b8.pop();
-                                acc_683e37b8
-                            };
-                            let #PkQueryPartSc = #extra_params_pk_modification_ts;
-                            let return_columns = match #UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc) {
-                                Ok(v_7f0d86a1) => v_7f0d86a1,
-                                Err(#Er0) => {
-                                    #ts_255ad2f1
-                                }
-                            };
-                            #import_ts gen_update_one_query_string(
-                                #TableSc,
-                                &#ColumnsSc,
-                                Self::#PkSc(),
-                                &#PkQueryPartSc,
-                                &return_columns
-                            )
                         }
                     }
-                }
-                Operation::DeleteMany => {
-                    let extra_params_init_ts = gen_read_or_delete_many_extra_params_init_ts(
-                        &ReadManyOrDeleteMany::DeleteMany,
-                    );
-                    quote! {#import_ts gen_delete_many_query_string(
-                        #TableSc,
-                        &{
-                            #incr_init_ts
-                            #extra_params_init_ts
-                        },
-                        Self::#PkSc(),
-                    )}
-                }
-                Operation::DeleteOne => quote! {#import_ts gen_delete_one_query_string(
-                    #TableSc,
-                    Self::#PkSc(),
-                )},
-            }
-        };
-        let binded_query_ts = {
-            match &operation {
-                Operation::CreateMany => {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        for el_7f862135 in #ParamsSc.#PayloadSc.0 {
-                            match el_7f862135.#CreateQueryBindSc(#QuerySc) {
-                                Ok(v_011a3eb4) => {
-                                    #QuerySc = v_011a3eb4;
+                    Operation::CreateOne => {
+                        let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                            gen_operation_er_init_eprintln_res_creation_ts(
+                                operation,
+                                &try_bind_syn_vrt_wrapper,
+                                Location::caller(),
+                            );
+                        quote! {
+                            match #ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
+                                Ok(v_06f852cd) => {
+                                    #QuerySc = v_06f852cd;
                                 },
                                 Err(#Er0) => {
                                     #pg_syn_vrt_er_init_eprintln_res_creation_ts
@@ -3049,418 +3078,401 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }
                     }
-                }
-                Operation::CreateOne => {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        match #ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc) {
-                            Ok(v_06f852cd) => {
-                                #QuerySc = v_06f852cd;
-                            },
-                            Err(#Er0) => {
-                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                            }
-                        }
-                    }
-                }
-                Operation::ReadMany => {
-                    let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(operation);
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
-                        match #pg_crud_pg_type_where_filter_query_bind_ts(
-                            #ParamsSc.#PayloadSc.pagination,
-                            #QuerySc,
-                        ) {
-                            Ok(v_9f7e487b) => {
-                                #QuerySc = v_9f7e487b;
-                            },
-                            Err(#Er0) => {
-                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                            }
-                        }
-                    }
-                }
-                Operation::ReadOne => {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    quote! {
-                        match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc) {
-                            Ok(v_80ee6983) => {
-                                #QuerySc = v_80ee6983;
-                            },
-                            Err(#Er0) => {
-                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                            }
-                        }
-                    }
-                }
-                Operation::UpdateMany => {
-                    let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                        gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &try_bind_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
-                    let fields_named_without_pk_update_assignment_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                for el_4b24f8f0 in &#UpdateForQueryVecSc {
-                                    if let Some(v_2edaa480) = &el_4b24f8f0.#fi {
-                                        if let Err(er_981062db) = #QuerySc.try_bind(el_4b24f8f0.#pk_fi) {
-                                            let #Er0 = er_981062db.to_string();
-                                            #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                        }
-                                        match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                            v_2edaa480.#VSc.clone(),
-                                            #QuerySc,
-                                        ) {
-                                            Ok(v_600e67dc) => {
-                                                #QuerySc = v_600e67dc;
-                                            },
-                                            Err(#Er0) => {
-                                                #pg_syn_vrt_er_init_eprintln_res_creation_ts
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    let pk_update_assignment_ts = quote! {
-                        for el_323f7dfc in &#UpdateForQueryVecSc {
-                            match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
-                                el_323f7dfc.#pk_fi,
+                    Operation::ReadMany => {
+                        let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(operation);
+                        let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                            gen_operation_er_init_eprintln_res_creation_ts(
+                                operation,
+                                &try_bind_syn_vrt_wrapper,
+                                Location::caller(),
+                            );
+                        quote! {
+                            #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
+                            match #pg_crud_pg_type_where_filter_query_bind_ts(
+                                #ParamsSc.#PayloadSc.pagination,
                                 #QuerySc,
                             ) {
-                                Ok(v_c40a4522) => {
-                                    #QuerySc = v_c40a4522;
+                                Ok(v_9f7e487b) => {
+                                    #QuerySc = v_9f7e487b;
                                 },
                                 Err(#Er0) => {
                                     #pg_syn_vrt_er_init_eprintln_res_creation_ts
                                 }
                             }
                         }
-                    };
-                    let binded_query_select_only_updated_ids_query_bind_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                for el_a1660ed1 in &#UpdateForQueryVecSc {
-                                    if let Some(v_47030ac2) = &el_a1660ed1.#fi {
-                                        match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                            &v_47030ac2.#VSc,
-                                            #QuerySc
-                                        ) {
-                                            Ok(v_c5b79b95) => {
-                                                #QuerySc = v_c5b79b95;
-                                            },
-                                            Err(#Er0) => {
+                    }
+                    Operation::ReadOne => {
+                        let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                            gen_operation_er_init_eprintln_res_creation_ts(
+                                operation,
+                                &try_bind_syn_vrt_wrapper,
+                                Location::caller(),
+                            );
+                        quote! {
+                            match #pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc) {
+                                Ok(v_80ee6983) => {
+                                    #QuerySc = v_80ee6983;
+                                },
+                                Err(#Er0) => {
+                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                }
+                            }
+                        }
+                    }
+                    Operation::UpdateMany => {
+                        let pg_syn_vrt_er_init_eprintln_res_creation_ts =
+                            gen_operation_er_init_eprintln_res_creation_ts(
+                                operation,
+                                &try_bind_syn_vrt_wrapper,
+                                Location::caller(),
+                            );
+                        let fields_named_without_pk_update_assignment_ts =
+                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                                let fi = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                                quote! {
+                                    for el_4b24f8f0 in &#UpdateForQueryVecSc {
+                                        if let Some(v_2edaa480) = &el_4b24f8f0.#fi {
+                                            if let Err(er_981062db) = #QuerySc.try_bind(el_4b24f8f0.#pk_fi) {
+                                                let #Er0 = er_981062db.to_string();
                                                 #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                            }
+                                            match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
+                                                v_2edaa480.#VSc.clone(),
+                                                #QuerySc,
+                                            ) {
+                                                Ok(v_600e67dc) => {
+                                                    #QuerySc = v_600e67dc;
+                                                },
+                                                Err(#Er0) => {
+                                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        });
-                    quote! {
-                        #fields_named_without_pk_update_assignment_ts
-                        #pk_update_assignment_ts
-                        #binded_query_select_only_updated_ids_query_bind_ts
-                    }
-                }
-                Operation::UpdateOne => {
-                    let ts_1bdf01cd = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &try_bind_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    let binded_query_modifications_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                if let Some(v_ed87c152) = &#UpdateForQuerySc.#fi {
-                                    match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                        v_ed87c152.#VSc.clone(),//todo is there a way to remove .clone here?
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_c3c1b857) => {
-                                            #QuerySc = v_c3c1b857;
-                                        }
-                                        Err(#Er0) => {
-                                            #ts_1bdf01cd
-                                        }
+                            });
+                        let pk_update_assignment_ts = quote! {
+                            for el_323f7dfc in &#UpdateForQueryVecSc {
+                                match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
+                                    el_323f7dfc.#pk_fi,
+                                    #QuerySc,
+                                ) {
+                                    Ok(v_c40a4522) => {
+                                        #QuerySc = v_c40a4522;
+                                    },
+                                    Err(#Er0) => {
+                                        #pg_syn_vrt_er_init_eprintln_res_creation_ts
                                     }
                                 }
                             }
-                        });
-                    let binded_query_pk_modification_ts = quote! {
-                        match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
-                            #UpdateForQuerySc.#pk_fi,
-                            #QuerySc,
-                        ) {
-                            Ok(v_d64bac39) => {
-                                #QuerySc = v_d64bac39;
-                            },
-                            Err(#Er0) => {
-                                #ts_1bdf01cd
-                            }
-                        }
-                    };
-                    let binded_query_select_only_updated_ids_query_bind_ts =
-                        gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                            let fi = &el.ident;
-                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                            quote! {
-                                if let Some(v_b2902425) = &#UpdateForQuerySc.#fi {
-                                    match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                        &v_b2902425.#VSc,
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_cc6145f8) => {
-                                            #QuerySc = v_cc6145f8;
-                                        },
-                                        Err(#Er0) => {
-                                            #ts_1bdf01cd
+                        };
+                        let binded_query_select_only_updated_ids_query_bind_ts =
+                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                                let fi = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                                quote! {
+                                    for el_a1660ed1 in &#UpdateForQueryVecSc {
+                                        if let Some(v_47030ac2) = &el_a1660ed1.#fi {
+                                            match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
+                                                &v_47030ac2.#VSc,
+                                                #QuerySc
+                                            ) {
+                                                Ok(v_c5b79b95) => {
+                                                    #QuerySc = v_c5b79b95;
+                                                },
+                                                Err(#Er0) => {
+                                                    #pg_syn_vrt_er_init_eprintln_res_creation_ts
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        });
-                    quote! {
-                        #binded_query_modifications_ts
-                        #binded_query_pk_modification_ts
-                        #binded_query_select_only_updated_ids_query_bind_ts
-                    }
-                }
-                Operation::DeleteMany => {
-                    gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(
-                        operation,
-                    )
-                }
-                Operation::DeleteOne => {
-                    let ts_1319f705 = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &try_bind_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
-                    quote! {
-                        match #import_ts PgTypeWhereFilter::query_bind(
-                            #ParamsSc.#PayloadSc.#pk_fi,
-                            #QuerySc
-                        ) {
-                            Ok(v_3099ea0f) => {
-                                #QuerySc = v_3099ea0f;
-                            },
-                            Err(#Er0) => {
-                                #ts_1319f705
-                            }
+                            });
+                        quote! {
+                            #fields_named_without_pk_update_assignment_ts
+                            #pk_update_assignment_ts
+                            #binded_query_select_only_updated_ids_query_bind_ts
                         }
                     }
-                }
-            }
-        };
-        let acquire_pool_and_connection_ts = {
-            let pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-                gen_operation_er_init_eprintln_res_creation_ts(
-                    operation,
-                    &pg_syn_vrt_wrapper,
-                    Location::caller(),
-                );
-            quote! {
-                let mut #PoolConnectionSc = match #AppStateSc.get_pg_pool().acquire().await {
-                    Ok(v_4535ee48) => v_4535ee48,
-                    Err(#Er0) => {
-                        #pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                    Operation::UpdateOne => {
+                        let ts_1bdf01cd = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        let binded_query_modifications_ts =
+                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                                let fi = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                                quote! {
+                                    if let Some(v_ed87c152) = &#UpdateForQuerySc.#fi {
+                                        match #as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
+                                            v_ed87c152.#VSc.clone(),//todo is there a way to remove .clone here?
+                                            #QuerySc
+                                        ) {
+                                            Ok(v_c3c1b857) => {
+                                                #QuerySc = v_c3c1b857;
+                                            }
+                                            Err(#Er0) => {
+                                                #ts_1bdf01cd
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        let binded_query_pk_modification_ts = quote! {
+                            match #pk_ft_as_pg_type_ts #UpdateQueryBindSc(
+                                #UpdateForQuerySc.#pk_fi,
+                                #QuerySc,
+                            ) {
+                                Ok(v_d64bac39) => {
+                                    #QuerySc = v_d64bac39;
+                                },
+                                Err(#Er0) => {
+                                    #ts_1bdf01cd
+                                }
+                            }
+                        };
+                        let binded_query_select_only_updated_ids_query_bind_ts =
+                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                                let fi = &el.ident;
+                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                                quote! {
+                                    if let Some(v_b2902425) = &#UpdateForQuerySc.#fi {
+                                        match #as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
+                                            &v_b2902425.#VSc,
+                                            #QuerySc
+                                        ) {
+                                            Ok(v_cc6145f8) => {
+                                                #QuerySc = v_cc6145f8;
+                                            },
+                                            Err(#Er0) => {
+                                                #ts_1bdf01cd
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        quote! {
+                            #binded_query_modifications_ts
+                            #binded_query_pk_modification_ts
+                            #binded_query_select_only_updated_ids_query_bind_ts
+                        }
                     }
-                };
-                let #ExecutorAcquireSc = match sqlx::Acquire::acquire(&mut #PoolConnectionSc).await {
-                    Ok(v_61ae8f84) => v_61ae8f84,
-                    Err(#Er0) => {
-                        #pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                    Operation::DeleteMany => {
+                        gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(
+                            operation,
+                        )
                     }
-                };
-            }
-        };
-        let wraped_into_axum_res_ts = wrap_into_axum_res_ts(
-            &{
-                let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
-                quote! {#ident_operation_res_vrts_ucc::#DesirableUcc(#VSc)}
-            },
-            &operation.desirable_status_code().to_http_status_code_ts(),
-            &ShouldAddReturn::False,
-        );
-        let pg_logic_ts = {
-            let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
-                quote! {
-                    match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79) {
-                        Ok(v_33759463) => v_33759463,
-                        Err(#Er0) => #ts
+                    Operation::DeleteOne => {
+                        let ts_1319f705 = gen_operation_er_init_eprintln_res_creation_ts(
+                            operation,
+                            &try_bind_syn_vrt_wrapper,
+                            Location::caller(),
+                        );
+                        quote! {
+                            match #import_ts PgTypeWhereFilter::query_bind(
+                                #ParamsSc.#PayloadSc.#pk_fi,
+                                #QuerySc
+                            ) {
+                                Ok(v_3099ea0f) => {
+                                    #QuerySc = v_3099ea0f;
+                                },
+                                Err(#Er0) => {
+                                    #ts_1319f705
+                                }
+                            }
+                        }
                     }
                 }
             };
-            let gen_create_update_delete_many_fetch_ts =
-                |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
-                    let operation_d1960edc = Operation::from(create_or_update_or_delete_many);
-                    gen_fetch_ts(
-                        &ExecutorSc,
-                        &match &create_or_update_or_delete_many {
-                            CreateOrUpdateOrDeleteMany::Create
-                            | CreateOrUpdateOrDeleteMany::Update => {
-                                let ts = gen_match_ident_read_only_ids_as_from_row_from_row_ts(&{
-                                    let ts =
-                                        gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
-                                            &operation_d1960edc,
-                                            Location::caller(),
-                                        );
-                                    quote! {{#ts}}
-                                });
-                                quote! {Some(#ts)}
-                            }
-                            CreateOrUpdateOrDeleteMany::Delete => gen_sqlx_row_try_get_pk_ts(
-                                &pk_ft_as_pg_type_read_ucc,
-                                &quote! {Some(v_69ecb6a9)},
-                                &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
-                                    &operation_d1960edc,
-                                    Location::caller(),
-                                ),
-                            ),
-                        },
-                        &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
-                            &operation_d1960edc,
-                            Location::caller(),
-                        ),
-                        &ShouldWrapIntoV::True,
-                    )
+            let acquire_pool_and_connection_ts = {
+                let pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
+                    gen_operation_er_init_eprintln_res_creation_ts(
+                        operation,
+                        &pg_syn_vrt_wrapper,
+                        Location::caller(),
+                    );
+                quote! {
+                    let mut #PoolConnectionSc = match #AppStateSc.get_pg_pool().acquire().await {
+                        Ok(v_4535ee48) => v_4535ee48,
+                        Err(#Er0) => {
+                            #pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                        }
+                    };
+                    let #ExecutorAcquireSc = match sqlx::Acquire::acquire(&mut #PoolConnectionSc).await {
+                        Ok(v_61ae8f84) => v_61ae8f84,
+                        Err(#Er0) => {
+                            #pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts
+                        }
+                    };
+                }
+            };
+            let wraped_into_axum_res_ts = wrap_into_axum_res_ts(
+                &{
+                    let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
+                    quote! {#ident_operation_res_vrts_ucc::#DesirableUcc(#VSc)}
+                },
+                &operation.desirable_status_code().to_http_status_code_ts(),
+                &ShouldAddReturn::False,
+            );
+            let pg_logic_ts = {
+                let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
+                    quote! {
+                        match <#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79) {
+                            Ok(v_33759463) => v_33759463,
+                            Err(#Er0) => #ts
+                        }
+                    }
                 };
-            let gen_create_update_delete_one_fetch_ts =
-                |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
-                    wrap_into_v_ts(&{
-                        let operation0 = Operation::from(create_or_update_or_delete_one);
-                        let ts = gen_match_pg_transaction_rollback_await_ts(
-                            &operation0,
-                            Location::caller(),
-                        );
-                        gen_fetch_one_ts(
+                let gen_create_update_delete_many_fetch_ts =
+                    |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
+                        let operation_d1960edc = Operation::from(create_or_update_or_delete_many);
+                        gen_fetch_ts(
                             &ExecutorSc,
-                            &match create_or_update_or_delete_one {
-                                CreateOrUpdateOrDeleteOne::Create => {
-                                    gen_match_ident_read_only_ids_as_from_row_from_row_ts(
-                                        &quote! {{#ts}},
-                                    )
+                            &match &create_or_update_or_delete_many {
+                                CreateOrUpdateOrDeleteMany::Create
+                                | CreateOrUpdateOrDeleteMany::Update => {
+                                    let ts = gen_match_ident_read_only_ids_as_from_row_from_row_ts(&{
+                                        let ts =
+                                            gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                                &operation_d1960edc,
+                                                Location::caller(),
+                                            );
+                                        quote! {{#ts}}
+                                    });
+                                    quote! {Some(#ts)}
                                 }
-                                CreateOrUpdateOrDeleteOne::Update => {
-                                    gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
-                                }
-                                CreateOrUpdateOrDeleteOne::Delete => gen_sqlx_row_try_get_pk_ts(
-                                    &quote! {#pk_ft_as_pg_type_read_ucc},
-                                    &quote! {v_69ecb6a9},
-                                    &ts,
+                                CreateOrUpdateOrDeleteMany::Delete => gen_sqlx_row_try_get_pk_ts(
+                                    &pk_ft_as_pg_type_read_ucc,
+                                    &quote! {Some(v_69ecb6a9)},
+                                    &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                        &operation_d1960edc,
+                                        Location::caller(),
+                                    ),
                                 ),
                             },
-                            &ts,
+                            &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                &operation_d1960edc,
+                                Location::caller(),
+                            ),
+                            &ShouldWrapIntoV::True,
                         )
-                    })
-                };
-            match &operation {
-                Operation::CreateMany => wrap_into_pg_transaction_begin_commit_ts(
-                    operation,
-                    &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Create),
-                ),
-                Operation::CreateOne => wrap_into_pg_transaction_begin_commit_ts(
-                    operation,
-                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create),
-                ),
-                Operation::ReadMany => {
-                    let fetch_ts = gen_fetch_ts(
+                    };
+                let gen_create_update_delete_one_fetch_ts =
+                    |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
+                        wrap_into_v_ts(&{
+                            let operation0 = Operation::from(create_or_update_or_delete_one);
+                            let ts = gen_match_pg_transaction_rollback_await_ts(
+                                &operation0,
+                                Location::caller(),
+                            );
+                            gen_fetch_one_ts(
+                                &ExecutorSc,
+                                &match create_or_update_or_delete_one {
+                                    CreateOrUpdateOrDeleteOne::Create => {
+                                        gen_match_ident_read_only_ids_as_from_row_from_row_ts(
+                                            &quote! {{#ts}},
+                                        )
+                                    }
+                                    CreateOrUpdateOrDeleteOne::Update => {
+                                        gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
+                                    }
+                                    CreateOrUpdateOrDeleteOne::Delete => gen_sqlx_row_try_get_pk_ts(
+                                        &quote! {#pk_ft_as_pg_type_read_ucc},
+                                        &quote! {v_69ecb6a9},
+                                        &ts,
+                                    ),
+                                },
+                                &ts,
+                            )
+                        })
+                    };
+                match &operation {
+                    Operation::CreateMany => wrap_into_pg_transaction_begin_commit_ts(
+                        operation,
+                        &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Create),
+                    ),
+                    Operation::CreateOne => wrap_into_pg_transaction_begin_commit_ts(
+                        operation,
+                        &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create),
+                    ),
+                    Operation::ReadMany => {
+                        let fetch_ts = gen_fetch_ts(
+                            &ExecutorAcquireSc,
+                            &{
+                                let match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadMany);
+                                quote! {Some(#match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts)}
+                            },
+                            &gen_operation_er_init_eprintln_res_creation_ts(
+                                operation,
+                                &pg_syn_vrt_wrapper,
+                                Location::caller(),
+                            ),
+                            &ShouldWrapIntoV::False,
+                        );
+                        quote! {{
+                            #fetch_ts
+                        }}
+                    },
+                    Operation::ReadOne => gen_fetch_one_ts(
                         &ExecutorAcquireSc,
-                        &{
-                            let match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadMany);
-                            quote! {Some(#match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts)}
-                        },
-                        &gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &pg_syn_vrt_wrapper,
-                            Location::caller(),
-                        ),
-                        &ShouldWrapIntoV::False,
-                    );
-                    quote! {{
-                        #fetch_ts
-                    }}
-                },
-                Operation::ReadOne => gen_fetch_one_ts(
-                    &ExecutorAcquireSc,
-                    &gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadOne),
-                    &gen_operation_er_init_eprintln_res_creation_ts(operation, &pg_syn_vrt_wrapper, Location::caller()),
-                ),
-                Operation::UpdateMany => wrap_into_pg_transaction_begin_commit_ts(
-                    operation,
-                    &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Update),
-                ),
-                Operation::UpdateOne => wrap_into_pg_transaction_begin_commit_ts(
-                    operation,
-                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
-                ),
-                Operation::DeleteMany => wrap_into_pg_transaction_begin_commit_ts(
-                    operation,
-                    &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Delete),
-                ),
-                Operation::DeleteOne => wrap_into_pg_transaction_begin_commit_ts(
-                    operation,
-                    &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Delete),
-                ),
+                        &gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&ReadManyOrReadOne::ReadOne),
+                        &gen_operation_er_init_eprintln_res_creation_ts(operation, &pg_syn_vrt_wrapper, Location::caller()),
+                    ),
+                    Operation::UpdateMany => wrap_into_pg_transaction_begin_commit_ts(
+                        operation,
+                        &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Update),
+                    ),
+                    Operation::UpdateOne => wrap_into_pg_transaction_begin_commit_ts(
+                        operation,
+                        &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
+                    ),
+                    Operation::DeleteMany => wrap_into_pg_transaction_begin_commit_ts(
+                        operation,
+                        &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Delete),
+                    ),
+                    Operation::DeleteOne => wrap_into_pg_transaction_begin_commit_ts(
+                        operation,
+                        &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Delete),
+                    ),
+                }
+            };
+            quote! {
+                #[allow(clippy::single_call_fn)]
+                async fn #operation_handle_sc_ts(
+                    #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
+                    #ReqSc: axum::extract::Request,
+                    #TableSc: &str,
+                ) -> axum::response::Response {
+                    #req_parts_preparation_ts
+                    #extra_validators_ts
+                    #params_logic_ts
+                    let #QueryStringSc = #query_string_ts;
+                    //println!("{}", #QueryStringSc);
+                    let #BindedQuerySc = {
+                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
+                        #binded_query_ts
+                        #QuerySc
+                    };
+                    #acquire_pool_and_connection_ts
+                    let #VSc = {
+                        #pg_logic_ts
+                    };
+                    #wraped_into_axum_res_ts
+                }
+                #[allow(clippy::single_call_fn)]
+                pub async fn #operation_sc_ts(
+                    #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
+                    #ReqSc: axum::extract::Request,
+                ) -> axum::response::Response {
+                    Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
+                }
             }
-        };
-        quote! {
-            #[allow(clippy::single_call_fn)]
-            async fn #operation_handle_sc_ts(
-                #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
-                #ReqSc: axum::extract::Request,
-                #TableSc: &str,
-            ) -> axum::response::Response {
-                #req_parts_preparation_ts
-                #extra_validators_ts
-                #params_logic_ts
-                let #QueryStringSc = #query_string_ts;
-                // println!("{}", #QueryStringSc);
-                let #BindedQuerySc = {
-                    let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                    #binded_query_ts
-                    #QuerySc
-                };
-                #acquire_pool_and_connection_ts
-                let #VSc = {
-                    #pg_logic_ts
-                };
-                #wraped_into_axum_res_ts
-            }
-            #[allow(clippy::single_call_fn)]
-            pub async fn #operation_sc_ts(
-                #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
-                #ReqSc: axum::extract::Request,
-            ) -> axum::response::Response {
-                Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
-            }
-        }
-    };
+        });
+        quote!{#(#ts)*}
+    });
     let gen_try_operation_ts = |operation: &Operation,
                                 type_vrts_from_req_res_syn_vrts: &[Variant],
                                 result_ok_type_ts: &dyn ToTokens| {
@@ -3659,7 +3671,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {(vec![#PgCrudDefaultOptSomeVecOneElCall])},
             ),
         );
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_ident_read_only_ids_ts,
@@ -3703,7 +3714,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &operation,
         );
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &ident_read_only_ids_ucc,
@@ -3774,7 +3784,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             ),
         );
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_struct_opts_ident_ts,
@@ -3843,7 +3852,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             ),
         );
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &ident_read_ucc,
@@ -4037,7 +4045,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
             }
         });
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_ident_read_only_ids_ts,
@@ -4081,7 +4088,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &operation,
         );
         let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &ident_read_only_ids_ucc,
@@ -4133,7 +4139,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
             ),
         );
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_pk_ft_read_ts,
@@ -4191,7 +4196,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             ),
         );
-        impl_ident_vec_ts.push(gen_operation_ts(&operation));
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &pk_ft_as_pg_type_read_ucc,
