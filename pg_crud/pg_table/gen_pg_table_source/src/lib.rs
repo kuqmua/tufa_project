@@ -3683,29 +3683,35 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let #Er1 = #ResSc.headers().clone();
         };
         let res_text_ts = {
-            let failed_to_get_res_text_syn_vrt_init_ts =
-                gen_init_ts(&failed_to_get_res_text_syn_vrt_wrapper, Location::caller());
-            quote! {
-                let #Er2 = match #ResSc.text().await {
-                    Ok(v_6a62b2b9) => v_6a62b2b9,
-                    Err(#Er2) => {
+            let ts = gen_match_ok_err_ts(
+                &quote! {#ResSc.text().await},
+                &quote! {v_6a62b2b9},
+                &quote! {v_6a62b2b9},
+                &Er2,
+                &{
+                    let failed_to_get_res_text_syn_vrt_init_ts =
+                        gen_init_ts(&failed_to_get_res_text_syn_vrt_wrapper, Location::caller());
+                    quote! {{
                         return Err(#ident_try_operation_er_ucc::#failed_to_get_res_text_syn_vrt_init_ts);
-                    }
-                };
-            }
+                    }}
+                },
+            );
+            quote! {let #Er2 = #ts;}
         };
         let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
         let expected_res_ts = {
             let deserialize_res_syn_vrt_init_ts =
                 gen_init_ts(&deserialize_res_syn_vrt_wrapper, Location::caller());
-            quote! {
-                let #ExpectedResSc = match serde_json::from_str::<#ident_operation_res_vrts_ucc>(&#Er2) {
-                    Ok(v_563d2a75) => v_563d2a75,
-                    Err(#Er3) => {
-                        return Err(#ident_try_operation_er_ucc::#deserialize_res_syn_vrt_init_ts);
-                    }
-                };
-            }
+            let ts = gen_match_ok_err_ts(
+                &quote! {serde_json::from_str::<#ident_operation_res_vrts_ucc>(&#Er2)},
+                &quote! {v_563d2a75},
+                &quote! {v_563d2a75},
+                &Er3,
+                &quote! {{
+                    return Err(#ident_try_operation_er_ucc::#deserialize_res_syn_vrt_init_ts);
+                }},
+            );
+            quote! {let #ExpectedResSc = #ts;}
         };
         let try_operation_logic_er_with_serde_ucc =
             gen_ident_operation_er_with_serde_ucc(operation);
