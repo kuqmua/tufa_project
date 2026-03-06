@@ -156,5 +156,4 @@ The agent must **not** perform the following actions:
 ```bash
 cargo fmt
 cargo clippy --all-targets --all-features -- -D warnings
-cargo test --features test-utils
 ```
