@@ -2651,14 +2651,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let extra_validators_ts = {
-                let common_extra_logic_ts = get_macro_attr_meta_list_ts(
-                    &di.attrs,
-                    &GenPgTableAttr::CommonExtraLogic.gen_path_to_attr(),
-                );
-                let operation_extra_logic_ts = get_macro_attr_meta_list_ts(
-                    &di.attrs,
-                    &operation.gen_pg_table_attr_extra_logic().gen_path_to_attr(),
-                );
+                let (
+                    common_extra_logic_ts,
+                    operation_extra_logic_ts
+                ) = {
+                    let gen_ts = |v: &String|get_macro_attr_meta_list_ts(
+                        &di.attrs,
+                        v
+                    );
+                    (
+                        gen_ts(&GenPgTableAttr::CommonExtraLogic.gen_path_to_attr()),
+                        gen_ts(&operation.gen_pg_table_attr_extra_logic().gen_path_to_attr())
+                    )
+                };
                 quote! {
                     #common_extra_logic_ts
                     #operation_extra_logic_ts
