@@ -2035,7 +2035,7 @@ pub fn gen_impl_crate_is_string_empty_for_ident_ts(ident: &dyn ToTokens, ts: &dy
         }
     }
 }
-pub fn gen_match_try_new_in_deserialize_ts(ident: &dyn ToTokens, init_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_match_try_new_in_de_ts(ident: &dyn ToTokens, init_ts: &dyn ToTokens) -> Ts2 {
     quote! {
         match #ident::try_new(#init_ts) {
             Ok(v) => Ok(v),
@@ -2114,7 +2114,7 @@ pub fn gen_impl_de_for_struct_ts(
         });
         quote! {#(#ts)*}
     };
-    let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(&ident, &{
+    let match_try_new_in_de_ts = gen_match_try_new_in_de_ts(&ident, &{
         let fields_ts = (0..len).map(gen_undrscr_undrscr_field_i_handle_ts);
         quote! {#(#fields_ts),*}
     });
@@ -2288,7 +2288,7 @@ pub fn gen_impl_de_for_struct_ts(
                             __A: _serde::de::SeqAccess<'de>,
                         {
                             #visit_seq_fields_init_ts
-                            #match_try_new_in_deserialize_ts
+                            #match_try_new_in_de_ts
                         }
                         #[inline]
                         fn visit_map<__A>(
@@ -2312,7 +2312,7 @@ pub fn gen_impl_de_for_struct_ts(
                                 }
                             }
                             #visit_map_missing_fields_check_ts
-                            #match_try_new_in_deserialize_ts
+                            #match_try_new_in_de_ts
                         }
                     }
                     #[doc(hidden)]

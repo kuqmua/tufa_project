@@ -64,10 +64,10 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrParamUndrscr,
     IsQbMut, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
-    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_match_try_new_in_deserialize_ts,
-    gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
-    gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts, gen_v_init_ts,
-    gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts, mb_wrap_into_braces_ts,
+    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_decl_ts,
+    gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts,
+    gen_v_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
+    mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -3624,7 +3624,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 "tuple struct {ident_op_payload_ucc} with 1 el"
                             ));
                             let match_ident_um_payload_try_new_field0_ts =
-                                gen_match_try_new_in_deserialize_ts(&ident_op_payload_ucc, &quote! {f0});
+                                gen_match_try_new_in_de_ts(&ident_op_payload_ucc, &quote! {f0});
                             let ident_op_payload_dq_ts = dq_ts(&ident_op_payload_ucc);
                             quote! {
                                 #[allow(unused_qualifications)]

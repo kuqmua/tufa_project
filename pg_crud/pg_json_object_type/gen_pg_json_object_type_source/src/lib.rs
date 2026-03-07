@@ -63,7 +63,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_jsonb_build_object, gen_jsonb_build_object_v,
-    gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts,
+    gen_match_try_new_in_de_ts, gen_opt_type_decl_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
@@ -2783,7 +2783,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         //todo mb reuse?
                         let tuple_struct_ident_update_dq_ts = dq_ts(&format!("tuple struct {ident_update_ucc}"));
                         let ident_update_dq_ts = dq_ts(&ident_update_ucc);
-                        let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(
+                        let match_try_new_in_de_ts = gen_match_try_new_in_de_ts(
                             &ident_update_ucc,
                             &quote! {f0_v, f1_v, f2_v}
                         );
@@ -2871,7 +2871,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let f0_v = serde::de::SeqAccess::next_element::<#vec_ident_with_id_stdrt_not_null_create_ts>(&mut __seq)?.unwrap_or_default();
                                             let f1_v = serde::de::SeqAccess::next_element::<#import_unique_vec_ident_with_id_stdrt_not_null_update_el_ts>(&mut __seq)?.unwrap_or_default();
                                             let f2_v = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts>(&mut __seq)?.unwrap_or_default();
-                                            #match_try_new_in_deserialize_ts
+                                            #match_try_new_in_de_ts
                                         }
                                         #[inline]
                                         fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
@@ -2909,7 +2909,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             let f0_v = f0.unwrap_or_default();
                                             let f1_v = f1.unwrap_or_default();
                                             let f2_v = f2.unwrap_or_default();
-                                            #match_try_new_in_deserialize_ts
+                                            #match_try_new_in_de_ts
                                         }
                                     }
                                     #[doc(hidden)]
