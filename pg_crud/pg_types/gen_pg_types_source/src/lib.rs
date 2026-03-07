@@ -28,7 +28,7 @@ use naming::{
         SelfTableTypeUcc, SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
@@ -67,7 +67,7 @@ use token_patterns::{
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, StrumDisplay, OptimalPack)]
+    #[derive(Debug, StrumDisplay, Optml)]
     enum RustTypeName {
         I16,
         I32,
@@ -123,7 +123,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, StrumDisplay, OptimalPack)]
+    #[derive(Debug, StrumDisplay, Optml)]
     enum PgTypeName {
         Int2,
         Int4,
@@ -194,7 +194,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         StrumDisplay,
         EnumIter,
         EnumExtension,
-        OptimalPack,
+        Optml,
     )]
     enum PgType {
         I16AsInt2,
@@ -384,7 +384,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         StrumDisplay,
         EnumIter,
         EnumExtension,
-        OptimalPack,
+        Optml,
     )]
     enum PgTypePattern {
         Stdrt,
@@ -415,7 +415,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, Serialize, OptimalPack)]
+    #[derive(Debug, PartialEq, Serialize, Optml)]
     struct PgTypeRecord {
         pg_type: PgType,
         is_nullable: IsNullable,
@@ -690,20 +690,20 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    #[derive(Debug, serde::Deserialize, OptimalPack)]
+    #[derive(Debug, serde::Deserialize, Optml)]
     enum GenPgTypesConfigVrt {
         All,
         Concrete(Vec<PgTypeRecord>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, serde::Deserialize, OptimalPack)]
+    #[derive(Debug, serde::Deserialize, Optml)]
     struct GenPgJsonTypesConfig {
         vrt: GenPgTypesConfigVrt,
         pg_table_columns_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     enum PgTypeInitTryNew {
         StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
@@ -769,7 +769,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     enum PgTypeImplNewForDeserialize {
         SsqlxPgTypesPgIntervalAsInterval, //Ssqlx instead of Sqlx - just to fix clippy lint
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
@@ -779,7 +779,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     enum PgTypeImplTryNewForDeserialize {
         StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
@@ -788,12 +788,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeI32AsInt4Range,
         SqlxPgTypesPgRangeI64AsInt8Range,
     }
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     enum PgTypeImplNewForDeserializeOrTryNewForDeserialize {
         NewForDeserialize(PgTypeImplNewForDeserialize),
         TryNewForDeserialize(PgTypeImplTryNewForDeserialize),
     }
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     enum PgTypeDeserialize {
         Derive,
         ImplNewForDeserializeOrTryNewForDeserialize(
@@ -913,7 +913,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     .fold(
         Vec::new(),
         |mut acc, el| {
-            #[derive(Clone, OptimalPack)]
+            #[derive(Clone, Optml)]
             struct PgTypeRecordHandle {
                 is_nullable: IsNullable,
                 pg_type_pattern: PgTypePattern,

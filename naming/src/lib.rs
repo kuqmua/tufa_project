@@ -10,7 +10,7 @@ pub use naming_macros::{
     AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrEnumWithUnitFieldsToUpperScStr,
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::{Display, Formatter, Result as FmtResult};
@@ -842,9 +842,9 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["positive", "more", "typical"],
     ["v"]
 ]);
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub struct HashMap;
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub struct HashMapUcc;
 impl Display for HashMapUcc {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
@@ -856,7 +856,7 @@ impl ToTokens for HashMapUcc {
         quote! {HashMap}.to_tokens(tokens);
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub struct HashMapSc;
 impl Display for HashMapSc {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {

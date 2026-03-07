@@ -1,13 +1,13 @@
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use serde::Deserialize;
 use std::{fs::File, io::Write, path::Path, process::Command};
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum FormatWithCargofmt {
     False,
     True,
 }
-#[derive(Debug, Copy, Clone, Deserialize, OptimalPack)]
+#[derive(Debug, Copy, Clone, Deserialize, Optml)]
 pub enum ShouldWriteTsIntoFile {
     False,
     True,

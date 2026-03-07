@@ -17,7 +17,7 @@ location_lib = {path = "../../../location_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
 pg_types_common = {path = "../pg_types_common"}
 where_filters = {path = "../../where_filters"}
-optimal_pack = {path = "../../../optimal_pack"}
+optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,
             &gen_pg_types_source::gen_pg_types(&quote! {

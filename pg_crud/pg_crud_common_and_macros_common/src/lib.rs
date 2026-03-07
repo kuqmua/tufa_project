@@ -1,5 +1,5 @@
 use naming::{AndSc, NotSc, OrSc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use schemars::JsonSchema;
@@ -17,9 +17,7 @@ pub trait DfltOptSomeVecOneElMaxPageSize: Sized {
 pub trait AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize: Sized {
     fn all_vrts_dflt_opt_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
-#[derive(
-    Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema, OptimalPack,
-)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema, Optml)]
 pub enum Oprtr {
     And,
     AndNot,
@@ -69,7 +67,7 @@ impl ToTokens for Oprtr {
         .to_tokens(tokens);
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, OptimalPack)]
+#[derive(Debug, Clone, Copy, PartialEq, Optml)]
 pub enum PgTypeGreaterThanVrt {
     EqualNotGreaterThan,
     GreaterThan,
@@ -94,7 +92,7 @@ impl ToTokens for PgTypeGreaterThanVrt {
         .to_tokens(tokens);
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum PgJsonTypeLengthGreaterThanVrt {
     EqualNotLengthGreaterThan,
     LengthGreaterThan,

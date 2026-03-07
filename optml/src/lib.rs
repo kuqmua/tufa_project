@@ -7,8 +7,8 @@ use syn::{
     Data, DeriveInput, Field, Fields, GenericParam, Ident, Lifetime, parse, punctuated::Punctuated,
     token::Comma, visit_mut::VisitMut,
 };
-#[proc_macro_derive(OptimalPack)]
-pub fn optimal_pack(input_ts: Ts) -> Ts {
+#[proc_macro_derive(Optml)]
+pub fn optml(input_ts: Ts) -> Ts {
     enum StructOrEnum {
         Enum(String),
         Struct,

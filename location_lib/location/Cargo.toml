@@ -22,7 +22,7 @@ gen_quotes = {path = "../../gen_quotes"}
 panic_location = {path = "../../panic_location"}
 token_patterns = {path = "../../token_patterns"}
 naming = {path = "../../naming"}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 [lints]
 workspace = true

@@ -1,11 +1,11 @@
 use location_lib::{Location, loc, loc::Loc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use pg_crud_common::DfltOptSomeVecOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use utoipa::ToSchema;
-#[derive(Debug, Serialize, Deserialize, Error, Location)] //todo , OptimalPack
+#[derive(Debug, Serialize, Deserialize, Error, Location)] //todo , Optml
 pub enum UniqueVecTryNewEr<T> {
     NotUnique {
         #[eo_to_err_string_serde]
@@ -13,7 +13,7 @@ pub enum UniqueVecTryNewEr<T> {
         loc: Loc,
     },
 }
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct UniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> UniqueVec<T> {
     #[must_use]

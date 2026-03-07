@@ -1,8 +1,8 @@
 use location_lib::{Location, loc, loc::Loc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use std::{fs, io::Error as IoEr, path::Path};
 use thiserror::Error;
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum CreateDirIfItDoesntExistEr {
     CreateDirAll {
         #[eo_to_err_string]

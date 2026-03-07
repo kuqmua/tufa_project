@@ -21,7 +21,7 @@ token_patterns = {path = "../../token_patterns"}
 enum_extension_lib = {path = "../../enum_extension_lib"}
 gen_quotes = {path = "../../gen_quotes"}
 macros_helpers = {path = "../../macros_helpers"}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 [lints]
 workspace = true

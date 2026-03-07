@@ -16,7 +16,7 @@ serde.workspace = true
 serde_derive.workspace = true
 compile_time_git_info = {path = "./compile_time_git_info"}
 naming = {path = "../naming"}
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

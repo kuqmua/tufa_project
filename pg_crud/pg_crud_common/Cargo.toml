@@ -20,7 +20,7 @@ location_lib = {path = "../../location_lib"}
 from_str = {path = "../../from_str"}
 naming = {path = "../../naming"}
 pg_crud_common_and_macros_common = {path = "../pg_crud_common_and_macros_common"}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 [features]
 test-utils = []

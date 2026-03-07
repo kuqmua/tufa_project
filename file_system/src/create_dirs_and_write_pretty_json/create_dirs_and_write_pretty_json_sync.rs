@@ -1,9 +1,9 @@
 use location_lib::{Location, loc, loc::Loc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonV, to_string_pretty};
 use std::path::Path;
 use thiserror::Error;
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum CreateDirsAndWritePrettyJsonSyncEr {
     SerdeJson {
         #[eo_to_err_string]

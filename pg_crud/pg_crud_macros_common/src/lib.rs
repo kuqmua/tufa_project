@@ -36,7 +36,7 @@ use naming::{
     UpdateToReadIdsSc, UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde::{Deserialize, Serialize};
@@ -54,12 +54,12 @@ use token_patterns::{
     PgCrudDfltOptSomeVecOneEl, PgCrudDfltOptSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay,
     StringTs, U64,
 };
-#[derive(Debug, Clone, OptimalPack)]
+#[derive(Debug, Clone, Optml)]
 pub enum DeriveOrImpl {
     Derive,
     Impl(Ts2),
 }
-#[derive(Debug, OptimalPack)]
+#[derive(Debug, Optml)]
 pub enum IsStdrtNotNull {
     False,
     True,
@@ -77,7 +77,7 @@ pub enum IsStdrtNotNull {
     Display,
     EnumIter,
     EnumExtension,
-    OptimalPack,
+    Optml,
 )]
 pub enum IsNullable {
     #[default]
@@ -121,7 +121,7 @@ impl IsNullable {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum Import {
     Crate,
     PgCrud,
@@ -181,7 +181,7 @@ impl ToTokens for Import {
             .to_tokens(tokens);
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum ShouldDeriveSchemarsJsonSchema {
     False,
     True,
@@ -194,7 +194,7 @@ impl ToTokens for ShouldDeriveSchemarsJsonSchema {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum ShouldDeriveUtoipaToSchema {
     False,
     True,
@@ -207,7 +207,7 @@ impl ToTokens for ShouldDeriveUtoipaToSchema {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsCreateQbMut {
     False,
     True,
@@ -220,7 +220,7 @@ impl ToTokens for IsCreateQbMut {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsSelectQpSelfSelectUsed {
     False,
     True,
@@ -233,7 +233,7 @@ impl ToTokens for IsSelectQpSelfSelectUsed {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsSelectQpColumnFieldForErMessageUsed {
     False,
     True,
@@ -248,7 +248,7 @@ impl ToTokens for IsSelectQpColumnFieldForErMessageUsed {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsSelectQpIsPgTypeUsed {
     False,
     True,
@@ -261,7 +261,7 @@ impl ToTokens for IsSelectQpIsPgTypeUsed {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsUpdateQpSelfUpdateUsed {
     False,
     True,
@@ -274,7 +274,7 @@ impl ToTokens for IsUpdateQpSelfUpdateUsed {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsUpdateQpJsonbSetTargetUsed {
     False,
     True,
@@ -287,7 +287,7 @@ impl ToTokens for IsUpdateQpJsonbSetTargetUsed {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsUpdateQbMut {
     False,
     True,
@@ -300,7 +300,7 @@ impl ToTokens for IsUpdateQbMut {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsSelectOnlyUpdatedIdsQbMut {
     False,
     True,
@@ -313,7 +313,7 @@ impl ToTokens for IsSelectOnlyUpdatedIdsQbMut {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsSelectOnlyCreatedIdsQbMut {
     False,
     True,
@@ -326,7 +326,7 @@ impl ToTokens for IsSelectOnlyCreatedIdsQbMut {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsQbMut {
     False,
     True,
@@ -339,7 +339,7 @@ impl ToTokens for IsQbMut {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IncrParamUndrscr {
     False,
     True,
@@ -352,7 +352,7 @@ impl ToTokens for IncrParamUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum ColumnParamUndrscr {
     False,
     True,
@@ -365,7 +365,7 @@ impl ToTokens for ColumnParamUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum AddOprtrUndrscr {
     False,
     True,
@@ -378,7 +378,7 @@ impl ToTokens for AddOprtrUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum ReadOrUpdate {
     Read,
     Update,
@@ -392,7 +392,7 @@ impl ReadOrUpdate {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum IsPkUndrscr {
     False,
     True,
@@ -405,22 +405,22 @@ impl ToTokens for IsPkUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum PgTypeOrPgJsonType {
     PgJsonType,
     PgType,
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
     DefaultSomeOne,
     DefaultSomeOneWithMaxPageSize,
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum EqualOrEqualUsingFields {
     Equal,
     EqualUsingFields,
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum EqualOprtrHandle {
     Equal,
     IsNull,
@@ -437,7 +437,7 @@ impl EqualOprtrHandle {
 }
 //todo mb reuse with other structs
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum Dim {
     One,
     Two,
@@ -458,7 +458,7 @@ impl Dim {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum DimIndexNbr {
     Zero,
     One,
@@ -475,7 +475,7 @@ impl From<&Dim> for DimIndexNbr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum CreateQpValueUndrscr {
     False,
     True,
@@ -488,7 +488,7 @@ impl ToTokens for CreateQpValueUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum CreateQpIncrUndrscr {
     False,
     True,
@@ -501,7 +501,7 @@ impl ToTokens for CreateQpIncrUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum CreateQbValueUndrscr {
     False,
     True,
@@ -514,7 +514,7 @@ impl ToTokens for CreateQbValueUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum SelectQpValueUndrscr {
     False,
     True,
@@ -527,7 +527,7 @@ impl ToTokens for SelectQpValueUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum UpdateQpValueUndrscr {
     False,
     True,
@@ -540,7 +540,7 @@ impl ToTokens for UpdateQpValueUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum UpdateQpJsonbSetAccumulatorUndrscr {
     False,
     True,
@@ -553,7 +553,7 @@ impl ToTokens for UpdateQpJsonbSetAccumulatorUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum UpdateQpJsonbSetTargetUndrscr {
     False,
     True,
@@ -566,7 +566,7 @@ impl ToTokens for UpdateQpJsonbSetTargetUndrscr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum UpdateQpJsonbSetPathUndrscr {
     False,
     True,
@@ -598,7 +598,7 @@ pub fn gen_pg_type_where_ts(
         });
         quote! {
             #attrs_ts
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema, optimal_pack::OptimalPack)]
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema, optml::Optml)]
             pub enum #ident {
                 #(#vrts_ts),*
             }

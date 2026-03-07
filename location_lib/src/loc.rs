@@ -2,7 +2,7 @@ use app_state::SourcePlaceType;
 use chrono::{DateTime, FixedOffset, Utc};
 use git_info::PROJECT_GIT_INFO;
 use naming::GITHUB_URL;
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -13,18 +13,14 @@ use std::{
 use utoipa::ToSchema;
 static SOURCE_PLACE_TYPE: OnceLock<SourcePlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
-)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct MacroOccurence {
     pub file: String,
     pub line: u32,
     pub column: u32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
-)]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct Loc {
     #[allow(clippy::arbitrary_source_item_ordering)]
     file: String,
@@ -55,7 +51,7 @@ impl Loc {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, ToSchema, OptimalPack)] //todo check somehow what its equal to std::time::Duration
+#[derive(Debug, Clone, Copy, ToSchema, Optml)] //todo check somehow what its equal to std::time::Duration
 pub struct StdTimeDuration {
     pub secs: u64,
     pub nanos: u32,

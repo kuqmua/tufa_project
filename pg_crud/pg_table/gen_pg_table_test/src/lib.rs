@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use macro_clippy_check_common::clippy_check;
-    use optimal_pack::OptimalPack;
+    use optml::Optml;
     use proc_macro2::TokenStream as Ts2;
     use quote::quote;
     use token_patterns::AllowClippyArbitrarySourceItemOrdering;
@@ -22,7 +22,7 @@ utoipa.workspace = true
 git_info = {path = "../../../git_info"}
 location_lib = {path = "../../../location_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
-optimal_pack = {path = "../../../optimal_pack"}
+optml = {path = "../../../optml"}
 [dev-dependencies]
 num_cpus.workspace = true
 futures.workspace = true
@@ -36,7 +36,7 @@ config_lib = {path = "../../../config_lib"}
 server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}"#,
             &{
-                #[derive(OptimalPack)]
+                #[derive(Optml)]
                 enum AddGenPgTablePk {
                     False,
                     True,
@@ -50,7 +50,7 @@ server_config = {path = "../../../server_config"}"#,
                     };
                     quote! {
                         #AllowClippyArbitrarySourceItemOrdering
-                        #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
+                        #[derive(Debug, Clone, Copy, optml::Optml)]
                         #[pg_crud::gen_pg_table_config{{
                             "cm_write_into_file": "False",
                             "co_write_into_file": "False",

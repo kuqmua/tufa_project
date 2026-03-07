@@ -21,7 +21,7 @@ location_lib = {path = "../../location_lib"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
 where_filters = {path = "../where_filters"}
 gen_pg_json_types_common = {path = "./gen_pg_json_types_common"}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 [lints]
 workspace = true

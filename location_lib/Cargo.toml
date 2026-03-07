@@ -21,7 +21,7 @@ app_state = {path = "../app_state"}
 location = {path = "./location"}
 naming = {path = "../naming"}
 to_err_string = {path = "../to_err_string"}
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

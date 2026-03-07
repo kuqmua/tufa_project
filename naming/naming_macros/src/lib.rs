@@ -57,7 +57,7 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             let (ucc_struct_decl_ts, sc_struct_decl_ts) = {
                 let gen_ts = |ts: &dyn ToTokens| {
                     quote! {
-                        #[derive(Debug, optimal_pack::OptimalPack)]
+                        #[derive(Debug, optml::Optml)]
                         pub struct #ts;
                     }
                 };
@@ -197,7 +197,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 &quote!{self.to_string().parse::<Ts2>().expect("71c8d26b").to_tokens(tokens);}
             );
             quote! {
-                #[derive(Debug, optimal_pack::OptimalPack)]
+                #[derive(Debug, optml::Optml)]
                 pub struct #struct_ident_ts(String);
                 impl #struct_ident_ts {
                     fn wrap(v: &dyn std::fmt::Display) -> Self {

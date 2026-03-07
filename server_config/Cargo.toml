@@ -16,7 +16,7 @@ dotenv.workspace = true
 secrecy.workspace = true
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

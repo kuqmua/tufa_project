@@ -1,7 +1,7 @@
 pub mod types;
 use chrono::FixedOffset;
 pub use gen_getter_traits_for_struct_fields::GenGetterTraitsForStructFields;
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use secrecy::SecretBox;
 use std::{
     net::{AddrParseError, SocketAddr},
@@ -14,9 +14,9 @@ pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error>;
 }
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct ServiceSocketAddress(pub SocketAddr);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressEr {
     StdNetSocketAddr { std_net_socket_addr: AddrParseError },
 }
@@ -30,9 +30,9 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
             })
     }
 }
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct Timezone(pub FixedOffset);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkTimezoneEr {
     ChronoFixedOffset { chrono_fixed_offset: String },
     I32Parsing { i32_parsing: ParseIntError },
@@ -53,9 +53,9 @@ impl TryFromStdEnvVarOk for Timezone {
         Ok(Self(fixed_offset))
     }
 }
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct RedisUrl(pub SecretBox<String>);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkRedisUrlEr {
     IsEmpty { is_empty: String },
 }
@@ -71,9 +71,9 @@ impl TryFromStdEnvVarOk for RedisUrl {
         }))
     }
 }
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct MongoUrl(pub SecretBox<String>);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkMongoUrlEr {
     IsEmpty { is_empty: String },
 }
@@ -89,9 +89,9 @@ impl TryFromStdEnvVarOk for MongoUrl {
         }))
     }
 }
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct DatabaseUrl(pub SecretBox<String>);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkDatabaseUrlEr {
     IsEmpty { is_empty: String },
 }
@@ -107,9 +107,9 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
         }))
     }
 }
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct StartingCheckLink(pub String);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkStartingCheckLinkEr {
     IsEmpty { is_empty: String },
 }
@@ -125,9 +125,9 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
         }))
     }
 }
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct TracingLevel(pub types::TracingLevel);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkTracingLevelEr {
     AppStateTracingLevelParsing {
         app_state_tracing_type_parsing: String,
@@ -146,9 +146,9 @@ impl TryFromStdEnvVarOk for TracingLevel {
         }))
     }
 }
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct SourcePlaceType(pub types::SourcePlaceType);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeEr {
     AppStateSourcePlaceTypeParsing {
         app_state_source_place_type_parsing: String,
@@ -167,9 +167,9 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
         }))
     }
 }
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct EnableApiGitCommitCheck(pub bool);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckEr {
     BoolParsing { bool_parsing: ParseBoolError },
 }
@@ -184,9 +184,9 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
         }))
     }
 }
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, OptimalPack)]
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
-#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, OptimalPack)]
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr {
     UsizeParsing { usize_parsing: ParseIntError },
 }

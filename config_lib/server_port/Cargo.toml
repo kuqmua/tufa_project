@@ -15,7 +15,7 @@ categories = ["category"]
 serde.workspace = true
 server_port_try_from_u16 = {path = "./server_port_try_from_u16"}
 server_port_common = {path = "./server_port_common"}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 [lints]
 workspace = true

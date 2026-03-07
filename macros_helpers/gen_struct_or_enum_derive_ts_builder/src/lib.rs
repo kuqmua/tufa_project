@@ -1,4 +1,4 @@
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -6,7 +6,7 @@ use serde_json::from_str;
 #[proc_macro]
 pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     use naming::param::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
-    #[derive(Clone, OptimalPack)]
+    #[derive(Clone, Optml)]
     struct El {
         derive_trait_name_if_sc: Ts2,
         derive_trait_name_sc: Ts2,
@@ -69,7 +69,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     let (make_pub_pub_enum_ts, pub_enum_derive_vec_ts) = {
         fn gen_ts(ident: &dyn ToTokens) -> Ts2 {
             quote! {
-                #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
+                #[derive(Debug, Clone, Copy, optml::Optml)]
                 pub enum #ident {
                     True,
                     False
@@ -136,12 +136,12 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
     let generated: Ts2 = quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
-        #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
+        #[derive(Debug, Clone, Copy, optml::Optml)]
         enum #struct_or_enum_ucc {
             Struct,
             Enum
         }
-        #[derive(Debug, Default, Clone, Copy, optimal_pack::OptimalPack)]
+        #[derive(Debug, Default, Clone, Copy, optml::Optml)]
         pub struct #struct_or_enum_derive_ts_builder_ucc {
             #make_pub_derive_trait_name_bool_ts
             #(#field_vec_ts)*

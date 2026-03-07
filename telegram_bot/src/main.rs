@@ -1,6 +1,6 @@
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use teloxide::{Bot, prelude::Requester, repl, types::Message, utils::command::BotCommands};
-#[derive(BotCommands, Clone, OptimalPack)]
+#[derive(BotCommands, Clone, Optml)]
 #[command(rename_rule = "lowercase", description = "These cmds are supported:")]
 enum Cmd {
     #[command(description = "show bot source code info ")]

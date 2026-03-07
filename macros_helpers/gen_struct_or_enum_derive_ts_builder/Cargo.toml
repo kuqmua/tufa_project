@@ -17,7 +17,7 @@ proc-macro2.workspace = true
 quote.workspace = true
 serde_json.workspace = true
 naming = {path = "../../naming"}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 [lints]
 workspace = true

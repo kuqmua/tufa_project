@@ -1,5 +1,5 @@
 use naming::{AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use strum_macros::Display;
@@ -15,7 +15,7 @@ use syn::Variant;
     Hash,
     AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrEnumWithUnitFieldsToScStr,
-    OptimalPack,
+    Optml,
 )]
 pub enum StatusCode {
     Continue100,

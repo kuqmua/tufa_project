@@ -15,7 +15,7 @@ serde_json.workspace = true
 tokio.workspace = true
 thiserror.workspace = true
 location_lib = {path = "../location_lib"}
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

@@ -58,7 +58,7 @@ use naming::{
         UpdateQpSelfSc,
     },
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrParamUndrscr,
@@ -123,7 +123,7 @@ use token_patterns::{
 #[must_use]
 pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     struct SynVrtWrapper {
         vrt: Variant,
         status_code: Option<StatusCode>,
@@ -159,7 +159,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Copy,
         AsRefStrEnumWithUnitFieldsToUccStr,
         AsRefStrEnumWithUnitFieldsToScStr,
-        OptimalPack,
+        Optml,
     )]
     enum Op {
         Cm,
@@ -297,7 +297,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(AsRefStrEnumWithUnitFieldsToScStr, OptimalPack)]
+    #[derive(AsRefStrEnumWithUnitFieldsToScStr, Optml)]
     enum OpHttpMethod {
         Post,
         Patch,
@@ -313,7 +313,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Ro,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Display, OptimalPack)]
+    #[derive(Debug, Display, Optml)]
     enum GenPgTableAttr {
         CmErVrts,
         CoErVrts,
@@ -378,7 +378,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Delete,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Deserialize, OptimalPack)]
+    #[derive(Debug, Deserialize, Optml)]
     struct GenPgTableConfig {
         tests_write_into_file: ShouldWriteTsIntoFile,
         common_write_into_file: ShouldWriteTsIntoFile,

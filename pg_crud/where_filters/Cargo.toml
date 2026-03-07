@@ -19,7 +19,7 @@ thiserror.workspace = true
 gen_where_filters = {path = "./gen_where_filters"}
 location_lib = {path = "../../location_lib"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
-optimal_pack = {path = "../../optimal_pack"}
+optml = {path = "../../optml"}
 
 
 [lints]

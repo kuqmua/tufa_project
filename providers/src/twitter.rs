@@ -1,12 +1,12 @@
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use serde_derive::{Deserialize, Serialize};
-#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Optml)]
 pub struct Data {
     pub image: Image,
     #[serde(rename = "item", default)]
     pub items: Vec<ItemEl>,
 }
-#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Optml)]
 pub struct Image {
     //title
     //link
@@ -14,7 +14,7 @@ pub struct Image {
     //height
     pub url: Option<String>,
 }
-#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Optml)]
 pub struct ItemEl {
     pub creator: Option<String>,
     pub description: Option<String>,

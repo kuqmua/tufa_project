@@ -1,6 +1,6 @@
 use dotenv::dotenv;
 use enum_extension_lib::EnumExtension;
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use serde::{Deserialize, Serialize};
 use std::{
     env,
@@ -20,7 +20,7 @@ use strum_macros::{Display as StrumDisplay, EnumIter};
     Deserialize,
     PartialEq,
     Eq,
-    OptimalPack,
+    Optml,
 )]
 pub enum TracingLevel {
     Trace,
@@ -49,7 +49,7 @@ impl Display for TracingLevel {
     }
 }
 #[derive(
-    Debug, Default, Clone, Copy, PartialEq, Eq, StrumDisplay, Serialize, Deserialize, OptimalPack,
+    Debug, Default, Clone, Copy, PartialEq, Eq, StrumDisplay, Serialize, Deserialize, Optml,
 )]
 pub enum SourcePlaceType {
     #[default]

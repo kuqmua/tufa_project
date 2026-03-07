@@ -13,7 +13,7 @@ categories = ["category"]
 thiserror.workspace = true
 serde.workspace = true
 location_lib = {path = "../location_lib"}
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

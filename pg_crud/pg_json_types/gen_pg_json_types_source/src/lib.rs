@@ -18,7 +18,7 @@ use naming::{
         SelfUpdateUcc, SelfWhereUcc,
     },
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNullable, IsQbMut,
@@ -54,7 +54,7 @@ use token_patterns::{
 #[must_use]
 pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Display, OptimalPack)]
+    #[derive(Debug, Display, Optml)]
     enum RustTypeName {
         I8,
         I16,
@@ -89,7 +89,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             }
         }
     }
-    #[derive(Debug, OptimalPack)]
+    #[derive(Debug, Optml)]
     enum PgJsonTypeName {
         Boolean,
         Nbr,
@@ -138,7 +138,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         Display,
         EnumIter,
         EnumExtension,
-        OptimalPack,
+        Optml,
     )]
     enum PgJsonType {
         I8AsJsonbNbr,
@@ -175,7 +175,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         Display,
         EnumIter,
         EnumExtension,
-        OptimalPack,
+        Optml,
     )]
     enum Pattern {
         Stdrt,
@@ -326,14 +326,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, OptimalPack)]
+    #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Optml)]
     struct Record {
         pg_json_type: PgJsonType,
         is_nullable: IsNullable,
         pattern: Pattern,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Deserialize, OptimalPack)]
+    #[derive(Debug, Deserialize, Optml)]
     enum ConfigVrt {
         All,
         WithoutDims,
@@ -344,7 +344,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         Concrete(Vec<Record>),
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, Deserialize, OptimalPack)]
+    #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonTypesConfig {
         vrt: ConfigVrt,
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
@@ -479,7 +479,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         acc
     }.into_iter().fold(Vec::new(), |mut acc, el| {
         for el0 in {
-            #[derive(Clone, OptimalPack)]
+            #[derive(Clone, Optml)]
             struct RecordHandle {
                 is_nullable: IsNullable,
                 pattern: Pattern,
@@ -1177,7 +1177,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             IsNullable::False => gen_pg_type_where_ts(
                 &AllowClippyArbitrarySourceItemOrdering,
                 &{
-                    #[derive(Debug, Clone, OptimalPack)]
+                    #[derive(Debug, Clone, Optml)]
                     enum PgJsonTypeSpecific {
                         Bool,
                         Nbr,

@@ -7,11 +7,11 @@
 // eo_location_field
 // https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
 use location_lib::{Location, ToErrString, loc, loc::Loc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use thiserror::Error;
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum ErOne {
     //use ToErrString for hashmap ks instead of Display
     //todo even for String in serialize deserialize version of er must be using ToErrString impl instead of std::fmt::Display
@@ -38,7 +38,7 @@ pub enum ErOne {
         loc: Loc,
     },
 }
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum ErTwo {
     Another {
         #[eo_to_err_string_serde]
@@ -51,11 +51,11 @@ pub enum ErTwo {
         loc: Loc,
     },
 }
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum ErUnnamedOne {
     Something(ErTwo),
 }
-#[derive(Debug, OptimalPack)]
+#[derive(Debug, Optml)]
 pub struct DisplayStruct {
     pub display: String,
     pub something: bool,
@@ -68,7 +68,7 @@ impl ToErrString for DisplayStruct {
 }
 //todo rename fields
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Serialize, Deserialize, OptimalPack)]
+#[derive(Debug, Serialize, Deserialize, Optml)]
 pub struct SerdeStruct {
     pub one: String,
     pub three: u32,

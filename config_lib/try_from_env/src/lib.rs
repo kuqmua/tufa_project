@@ -35,7 +35,7 @@ pub fn try_from_env(v: Ts) -> Ts {
             }
         });
         quote! {
-            #[derive(Debug, Error, optimal_pack::OptimalPack)]
+            #[derive(Debug, Error, optml::Optml)]
             pub enum #ident_try_from_env_er_ucc {
                 #DotenvUcc {
                     #DotenvSc: dotenv::Error,

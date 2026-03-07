@@ -15,7 +15,7 @@ categories = ["category"]
 log.workspace = true
 teloxide.workspace = true
 tokio.workspace = true
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

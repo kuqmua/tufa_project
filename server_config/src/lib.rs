@@ -3,12 +3,12 @@ use config_lib::{
     GenGetterTraitsForStructFields, TryFromEnv,
     types::{SourcePlaceType, TracingLevel},
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use secrecy::SecretBox;
 use std::net::SocketAddr;
 use thiserror::Error;
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields, OptimalPack)]
+#[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields, Optml)]
 pub struct Config {
     //todo mb auto gen .env and docker-compose environment variables. and mb write in directly into files
     pub maximum_size_of_http_body_in_bytes: usize,

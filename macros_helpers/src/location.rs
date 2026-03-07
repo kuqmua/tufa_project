@@ -1,6 +1,6 @@
 use crate::attr_ident_str::AttrIdentStr;
 use naming::{HashMapUcc, LocSc, WithSerdeUcc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 use std::str::FromStr;
@@ -9,7 +9,7 @@ use syn::{
 };
 use token_patterns::StringTs;
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, OptimalPack)]
+#[derive(Debug, Clone, Copy, Optml)]
 pub enum LocationFieldAttr {
     EoToErrString,
     EoToErrStringSerde,

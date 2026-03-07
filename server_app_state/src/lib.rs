@@ -6,11 +6,11 @@ use chrono::FixedOffset;
 use common_routes::CommonRoutesParams;
 use config_lib::types::SourcePlaceType;
 use git_info::{GetGitCommitLink, ProjectGitInfo};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use pg_crud::CombinationOfAppStateLogicTraits;
 use server_config::Config;
 use sqlx::PgPool;
-#[derive(Debug, OptimalPack)]
+#[derive(Debug, Optml)]
 pub struct ServerAppState<'lt> {
     pub config: Config,
     pub pg_pool: PgPool,

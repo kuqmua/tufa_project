@@ -21,7 +21,7 @@ git_info = {path = "../git_info"}
 naming = {path = "../naming"}
 location_lib = {path = "../location_lib"}
 http_logic = {path = "../http_logic"}
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

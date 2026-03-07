@@ -58,7 +58,7 @@ fn main() {
                     //todo partialy move to gen postresql crud impl (except git_info route)
                     // .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
                     //         // er: needless use of `for_each`
-                    //         // #[derive(utoipa::OpenApi, OptimalPack)]
+                    //         // #[derive(utoipa::OpenApi, Optml)]
                     //     //     #[openapi(
                     //     //     paths(
                     //     //         server_table_example::server::routes::git_info::git_info,

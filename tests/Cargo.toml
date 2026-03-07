@@ -19,7 +19,7 @@ regex.workspace = true
 syn.workspace = true
 uuid.workspace = true
 walkdir.workspace = true
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

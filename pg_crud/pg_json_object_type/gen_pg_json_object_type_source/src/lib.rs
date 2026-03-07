@@ -42,7 +42,7 @@ use naming::{
         SelfUpdateForQueryUcc, SelfUpdateTryNewErUcc, SelfUpdateUcc, SelfWhereUcc,
     },
 };
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
@@ -88,34 +88,26 @@ use token_patterns::{
 //todo bug in update if updating arr and creating el in jsonb arr without anything - read_ids generation logic of vec returns wrong query part
 #[must_use]
 pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
-    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
     enum TraitGen {
         PgJsonType,
         PgTypeAndPgJsonType,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Serialize,
-        Deserialize,
-        Display,
-        EnumIter,
-        EnumExtension,
-        OptimalPack,
+        Debug, Clone, PartialEq, Serialize, Deserialize, Display, EnumIter, EnumExtension, Optml,
     )]
     enum Pattern {
         Stdrt,
         Arr,
     }
-    #[derive(Debug, PartialEq, Serialize, Deserialize, OptimalPack)]
+    #[derive(Debug, PartialEq, Serialize, Deserialize, Optml)]
     struct PgJsonObjectTypeRecord {
         is_nullable: IsNullable,
         pattern: Pattern,
         trait_gen: TraitGen,
     }
-    #[derive(Debug, Deserialize, OptimalPack)]
+    #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types:
             ShouldWriteTsIntoFile,
@@ -169,7 +161,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     .into_iter()
     .enumerate()
     .map(|(i, el)| {
-        #[derive(Debug, Display, EnumIter, EnumExtension, OptimalPack)]
+        #[derive(Debug, Display, EnumIter, EnumExtension, Optml)]
         enum IsStdrtWithId {
             False,
             True,
@@ -183,7 +175,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             ArrNullableWithIdentifier,//Identifier instead of Id - just to fix clippy lint
         }
         #[allow(clippy::arbitrary_source_item_ordering)]
-        #[derive(Debug, Clone, Display, OptimalPack)]
+        #[derive(Debug, Clone, Display, Optml)]
         enum PgJsonTypeSubtype {
             TableType,
             Create,
@@ -201,7 +193,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 self.to_string().parse::<Ts2>().expect("43ac0b62").to_tokens(tokens);
             }
         }
-        #[derive(Debug, Clone, Display, OptimalPack)]
+        #[derive(Debug, Clone, Display, Optml)]
         enum PgTypeSubtype {
             // TableType,
             // Create,
@@ -3005,15 +2997,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 //     type ExtraType: PartialEq;
                 // }
                 // pub struct MyStruct;
-                // #[derive(PartialEq, OptimalPack)]
+                // #[derive(PartialEq, Optml)]
                 // pub struct MyStructExtraType(String);
                 // impl MyTrait for MyStruct {
                 //     type ExtraType = MyStructExtraType;
                 // }
-                // #[derive(PartialEq, OptimalPack)]
+                // #[derive(PartialEq, Optml)]
                 // pub struct WrapperOfMyTrait<T: MyTrait>(<T as MyTrait>::ExtraType);
                 // pub type WrapperOfMyTraitAl = WrapperOfMyTrait<MyStruct>;
-                // #[derive(PartialEq, OptimalPack)]
+                // #[derive(PartialEq, Optml)]
                 // pub struct WrapperOfWrapperOfMyTraitAl(WrapperOfMyTraitAl);
                 // // er[E0369]: binary op `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
                 let ident_with_id_stdrt_not_null_update_el_fields_decl_ts = quote! {
@@ -4764,7 +4756,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     opt_extra_params_ts,
                                     params_ts
                                 ) = {
-                                    #[derive(Clone, OptimalPack)]
+                                    #[derive(Clone, Optml)]
                                     enum AddDotClone {
                                         False,
                                         True,

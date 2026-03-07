@@ -1,4 +1,4 @@
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeEr};
 use server_port_common::{
     SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
@@ -9,14 +9,14 @@ use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
 };
-#[derive(Debug, Clone, Copy, Serialize, OptimalPack)]
+#[derive(Debug, Clone, Copy, Serialize, Optml)]
 pub struct ServerPort(u16);
 impl Display for ServerPort {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         write!(f, "{}", self.0)
     }
 }
-#[derive(Debug, Serialize, Deserialize, OptimalPack)]
+#[derive(Debug, Serialize, Deserialize, Optml)]
 pub struct ServerPortEr {
     message: String,
     server_port_max: u16,

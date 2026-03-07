@@ -1,19 +1,19 @@
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use serde_derive::{Deserialize, Serialize};
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
 pub struct Data {
     pub data: DataChildren,
 }
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
 pub struct DataChildren {
     pub children: Vec<DataChildrenEl>,
 }
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
 pub struct DataChildrenEl {
     pub data: DataChildrenElData,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, OptimalPack)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
 pub struct DataChildrenElData {
     // media_embed ???
     // user_reports ???

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use optimal_pack::OptimalPack;
+    use optml::Optml;
     use regex::Regex;
     use reqwest::blocking;
     use scraper::{Html, Selector};
@@ -17,7 +17,7 @@ mod tests {
     use toml::{Table as TomlTable, Value, value::Table};
     use uuid::Uuid;
     use walkdir::WalkDir;
-    #[derive(Debug, Clone, Copy, OptimalPack)]
+    #[derive(Debug, Clone, Copy, Optml)]
     enum RustOrClippy {
         Clippy,
         Rust,
@@ -30,7 +30,7 @@ mod tests {
             }
         }
     }
-    #[derive(Debug, Clone, Copy, OptimalPack)]
+    #[derive(Debug, Clone, Copy, Optml)]
     enum ExpectOrPanic {
         Expect,
         Panic,

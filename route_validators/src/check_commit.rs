@@ -6,9 +6,9 @@ use git_info::{GetGitCommitLink, PROJECT_GIT_INFO};
 use http_logic::GetAxumHttpStatusCode;
 use location_lib::{Location, loc, loc::Loc};
 use naming::CommitSc;
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use thiserror::Error;
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum CommitEr {
     CommitNotEqual {
         #[eo_to_err_string_serde]

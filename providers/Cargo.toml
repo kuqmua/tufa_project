@@ -12,7 +12,7 @@ categories = ["category"]
 [dependencies]
 serde.workspace = true
 serde_derive.workspace = true
-optimal_pack = {path = "../optimal_pack"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

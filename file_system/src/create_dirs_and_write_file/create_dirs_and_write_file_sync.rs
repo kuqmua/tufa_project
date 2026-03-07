@@ -1,12 +1,12 @@
 use location_lib::{Location, loc, loc::Loc};
-use optimal_pack::OptimalPack;
+use optml::Optml;
 use std::{
     fs::{self, File},
     io::{Error as IoEr, Write},
     path::Path,
 };
 use thiserror::Error;
-#[derive(Debug, Error, Location, OptimalPack)]
+#[derive(Debug, Error, Location, Optml)]
 pub enum CreateDirsAndWriteFileSyncEr {
     StdIo {
         #[eo_to_err_string]
