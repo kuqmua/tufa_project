@@ -56,7 +56,10 @@
 
 ## Run before completion
 
-​```bash
+```bash
 cargo fmt
+```
+
+```bash
 cargo clippy --all-targets --all-features -- -D warnings
-​```
+```
