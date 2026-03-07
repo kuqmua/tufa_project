@@ -328,7 +328,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["std", "vec", "vec", "generic"],
     ["fields", "filter", "is", "empty"],
     ["not", "unique", "field", "filter"],
-    ["pagination"],
+    ["pgn"],
     ["field", "vec"],
     ["object", "acc"],
     ["std", "opt", "opt", "object", "acc"],

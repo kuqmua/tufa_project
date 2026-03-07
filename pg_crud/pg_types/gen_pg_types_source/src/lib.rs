@@ -4331,9 +4331,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::ArrDim1 { .. } => {
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dims_nbr {
-                            let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("af86f2d1");
+                            let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("af86f2d1");
                             args_ts.push(quote! {
-                                #dim_nbr_pagination_ts: pg_types_common::PaginationStartsWithOne
+                                #dim_nbr_pgn_ts: pg_types_common::PgnStartsWithOne
                             });
                         }
                         quote! {{#(#args_ts),*}}
@@ -4351,9 +4351,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dims_nbr {
-                            let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("e5250a98");
+                            let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("e5250a98");
                             args_ts.push(quote! {
-                                #dim_nbr_pagination_ts: #ts
+                                #dim_nbr_pgn_ts: #ts
                             });
                         }
                         quote! {Self {#(#args_ts),*}}
@@ -5026,12 +5026,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             });
                             let args_ts = (1..=arr_dims_nbr)
                             .map(|el0| {
-                                let dim_nbr_pagination_ts = format!("dim{el0}_pagination")
+                                let dim_nbr_pgn_ts = format!("dim{el0}_pgn")
                                 .parse::<Ts2>()
                                 .expect("6f2305ee");
                                 quote! {
-                                    #VSc.#dim_nbr_pagination_ts.start(),
-                                    #VSc.#dim_nbr_pagination_ts.end(),
+                                    #VSc.#dim_nbr_pgn_ts.start(),
+                                    #VSc.#dim_nbr_pgn_ts.end(),
                                 }
                             });
                             quote! {format!(

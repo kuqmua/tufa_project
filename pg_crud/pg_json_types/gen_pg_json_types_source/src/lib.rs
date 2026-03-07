@@ -1132,10 +1132,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         |arr_dim| {
                             let mut args_ts = Vec::new();
                             for el0 in 1..=arr_dim.to_usize() {
-                                let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>()
+                                let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>()
                                 .expect("2ad1faf7");
                                 args_ts.push(quote! {
-                                    #dim_nbr_pagination_ts: #import::PaginationStartsWithZero
+                                    #dim_nbr_pgn_ts: #import::PgnStartsWithZero
                                 });
                             }
                             quote! {{#(#args_ts),*}}
@@ -1152,9 +1152,9 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dim.to_usize() {
-                            let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("26ca29fb");
+                            let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("26ca29fb");
                             args_ts.push(quote! {
-                                #dim_nbr_pagination_ts: #content_ts
+                                #dim_nbr_pgn_ts: #content_ts
                             });
                         }
                         quote! {#(#args_ts),*}
@@ -2030,16 +2030,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                 gen_dim_nbr_end_str(el0)
                                     .parse::<Ts2>()
                                     .expect("24acbb5e");
-                            let dim_nbr_pagination_ts =
+                            let dim_nbr_pgn_ts =
                                 format!(
-                                    "{}_pagination",
+                                    "{}_pgn",
                                     gen_dim_nbr_str(el0)
                                 )
                                 .parse::<Ts2>()
                                 .expect("745c99b3");
                             quote! {
-                                let #dim_nbr_start_ts = #VSc.#dim_nbr_pagination_ts.start();
-                                let #dim_nbr_end_ts = #VSc.#dim_nbr_pagination_ts.end();
+                                let #dim_nbr_start_ts = #VSc.#dim_nbr_pgn_ts.start();
+                                let #dim_nbr_end_ts = #VSc.#dim_nbr_pgn_ts.end();
                             }
                         })
                     });

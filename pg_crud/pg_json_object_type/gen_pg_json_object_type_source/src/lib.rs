@@ -1052,7 +1052,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let ident_stdrt_not_null_as_pg_json_type_select_ts = gen_type_as_pg_json_type_select_ts(&ident_stdrt_not_null_ucc);
         let ident_with_id_arr_not_null_as_pg_json_type_select_ts = gen_type_as_pg_json_type_select_ts(&ident_with_id_arr_not_null_ucc);
         let ident_with_id_stdrt_not_null_select_sc = SelfSelectSc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
-        let dim1_pagination_ts = quote! {dim1_pagination};
+        let dim1_pgn_ts = quote! {dim1_pgn};
         let ident_stdrt_not_null_select_el_ucc = SelfSelectElUcc::from_tokens(&ident_stdrt_not_null_ucc);
         let ident_with_id_stdrt_not_null_select_el_ucc = SelfSelectElUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let gen_select_qp_for_loop_ts = |
@@ -1141,7 +1141,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     })),
                 )
             };
-            let import_pagination_ts = quote! {#import::PaginationStartsWithZero};
+            let import_pgn_ts = quote! {#import::PgnStartsWithZero};
             let ident_select_ts = match &is_nullable {
                 IsNullable::False => match &pattern {
                     Pattern::Stdrt => gen_ident_select_stdrt_not_null_ts(&is_stdrt_with_id_false),
@@ -1150,7 +1150,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ident_select_ucc,
                         &quote! {{
                             #ident_with_id_stdrt_not_null_select_sc: #ident_with_id_stdrt_not_null_select_ucc,
-                            #dim1_pagination_ts: #import_pagination_ts
+                            #dim1_pgn_ts: #import_pgn_ts
                         }},
                     ),
                 },
@@ -1175,7 +1175,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Pattern::Arr => match &is_nullable {
                                 IsNullable::False => quote! {
                                     #ident_with_id_stdrt_not_null_select_sc: #ident_with_id_stdrt_not_null_select_ucc,
-                                    #dim1_pagination_ts: #import_pagination_ts
+                                    #dim1_pgn_ts: #import_pgn_ts
                                 },
                                 IsNullable::True => gen_v_type_ts(&gen_opt_type_decl_ts(&ident_with_id_arr_not_null_as_pg_json_type_select_ts)),
                             },
@@ -1192,7 +1192,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::False => {
                                 quote! {Self {
                                     #ident_with_id_stdrt_not_null_select_sc,
-                                    #dim1_pagination_ts,
+                                    #dim1_pgn_ts,
                                 }}
                             }
                             IsNullable::True => self_v_ts.clone(),
@@ -1287,8 +1287,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         let _: Option<char> = #acc_399d9786_ts.pop();
                                         #acc_399d9786_ts
                                     };
-                                    let dim1_start = self.#dim1_pagination_ts.start();
-                                    let dim1_end = self.#dim1_pagination_ts.end();
+                                    let dim1_start = self.#dim1_pgn_ts.start();
+                                    let dim1_end = self.#dim1_pgn_ts.end();
                                     Ok(format!(#format_ts))
                                 }
                             }
@@ -1355,7 +1355,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             IsNullable::False => {
                                 let (
                                     ident_with_id_stdrt_not_null_select_ts,
-                                    dim1_pagination_ts_364caa54
+                                    dim1_pgn_ts_364caa54
                                 ): (
                                     &dyn ToTokens,
                                     &dyn ToTokens
@@ -1372,7 +1372,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 quote! {
                                     Self {
                                         #ident_with_id_stdrt_not_null_select_sc: #ident_with_id_stdrt_not_null_select_ts,
-                                        #dim1_pagination_ts: #dim1_pagination_ts_364caa54,
+                                        #dim1_pgn_ts: #dim1_pgn_ts_364caa54,
                                     }
                                 }
                             },
@@ -3769,8 +3769,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     let _: Option<char> = #acc_41dea548_ts.pop();
                                     #acc_41dea548_ts
                                 };
-                                let dim1_start = #VSc.#dim1_pagination_ts.start();
-                                let dim1_end = #VSc.#dim1_pagination_ts.end();
+                                let dim1_start = #VSc.#dim1_pgn_ts.start();
+                                let dim1_end = #VSc.#dim1_pgn_ts.end();
                                 Ok(format!(#format_ts))
                             }
                         }

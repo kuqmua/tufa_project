@@ -24,12 +24,12 @@ use naming::{
     GenWhenColumnIdThenVUmQpSc, HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc,
     IdentCreateDfltSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc,
     NotUniqueFieldUcc, NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc,
-    OrderSc, PaginationSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc,
-    PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc,
-    PgUcc, PkQpSc, PkSc, PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc,
-    PreparePgTableSc, PreparePgUcc, QbSc, QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc,
-    ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
-    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
+    OrderSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc,
+    PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PgnSc, PkQpSc, PkSc,
+    PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc, PreparePgTableSc,
+    PreparePgUcc, QbSc, QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc,
+    ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc, ReadOnlyIdsIntoUpdateSc,
+    ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
@@ -2880,7 +2880,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     gen_if_write_is_err_curly_braces_ts_f9cf9cf2(&{
                                         let ts = gen_match_ok_err_ts_85a5eace(
                                             &quote! {#pg_crud_pg_type_where_filter_qp_ts(
-                                                &#ParamsSc.#PayloadSc.pagination,
+                                                &#ParamsSc.#PayloadSc.pgn,
                                                 &mut #IncrSc,
                                                 &"",
                                                 bool::default()
@@ -3135,7 +3135,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let query_pg_type_where_filter_qb_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_qb_params_payload_where_many_query_ts(op);
                             let ts = gen_match_qb_or_err_ts_519a3119(
                                 &quote! {#pg_crud_pg_type_where_filter_qb_ts(
-                                    #ParamsSc.#PayloadSc.pagination,
+                                    #ParamsSc.#PayloadSc.pgn,
                                     #QuerySc,
                                 )},
                                 &quote! {v_9f7e487b},
@@ -3526,10 +3526,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #pub_where_many_opt_ident_where_many_ts,
                             #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
                             pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
-                            pub #PaginationSc: #import_ts PaginationStartsWithZero,
+                            pub #PgnSc: #import_ts PgnStartsWithZero,
                         }},
                         &{
-                            let ts = gen_fi_dflt_opt_some_vec_one_el_call_ts(&PaginationSc);
+                            let ts = gen_fi_dflt_opt_some_vec_one_el_call_ts(&PgnSc);
                             quote! {{
                                 #where_many_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                                 #select_pg_crud_dflt_opt_some_vec_one_el_call_ts,
@@ -4302,7 +4302,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &quote! {
                     itertools::Itertools::sorted_by(
-                        gen_try_rm_order_by_pk_with_big_pagination(
+                        gen_try_rm_order_by_pk_with_big_pgn(
                             url,
                             gen_ident_where_many_pripery_k_others_none(
                                 Some(
@@ -4454,7 +4454,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let assert_eq_ts_b47328e3 = gen_assert_eq_ts(
                         &ts_611ddc2e,
                         &quote! {
-                            gen_try_rm_order_by_pk_with_big_pagination(
+                            gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
                                 gen_ident_where_many_pripery_k_others_none(
                                     Some(
@@ -4480,7 +4480,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ts =
                                 gen_pk_where_equal_into_inner_ts(&quote! {el_a37bca54.clone()});
                             quote! {
-                                gen_try_rm_order_by_pk_with_big_pagination(
+                                gen_try_rm_order_by_pk_with_big_pgn(
                                     &url_cloned,
                                     gen_ident_where_many_pripery_k_others_none(
                                         Some(
@@ -4650,7 +4650,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote!{table_test_rm_by_non_existent_pks},
                     &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &quote!{
-                            gen_try_rm_order_by_pk_with_big_pagination(
+                            gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
                                 gen_ident_where_many_pripery_k_others_none(
                                     Some(
@@ -4680,7 +4680,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
                                 &ts_611ddc2e,
                                 &quote! {
-                                    gen_try_rm_order_by_pk_with_big_pagination(
+                                    gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
@@ -4705,7 +4705,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &{
                                     let ts = gen_pk_where_equal_into_inner_ts(&quote!{el_1e9c87ce.clone()});
                                     quote!{
-                                        gen_try_rm_order_by_pk_with_big_pagination(
+                                        gen_try_rm_order_by_pk_with_big_pgn(
                                             &url_cloned,
                                             gen_ident_where_many_pripery_k_others_none(
                                                 Some(
@@ -4769,7 +4769,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         ]},
                         &quote! {
-                            gen_try_rm_order_by_pk_with_big_pagination(
+                            gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
                                 #ident_where_many_ucc::try_new(#ts).expect("83c2d430"),
                                 #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -4811,7 +4811,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts
                                 );
                                 quote! {
-                                    gen_try_rm_order_by_pk_with_big_pagination(
+                                    gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
@@ -5291,7 +5291,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         quote! {
                             let previous_read = itertools::Itertools::sorted_by(
-                                gen_try_rm_order_by_pk_with_big_pagination(
+                                gen_try_rm_order_by_pk_with_big_pgn(
                                     &url_cloned,
                                     gen_ident_where_many_pripery_k_others_none(
                                         Some(
@@ -5413,7 +5413,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             );
                             quote! {
                                 itertools::Itertools::sorted_by(
-                                    gen_try_rm_order_by_pk_with_big_pagination(
+                                    gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
@@ -5636,7 +5636,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &{
                                 let ts = gen_pk_where_equal_ts(&pk_ft_read_into_table_type_el_pk_fi_clone_ts);
                                 quote!{
-                                    gen_try_rm_order_by_pk_with_big_pagination(
+                                    gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
@@ -5816,8 +5816,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )
             }
         };
-        let gen_try_rm_order_by_pk_with_big_pagination_fn_ts = quote! {
-            async fn gen_try_rm_order_by_pk_with_big_pagination(
+        let gen_try_rm_order_by_pk_with_big_pgn_fn_ts = quote! {
+            async fn gen_try_rm_order_by_pk_with_big_pgn(
                 endpoint_location: &str,
                 ident_where_many_6b1fab92: #ident_where_many_ucc,
                 select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
@@ -5837,7 +5837,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 ),
                                 order: Some(#import_ts Order::Asc)
                             },
-                            pagination: #import_ts PaginationStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
+                            pgn: #import_ts PgnStartsWithZero::try_new(10000, 0).expect("b0cdf0cb"),
                         }
                     },
                     table
@@ -5999,7 +5999,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #gen_ident_where_many_pripery_k_others_none_fn_ts
                     #gen_pg_type_where_try_new_pk_fn_ts
                     #gen_pg_type_where_try_new_or_pks_fn_ts
-                    #gen_try_rm_order_by_pk_with_big_pagination_fn_ts
+                    #gen_try_rm_order_by_pk_with_big_pgn_fn_ts
                     #gen_ident_try_ro_handle_pk_fn_ts
                     #gen_check_no_rows_returned_from_ident_try_ro_handle_pk_fn_ts
                     #ident_create_dflt_fn_ts

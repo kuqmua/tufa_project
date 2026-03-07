@@ -763,11 +763,11 @@ pub struct OrderBy<ColumnGeneric> {
 #[derive(
     Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
 )]
-pub struct PaginationBase {
+pub struct PgnBase {
     limit: i64,
     offset: i64,
 }
-impl PaginationBase {
+impl PgnBase {
     #[must_use]
     pub const fn end(&self) -> i64 {
         self.offset.checked_add(self.limit).expect("8a297b66")
@@ -781,7 +781,7 @@ impl PaginationBase {
         self.offset
     }
 }
-impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
+impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PgnBase {
     fn qb(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
@@ -810,7 +810,7 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
         Ok(format!("limit ${limit_incr} offset ${offset_incr}"))
     }
 }
-impl Default for PaginationBase {
+impl Default for PgnBase {
     fn default() -> Self {
         Self::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0)
     }
@@ -818,9 +818,9 @@ impl Default for PaginationBase {
 #[derive(
     Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema, OptimalPack,
 )]
-pub struct PaginationStartsWithZero(PaginationBase);
+pub struct PgnStartsWithZero(PgnBase);
 #[derive(Debug, Serialize, Deserialize, Error, Location, OptimalPack)]
-pub enum PaginationStartsWithZeroTryNewEr {
+pub enum PgnStartsWithZeroTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
         limit: i64,
@@ -839,7 +839,7 @@ pub enum PaginationStartsWithZeroTryNewEr {
         loc: Loc,
     },
 }
-impl PaginationStartsWithZero {
+impl PgnStartsWithZero {
     #[must_use]
     pub const fn end(&self) -> i64 {
         self.0.end()
@@ -848,38 +848,31 @@ impl PaginationStartsWithZero {
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
-    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithZeroTryNewEr> {
+    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PgnStartsWithZeroTryNewEr> {
         if limit <= 0 || offset < 0 {
             if limit <= 0 {
-                Err(
-                    PaginationStartsWithZeroTryNewEr::LimitIsLessThanOrEqualToZero {
-                        limit,
-                        loc: loc!(),
-                    },
-                )
+                Err(PgnStartsWithZeroTryNewEr::LimitIsLessThanOrEqualToZero { limit, loc: loc!() })
             } else {
-                Err(PaginationStartsWithZeroTryNewEr::OffsetIsLessThanZero {
+                Err(PgnStartsWithZeroTryNewEr::OffsetIsLessThanZero {
                     offset,
                     loc: loc!(),
                 })
             }
         } else if offset.checked_add(limit).is_some() {
-            Ok(Self(PaginationBase::new_unchecked(limit, offset)))
+            Ok(Self(PgnBase::new_unchecked(limit, offset)))
         } else {
-            Err(
-                PaginationStartsWithZeroTryNewEr::OffsetPlusLimitIsIntOverflow {
-                    limit,
-                    offset,
-                    loc: loc!(),
-                },
-            )
+            Err(PgnStartsWithZeroTryNewEr::OffsetPlusLimitIsIntOverflow {
+                limit,
+                offset,
+                loc: loc!(),
+            })
         }
     }
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-impl<'de> Deserialize<'de> for PaginationStartsWithZero {
+impl<'de> Deserialize<'de> for PgnStartsWithZero {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
         __D: Deserializer<'de>,
@@ -940,13 +933,13 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
         }
         #[doc(hidden)]
         struct __Visitor<'de> {
-            marker: serde::__private228::PhantomData<PaginationStartsWithZero>,
+            marker: serde::__private228::PhantomData<PgnStartsWithZero>,
             lifetime: serde::__private228::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PaginationStartsWithZero;
+            type Value = PgnStartsWithZero;
             fn expecting(&self, __f: &mut Formatter<'_>) -> serde::__private228::fmt::Result {
-                Formatter::write_str(__f, "struct PaginationStartsWithZero")
+                Formatter::write_str(__f, "struct PgnStartsWithZero")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -956,16 +949,16 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                 let Some(f0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(
                         0usize,
-                        &"struct PaginationStartsWithZero with 2 els",
+                        &"struct PgnStartsWithZero with 2 els",
                     ));
                 };
                 let Some(f1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(
                         1usize,
-                        &"struct PaginationStartsWithZero with 2 els",
+                        &"struct PgnStartsWithZero with 2 els",
                     ));
                 };
-                match PaginationStartsWithZero::try_new(f0, f1) {
+                match PgnStartsWithZero::try_new(f0, f1) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&er).unwrap_or_else(|_|"failed to serialize er".into())
                 }
@@ -1011,7 +1004,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithZero::try_new(f0_v, f1_v) {
+                match PgnStartsWithZero::try_new(f0_v, f1_v) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                 }
@@ -1021,7 +1014,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
         const FIELDS: &[&str] = &["limit", "offset"];
         Deserializer::deserialize_struct(
             __deserializer,
-            "PaginationStartsWithZero",
+            "PgnStartsWithZero",
             FIELDS,
             __Visitor {
                 marker: serde::__private228::PhantomData::<Self>,
@@ -1030,7 +1023,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
         )
     }
 }
-impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWithZero {
+impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PgnStartsWithZero {
     fn qb(
         self,
         query: Query<'query_lifetime, Postgres, PgArguments>,
@@ -1041,16 +1034,16 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWit
         self.0.qp(incr, column, add_oprtr)
     }
 }
-impl DfltOptSomeVecOneEl for PaginationStartsWithZero {
+impl DfltOptSomeVecOneEl for PgnStartsWithZero {
     #[inline]
     fn dflt_opt_some_vec_one_el() -> Self {
-        Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
+        Self(PgnBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl DfltOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
+impl DfltOptSomeVecOneElMaxPageSize for PgnStartsWithZero {
     #[inline]
     fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
-        Self(PaginationBase::new_unchecked(i32::MAX.into(), 0))
+        Self(PgnBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
 //this needed coz serde Option<Opt<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both opts: inner and parent is null then it skip - its not correct

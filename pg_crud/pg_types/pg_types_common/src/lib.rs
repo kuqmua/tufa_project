@@ -2,8 +2,8 @@ use location_lib::loc::Loc;
 use location_lib::{Location, loc};
 use optimal_pack::OptimalPack;
 use pg_crud_common::{
-    DEFAULT_PAGINATION_LIMIT, DfltOptSomeVecOneEl, DfltOptSomeVecOneElMaxPageSize, PaginationBase,
-    PgTypeWhereFilter, QpEr,
+    DEFAULT_PAGINATION_LIMIT, DfltOptSomeVecOneEl, DfltOptSomeVecOneElMaxPageSize,
+    PgTypeWhereFilter, PgnBase, QpEr,
 };
 use schemars::JsonSchema;
 use serde::de::{Error as SerdeEr, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -15,9 +15,9 @@ use utoipa::ToSchema;
 #[derive(
     Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema, OptimalPack,
 )]
-pub struct PaginationStartsWithOne(PaginationBase);
+pub struct PgnStartsWithOne(PgnBase);
 #[derive(Debug, Serialize, Deserialize, Error, Location, OptimalPack)]
-pub enum PaginationStartsWithOneTryNewEr {
+pub enum PgnStartsWithOneTryNewEr {
     LimitIsLessThanOrEqualToZero {
         #[eo_to_err_string_serde]
         limit: i64,
@@ -36,7 +36,7 @@ pub enum PaginationStartsWithOneTryNewEr {
         loc: Loc,
     },
 }
-impl PaginationStartsWithOne {
+impl PgnStartsWithOne {
     #[must_use]
     pub const fn end(&self) -> i64 {
         self.0.end()
@@ -45,37 +45,30 @@ impl PaginationStartsWithOne {
     pub const fn start(&self) -> i64 {
         self.0.start()
     }
-    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithOneTryNewEr> {
+    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PgnStartsWithOneTryNewEr> {
         if limit <= 0 || offset < 1 {
             if limit <= 0 {
-                Err(
-                    PaginationStartsWithOneTryNewEr::LimitIsLessThanOrEqualToZero {
-                        limit,
-                        loc: loc!(),
-                    },
-                )
+                Err(PgnStartsWithOneTryNewEr::LimitIsLessThanOrEqualToZero { limit, loc: loc!() })
             } else {
-                Err(PaginationStartsWithOneTryNewEr::OffsetIsLessThanOne {
+                Err(PgnStartsWithOneTryNewEr::OffsetIsLessThanOne {
                     offset,
                     loc: loc!(),
                 })
             }
         } else if offset.checked_add(limit).is_some() {
-            Ok(Self(PaginationBase::new_unchecked(limit, offset)))
+            Ok(Self(PgnBase::new_unchecked(limit, offset)))
         } else {
-            Err(
-                PaginationStartsWithOneTryNewEr::OffsetPlusLimitIsIntOverflow {
-                    limit,
-                    offset,
-                    loc: loc!(),
-                },
-            )
+            Err(PgnStartsWithOneTryNewEr::OffsetPlusLimitIsIntOverflow {
+                limit,
+                offset,
+                loc: loc!(),
+            })
         }
     }
 }
 #[allow(clippy::absolute_paths)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-impl<'de> Deserialize<'de> for PaginationStartsWithOne {
+impl<'de> Deserialize<'de> for PgnStartsWithOne {
     fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
         __D: Deserializer<'de>,
@@ -139,16 +132,16 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
         }
         #[doc(hidden)]
         struct __Visitor<'de> {
-            marker: serde::__private228::PhantomData<PaginationStartsWithOne>,
+            marker: serde::__private228::PhantomData<PgnStartsWithOne>,
             lifetime: serde::__private228::PhantomData<&'de ()>,
         }
         impl<'de> Visitor<'de> for __Visitor<'de> {
-            type Value = PaginationStartsWithOne;
+            type Value = PgnStartsWithOne;
             fn expecting(
                 &self,
                 __f: &mut serde::__private228::Formatter<'_>,
             ) -> serde::__private228::fmt::Result {
-                serde::__private228::Formatter::write_str(__f, "struct PaginationStartsWithOne")
+                serde::__private228::Formatter::write_str(__f, "struct PgnStartsWithOne")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -158,16 +151,16 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                 let Some(f0) = SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(SerdeEr::invalid_length(
                         0usize,
-                        &"struct PaginationStartsWithOne with 2 els",
+                        &"struct PgnStartsWithOne with 2 els",
                     ));
                 };
                 let Some(f1) = SeqAccess::next_element::<i64>(&mut __seq)? else {
                     return Err(SerdeEr::invalid_length(
                         1usize,
-                        &"struct PaginationStartsWithOne with 2 els",
+                        &"struct PgnStartsWithOne with 2 els",
                     ));
                 };
-                match PaginationStartsWithOne::try_new(f0, f1) {
+                match PgnStartsWithOne::try_new(f0, f1) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
@@ -206,7 +199,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
                     Some(v) => v,
                     None => serde::__private228::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithOne::try_new(f0_v, f1_v) {
+                match PgnStartsWithOne::try_new(f0_v, f1_v) {
                     Ok(v) => Ok(v),
                     Err(er) => Err(SerdeEr::custom(format!("{er:?}"))),
                 }
@@ -216,7 +209,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
         const FIELDS: &[&str] = &["limit", "offset"];
         Deserializer::deserialize_struct(
             __deserializer,
-            "PaginationStartsWithOne",
+            "PgnStartsWithOne",
             FIELDS,
             __Visitor {
                 marker: serde::__private228::PhantomData::<Self>,
@@ -225,7 +218,7 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
-impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
+impl<'lt> PgTypeWhereFilter<'lt> for PgnStartsWithOne {
     fn qb(
         self,
         query: Query<'lt, Postgres, PgArguments>,
@@ -236,17 +229,17 @@ impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
         self.0.qp(incr, column, add_oprtr)
     }
 }
-impl DfltOptSomeVecOneEl for PaginationStartsWithOne {
+impl DfltOptSomeVecOneEl for PgnStartsWithOne {
     #[inline]
     fn dflt_opt_some_vec_one_el() -> Self {
-        Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 1))
+        Self(PgnBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
-impl DfltOptSomeVecOneElMaxPageSize for PaginationStartsWithOne {
+impl DfltOptSomeVecOneElMaxPageSize for PgnStartsWithOne {
     #[inline]
     fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
         let one: i32 = 1;
-        Self(PaginationBase::new_unchecked(
+        Self(PgnBase::new_unchecked(
             i32::MAX.checked_sub(one).expect("c0f03c51").into(),
             one.into(),
         ))
