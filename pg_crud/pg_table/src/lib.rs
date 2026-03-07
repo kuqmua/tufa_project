@@ -14,7 +14,7 @@ pub trait CombinationOfAppStateLogicTraits:
 {
 }
 #[must_use]
-pub fn gen_create_many_query_string(
+pub fn gen_cm_query_string(
     table: &str,
     columns: &str,
     values: &str,

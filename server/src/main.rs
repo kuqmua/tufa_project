@@ -62,7 +62,7 @@ fn main() {
                     //     //     #[openapi(
                     //     //     paths(
                     //     //         server_table_example::server::routes::git_info::git_info,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::create_many,
+                    //     //         // server_table_example::repositories_types::server::routes::api::cats::cm,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::create_one,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::read_many,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::read_one,

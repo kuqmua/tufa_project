@@ -191,7 +191,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["expected", "res"],
     ["pg", "crud"],
     ["check", "body", "size", "er"],
-    ["create", "many", "extra", "er", "vrts"],
+    ["cm", "extra", "er", "vrts"],
     ["create", "one", "extra", "er", "vrts"],
     ["read", "many", "extra", "er", "vrts"],
     ["read", "one", "extra", "er", "vrts"],
@@ -200,7 +200,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["delete", "many", "extra", "er", "vrts"],
     ["delete", "one", "extra", "er", "vrts"],
     ["common", "extra", "er", "vrts"],
-    ["create", "many", "extra", "logic"],
+    ["cm", "extra", "logic"],
     ["create", "one", "extra", "logic"],
     ["read", "many", "extra", "logic"],
     ["read", "one", "extra", "logic"],
@@ -761,7 +761,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "pool"],
     ["pg", "pool", "for", "tokio", "spawn", "sync", "move"],
     ["ident", "create", "default"],
-    ["vec", "of", "p", "ks", "returned", "from", "create", "many"],
+    ["vec", "of", "p", "ks", "returned", "from", "cm"],
     ["select", "pk"],
     [
         "sort", "vec", "of", "ident", "read", "with", "pk", "by", "pk"
@@ -789,7 +789,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["update", "one", "params"],
     ["update", "to", "read", "only", "ids"],
     ["self", "read", "only", "ids", "handle"],
-    ["read", "only", "ids", "returned", "from", "create", "many"],
+    ["read", "only", "ids", "returned", "from", "cm"],
     [
         "common", "read", "only", "ids", "returned", "from", "create", "one"
     ],

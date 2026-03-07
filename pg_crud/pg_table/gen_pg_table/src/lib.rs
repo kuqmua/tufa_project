@@ -4,7 +4,7 @@ pub fn gen_pg_table_config(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn create_many_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn cm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -40,7 +40,7 @@ pub fn common_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn create_many_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn cm_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]

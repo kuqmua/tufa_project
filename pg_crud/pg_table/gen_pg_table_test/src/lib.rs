@@ -52,7 +52,7 @@ server_config = {path = "../../../server_config"}"#,
                         #AllowClippyArbitrarySourceItemOrdering
                         #[derive(Debug, Clone, Copy, optimal_pack::OptimalPack)]
                         #[pg_crud::gen_pg_table_config{{
-                            "create_many_write_into_file": "False",
+                            "cm_write_into_file": "False",
                             "create_one_write_into_file": "False",
                             "read_many_write_into_file": "False",
                             "read_one_write_into_file": "False",
@@ -64,7 +64,7 @@ server_config = {path = "../../../server_config"}"#,
                             "common_write_into_file": "False",
                             "whole_write_into_file": "False"
                         }}]
-                        #[pg_crud::create_many_extra_er_vrts{enum CreateManyExtraErVrts{}}]
+                        #[pg_crud::cm_extra_er_vrts{enum CmExtraErVrts{}}]
                         #[pg_crud::create_one_extra_er_vrts{enum CreateOneExtraErVrts{}}]
                         #[pg_crud::read_many_extra_er_vrts{enum ReadManyExtraErVrts{}}]
                         #[pg_crud::read_one_extra_er_vrts{enum ReadOneExtraErVrts{}}]
@@ -81,7 +81,7 @@ server_config = {path = "../../../server_config"}"#,
                                 },
                             }
                         }]
-                        #[pg_crud::create_many_extra_logic{}]
+                        #[pg_crud::cm_extra_logic{}]
                         #[pg_crud::create_one_extra_logic{}]
                         #[pg_crud::read_many_extra_logic{}]
                         #[pg_crud::read_one_extra_logic{}]

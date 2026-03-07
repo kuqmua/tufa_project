@@ -6,7 +6,7 @@ use optimal_pack::OptimalPack;
     "common_write_into_file": "False",
     "whole_write_into_file": "False"
 }}]
-#[pg_crud::create_many_extra_er_vrts{enum CreateManyExtraErVrts{}}]
+#[pg_crud::cm_extra_er_vrts{enum CmExtraErVrts{}}]
 #[pg_crud::create_one_extra_er_vrts{enum CreateOneExtraErVrts{}}]
 #[pg_crud::read_many_extra_er_vrts{enum ReadManyExtraErVrts{}}]
 #[pg_crud::read_one_extra_er_vrts{enum ReadOneExtraErVrts{}}]
@@ -23,7 +23,7 @@ use optimal_pack::OptimalPack;
         // },
     }
 }]
-#[pg_crud::create_many_extra_logic{}]
+#[pg_crud::cm_extra_logic{}]
 #[pg_crud::create_one_extra_logic{}]
 #[pg_crud::read_many_extra_logic{}]
 #[pg_crud::read_one_extra_logic{}]
