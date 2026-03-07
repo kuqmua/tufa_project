@@ -159,12 +159,12 @@ mod something {
         one: String,
         two: i32,
     }
-    pub struct InputCheckedSomething<'lifetime> {
-        one: &'lifetime str,
+    pub struct InputCheckedSomething<'lt> {
+        one: &'lt str,
         two: i32,
     }
-    pub struct UncheckedSomething<'lifetime> {
-        pub one: &'lifetime str,
+    pub struct UncheckedSomething<'lt> {
+        pub one: &'lt str,
         pub two: i32,
     }
     #[derive(Debug)]

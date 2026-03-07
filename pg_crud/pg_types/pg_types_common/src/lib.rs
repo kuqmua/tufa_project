@@ -225,11 +225,11 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
-impl<'lifetime> PgTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
+impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
     fn query_bind(
         self,
-        query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         self.0.query_bind(query)
     }
     fn query_part(

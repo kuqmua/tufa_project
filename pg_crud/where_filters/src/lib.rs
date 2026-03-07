@@ -196,14 +196,14 @@ impl<T> From<PgJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
         v.0
     }
 }
-impl<'lifetime, T> PgTypeWhereFilter<'lifetime> for PgJsonTypeNotEmptyUniqueVec<T>
+impl<'lt, T> PgTypeWhereFilter<'lt> for PgJsonTypeNotEmptyUniqueVec<T>
 where
-    T: Serialize + 'lifetime,
+    T: Serialize + 'lt,
 {
     fn query_bind(
         self,
-        mut query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        mut query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         if let Err(er) = query.try_bind(Json(self.0)) {
             return Err(er.to_string());
         }
@@ -599,13 +599,13 @@ impl<T: DefaultOptSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>
         }
     }
 }
-impl<'lifetime, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime>
-    PgTypeWhereFilter<'lifetime> for Between<T>
+impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhereFilter<'lt>
+    for Between<T>
 {
     fn query_bind(
         self,
-        mut query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        mut query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         if let Err(er) = query.try_bind(self.start) {
             return Err(er.to_string());
         }
@@ -771,7 +771,7 @@ enum Vrt {
     MinusOne,
     Normal,
 }
-impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, const LENGTH: usize>
+impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH: usize>
     BoundedVec<T, LENGTH>
 {
     #[must_use]
@@ -836,8 +836,8 @@ impl<'lifetime, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lifetime, 
     }
     pub fn query_bind(
         self,
-        mut query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String> {
+        mut query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         for el in self.0 {
             if let Err(er) = query.try_bind(el) {
                 return Err(er.to_string());

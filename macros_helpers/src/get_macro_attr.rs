@@ -2,10 +2,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::ToTokens;
 use syn::{Attribute, Meta};
 #[must_use]
-pub fn get_macro_attr<'attrs_litime>(
-    attrs: &'attrs_litime [Attribute],
-    attr_path: &String,
-) -> &'attrs_litime Attribute {
+pub fn get_macro_attr<'lt>(attrs: &'lt [Attribute], attr_path: &String) -> &'lt Attribute {
     attrs
         .iter()
         .find(|el0| {
@@ -18,10 +15,7 @@ pub fn get_macro_attr<'attrs_litime>(
         .expect("68acaa15")
 }
 #[must_use]
-pub fn get_macro_attr_meta_list_ts<'attrs_lifetime>(
-    attrs: &'attrs_lifetime [Attribute],
-    attr_path: &String,
-) -> &'attrs_lifetime Ts2 {
+pub fn get_macro_attr_meta_list_ts<'lt>(attrs: &'lt [Attribute], attr_path: &String) -> &'lt Ts2 {
     let attr = attrs
         .iter()
         .find(|el0| {

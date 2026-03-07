@@ -11,10 +11,10 @@ use pg_crud::CombinationOfAppStateLogicTraits;
 use server_config::Config;
 use sqlx::PgPool;
 #[derive(Debug, OptimalPack)]
-pub struct ServerAppState<'lifetime> {
+pub struct ServerAppState<'lt> {
     pub config: Config,
     pub pg_pool: PgPool,
-    pub project_git_info: &'lifetime ProjectGitInfo<'lifetime>,
+    pub project_git_info: &'lt ProjectGitInfo<'lt>,
 }
 impl CommonRoutesParams for ServerAppState<'_> {}
 impl CombinationOfAppStateLogicTraits for ServerAppState<'_> {}

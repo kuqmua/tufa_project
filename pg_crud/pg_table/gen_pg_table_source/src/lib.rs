@@ -1240,7 +1240,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         let impl_pg_type_where_filter_for_opt_ident_where_many_ts =
             impl_pg_type_where_filter_for_ident_ts(
-                &quote! {<'lifetime>},
+                &quote! {<'lt>},
                 &opt_ident_where_many_ucc,
                 &Ts2::new(),
                 &IncrParamUnderscore::False,
@@ -1646,7 +1646,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let el_syn_field_ty_as_pg_type_read_only_ids_ts =
                     gen_as_pg_type_read_only_ids_ts(&ft);
                 quote! {
-                    #el_syn_field_ty_as_pg_type_read_only_ids_ts: ::sqlx::decode::Decode<'lifetime, R::Database>
+                    #el_syn_field_ty_as_pg_type_read_only_ids_ts: ::sqlx::decode::Decode<'lt, R::Database>
                 }
             });
             let pk_ts = {
@@ -1686,12 +1686,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {#fi}
             });
             quote! {
-                impl<'lifetime, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lifetime, R> for #ident_read_only_ids_ucc
+                impl<'lt, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lt, R> for #ident_read_only_ids_ucc
                 where
-                    &'lifetime ::std::primitive::str: ::sqlx::ColumnIndex<R>,
+                    &'lt ::std::primitive::str: ::sqlx::ColumnIndex<R>,
                     #where_fts_ts
                 {
-                    fn from_row(#undescore_underscore_row: &'lifetime R) -> ::sqlx::Result<Self> {
+                    fn from_row(#undescore_underscore_row: &'lt R) -> ::sqlx::Result<Self> {
                         #pk_ts
                         #fields_init_ts
                         Ok(Self { #self_fields_ts })

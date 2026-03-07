@@ -85,10 +85,10 @@ pub trait PgType {
         column: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn select_only_updated_ids_query_bind<'lifetime>(
-        v: &'lifetime Self::UpdateForQuery,
-        query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
+    fn select_only_updated_ids_query_bind<'lt>(
+        v: &'lt Self::UpdateForQuery,
+        query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PgJsonType {
@@ -134,20 +134,20 @@ pub trait PgJsonType {
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn select_only_updated_ids_query_bind<'lifetime>(
-        v: &'lifetime Self::UpdateForQuery,
-        query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
+    fn select_only_updated_ids_query_bind<'lt>(
+        v: &'lt Self::UpdateForQuery,
+        query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
     fn select_only_created_ids_query_part(
         v: &Self::CreateForQuery,
         fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn select_only_created_ids_query_bind<'lifetime>(
-        v: &'lifetime Self::CreateForQuery,
-        query: Query<'lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'lifetime, Postgres, PgArguments>, String>;
+    fn select_only_created_ids_query_bind<'lt>(
+        v: &'lt Self::CreateForQuery,
+        query: Query<'lt, Postgres, PgArguments>,
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PgTypePk {
@@ -439,7 +439,7 @@ pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug
         + PartialEq
         + Clone
-        + for<'lifetime> PgTypeWhereFilter<'lifetime>
+        + for<'lt> PgTypeWhereFilter<'lt>
         + AllEnumVrtsArrDefaultOptSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
 impl<'query_lifetime, T> PgTypeWhereFilter<'query_lifetime>

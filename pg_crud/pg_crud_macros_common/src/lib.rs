@@ -619,7 +619,7 @@ pub fn gen_pg_type_where_ts(
     };
     let impl_pg_type_pg_type_where_filter_for_pg_type_tokens_where_ts =
         impl_pg_type_where_filter_for_ident_ts(
-            &quote! {<'lifetime>},
+            &quote! {<'lt>},
             &ident,
             &Ts2::new(),
             &IncrParamUnderscore::False,
@@ -755,7 +755,7 @@ pub fn gen_impl_pg_json_type_ts(
     let query_pg_arguments_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lifetime_pg_arguments_ts =
-        quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
+        quote! {sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo mb reexport sqlx?
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
@@ -810,8 +810,8 @@ pub fn gen_impl_pg_json_type_ts(
             ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
-            fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
-                #VSc: &'lifetime Self::#UpdateForQueryUcc,
+            fn #SelectOnlyUpdatedIdsQueryBindSc<'lt>(
+                #VSc: &'lt Self::#UpdateForQueryUcc,
                 #is_select_only_updated_ids_query_bind_mutable #QuerySc: #query_lifetime_pg_arguments_ts
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_updated_ids_query_bind_ts
@@ -824,8 +824,8 @@ pub fn gen_impl_pg_json_type_ts(
             ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_created_ids_query_part_ts
             }
-            fn #SelectOnlyCreatedIdsQueryBindSc<'lifetime>(
-                #VSc: &'lifetime Self::#CreateForQueryUcc,
+            fn #SelectOnlyCreatedIdsQueryBindSc<'lt>(
+                #VSc: &'lt Self::#CreateForQueryUcc,
                 #is_select_only_created_ids_query_bind_mutable #QuerySc: #query_lifetime_pg_arguments_ts
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_created_ids_query_bind_ts
@@ -971,7 +971,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
 ) -> Ts2 {
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
-        impl #impl_generic_ts #import ::#PgTypeWhereFilterUcc<'lifetime> for #ident_ts #ident_generic_ts {
+        impl #impl_generic_ts #import ::#PgTypeWhereFilterUcc<'lt> for #ident_ts #ident_generic_ts {
             fn #QueryPartSc(
                 &self,
                 #incr_param_underscore: &mut #U64,
@@ -980,8 +980,8 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
             ) -> Result<#StringTs, #import::#QueryPartErUcc> {
                 #query_part_ts
             }
-            fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-                sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+            fn #QueryBindSc(self, #is_query_bind_mutable query: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+                sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
                 #query_bind_ts
@@ -1139,10 +1139,10 @@ pub fn gen_impl_pg_type_ts(
             ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
                 #select_only_updated_ids_query_part_ts
             }
-            fn #SelectOnlyUpdatedIdsQueryBindSc<'lifetime>(
-                #VSc: &'lifetime Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_query_bind_mutable #QuerySc: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
-            ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
+            fn #SelectOnlyUpdatedIdsQueryBindSc<'lt>(
+                #VSc: &'lt Self::#UpdateForQueryUcc,
+                #is_select_only_updated_ids_query_bind_mutable #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
+            ) -> Result<sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
                 #select_only_updated_ids_query_bind_ts
             }
         }

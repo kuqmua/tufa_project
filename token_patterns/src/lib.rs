@@ -162,14 +162,14 @@ impl ToTokens for DeriveDebugCloneCopy {
 pub struct StrSqlxColumnIndex;
 impl ToTokens for StrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {&'lifetime str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
+        quote! {&'lt str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
 pub struct SqlxDecodeDecodeDatabase;
 impl ToTokens for SqlxDecodeDecodeDatabase {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {sqlx::decode::Decode<'lifetime, R::Database>}.to_tokens(tokens);
+        quote! {sqlx::decode::Decode<'lt, R::Database>}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]

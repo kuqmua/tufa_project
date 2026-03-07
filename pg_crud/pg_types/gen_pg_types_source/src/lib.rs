@@ -1008,7 +1008,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             SqlxPgTypesPgRangeI32AsInt4Range,
             SqlxPgTypesPgRangeI64AsInt8Range,
         }
-        type Handle<'lifetime> = (&'lifetime dyn ToTokens, &'lifetime dyn ToTokens);
+        type Handle<'lt> = (&'lt dyn ToTokens, &'lt dyn ToTokens);
         fn gen_pg_range_conversion_ts(match_ts: &dyn ToTokens, input_ts: &dyn ToTokens) -> Ts2 {
             quote! {
                 sqlx::postgres::types::PgRange {
@@ -4743,7 +4743,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_type_for_ident_read_ts = gen_impl_sqlx_type_for_ident_ts(&ident_read_ucc, &ident_origin_ucc);
             let mb_impl_pg_type_where_filter_for_ident_read_if_can_be_pk_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
                 impl_pg_type_where_filter_for_ident_ts(
-                    &quote! {<'lifetime>},
+                    &quote! {<'lt>},
                     &ident_stdrt_not_null_read_ucc,
                     &Ts2::new(),
                     &IncrParamUnderscore::False,
@@ -5398,9 +5398,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let gen_stdrt_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
                 let gen_range_read_only_ids_to_two_dims_vec_read_inner_ts =
                     |min_ts: &dyn ToTokens, negative_less_typical_ts: &dyn ToTokens, negative_more_typical_ts: &dyn ToTokens, near_zero_ts: &dyn ToTokens, positive_less_typical_ts: &dyn ToTokens, positive_more_typical_ts: &dyn ToTokens, max_ts: &dyn ToTokens| {
-                        enum Bnd<'lifetime> {
-                            Excl(&'lifetime dyn ToTokens),
-                            Incl(&'lifetime dyn ToTokens),
+                        enum Bnd<'lt> {
+                            Excl(&'lt dyn ToTokens),
+                            Incl(&'lt dyn ToTokens),
                             Unb,
                         }
                         let ts_08778f0f = [

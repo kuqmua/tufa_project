@@ -1676,7 +1676,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     query_bind_ts: &dyn ToTokens
                 | {
                     impl_pg_type_where_filter_for_ident_ts(
-                        &quote! {<'lifetime>},
+                        &quote! {<'lt>},
                         &ident_ts_e0f20014,
                         &Ts2::new(),
                         &IncrParamUnderscore::False,
