@@ -1,5 +1,3 @@
-# AGENTS.md
-
 ## WHAT AGENT MUST DO
 
 - Place shared logic in a dedicated shared crate.
