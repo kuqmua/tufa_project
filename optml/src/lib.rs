@@ -16,14 +16,14 @@ pub fn optml(input_ts: Ts) -> Ts {
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
     let ident = &di.ident;
     let gen_align_of_ts = |field: &Field| {
-        struct ReplaceLifetimes;
-        impl VisitMut for ReplaceLifetimes {
+        struct ReplaceLts;
+        impl VisitMut for ReplaceLts {
             fn visit_lifetime_mut(&mut self, i: &mut Lifetime) {
                 i.ident = Ident::new("static", i.ident.span());
             }
         }
         let mut ft = field.ty.clone();
-        let mut visitor = ReplaceLifetimes;
+        let mut visitor = ReplaceLts;
         visitor.visit_type_mut(&mut ft);
         quote! {align_of::<#ft>()}
     };
@@ -123,13 +123,13 @@ pub fn optml(input_ts: Ts) -> Ts {
     };
     let generics = &di.generics;
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
-    let has_only_lifetimes = generics
+    let has_only_lts = generics
         .params
         .iter()
         .all(|p| matches!(p, GenericParam::Lifetime(_)));
-    let (impl_ts, ty_ts) = if has_only_lifetimes && !generics.params.is_empty() {
-        let lifetimes_count = generics.params.len();
-        let undrscrs = repeat_n(quote! {'_}, lifetimes_count);
+    let (impl_ts, ty_ts) = if has_only_lts && !generics.params.is_empty() {
+        let lts_count = generics.params.len();
+        let undrscrs = repeat_n(quote! {'_}, lts_count);
         let new_ty_generics = quote! {<#(#undrscrs),*>};
         (quote! {}, new_ty_generics)
     } else {

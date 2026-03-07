@@ -415,11 +415,11 @@ pub trait PgJsonTypeTestCases {
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
 }
-pub trait PgTypeWhereFilter<'query_lifetime> {
+pub trait PgTypeWhereFilter<'query_lt> {
     fn qb(
         self,
-        query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>;
+        query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String>;
     fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr>;
 }
 //todo custom deserialization - must not contain more than one el
@@ -427,19 +427,18 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
 pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug + PartialEq + Clone + for<'lt> PgTypeWhereFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
-impl<'query_lifetime, T> PgTypeWhereFilter<'query_lifetime>
-    for NullableJsonObjectPgTypeWhereFilter<T>
+impl<'query_lt, T> PgTypeWhereFilter<'query_lt> for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
+        + for<'t_lt> PgTypeWhereFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn qb(
         self,
-        query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
+        query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         match self.0 {
             Some(v) => v.qb(query),
             None => Ok(query), //todo mb wrong
@@ -457,7 +456,7 @@ where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
+        + for<'t_lt> PgTypeWhereFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn to_err_string(&self) -> String {
@@ -469,7 +468,7 @@ where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
+        + for<'t_lt> PgTypeWhereFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn all_vrts_dflt_opt_some_vec_one_el() -> Vec<Self> {
@@ -572,7 +571,7 @@ const _: () = {
             #[doc(hidden)]
             struct __Visitor<'de, PgTypeWhere> {
                 marker: _serde::__private228::PhantomData<PgTypeWhere>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
                 for __Visitor<'de, T>
@@ -659,19 +658,17 @@ const _: () = {
                 FIELDS,
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<T>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
     }
 };
-impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'query_lifetime>
-    for PgTypeWhere<T>
-{
+impl<'query_lt, T: PgTypeWhereFilter<'query_lt>> PgTypeWhereFilter<'query_lt> for PgTypeWhere<T> {
     fn qb(
         self,
-        mut query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
+        mut query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         for el in self.v.0 {
             match PgTypeWhereFilter::qb(el, query) {
                 Ok(v) => {
@@ -775,11 +772,11 @@ impl PgnBase {
         self.offset
     }
 }
-impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PgnBase {
+impl<'query_lt> PgTypeWhereFilter<'query_lt> for PgnBase {
     fn qb(
         self,
-        mut query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
+        mut query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         if let Err(er) = query.try_bind(self.limit) {
             return Err(er.to_string());
         }
@@ -926,7 +923,7 @@ impl<'de> Deserialize<'de> for PgnStartsWithZero {
         #[doc(hidden)]
         struct __Visitor<'de> {
             marker: serde::__private228::PhantomData<PgnStartsWithZero>,
-            lifetime: serde::__private228::PhantomData<&'de ()>,
+            lt: serde::__private228::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = PgnStartsWithZero;
@@ -1010,16 +1007,16 @@ impl<'de> Deserialize<'de> for PgnStartsWithZero {
             FIELDS,
             __Visitor {
                 marker: serde::__private228::PhantomData::<Self>,
-                lifetime: serde::__private228::PhantomData,
+                lt: serde::__private228::PhantomData,
             },
         )
     }
 }
-impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PgnStartsWithZero {
+impl<'query_lt> PgTypeWhereFilter<'query_lt> for PgnStartsWithZero {
     fn qb(
         self,
-        query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
+        query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         self.0.qb(query)
     }
     fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
@@ -1108,7 +1105,7 @@ const _: () = {
                 T: Deserialize<'de>,
             {
                 marker: _serde::__private228::PhantomData<NotEmptyUniqueVec<T>>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
@@ -1149,7 +1146,7 @@ const _: () = {
                 "NotEmptyUniqueVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -1182,18 +1179,18 @@ impl<T1> NotEmptyUniqueVec<T1> {
         NotEmptyUniqueVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
-impl<'query_lifetime, T> PgTypeWhereFilter<'query_lifetime> for NotEmptyUniqueVec<T>
+impl<'query_lt, T> PgTypeWhereFilter<'query_lt> for NotEmptyUniqueVec<T>
 where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
+        + for<'t_lt> PgTypeWhereFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn qb(
         self,
-        mut query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
+        mut query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         for el in self.0 {
             match el.qb(query) {
                 Ok(v) => {
@@ -1303,7 +1300,7 @@ const _: () = {
             #[doc(hidden)]
             struct __Visitor<'de> {
                 marker: _serde::__private228::PhantomData<UnsignedPartOfI32>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -1347,7 +1344,7 @@ const _: () = {
                 "UnsignedPartOfI32",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -1429,7 +1426,7 @@ const _: () = {
             #[doc(hidden)]
             struct __Visitor<'de> {
                 marker: _serde::__private228::PhantomData<NotZeroUnsignedPartOfI32>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -1473,7 +1470,7 @@ const _: () = {
                 "NotZeroUnsignedPartOfI32",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }

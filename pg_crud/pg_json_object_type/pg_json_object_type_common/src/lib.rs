@@ -61,7 +61,7 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 marker: _serde::__private228::PhantomData<UniqueVec<T>>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
@@ -111,7 +111,7 @@ const _: () = {
                 "UniqueVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }

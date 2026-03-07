@@ -502,7 +502,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #[doc(hidden)]
                 struct __Visitor<'de> {
                     marker: _serde::__private228::PhantomData<PgTypeRecord>,
-                    lifetime: _serde::__private228::PhantomData<&'de ()>,
+                    lt: _serde::__private228::PhantomData<&'de ()>,
                 }
                 #[automatically_derived]
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -628,7 +628,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     FIELDS,
                     __Visitor {
                         marker: _serde::__private228::PhantomData::<Self>,
-                        lifetime: _serde::__private228::PhantomData,
+                        lt: _serde::__private228::PhantomData,
                     },
                 )
             }
@@ -1518,7 +1518,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 },
                 {
-                    enum AddDeLifetime {
+                    enum AddDeLt {
                         False,
                         True,
                     }
@@ -1528,7 +1528,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
                             marker: serde::__private228::PhantomData<#ident_stdrt_not_null_origin_ucc>,
-                            lifetime: serde::__private228::PhantomData<&'de ()>,
+                            lt: serde::__private228::PhantomData<&'de ()>,
                         }
                     };
                     let start_end_display_plus_to_tokens_arr: [&dyn DisplayPlusToTokens; 2] = [&StartSc, &EndSc];
@@ -1545,7 +1545,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 FIELDS,
                                 __Visitor {
                                     marker: _serde::__private228::PhantomData::<Self>,
-                                    lifetime: _serde::__private228::PhantomData,
+                                    lt: _serde::__private228::PhantomData,
                                 }
                             )
                         }
@@ -1556,7 +1556,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             #ident_stdrt_not_null_origin_dq_ts,
                             __Visitor {
                                 marker: serde::__private228::PhantomData::<Self>,
-                                lifetime: serde::__private228::PhantomData,
+                                lt: serde::__private228::PhantomData,
                             },
                         )
                     };
@@ -2129,25 +2129,25 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     let gen_impl_serde_de_visitor_for_tokens_ts = |
-                        add_de_lifetime: AddDeLifetime,
+                        add_de_lt: AddDeLt,
                         ident_ts_2ecd936e: &dyn ToTokens,
                         ts: &dyn ToTokens
                     | {
                         let (
-                            mb_impl_lifetime_ts,
-                            mb_visitor_lifetime_ts
-                        ) = match add_de_lifetime{
-                            AddDeLifetime::False => (
+                            mb_impl_lt_ts,
+                            mb_visitor_lt_ts
+                        ) = match add_de_lt{
+                            AddDeLt::False => (
                                 Ts2::new(),
                                 quote!{<'_>},
                             ),
-                            AddDeLifetime::True => (
+                            AddDeLt::True => (
                                 quote!{<'de>},
                                 quote!{<'de>},
                             ),
                         };
                         quote! {
-                            impl #mb_impl_lifetime_ts _serde::de::Visitor #mb_visitor_lifetime_ts for #ident_ts_2ecd936e {
+                            impl #mb_impl_lt_ts _serde::de::Visitor #mb_visitor_lt_ts for #ident_ts_2ecd936e {
                                 #ts
                             }
                         }
@@ -2171,7 +2171,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ) = {
                         let gen_ts = |zero_ts: &dyn ToTokens, first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| {
                             gen_impl_serde_de_visitor_for_tokens_ts(
-                                AddDeLifetime::True,
+                                AddDeLt::True,
                                 &quote! {__Visitor<'de>},
                                 &quote! {
                                     type Value = #ident_stdrt_not_null_origin_ucc;
@@ -2215,7 +2215,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ) = {
                         let gen_ts = |ts: &dyn ToTokens| {
                             let impl_serde_de_visitor_for_tokens_ts = gen_impl_serde_de_visitor_for_tokens_ts(
-                                AddDeLifetime::False,
+                                AddDeLt::False,
                                 &field_visitor_ts,
                                 &ts
                             );

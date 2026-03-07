@@ -69,12 +69,12 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
-    pub fn qb_one_by_one<'query_lifetime>(
+    pub fn qb_one_by_one<'query_lt>(
         self,
-        mut query: Query<'query_lifetime, Postgres, PgArguments>,
-    ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>
+        mut query: Query<'query_lt, Postgres, PgArguments>,
+    ) -> Result<Query<'query_lt, Postgres, PgArguments>, String>
     where
-        T: 'query_lifetime,
+        T: 'query_lt,
     {
         for el in self.0 {
             if let Err(er) = query.try_bind(Json(el)) {
@@ -126,7 +126,7 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 marker: _serde::__private228::PhantomData<PgJsonTypeNotEmptyUniqueVec<T>>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
@@ -173,7 +173,7 @@ const _: () = {
                 "PgJsonTypeNotEmptyUniqueVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -260,7 +260,7 @@ const _: () = {
             #[doc(hidden)]
             struct __Visitor<'de> {
                 marker: _serde::__private228::PhantomData<RegexRegex>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -312,7 +312,7 @@ const _: () = {
                 "RegexRegex",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -482,7 +482,7 @@ const _: () = {
                 T: _serde::Deserialize<'de> + Type<Postgres> + for<'__> Encode<'__, Postgres>,
             {
                 marker: _serde::__private228::PhantomData<Between<T>>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
             where
@@ -576,7 +576,7 @@ const _: () = {
                 FIELDS,
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -674,7 +674,7 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 marker: _serde::__private228::PhantomData<PgTypeNotEmptyUniqueVec<T>>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
@@ -721,7 +721,7 @@ const _: () = {
                 "PgTypeNotEmptyUniqueVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -916,7 +916,7 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 marker: _serde::__private228::PhantomData<BoundedVec<T, LENGTH>>,
-                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T, const LENGTH: usize> _serde::de::Visitor<'de> for __Visitor<'de, T, LENGTH>
@@ -967,7 +967,7 @@ const _: () = {
                 "BoundedVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
-                    lifetime: _serde::__private228::PhantomData,
+                    lt: _serde::__private228::PhantomData,
                 },
             )
         }

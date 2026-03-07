@@ -738,7 +738,7 @@ pub fn gen_impl_pg_json_type_ts(
     let reference_mut_u64_ts = quote! {&mut #U64};
     let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let query_lifetime_pg_args_ts =
+    let query_lt_pg_args_ts =
         quote! {sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo mb reexport sqlx?
     quote! {
@@ -796,8 +796,8 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_qb_mut #QuerySc: #query_lifetime_pg_args_ts
-            ) -> Result<#query_lifetime_pg_args_ts, #StringTs> {
+                #is_select_only_updated_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+            ) -> Result<#query_lt_pg_args_ts, #StringTs> {
                 #select_only_updated_ids_qb_ts
             }
             fn #SelectOnlyCreatedIdsQpSc(
@@ -810,8 +810,8 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyCreatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#CreateForQueryUcc,
-                #is_select_only_created_ids_qb_mut #QuerySc: #query_lifetime_pg_args_ts
-            ) -> Result<#query_lifetime_pg_args_ts, #StringTs> {
+                #is_select_only_created_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+            ) -> Result<#query_lt_pg_args_ts, #StringTs> {
                 #select_only_created_ids_qb_ts
             }
         }
@@ -887,10 +887,10 @@ pub fn gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(
 }
 pub fn gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
-    lifetime_ts: &dyn ToTokens,
+    lt_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_dflt_opt_some_vec_one_el_ts(&Ts2::new(), &Import::PgCrud, ident, lifetime_ts, ts)
+    gen_impl_dflt_opt_some_vec_one_el_ts(&Ts2::new(), &Import::PgCrud, ident, lt_ts, ts)
 }
 pub fn gen_impl_pg_crud_common_all_vrts_dflt_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
@@ -918,14 +918,14 @@ pub fn gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(
 }
 pub fn gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
-    lifetime_ts: &dyn ToTokens,
+    lt_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     gen_impl_dflt_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &Import::PgCrud,
         ident,
-        lifetime_ts,
+        lt_ts,
         ts,
     )
 }
@@ -2234,7 +2234,7 @@ pub fn gen_impl_de_for_struct_ts(
                     #[doc(hidden)]
                     struct __Visitor<'de> {
                         marker: _serde::__private228::PhantomData<#ident>,
-                        lifetime: _serde::__private228::PhantomData<&'de ()>,
+                        lt: _serde::__private228::PhantomData<&'de ()>,
                     }
                     #[automatically_derived]
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -2292,7 +2292,7 @@ pub fn gen_impl_de_for_struct_ts(
                         FIELDS,
                         __Visitor {
                             marker: _serde::__private228::PhantomData::<Self>,
-                            lifetime: _serde::__private228::PhantomData,
+                            lt: _serde::__private228::PhantomData,
                         },
                     )
                 }

@@ -2844,7 +2844,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     #[doc(hidden)]
                                     struct __Visitor<'de> {
                                         marker: serde::__private228::PhantomData<#ident_update_ucc>,
-                                        lifetime: serde::__private228::PhantomData<&'de ()>,
+                                        lt: serde::__private228::PhantomData<&'de ()>,
                                     }
                                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = #ident_update_ucc;
@@ -2908,7 +2908,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         FIELDS,
                                         __Visitor {
                                             marker: serde::__private228::PhantomData::<#SelfUcc>,
-                                            lifetime: serde::__private228::PhantomData,
+                                            lt: serde::__private228::PhantomData,
                                         },
                                     )
                                 }

@@ -131,7 +131,7 @@ impl<'de> Deserialize<'de> for PgnStartsWithOne {
         #[doc(hidden)]
         struct __Visitor<'de> {
             marker: serde::__private228::PhantomData<PgnStartsWithOne>,
-            lifetime: serde::__private228::PhantomData<&'de ()>,
+            lt: serde::__private228::PhantomData<&'de ()>,
         }
         impl<'de> Visitor<'de> for __Visitor<'de> {
             type Value = PgnStartsWithOne;
@@ -211,7 +211,7 @@ impl<'de> Deserialize<'de> for PgnStartsWithOne {
             FIELDS,
             __Visitor {
                 marker: serde::__private228::PhantomData::<Self>,
-                lifetime: serde::__private228::PhantomData,
+                lt: serde::__private228::PhantomData,
             },
         )
     }
