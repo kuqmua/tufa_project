@@ -3457,6 +3457,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }
             };
+            // let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
+            //     &{
+            //         let mut acc = common_route_syn_vrts.clone();
+            //         if let Operation::ReadMany | Operation::ReadOne = &operation {
+            //             acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
+            //         }
+            //         if let Operation::CreateMany | Operation::ReadMany | Operation::ReadOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
+            //             acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
+            //         }
+            //         if let Operation::CreateMany | Operation::DeleteOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
+            //             acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
+            //         }
+            //         acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
+            //         acc
+            //     },
+            //     operation
+            // );
             operation_routes_ts.push({
                 let method_ts = match &operation {
                     Operation::CreateMany |
