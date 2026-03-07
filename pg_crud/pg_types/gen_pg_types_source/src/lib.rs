@@ -1562,7 +1562,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             },
                         )
                     };
-                    let gen_impl_serde_deserialize_for_tokens_ts = |ts: &dyn ToTokens| {
+                    let gen_impl_de_for_tokens_ts = |ts: &dyn ToTokens| {
                         quote! {
                             #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
@@ -1899,7 +1899,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             gen_ts(&months_days_microseconds_display_plus_to_tokens_arr),
                         )
                     };
-                    let impl_serde_deserialize_for_field_ts = quote! {
+                    let impl_de_for_field_ts = quote! {
                         impl<'de> _serde::Deserialize<'de> for __Field {
                             #[inline]
                             fn deserialize<__D>(
@@ -2272,7 +2272,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }),
                         )
                     };
-                    let impl_serde_deserialize_for_uuid_uuid_ts = gen_impl_serde_deserialize_for_tokens_ts(&{
+                    let impl_de_for_uuid_uuid_ts = gen_impl_de_for_tokens_ts(&{
                         quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_uuid_uuid_ts
@@ -2291,112 +2291,112 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::BoolAsBool
                         | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
-                        PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_pg_money_ts
                             #serde_deserializer_deserialize_newtype_struct_ts
                         })),
-                        PgType::StringAsText => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::StringAsText => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_string_ts
                             #serde_deserializer_deserialize_newtype_struct_ts
                         })),
-                        PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_four_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_5a4f24ce
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_ts
                             #const_fields_sqlx_types_chrono_naive_time_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_four_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_9b240c3e
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_types_time_time_ts
                             #const_fields_sqlx_types_time_time_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxTypesChronoNaiveDateAsDate => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxTypesChronoNaiveDateAsDate => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_ts
                             #serde_deserializer_deserialize_newtype_struct_ts
                         })),
-                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_dc439ca1
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_time_ts
                             #const_fields_sqlx_types_chrono_naive_date_time_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_8c733fe0
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts
                             #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_serde_deserialize_for_uuid_uuid_ts),
-                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_de_for_uuid_uuid_ts),
+                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts
                             #serde_deserializer_deserialize_newtype_struct_ts
                         })),
-                        PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_three_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f702a411
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_interval_ts
                             #const_fields_sqlx_pg_types_pg_interval_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxPgTypesPgRangeI32AsInt4Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_i32_ts
                             #const_fields_start_end_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_i64_ts
                             #const_fields_start_end_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts
                             #const_fields_start_end_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts
                             #const_fields_start_end_ts
                             #serde_deserializer_deserialize_struct_visitor_ts
                         })),
-                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_serde_deserialize_for_tokens_ts(&quote! {
+                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33
-                            #impl_serde_deserialize_for_field_ts
+                            #impl_de_for_field_ts
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts
                             #const_fields_start_end_ts
@@ -3998,7 +3998,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(v) => v,
             };
-            let mb_impl_serde_deserialize_for_ident_stdrt_not_null_origin_ts = match &serde_deserialize_derive_or_impl {
+            let mb_impl_de_for_ident_stdrt_not_null_origin_ts = match &serde_deserialize_derive_or_impl {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(v) => v,
             };
@@ -4145,7 +4145,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_from_ident_origin_for_ident_inner_type_ts
                 #mb_impl_is_string_empty_for_ident_origin_ts
                 #mb_impl_serde_serialize_for_ident_stdrt_not_null_origin_ts
-                #mb_impl_serde_deserialize_for_ident_stdrt_not_null_origin_ts
+                #mb_impl_de_for_ident_stdrt_not_null_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
                 #impl_dflt_opt_some_vec_one_el_for_ident_origin_ts

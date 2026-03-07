@@ -54,16 +54,16 @@ use pg_crud_macros_common::{
     IsSelectQpSelfSelectUsed, IsUpdateQbMut, IsUpdateQpJsonbSetTargetUsed,
     IsUpdateQpSelfUpdateUsed, PgTypeOrPgJsonType, SelectQpValueUndrscr,
     UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr, UpdateQpJsonbSetTargetUndrscr,
-    UpdateQpValueUndrscr, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts,
+    UpdateQpValueUndrscr, gen_impl_de_for_struct_ts,
+    gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_pg_json_type_test_cases_for_ident_ts,
     gen_impl_pg_json_type_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
-    gen_impl_serde_deserialize_for_struct_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_jsonb_build_object, gen_jsonb_build_object_v, gen_match_try_new_in_deserialize_ts,
-    gen_opt_type_decl_ts,
+    gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_jsonb_build_object, gen_jsonb_build_object_v,
+    gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
     gen_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
     gen_read_only_ids_merged_with_create_into_where_equal_ts,
@@ -2137,9 +2137,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 }
             };
-            let gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = |is_stdrt_with_id: &IsStdrtWithId| {
+            let gen_impl_de_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                 let vec_syn_field_13a9b1ed = get_vec_syn_field(is_stdrt_with_id);
-                gen_impl_serde_deserialize_for_struct_ts(
+                gen_impl_de_for_struct_ts(
                     &gen_ident_read_or_ident_with_id_stdrt_not_null_read_ucc(is_stdrt_with_id),
                     &vec_syn_field_13a9b1ed.iter().map(|el0|
                         (&el0.ident, &el0.type0)
@@ -2153,9 +2153,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 )
             };
-            let mb_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = match &pattern {
+            let mb_impl_de_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = match &pattern {
                 Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_false),
+                    IsNullable::False => gen_impl_de_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_false),
                     IsNullable::True => Ts2::new(),
                 },
                 Pattern::Arr => Ts2::new(),
@@ -2215,7 +2215,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 };
-                let impl_serde_deserialize_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_true);
+                let impl_de_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_de_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_true);
                 let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_true);
                 let impl_sqlx_type_for_ident_with_id_stdrt_not_null_read_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_with_id_stdrt_not_null_read_ucc);
                 let impl_sqlx_decode_sqlx_pg_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_with_id_stdrt_not_null_read_ucc);
@@ -2223,7 +2223,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #ident_with_id_stdrt_not_null_read_ts
                     #ident_with_id_stdrt_not_null_read_try_from_er_ts
                     #impl_ident_with_id_stdrt_not_null_read_ts
-                    #impl_serde_deserialize_for_ident_with_id_stdrt_not_null_read_ts
+                    #impl_de_for_ident_with_id_stdrt_not_null_read_ts
                     #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_read_ts
                     #impl_sqlx_type_for_ident_with_id_stdrt_not_null_read_ts
                     #impl_sqlx_decode_sqlx_pg_for_ident_with_id_stdrt_not_null_read_ts
@@ -2235,7 +2235,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #ident_read_ts
                 #mb_ident_read_try_from_er_ts
                 #impl_ident_read_ts
-                #mb_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts
+                #mb_impl_de_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts
                 #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts
                 #impl_sqlx_type_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_read_ts
@@ -2776,7 +2776,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 }
             };
-            let mb_impl_serde_deserialize_for_ident_update_ts = match &pattern {
+            let mb_impl_de_for_ident_update_ts = match &pattern {
                 Pattern::Stdrt => Ts2::new(),
                 Pattern::Arr => match &is_nullable {
                     IsNullable::False => {
@@ -3072,7 +3072,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #ident_update_ts
                 #mb_ident_update_try_new_er_ts
                 #impl_ident_update_ts
-                #mb_impl_serde_deserialize_for_ident_update_ts
+                #mb_impl_de_for_ident_update_ts
                 #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_update_ts
                 #mb_ident_update_el_ts
                 #mb_ident_with_id_stdrt_not_null_update_el_ts

@@ -63,9 +63,9 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrParamUndrscr,
-    IsQbMut, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
-    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
-    gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
+    IsQbMut, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
+    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_match_try_new_in_deserialize_ts,
+    gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts, gen_v_init_ts,
     gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts, mb_wrap_into_braces_ts,
 };
@@ -1172,21 +1172,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             },
         );
-        let impl_serde_deserialize_for_ident_where_many_ts =
-            gen_impl_serde_deserialize_for_struct_ts(
-                &ident_where_many_ucc,
-                &fields
-                    .iter()
-                    .map(|el| (&el.ident, &el.type0))
-                    .collect::<Vec<(&Ident, &Type)>>(),
-                fields_len,
-                &|_: &Ident, syn_type: &Type| {
-                    let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
-                    gen_opt_type_decl_ts(
-                        &quote! {#import_ts PgTypeWhere<#syn_type_as_pg_type_where_ts>},
-                    )
-                },
-            );
+        let impl_de_for_ident_where_many_ts = gen_impl_de_for_struct_ts(
+            &ident_where_many_ucc,
+            &fields
+                .iter()
+                .map(|el| (&el.ident, &el.type0))
+                .collect::<Vec<(&Ident, &Type)>>(),
+            fields_len,
+            &|_: &Ident, syn_type: &Type| {
+                let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
+                gen_opt_type_decl_ts(
+                    &quote! {#import_ts PgTypeWhere<#syn_type_as_pg_type_where_ts>},
+                )
+            },
+        );
         let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_many_ts =
             gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_where_many_ucc,
@@ -1206,7 +1205,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #ident_where_many_ts
             #ident_where_many_try_new_er_ts
             #impl_pub_try_new_for_ident_where_many_ts
-            #impl_serde_deserialize_for_ident_where_many_ts
+            #impl_de_for_ident_where_many_ts
             #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_many_ts
         }
     };
@@ -1791,7 +1790,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             },
         );
-        let impl_serde_deserialize_for_ident_update_ts = gen_impl_serde_deserialize_for_struct_ts(
+        let impl_de_for_ident_update_ts = gen_impl_de_for_struct_ts(
             &ident_update_ucc,
             &fields
                 .iter()
@@ -1827,7 +1826,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #ident_update_ts
             #ident_update_try_new_er_ts
             #impl_pub_try_new_for_ident_update_ts
-            #impl_serde_deserialize_for_ident_update_ts
+            #impl_de_for_ident_update_ts
             #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_update_ts
         }
     };
@@ -3618,7 +3617,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Ok(Self(#VSc))
                             },
                         );
-                        let impl_serde_deserialize_for_ident_um_payload_ts = {
+                        let impl_de_for_ident_um_payload_ts = {
                             let tuple_struct_ident_op_payload_dq_ts =
                                 dq_ts(&format!("tuple struct {ident_op_payload_ucc}"));
                             let tuple_struct_ident_op_payload_with_1_el_dq_ts = dq_ts(&format!(
@@ -3708,7 +3707,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #ident_op_payload_vec_ts
                             #ident_op_payload_try_new_er_ts
                             #impl_pub_try_new_for_ident_op_payload_ts
-                            #impl_serde_deserialize_for_ident_um_payload_ts
+                            #impl_de_for_ident_um_payload_ts
                             #impl_pg_crud_dflt_opt_some_vec_one_el_for_op_payload_ts
                         }
                     },

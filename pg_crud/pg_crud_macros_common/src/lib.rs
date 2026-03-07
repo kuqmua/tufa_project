@@ -2046,7 +2046,7 @@ pub fn gen_match_try_new_in_deserialize_ts(ident: &dyn ToTokens, init_ts: &dyn T
         }
     }
 }
-pub fn gen_impl_serde_deserialize_for_struct_ts(
+pub fn gen_impl_de_for_struct_ts(
     ident: &dyn DisplayPlusToTokens,
     vec_ident_type: &[(&Ident, &Type)],
     len: usize,
