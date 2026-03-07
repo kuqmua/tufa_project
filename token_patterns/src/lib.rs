@@ -121,8 +121,8 @@ impl ToTokens for DeriveDebug {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub struct DeriveDebugThiserrorErrorOccurence;
-impl ToTokens for DeriveDebugThiserrorErrorOccurence {
+pub struct DeriveDebugThiserrorLocation;
+impl ToTokens for DeriveDebugThiserrorLocation {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {#[derive(Debug, thiserror::Error, location_lib::Location, OptimalPack)]}
             .to_tokens(tokens);

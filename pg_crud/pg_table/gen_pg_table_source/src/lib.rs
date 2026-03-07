@@ -90,8 +90,8 @@ use syn::{
 #[allow(unused_imports)]
 use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefault,
-    DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorErrorOccurence, Er0, Er1, Er2,
-    Er3, F32, F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
+    DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorLocation, Er0, Er1, Er2, Er3,
+    F32, F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
     PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
     PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, PgCrudDfltOptSomeVecOneElCall, RefStr,
     SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
