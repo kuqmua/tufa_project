@@ -68,33 +68,33 @@ impl FromStr for SourcePlaceType {
 }
 impl SourcePlaceType {
     #[must_use]
-    pub fn from_env_or_default() -> Self {
+    pub fn from_env_or_dflt() -> Self {
         let fix_message = "You can set environment variable SOURCE_PLACE_TYPE to be equal \"source\" or \"github\"";
         if let Err(er) = dotenv() {
-            let default = Self::default();
+            let dflt = Self::default();
             eprintln!(
-                "using default SourcePlaceType::{default:#?} (failed to dotenv(): {er}) {fix_message}"
+                "using dflt SourcePlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_message}"
             );
-            return default;
+            return dflt;
         }
         let name = "SOURCE_PLACE_TYPE";
         match env::var(name) {
             Ok(v) => match <Self as FromStr>::from_str(&v) {
                 Ok(v0) => v0,
                 Err(er) => {
-                    let default = Self::default();
+                    let dflt = Self::default();
                     eprintln!(
-                        "using default SourcePlaceType::{default:#?} (<SourcePlaceType as FromStr>::from_str(&v): {er}) {fix_message}"
+                        "using dflt SourcePlaceType::{dflt:#?} (<SourcePlaceType as FromStr>::from_str(&v): {er}) {fix_message}"
                     );
-                    default
+                    dflt
                 }
             },
             Err(er) => {
-                let default = Self::default();
+                let dflt = Self::default();
                 eprintln!(
-                    "using default SourcePlaceType::{default:#?} (env::var(\"{name}\"): {er}) {fix_message}"
+                    "using dflt SourcePlaceType::{dflt:#?} (env::var(\"{name}\"): {er}) {fix_message}"
                 );
-                default
+                dflt
             }
         }
     }

@@ -33,7 +33,7 @@ trait_al!(DebugClonePartialEqAl = Debug + Clone + PartialEq);
 trait_al!(DebugClonePartialEqSerializeAl = DebugClonePartialEqAl + Serialize);
 trait_al!(DebugClonePartialEqSerdeAl = DebugClonePartialEqSerializeAl + for<'__> Deserialize<'__>);
 trait_al!(
-    DebugClonePartialEqSerdeDefaultSomeOneAl = DebugClonePartialEqSerdeAl + DefaultOptSomeVecOneEl
+    DebugClonePartialEqSerdeDefaultSomeOneAl = DebugClonePartialEqSerdeAl + DfltOptSomeVecOneEl
 );
 trait_al!(SqlxEncodePgSqlxTypePgAl = for<'__> Encode<'__, Postgres> + Type<Postgres>);
 trait_al!(UtoipaToSchemaAndSchemarsJsonSchemaAl = for<'__> ToSchema<'__> + JsonSchema);
@@ -106,11 +106,11 @@ pub trait PgJsonType {
     ) -> Result<String, QpEr>;
     type Where: WhereAl
         + UtoipaToSchemaAndSchemarsJsonSchemaAl
-        + AllEnumVrtsArrDefaultOptSomeVecOneEl
+        + AllEnumVrtsArrDfltOptSomeVecOneEl
         + ToErrString;
     //todo impl get fields from read
     //todo mb add Decode trait here and Type
-    type Read: ReadAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DefaultOptSomeVecOneEl;
+    type Read: ReadAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneEl;
     type ReadOnlyIds: ReadOnlyIdsAl;
     fn select_only_ids_qp(column_field: &str) -> Result<String, QpEr>;
     type ReadInner: ReadInnerAl;
@@ -194,7 +194,7 @@ pub trait PgJsonTypeObjectVecElId {
 #[cfg(feature = "test-utils")]
 pub trait PgTypeTestCases {
     type PgType: PgType;
-    type Select: SelectAl + DefaultOptSomeVecOneElMaxPageSize;
+    type Select: SelectAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_create() -> Option<Vec<<Self::PgType as PgType>::Create>>;
     fn read_only_ids_to_two_dims_vec_read_inner(
         read_only_ids: &<Self::PgType as PgType>::ReadOnlyIds,
@@ -208,7 +208,7 @@ pub trait PgTypeTestCases {
     fn update_to_read_only_ids(
         v: &<Self::PgType as PgType>::Update,
     ) -> <Self::PgType as PgType>::ReadOnlyIds;
-    fn read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+    fn read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
         v: &<Self::PgType as PgType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgType as PgType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
@@ -322,9 +322,7 @@ pub struct PgJsonTypeLengthGreaterThanTest<T: PgJsonType> {
 #[cfg(feature = "test-utils")]
 pub trait PgJsonTypeTestCases {
     type PgJsonType: PgJsonType;
-    type Select: SelectAl
-        + UtoipaToSchemaAndSchemarsJsonSchemaAl
-        + DefaultOptSomeVecOneElMaxPageSize;
+    type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_create() -> Option<Vec<<Self::PgJsonType as PgJsonType>::Create>>;
     fn read_only_ids_to_two_dims_vec_read_inner(
         read_only_ids: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
@@ -341,7 +339,7 @@ pub trait PgJsonTypeTestCases {
     fn update_to_read_only_ids(
         v: &<Self::PgJsonType as PgJsonType>::Update,
     ) -> <Self::PgJsonType as PgJsonType>::ReadOnlyIds;
-    fn read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+    fn read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
         v: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
     fn previous_read_merged_with_opt_update_into_read(
@@ -436,11 +434,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, OptimalPack,
 )]
 pub struct NullableJsonObjectPgTypeWhereFilter<
-    T: Debug
-        + PartialEq
-        + Clone
-        + for<'lt> PgTypeWhereFilter<'lt>
-        + AllEnumVrtsArrDefaultOptSomeVecOneEl,
+    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhereFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
 impl<'query_lifetime, T> PgTypeWhereFilter<'query_lifetime>
     for NullableJsonObjectPgTypeWhereFilter<T>
@@ -449,7 +443,7 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVrtsArrDefaultOptSomeVecOneEl,
+        + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn qb(
         self,
@@ -478,24 +472,22 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVrtsArrDefaultOptSomeVecOneEl,
+        + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVrtsArrDefaultOptSomeVecOneEl for NullableJsonObjectPgTypeWhereFilter<T>
+impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVrtsArrDefaultOptSomeVecOneEl,
+        + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
-    fn all_vrts_default_opt_some_vec_one_el() -> Vec<Self> {
-        vec![Self(Some(
-            DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
-        ))]
+    fn all_vrts_dflt_opt_some_vec_one_el() -> Vec<Self> {
+        vec![Self(Some(DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()))]
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, OptimalPack)]
@@ -740,14 +732,14 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         ))
     }
 }
-impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl
+impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSomeVecOneEl
     for PgTypeWhere<T>
 {
-    fn default_opt_some_vec_one_el() -> Self {
+    fn dflt_opt_some_vec_one_el() -> Self {
         Self {
-            operator: DefaultOptSomeVecOneEl::default_opt_some_vec_one_el(),
+            operator: DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el(),
             v: NotEmptyUniqueVec::try_new(
-                AllEnumVrtsArrDefaultOptSomeVecOneEl::all_vrts_default_opt_some_vec_one_el(),
+                AllEnumVrtsArrDfltOptSomeVecOneEl::all_vrts_dflt_opt_some_vec_one_el(),
             )
             .expect("a918b427"),
         }
@@ -771,8 +763,8 @@ impl Display for Order {
         }
     }
 }
-impl DefaultOptSomeVecOneEl for Order {
-    fn default_opt_some_vec_one_el() -> Self {
+impl DfltOptSomeVecOneEl for Order {
+    fn dflt_opt_some_vec_one_el() -> Self {
         Self::default()
     }
 }
@@ -1077,15 +1069,15 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWit
         self.0.qp(incr, column, is_need_to_add_operator)
     }
 }
-impl DefaultOptSomeVecOneEl for PaginationStartsWithZero {
+impl DfltOptSomeVecOneEl for PaginationStartsWithZero {
     #[inline]
-    fn default_opt_some_vec_one_el() -> Self {
+    fn dflt_opt_some_vec_one_el() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
+impl DfltOptSomeVecOneElMaxPageSize for PaginationStartsWithZero {
     #[inline]
-    fn default_opt_some_vec_one_el_max_page_size() -> Self {
+    fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
         Self(PaginationBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
@@ -1208,16 +1200,16 @@ const _: () = {
         }
     }
 };
-impl<T: AllEnumVrtsArrDefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl for NotEmptyUniqueVec<T> {
-    fn default_opt_some_vec_one_el() -> Self {
-        Self(AllEnumVrtsArrDefaultOptSomeVecOneEl::all_vrts_default_opt_some_vec_one_el())
+impl<T: AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSomeVecOneEl for NotEmptyUniqueVec<T> {
+    fn dflt_opt_some_vec_one_el() -> Self {
+        Self(AllEnumVrtsArrDfltOptSomeVecOneEl::all_vrts_dflt_opt_some_vec_one_el())
     }
 }
-impl<T: AllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize> DefaultOptSomeVecOneElMaxPageSize
+impl<T: AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize> DfltOptSomeVecOneElMaxPageSize
     for NotEmptyUniqueVec<T>
 {
-    fn default_opt_some_vec_one_el_max_page_size() -> Self {
-        Self(AllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize::all_vrts_default_opt_some_vec_one_el_max_page_size())
+    fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
+        Self(AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize::all_vrts_dflt_opt_some_vec_one_el_max_page_size())
     }
 }
 impl<T> Default for NotEmptyUniqueVec<T> {
@@ -1241,7 +1233,7 @@ where
         + PartialEq
         + Clone
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
-        + AllEnumVrtsArrDefaultOptSomeVecOneEl,
+        + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn qb(
         self,
@@ -1448,8 +1440,8 @@ impl UnsignedPartOfI32 {
         self.0
     }
 }
-impl DefaultOptSomeVecOneEl for UnsignedPartOfI32 {
-    fn default_opt_some_vec_one_el() -> Self {
+impl DfltOptSomeVecOneEl for UnsignedPartOfI32 {
+    fn dflt_opt_some_vec_one_el() -> Self {
         Self(0)
     }
 }
@@ -1576,9 +1568,9 @@ impl NotZeroUnsignedPartOfI32 {
         self.0.get()
     }
 }
-impl DefaultOptSomeVecOneEl for NotZeroUnsignedPartOfI32 {
-    fn default_opt_some_vec_one_el() -> Self {
-        Self(DefaultOptSomeVecOneEl::default_opt_some_vec_one_el())
+impl DfltOptSomeVecOneEl for NotZeroUnsignedPartOfI32 {
+    fn dflt_opt_some_vec_one_el() -> Self {
+        Self(DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el())
     }
 }
 #[derive(

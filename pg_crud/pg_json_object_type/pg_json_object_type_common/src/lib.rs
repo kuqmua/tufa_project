@@ -1,6 +1,6 @@
 use location_lib::{Location, loc, loc::Loc};
 use optimal_pack::OptimalPack;
-use pg_crud_common::DefaultOptSomeVecOneEl;
+use pg_crud_common::DfltOptSomeVecOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -117,9 +117,9 @@ const _: () = {
         }
     }
 };
-impl<T: DefaultOptSomeVecOneEl> DefaultOptSomeVecOneEl for UniqueVec<T> {
-    fn default_opt_some_vec_one_el() -> Self {
-        Self(vec![DefaultOptSomeVecOneEl::default_opt_some_vec_one_el()])
+impl<T: DfltOptSomeVecOneEl> DfltOptSomeVecOneEl for UniqueVec<T> {
+    fn dflt_opt_some_vec_one_el() -> Self {
+        Self(vec![DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()])
     }
 }
 impl<T> Default for UniqueVec<T> {

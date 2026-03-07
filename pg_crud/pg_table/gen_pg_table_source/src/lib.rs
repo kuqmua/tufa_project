@@ -15,22 +15,21 @@ use naming::{
     CommonReadOnlyIdsReturnedFromCoSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
     CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
-    CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc,
-    DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElMaxPageSizeUcc,
-    DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeserializeResUcc, DesirableUcc,
-    DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloLogicSc, DmErVrtsSc, DmLogicSc, ElSc,
-    EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc,
-    FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc, GenColumnQuealsVCommaUoQpSc,
-    GenPgTablePkSc, GenSelectQpSc, GenWhenColumnIdThenVUmQpSc,
-    HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrSc,
-    IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
-    NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc, PaginationSc,
-    ParamsSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
-    PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PkQpSc, PkSc, PoolConnectionSc, PoolSc,
-    PrefixSc, PrepareExtensionsSc, PreparePgSc, PreparePgTableSc, PreparePgUcc, QbSc, QpErUcc,
-    QpSc, QpUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc,
-    ReadOnlyIdsIntoTableTypeSc, ReadOnlyIdsIntoUpdateSc,
-    ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
+    CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc, DeserializeResUcc,
+    DesirableUcc, DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElMaxPageSizeUcc,
+    DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DisplayPlusToTokens, DisplayToScStr,
+    DloErVrtsSc, DloLogicSc, DmErVrtsSc, DmLogicSc, ElSc, EndpointLocationSc, ErSc,
+    ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc,
+    FromHandleSc, FutureSc, GenColumnQuealsVCommaUoQpSc, GenPgTablePkSc, GenSelectQpSc,
+    GenWhenColumnIdThenVUmQpSc, HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc,
+    IdentCreateDfltSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc,
+    NotUniqueFieldUcc, NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc,
+    OrderSc, PaginationSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc,
+    PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc,
+    PgUcc, PkQpSc, PkSc, PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc,
+    PreparePgTableSc, PreparePgUcc, QbSc, QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc,
+    ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
+    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
@@ -65,8 +64,8 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, Dim, EqualOrEqualUsingFields, Import, IncrParamUnderscore,
     IsNeedToAddOperatorUnderscore, IsQbMutable,
-    gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
-    gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
+    gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
+    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts, gen_v_init_ts,
     gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts, mb_wrap_into_braces_ts,
@@ -93,8 +92,8 @@ use token_patterns::{
     AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefault,
     DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorErrorOccurence, Er0, Er1, Er2,
     Er3, F32, F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
-    PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
-    PgCrudCommonDefaultOptSomeVecOneElMaxPageSizeCall, PgCrudDefaultOptSomeVecOneElCall, RefStr,
+    PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
+    PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, PgCrudDfltOptSomeVecOneElCall, RefStr,
     SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
 };
 //todo decide where to do er log (mb add in some places)
@@ -940,12 +939,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
     let gen_v_decl_ts0 = |ts: &dyn ToTokens| gen_v_decl_ts(&import, &ts);
     let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
-    let gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts =
+    let gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts =
         |ident_4d69a809: &dyn ToTokens, ts: &dyn ToTokens| {
-            gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&ident_4d69a809, &Ts2::new(), &ts)
+            gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_4d69a809, &Ts2::new(), &ts)
         };
-    let gen_fi_default_opt_some_vec_one_el_call_ts =
-        |ts: &dyn ToTokens| quote! {#ts: #PgCrudDefaultOptSomeVecOneElCall};
+    let gen_fi_dflt_opt_some_vec_one_el_call_ts =
+        |ts: &dyn ToTokens| quote! {#ts: #PgCrudDfltOptSomeVecOneElCall};
     let gen_match_qb_or_err_ts =
         |expr: &dyn ToTokens, ok_binding: &dyn ToTokens, err_ts: &dyn ToTokens| {
             gen_match_ok_err_ts(
@@ -985,12 +984,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {{#ts}}
             });
         let impl_ident_create_ts = {
-            let pk_ft_as_default_opt_some_vec_one_el_call_ts = {
+            let pk_ft_as_dflt_opt_some_vec_one_el_call_ts = {
                 let pk_ft_as_pg_type_create_ts = gen_as_pg_type_create_ts(&pk_ft);
                 quote! {
                     <
-                        #pk_ft_as_pg_type_create_ts as #import_ts #DefaultOptSomeVecOneElUcc
-                    >::#DefaultOptSomeVecOneElSc()
+                        #pk_ft_as_pg_type_create_ts as #import_ts #DfltOptSomeVecOneElUcc
+                    >::#DfltOptSomeVecOneElSc()
                 }
             };
             let fn_create_qp_ts = {
@@ -1022,7 +1021,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                 let pk_ts = gen_match_as_pg_crud_pg_type_pg_type_create_qp_ts(
                     pk_ft,
-                    &pk_ft_as_default_opt_some_vec_one_el_call_ts,
+                    &pk_ft_as_dflt_opt_some_vec_one_el_call_ts,
                 );
                 let column_incrs_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
@@ -1058,7 +1057,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                 let pk_ts = gen_query_as_pg_crud_pg_type_pg_type_create_qb_ts(
                     pk_ft,
-                    &pk_ft_as_default_opt_some_vec_one_el_call_ts,
+                    &pk_ft_as_dflt_opt_some_vec_one_el_call_ts,
                 );
                 let binded_query_modifications_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
@@ -1086,23 +1085,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let impl_pg_crud_default_opt_some_vec_one_el_for_ident_create_ts =
-            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+        let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_create_ts =
+            gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_create_ucc,
                 &{
-                    let fields_init_without_pk_with_default_opt_some_vec_one_el_ts =
+                    let fields_init_without_pk_with_dflt_opt_some_vec_one_el_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
-                            gen_fi_default_opt_some_vec_one_el_call_ts(&el.ident)
+                            gen_fi_dflt_opt_some_vec_one_el_call_ts(&el.ident)
                         });
                     quote! {
-                        Self{#fields_init_without_pk_with_default_opt_some_vec_one_el_ts}
+                        Self{#fields_init_without_pk_with_dflt_opt_some_vec_one_el_ts}
                     }
                 },
             );
         quote! {
             #ident_create_ts
             #impl_ident_create_ts
-            #impl_pg_crud_default_opt_some_vec_one_el_for_ident_create_ts
+            #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_create_ts
         }
     };
     let ident_where_many_ucc = SelfWhereManyUcc::from_tokens(&ident);
@@ -1189,15 +1188,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 },
             );
-        let impl_pg_crud_default_opt_some_vec_one_el_for_ident_where_many_ts =
-            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+        let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_many_ts =
+            gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_where_many_ucc,
                 &{
                     let fields_ts = gen_fields_named_without_comma_ts(&|el: &SynFieldWrapper| {
                         let fi = &el.ident;
                         quote! {
                             #fi: Some(
-                                #PgCrudDefaultOptSomeVecOneElCall
+                                #PgCrudDfltOptSomeVecOneElCall
                             ),
                         }
                     });
@@ -1209,7 +1208,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #ident_where_many_try_new_er_ts
             #impl_pub_try_new_for_ident_where_many_ts
             #impl_serde_deserialize_for_ident_where_many_ts
-            #impl_pg_crud_default_opt_some_vec_one_el_for_ident_where_many_ts
+            #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_many_ts
         }
     };
     let opt_ident_where_many_ucc = StdOptOptSelfWhereManyUcc::from_tokens(&ident);
@@ -1302,21 +1301,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &Import::PgCrud,
             );
-        let impl_pg_crud_default_opt_some_vec_one_el_for_opt_ident_where_many_ts =
-            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+        let impl_pg_crud_dflt_opt_some_vec_one_el_for_opt_ident_where_many_ts =
+            gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &opt_ident_where_many_ucc,
-                &quote! {Self(Some(#PgCrudDefaultOptSomeVecOneElCall))},
+                &quote! {Self(Some(#PgCrudDfltOptSomeVecOneElCall))},
             );
         quote! {
             #opt_ident_where_many_ts
             #impl_pg_type_where_filter_for_opt_ident_where_many_ts
-            #impl_pg_crud_default_opt_some_vec_one_el_for_opt_ident_where_many_ts
+            #impl_pg_crud_dflt_opt_some_vec_one_el_for_opt_ident_where_many_ts
         }
     };
     let pub_where_many_opt_ident_where_many_ts =
         quote! {pub #WhereManySc: #opt_ident_where_many_ucc};
-    let where_many_pg_crud_default_opt_some_vec_one_el_call_ts =
-        gen_fi_default_opt_some_vec_one_el_call_ts(&WhereManySc);
+    let where_many_pg_crud_dflt_opt_some_vec_one_el_call_ts =
+        gen_fi_dflt_opt_some_vec_one_el_call_ts(&WhereManySc);
     let gen_read_or_dm_extra_params_init_ts = |rm_or_dm: &RmOrDm| {
         gen_match_ok_err_ts_c35d87fd(
             &quote! {#import_ts PgTypeWhereFilter::qp(
@@ -1437,12 +1436,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &Ts2::new(),
             &quote! {format!("{self}")},
         );
-        let impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_ts =
-            gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(&ident_select_ucc, &{
+        let impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_select_ts =
+            gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_select_ucc, &{
                 let els_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
                     let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&el.ident);
                     quote! {
-                        Self::#fi_ucc_ts(#PgCrudDefaultOptSomeVecOneElCall)
+                        Self::#fi_ucc_ts(#PgCrudDfltOptSomeVecOneElCall)
                     }
                 });
                 quote! {vec![#els_ts]}
@@ -1451,11 +1450,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #ident_select_ts
             #impl_display_for_ident_select_ts
             #impl_location_lib_to_err_string_for_ident_select_ts
-            #impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_ts
+            #impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_select_ts
         }
     };
-    let select_pg_crud_default_opt_some_vec_one_el_call_ts =
-        gen_fi_default_opt_some_vec_one_el_call_ts(&SelectSc);
+    let select_pg_crud_dflt_opt_some_vec_one_el_call_ts =
+        gen_fi_dflt_opt_some_vec_one_el_call_ts(&SelectSc);
     let ident_read_ts = {
         let ident_read_ts = {
             let ts_f80f1f3e = StructOrEnumDeriveTsStreamBuilder::new()
@@ -1808,20 +1807,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             },
         );
-        let impl_pg_crud_default_opt_some_vec_one_el_for_ident_update_ts =
-            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+        let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_update_ts =
+            gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_update_ucc,
                 &{
-                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
-                    let fields_without_pk_with_default_opt_some_vec_one_el_ts =
+                    let ts = gen_fi_dflt_opt_some_vec_one_el_call_ts(&pk_fi);
+                    let fields_without_pk_with_dflt_opt_some_vec_one_el_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                             let fi = &el.ident;
-                            let ts0 = gen_v_init_ts0(&PgCrudDefaultOptSomeVecOneElCall);
+                            let ts0 = gen_v_init_ts0(&PgCrudDfltOptSomeVecOneElCall);
                             quote! {#fi: Some(#ts0)}
                         });
                     quote! {Self{
                         #ts,
-                        #fields_without_pk_with_default_opt_some_vec_one_el_ts
+                        #fields_without_pk_with_dflt_opt_some_vec_one_el_ts
                     }}
                 },
             );
@@ -1830,7 +1829,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #ident_update_try_new_er_ts
             #impl_pub_try_new_for_ident_update_ts
             #impl_serde_deserialize_for_ident_update_ts
-            #impl_pg_crud_default_opt_some_vec_one_el_for_ident_update_ts
+            #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_update_ts
         }
     };
     let ident_update_for_query_ts = {
@@ -3466,7 +3465,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts = wrap_into_axum_res_ts(
                     &{
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
-                        quote! {<#ident_op_payload_ucc as #import_ts #DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()}
+                        quote! {<#ident_op_payload_ucc as #import_ts #DfltOptSomeVecOneElUcc>::#DfltOptSomeVecOneElSc()}
                     },
                     &quote! {http::StatusCode::OK},
                     &AddReturn::False,
@@ -3487,8 +3486,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         });
         content_ts.push({
             let payload_ts = {
-                let gen_params_payload_and_default_ts =
-                    |decl_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
+                let gen_params_payload_and_dflt_ts =
+                    |decl_ts: &dyn ToTokens, dflt_init_ts: &dyn ToTokens| {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         let ident_op_payload_ts = {
                             let (derive_clone, derive_copy) = op.derive_clone_and_copy();
@@ -3506,25 +3505,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #ts_ec5b096c
                             }
                         };
-                        let impl_pg_crud_default_opt_some_vec_one_el_for_op_payload_ts =
-                            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+                        let impl_pg_crud_dflt_opt_some_vec_one_el_for_op_payload_ts =
+                            gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                                 &ident_op_payload_ucc,
-                                &quote! {Self #default_init_ts},
+                                &quote! {Self #dflt_init_ts},
                             );
                         quote! {
                             #ident_op_payload_ts
-                            #impl_pg_crud_default_opt_some_vec_one_el_for_op_payload_ts
+                            #impl_pg_crud_dflt_opt_some_vec_one_el_for_op_payload_ts
                         }
                     };
                 match &op {
-                    Op::Cm => gen_params_payload_and_default_ts(
+                    Op::Cm => gen_params_payload_and_dflt_ts(
                         &{
                             let vec_ident_create_ts = gen_vec_tokens_decl_ts(&ident_create_ucc);
                             quote! {(pub #vec_ident_create_ts);}
                         },
-                        &quote! {(vec![#PgCrudDefaultOptSomeVecOneElCall])},
+                        &quote! {(vec![#PgCrudDfltOptSomeVecOneElCall])},
                     ),
-                    Op::Rm => gen_params_payload_and_default_ts(
+                    Op::Rm => gen_params_payload_and_dflt_ts(
                         &quote! {{
                             #pub_where_many_opt_ident_where_many_ts,
                             #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
@@ -3532,23 +3531,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             pub #PaginationSc: #import_ts PaginationStartsWithZero,
                         }},
                         &{
-                            let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&PaginationSc);
+                            let ts = gen_fi_dflt_opt_some_vec_one_el_call_ts(&PaginationSc);
                             quote! {{
-                                #where_many_pg_crud_default_opt_some_vec_one_el_call_ts,
-                                #select_pg_crud_default_opt_some_vec_one_el_call_ts,
+                                #where_many_pg_crud_dflt_opt_some_vec_one_el_call_ts,
+                                #select_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                                 #OrderBySc: #import_ts OrderBy {
                                     #ColumnSc: #ident_select_ucc::#pk_fi_ucc_ts(
-                                        #PgCrudDefaultOptSomeVecOneElCall
+                                        #PgCrudDfltOptSomeVecOneElCall
                                     ),
                                     #OrderSc: Some(
-                                        #PgCrudDefaultOptSomeVecOneElCall
+                                        #PgCrudDfltOptSomeVecOneElCall
                                     ),
                                 },
                                 #ts,
                             }}
                         },
                     ),
-                    Op::Ro => gen_params_payload_and_default_ts(
+                    Op::Ro => gen_params_payload_and_dflt_ts(
                         &{
                             let pub_handle_pk_fi_pk_inner_type_handle_ts =
                                 gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
@@ -3560,10 +3559,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }}
                         },
                         &{
-                            let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
+                            let ts = gen_fi_dflt_opt_some_vec_one_el_call_ts(&pk_fi);
                             quote! {{
                                 #ts,
-                                #select_pg_crud_default_opt_some_vec_one_el_call_ts
+                                #select_pg_crud_dflt_opt_some_vec_one_el_call_ts
                             }}
                         },
                     ),
@@ -3699,11 +3698,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 };
                             }
                         };
-                        let impl_pg_crud_default_opt_some_vec_one_el_for_op_payload_ts =
-                            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+                        let impl_pg_crud_dflt_opt_some_vec_one_el_for_op_payload_ts =
+                            gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                                 &ident_op_payload_ucc,
                                 &quote! {
-                                    Self(vec![#PgCrudDefaultOptSomeVecOneElCall])
+                                    Self(vec![#PgCrudDfltOptSomeVecOneElCall])
                                 },
                             );
                         quote! {
@@ -3711,14 +3710,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #ident_op_payload_try_new_er_ts
                             #impl_pub_try_new_for_ident_op_payload_ts
                             #impl_serde_deserialize_for_ident_um_payload_ts
-                            #impl_pg_crud_default_opt_some_vec_one_el_for_op_payload_ts
+                            #impl_pg_crud_dflt_opt_some_vec_one_el_for_op_payload_ts
                         }
                     },
-                    Op::Dm => gen_params_payload_and_default_ts(
+                    Op::Dm => gen_params_payload_and_dflt_ts(
                         &quote! {{#pub_where_many_opt_ident_where_many_ts}},
-                        &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
+                        &quote! {{#where_many_pg_crud_dflt_opt_some_vec_one_el_call_ts}},
                     ),
-                    Op::Dlo => gen_params_payload_and_default_ts(
+                    Op::Dlo => gen_params_payload_and_dflt_ts(
                         &{
                             let ts = gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
                                 &SelfReadUcc::from_type_last_segment(pk_ft),
@@ -3726,7 +3725,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {{#ts}}
                         },
                         &{
-                            let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
+                            let ts = gen_fi_dflt_opt_some_vec_one_el_call_ts(&pk_fi);
                             quote! {{#ts}}
                         },
                     ),
@@ -3961,33 +3960,34 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 vec
             ).expect("fd20ad6d")
         };
-        let ident_create_default_fields_init_without_pk_ts =
-            gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
+        let ident_create_dflt_fields_init_without_pk_ts = gen_fields_named_without_pk_with_comma_ts(
+            &|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 let ft_as_pg_type_create_ts = gen_as_pg_type_create_ts(&el.type0);
                 quote! {
-                    #fi: <#ft_as_pg_type_create_ts as #import_ts DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()
+                    #fi: <#ft_as_pg_type_create_ts as #import_ts DfltOptSomeVecOneEl>::dflt_opt_some_vec_one_el()
                 }
-            });
+            },
+        );
         let fields_none_init_ts =
             gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 quote! {#fi: None}
             });
         //todo instead of first dropping table - check if its not exists. if exists Test must fail
-        let select_default_all_with_max_page_size_not_empty_unique_vec_ts = {
+        let select_dflt_all_with_max_page_size_not_empty_unique_vec_ts = {
             let ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 let ft = &el.type0;
                 let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
                 quote! {
                     #ident_select_ucc::#fi_ucc(
-                        <<#ft as #import_ts PgType>::Select as #import_ts #DefaultOptSomeVecOneElMaxPageSizeUcc>::#DefaultOptSomeVecOneElMaxPageSizeSc()
+                        <<#ft as #import_ts PgType>::Select as #import_ts #DfltOptSomeVecOneElMaxPageSizeUcc>::#DfltOptSomeVecOneElMaxPageSizeSc()
                     )
                 }
             });
             quote! {
-                let select_default_all_with_max_page_size = #import_ts NotEmptyUniqueVec::try_new(vec![
+                let select_dflt_all_with_max_page_size = #import_ts NotEmptyUniqueVec::try_new(vec![
                     #ts
                 ]).expect("5e82ac66");
             }
@@ -4068,7 +4068,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ),
                 gen_ts(
                     &read_only_ids_returned_from_co_name_ts,
-                    &quote! {ident_create_default},
+                    &quote! {ident_create_dflt},
                     &AddDotClone::False,
                 ),
                 gen_ts(
@@ -4083,8 +4083,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fi = &el.ident;
                 quote! {#fi: None}
             });
-        let select_default_all_with_max_page_size_clone_ts =
-            quote! {select_default_all_with_max_page_size.clone()};
+        let select_dflt_all_with_max_page_size_clone_ts =
+            quote! {select_dflt_all_with_max_page_size.clone()};
         let common_read_only_ids_returned_from_co_ts = {
             let pk_read_ts = quote! {pk_read};
             let pk_read_clone_ts = quote! {pk_read.clone()};
@@ -4121,14 +4121,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             quote! {
                 let #CommonReadOnlyIdsReturnedFromCoSc = {
-                    let read_only_ids_from_try_co = gen_read_only_ids_from_try_co_default(&#UrlSc, &table_init).await;
+                    let read_only_ids_from_try_co = gen_read_only_ids_from_try_co_dflt(&#UrlSc, &table_init).await;
                     let pk_read = #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts;
                     #assert_eq_ts_4f6bbe8a
                     #assert_eq_ts_947d2096
                     gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                         &url,
                         #pk_read_ts,
-                        #select_default_all_with_max_page_size_clone_ts,
+                        #select_dflt_all_with_max_page_size_clone_ts,
                         &table_init,
                     ).await;
                     read_only_ids_from_try_co
@@ -4143,7 +4143,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {#ts}
                 } else {
                     let ts1 = gen_as_pg_type_path_ts(&ft0);
-                    quote! {<#ts1 Create as #import_ts DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el()}
+                    quote! {<#ts1 Create as #import_ts DfltOptSomeVecOneEl>::dflt_opt_some_vec_one_el()}
                 };
                 quote! {#fi0: #ts0}
             })
@@ -4233,14 +4233,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
             &table_read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
         ]);
-        let select_default_all_with_max_page_size_cloned_clone_ts =
-            quote! {select_default_all_with_max_page_size_cloned.clone()};
+        let select_dflt_all_with_max_page_size_cloned_clone_ts =
+            quote! {select_dflt_all_with_max_page_size_cloned.clone()};
         let read_only_ids_to_two_dims_vec_read_inner_acc_fields_ts =
             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 let fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc =
                     SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
-                let ident_create_defaults_for_column_read_only_ids_to_two_dims_vec_read_inner_ts =
+                let ident_create_dflts_for_column_read_only_ids_to_two_dims_vec_read_inner_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el0: &SynFieldWrapper| {
                         let fi0 = &el0.ident;
                         let ft0 = &el0.type0;
@@ -4253,7 +4253,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     quote! {
                                         for el_b3522b7d in #ft_ts read_only_ids_to_two_dims_vec_read_inner(v_a5f7e6cd) {
                                             for _ in el_b3522b7d {
-                                                acc_458cda9e.push(ident_create_default.clone());
+                                                acc_458cda9e.push(ident_create_dflt.clone());
                                             }
                                         }
                                     }
@@ -4266,7 +4266,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     let #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc = {
                         let mut acc_458cda9e = Vec::new();
-                        #ident_create_defaults_for_column_read_only_ids_to_two_dims_vec_read_inner_ts
+                        #ident_create_dflts_for_column_read_only_ids_to_two_dims_vec_read_inner_ts
                         acc_458cda9e
                     };
                 }
@@ -4275,12 +4275,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_read_fields_init_without_pk_ts = gen_fields_named_without_pk_with_comma_ts(
                 &|syn_field_wrapper: &SynFieldWrapper| {
                     let fi = &syn_field_wrapper.ident;
-                    let ts = gen_v_init_ts0(&PgCrudDefaultOptSomeVecOneElCall);
+                    let ts = gen_v_init_ts0(&PgCrudDfltOptSomeVecOneElCall);
                     let ts0 = gen_as_pg_type_test_cases_path_ts(&syn_field_wrapper.type0);
                     quote! {
                         #fi: el_f108da5a.#fi.as_ref().map_or_else(
                             || Some(#ts),
-                            #ts0 read_only_ids_to_opt_v_read_default_opt_some_vec_one_el
+                            #ts0 read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el
                         )
                     }
                 },
@@ -4290,7 +4290,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     itertools::Itertools::sorted_by(
                         read_only_ids_els_efeed554.iter().map(|el_f108da5a| {
                             #ident_read_ucc {
-                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                     &el_f108da5a.#pk_fi
                                 ),
                                 #ident_read_fields_init_without_pk_ts
@@ -4314,7 +4314,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 )
                             ),
-                            #select_default_all_with_max_page_size_clone_ts,
+                            #select_dflt_all_with_max_page_size_clone_ts,
                             table_9c259e1c
                         )
                         .await
@@ -4333,7 +4333,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 async fn gen_read_only_ids_els_8a1ef027(
                     url: &str,
                     table_9c259e1c: &str,
-                    select_default_all_with_max_page_size: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
+                    select_dflt_all_with_max_page_size: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
                     read_only_ids_to_two_dims_vec_read_inner_acc: Vec<#ident_create_ucc>
                 ) -> Vec<#ident_read_only_ids_ucc> {
                     let read_only_ids_els_efeed554 = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_ucc>>>(
@@ -4433,7 +4433,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 let #ts0 = #ts1.clone();
                 let url_cloned = url.clone();
-                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                let select_dflt_all_with_max_page_size_cloned = #select_dflt_all_with_max_page_size_clone_ts;
                 acc_9189f86e.push(futures::FutureExt::boxed(async move {
                     #ts2
                 }));
@@ -4466,7 +4466,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         )
                                     )
                                 ),
-                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &table_cm_cloned
                             ).await.expect("bdb72341")
                         },
@@ -4498,7 +4498,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             )
                                         )
                                     ),
-                                    #select_default_all_with_max_page_size_cloned_clone_ts,
+                                    #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                     &table_cm_cloned
                                 ).await
                                 .expect("24ab86d6")
@@ -4572,7 +4572,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_ident_try_ro_handle_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
-                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &table_co_cloned
                             )
                             .await
@@ -4608,7 +4608,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
-                                select_default_all_with_max_page_size_cloned,
+                                select_dflt_all_with_max_page_size_cloned,
                                 &table_co_cloned,
                             ).await;
                         },
@@ -4622,10 +4622,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             quote! {#co_tests_ts}
         };
-        let add_co_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
+        let add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
             |ts: &dyn ToTokens| {
                 quote! {
-                    let read_only_ids_from_try_co = gen_read_only_ids_from_try_co_default(
+                    let read_only_ids_from_try_co = gen_read_only_ids_from_try_co_dflt(
                         &url_cloned,
                         &table_7e35b1ce
                     ).await;
@@ -4638,7 +4638,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                         &url_cloned,
                         #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
-                        select_default_all_with_max_page_size_cloned,
+                        select_dflt_all_with_max_page_size_cloned,
                         &table_7e35b1ce,
                     ).await;
                 }
@@ -4650,7 +4650,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_non_existent_pks},
-                    &add_co_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
+                    &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &quote!{
                             gen_try_rm_order_by_pk_with_big_pagination(
                                 &url_cloned,
@@ -4664,7 +4664,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         )
                                     )
                                 ),
-                                select_default_all_with_max_page_size_cloned.clone(),
+                                select_dflt_all_with_max_page_size_cloned.clone(),
                                 &table_7e35b1ce
                             ).await
                             .expect("e661c49b")
@@ -4678,7 +4678,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts = gen_acc_push_future_ts(
                         &quote!{table_7e35b1ce},
                         &quote!{table_test_rm_by_equal_to_created_pks},
-                        &add_co_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
+                        &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                             let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
                                 &ts_611ddc2e,
                                 &quote! {
@@ -4692,7 +4692,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 )
                                             )
                                         ),
-                                        select_default_all_with_max_page_size_cloned.clone(),
+                                        select_dflt_all_with_max_page_size_cloned.clone(),
                                         &table_7e35b1ce
                                     ).await.expect("b8efe770")
                                 },
@@ -4720,7 +4720,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                     )
                                                 )
                                             ),
-                                            select_default_all_with_max_page_size_cloned.clone(),
+                                            select_dflt_all_with_max_page_size_cloned.clone(),
                                             &table_7e35b1ce
                                         ).await
                                         .expect("1f079962")
@@ -4737,7 +4737,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             );
                             quote! {
                                 let ident_vec_create = std::iter::repeat_n(
-                                    ident_create_default_cloned.clone(),//todo mb remove
+                                    ident_create_dflt_cloned.clone(),//todo mb remove
                                     el_a636d084
                                 ).collect::<Vec<#ident_create_ucc>>();
                                 let read_only_ids_from_try_cm = #ident::try_cm_handle(
@@ -4755,7 +4755,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         })
                     );
                 quote! {
-                    let ident_create_default_cloned = ident_create_default.clone();
+                    let ident_create_dflt_cloned = ident_create_dflt.clone();
                     #ts
                 }
             });
@@ -4764,7 +4764,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_assert_eq_ts(
                         &quote! {vec![
                             #ident_read_ucc {
-                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                     &read_only_ids_returned_from_co.#pk_fi
                                 ),
                                 #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_co_clone_ident_create_clone_ts
@@ -4774,20 +4774,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_try_rm_order_by_pk_with_big_pagination(
                                 &url_cloned,
                                 #ident_where_many_ucc::try_new(#ts).expect("83c2d430"),
-                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &table_7e35b1ce
                             ).await.expect("c3e316c0")
                         },
                         &quote! {"ee8d232d"},
                     )
                 };
-            let gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts =
+            let gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_dflt_ts =
                 |fi: &Ident, ft: &Type| {
                     let ts = gen_ft_opt_vec_create_ts(ft);
                     quote! {
                         #ts
                         .filter(|el_bba28182| !el_bba28182.is_empty())
-                        .unwrap_or_else(|| vec![ident_create_default.#fi.clone()])
+                        .unwrap_or_else(|| vec![ident_create_dflt.#fi.clone()])
                     }
                 };
             let gen_read_test_ts =
@@ -4823,7 +4823,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 )
                                             )
                                         ),
-                                        #select_default_all_with_max_page_size_cloned_clone_ts,
+                                        #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                         &table_7e35b1ce
                                     ).await
                                     .expect("1817b67a")
@@ -4876,7 +4876,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         vec![
                             #pk_as_pg_type_test_cases_path_ts read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_co.#pk_fi,
-                                #PgCrudDefaultOptSomeVecOneElCall
+                                #PgCrudDfltOptSomeVecOneElCall
                             )
                         ]
                     )
@@ -5041,12 +5041,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
                 read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
             ) = {
-                //todo if vec_create is empty then do different logic (for uuid). now uuid Tested using one default case
+                //todo if vec_create is empty then do different logic (for uuid). now uuid Tested using one dflt case
                 let gen_ts = |test_name: &str, dim: &Dim| {
                     let fn_ts = dim.read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
                     gen_read_test_ts(
                         test_name,
-                        &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
+                        &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_dflt_ts,
                         &gen_ident_create_content_el_ts,
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
@@ -5082,7 +5082,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = gen_read_test_ts(
                 table_create_into_pg_json_type_opt_vec_where_length_equal_name,
-                &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
+                &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
@@ -5110,7 +5110,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = gen_read_test_ts(
                 table_create_into_pg_json_type_opt_vec_where_length_greater_than_name,
-                &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
+                &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_create_content_el_ts,
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
@@ -5147,7 +5147,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let gen_ts = |table_name: &str, method_ts: &dyn ToTokens| {
                     gen_read_test_ts(
                         table_name,
-                        &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_default_ts,
+                        &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_dflt_ts,
                         &gen_ident_create_content_el_ts,
                         &|el: &SynFieldWrapper| {
                             let fi = &el.ident;
@@ -5233,12 +5233,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             acc_9189f86e.push({
                 let table_ro_cloned = table_ro.clone();
                 let url_cloned = url.clone();
-                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                let select_dflt_all_with_max_page_size_cloned = #select_dflt_all_with_max_page_size_clone_ts;
                 futures::FutureExt::boxed(async move {
                     gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                         &url_cloned,
                         #pk_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
-                        #select_default_all_with_max_page_size_cloned_clone_ts,
+                        #select_dflt_all_with_max_page_size_cloned_clone_ts,
                         &table_ro_cloned,
                     ).await;
                 })
@@ -5303,7 +5303,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             )
                                         )
                                     ),
-                                    #select_default_all_with_max_page_size_cloned_clone_ts,
+                                    #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                     &table_um_cloned
                                 )
                                 .await
@@ -5359,7 +5359,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         );
                                         quote! {
                                             #ts1 previous_read_merged_with_opt_update_into_read(
-                                                #ts1 read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                                #ts1 read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                                     &read_only_ids_el_937c5af3.#fi0.clone().expect("96213542")
                                                 ).expect("bf0d6f55").#VSc,
                                                 Some(#UpdateSc.clone())
@@ -5425,7 +5425,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 )
                                             )
                                         ),
-                                        select_default_all_with_max_page_size_cloned,
+                                        select_dflt_all_with_max_page_size_cloned,
                                         &table_um_cloned
                                     )
                                     .await
@@ -5454,7 +5454,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         for (i_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
                             &table_um,
-                            #select_default_all_with_max_page_size_clone_ts,
+                            #select_dflt_all_with_max_page_size_clone_ts,
                             #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc.clone()
                         ).await.into_iter().enumerate() {
                             #ts_2a6601e1
@@ -5475,7 +5475,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let previous_read = gen_ident_try_ro_handle_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
-                                #select_default_all_with_max_page_size_cloned_clone_ts,
+                                #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &table_uo_cloned
                             )
                             .await.expect("e6998b47");
@@ -5514,7 +5514,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     let ts0 = gen_as_pg_type_test_cases_path_ts(&el0.type0);
                                     quote! {
                                         #ts0 previous_read_merged_with_opt_update_into_read(
-                                            #ts0 read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                            #ts0 read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                                 &read_only_ids_el_937c5af3.#fi0.clone().expect("4f19d0d2")
                                             ).expect("c7685b19").#VSc,
                                             Some(#UpdateSc.clone())
@@ -5554,7 +5554,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_ident_try_ro_handle_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
-                                select_default_all_with_max_page_size_cloned,
+                                select_dflt_all_with_max_page_size_cloned,
                                 &table_uo_cloned
                             )
                             .await.expect("75894c76")
@@ -5575,7 +5575,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         for (i_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
                             &table_uo,
-                            #select_default_all_with_max_page_size_clone_ts,
+                            #select_dflt_all_with_max_page_size_clone_ts,
                             #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc
                         ).await.into_iter().enumerate() {
                             #ts_fedea8c3
@@ -5591,7 +5591,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_equal_to_created_pks},
-                    &add_co_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
+                    &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &{
                             let ts = gen_try_dm_handle_ts(
                                 &quote!{
@@ -5617,7 +5617,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts_3240261f = gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_equal_to_created_pks},//todo is table name correct?
-                    &add_co_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
+                    &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                         let pk_ft_read_only_ids_into_table_type_el_pk_fi_clone_ts =
                             gen_pk_ft_as_pg_type_pk_method_call_ts(
                                 &ReadOnlyIdsIntoTableTypeSc,
@@ -5627,7 +5627,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{read_only_ids_from_try_dm},
                             &quote!{{
                                 read_only_ids_from_try_cm.iter().map(|el_ba0f6b1c|
-                                    #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                    #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                         &el_ba0f6b1c.#pk_fi
                                     ).expect("3ee5ee86").#VSc
                                 ).collect::<Vec<#pk_ft_as_pg_type_read_ts>>()
@@ -5648,7 +5648,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 )
                                             )
                                         ),
-                                        select_default_all_with_max_page_size_cloned.clone(),
+                                        select_dflt_all_with_max_page_size_cloned.clone(),
                                         &table_7e35b1ce
                                     ).await
                                     .expect("bcb79917")
@@ -5675,7 +5675,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &url_cloned,
                                 #ident_cm_params_ucc {
                                     payload: #ident_cm_payload_ucc(
-                                        std::iter::repeat_n(ident_create_default_cloned, el_56409d32).collect()
+                                        std::iter::repeat_n(ident_create_dflt_cloned, el_56409d32).collect()
                                     )
                                 },
                                 &table_7e35b1ce
@@ -5687,7 +5687,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     })
                 );
                 quote! {
-                    let ident_create_default_cloned = ident_create_default.clone();
+                    let ident_create_dflt_cloned = ident_create_dflt.clone();
                     #ts_3240261f
                 }
             });
@@ -5709,7 +5709,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_ident_try_ro_handle_pk(
                         &url,
                         #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
-                        #select_default_all_with_max_page_size_cloned_clone_ts,
+                        #select_dflt_all_with_max_page_size_cloned_clone_ts,
                         &table_dlo_cloned
                     )
                     .await.expect("c8c44c89")
@@ -5734,7 +5734,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 acc_9189f86e.push({
                     let table_dlo_cloned = table_dlo.clone();
-                    let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
+                    let select_dflt_all_with_max_page_size_cloned = #select_dflt_all_with_max_page_size_clone_ts;
                     futures::FutureExt::boxed(async move {
                         if let Err(#ErSc) = gen_try_dlo_handle(
                             &url,
@@ -5759,13 +5759,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         } else {
                             panic!("9be62f9f")
                         }
-                        let read_only_ids_returned_from_co = gen_read_only_ids_from_try_co_default(&url, &table_dlo_cloned).await;
+                        let read_only_ids_returned_from_co = gen_read_only_ids_from_try_co_dflt(&url, &table_dlo_cloned).await;
                         #assert_eq_ts_6322435c
                         #assert_eq_ts_8812d778
                         gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                             &url,
                             #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
-                            #select_default_all_with_max_page_size_cloned_clone_ts,
+                            #select_dflt_all_with_max_page_size_cloned_clone_ts,
                             &table_dlo_cloned,
                         ).await;
                     })
@@ -5903,10 +5903,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let ident_create_default_fn_ts = quote! {
-            fn ident_create_default() -> #ident_create_ucc {
+        let ident_create_dflt_fn_ts = quote! {
+            fn ident_create_dflt() -> #ident_create_ucc {
                 #ident_create_ucc {
-                    #ident_create_default_fields_init_without_pk_ts
+                    #ident_create_dflt_fields_init_without_pk_ts
                 }
             }
         };
@@ -5925,14 +5925,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ).await.expect("32e30b87")
             }
         };
-        let gen_read_only_ids_from_try_co_default_fn_ts = quote! {
-            async fn gen_read_only_ids_from_try_co_default(
+        let gen_read_only_ids_from_try_co_dflt_fn_ts = quote! {
+            async fn gen_read_only_ids_from_try_co_dflt(
                 #UrlSc: &str,
                 table: &str,
             ) -> #ident_read_only_ids_ucc {
                 gen_read_only_ids_from_try_co(
                     #UrlSc,
-                    ident_create_default(),
+                    ident_create_dflt(),
                     table
                 ).await
             }
@@ -5974,7 +5974,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #ts
                     for (read_only_ids, create) in read_only_ids_from_try_cm.into_iter().zip(ident_vec_create) {
                         acc_1debe8fb.push(#ident_read_ucc {
-                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                 &read_only_ids.#pk_fi
                             ),
                             #fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_and_create_ts
@@ -6004,9 +6004,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #gen_try_rm_order_by_pk_with_big_pagination_fn_ts
                     #gen_ident_try_ro_handle_pk_fn_ts
                     #gen_check_no_rows_returned_from_ident_try_ro_handle_pk_fn_ts
-                    #ident_create_default_fn_ts
+                    #ident_create_dflt_fn_ts
                     #gen_read_only_ids_from_try_co_fn_ts
-                    #gen_read_only_ids_from_try_co_default_fn_ts
+                    #gen_read_only_ids_from_try_co_dflt_fn_ts
                     #gen_try_dlo_handle_fn_ts
                     #no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
                     #gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts
@@ -6127,8 +6127,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             )
                         ])
                         .expect("0776170e");
-                        let #IdentCreateDefaultSc = ident_create_default();
-                        #select_default_all_with_max_page_size_not_empty_unique_vec_ts
+                        let #IdentCreateDfltSc = ident_create_dflt();
+                        #select_dflt_all_with_max_page_size_not_empty_unique_vec_ts
                         #common_read_only_ids_returned_from_co_ts
                         #read_only_ids_to_two_dims_vec_read_inner_acc_fields_ts
                         futures::StreamExt::for_each_concurrent(

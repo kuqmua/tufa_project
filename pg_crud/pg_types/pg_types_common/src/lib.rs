@@ -2,8 +2,8 @@ use location_lib::loc::Loc;
 use location_lib::{Location, loc};
 use optimal_pack::OptimalPack;
 use pg_crud_common::{
-    DEFAULT_PAGINATION_LIMIT, DefaultOptSomeVecOneEl, DefaultOptSomeVecOneElMaxPageSize,
-    PaginationBase, PgTypeWhereFilter, QpEr,
+    DEFAULT_PAGINATION_LIMIT, DfltOptSomeVecOneEl, DfltOptSomeVecOneElMaxPageSize, PaginationBase,
+    PgTypeWhereFilter, QpEr,
 };
 use schemars::JsonSchema;
 use serde::de::{Error as SerdeEr, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -241,15 +241,15 @@ impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
         self.0.qp(incr, column, is_need_to_add_operator)
     }
 }
-impl DefaultOptSomeVecOneEl for PaginationStartsWithOne {
+impl DfltOptSomeVecOneEl for PaginationStartsWithOne {
     #[inline]
-    fn default_opt_some_vec_one_el() -> Self {
+    fn dflt_opt_some_vec_one_el() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
-impl DefaultOptSomeVecOneElMaxPageSize for PaginationStartsWithOne {
+impl DfltOptSomeVecOneElMaxPageSize for PaginationStartsWithOne {
     #[inline]
-    fn default_opt_some_vec_one_el_max_page_size() -> Self {
+    fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
         let one: i32 = 1;
         Self(PaginationBase::new_unchecked(
             i32::MAX.checked_sub(one).expect("c0f03c51").into(),

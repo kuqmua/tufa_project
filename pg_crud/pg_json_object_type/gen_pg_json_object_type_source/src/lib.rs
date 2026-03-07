@@ -12,7 +12,7 @@ use naming::{
     AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
     ContainsAllElsOfArrUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
-    DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeleteSc, DimOneEqualUcc, DimOneInUcc,
+    DeleteSc, DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DimOneEqualUcc, DimOneInUcc,
     DisplayPlusToTokens, EqualUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc,
     InUcc, IncrSc, IsNeedToAddOperatorSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc,
     JsonbSetTargetSc, LengthEqualUcc, LengthGreaterThanUcc, NotUniqueIdInJsonDeleteArrUcc,
@@ -31,7 +31,7 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimsVecReadInnerSc, ReadSc,
+    ReadOnlyIdsToOptVReadDfltOptSomeVecOneElSc, ReadOnlyIdsToTwoDimsVecReadInnerSc, ReadSc,
     SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc, SelectOnlyIdsQpSc,
     SelectOnlyUpdatedIdsQbSc, SelectOnlyUpdatedIdsQpSc, SelectQpPgTypeSc, SelectQpSc, SelfSc,
     SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdateQbSc, UpdateQpSc, UpdateSc,
@@ -55,10 +55,10 @@ use pg_crud_macros_common::{
     IsUpdateQbMutable, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed, PgTypeOrPgJsonType,
     SelectQpValueUnderscore, UpdateQpJsonbSetAccumulatorUnderscore, UpdateQpJsonbSetPathUnderscore,
     UpdateQpJsonbSetTargetUnderscore, UpdateQpValueUnderscore,
-    gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts,
-    gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts,
-    gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts,
-    gen_impl_pg_crud_default_opt_some_vec_one_el_ts, gen_impl_pg_json_type_test_cases_for_ident_ts,
+    gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts,
+    gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
+    gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts,
+    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_pg_json_type_test_cases_for_ident_ts,
     gen_impl_pg_json_type_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_serde_deserialize_for_struct_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
@@ -85,8 +85,8 @@ use syn::{
     token::{Colon, Pub},
 };
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudDefaultOptSomeVecOneElCall,
-    PgCrudDefaultOptSomeVecOneElMaxPageSizeCall, StringTs,
+    AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudDfltOptSomeVecOneElCall,
+    PgCrudDfltOptSomeVecOneElMaxPageSizeCall, StringTs,
 };
 //todo gen authorization rights enum for json fields
 //todo bug in update if updating arr and creating el in jsonb arr without anything - read_only_ids generation logic of vec returns wrong query part
@@ -255,16 +255,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let return_err_qp_er_write_into_buffer_ts = gen_return_err_qp_er_write_into_buffer_ts(import);
         let none_ts = quote!{None};
         let import_qp_er_ts = quote! {#import::#QpErUcc};
-        let vec_pg_crud_default_opt_some_vec_one_el_call_ts = quote!{vec![#PgCrudDefaultOptSomeVecOneElCall]};
-        let default_but_opt_is_some_ts = quote!{
-            #import::#DefaultOptSomeVecOneElUcc::#DefaultOptSomeVecOneElSc
+        let vec_pg_crud_dflt_opt_some_vec_one_el_call_ts = quote!{vec![#PgCrudDfltOptSomeVecOneElCall]};
+        let dflt_but_opt_is_some_ts = quote!{
+            #import::#DfltOptSomeVecOneElUcc::#DfltOptSomeVecOneElSc
         };
-        let default_but_opt_is_some_call_ts = quote!{#default_but_opt_is_some_ts()};
-        let gen_ident_as_default_but_opt_is_some_ts = |ts: &dyn ToTokens|quote!{
-            <#ts as #import::#DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc
+        let dflt_but_opt_is_some_call_ts = quote!{#dflt_but_opt_is_some_ts()};
+        let gen_ident_as_dflt_but_opt_is_some_ts = |ts: &dyn ToTokens|quote!{
+            <#ts as #import::#DfltOptSomeVecOneElUcc>::#DfltOptSomeVecOneElSc
         };
-        let gen_ident_as_default_but_opt_is_some_call_ts = |ts: &dyn ToTokens|{
-            let ts0 = gen_ident_as_default_but_opt_is_some_ts(ts);
+        let gen_ident_as_dflt_but_opt_is_some_call_ts = |ts: &dyn ToTokens|{
+            let ts0 = gen_ident_as_dflt_but_opt_is_some_ts(ts);
             quote!{#ts0()}
         };
         let gen_v_decl_ts0 = |ts: &dyn ToTokens|{
@@ -441,7 +441,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let ident_ts_e06846af = gen_ts(
                                 &IdSc,
                                 &uuid_uuid_as_not_null_jsonb_string_ts,
-                                &PgCrudDefaultOptSomeVecOneElCall
+                                &PgCrudDfltOptSomeVecOneElCall
                             );
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -490,7 +490,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let id_ts = gen_ts(
                                 &IdSc,
                                 &uuid_uuid_as_not_null_jsonb_string_ts,
-                                &PgCrudDefaultOptSomeVecOneElCall
+                                &PgCrudDfltOptSomeVecOneElCall
                             );
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -536,7 +536,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let id_ts = gen_ts(
                                 &IdSc,
                                 &uuid_uuid_as_not_null_jsonb_string_ts,
-                                &PgCrudDefaultOptSomeVecOneElCall
+                                &PgCrudDfltOptSomeVecOneElCall
                             );
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -747,34 +747,34 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     )
                 }
             };
-            let gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_ts = |
+            let gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_ts = |
                 ident_ts_36ce1199: &dyn ToTokens,
                 ts: &dyn ToTokens
-            | gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
+            | gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
                 &ident_ts_36ce1199,
                 &Ts2::new(),
                 &quote! {Self #ts}
             );
-            let gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts = |is_stdrt_with_id: &IsStdrtWithId| {
+            let gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                 let ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                     let fi = &el0.ident;
-                    quote! {#fi: #PgCrudDefaultOptSomeVecOneElCall}
+                    quote! {#fi: #PgCrudDfltOptSomeVecOneElCall}
                 });
                 quote! {{#(#ts),*}}
             };
-            let impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts(&is_stdrt_with_id_false);
-            let scopes_vec_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {(#vec_pg_crud_default_opt_some_vec_one_el_call_ts)};
-            let scopes_some_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {
-                (Some(#PgCrudDefaultOptSomeVecOneElCall))
+            let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts(&is_stdrt_with_id_false);
+            let scopes_vec_pg_crud_dflt_opt_some_vec_one_el_call_ts = quote! {(#vec_pg_crud_dflt_opt_some_vec_one_el_call_ts)};
+            let scopes_some_pg_crud_dflt_opt_some_vec_one_el_call_ts = quote! {
+                (Some(#PgCrudDfltOptSomeVecOneElCall))
             };
-            let impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_ident_create_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_ts(
+            let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_ident_create_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_ts(
                 &ident_table_type_or_ident_create_ucc,
                 match &is_nullable {
                     IsNullable::False => match &pattern {
-                        Pattern::Stdrt => &impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts,
-                        Pattern::Arr => &scopes_vec_pg_crud_default_opt_some_vec_one_el_call_ts,
+                        Pattern::Stdrt => &impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts,
+                        Pattern::Arr => &scopes_vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                     },
-                    IsNullable::True => &scopes_some_pg_crud_default_opt_some_vec_one_el_call_ts,
+                    IsNullable::True => &scopes_some_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                 },
             );
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_or_ident_create_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
@@ -805,17 +805,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_stdrt_not_null_ts(is_stdrt_with_id_240dfa72, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_new_type),
                     &gen_self_content_for_ident_or_ident_with_id_table_type_or_create_ts(is_stdrt_with_id_240dfa72),
                 );
-                let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_ts(
+                let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_ts(
                     &ident_with_id_table_type_or_ident_with_id_stdrt_not_null_create_ucc,
                     &match &pg_json_type_subtype_table_type_or_create {
-                        PgJsonTypeSubtypeTableTypeOrCreate::TableType => gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts(&is_stdrt_with_id_true),
-                        PgJsonTypeSubtypeTableTypeOrCreate::Create => impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts,
+                        PgJsonTypeSubtypeTableTypeOrCreate::TableType => gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts(&is_stdrt_with_id_true),
+                        PgJsonTypeSubtypeTableTypeOrCreate::Create => impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_create_stdrt_not_null_ts,
                     },
                 );
                 quote! {
                     #ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts
                     #impl_pub_const_new_for_ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts
-                    #impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts
+                    #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts
                 }
             } else {
                 Ts2::new()
@@ -823,7 +823,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             quote! {
                 #ident_table_type_or_ident_create_ts
                 #impl_pub_new_for_ident_table_type_or_ident_create_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_for_ident_table_type_or_ident_create_ts
+                #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_ident_create_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_or_ident_create_ts
                 #impl_sqlx_type_for_ident_table_type_or_ident_create_ts
                 #mb_ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts
@@ -1034,11 +1034,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let gen_unique_vec_wrapper_ts = |ts: &dyn ToTokens| {
             quote! {#import::NotEmptyUniqueVec<#ts>}
         };
-        let self_some_pg_crud_default_opt_some_vec_one_el_call_ts = quote! {
-            Self(Some(#PgCrudDefaultOptSomeVecOneElCall))
+        let self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts = quote! {
+            Self(Some(#PgCrudDfltOptSomeVecOneElCall))
         };
-        let self_some_pg_crud_default_opt_some_vec_one_el_max_page_size_call_ts = quote! {
-            Self(Some(#PgCrudDefaultOptSomeVecOneElMaxPageSizeCall))
+        let self_some_pg_crud_dflt_opt_some_vec_one_el_max_page_size_call_ts = quote! {
+            Self(Some(#PgCrudDfltOptSomeVecOneElMaxPageSizeCall))
         };
         let gen_type_as_pg_json_type_update_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_update);
         let gen_type_as_pg_json_type_update_for_query_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_update_for_query);
@@ -1257,7 +1257,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 };
                                 quote! {
                                     let #VSc = self.0.as_ref().map_or_else(
-                                        <#ident_740c9034 as pg_crud::DefaultOptSomeVecOneEl>::default_opt_some_vec_one_el,
+                                        <#ident_740c9034 as pg_crud::DfltOptSomeVecOneEl>::dflt_opt_some_vec_one_el,
                                         Clone::clone
                                     );
                                     match #VSc.#SelectQpPgTypeSc(#ColumnSc) {
@@ -1295,12 +1295,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                             IsNullable::True => {
                                 let format_ts = dq_ts(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
-                                let ident_with_id_arr_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
+                                let ident_with_id_arr_not_null_as_pg_json_type_select_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                     &ident_with_id_arr_not_null_as_pg_json_type_select_ts
                                 );
                                 quote! {
                                     let #VSc = self.0.as_ref().map_or_else(
-                                        #ident_with_id_arr_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts,
+                                        #ident_with_id_arr_not_null_as_pg_json_type_select_as_dflt_but_opt_is_some_ts,
                                         Clone::clone
                                     );
                                     match #VSc.#SelectQpPgTypeSc(column) {
@@ -1330,26 +1330,26 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             };
             let impl_sqlx_type_for_ident_select_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_select_ucc);
             let impl_sqlx_decode_sqlx_pg_for_ident_select_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_select_ucc);
-            let impl_pg_crud_default_opt_some_vec_one_el_stdrt_not_null_ts = quote! {
-                Self(#PgCrudDefaultOptSomeVecOneElCall)
+            let impl_pg_crud_dflt_opt_some_vec_one_el_stdrt_not_null_ts = quote! {
+                Self(#PgCrudDfltOptSomeVecOneElCall)
             };
-            let impl_pg_crud_default_opt_some_vec_one_el_max_page_size_stdrt_not_null_ts = quote! {
-                Self(#PgCrudDefaultOptSomeVecOneElMaxPageSizeCall)
+            let impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_stdrt_not_null_ts = quote! {
+                Self(#PgCrudDfltOptSomeVecOneElMaxPageSizeCall)
             };
             let (
-                impl_pg_crud_default_opt_some_vec_one_el_for_ident_select_ts,
-                impl_pg_crud_default_opt_some_vec_one_el_max_page_size_for_ident_select_ts
+                impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_select_ts,
+                impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_for_ident_select_ts
             ) = {
-                let gen_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                let gen_ts = |dflt_some_one_or_dflt_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                     match &pattern {
                         Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => match &default_some_one_or_default_some_one_with_max_page_size {
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => quote! {#impl_pg_crud_default_opt_some_vec_one_el_stdrt_not_null_ts},
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => quote! {#impl_pg_crud_default_opt_some_vec_one_el_max_page_size_stdrt_not_null_ts},
+                            IsNullable::False => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => quote! {#impl_pg_crud_dflt_opt_some_vec_one_el_stdrt_not_null_ts},
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => quote! {#impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_stdrt_not_null_ts},
                             },
-                            IsNullable::True => match &default_some_one_or_default_some_one_with_max_page_size {
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_default_opt_some_vec_one_el_call_ts.clone(),
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_default_opt_some_vec_one_el_max_page_size_call_ts.clone(),
+                            IsNullable::True => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts.clone(),
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_dflt_opt_some_vec_one_el_max_page_size_call_ts.clone(),
                             },
                         },
                         Pattern::Arr => match &is_nullable {
@@ -1360,14 +1360,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 ): (
                                     &dyn ToTokens,
                                     &dyn ToTokens
-                                ) = match &default_some_one_or_default_some_one_with_max_page_size {
+                                ) = match &dflt_some_one_or_dflt_some_one_with_max_page_size {
                                     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
-                                        &PgCrudDefaultOptSomeVecOneElCall,
-                                        &PgCrudDefaultOptSomeVecOneElCall
+                                        &PgCrudDfltOptSomeVecOneElCall,
+                                        &PgCrudDfltOptSomeVecOneElCall
                                     ),
                                     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => (
-                                        &PgCrudDefaultOptSomeVecOneElMaxPageSizeCall,
-                                        &PgCrudDefaultOptSomeVecOneElMaxPageSizeCall
+                                        &PgCrudDfltOptSomeVecOneElMaxPageSizeCall,
+                                        &PgCrudDfltOptSomeVecOneElMaxPageSizeCall
                                     ),
                                 };
                                 quote! {
@@ -1377,20 +1377,20 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            IsNullable::True => match &default_some_one_or_default_some_one_with_max_page_size {
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_default_opt_some_vec_one_el_call_ts.clone(),
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_default_opt_some_vec_one_el_max_page_size_call_ts.clone(),
+                            IsNullable::True => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts.clone(),
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_dflt_opt_some_vec_one_el_max_page_size_call_ts.clone(),
                             },
                         },
                     }
                 };
                 (
-                    gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
+                    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
                         &ident_select_ucc,
                         &Ts2::new(),
                         &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                     ),
-                    gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
+                    gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts(
                         &ident_select_ucc,
                         &Ts2::new(),
                         &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
@@ -1436,14 +1436,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_location_lib_to_err_string_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts = gen_gen_impl_location_lib_to_err_string_wrapper_ts(&ident_select_el_or_ident_with_id_select_el_ucc);
                 let (
-                    impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts,
-                    impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_with_max_page_size_ts
+                    impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts,
+                    impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_with_max_page_size_ts
                 ) = {
-                    let gen_ts = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                    let gen_ts = |dflt_some_one_or_dflt_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                         let vec_ts = {
-                            let ts: &dyn ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudDefaultOptSomeVecOneElCall,
-                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudDefaultOptSomeVecOneElMaxPageSizeCall,
+                            let ts: &dyn ToTokens = match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudDfltOptSomeVecOneElCall,
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudDfltOptSomeVecOneElMaxPageSizeCall,
                             };
                             let els_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -1455,11 +1455,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         quote! {vec![#vec_ts]}
                     };
                     (
-                        gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(
+                        gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(
                             &ident_select_el_or_ident_with_id_select_el_ucc,
                             &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
                         ),
-                        gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
+                        gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts(
                             &ident_select_el_or_ident_with_id_select_el_ucc,
                             &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                         )
@@ -1468,8 +1468,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 quote! {
                     #ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts
                     #impl_location_lib_to_err_string_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts
-                    #impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts
-                    #impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_with_max_page_size_ts
+                    #impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts
+                    #impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_with_max_page_size_ts
                 }
             };
             let mb_ident_select_el_ts = if is_stdrt_not_null { gen_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts(&is_stdrt_with_id_false) } else { Ts2::new() };
@@ -1489,15 +1489,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 let impl_sqlx_type_for_ident_with_id_stdrt_not_null_select_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_with_id_stdrt_not_null_select_ucc);
                 let impl_sqlx_decode_sqlx_pg_for_ident_with_id_stdrt_not_null_select_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_with_id_stdrt_not_null_select_ucc);
-                let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_select_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
+                let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_select_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
                     &ident_with_id_stdrt_not_null_select_ucc,
                     &Ts2::new(),
-                    &impl_pg_crud_default_opt_some_vec_one_el_stdrt_not_null_ts
+                    &impl_pg_crud_dflt_opt_some_vec_one_el_stdrt_not_null_ts
                 );
-                let impl_pg_crud_default_opt_some_vec_one_el_max_page_size_for_ident_with_id_stdrt_not_null_select_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
+                let impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_for_ident_with_id_stdrt_not_null_select_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts(
                     &ident_with_id_stdrt_not_null_select_ucc,
                     &Ts2::new(),
-                    &impl_pg_crud_default_opt_some_vec_one_el_max_page_size_stdrt_not_null_ts
+                    &impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_stdrt_not_null_ts
                 );
                 let ident_with_id_select_el_ts = gen_ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts(&is_stdrt_with_id_true);
                 quote! {
@@ -1505,8 +1505,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #impl_ident_with_id_stdrt_not_null_select_ts
                     #impl_sqlx_type_for_ident_with_id_stdrt_not_null_select_ts
                     #impl_sqlx_decode_sqlx_pg_for_ident_with_id_stdrt_not_null_select_ts
-                    #impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_select_ts
-                    #impl_pg_crud_default_opt_some_vec_one_el_max_page_size_for_ident_with_id_stdrt_not_null_select_ts
+                    #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_select_ts
+                    #impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_for_ident_with_id_stdrt_not_null_select_ts
                     #ident_with_id_select_el_ts
                 }
             } else {
@@ -1517,8 +1517,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #impl_ident_select_ts
                 #impl_sqlx_type_for_ident_select_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_select_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_for_ident_select_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_max_page_size_for_ident_select_ts
+                #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_select_ts
+                #impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_for_ident_select_ts
                 #mb_ident_select_el_ts
                 #mb_ident_with_id_stdrt_not_null_select_ts
             }
@@ -1799,40 +1799,40 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 } else {
                     gen_gen_impl_location_lib_to_err_string_wrapper_ts(&ident_where_ucc)
                 };
-                let gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_content_stdrt_not_null_where = |is_stdrt_with_id: &IsStdrtWithId| {
-                    let gen_self_vrt_default_some_one_ts = |ts: &dyn ToTokens|quote!{
-                        Self::#ts(#PgCrudDefaultOptSomeVecOneElCall)
+                let gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_content_stdrt_not_null_where = |is_stdrt_with_id: &IsStdrtWithId| {
+                    let gen_self_vrt_dflt_some_one_ts = |ts: &dyn ToTokens|quote!{
+                        Self::#ts(#PgCrudDfltOptSomeVecOneElCall)
                     };
                     let vrts_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
-                        gen_self_vrt_default_some_one_ts(&AsRefStrToUccTs::case_or_panic(&el0.ident.to_string()))
+                        gen_self_vrt_dflt_some_one_ts(&AsRefStrToUccTs::case_or_panic(&el0.ident.to_string()))
                     });
-                    let self_equal_default_some_one_ts = gen_self_vrt_default_some_one_ts(&EqualUcc);
+                    let self_equal_dflt_some_one_ts = gen_self_vrt_dflt_some_one_ts(&EqualUcc);
                     quote! {vec![
                         #(#vrts_ts),*,
-                        #self_equal_default_some_one_ts
+                        #self_equal_dflt_some_one_ts
                     ]}
                 };
-                let mb_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_where_ts = match &pattern {
+                let mb_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_where_ts = match &pattern {
                     Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(&ident_where_ucc, &gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_content_stdrt_not_null_where(&is_stdrt_with_id_false)),
+                        IsNullable::False => gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_where_ucc, &gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_content_stdrt_not_null_where(&is_stdrt_with_id_false)),
                         IsNullable::True => Ts2::new(),
                     },
-                    Pattern::Arr => gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(&ident_where_ucc, &{
+                    Pattern::Arr => gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_where_ucc, &{
                         let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
                             let fi = &el0.ident;
                             let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                            quote! {Self::#el_fi_ucc(#default_but_opt_is_some_call_ts)}
+                            quote! {Self::#el_fi_ucc(#dflt_but_opt_is_some_call_ts)}
                         });
                         quote! {
                             vec![
-                                Self::Equal(#default_but_opt_is_some_call_ts),
-                                Self::DimOneEqual(#default_but_opt_is_some_call_ts),
-                                Self::LengthEqual(#default_but_opt_is_some_call_ts),
-                                Self::LengthGreaterThan(#default_but_opt_is_some_call_ts),
-                                Self::In(#default_but_opt_is_some_call_ts),
-                                Self::DimOneIn(#default_but_opt_is_some_call_ts),
-                                Self::ContainsAllElsOfArr(#default_but_opt_is_some_call_ts),
-                                Self::OverlapsWithArr(#default_but_opt_is_some_call_ts),
+                                Self::Equal(#dflt_but_opt_is_some_call_ts),
+                                Self::DimOneEqual(#dflt_but_opt_is_some_call_ts),
+                                Self::LengthEqual(#dflt_but_opt_is_some_call_ts),
+                                Self::LengthGreaterThan(#dflt_but_opt_is_some_call_ts),
+                                Self::In(#dflt_but_opt_is_some_call_ts),
+                                Self::DimOneIn(#dflt_but_opt_is_some_call_ts),
+                                Self::ContainsAllElsOfArr(#dflt_but_opt_is_some_call_ts),
+                                Self::OverlapsWithArr(#dflt_but_opt_is_some_call_ts),
                                 #(#el_filters_ts),*
                             ]
                         }
@@ -1878,15 +1878,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                     );
                     let impl_location_lib_to_err_string_for_ident_with_id_stdrt_not_null_where_ts = gen_gen_impl_location_lib_to_err_string_wrapper_ts(&ident_with_id_stdrt_not_null_where_ucc);
-                    let impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_where_ts = gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(
+                    let impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_where_ts = gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(
                         &ident_with_id_stdrt_not_null_where_ucc,
-                        &gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_content_stdrt_not_null_where(&is_stdrt_with_id_true)
+                        &gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_content_stdrt_not_null_where(&is_stdrt_with_id_true)
                     );
                     quote! {
                         #ident_with_id_stdrt_not_null_where_ts
                         #impl_pg_crud_pg_type_pg_type_where_filter_for_ident_with_id_stdrt_not_null_where_ts
                         #impl_location_lib_to_err_string_for_ident_with_id_stdrt_not_null_where_ts
-                        #impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_where_ts
+                        #impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_where_ts
                     }
                 } else {
                     Ts2::new()
@@ -1895,7 +1895,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #mb_ident_where_ts
                     #mb_impl_pg_crud_pg_type_pg_type_where_filter_for_ident_where_ts
                     #mb_impl_location_lib_to_err_string_for_ident_where_ts
-                    #mb_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_where_ts
+                    #mb_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_where_ts
                     #mb_ident_with_id_stdrt_not_null_where_ts
                 }
             }
@@ -2161,32 +2161,32 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 },
                 Pattern::Arr => Ts2::new(),
             };
-            let gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = |is_stdrt_with_id: &IsStdrtWithId| {
-                gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_stdrt_not_null_read_ucc(is_stdrt_with_id), &Ts2::new(), &{
+            let gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = |is_stdrt_with_id: &IsStdrtWithId| {
+                gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&gen_ident_read_or_ident_with_id_stdrt_not_null_read_ucc(is_stdrt_with_id), &Ts2::new(), &{
                     let fields_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                         let fi = &el0.ident;
                         let ts = gen_v_init_ts0(
-                            &PgCrudDefaultOptSomeVecOneElCall
+                            &PgCrudDfltOptSomeVecOneElCall
                         );
                         quote! {#fi: Some(#ts)}
                     });
                     quote! {Self{#(#fields_ts),*}}
                 })
             };
-            let impl_pg_crud_default_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = match &pattern {
+            let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts = match &pattern {
                 Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_false),
-                    IsNullable::True => gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_opt_some_vec_one_el_call_ts),
+                    IsNullable::False => gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_false),
+                    IsNullable::True => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts),
                 },
                 Pattern::Arr => match &is_nullable {
-                    IsNullable::False => gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
+                    IsNullable::False => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
                         &ident_read_ucc,
                         &Ts2::new(),
                         &quote! {
-                            Self(#vec_pg_crud_default_opt_some_vec_one_el_call_ts)
+                            Self(#vec_pg_crud_dflt_opt_some_vec_one_el_call_ts)
                         },
                     ),
-                    IsNullable::True => gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_default_opt_some_vec_one_el_call_ts),
+                    IsNullable::True => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_read_ucc, &Ts2::new(), &self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts),
                 },
             };
             let impl_sqlx_type_for_ident_read_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_read_ucc);
@@ -2217,7 +2217,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 let impl_serde_deserialize_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_true);
-                let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_true);
+                let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts(&is_stdrt_with_id_true);
                 let impl_sqlx_type_for_ident_with_id_stdrt_not_null_read_ts = gen_sqlx_types_json_type_decl_wrapper_ts(&ident_with_id_stdrt_not_null_read_ucc);
                 let impl_sqlx_decode_sqlx_pg_for_ident_with_id_stdrt_not_null_read_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_wrapper_ts(&ident_with_id_stdrt_not_null_read_ucc);
                 quote! {
@@ -2225,7 +2225,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #ident_with_id_stdrt_not_null_read_try_from_er_ts
                     #impl_ident_with_id_stdrt_not_null_read_ts
                     #impl_serde_deserialize_for_ident_with_id_stdrt_not_null_read_ts
-                    #impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_read_ts
+                    #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_id_stdrt_not_null_read_ts
                     #impl_sqlx_type_for_ident_with_id_stdrt_not_null_read_ts
                     #impl_sqlx_decode_sqlx_pg_for_ident_with_id_stdrt_not_null_read_ts
                 }
@@ -2237,7 +2237,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #mb_ident_read_try_from_er_ts
                 #impl_ident_read_ts
                 #mb_impl_serde_deserialize_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts
+                #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_read_or_ident_with_id_stdrt_not_null_read_ts
                 #impl_sqlx_type_for_ident_read_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_read_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_ts
@@ -2285,10 +2285,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     let ft_as_pg_json_type_read_ts = gen_type_as_pg_json_type_subtype_ts(&ft, &PgJsonTypeSubtype::Read);
                     let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
                     let ts1 = gen_v_init_ts0(&{
-                        let default_but_opt_is_some_call_ts_f378bbab = gen_ident_as_default_but_opt_is_some_call_ts(
+                        let dflt_but_opt_is_some_call_ts_f378bbab = gen_ident_as_dflt_but_opt_is_some_call_ts(
                             &ft_as_pg_json_type_read_ts
                         );
-                        quote!{#ft_as_pg_json_type_ts::into_inner(#default_but_opt_is_some_call_ts_f378bbab)}
+                        quote!{#ft_as_pg_json_type_ts::into_inner(#dflt_but_opt_is_some_call_ts_f378bbab)}
                     });
                     quote! {
                         #fi: #ft_as_pg_json_type_test_cases_ts::read_only_ids_into_opt_v_read_inner(
@@ -2931,20 +2931,20 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     IsNullable::True => Ts2::new(),
                 },
             };
-            let impl_pg_crud_default_opt_some_vec_one_el_for_ident_update_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_ts(&ident_update_ucc, &Ts2::new(), &{
+            let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_update_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_update_ucc, &Ts2::new(), &{
                 let v = match &pattern {
                     Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {(#PgCrudDefaultOptSomeVecOneElCall)},
-                        IsNullable::True => quote! {(Some(#PgCrudDefaultOptSomeVecOneElCall))},
+                        IsNullable::False => quote! {(#PgCrudDfltOptSomeVecOneElCall)},
+                        IsNullable::True => quote! {(Some(#PgCrudDfltOptSomeVecOneElCall))},
                     },
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => quote! {{
-                            #CreateSc: #vec_pg_crud_default_opt_some_vec_one_el_call_ts,
-                            #UpdateSc: #PgCrudDefaultOptSomeVecOneElCall,
-                            #DeleteSc: #vec_pg_crud_default_opt_some_vec_one_el_call_ts,
+                            #CreateSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
+                            #UpdateSc: #PgCrudDfltOptSomeVecOneElCall,
+                            #DeleteSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                         }},
                         IsNullable::True => quote! {
-                            (Some(#PgCrudDefaultOptSomeVecOneElCall))
+                            (Some(#PgCrudDfltOptSomeVecOneElCall))
                         },
                     },
                 };
@@ -2985,12 +2985,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #ts_b258e2eb
                     }
                 };
-                let impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_update_el_ts = gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(&ident_stdrt_not_null_update_el_ucc, &{
+                let impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_update_el_ts = gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_stdrt_not_null_update_el_ucc, &{
                     let ts = vec_syn_field.iter().map(|el0| {
                         let fi = &el0.ident;
                         let vrt_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
                         let ts0 = gen_v_init_ts0(
-                            &PgCrudDefaultOptSomeVecOneElCall
+                            &PgCrudDfltOptSomeVecOneElCall
                         );
                         quote! {#SelfUcc::#vrt_ident_ucc_ts(#ts0)}
                     });
@@ -2998,7 +2998,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 });
                 quote! {
                     #ident_update_el_ts
-                    #impl_pg_crud_all_vrts_default_opt_some_vec_one_el_for_ident_update_el_ts
+                    #impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_update_el_ts
                 }
             } else {
                 Ts2::new()
@@ -3053,18 +3053,18 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         #FieldsSc
                     }},
                 );
-                let impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_stdrt_not_null_update_el_ts = gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
+                let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_stdrt_not_null_update_el_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
                     &ident_with_id_stdrt_not_null_update_el_ucc,
                     &Ts2::new(),
                     &quote! {Self {
-                        #IdSc: #PgCrudDefaultOptSomeVecOneElCall,
-                        #FieldsSc: #PgCrudDefaultOptSomeVecOneElCall,
+                        #IdSc: #PgCrudDfltOptSomeVecOneElCall,
+                        #FieldsSc: #PgCrudDfltOptSomeVecOneElCall,
                     }},
                 );
                 quote! {
                     #ident_with_id_stdrt_not_null_update_el_ts
                     #impl_pub_new_for_ident_with_id_stdrt_not_null_update_el_ts
-                    #impl_pg_crud_default_opt_some_vec_one_el_for_ident_with_stdrt_not_null_update_el_ts
+                    #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_with_stdrt_not_null_update_el_ts
                 }
             } else {
                 Ts2::new()
@@ -3074,7 +3074,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #mb_ident_update_try_new_er_ts
                 #impl_ident_update_ts
                 #mb_impl_serde_deserialize_for_ident_update_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_for_ident_update_ts
+                #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_update_ts
                 #mb_ident_update_el_ts
                 #mb_ident_with_id_stdrt_not_null_update_el_ts
             }
@@ -3713,7 +3713,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             }
                         },
                         IsNullable::True => {
-                            let ident_stdrt_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
+                            let ident_stdrt_not_null_as_pg_json_type_select_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                 &ident_stdrt_not_null_as_pg_json_type_select_ts
                             );
                             let dq_ts0 = dq_ts(
@@ -3724,7 +3724,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 let column_field_fi = format!("{column_field}->'{fi}'");
                                 let v_46039f0e = #VSc.0.as_ref().map_or_else(
-                                    #ident_stdrt_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts,
+                                    #ident_stdrt_not_null_as_pg_json_type_select_as_dflt_but_opt_is_some_ts,
                                     Clone::clone
                                 );
                                 match #ident_stdrt_not_null_as_pg_json_type_ts::#SelectQpSc(
@@ -3785,12 +3785,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     ))
                                 )
                             );
-                            let ident_with_id_arr_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts = gen_ident_as_default_but_opt_is_some_ts(
+                            let ident_with_id_arr_not_null_as_pg_json_type_select_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                 &ident_with_id_arr_not_null_as_pg_json_type_select_ts
                             );
                             quote! {
                                 let v_174d33cd = #VSc.0.as_ref().map_or_else(
-                                    #ident_with_id_arr_not_null_as_pg_json_type_select_as_default_but_opt_is_some_ts,
+                                    #ident_with_id_arr_not_null_as_pg_json_type_select_as_dflt_but_opt_is_some_ts,
                                     Clone::clone
                                 );
                                 match #ident_with_id_arr_not_null_as_pg_json_type_ts::#SelectQpSc(
@@ -4741,7 +4741,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         quote! {el_37154498}
                                     } else {
                                         quote! {
-                                            #PgCrudDefaultOptSomeVecOneElCall
+                                            #PgCrudDfltOptSomeVecOneElCall
                                         }
                                     }
                                 });
@@ -4786,7 +4786,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                 };
                                                 quote! {#el_ts #mb_dot_clone_ts}
                                             } else {
-                                                quote! {#PgCrudDefaultOptSomeVecOneElCall}
+                                                quote! {#PgCrudDfltOptSomeVecOneElCall}
                                             }
                                         }).collect::<Vec<Ts2>>()
                                     };
@@ -5209,10 +5209,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let ft_as_pg_json_type_read_ts = gen_type_as_pg_json_type_subtype_ts(&ft, &PgJsonTypeSubtype::Read);
                                 let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&ft);
                                 let ts1 = gen_v_init_ts0(&{
-                                    let default_but_opt_is_some_call_ts_a3f714b3 = gen_ident_as_default_but_opt_is_some_call_ts(
+                                    let dflt_but_opt_is_some_call_ts_a3f714b3 = gen_ident_as_dflt_but_opt_is_some_call_ts(
                                         &ft_as_pg_json_type_read_ts
                                     );
-                                    quote!{#ft_as_pg_json_type_ts::into_inner(#default_but_opt_is_some_call_ts_a3f714b3)}
+                                    quote!{#ft_as_pg_json_type_ts::into_inner(#dflt_but_opt_is_some_call_ts_a3f714b3)}
                                 });
                                 quote! {
                                     #fi: #ft_as_pg_json_type_test_cases_ts::read_only_ids_into_opt_v_read_inner(
@@ -5370,7 +5370,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 };
                 quote!{#ident_read_only_ids_ucc(#ts)}
             };
-            let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = {
+            let read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts = {
                 let ts = gen_v_init_ts0(&match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
@@ -5378,7 +5378,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                                 quote! {
-                                    #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                    #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                         &#VSc.0.#VSc.#fi
                                     )
                                 }
@@ -5391,7 +5391,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                         IsNullable::True => quote! {
                             #ident_read_ucc::new(
-                                #VSc.0.#VSc.as_ref().and_then(|v_dfa7815e| match #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #VSc.0.#VSc.as_ref().and_then(|v_dfa7815e| match #ident_stdrt_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                     v_dfa7815e
                                 ) {
                                     Some(v_02cef266) => Some(v_02cef266.#VSc),
@@ -5406,7 +5406,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_type_test_cases_ts = gen_type_as_pg_json_type_test_cases_ts(&el0.type0);
                                 quote! {
-                                    #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                    #ft_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                         &el_629b1544.0.#VSc.#fi
                                     )
                                 }
@@ -5438,7 +5438,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                         IsNullable::True => quote! {
                             #ident_read_ucc::new(
-                                #VSc.0.#VSc.as_ref().and_then(|v_16ab4136| match #ident_arr_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_default_opt_some_vec_one_el(
+                                #VSc.0.#VSc.as_ref().and_then(|v_16ab4136| match #ident_arr_not_null_as_pg_json_type_test_cases_ts::read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                     v_16ab4136
                                 ) {
                                     Some(v_71a66429) => Some(v_71a66429.#VSc.0),
@@ -5492,7 +5492,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 match v_fca601b5.0 {
                                     Some(v_8d7747f1) => Some(
                                         #ident_as_pg_json_type_test_cases_ts_53bdff8d::previous_read_merged_with_opt_update_into_read(
-                                            #ReadSc.0.unwrap_or_else(#default_but_opt_is_some_ts),
+                                            #ReadSc.0.unwrap_or_else(#dflt_but_opt_is_some_ts),
                                             Some(v_8d7747f1),
                                         )
                                     ),
@@ -5632,7 +5632,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let id_param_ts = gen_param_ts(
                                 &uuid_uuid_as_not_null_jsonb_string_ts,
                                 &IdSc,
-                                &default_but_opt_is_some_call_ts
+                                &dflt_but_opt_is_some_call_ts
                             );
                             let params_ts = vec_syn_field.iter().map(|el0|{
                                 let fi = &el0.ident;
@@ -5731,7 +5731,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let id_param_ts = gen_param_ts(
                                 &uuid_uuid_as_not_null_jsonb_string_ts,
                                 &IdSc,
-                                &default_but_opt_is_some_call_ts
+                                &dflt_but_opt_is_some_call_ts
                             );
                             let params_ts = vec_syn_field.iter().map(|el0|{
                                 let fi = &el0.ident;
@@ -5803,7 +5803,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let ident_ts_978daa48 = gen_read_only_ids_merged_with_create_into_table_type_ts(
                             &IdSc,
                             &uuid_uuid_as_not_null_jsonb_string_ts,
-                            &default_but_opt_is_some_call_ts
+                            &dflt_but_opt_is_some_call_ts
                         );
                         let params_ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
@@ -5906,7 +5906,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             let ident_ts_76fd9d28 = gen_read_only_ids_merged_with_create_into_table_type_ts(
                                 &IdSc,
                                 &uuid_uuid_as_not_null_jsonb_string_ts,
-                                &default_but_opt_is_some_call_ts
+                                &dflt_but_opt_is_some_call_ts
                             );
                             let params_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -6208,7 +6208,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     #VSc: #ident_with_id_stdrt_not_null_table_type_ucc::new(
                                                         <#uuid_uuid_as_not_null_jsonb_string_ts as #import::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoTableTypeSc(
                                                             read_only_ids_420d38ca.0.#VSc.#IdSc,
-                                                            #PgCrudDefaultOptSomeVecOneElCall
+                                                            #PgCrudDfltOptSomeVecOneElCall
                                                         ),
                                                         #(#ts_91a09fe2),*
                                                     ),
@@ -6863,7 +6863,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &read_only_ids_into_opt_v_read_inner_ts,
                 &update_to_read_only_ids_ts,
-                &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
+                &read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
                 &previous_read_merged_with_opt_update_into_read_ts,
                 &read_only_ids_merged_with_create_into_read_ts,
                 &read_only_ids_merged_with_create_into_opt_v_read_ts,
@@ -6891,7 +6891,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let read_inner_into_read_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(#VSc)};
             let read_inner_into_update_with_new_or_try_new_unwraped_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#VSc)};
             let update_to_read_only_ids_ts = quote! {#self_as_pg_json_type_test_cases_ts::#UpdateToReadOnlyIdsSc(#VSc)};
-            let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc(#VSc)};
+            let read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsToOptVReadDfltOptSomeVecOneElSc(#VSc)};
             let previous_read_merged_with_opt_update_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#PreviousReadMergedWithOptUpdateIntoReadSc(#ReadSc, #OptUpdateSc)};
             let read_only_ids_merged_with_create_into_read_ts = quote! {#self_as_pg_json_type_test_cases_ts::#ReadOnlyIdsMergedWithCreateIntoReadSc(
                 #ReadOnlyIdsSc,
@@ -6980,7 +6980,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inner_into_update_with_new_or_try_new_unwraped_ts,
                 &update_to_read_only_ids_ts,
-                &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
+                &read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
                 &previous_read_merged_with_opt_update_into_read_ts,
                 &read_only_ids_merged_with_create_into_read_ts,
                 &read_only_ids_merged_with_create_into_opt_v_read_ts,

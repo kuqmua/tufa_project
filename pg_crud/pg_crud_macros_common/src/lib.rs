@@ -4,14 +4,14 @@ pub use filters::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
-    AllVrtsDefaultOptSomeVecOneElMaxPageSizeSc, AllVrtsDefaultOptSomeVecOneElSc,
+    AllVrtsDfltOptSomeVecOneElMaxPageSizeSc, AllVrtsDfltOptSomeVecOneElSc,
     ColumnFieldForErMessageSc, ColumnFieldSc, ColumnSc, CreateForQueryUcc,
     CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc,
-    DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
-    EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddOperatorSc, IsPkSc, JsonbSetAccumulatorSc,
-    JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
+    DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc,
+    FiSc, IncrSc, IsNeedToAddOperatorSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc,
+    JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
     PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPkUcc,
     PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
     PreviousReadMergedWithOptUpdateIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc,
@@ -33,11 +33,11 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc,
-    ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimsVecReadInnerSc,
-    ReadOnlyIdsUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc,
-    SelectOnlyIdsQpSc, SelectOnlyUpdatedIdsQbSc, SelectOnlyUpdatedIdsQpSc, SelectQpSc, SelectUcc,
-    SelfUcc, TableTypeSc, TableTypeUcc, UpdateForQueryUcc, UpdateQbSc, UpdateQpSc,
-    UpdateToReadOnlyIdsSc, UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
+    ReadOnlyIdsToOptVReadDfltOptSomeVecOneElSc, ReadOnlyIdsToTwoDimsVecReadInnerSc, ReadOnlyIdsUcc,
+    ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc, SelectOnlyIdsQpSc,
+    SelectOnlyUpdatedIdsQbSc, SelectOnlyUpdatedIdsQpSc, SelectQpSc, SelectUcc, SelfUcc,
+    TableTypeSc, TableTypeUcc, UpdateForQueryUcc, UpdateQbSc, UpdateQpSc, UpdateToReadOnlyIdsSc,
+    UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optimal_pack::OptimalPack;
@@ -48,15 +48,15 @@ use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
 use syn::{Ident, Type};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrDefaultOptSomeVecOneEl,
-    CrateAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize, CrateDefaultOptSomeVecOneEl,
-    CrateDefaultOptSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrDefaultOptSomeVecOneEl,
-    PgCrudAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
-    PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneEl,
-    PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
-    PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
-    PgCrudCommonDefaultOptSomeVecOneElMaxPageSize, PgCrudDefaultOptSomeVecOneEl,
-    PgCrudDefaultOptSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
+    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrDfltOptSomeVecOneEl,
+    CrateAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize, CrateDfltOptSomeVecOneEl,
+    CrateDfltOptSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrDfltOptSomeVecOneEl,
+    PgCrudAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize,
+    PgCrudCommonAllEnumVrtsArrDfltOptSomeVecOneEl,
+    PgCrudCommonAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize, PgCrudCommonDfltOptSomeVecOneEl,
+    PgCrudCommonDfltOptSomeVecOneElCall, PgCrudCommonDfltOptSomeVecOneElMaxPageSize,
+    PgCrudDfltOptSomeVecOneEl, PgCrudDfltOptSomeVecOneElMaxPageSize, RefStr, StdFmtDisplay,
+    StringTs, U64,
 };
 #[derive(Debug, Clone, OptimalPack)]
 pub enum DeriveOrImpl {
@@ -132,32 +132,32 @@ pub enum Import {
     PgCrudCommon,
 }
 impl Import {
-    fn all_vrts_default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
+    fn all_vrts_dflt_opt_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVrtsArrDefaultOptSomeVecOneEl,
-            Self::PgCrud => &PgCrudAllEnumVrtsArrDefaultOptSomeVecOneEl,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneEl,
+            Self::Crate => &CrateAllEnumVrtsArrDfltOptSomeVecOneEl,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrDfltOptSomeVecOneEl,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrDfltOptSomeVecOneEl,
         }
     }
-    fn all_vrts_default_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
+    fn all_vrts_dflt_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
-            Self::PgCrud => &PgCrudAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
-            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize,
+            Self::Crate => &CrateAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize,
+            Self::PgCrud => &PgCrudAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize,
+            Self::PgCrudCommon => &PgCrudCommonAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize,
         }
     }
-    fn default_opt_some_vec_one_el(&self) -> &dyn ToTokens {
+    fn dflt_opt_some_vec_one_el(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateDefaultOptSomeVecOneEl,
-            Self::PgCrud => &PgCrudDefaultOptSomeVecOneEl,
-            Self::PgCrudCommon => &PgCrudCommonDefaultOptSomeVecOneEl,
+            Self::Crate => &CrateDfltOptSomeVecOneEl,
+            Self::PgCrud => &PgCrudDfltOptSomeVecOneEl,
+            Self::PgCrudCommon => &PgCrudCommonDfltOptSomeVecOneEl,
         }
     }
-    fn default_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
+    fn dflt_opt_some_vec_one_el_max_page_size(&self) -> &dyn ToTokens {
         match &self {
-            Self::Crate => &CrateDefaultOptSomeVecOneElMaxPageSize,
-            Self::PgCrud => &PgCrudDefaultOptSomeVecOneElMaxPageSize,
-            Self::PgCrudCommon => &PgCrudCommonDefaultOptSomeVecOneElMaxPageSize,
+            Self::Crate => &CrateDfltOptSomeVecOneElMaxPageSize,
+            Self::PgCrud => &PgCrudDfltOptSomeVecOneElMaxPageSize,
+            Self::PgCrudCommon => &PgCrudCommonDfltOptSomeVecOneElMaxPageSize,
         }
     }
     #[must_use]
@@ -667,11 +667,11 @@ pub fn gen_pg_type_where_ts(
         &Ts2::new(),
         &quote! {format!("{self:#?}")},
     );
-    let impl_all_vrts_default_opt_some_vec_one_el_for_pg_type_tokens_where_ts =
-        gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(&ident, &{
+    let impl_all_vrts_dflt_opt_some_vec_one_el_for_pg_type_tokens_where_ts =
+        gen_impl_pg_crud_common_all_vrts_dflt_opt_some_vec_one_el_ts(&ident, &{
             let vrts_ts = vrts.iter().map(|el| {
                 let el_ucc = el.ucc();
-                quote! {Self::#el_ucc(#PgCrudCommonDefaultOptSomeVecOneElCall)}
+                quote! {Self::#el_ucc(#PgCrudCommonDfltOptSomeVecOneElCall)}
             });
             quote! {vec![#(#vrts_ts),*]}
         });
@@ -679,7 +679,7 @@ pub fn gen_pg_type_where_ts(
         #pg_type_tokens_where_ts
         #impl_pg_type_pg_type_where_filter_for_pg_type_tokens_where_ts
         #impl_location_lib_to_err_string_for_pg_type_tokens_where_ts
-        #impl_all_vrts_default_opt_some_vec_one_el_for_pg_type_tokens_where_ts
+        #impl_all_vrts_dflt_opt_some_vec_one_el_for_pg_type_tokens_where_ts
     }
 }
 #[must_use]
@@ -832,73 +832,98 @@ pub fn gen_impl_pg_json_type_ts(
         }
     }
 }
-pub fn gen_impl_default_opt_some_vec_one_el_ts(
+pub fn gen_impl_dflt_opt_some_vec_one_el_ts(
     impl_generic_ts: &dyn ToTokens,
     import: &Import,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import.default_opt_some_vec_one_el();
+    let path_trait_ts = import.dflt_opt_some_vec_one_el();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #DefaultOptSomeVecOneElSc() -> Self {
+            fn #DfltOptSomeVecOneElSc() -> Self {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_ts(
+pub fn gen_impl_all_vrts_dflt_opt_some_vec_one_el_ts(
     import: &Import,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import.all_vrts_default_opt_some_vec_one_el();
+    let path_trait_ts = import.all_vrts_dflt_opt_some_vec_one_el();
     quote! {
         impl #path_trait_ts for #ident {
-            fn #AllVrtsDefaultOptSomeVecOneElSc() -> Vec<Self> {
+            fn #AllVrtsDfltOptSomeVecOneElSc() -> Vec<Self> {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_dflt_opt_some_vec_one_el_max_page_size_ts(
     impl_generic_ts: &dyn ToTokens,
     import: &Import,
     ident: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import.default_opt_some_vec_one_el_max_page_size();
+    let path_trait_ts = import.dflt_opt_some_vec_one_el_max_page_size();
     quote! {
         impl #impl_generic_ts #path_trait_ts for #ident #ident_generic_ts {
-            fn #DefaultOptSomeVecOneElMaxPageSizeSc() -> Self {
+            fn #DfltOptSomeVecOneElMaxPageSizeSc() -> Self {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts(
     import: &Import,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let path_trait_ts = import.all_vrts_default_opt_some_vec_one_el_max_page_size();
-    let all_vrts_default_opt_some_vec_one_el_max_page_size_sc =
-        AllVrtsDefaultOptSomeVecOneElMaxPageSizeSc;
+    let path_trait_ts = import.all_vrts_dflt_opt_some_vec_one_el_max_page_size();
+    let all_vrts_dflt_opt_some_vec_one_el_max_page_size_sc =
+        AllVrtsDfltOptSomeVecOneElMaxPageSizeSc;
     quote! {
         impl #path_trait_ts for #ident {
-            fn #all_vrts_default_opt_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
+            fn #all_vrts_dflt_opt_some_vec_one_el_max_page_size_sc() -> Vec<Self> {
                 #ts
             }
         }
     }
 }
-pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_opt_some_vec_one_el_ts(
+    gen_impl_dflt_opt_some_vec_one_el_ts(&Ts2::new(), &Import::PgCrudCommon, ident, &Ts2::new(), ts)
+}
+pub fn gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
+    ident: &dyn ToTokens,
+    lifetime_ts: &dyn ToTokens,
+    ts: &dyn ToTokens,
+) -> Ts2 {
+    gen_impl_dflt_opt_some_vec_one_el_ts(&Ts2::new(), &Import::PgCrud, ident, lifetime_ts, ts)
+}
+pub fn gen_impl_pg_crud_common_all_vrts_dflt_opt_some_vec_one_el_ts(
+    ident: &dyn ToTokens,
+    ts: &dyn ToTokens,
+) -> Ts2 {
+    gen_impl_all_vrts_dflt_opt_some_vec_one_el_ts(&Import::PgCrudCommon, ident, ts)
+}
+pub fn gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(
+    ident: &dyn ToTokens,
+    ts: &dyn ToTokens,
+) -> Ts2 {
+    gen_impl_all_vrts_dflt_opt_some_vec_one_el_ts(&Import::PgCrud, ident, ts)
+}
+pub fn gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(
+    ident: &dyn ToTokens,
+    ts: &dyn ToTokens,
+) -> Ts2 {
+    gen_impl_dflt_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &Import::PgCrudCommon,
         ident,
@@ -906,43 +931,12 @@ pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_ts(
+pub fn gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     lifetime_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_default_opt_some_vec_one_el_ts(&Ts2::new(), &Import::PgCrud, ident, lifetime_ts, ts)
-}
-pub fn gen_impl_pg_crud_common_all_vrts_default_opt_some_vec_one_el_ts(
-    ident: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&Import::PgCrudCommon, ident, ts)
-}
-pub fn gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_ts(
-    ident: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_impl_all_vrts_default_opt_some_vec_one_el_ts(&Import::PgCrud, ident, ts)
-}
-pub fn gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts(
-    ident: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
-        &Ts2::new(),
-        &Import::PgCrudCommon,
-        ident,
-        &Ts2::new(),
-        ts,
-    )
-}
-pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
-    ident: &dyn ToTokens,
-    lifetime_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_impl_default_opt_some_vec_one_el_max_page_size_ts(
+    gen_impl_dflt_opt_some_vec_one_el_max_page_size_ts(
         &Ts2::new(),
         &Import::PgCrud,
         ident,
@@ -950,11 +944,11 @@ pub fn gen_impl_pg_crud_default_opt_some_vec_one_el_max_page_size_ts(
         ts,
     )
 }
-pub fn gen_impl_pg_crud_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(
+pub fn gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts(
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_impl_all_vrts_default_opt_some_vec_one_el_max_page_size_ts(&Import::PgCrud, ident, ts)
+    gen_impl_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts(&Import::PgCrud, ident, ts)
 }
 pub fn impl_pg_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
@@ -1239,13 +1233,13 @@ fn gen_update_to_read_only_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> 
         }
     }
 }
-fn gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
+fn gen_read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc(
+        fn #ReadOnlyIdsToOptVReadDfltOptSomeVecOneElSc(
             #VSc: &#path_ts::#ReadOnlyIdsUcc
         ) -> Option<#import::#VUcc<#path_ts::#ReadUcc>> {
             #ts
@@ -1568,7 +1562,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     update_to_read_only_ids_ts: &dyn ToTokens,
-    read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
+    read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_opt_v_read_ts: &dyn ToTokens,
@@ -1619,11 +1613,11 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         );
     let update_to_read_only_ids_ts_ee17b828 =
         gen_update_to_read_only_ids_ts(&self_pg_type_as_pg_type_ts, &update_to_read_only_ids_ts);
-    let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_18ef45e8 =
-        gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
+    let read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_18ef45e8 =
+        gen_read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
+            &read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
         );
     let previous_read_merged_with_opt_update_into_read_ts_c48b8ede =
         gen_previous_read_merged_with_opt_update_into_read_ts(
@@ -1759,7 +1753,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_affc58f5
             #read_inner_into_update_with_new_or_try_new_unwraped_ts_c38e6621
             #update_to_read_only_ids_ts_ee17b828
-            #read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_18ef45e8
+            #read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_18ef45e8
             #previous_read_merged_with_opt_update_into_read_ts_c48b8ede
             #read_only_ids_merged_with_create_into_read_ts_df48e4b7
             #read_only_ids_merged_with_create_into_opt_v_read_ts_8b7e9688
@@ -1814,7 +1808,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_only_ids_into_opt_v_read_inner_ts: &dyn ToTokens,
     update_to_read_only_ids_ts: &dyn ToTokens,
-    read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts: &dyn ToTokens,
+    read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_merged_with_opt_update_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_read_ts: &dyn ToTokens,
     read_only_ids_merged_with_create_into_opt_v_read_ts: &dyn ToTokens,
@@ -1867,11 +1861,11 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
         &self_pg_json_type_as_pg_json_type_ts,
         &update_to_read_only_ids_ts,
     );
-    let read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_f5d1b395 =
-        gen_read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts(
+    let read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_f5d1b395 =
+        gen_read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts(
             *import,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts,
+            &read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
         );
     let previous_read_merged_with_opt_update_into_read_ts_ab0384b9 =
         gen_previous_read_merged_with_opt_update_into_read_ts(
@@ -2008,7 +2002,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
                 #read_only_ids_into_opt_v_read_inner_ts
             }
             #update_to_read_only_ids_ts_d7e0cbf0
-            #read_only_ids_to_opt_v_read_default_opt_some_vec_one_el_ts_f5d1b395
+            #read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_f5d1b395
             #previous_read_merged_with_opt_update_into_read_ts_ab0384b9
             #read_only_ids_merged_with_create_into_read_ts_7df2fa10
             #read_only_ids_merged_with_create_into_opt_v_read_ts_1f54e2bf

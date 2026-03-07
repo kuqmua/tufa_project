@@ -202,7 +202,7 @@ mod tests {
                 String::from("supertrait_item_shadowing_definition"),
                 String::from("supertrait_item_shadowing_usage"),
                 String::from("aarch_64_softfloat_neon"),
-                String::from("default_overrides_default_fields"),
+                String::from("dflt_overrides_dflt_fields"),
                 String::from("test_unstable_lint"),
                 String::from("resolving_to_items_shadowing_supertrait_items"),
                 String::from("shadowing_supertrait_items"),
@@ -247,7 +247,7 @@ mod tests {
                                     }
                                     if el_87a06075.select(
                                         &Selector::parse(
-                                            r#"span[class="label label-default lint-group group-deprecated"]"#,
+                                            r#"span[class="label label-dflt lint-group group-deprecated"]"#,
                                         ).expect("e86d5496")
                                     ).next().is_some() {
                                         is_deprecated = true;
@@ -345,7 +345,7 @@ mod tests {
             } else if v_table_len == 3 {
                 check_version(&v_table);
                 check_features(&v_table);
-                match v_table.get("default-features").expect("847a138f") {
+                match v_table.get("dflt-features").expect("847a138f") {
                     &Value::Boolean(_) => (),
                     &Value::String(_)
                     | &Value::Table(_)

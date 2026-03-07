@@ -1,7 +1,7 @@
 mod attr_ident_str;
 mod gen_field_loc_new_ts;
 mod gen_if_write_is_err_ts;
-mod gen_impl_default_ts;
+mod gen_impl_dflt_ts;
 mod gen_impl_display_ts;
 mod gen_impl_from_ts;
 mod gen_impl_to_err_string_ts;
@@ -22,7 +22,7 @@ mod write_ts_into_file;
 pub use attr_ident_str::AttrIdentStr;
 pub use gen_field_loc_new_ts::gen_field_loc_new_ts;
 pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};
-pub use gen_impl_default_ts::gen_impl_default_ts;
+pub use gen_impl_dflt_ts::gen_impl_dflt_ts;
 pub use gen_impl_display_ts::gen_impl_display_ts;
 pub use gen_impl_from_ts::gen_impl_from_ts;
 pub use gen_impl_to_err_string_ts::gen_impl_to_err_string_ts;

@@ -5,17 +5,17 @@ use quote::{ToTokens, quote};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
-pub trait DefaultOptSomeVecOneEl: Sized {
-    fn default_opt_some_vec_one_el() -> Self;
+pub trait DfltOptSomeVecOneEl: Sized {
+    fn dflt_opt_some_vec_one_el() -> Self;
 }
-pub trait AllEnumVrtsArrDefaultOptSomeVecOneEl: Sized {
-    fn all_vrts_default_opt_some_vec_one_el() -> Vec<Self>;
+pub trait AllEnumVrtsArrDfltOptSomeVecOneEl: Sized {
+    fn all_vrts_dflt_opt_some_vec_one_el() -> Vec<Self>;
 }
-pub trait DefaultOptSomeVecOneElMaxPageSize: Sized {
-    fn default_opt_some_vec_one_el_max_page_size() -> Self;
+pub trait DfltOptSomeVecOneElMaxPageSize: Sized {
+    fn dflt_opt_some_vec_one_el_max_page_size() -> Self;
 }
-pub trait AllEnumVrtsArrDefaultOptSomeVecOneElMaxPageSize: Sized {
-    fn all_vrts_default_opt_some_vec_one_el_max_page_size() -> Vec<Self>;
+pub trait AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize: Sized {
+    fn all_vrts_dflt_opt_some_vec_one_el_max_page_size() -> Vec<Self>;
 }
 #[derive(
     Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema, OptimalPack,
@@ -53,8 +53,8 @@ impl Display for Operator {
         write!(f, "{self:?}")
     }
 }
-impl DefaultOptSomeVecOneEl for Operator {
-    fn default_opt_some_vec_one_el() -> Self {
+impl DfltOptSomeVecOneEl for Operator {
+    fn dflt_opt_some_vec_one_el() -> Self {
         Self::default()
     }
 }

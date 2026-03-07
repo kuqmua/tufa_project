@@ -12,7 +12,7 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, Import, IncrParamUnderscore, IsNeedToAddOperatorUnderscore, IsQbMutable,
-    PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType, gen_impl_default_opt_some_vec_one_el_ts,
+    PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType, gen_impl_dflt_opt_some_vec_one_el_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
@@ -21,7 +21,7 @@ use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
 use token_patterns::{
-    CoreDefault, PgCrudCommonDefaultOptSomeVecOneEl, PgCrudCommonDefaultOptSomeVecOneElCall,
+    CoreDefault, PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
 };
 #[proc_macro]
 pub fn gen_where_filters(input_ts: Ts) -> Ts {
@@ -120,8 +120,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     let pub_v_t_ts = quote! {pub #VSc: T};
     let unsigned_part_of_i32_ts = quote! {#import::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {#import::NotZeroUnsignedPartOfI32};
-    let v_default_opt_some_vec_one_el_ts = quote! {
-        #VSc: #PgCrudCommonDefaultOptSomeVecOneElCall
+    let v_dflt_opt_some_vec_one_el_ts = quote! {
+        #VSc: #PgCrudCommonDfltOptSomeVecOneElCall
     };
     let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool,
                          generic: &Generic,
@@ -161,15 +161,15 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 }},
             )
     };
-    let gen_impl_default_opt_some_vec_one_el_ts =
+    let gen_impl_dflt_opt_some_vec_one_el_ts =
         |generic: &Generic, ident: &dyn ToTokens, ts: &dyn ToTokens| {
-            gen_impl_default_opt_some_vec_one_el_ts(
+            gen_impl_dflt_opt_some_vec_one_el_ts(
             &match &generic {
                 Generic::False => Ts2::new(),
                 Generic::True { mb_extra_traits_ts } => {
                     mb_extra_traits_ts.as_ref().map_or_else(
-                        || quote! {<T: #PgCrudCommonDefaultOptSomeVecOneEl>},
-                        |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCommonDefaultOptSomeVecOneEl>}
+                        || quote! {<T: #PgCrudCommonDfltOptSomeVecOneEl>},
+                        |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCommonDfltOptSomeVecOneEl>}
                     )
                 }
             },
@@ -181,7 +181,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             },
             &quote! {
                 Self {
-                    operator: #PgCrudCommonDefaultOptSomeVecOneElCall,
+                    operator: #PgCrudCommonDfltOptSomeVecOneElCall,
                     #ts
                 }
             },
@@ -242,11 +242,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             pub #VSc: RegexRegex
         }
     };
-    let add_regex_case_and_v_default_init_ts = |ts: &dyn ToTokens| {
+    let add_regex_case_and_v_dflt_init_ts = |ts: &dyn ToTokens| {
         quote! {
             #ts
-            regex_case: #PgCrudCommonDefaultOptSomeVecOneElCall,
-            #v_default_opt_some_vec_one_el_ts
+            regex_case: #PgCrudCommonDfltOptSomeVecOneElCall,
+            #v_dflt_opt_some_vec_one_el_ts
         }
     };
     let gen_match_incr_checked_add_one_init_ts = |ts: &dyn ToTokens| {
@@ -343,10 +343,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         };
     let v_match_self_v_qp_init_ts =
         gen_ident_match_field_fn_ok_v_return_err_ts(&VSc, &VSc, &quote! {qp});
-    let dims_default_init_ts = quote! {
-        #DimsSc: #PgCrudCommonDefaultOptSomeVecOneElCall
+    let dims_dflt_init_ts = quote! {
+        #DimsSc: #PgCrudCommonDfltOptSomeVecOneElCall
     };
-    let dims_default_init_comma_ts = quote! {#dims_default_init_ts,};
+    let dims_dflt_init_comma_ts = quote! {#dims_dflt_init_ts,};
     let query_self_dims_qb_query_ts = quote! {
         match #SelfSc.#DimsSc.qb(#QuerySc) {
             Ok(v_ed6f1157) => {
@@ -364,10 +364,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             #pub_v_t_ts
         }
     };
-    let gen_mb_dims_default_init_v_default_ts = |ts: &dyn ToTokens| {
+    let gen_mb_dims_dflt_init_v_dflt_ts = |ts: &dyn ToTokens| {
         quote! {
             #ts
-            #v_default_opt_some_vec_one_el_ts
+            #v_dflt_opt_some_vec_one_el_ts
         }
     };
     let is_qb_mutable_true = IsQbMutable::True;
@@ -407,7 +407,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr)
                             }
                         },
-                        dims_default_init_comma_ts.clone(),
+                        dims_dflt_init_comma_ts.clone(),
                         gen_ident_match_field_fn_ok_v_return_err_ts(
                             &DimsIesSc,
                             &DimsSc,
@@ -429,7 +429,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let (
                 generic,
                 struct_extra_fields_ts,
-                impl_default_opt_some_vec_one_el_extra_fields_ts,
+                impl_dflt_opt_some_vec_one_el_extra_fields_ts,
                 incr_param_underscore,
                 qp_ts,
                 is_qb_mutable,
@@ -449,7 +449,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                      gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                         let (
                             mb_dims_decl_ts,
-                            mb_dims_default_init_ts,
+                            mb_dims_dflt_init_ts,
                             mb_dims_ies_init_ts,
                             pg_type_kind,
                             mb_extra_params_ts,
@@ -458,7 +458,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         (
                             generic_true_type_encode.clone(),
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
-                            gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                            gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrParamUnderscore::False,
                             {
                                 let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
@@ -494,7 +494,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_between_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -506,7 +506,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #mb_dims_decl_ts
                             #pub_v_between_t_ts
                         },
-                        gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                        gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                         IncrParamUnderscore::False,
                         {
                             let format_ts = dq_ts(&format!(
@@ -535,7 +535,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_in_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -551,7 +551,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #mb_dims_decl_ts
                             #pub_v_pg_type_not_empty_unique_vec_t_ts
                         },
-                        gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                        gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                         IncrParamUnderscore::False,
                         {
                             let format_ts = dq_ts(&format!(
@@ -603,7 +603,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_regex_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -612,7 +612,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         generic_false.clone(),
                         add_regex_case_and_v_decl_ts(&mb_dims_decl_ts),
-                        add_regex_case_and_v_default_init_ts(&mb_dims_default_init_ts),
+                        add_regex_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
                         IncrParamUnderscore::False,
                         gen_ts_dbf9de6b(
                             &format!("{{}}({{}}{} {{}} ${{}})", pg_type_kind.format_argument()),
@@ -629,7 +629,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_before_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -638,7 +638,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         generic_true_type_encode.clone(),
                         gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
-                        gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                        gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                         IncrParamUnderscore::False,
                         {
                             let format_ts = dq_ts(&format!(
@@ -667,7 +667,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_1fa0bbf4_ts = |pg_type_ptrn: &PgTypePtrn, pg_syntax: &dyn Display| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -676,7 +676,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         generic_false.clone(),
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         match &pg_type_ptrn {
                             PgTypePtrn::Stdrt => IncrParamUnderscore::True,
                             PgTypePtrn::ArrDim1
@@ -729,7 +729,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_equal_to_encoded_string_representation_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -743,8 +743,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             pub encoded_string_representation: String,
                         },
                         quote! {
-                            #mb_dims_default_init_ts
-                            encode_format: #PgCrudCommonDefaultOptSomeVecOneElCall,
+                            #mb_dims_dflt_init_ts
+                            encode_format: #PgCrudCommonDfltOptSomeVecOneElCall,
                             encoded_string_representation: #CoreDefault
                         },
                         IncrParamUnderscore::False,
@@ -794,7 +794,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     (
                         generic_false.clone(),
                         pub_v_not_zero_unsigned_part_of_i32_decl_ts.clone(),
-                        v_default_opt_some_vec_one_el_ts.clone(),
+                        v_dflt_opt_some_vec_one_el_ts.clone(),
                         IncrParamUnderscore::False,
                         {
                             let format_ts =
@@ -845,7 +845,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 let gen_range_length_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -866,7 +866,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts(
                                     &dim_nbr,
                                 ),
-                                dims_default_init_comma_ts.clone(),
+                                dims_dflt_init_comma_ts.clone(),
                                 {
                                     let (dims_ies1_ts, dims_ies2_ts) = {
                                         let gen_ts = |ts: &dyn ToTokens| {
@@ -909,7 +909,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #mb_dims_decl_ts
                             #pub_v_not_zero_unsigned_part_of_i32_decl_ts
                         },
-                        gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                        gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                         IncrParamUnderscore::False,
                         {
                             let format_ts = dq_ts(&format!(
@@ -969,7 +969,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::Equal { .. } => {
                         let (
                             mb_dims_decl_ts,
-                            mb_dims_default_init_ts,
+                            mb_dims_dflt_init_ts,
                             mb_dims_ies_init_ts,
                             _,
                             _,
@@ -982,7 +982,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ),
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
-                            gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                            gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrParamUnderscore::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
                             is_qb_mutable_true,
@@ -992,7 +992,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::DimOneEqual { .. } => {
                         let (
                             mb_dims_decl_ts,
-                            mb_dims_default_init_ts,
+                            mb_dims_dflt_init_ts,
                             mb_dims_ies_init_ts,
                             _,
                             _,
@@ -1005,7 +1005,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ),
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
-                            gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                            gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrParamUnderscore::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
                             is_qb_mutable_true,
@@ -1125,10 +1125,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 }
             };
             let struct_ts = gen_struct_ts(false, &generic, &ident, &struct_extra_fields_ts);
-            let impl_default_opt_some_vec_one_el_ts = gen_impl_default_opt_some_vec_one_el_ts(
+            let impl_dflt_opt_some_vec_one_el_ts = gen_impl_dflt_opt_some_vec_one_el_ts(
                 &generic,
                 &ident,
-                &impl_default_opt_some_vec_one_el_extra_fields_ts,
+                &impl_dflt_opt_some_vec_one_el_extra_fields_ts,
             );
             let impl_pg_type_where_filter_ts = gen_impl_pg_type_where_filter_ts(
                 &FilterType::PgType,
@@ -1142,7 +1142,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             );
             let gend = quote! {
                 #struct_ts
-                #impl_default_opt_some_vec_one_el_ts
+                #impl_dflt_opt_some_vec_one_el_ts
                 #impl_pg_type_where_filter_ts
             };
             gend
@@ -1177,7 +1177,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                  gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
                     let (
                         mb_dims_decl_ts,
-                        mb_dims_default_init_ts,
+                        mb_dims_dflt_init_ts,
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
@@ -1190,8 +1190,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #pub_v_t_ts
                         },
                         quote! {
-                            #mb_dims_default_init_ts
-                            #v_default_opt_some_vec_one_el_ts
+                            #mb_dims_dflt_init_ts
+                            #v_dflt_opt_some_vec_one_el_ts
                         },
                         {
                             let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
@@ -1245,7 +1245,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_ts_ae2fa44d = |pg_type_ptrn: &PgTypePtrn, op: &dyn Display| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1258,7 +1258,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         pub #VSc: #unsigned_part_of_i32_ts
                     },
                     quote! {
-                        #mb_dims_default_init_ts
+                        #mb_dims_dflt_init_ts
                         #VSc: #CoreDefault
                     },
                     {
@@ -1305,7 +1305,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_between_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1317,7 +1317,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #mb_dims_decl_ts
                         #pub_v_between_t_ts
                     },
-                    gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                    gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                     {
                         let ts: &dyn ToTokens = match pg_type_ptrn {
                             PgTypePtrn::Stdrt => &quote! {
@@ -1379,7 +1379,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_in_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1391,7 +1391,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #mb_dims_decl_ts
                         #pub_v_pg_json_type_not_empty_unique_vec_t_ts
                     },
-                    gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
+                    gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                     {
                         let v_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
                             &VSc,
@@ -1429,7 +1429,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_regex_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1448,7 +1448,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     |dim_nbr| {
                         (
                             gen_pub_dims_bounded_vec_unsigned_part_of_i32_comma_ts(&dim_nbr),
-                            dims_default_init_comma_ts.clone(),
+                            dims_dflt_init_comma_ts.clone(),
                             {
                                 let dims_ies_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
                                     &DimsIesSc,
@@ -1474,7 +1474,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 (
                     generic_false.clone(),
                     add_regex_case_and_v_decl_ts(&mb_dims_decl_ts),
-                    add_regex_case_and_v_default_init_ts(&mb_dims_default_init_ts),
+                    add_regex_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
                     gen_ts_dbf9de6b(
                         &format!(
                             "{{}}(trim(both '\\\"' from ({{}}{})::text) {{}} ${{}})",
@@ -1496,7 +1496,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_contains_el_regex_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1505,7 +1505,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 (
                     generic_false.clone(),
                     add_regex_case_and_v_decl_ts(&mb_dims_decl_ts),
-                    add_regex_case_and_v_default_init_ts(&mb_dims_default_init_ts),
+                    add_regex_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
                     gen_ts_dbf9de6b(
                         &format!(
                             //todo test it properly using all strange string vrts
@@ -1526,7 +1526,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_all_els_regex_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1535,7 +1535,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 (
                     generic_false.clone(),
                     add_regex_case_and_v_decl_ts(&mb_dims_decl_ts),
-                    add_regex_case_and_v_default_init_ts(&mb_dims_default_init_ts),
+                    add_regex_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
                     gen_ts_dbf9de6b(
                         &format!(
                             //todo test it properly using all strange string vrts
@@ -1556,7 +1556,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_contains_all_els_of_arr_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1569,8 +1569,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #pub_v_pg_json_type_not_empty_unique_vec_t_ts
                     },
                     quote! {
-                        #mb_dims_default_init_ts
-                        #v_default_opt_some_vec_one_el_ts
+                        #mb_dims_dflt_init_ts
+                        #v_dflt_opt_some_vec_one_el_ts
                     },
                     {
                         let ts = gen_ts_e527a806(
@@ -1596,7 +1596,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gen_overlaps_with_arr_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
                     mb_dims_decl_ts,
-                    mb_dims_default_init_ts,
+                    mb_dims_dflt_init_ts,
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
@@ -1609,8 +1609,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         #pub_v_pg_json_type_not_empty_unique_vec_t_ts
                     },
                     quote! {
-                        #mb_dims_default_init_ts
-                        #v_default_opt_some_vec_one_el_ts
+                        #mb_dims_dflt_init_ts
+                        #v_dflt_opt_some_vec_one_el_ts
                     },
                     {
                         let ts = gen_ts_e527a806(
@@ -1636,7 +1636,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let (
                 generic,
                 struct_extra_fields_ts,
-                impl_default_opt_some_vec_one_el_extra_fields_ts,
+                impl_dflt_opt_some_vec_one_el_extra_fields_ts,
                 qp_ts,
                 is_qb_mutable,
                 qb_ts,
@@ -1794,10 +1794,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 }
             };
             let struct_ts = gen_struct_ts(false, &generic, &ident, &struct_extra_fields_ts);
-            let impl_default_opt_some_vec_one_el_ts = gen_impl_default_opt_some_vec_one_el_ts(
+            let impl_dflt_opt_some_vec_one_el_ts = gen_impl_dflt_opt_some_vec_one_el_ts(
                 &generic,
                 &ident,
-                &impl_default_opt_some_vec_one_el_extra_fields_ts,
+                &impl_dflt_opt_some_vec_one_el_extra_fields_ts,
             );
             let impl_pg_type_where_filter_ts = gen_impl_pg_type_where_filter_ts(
                 &FilterType::PgJsonType,
@@ -1811,7 +1811,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             );
             let gend = quote! {
                 #struct_ts
-                #impl_default_opt_some_vec_one_el_ts
+                #impl_dflt_opt_some_vec_one_el_ts
                 #impl_pg_type_where_filter_ts
             };
             gend

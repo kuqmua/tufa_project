@@ -370,8 +370,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["try", "from", "std", "env", "var", "ok"],
     ["table", "name"],
     ["gen", "pg", "crud", "pk"],
-    ["default", "opt", "some", "vec", "one", "el"],
-    ["all", "vrts", "default", "opt", "some", "vec", "one", "el"],
+    ["dflt", "opt", "some", "vec", "one", "el"],
+    ["all", "vrts", "dflt", "opt", "some", "vec", "one", "el"],
     ["gen", "pg", "json", "type"],
     ["to", "std", "string", "string"],
     ["location", "lib"],
@@ -675,7 +675,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "json", "type", "test", "cases"],
     ["pg", "pool"],
     ["pg", "pool", "for", "tokio", "spawn", "sync", "move"],
-    ["ident", "create", "default"],
+    ["ident", "create", "dflt"],
     ["vec", "of", "p", "ks", "returned", "from", "cm"],
     ["select", "pk"],
     [
@@ -712,8 +712,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "update", "new", "or", "try", "new", "unwraped", "for", "test"
     ],
     [
-        "read", "only", "ids", "to", "opt", "v", "read", "default", "opt", "some", "vec", "one",
-        "el"
+        "read", "only", "ids", "to", "opt", "v", "read", "dflt", "opt", "some", "vec", "one", "el"
     ],
     [
         "read", "from", "previous", "read", "unwraped", "merged", "with", "update"
@@ -729,10 +728,10 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "only", "ids", "merged", "with", "create", "into", "opt", "v", "read"
     ],
     [
-        "default", "opt", "some", "vec", "one", "el", "max", "page", "size"
+        "dflt", "opt", "some", "vec", "one", "el", "max", "page", "size"
     ],
     [
-        "all", "vrts", "default", "opt", "some", "vec", "one", "el", "max", "page", "size"
+        "all", "vrts", "dflt", "opt", "some", "vec", "one", "el", "max", "page", "size"
     ],
     ["ids", "are", "not", "unique"],
     ["pg", "type", "pk"],

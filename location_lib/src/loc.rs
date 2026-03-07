@@ -65,7 +65,7 @@ impl Display for Loc {
         write!(
             f,
             "{} {}",
-            &match SOURCE_PLACE_TYPE.get_or_init(SourcePlaceType::from_env_or_default) {
+            &match SOURCE_PLACE_TYPE.get_or_init(SourcePlaceType::from_env_or_dflt) {
                 SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(
                     || format!("{}:{}:{}", self.file, self.line, self.column),
                     |v| format!(
