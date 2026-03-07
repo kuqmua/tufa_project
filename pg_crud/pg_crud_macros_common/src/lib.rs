@@ -4,19 +4,19 @@ pub use filters::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
-    AllVrtsDfltOptSomeVecOneElMaxPageSizeSc, AllVrtsDfltOptSomeVecOneElSc,
+    AddOprtrSc, AllVrtsDfltOptSomeVecOneElMaxPageSizeSc, AllVrtsDfltOptSomeVecOneElSc,
     ColumnFieldForErMessageSc, ColumnFieldSc, ColumnSc, CreateForQueryUcc,
     CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc,
     DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc, DisplayPlusToTokens, EqualOprtrUcc,
-    FiSc, IncrSc, IsNeedToAddOprtrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc,
-    JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
-    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOprtrUcc, PgTypeNotPkUcc,
-    PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
-    PreviousReadMergedWithOptUpdateIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc,
-    ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
-    ReadInnerUcc, ReadOnlyIdsIntoOptVReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptVReadSc,
+    FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc,
+    NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc,
+    PgTypeEqualOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc,
+    PgTypeUcc, PgTypeWhereFilterUcc, PreviousReadMergedWithOptUpdateIntoReadSc, QbSc, QpErUcc,
+    QpSc, QuerySc, ReadInnerIntoReadWithNewOrTryNewUnwrapedSc,
+    ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc, ReadInnerUcc, ReadOnlyIdsIntoOptVReadInnerSc,
+    ReadOnlyIdsMergedWithCreateIntoOptVReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
@@ -370,14 +370,14 @@ impl ToTokens for ColumnParamUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsNeedToAddOprtrUndrscr {
+pub enum AddOprtrUndrscr {
     False,
     True,
 }
-impl ToTokens for IsNeedToAddOprtrUndrscr {
+impl ToTokens for AddOprtrUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IsNeedToAddOprtrSc.to_tokens(tokens),
+            Self::False => AddOprtrSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -623,7 +623,7 @@ pub fn gen_pg_type_where_ts(
             &Ts2::new(),
             &IncrParamUndrscr::False,
             &ColumnParamUndrscr::False,
-            &IsNeedToAddOprtrUndrscr::False,
+            &AddOprtrUndrscr::False,
             &{
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
@@ -632,7 +632,7 @@ pub fn gen_pg_type_where_ts(
                             #VSc,
                             #IncrSc,
                             #ColumnSc,
-                            #IsNeedToAddOprtrSc,
+                            #AddOprtrSc,
                         )
                     }
                 });
@@ -956,7 +956,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     ident_generic_ts: &dyn ToTokens,
     incr_param_undrscr: &IncrParamUndrscr,
     column_param_undrscr: &ColumnParamUndrscr,
-    is_need_to_add_oprtr_undrscr: &IsNeedToAddOprtrUndrscr,
+    add_oprtr_undrscr: &AddOprtrUndrscr,
     qp_ts: &dyn ToTokens,
     is_qb_mutable: &IsQbMutable,
     qb_ts: &dyn ToTokens,
@@ -969,7 +969,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
                 &self,
                 #incr_param_undrscr: &mut #U64,
                 #column_param_undrscr: &dyn #StdFmtDisplay,
-                #is_need_to_add_oprtr_undrscr: #Bool
+                #add_oprtr_undrscr: #Bool
             ) -> Result<#StringTs, #import::#QpErUcc> {
                 #qp_ts
             }

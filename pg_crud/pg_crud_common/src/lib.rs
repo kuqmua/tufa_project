@@ -422,12 +422,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
         self,
         query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>;
-    fn qp(
-        &self,
-        incr: &mut u64,
-        column: &dyn Display,
-        is_need_to_add_oprtr: bool,
-    ) -> Result<String, QpEr>;
+    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr>;
 }
 //todo custom deserialization - must not contain more than one el
 #[derive(
@@ -454,15 +449,10 @@ where
             None => Ok(query), //todo mb wrong
         }
     }
-    fn qp(
-        &self,
-        incr: &mut u64,
-        column: &dyn Display,
-        is_need_to_add_oprtr: bool,
-    ) -> Result<String, QpEr> {
+    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{column} = 'null'")),
-            |v_b4a9fcfb| v_b4a9fcfb.qp(incr, column, is_need_to_add_oprtr),
+            |v_b4a9fcfb| v_b4a9fcfb.qp(incr, column, add_oprtr),
         )
     }
 }
@@ -698,22 +688,17 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         }
         Ok(query)
     }
-    fn qp(
-        &self,
-        incr: &mut u64,
-        column: &dyn Display,
-        is_need_to_add_oprtr: bool,
-    ) -> Result<String, QpEr> {
+    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         let mut acc = String::default();
-        let mut is_need_to_add_oprtr_inner_handle = false;
+        let mut add_oprtr_inner_handle = false;
         for el in &self.v.0 {
-            match PgTypeWhereFilter::qp(el, incr, column, is_need_to_add_oprtr_inner_handle) {
+            match PgTypeWhereFilter::qp(el, incr, column, add_oprtr_inner_handle) {
                 Ok(v) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{v} ").is_err() {
                         return Err(QpEr::WriteIntoBuffer { loc: loc!() });
                     }
-                    is_need_to_add_oprtr_inner_handle = true;
+                    add_oprtr_inner_handle = true;
                 }
                 Err(er) => {
                     return Err(er);
@@ -721,10 +706,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
             }
         }
         let _: Option<char> = acc.pop();
-        Ok(format!(
-            "{}({acc})",
-            &self.oprtr.to_qp(is_need_to_add_oprtr)
-        ))
+        Ok(format!("{}({acc})", &self.oprtr.to_qp(add_oprtr)))
     }
 }
 impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSomeVecOneEl
@@ -1055,13 +1037,8 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWit
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         self.0.qb(query)
     }
-    fn qp(
-        &self,
-        incr: &mut u64,
-        column: &dyn Display,
-        is_need_to_add_oprtr: bool,
-    ) -> Result<String, QpEr> {
-        self.0.qp(incr, column, is_need_to_add_oprtr)
+    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
+        self.0.qp(incr, column, add_oprtr)
     }
 }
 impl DfltOptSomeVecOneEl for PaginationStartsWithZero {
@@ -1246,19 +1223,10 @@ where
         }
         Ok(query)
     }
-    fn qp(
-        &self,
-        incr: &mut u64,
-        column: &dyn Display,
-        is_need_to_add_oprtr: bool,
-    ) -> Result<String, QpEr> {
+    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         let mut acc = String::default();
         for (i, v_953208ce) in self.0.iter().enumerate() {
-            match v_953208ce.qp(
-                incr,
-                column,
-                if i == 0 { is_need_to_add_oprtr } else { true },
-            ) {
+            match v_953208ce.qp(incr, column, if i == 0 { add_oprtr } else { true }) {
                 Ok(v) => {
                     acc.push_str(&v);
                 }

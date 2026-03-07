@@ -410,7 +410,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["qb"],
     ["crate"],
     ["between"],
-    ["is", "need", "to", "add", "oprtr"],
+    ["add", "oprtr"],
     ["case", "sensitive", "regex"],
     ["case", "insensitive", "regex"],
     ["equal"],

@@ -29,9 +29,9 @@ pub enum Oprtr {
 }
 impl Oprtr {
     #[must_use]
-    pub fn to_qp(&self, is_need_to_add_oprtr: bool) -> String {
+    pub fn to_qp(&self, add_oprtr: bool) -> String {
         let not_space = format!("{NotSc} ");
-        if is_need_to_add_oprtr {
+        if add_oprtr {
             let and_space = format!("{AndSc} ");
             let or_space = format!("{OrSc} ");
             match *self {

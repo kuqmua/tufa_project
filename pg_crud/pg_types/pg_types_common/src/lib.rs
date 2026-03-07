@@ -232,13 +232,8 @@ impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         self.0.qb(query)
     }
-    fn qp(
-        &self,
-        incr: &mut u64,
-        column: &dyn Display,
-        is_need_to_add_oprtr: bool,
-    ) -> Result<String, QpEr> {
-        self.0.qp(incr, column, is_need_to_add_oprtr)
+    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
+        self.0.qp(incr, column, add_oprtr)
     }
 }
 impl DfltOptSomeVecOneEl for PaginationStartsWithOne {

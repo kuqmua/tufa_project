@@ -9,13 +9,13 @@ use macros_helpers::{
     gen_simple_syn_punct, get_macro_attr_meta_list_ts, mb_write_ts_into_file,
 };
 use naming::{
-    AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
+    AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
     ContainsAllElsOfArrUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateSc, CreateUpdateDeleteAreEmptyUcc,
     DeleteSc, DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DimOneEqualUcc, DimOneInUcc,
     DisplayPlusToTokens, EqualUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc,
-    InUcc, IncrSc, IsNeedToAddOprtrSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc,
-    JsonbSetTargetSc, LengthEqualUcc, LengthGreaterThanUcc, NotUniqueIdInJsonDeleteArrUcc,
+    InUcc, IncrSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
+    LengthEqualUcc, LengthGreaterThanUcc, NotUniqueIdInJsonDeleteArrUcc,
     NotUniqueIdInJsonUpdateAndDeleteArrsUcc, OptUpdateSc, OptVecCreateSc, OverlapsWithArrUcc,
     PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeTestCasesUcc, PgTypeUcc,
     PreviousReadMergedWithOptUpdateIntoReadSc, QpErUcc, QpSc, QuerySc,
@@ -47,9 +47,9 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr, CreateQpValueUndrscr,
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrParamUndrscr,
-    IsCreateQbMutable, IsNeedToAddOprtrUndrscr, IsNullable, IsPkUndrscr, IsQbMutable,
+    AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
+    CreateQpValueUndrscr, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import,
+    IncrParamUndrscr, IsCreateQbMutable, IsNullable, IsPkUndrscr, IsQbMutable,
     IsSelectOnlyCreatedIdsQbMutable, IsSelectOnlyUpdatedIdsQbMutable,
     IsSelectQpColumnFieldForErMessageUsed, IsSelectQpIsPgTypeUsed, IsSelectQpSelfSelectUsed,
     IsUpdateQbMutable, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed, PgTypeOrPgJsonType,
@@ -1571,7 +1571,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         v_6781c7e3,
                         #IncrSc,
                         &#ColumnSc,
-                        is_need_to_add_oprtr
+                        add_oprtr
                     )
                 };
                 let equal_vrt_qb_ts = quote!{
@@ -1653,7 +1653,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 v_b93ffc1d,
                                 incr,
                                 &format!(#ts),
-                                is_need_to_add_oprtr,
+                                add_oprtr,
                             )
                         }
                     });
@@ -1678,7 +1678,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &Ts2::new(),
                         &IncrParamUndrscr::False,
                         &ColumnParamUndrscr::False,
-                        &IsNeedToAddOprtrUndrscr::False,
+                        &AddOprtrUndrscr::False,
                         &qp_ts,
                         &is_qb_mutable,
                         &qb_ts,
@@ -1740,7 +1740,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         v_df049001,
                                         #IncrSc,
                                         #ColumnSc,
-                                        #IsNeedToAddOprtrSc
+                                        #AddOprtrSc
                                     ),
                                 });
                                 quote! {
@@ -1749,7 +1749,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         v_637adcbd: &dyn #import::PgTypeWhereFilter<'_>,
                                         field: &str
                                     | -> Result<#StringTs, #import_qp_er_ts> {
-                                        let oprtr_qp = oprtr.to_qp(is_need_to_add_oprtr);
+                                        let oprtr_qp = oprtr.to_qp(add_oprtr);
                                         let elem = "elem";
                                         let v_9696ee60 = match #import::PgTypeWhereFilter::#QpSc(
                                             v_637adcbd,
@@ -1861,7 +1861,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         v_31e7fe47,
                                         #IncrSc,
                                         &#ColumnSc,
-                                        is_need_to_add_oprtr
+                                        add_oprtr
                                     ),//todo mb reuse? vrt generation
                                 }
                             }

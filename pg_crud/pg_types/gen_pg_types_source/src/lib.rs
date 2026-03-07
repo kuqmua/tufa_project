@@ -33,9 +33,9 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr, CreateQpValueUndrscr,
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrHandle, Import,
-    IncrParamUndrscr, IsCreateQbMutable, IsNeedToAddOprtrUndrscr, IsNullable, IsPkUndrscr,
+    AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
+    CreateQpValueUndrscr, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
+    EqualOprtrHandle, Import, IncrParamUndrscr, IsCreateQbMutable, IsNullable, IsPkUndrscr,
     IsQbMutable, IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull, IsUpdateQbMutable, PgFilter,
     PgTypeFilter, ReadOrUpdate, SelectQpValueUndrscr, ShouldDeriveSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr,
@@ -4747,7 +4747,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &IncrParamUndrscr::False,
                     &ColumnParamUndrscr::False,
-                    &IsNeedToAddOprtrUndrscr::True,
+                    &AddOprtrUndrscr::True,
                     &quote! {
                         match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
