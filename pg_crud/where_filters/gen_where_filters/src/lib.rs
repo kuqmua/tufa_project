@@ -11,7 +11,7 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, Import, IncrParamUnderscore, IsNeedToAddOprtrUnderscore, IsQbMutable,
+    ColumnParamUndrscr, Import, IncrParamUndrscr, IsNeedToAddOprtrUndrscr, IsQbMutable,
     PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType, gen_impl_dflt_opt_some_vec_one_el_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
@@ -191,8 +191,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         |filter_type: &FilterType,
          generic: &Generic,
          ident: &dyn ToTokens,
-         incr_param_underscore: &IncrParamUnderscore,
-         is_need_to_add_oprtr_underscore: &IsNeedToAddOprtrUnderscore,
+         incr_param_undrscr: &IncrParamUndrscr,
+         is_need_to_add_oprtr_undrscr: &IsNeedToAddOprtrUndrscr,
          qp_ts: &dyn ToTokens,
          is_qb_mutable: &IsQbMutable,
          qb_ts: &dyn ToTokens| {
@@ -226,9 +226,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     Generic::False => &proc_macro2_ts_new,
                     Generic::True { .. } => &t_annotation_generic_ts,
                 },
-                incr_param_underscore,
-                &ColumnParamUnderscore::False,
-                is_need_to_add_oprtr_underscore,
+                incr_param_undrscr,
+                &ColumnParamUndrscr::False,
+                is_need_to_add_oprtr_undrscr,
                 &qp_ts,
                 is_qb_mutable,
                 &qb_ts,
@@ -430,7 +430,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 generic,
                 struct_extra_fields_ts,
                 impl_dflt_opt_some_vec_one_el_extra_fields_ts,
-                incr_param_underscore,
+                incr_param_undrscr,
                 qp_ts,
                 is_qb_mutable,
                 qb_ts,
@@ -459,7 +459,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             generic_true_type_encode.clone(),
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                            IncrParamUnderscore::False,
+                            IncrParamUndrscr::False,
                             {
                                 let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
                                 quote! {
@@ -504,7 +504,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #pub_v_between_t_ts
                         },
                         gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         {
                             let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} {{}})",
@@ -549,7 +549,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #pub_v_pg_type_not_empty_unique_vec_t_ts
                         },
                         gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         {
                             let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} in ({{}}))",
@@ -610,7 +610,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         generic_false.clone(),
                         add_regex_case_and_v_decl_ts(&mb_dims_decl_ts),
                         add_regex_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         gen_ts_dbf9de6b(
                             &format!("{{}}({{}}{} {{}} ${{}})", pg_type_kind.format_argument()),
                             &mb_dims_ies_init_ts,
@@ -636,7 +636,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         generic_true_type_encode.clone(),
                         gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
                         gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         {
                             let format_ts = dq_ts(&format!(
                                 "{{}}({{}}{} < ${{}})",
@@ -675,11 +675,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_decl_ts,
                         mb_dims_dflt_init_ts,
                         match &pg_type_ptrn {
-                            PgTypePtrn::Stdrt => IncrParamUnderscore::True,
+                            PgTypePtrn::Stdrt => IncrParamUndrscr::True,
                             PgTypePtrn::ArrDim1
                             | PgTypePtrn::ArrDim2
                             | PgTypePtrn::ArrDim3
-                            | PgTypePtrn::ArrDim4 => IncrParamUnderscore::False,
+                            | PgTypePtrn::ArrDim4 => IncrParamUndrscr::False,
                         },
                         {
                             let format_ts = dq_ts(&format!(
@@ -744,7 +744,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             encode_format: #PgCrudCommonDfltOptSomeVecOneElCall,
                             encoded_string_representation: #CoreDefault
                         },
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         {
                             let format_ts = dq_ts(&format!(
                                 "{{}}(encode({{}}{}, '{{}}') = ${{}})",
@@ -792,7 +792,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         generic_false.clone(),
                         pub_v_not_zero_unsigned_part_of_i32_decl_ts.clone(),
                         v_dflt_opt_some_vec_one_el_ts.clone(),
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         {
                             let format_ts =
                                 dq_ts(&format!("{{}}(arr_length({{}}, 1) {oprtr} ${{}})"));
@@ -907,7 +907,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #pub_v_not_zero_unsigned_part_of_i32_decl_ts
                         },
                         gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                        IncrParamUnderscore::False,
+                        IncrParamUndrscr::False,
                         {
                             let format_ts = dq_ts(&format!(
                                 "{{}}(upper({{}}{}) - lower({{}}{}) = ${{}})",
@@ -980,7 +980,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                            IncrParamUnderscore::False,
+                            IncrParamUndrscr::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
                             is_qb_mutable_true,
                             gen_ts_eeee6e79(&mb_dims_qb_ts),
@@ -1003,7 +1003,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             },
                             gen_mb_dims_decl_pub_v_t_ts(&mb_dims_decl_ts),
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
-                            IncrParamUnderscore::False,
+                            IncrParamUndrscr::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
                             is_qb_mutable_true,
                             gen_ts_eeee6e79(&mb_dims_qb_ts),
@@ -1131,8 +1131,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &FilterType::PgType,
                 &generic,
                 &ident,
-                &incr_param_underscore,
-                &IsNeedToAddOprtrUnderscore::False,
+                &incr_param_undrscr,
+                &IsNeedToAddOprtrUndrscr::False,
                 &qp_ts,
                 &is_qb_mutable,
                 &qb_ts,
@@ -1797,8 +1797,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &FilterType::PgJsonType,
                 &generic,
                 &ident,
-                &IncrParamUnderscore::False,
-                &IsNeedToAddOprtrUnderscore::False,
+                &IncrParamUndrscr::False,
+                &IsNeedToAddOprtrUndrscr::False,
                 &qp_ts,
                 &is_qb_mutable,
                 &qb_ts,

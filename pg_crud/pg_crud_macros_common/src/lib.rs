@@ -344,11 +344,11 @@ impl ToTokens for IsQbMutable {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IncrParamUnderscore {
+pub enum IncrParamUndrscr {
     False,
     True,
 }
-impl ToTokens for IncrParamUnderscore {
+impl ToTokens for IncrParamUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrSc.to_tokens(tokens),
@@ -357,11 +357,11 @@ impl ToTokens for IncrParamUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum ColumnParamUnderscore {
+pub enum ColumnParamUndrscr {
     False,
     True,
 }
-impl ToTokens for ColumnParamUnderscore {
+impl ToTokens for ColumnParamUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => ColumnSc.to_tokens(tokens),
@@ -370,11 +370,11 @@ impl ToTokens for ColumnParamUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsNeedToAddOprtrUnderscore {
+pub enum IsNeedToAddOprtrUndrscr {
     False,
     True,
 }
-impl ToTokens for IsNeedToAddOprtrUnderscore {
+impl ToTokens for IsNeedToAddOprtrUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IsNeedToAddOprtrSc.to_tokens(tokens),
@@ -397,11 +397,11 @@ impl ReadOrUpdate {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsPkUnderscore {
+pub enum IsPkUndrscr {
     False,
     True,
 }
-impl ToTokens for IsPkUnderscore {
+impl ToTokens for IsPkUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IsPkSc.to_tokens(tokens),
@@ -488,11 +488,11 @@ impl From<&Dim> for DimIndexNbr {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum CreateQpValueUnderscore {
+pub enum CreateQpValueUndrscr {
     False,
     True,
 }
-impl ToTokens for CreateQpValueUnderscore {
+impl ToTokens for CreateQpValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -501,11 +501,11 @@ impl ToTokens for CreateQpValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum CreateQpIncrUnderscore {
+pub enum CreateQpIncrUndrscr {
     False,
     True,
 }
-impl ToTokens for CreateQpIncrUnderscore {
+impl ToTokens for CreateQpIncrUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrSc.to_tokens(tokens),
@@ -514,11 +514,11 @@ impl ToTokens for CreateQpIncrUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum CreateQbValueUnderscore {
+pub enum CreateQbValueUndrscr {
     False,
     True,
 }
-impl ToTokens for CreateQbValueUnderscore {
+impl ToTokens for CreateQbValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -527,11 +527,11 @@ impl ToTokens for CreateQbValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum SelectQpValueUnderscore {
+pub enum SelectQpValueUndrscr {
     False,
     True,
 }
-impl ToTokens for SelectQpValueUnderscore {
+impl ToTokens for SelectQpValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -540,11 +540,11 @@ impl ToTokens for SelectQpValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQpValueUnderscore {
+pub enum UpdateQpValueUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpValueUnderscore {
+impl ToTokens for UpdateQpValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -553,11 +553,11 @@ impl ToTokens for UpdateQpValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQpJsonbSetAccumulatorUnderscore {
+pub enum UpdateQpJsonbSetAccumulatorUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpJsonbSetAccumulatorUnderscore {
+impl ToTokens for UpdateQpJsonbSetAccumulatorUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_accumulator}.to_tokens(tokens),
@@ -566,11 +566,11 @@ impl ToTokens for UpdateQpJsonbSetAccumulatorUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQpJsonbSetTargetUnderscore {
+pub enum UpdateQpJsonbSetTargetUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpJsonbSetTargetUnderscore {
+impl ToTokens for UpdateQpJsonbSetTargetUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_target}.to_tokens(tokens),
@@ -579,11 +579,11 @@ impl ToTokens for UpdateQpJsonbSetTargetUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQpJsonbSetPathUnderscore {
+pub enum UpdateQpJsonbSetPathUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpJsonbSetPathUnderscore {
+impl ToTokens for UpdateQpJsonbSetPathUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_path}.to_tokens(tokens),
@@ -621,9 +621,9 @@ pub fn gen_pg_type_where_ts(
             &quote! {<'lt>},
             &ident,
             &Ts2::new(),
-            &IncrParamUnderscore::False,
-            &ColumnParamUnderscore::False,
-            &IsNeedToAddOprtrUnderscore::False,
+            &IncrParamUndrscr::False,
+            &ColumnParamUndrscr::False,
+            &IsNeedToAddOprtrUndrscr::False,
             &{
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
@@ -954,9 +954,9 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
-    incr_param_underscore: &IncrParamUnderscore,
-    column_param_underscore: &ColumnParamUnderscore,
-    is_need_to_add_oprtr_underscore: &IsNeedToAddOprtrUnderscore,
+    incr_param_undrscr: &IncrParamUndrscr,
+    column_param_undrscr: &ColumnParamUndrscr,
+    is_need_to_add_oprtr_undrscr: &IsNeedToAddOprtrUndrscr,
     qp_ts: &dyn ToTokens,
     is_qb_mutable: &IsQbMutable,
     qb_ts: &dyn ToTokens,
@@ -967,9 +967,9 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
         impl #impl_generic_ts #import ::#PgTypeWhereFilterUcc<'lt> for #ident_ts #ident_generic_ts {
             fn #QpSc(
                 &self,
-                #incr_param_underscore: &mut #U64,
-                #column_param_underscore: &dyn #StdFmtDisplay,
-                #is_need_to_add_oprtr_underscore: #Bool
+                #incr_param_undrscr: &mut #U64,
+                #column_param_undrscr: &dyn #StdFmtDisplay,
+                #is_need_to_add_oprtr_undrscr: #Bool
             ) -> Result<#StringTs, #import::#QpErUcc> {
                 #qp_ts
             }
@@ -1026,17 +1026,17 @@ pub fn gen_impl_pg_type_ts(
     import: &Import,
     ident: &dyn ToTokens,
     ident_table_type_ucc: &dyn ToTokens,
-    is_pk_underscore: &IsPkUnderscore,
+    is_pk_undrscr: &IsPkUndrscr,
     create_table_column_qp_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
-    create_qp_v_underscore: &CreateQpValueUnderscore,
-    create_qp_incr_underscore: &CreateQpIncrUnderscore,
+    create_qp_v_undrscr: &CreateQpValueUndrscr,
+    create_qp_incr_undrscr: &CreateQpIncrUndrscr,
     create_qp_ts: &dyn ToTokens,
-    create_qb_v_underscore: &CreateQbValueUnderscore,
+    create_qb_v_undrscr: &CreateQbValueUndrscr,
     is_create_qb_mutable: &IsCreateQbMutable,
     create_qb_ts: &dyn ToTokens,
     ident_select_ucc: &dyn ToTokens,
-    select_qp_v_underscore: &SelectQpValueUnderscore,
+    select_qp_v_undrscr: &SelectQpValueUndrscr,
     select_qp_ts: &dyn ToTokens,
     ident_where_ucc: &dyn ToTokens,
     ident_read_ucc: &dyn ToTokens,
@@ -1047,10 +1047,10 @@ pub fn gen_impl_pg_type_ts(
     into_inner_ts: &dyn ToTokens,
     ident_update_ucc: &dyn ToTokens,
     ident_update_for_query_ucc: &dyn ToTokens,
-    update_qp_v_underscore: &UpdateQpValueUnderscore,
-    update_qp_jsonb_set_accumulator_underscore: &UpdateQpJsonbSetAccumulatorUnderscore,
-    update_qp_jsonb_set_target_underscore: &UpdateQpJsonbSetTargetUnderscore,
-    update_qp_jsonb_set_path_underscore: &UpdateQpJsonbSetPathUnderscore,
+    update_qp_v_undrscr: &UpdateQpValueUndrscr,
+    update_qp_jsonb_set_accumulator_undrscr: &UpdateQpJsonbSetAccumulatorUndrscr,
+    update_qp_jsonb_set_target_undrscr: &UpdateQpJsonbSetTargetUndrscr,
+    update_qp_jsonb_set_path_undrscr: &UpdateQpJsonbSetPathUndrscr,
     update_qp_ts: &dyn ToTokens,
     is_update_qb_mutable: &IsUpdateQbMutable,
     update_qb_ts: &dyn ToTokens,
@@ -1064,18 +1064,18 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySourceItemOrdering
         impl #import :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
-            fn #CreateTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_underscore: #Bool) -> impl #StdFmtDisplay {
+            fn #CreateTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
                 #create_table_column_qp_ts
             }
             type #CreateUcc = #ident_create_ucc;
             fn #CreateQpSc(
-                #create_qp_v_underscore: &Self::#CreateUcc,
-                #create_qp_incr_underscore: &mut #U64
+                #create_qp_v_undrscr: &Self::#CreateUcc,
+                #create_qp_incr_undrscr: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #create_qp_ts
             }
             fn #CreateQbSc(
-                #create_qb_v_underscore: Self::#CreateUcc,
+                #create_qb_v_undrscr: Self::#CreateUcc,
                 #is_create_qb_mutable #QuerySc: #query_pg_arguments_ts
             ) -> Result<
                 #query_pg_arguments_ts,
@@ -1085,7 +1085,7 @@ pub fn gen_impl_pg_type_ts(
             }
             type #SelectUcc = #ident_select_ucc;
             fn #SelectQpSc(
-                #select_qp_v_underscore: &Self::#SelectUcc,
+                #select_qp_v_undrscr: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #select_qp_ts
@@ -1108,10 +1108,10 @@ pub fn gen_impl_pg_type_ts(
             type #UpdateUcc = #ident_update_ucc;
             type #UpdateForQueryUcc = #ident_update_for_query_ucc;
             fn #UpdateQpSc(
-                #update_qp_v_underscore: &Self::#UpdateForQueryUcc,
-                #update_qp_jsonb_set_accumulator_underscore: #RefStr,
-                #update_qp_jsonb_set_target_underscore: #RefStr,
-                #update_qp_jsonb_set_path_underscore: #RefStr,
+                #update_qp_v_undrscr: &Self::#UpdateForQueryUcc,
+                #update_qp_jsonb_set_accumulator_undrscr: #RefStr,
+                #update_qp_jsonb_set_target_undrscr: #RefStr,
+                #update_qp_jsonb_set_path_undrscr: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #update_qp_ts
@@ -2052,21 +2052,21 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     len: usize,
     gen_type_ts: &dyn Fn(&Ident, &Type) -> Ts2,
 ) -> Ts2 {
-    fn gen_underscore_underscore_field_i_str(i: usize) -> String {
+    fn gen_undrscr_undrscr_field_i_str(i: usize) -> String {
         format!("f{i}")
     }
-    fn gen_underscore_underscore_field_i_ts(i: usize) -> Ts2 {
-        gen_underscore_underscore_field_i_str(i)
+    fn gen_undrscr_undrscr_field_i_ts(i: usize) -> Ts2 {
+        gen_undrscr_undrscr_field_i_str(i)
             .parse::<Ts2>()
             .expect("ff7433a3")
     }
-    fn gen_underscore_underscore_field_i_handle_ts(i: usize) -> Ts2 {
-        format!("{}_handle", gen_underscore_underscore_field_i_str(i))
+    fn gen_undrscr_undrscr_field_i_handle_ts(i: usize) -> Ts2 {
+        format!("{}_handle", gen_undrscr_undrscr_field_i_str(i))
             .parse::<Ts2>()
             .expect("09a0c518")
     }
     fn gen_fi_dq_serde_private_ok_field_ts(field_name_dq_ts: &dyn ToTokens, i: usize) -> Ts2 {
-        let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+        let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
         quote! {#field_name_dq_ts => Ok(__Field::#field_i_ts)}
     }
     let vec_ident = vec_ident_type
@@ -2082,7 +2082,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let visit_u64_v_enum_vrts_ts = {
         let visit_u64_v_enum_vrts_ts = (0..len).map(|i| {
             let i_u64_ts = format!("{i}u64").parse::<Ts2>().expect("828ff7b4");
-            let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+            let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
             quote! {#i_u64_ts => Ok(__Field::#field_i_ts)}
         });
         quote! {#(#visit_u64_v_enum_vrts_ts),*}
@@ -2106,7 +2106,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_init_ts = {
         let ts = vec_ident_type.iter().enumerate().map(|(i, (el_ident, el_type))| {
-            let field_i_handle_ts = gen_underscore_underscore_field_i_handle_ts(i);
+            let field_i_handle_ts = gen_undrscr_undrscr_field_i_handle_ts(i);
             let type_ts = gen_type_ts(el_ident, el_type);
             let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} els"));
             quote! {
@@ -2118,7 +2118,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         quote! {#(#ts)*}
     };
     let match_try_new_in_deserialize_ts = gen_match_try_new_in_deserialize_ts(&ident, &{
-        let fields_ts = (0..len).map(gen_underscore_underscore_field_i_handle_ts);
+        let fields_ts = (0..len).map(gen_undrscr_undrscr_field_i_handle_ts);
         quote! {#(#fields_ts),*}
     });
     let visit_map_fields_init_ts = {
@@ -2127,7 +2127,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
             .enumerate()
             .map(|(i, (el_ident, el_type))| {
                 let type_ts = gen_type_ts(el_ident, el_type);
-                let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+                let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
                 quote! {
                     let mut #field_i_ts: Option<#type_ts> = None;
                 }
@@ -2138,7 +2138,7 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         {
             let visit_map_match_vrts_ts = vec_ident_type.iter().enumerate().map(
                 |(i, (el_ident, el_type))| {
-                    let field_i_ts = gen_underscore_underscore_field_i_ts(i);
+                    let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
                     let fi_dq_ts = dq_ts(&el_ident);
                     let type_ts = gen_type_ts(el_ident, el_type);
                     quote! {
@@ -2159,8 +2159,8 @@ pub fn gen_impl_serde_deserialize_for_struct_ts(
         };
     let visit_map_missing_fields_check_ts = {
         let ts = vec_ident.iter().enumerate().map(|(i, el)| {
-            let field_i_ts = gen_underscore_underscore_field_i_ts(i);
-            let field_i_handle_ts = gen_underscore_underscore_field_i_handle_ts(i);
+            let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
+            let field_i_handle_ts = gen_undrscr_undrscr_field_i_handle_ts(i);
             let fi_dq_ts = dq_ts(&el);
             quote! {
                 let #field_i_handle_ts = match #field_i_ts {

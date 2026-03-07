@@ -129,8 +129,8 @@ pub fn optimal_pack(input_ts: Ts) -> Ts {
         .all(|p| matches!(p, GenericParam::Lifetime(_)));
     let (impl_ts, ty_ts) = if has_only_lifetimes && !generics.params.is_empty() {
         let lifetimes_count = generics.params.len();
-        let underscores = repeat_n(quote! {'_}, lifetimes_count);
-        let new_ty_generics = quote! {<#(#underscores),*>};
+        let undrscrs = repeat_n(quote! {'_}, lifetimes_count);
+        let new_ty_generics = quote! {<#(#undrscrs),*>};
         (quote! {}, new_ty_generics)
     } else {
         (quote! { #impl_generics }, quote! { #ty_generics })

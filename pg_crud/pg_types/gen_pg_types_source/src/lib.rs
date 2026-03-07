@@ -33,14 +33,13 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, CreateQbValueUnderscore, CreateQpIncrUnderscore,
-    CreateQpValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOprtrHandle, Import, IncrParamUnderscore, IsCreateQbMutable, IsNeedToAddOprtrUnderscore,
-    IsNullable, IsPkUnderscore, IsQbMutable, IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull,
-    IsUpdateQbMutable, PgFilter, PgTypeFilter, ReadOrUpdate, SelectQpValueUnderscore,
-    ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    UpdateQpJsonbSetAccumulatorUnderscore, UpdateQpJsonbSetPathUnderscore,
-    UpdateQpJsonbSetTargetUnderscore, UpdateQpValueUnderscore,
+    ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr, CreateQpValueUndrscr,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrHandle, Import,
+    IncrParamUndrscr, IsCreateQbMutable, IsNeedToAddOprtrUndrscr, IsNullable, IsPkUndrscr,
+    IsQbMutable, IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull, IsUpdateQbMutable, PgFilter,
+    PgTypeFilter, ReadOrUpdate, SelectQpValueUndrscr, ShouldDeriveSchemarsJsonSchema,
+    ShouldDeriveUtoipaToSchema, UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr,
+    UpdateQpJsonbSetTargetUndrscr, UpdateQpValueUndrscr,
     gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
@@ -2208,7 +2207,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     let field_visitor_ts = quote! {__FieldVisitor};
-                    let type_v_equal_underscore_field_semicolon_ts = quote! {type Value = __Field;};
+                    let type_v_equal_undrscr_field_semicolon_ts = quote! {type Value = __Field;};
                     let (
                         impl_serde_de_visitor_for_field_visitor_ts_5a4f24ce,
                         impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33,
@@ -2231,42 +2230,42 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         (
                             gen_ts(&quote! {
-                                #type_v_equal_underscore_field_semicolon_ts
+                                #type_v_equal_undrscr_field_semicolon_ts
                                 #fn_expecting_fi_ts
                                 #fn_visit_u64_four_ts
                                 #fn_visit_str_v_hour_min_sec_micro_ts
                                 #fn_visit_bytes_hour_min_sec_micro_ts
                             }),
                             gen_ts(&quote! {
-                                #type_v_equal_underscore_field_semicolon_ts
+                                #type_v_equal_undrscr_field_semicolon_ts
                                 #fn_expecting_fi_ts
                                 #fn_visit_u64_two_ts
                                 #fn_visit_str_v_start_end_ts
                                 #fn_visit_bytes_start_end_ts
                             }),
                             gen_ts(&quote! {
-                                #type_v_equal_underscore_field_semicolon_ts
+                                #type_v_equal_undrscr_field_semicolon_ts
                                 #fn_expecting_fi_ts
                                 #fn_visit_u64_four_ts
                                 #fn_visit_str_v_hour_minute_second_microsecond_ts
                                 #fn_visit_bytes_hour_minute_second_microsecond_ts
                             }),
                             gen_ts(&quote! {
-                                #type_v_equal_underscore_field_semicolon_ts
+                                #type_v_equal_undrscr_field_semicolon_ts
                                 #fn_expecting_fi_ts
                                 #fn_visit_u64_two_ts
                                 #fn_visit_str_v_date_time_ts
                                 #fn_visit_bytes_date_time_ts
                             }),
                             gen_ts(&quote! {
-                                #type_v_equal_underscore_field_semicolon_ts
+                                #type_v_equal_undrscr_field_semicolon_ts
                                 #fn_expecting_fi_ts
                                 #fn_visit_u64_two_ts
                                 #fn_visit_str_v_date_naive_time_ts
                                 #fn_visit_bytes_date_naive_time_ts
                             }),
                             gen_ts(&quote! {
-                                #type_v_equal_underscore_field_semicolon_ts
+                                #type_v_equal_undrscr_field_semicolon_ts
                                 #fn_expecting_fi_ts
                                 #fn_visit_u64_three_ts
                                 #fn_visit_str_v_months_days_microseconds_ts
@@ -4746,9 +4745,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &quote! {<'lt>},
                     &ident_stdrt_not_null_read_ucc,
                     &Ts2::new(),
-                    &IncrParamUnderscore::False,
-                    &ColumnParamUnderscore::False,
-                    &IsNeedToAddOprtrUnderscore::True,
+                    &IncrParamUndrscr::False,
+                    &ColumnParamUndrscr::False,
+                    &IsNeedToAddOprtrUndrscr::True,
                     &quote! {
                         match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
@@ -4924,8 +4923,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &ident,
                 &ident_table_type_ucc,
                 &match &can_be_pk {
-                    CanBePk::False => IsPkUnderscore::True,
-                    CanBePk::True => IsPkUnderscore::False,
+                    CanBePk::False => IsPkUndrscr::True,
+                    CanBePk::True => IsPkUndrscr::False,
                 },
                 &{
                     let pg_query_type = match &pg_type {
@@ -4998,15 +4997,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 },
                 &ident_create_ucc,
-                &CreateQpValueUnderscore::True,
+                &CreateQpValueUndrscr::True,
                 &match &can_be_pk {
-                    CanBePk::False => CreateQpIncrUnderscore::False,
-                    CanBePk::True => CreateQpIncrUnderscore::True,
+                    CanBePk::False => CreateQpIncrUndrscr::False,
+                    CanBePk::True => CreateQpIncrUndrscr::True,
                 },
                 &qp_create_ts,
                 &match &can_be_pk {
-                    CanBePk::False => CreateQbValueUnderscore::False,
-                    CanBePk::True => CreateQbValueUnderscore::True,
+                    CanBePk::False => CreateQbValueUndrscr::False,
+                    CanBePk::True => CreateQbValueUndrscr::True,
                 },
                 &match &can_be_pk {
                     CanBePk::False => IsCreateQbMutable::True,
@@ -5015,8 +5014,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &bind_v_to_query_create_ts,
                 &ident_select_ucc,
                 &match &el.pg_type_pattern {
-                    PgTypePattern::Stdrt => SelectQpValueUnderscore::True,
-                    PgTypePattern::ArrDim1 { .. } => SelectQpValueUnderscore::False,
+                    PgTypePattern::Stdrt => SelectQpValueUndrscr::True,
+                    PgTypePattern::ArrDim1 { .. } => SelectQpValueUndrscr::False,
                 },
                 &{
                     let ts = match &pg_type_pattern {
@@ -5367,10 +5366,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
-                &UpdateQpValueUnderscore::True,
-                &UpdateQpJsonbSetAccumulatorUnderscore::True,
-                &UpdateQpJsonbSetTargetUnderscore::True,
-                &UpdateQpJsonbSetPathUnderscore::True,
+                &UpdateQpValueUndrscr::True,
+                &UpdateQpJsonbSetAccumulatorUndrscr::True,
+                &UpdateQpJsonbSetTargetUndrscr::True,
+                &UpdateQpJsonbSetPathUndrscr::True,
                 &typical_qp_ts,
                 &IsUpdateQbMutable::True,
                 &typical_qb_ts,

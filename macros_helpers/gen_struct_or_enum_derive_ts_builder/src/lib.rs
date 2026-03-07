@@ -22,12 +22,12 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
         .map(|el| {
             let sc = {
                 let mut result = String::with_capacity(el.len());
-                let mut prev_is_underscore = false;
+                let mut prev_is_undrscr = false;
                 let mut prev_is_lowercase = false;
                 for el0 in el.chars() {
                     if el0.is_alphabetic() {
                         if el0.is_uppercase() {
-                            if prev_is_lowercase && !prev_is_underscore {
+                            if prev_is_lowercase && !prev_is_undrscr {
                                 result.push('_');
                             }
                             for el1 in el0.to_lowercase() {
@@ -38,11 +38,11 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
                             result.push(el0);
                             prev_is_lowercase = true;
                         }
-                        prev_is_underscore = false;
+                        prev_is_undrscr = false;
                     } else {
-                        if !prev_is_underscore && !result.is_empty() {
+                        if !prev_is_undrscr && !result.is_empty() {
                             result.push('_');
-                            prev_is_underscore = true;
+                            prev_is_undrscr = true;
                         }
                         prev_is_lowercase = false;
                     }

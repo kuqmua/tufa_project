@@ -62,8 +62,8 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, Dim, EqualOrEqualUsingFields, Import, IncrParamUnderscore,
-    IsNeedToAddOprtrUnderscore, IsQbMutable, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
+    ColumnParamUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrParamUndrscr,
+    IsNeedToAddOprtrUndrscr, IsQbMutable, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts, gen_v_init_ts,
@@ -1229,9 +1229,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {<'lt>},
                 &opt_ident_where_many_ucc,
                 &Ts2::new(),
-                &IncrParamUnderscore::False,
-                &ColumnParamUnderscore::True,
-                &IsNeedToAddOprtrUnderscore::True,
+                &IncrParamUndrscr::False,
+                &ColumnParamUndrscr::True,
+                &IsNeedToAddOprtrUndrscr::True,
                 &{
                     let extra_params_modification_ts = fields.iter().enumerate().map(|(i, el)| {
                         let fi = &el.ident;
@@ -1625,7 +1625,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let impl_sqlx_row_for_ident_read_only_ids_ts = {
-            let undescore_underscore_row = quote! {__row};
+            let undescore_undrscr_row = quote! {__row};
             let where_fts_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
                 let ft = &el.type0;
                 let el_syn_field_ty_as_pg_type_read_only_ids_ts =
@@ -1640,7 +1640,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let fi_dq_ts = dq_ts(&pk_fi);
                 let ts = gen_match_ok_err_ts_c35d87fd(
                     &quote! {sqlx::Row::try_get::<#el_syn_field_ty_as_pg_type_read_only_ids_ts, &str>(
-                        #undescore_underscore_row,
+                        #undescore_undrscr_row,
                         #fi_dq_ts
                     )},
                     &quote! {v_283179dd},
@@ -1663,7 +1663,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let #fi = sqlx::Row::try_get::<
                             #el_syn_field_ty_as_pg_type_read_only_ids_ts,
                             &str
-                        >(#undescore_underscore_row, #fi_dq_ts).ok();
+                        >(#undescore_undrscr_row, #fi_dq_ts).ok();
                     }
                 });
             let self_fields_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
@@ -1676,7 +1676,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &'lt ::std::primitive::str: ::sqlx::ColumnIndex<R>,
                     #where_fts_ts
                 {
-                    fn from_row(#undescore_underscore_row: &'lt R) -> ::sqlx::Result<Self> {
+                    fn from_row(#undescore_undrscr_row: &'lt R) -> ::sqlx::Result<Self> {
                         #pk_ts
                         #fields_init_ts
                         Ok(Self { #self_fields_ts })
@@ -3939,7 +3939,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ident_ro_payload_ucc = gen_ident_op_payload_ucc(&Op::Ro);
         let ident_uo_params_ucc = gen_ident_op_params_ucc(&Op::Uo);
         let config_path_ts = quote! {server_config::Config};
-        let underscore_unused_ts = quote! {_unused};
+        let undrscr_unused_ts = quote! {_unused};
         //todo mb remove it?\
         let gen_some_pg_type_where_try_new_ts = |oprtr_ts: &dyn ToTokens, ts: &dyn ToTokens| {
             quote! {
@@ -6097,7 +6097,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let #PgPoolForTokioSpawnSyncMoveSc = #PgPoolSc.clone();
                         let table_names_cloned = table_names.iter().map(|el_26b304d1| (*el_26b304d1).to_owned()).collect::<Vec<String>>();
                         let (started_tx, started_rx) = tokio::sync::oneshot::channel();
-                        let #underscore_unused_ts = tokio::spawn(async move {
+                        let #undrscr_unused_ts = tokio::spawn(async move {
                             let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc)).await.expect("663ae29e");
                             let #AppStateSc = std::sync::Arc::new(server_app_state::ServerAppState {
                                 #PgPoolSc: #PgPoolForTokioSpawnSyncMoveSc.clone(),

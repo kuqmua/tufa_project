@@ -47,14 +47,14 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, CreateQbValueUnderscore, CreateQpIncrUnderscore,
-    CreateQpValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import,
-    IncrParamUnderscore, IsCreateQbMutable, IsNeedToAddOprtrUnderscore, IsNullable, IsPkUnderscore,
-    IsQbMutable, IsSelectOnlyCreatedIdsQbMutable, IsSelectOnlyUpdatedIdsQbMutable,
+    ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr, CreateQpValueUndrscr,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrParamUndrscr,
+    IsCreateQbMutable, IsNeedToAddOprtrUndrscr, IsNullable, IsPkUndrscr, IsQbMutable,
+    IsSelectOnlyCreatedIdsQbMutable, IsSelectOnlyUpdatedIdsQbMutable,
     IsSelectQpColumnFieldForErMessageUsed, IsSelectQpIsPgTypeUsed, IsSelectQpSelfSelectUsed,
     IsUpdateQbMutable, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed, PgTypeOrPgJsonType,
-    SelectQpValueUnderscore, UpdateQpJsonbSetAccumulatorUnderscore, UpdateQpJsonbSetPathUnderscore,
-    UpdateQpJsonbSetTargetUnderscore, UpdateQpValueUnderscore,
+    SelectQpValueUndrscr, UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr,
+    UpdateQpJsonbSetTargetUndrscr, UpdateQpValueUndrscr,
     gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts,
@@ -1676,9 +1676,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &quote! {<'lt>},
                         &ident_ts_e0f20014,
                         &Ts2::new(),
-                        &IncrParamUnderscore::False,
-                        &ColumnParamUnderscore::False,
-                        &IsNeedToAddOprtrUnderscore::False,
+                        &IncrParamUndrscr::False,
+                        &ColumnParamUndrscr::False,
+                        &IsNeedToAddOprtrUndrscr::False,
                         &qp_ts,
                         &is_qb_mutable,
                         &qb_ts,
@@ -4611,7 +4611,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &Import::PgCrud,
                 &ident,
                 &ident_table_type_ucc,
-                &IsPkUnderscore::True,
+                &IsPkUndrscr::True,
                 &{
                     let format_ts = dq_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                     quote! {
@@ -4619,15 +4619,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 },
                 &ident_create_ucc,
-                &CreateQpValueUnderscore::True,
-                &CreateQpIncrUnderscore::False,
+                &CreateQpValueUndrscr::True,
+                &CreateQpIncrUndrscr::False,
                 &quote!{
                     match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                         Ok(v_7df9eb00) => Ok(format!("${v_7df9eb00}")),
                         Err(#ErSc) => Err(#ErSc)
                     }
                 },
-                &CreateQbValueUnderscore::False,
+                &CreateQbValueUndrscr::False,
                 &IsCreateQbMutable::True,
                 &quote!{
                     if let Err(#ErSc) = #QuerySc.try_bind(
@@ -4638,7 +4638,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Ok(#QuerySc)
                 },
                 &ident_select_ucc,
-                &SelectQpValueUnderscore::False,
+                &SelectQpValueUndrscr::False,
                 &quote! {
                     match #VSc.#SelectQpPgTypeSc(#ColumnSc) {
                         Ok(v_d91c19a6) => Ok(format!("{v_d91c19a6} as {column}")),
@@ -4659,10 +4659,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 &quote!{#self_as_pg_json_type_ts::into_inner(#VSc)},
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
-                &UpdateQpValueUnderscore::False,
-                &UpdateQpJsonbSetAccumulatorUnderscore::False,
-                &UpdateQpJsonbSetTargetUnderscore::False,
-                &UpdateQpJsonbSetPathUnderscore::False,
+                &UpdateQpValueUndrscr::False,
+                &UpdateQpJsonbSetAccumulatorUndrscr::False,
+                &UpdateQpJsonbSetTargetUndrscr::False,
+                &UpdateQpJsonbSetPathUndrscr::False,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => quote!{#self_as_pg_json_type_ts::#UpdateQpSc(
