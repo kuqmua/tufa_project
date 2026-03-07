@@ -2720,6 +2720,26 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &query_part_syn_vrt_wrapper,
                     Location::caller(),
                 );
+                let gen_match_ok_err_ts_dd5366af = |
+                    ts0: &dyn ToTokens,
+                    ts1: &dyn ToTokens,
+                    ts2: &dyn ToTokens,
+                    ts3: &dyn ToTokens
+                |gen_match_ok_err_ts(
+                    &ts0,
+                    &ts1,
+                    &ts2,
+                    &ts3,
+                    &quote!{{#ts_fa8795ea}}
+                );
+                let gen_match_ok_err_ts_85a5eace = |
+                    ts0: &dyn ToTokens,
+                    ts1: &dyn ToTokens,
+                |gen_match_ok_err_ts_c35d87fd(
+                    &ts0,
+                    &ts1,
+                    &quote!{{#ts_fa8795ea}}
+                );
                 let write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts = {
                     let query_part_er_write_into_buffer_ts =
                         gen_query_part_er_write_into_buffer_ts(import);
@@ -2739,7 +2759,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     acc
                 });
                 let select_only_ids_query_part_ts = {
-                    let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| gen_match_ok_err_ts(
+                    let select_only_ids_query_part_init_ts = fields.iter().map(|el: &SynFieldWrapper| gen_match_ok_err_ts_dd5366af(
                         &{
                             let fi_dq_ts = dq_ts(&el.ident);
                             let ft_as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
@@ -2749,8 +2769,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote!{{
                             acc_a35168d8.push_str(&v_aa341baf);
                         }},
-                        &Er0,
-                        &quote!{{#ts_fa8795ea}}
+                        &Er0
                     ));
                     let ts0 = gen_acc_string_pop_ts(
                         &quote!{acc_a35168d8},
@@ -2776,14 +2795,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ts0 = gen_acc_string_pop_ts(
                             &quote!{acc_8a58994e},
                             &{
-                                let ts = gen_match_ok_err_ts(
+                                let ts = gen_match_ok_err_ts_dd5366af(
                                     &quote!{el_1651705d.#CreateQueryPartSc(&mut #IncrSc)},
                                     &quote!{v_f4fdd10d},
                                     &quote!{{
                                         #if_write_is_err_ts
                                     }},
                                     &Er0,
-                                    &quote!{{#ts_fa8795ea}}
                                 );
                                 quote!{
                                     for el_1651705d in &#ParamsSc.#PayloadSc.0 {
@@ -2804,10 +2822,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         )}
                     }
                     Operation::CreateOne => {
-                        let ts = gen_match_ok_err_ts_c35d87fd(
+                        let ts = gen_match_ok_err_ts_85a5eace(
                             &quote!{#ParamsSc.#PayloadSc.#CreateQueryPartSc(&mut 0)},
                             &quote!{v_3267d57d},
-                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {
                             #import_ts gen_create_one_query_string(
@@ -2859,7 +2876,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 ),
                                 gen_if_write_is_err_curly_braces_ts_f9cf9cf2(
                                     &{
-                                        let ts = gen_match_ok_err_ts_c35d87fd(
+                                        let ts = gen_match_ok_err_ts_85a5eace(
                                             &quote!{#pg_crud_pg_type_where_filter_query_part_ts(
                                                 &#ParamsSc.#PayloadSc.pagination,
                                                 &mut #IncrSc,
@@ -2867,7 +2884,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 bool::default()
                                             )},
                                             &quote!{v_742be6cf},
-                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         quote! {
                                             #ExtraParamsSc,
@@ -2894,7 +2910,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::ReadOne => {
                         let select_query_part_params_payload_select_ts =
                             gen_select_query_part_params_payload_select_ts(operation);
-                        let ts = gen_match_ok_err_ts_c35d87fd(
+                        let ts = gen_match_ok_err_ts_85a5eace(
                             &quote!{#pg_crud_pg_type_where_filter_query_part_ts(
                                 &#ParamsSc.#PayloadSc.#pk_fi,
                                 &mut 0,
@@ -2902,7 +2918,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 false
                             )},
                             &quote!{v_be9e7b7d},
-                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {#import_ts gen_read_one_query_string(
                             #TableSc,
@@ -2925,15 +2940,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &quote!{v_3ea04126},
                                     &quote!{&el_defbc401.#fi},
                                     &{
-                                        let ts0 = gen_match_ok_err_ts_c35d87fd(
+                                        let ts0 = gen_match_ok_err_ts_85a5eace(
                                             &quote!{el_defbc401.#UpdateQueryPartPkSc(&mut #IncrSc)},
                                             &quote!{v_00890100},
-                                            &quote!{{#ts_fa8795ea}}
                                         );
-                                        let ts1 = gen_match_ok_err_ts_c35d87fd(
+                                        let ts1 = gen_match_ok_err_ts_85a5eace(
                                             &quote!{#ident_update_for_query_ucc::#update_query_part_fi_sc(v_3ea04126, &mut #IncrSc)},
                                             &quote!{v_8797585c},
-                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         quote!{
                                             acc_8ad06c8c.push_str(&#import_ts #gen_when_column_id_then_v_update_many_query_part_sc(
@@ -2993,14 +3006,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             }
                         );
-                        let ts2 = gen_match_ok_err_ts(
+                        let ts2 = gen_match_ok_err_ts_dd5366af(
                             &quote!{el_bcf0dde4.select_only_updated_ids_query_part(&mut #IncrSc)},
                             &quote!{v_4f536654},
                             &quote!{{
                                 acc_fd44b0aa.push_str(&v_4f536654);
                             }},
                             &Er0,
-                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {
                             {
@@ -3042,10 +3054,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &quote!{v_2d144436},
                                     &quote!{&#UpdateForQuerySc.#fi},
                                     &{
-                                        let ts = gen_match_ok_err_ts_c35d87fd(
+                                        let ts = gen_match_ok_err_ts_85a5eace(
                                             &quote!{#ident_update_for_query_ucc::#update_query_part_fi_sc(v_2d144436, &mut #IncrSc)},
                                             &quote!{v_1ec12051},
-                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         quote!{
                                             acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_update_one_query_part_sc(
@@ -3063,10 +3074,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{acc_683e37b8},
                             &extra_params_modification_ts
                         );
-                        let ts = gen_match_ok_err_ts_c35d87fd(
+                        let ts = gen_match_ok_err_ts_85a5eace(
                             &quote!{#UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc)},
                             &quote!{v_7f0d86a1},
-                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {
                             {
