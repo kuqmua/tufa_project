@@ -202,7 +202,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["begin"],
     ["acc"],
     ["query"],
-    ["update"],
+    ["upd"],
     ["set"],
     ["insert"],
     ["values"],
@@ -318,11 +318,11 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["gen", "pg", "json", "type", "to", "read", "er"],
     ["opt", "to", "read"],
-    ["opt", "to", "update"],
+    ["opt", "to", "upd"],
     ["id"],
     ["to", "create"],
     ["reader"],
-    ["field", "to", "update"],
+    ["field", "to", "upd"],
     ["json", "arr", "el", "change"],
     ["not", "unique", "id"],
     ["std", "vec", "vec", "generic"],
@@ -332,13 +332,11 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["field", "vec"],
     ["object", "acc"],
     ["std", "opt", "opt", "object", "acc"],
-    [
-        "create", "update", "delete", "check", "fields", "are", "empty"
-    ],
-    ["not", "unique", "id", "in", "json", "update", "arr"],
+    ["create", "upd", "delete", "check", "fields", "are", "empty"],
+    ["not", "unique", "id", "in", "json", "upd", "arr"],
     ["not", "unique", "id", "in", "json", "delete", "arr"],
     [
-        "not", "unique", "id", "in", "json", "update", "and", "delete", "arrs"
+        "not", "unique", "id", "in", "json", "upd", "and", "delete", "arrs"
     ],
     ["fields", "are", "empty"],
     ["wrap", "into", "jsonb", "build", "object"],
@@ -349,9 +347,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["gen", "not", "unique", "field"],
     ["all", "fields", "are", "none"],
     ["self"],
-    [
-        "opt", "to", "update", "try", "gen", "pg", "json", "type", "er"
-    ],
+    ["opt", "to", "upd", "try", "gen", "pg", "json", "type", "er"],
     ["create", "qp"],
     ["create", "qb"],
     ["select", "qp"],
@@ -404,8 +400,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["true"],
     ["false"],
     ["null"],
-    ["update", "qp"],
-    ["update", "qb"],
+    ["upd", "qp"],
+    ["upd", "qb"],
     ["qp"],
     ["qb"],
     ["crate"],
@@ -626,7 +622,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["no", "fields", "provided"],
     ["extra", "params"],
     ["gen", "select", "qp"],
-    ["update", "qp", "pk"],
+    ["upd", "qp", "pk"],
     ["gen", "column", "queals", "v", "comma", "uo", "qp"],
     ["pk", "qp"],
     ["columns"],
@@ -687,18 +683,18 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["select", "pk", "fi"],
     ["select", "qp", "pg", "type"],
     ["select", "qp", "pg", "json", "type"],
-    ["update", "qp", "pg", "type"],
-    ["update", "qp", "pg", "json", "type"],
-    ["update", "qb", "pg", "type"],
-    ["update", "qb", "pg", "json", "type"],
+    ["upd", "qp", "pg", "type"],
+    ["upd", "qp", "pg", "json", "type"],
+    ["upd", "qb", "pg", "type"],
+    ["upd", "qb", "pg", "json", "type"],
     ["read", "ids"],
     ["select", "only", "ids", "qp"],
     ["read", "ids", "from", "co"],
     ["some", "v", "read", "ids", "from", "co"],
-    ["select", "only", "updated", "ids", "qp"],
-    ["create", "update", "delete", "are", "empty"],
+    ["select", "only", "updd", "ids", "qp"],
+    ["create", "upd", "delete", "are", "empty"],
     ["uo", "params"],
-    ["update", "to", "read", "ids"],
+    ["upd", "to", "read", "ids"],
     ["self", "read", "ids", "handle"],
     ["read", "ids", "from", "cm"],
     ["common", "read", "ids", "from", "co"],
@@ -706,22 +702,18 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
     ["read", "ids", "to", "opt", "v", "read", "inner"],
     ["try", "bind"],
-    ["select", "only", "updated", "ids", "qb"],
+    ["select", "only", "updd", "ids", "qb"],
     ["create", "for", "query"],
-    [
-        "update", "new", "or", "try", "new", "unwraped", "for", "test"
-    ],
+    ["upd", "new", "or", "try", "new", "unwraped", "for", "test"],
     [
         "read", "ids", "to", "opt", "v", "read", "dflt", "opt", "some", "vec", "one", "el"
     ],
-    [
-        "read", "from", "previous", "read", "unwraped", "and", "update"
-    ],
-    ["opt", "update"],
+    ["read", "from", "previous", "read", "unwraped", "and", "upd"],
+    ["opt", "upd"],
     ["select", "only", "created", "ids", "qp"],
     ["select", "only", "created", "ids", "qb"],
-    ["update", "for", "query"],
-    ["update", "for", "query", "vec"],
+    ["upd", "for", "query"],
+    ["upd", "for", "query", "vec"],
     ["read", "inner", "vec", "vec"],
     ["create", "vec"],
     ["read", "ids", "and", "create", "into", "opt", "v", "read"],
@@ -742,11 +734,11 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "inner", "into", "read", "with", "new", "or", "try", "new", "unwraped"
     ],
     [
-        "read", "inner", "into", "update", "with", "new", "or", "try", "new", "unwraped"
+        "read", "inner", "into", "upd", "with", "new", "or", "try", "new", "unwraped"
     ],
     ["read", "ids", "to2", "dims", "vec", "of", "read", "inner"],
     ["read", "ids", "into", "opt", "v", "read", "inner"],
-    ["previous", "read", "and", "opt", "update", "into", "read"],
+    ["previous", "read", "and", "opt", "upd", "into", "read"],
     [
         "read", "ids", "and", "create", "into", "vec", "where", "equal", "using", "fields"
     ],
@@ -754,7 +746,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "equal", "oprtr"],
     ["read", "ids", "into", "table", "type"],
     ["read", "ids", "into", "read"],
-    ["read", "ids", "into", "update"],
+    ["read", "ids", "into", "upd"],
     ["read", "into", "table", "type"],
     [
         "read", "ids", "and", "create", "into", "where", "equal", "to", "json", "field"

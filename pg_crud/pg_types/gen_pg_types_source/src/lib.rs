@@ -15,16 +15,16 @@ use naming::{
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrSc,
     InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
     MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NearZeroSc,
-    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptUpdateSc, OptVecCreateSc, PgTypePkUcc,
+    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptUpdSc, OptVecCreateSc, PgTypePkUcc,
     PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc, ReadIdsAndCreateIntoReadSc,
-    ReadIdsIntoReadSc, ReadIdsIntoTableTypeSc, ReadIdsIntoUpdateSc, ReadIdsSc,
+    ReadIdsIntoReadSc, ReadIdsIntoTableTypeSc, ReadIdsIntoUpdSc, ReadIdsSc,
     ReadIdsTo2DimsVecReadInnerSc, ReadIdsUcc, ReadIntoTableTypeSc, ReadSc, ReadUcc, SecSc,
     SecondSc, SelfSc, SelfUcc, StartSc, StartUcc, TableTypeSc, TableTypeUcc, TimeSc, TimeUcc,
-    ToErrStringSc, TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdateUcc, VSc, VecOfUcc,
+    ToErrStringSc, TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdUcc, VSc, VecOfUcc,
     param::{
         SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
         SelfOriginUcc, SelfReadIdsUcc, SelfReadInnerUcc, SelfReadUcc, SelfSelectUcc,
-        SelfTableTypeUcc, SelfUpdateForQueryUcc, SelfUpdateUcc, SelfWhereUcc,
+        SelfTableTypeUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhereUcc,
     },
 };
 use optml::Optml;
@@ -34,10 +34,10 @@ use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
     CreateQpValueUndrscr, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
     EqualOprtrHandle, Import, IncrParamUndrscr, IsCreateQbMut, IsNullable, IsPkUndrscr, IsQbMut,
-    IsSelectOnlyUpdatedIdsQbMut, IsStdrtNotNull, IsUpdateQbMut, PgFilter, PgTypeFilter,
-    ReadOrUpdate, SelectQpValueUndrscr, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr, UpdateQpJsonbSetTargetUndrscr,
-    UpdateQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
+    IsSelectOnlyUpddIdsQbMut, IsStdrtNotNull, IsUpdQbMut, PgFilter, PgTypeFilter, ReadOrUpd,
+    SelectQpValueUndrscr, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
+    UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
@@ -2990,7 +2990,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_ident_ts
             }
         };
-        let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
+        let ident_upd_ucc = SelfUpdUcc::from_tokens(&ident);
         let ident_origin_ts = {
             let ident_origin_ts = DTsBuilder::new()
                 .make_pub()
@@ -4802,8 +4802,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_read_inner_ts = quote! {
             pub type #ident_read_inner_ucc = #ident_inner_type_ts;
         };
-        let ident_update_ts = {
-            let ident_update_ts = DTsBuilder::new()
+        let ident_upd_ts = {
+            let ident_upd_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_clone()
@@ -4812,24 +4812,24 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
-                    &ident_update_ucc,
+                    &ident_upd_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_ts
                 );
-            let impl_ident_update_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_update_ucc);
-            let impl_dflt_opt_some_vec_one_el_for_ident_update_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_update_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
-            let impl_location_lib_to_err_string_for_ident_update_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_update_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
+            let impl_ident_upd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_upd_ucc);
+            let impl_dflt_opt_some_vec_one_el_for_ident_upd_ts =
+                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_location_lib_to_err_string_for_ident_upd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
-                #ident_update_ts
-                #impl_ident_update_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_update_ts
-                #impl_location_lib_to_err_string_for_ident_update_ts
+                #ident_upd_ts
+                #impl_ident_upd_ts
+                #impl_dflt_opt_some_vec_one_el_for_ident_upd_ts
+                #impl_location_lib_to_err_string_for_ident_upd_ts
             }
         };
-        let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
-        let ident_update_for_query_ts = {
-            let ident_update_for_query_ts = DTsBuilder::new()
+        let ident_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident);
+        let ident_upd_for_query_ts = {
+            let ident_upd_for_query_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_clone()
@@ -4838,18 +4838,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
-                    &ident_update_for_query_ucc,
+                    &ident_upd_for_query_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_ts
                 );
-            let impl_sqlx_type_for_ident_update_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_update_for_query_ucc, &ident_origin_ucc);
-            let impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_update_for_query_ucc, &quote! {#SelfSc.0});
-            let impl_from_ident_update_for_ident_update_for_query_ts = gen_impl_from_ts(&ident_update_ucc, &ident_update_for_query_ucc, &quote! {Self(#VSc.0)});
+            let impl_sqlx_type_for_ident_upd_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_upd_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_encode_sqlx_pg_for_ident_upd_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_upd_for_query_ucc, &quote! {#SelfSc.0});
+            let impl_from_ident_upd_for_ident_upd_for_query_ts = gen_impl_from_ts(&ident_upd_ucc, &ident_upd_for_query_ucc, &quote! {Self(#VSc.0)});
             quote! {
-                #ident_update_for_query_ts
-                #impl_sqlx_type_for_ident_update_for_query_ts
-                #impl_sqlx_encode_sqlx_pg_for_ident_update_for_query_ts
-                #impl_from_ident_update_for_ident_update_for_query_ts
+                #ident_upd_for_query_ts
+                #impl_sqlx_type_for_ident_upd_for_query_ts
+                #impl_sqlx_encode_sqlx_pg_for_ident_upd_for_query_ts
+                #impl_from_ident_upd_for_ident_upd_for_query_ts
             }
         };
         let impl_pg_type_for_ident_ts = {
@@ -4908,7 +4908,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => (&ok_string_from_uuid_generate_v4_ts, &ok_query_ts),
                 }
             };
-            let select_only_ids_and_select_only_updated_ids_query_common_ts = {
+            let select_only_ids_and_select_only_updd_ids_query_common_ts = {
                 let format_ts = dq_ts(&{
                     let column_comma = "{column},";
                     if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) { column_comma.to_owned() } else { format!("'{{{{\\\"v\\\": null}}}}'::jsonb as {column_comma}") }
@@ -5281,7 +5281,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 } else {
                     quote! {#import_non_pk_pg_type_read_ids_ts}
                 },
-                &select_only_ids_and_select_only_updated_ids_query_common_ts,
+                &select_only_ids_and_select_only_updd_ids_query_common_ts,
                 &ident_read_inner_ucc,
                 &{
                     let gen_ident_stdrt_not_null_into_inner_ident_stdrt_not_null_read_ts = |ts: &dyn ToTokens| {
@@ -5361,17 +5361,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                     }
                 },
-                &ident_update_ucc,
-                &ident_update_for_query_ucc,
-                &UpdateQpValueUndrscr::True,
-                &UpdateQpJsonbSetAccumulatorUndrscr::True,
-                &UpdateQpJsonbSetTargetUndrscr::True,
-                &UpdateQpJsonbSetPathUndrscr::True,
+                &ident_upd_ucc,
+                &ident_upd_for_query_ucc,
+                &UpdQpValueUndrscr::True,
+                &UpdQpJsonbSetAccumulatorUndrscr::True,
+                &UpdQpJsonbSetTargetUndrscr::True,
+                &UpdQpJsonbSetPathUndrscr::True,
                 &typical_qp_ts,
-                &IsUpdateQbMut::True,
+                &IsUpdQbMut::True,
                 &typical_qb_ts,
-                &select_only_ids_and_select_only_updated_ids_query_common_ts,
-                &IsSelectOnlyUpdatedIdsQbMut::False,
+                &select_only_ids_and_select_only_updd_ids_query_common_ts,
+                &IsSelectOnlyUpddIdsQbMut::False,
                 &quote! {Ok(#QuerySc)},
             )
         };
@@ -5380,8 +5380,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 False,
                 True,
             }
-            let gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts = |read_or_update: &ReadOrUpdate| {
-                let read_or_update_ucc = read_or_update.ucc();
+            let gen_read_or_read_inner_into_upd_with_new_or_try_new_unwraped_ts = |read_or_upd: &ReadOrUpd| {
+                let read_or_upd_ucc = read_or_upd.ucc();
                 let ts = if pg_type_init_try_new_try_from_pg_type.is_ok() {
                     quote! {#TryNewSc(#VSc).expect("69477d2f")}
                 } else {
@@ -5389,7 +5389,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {<#SelfUcc::#PgTypeUcc
                     as
-                #import::#PgTypeUcc>::#read_or_update_ucc:: #ts}
+                #import::#PgTypeUcc>::#read_or_upd_ucc:: #ts}
             };
             let gen_stdrt_not_null_test_case_handle_ts = |is_need_to_use_into: &IsNeedToUseInto| {
                 let gen_range_read_ids_to_2_dims_vec_read_inner_ts =
@@ -6126,9 +6126,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     },
                 }
             };
-            let read_inner_into_read_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Read);
-            let read_inner_into_update_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_update_with_new_or_try_new_unwraped_ts(&ReadOrUpdate::Update);
-            let update_to_read_ids_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
+            let read_inner_into_read_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_upd_with_new_or_try_new_unwraped_ts(&ReadOrUpd::Read);
+            let read_inner_into_upd_with_new_or_try_new_unwraped_ts = gen_read_or_read_inner_into_upd_with_new_or_try_new_unwraped_ts(&ReadOrUpd::Upd);
+            let upd_to_read_ids_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
                 quote! {
                     #ident_read_ids_ucc(#ident_read_ucc(#VSc.0 #mb_dot_clone_ts))//todo its not correct. must be only for pk but it for all types what van be pk
                 }
@@ -6150,8 +6150,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 });
                 quote! {Some(#ts)}
             };
-            let previous_read_and_opt_update_into_read_ts = quote! {
-                #OptUpdateSc.map_or(#ReadSc, |#VSc| #ident_read_ucc(#VSc.0))
+            let previous_read_and_opt_upd_into_read_ts = quote! {
+                #OptUpdSc.map_or(#ReadSc, |#VSc| #ident_read_ucc(#VSc.0))
             };
             let read_ids_and_create_into_read_ts = {
                 let ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
@@ -6575,10 +6575,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &opt_vec_create_ts,
                 &read_ids_to_2_dims_vec_read_inner_ts,
                 &read_inner_into_read_with_new_or_try_new_unwraped_ts,
-                &read_inner_into_update_with_new_or_try_new_unwraped_ts,
-                &update_to_read_ids_ts,
+                &read_inner_into_upd_with_new_or_try_new_unwraped_ts,
+                &upd_to_read_ids_ts,
                 &read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
-                &previous_read_and_opt_update_into_read_ts,
+                &previous_read_and_opt_upd_into_read_ts,
                 &read_ids_and_create_into_read_ts,
                 &read_ids_and_create_into_opt_v_read_ts,
                 &read_ids_and_create_into_table_type_ts,
@@ -6615,8 +6615,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     fn #ReadIdsIntoReadSc(#v_as_read_ids_ts) -> #self_as_pg_type_ts::#ReadUcc {
                         #VSc.0
                     }
-                    fn #ReadIdsIntoUpdateSc(#v_as_read_ids_ts) -> #self_as_pg_type_ts::#UpdateUcc {
-                        #ident_update_ucc(#VSc.0.0)
+                    fn #ReadIdsIntoUpdSc(#v_as_read_ids_ts) -> #self_as_pg_type_ts::#UpdUcc {
+                        #ident_upd_ucc(#VSc.0.0)
                     }
                     fn #ReadIntoTableTypeSc(
                         #VSc: #self_as_pg_type_ts::#ReadUcc
@@ -6643,8 +6643,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             #ident_read_ts
             #ident_read_ids_ts
             #ident_read_inner_ts
-            #ident_update_ts
-            #ident_update_for_query_ts
+            #ident_upd_ts
+            #ident_upd_for_query_ts
             #impl_pg_type_for_ident_ts
             #impl_pg_type_test_cases_for_ident_ts
             #mb_impl_pg_type_pk_for_ident_stdrt_not_null_if_can_be_pk_ts

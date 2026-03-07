@@ -11,10 +11,10 @@ use naming::{
     CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc,
     DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc, DisplayPlusToTokens, EqualOprtrUcc,
     FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc,
-    NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc,
+    NormalizeSc, OptUcc, OptUpdSc, OptVecCreateSc, PgJsonTypeTestCasesUcc, PgJsonTypeUcc,
     PgTypeEqualOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc,
-    PgTypeUcc, PgTypeWhereFilterUcc, PreviousReadAndOptUpdateIntoReadSc, QbSc, QpErUcc, QpSc,
-    QuerySc, ReadIdsAndCreateIntoOptVReadSc, ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc,
+    PgTypeUcc, PgTypeWhereFilterUcc, PreviousReadAndOptUpdIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc,
+    ReadIdsAndCreateIntoOptVReadSc, ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadIdsAndCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
     ReadIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
@@ -29,11 +29,11 @@ use naming::{
     ReadIdsAndCreateIntoVecWhereEqualUsingFieldsSc, ReadIdsAndCreateIntoWhereEqualSc,
     ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadIdsIntoOptVReadInnerSc, ReadIdsSc,
     ReadIdsTo2DimsVecReadInnerSc, ReadIdsToOptVReadDfltOptSomeVecOneElSc, ReadIdsUcc,
-    ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
+    ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdWithNewOrTryNewUnwrapedSc,
     ReadInnerUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc,
-    SelectOnlyIdsQpSc, SelectOnlyUpdatedIdsQbSc, SelectOnlyUpdatedIdsQpSc, SelectQpSc, SelectUcc,
-    SelfUcc, TableTypeSc, TableTypeUcc, UpdateForQueryUcc, UpdateQbSc, UpdateQpSc,
-    UpdateToReadIdsSc, UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
+    SelectOnlyIdsQpSc, SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc, SelectQpSc, SelectUcc,
+    SelfUcc, TableTypeSc, TableTypeUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc, UpdToReadIdsSc, UpdUcc,
+    VSc, VUcc, ValueSc, WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optml::Optml;
@@ -262,11 +262,11 @@ impl ToTokens for IsSelectQpIsPgTypeUsed {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsUpdateQpSelfUpdateUsed {
+pub enum IsUpdQpSelfUpdUsed {
     False,
     True,
 }
-impl ToTokens for IsUpdateQpSelfUpdateUsed {
+impl ToTokens for IsUpdQpSelfUpdUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -275,11 +275,11 @@ impl ToTokens for IsUpdateQpSelfUpdateUsed {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsUpdateQpJsonbSetTargetUsed {
+pub enum IsUpdQpJsonbSetTargetUsed {
     False,
     True,
 }
-impl ToTokens for IsUpdateQpJsonbSetTargetUsed {
+impl ToTokens for IsUpdQpJsonbSetTargetUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -288,11 +288,11 @@ impl ToTokens for IsUpdateQpJsonbSetTargetUsed {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsUpdateQbMut {
+pub enum IsUpdQbMut {
     False,
     True,
 }
-impl ToTokens for IsUpdateQbMut {
+impl ToTokens for IsUpdQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -301,11 +301,11 @@ impl ToTokens for IsUpdateQbMut {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectOnlyUpdatedIdsQbMut {
+pub enum IsSelectOnlyUpddIdsQbMut {
     False,
     True,
 }
-impl ToTokens for IsSelectOnlyUpdatedIdsQbMut {
+impl ToTokens for IsSelectOnlyUpddIdsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -379,16 +379,16 @@ impl ToTokens for AddOprtrUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum ReadOrUpdate {
+pub enum ReadOrUpd {
     Read,
-    Update,
+    Upd,
 }
-impl ReadOrUpdate {
+impl ReadOrUpd {
     #[must_use]
     pub fn ucc(&self) -> &dyn DisplayPlusToTokens {
         match &self {
             Self::Read => &ReadUcc,
-            Self::Update => &UpdateUcc,
+            Self::Upd => &UpdUcc,
         }
     }
 }
@@ -528,11 +528,11 @@ impl ToTokens for SelectQpValueUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdateQpValueUndrscr {
+pub enum UpdQpValueUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpValueUndrscr {
+impl ToTokens for UpdQpValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -541,11 +541,11 @@ impl ToTokens for UpdateQpValueUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdateQpJsonbSetAccumulatorUndrscr {
+pub enum UpdQpJsonbSetAccumulatorUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpJsonbSetAccumulatorUndrscr {
+impl ToTokens for UpdQpJsonbSetAccumulatorUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_accumulator}.to_tokens(tokens),
@@ -554,11 +554,11 @@ impl ToTokens for UpdateQpJsonbSetAccumulatorUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdateQpJsonbSetTargetUndrscr {
+pub enum UpdQpJsonbSetTargetUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpJsonbSetTargetUndrscr {
+impl ToTokens for UpdQpJsonbSetTargetUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_target}.to_tokens(tokens),
@@ -567,11 +567,11 @@ impl ToTokens for UpdateQpJsonbSetTargetUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdateQpJsonbSetPathUndrscr {
+pub enum UpdQpJsonbSetPathUndrscr {
     False,
     True,
 }
-impl ToTokens for UpdateQpJsonbSetPathUndrscr {
+impl ToTokens for UpdQpJsonbSetPathUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_path}.to_tokens(tokens),
@@ -720,16 +720,16 @@ pub fn gen_impl_pg_json_type_ts(
     select_only_ids_qp_ts: &dyn ToTokens,
     read_inner_type_ts: &dyn ToTokens,
     into_inner_ts: &dyn ToTokens,
-    update_type_ts: &dyn ToTokens,
-    update_type_for_query_ts: &dyn ToTokens,
-    update_qp_ts: &dyn ToTokens,
-    is_update_qp_self_update_used: &IsUpdateQpSelfUpdateUsed,
-    is_update_qp_jsonb_set_target_used: &IsUpdateQpJsonbSetTargetUsed,
-    is_update_qb_mut: &IsUpdateQbMut,
-    update_qb_ts: &dyn ToTokens,
-    select_only_updated_ids_qp_ts: &dyn ToTokens,
-    is_select_only_updated_ids_qb_mut: &IsSelectOnlyUpdatedIdsQbMut,
-    select_only_updated_ids_qb_ts: &dyn ToTokens,
+    upd_type_ts: &dyn ToTokens,
+    upd_type_for_query_ts: &dyn ToTokens,
+    upd_qp_ts: &dyn ToTokens,
+    is_upd_qp_self_upd_used: &IsUpdQpSelfUpdUsed,
+    is_upd_qp_jsonb_set_target_used: &IsUpdQpJsonbSetTargetUsed,
+    is_upd_qb_mut: &IsUpdQbMut,
+    upd_qb_ts: &dyn ToTokens,
+    select_only_updd_ids_qp_ts: &dyn ToTokens,
+    is_select_only_updd_ids_qb_mut: &IsSelectOnlyUpddIdsQbMut,
+    select_only_updd_ids_qb_ts: &dyn ToTokens,
     select_only_created_ids_qp_ts: &dyn ToTokens,
     is_select_only_created_ids_qb_mut: &IsSelectOnlyCreatedIdsQbMut,
     select_only_created_ids_qb_ts: &dyn ToTokens,
@@ -769,36 +769,36 @@ pub fn gen_impl_pg_json_type_ts(
             fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
                 #into_inner_ts
             }
-            type #UpdateUcc = #update_type_ts;
-            type #UpdateForQueryUcc = #update_type_for_query_ts;
-            fn #UpdateQpSc(
-                #is_update_qp_self_update_used: &Self::#UpdateForQueryUcc,
+            type #UpdUcc = #upd_type_ts;
+            type #UpdForQueryUcc = #upd_type_for_query_ts;
+            fn #UpdQpSc(
+                #is_upd_qp_self_upd_used: &Self::#UpdForQueryUcc,
                 #JsonbSetAccumulatorSc: #RefStr,
-                #is_update_qp_jsonb_set_target_used: #RefStr,
+                #is_upd_qp_jsonb_set_target_used: #RefStr,
                 #JsonbSetPathSc: #RefStr,
                 #IncrSc: #reference_mut_u64_ts,
             ) -> Result<#StringTs, #path_ts #QpErUcc> {
-                #update_qp_ts
+                #upd_qp_ts
             }
-            fn #UpdateQbSc(
-                #VSc: Self::#UpdateForQueryUcc,
-                #is_update_qb_mut #QuerySc: #query_pg_args_ts
+            fn #UpdQbSc(
+                #VSc: Self::#UpdForQueryUcc,
+                #is_upd_qb_mut #QuerySc: #query_pg_args_ts
             ) -> Result<#query_pg_args_ts, #StringTs> {
-                #update_qb_ts
+                #upd_qb_ts
             }
-            fn #SelectOnlyUpdatedIdsQpSc(
-                #VSc: &Self::#UpdateForQueryUcc,
+            fn #SelectOnlyUpddIdsQpSc(
+                #VSc: &Self::#UpdForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_updated_ids_qp_ts
+                #select_only_updd_ids_qp_ts
             }
-            fn #SelectOnlyUpdatedIdsQbSc<'lt>(
-                #VSc: &'lt Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+            fn #SelectOnlyUpddIdsQbSc<'lt>(
+                #VSc: &'lt Self::#UpdForQueryUcc,
+                #is_select_only_updd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
             ) -> Result<#query_lt_pg_args_ts, #StringTs> {
-                #select_only_updated_ids_qb_ts
+                #select_only_updd_ids_qb_ts
             }
             fn #SelectOnlyCreatedIdsQpSc(
                 #VSc: &Self::#CreateForQueryUcc,
@@ -1030,18 +1030,18 @@ pub fn gen_impl_pg_type_ts(
     select_only_ids_qp_ts: &dyn ToTokens,
     ident_read_inner_ucc: &dyn ToTokens,
     into_inner_ts: &dyn ToTokens,
-    ident_update_ucc: &dyn ToTokens,
-    ident_update_for_query_ucc: &dyn ToTokens,
-    update_qp_v_undrscr: &UpdateQpValueUndrscr,
-    update_qp_jsonb_set_accumulator_undrscr: &UpdateQpJsonbSetAccumulatorUndrscr,
-    update_qp_jsonb_set_target_undrscr: &UpdateQpJsonbSetTargetUndrscr,
-    update_qp_jsonb_set_path_undrscr: &UpdateQpJsonbSetPathUndrscr,
-    update_qp_ts: &dyn ToTokens,
-    is_update_qb_mut: &IsUpdateQbMut,
-    update_qb_ts: &dyn ToTokens,
-    select_only_updated_ids_qp_ts: &dyn ToTokens,
-    is_select_only_updated_ids_qb_mut: &IsSelectOnlyUpdatedIdsQbMut,
-    select_only_updated_ids_qb_ts: &dyn ToTokens,
+    ident_upd_ucc: &dyn ToTokens,
+    ident_upd_for_query_ucc: &dyn ToTokens,
+    upd_qp_v_undrscr: &UpdQpValueUndrscr,
+    upd_qp_jsonb_set_accumulator_undrscr: &UpdQpJsonbSetAccumulatorUndrscr,
+    upd_qp_jsonb_set_target_undrscr: &UpdQpJsonbSetTargetUndrscr,
+    upd_qp_jsonb_set_path_undrscr: &UpdQpJsonbSetPathUndrscr,
+    upd_qp_ts: &dyn ToTokens,
+    is_upd_qb_mut: &IsUpdQbMut,
+    upd_qb_ts: &dyn ToTokens,
+    select_only_updd_ids_qp_ts: &dyn ToTokens,
+    is_select_only_updd_ids_qb_mut: &IsSelectOnlyUpddIdsQbMut,
+    select_only_updd_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
     let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
@@ -1090,38 +1090,38 @@ pub fn gen_impl_pg_type_ts(
             fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
                 #into_inner_ts
             }
-            type #UpdateUcc = #ident_update_ucc;
-            type #UpdateForQueryUcc = #ident_update_for_query_ucc;
-            fn #UpdateQpSc(
-                #update_qp_v_undrscr: &Self::#UpdateForQueryUcc,
-                #update_qp_jsonb_set_accumulator_undrscr: #RefStr,
-                #update_qp_jsonb_set_target_undrscr: #RefStr,
-                #update_qp_jsonb_set_path_undrscr: #RefStr,
+            type #UpdUcc = #ident_upd_ucc;
+            type #UpdForQueryUcc = #ident_upd_for_query_ucc;
+            fn #UpdQpSc(
+                #upd_qp_v_undrscr: &Self::#UpdForQueryUcc,
+                #upd_qp_jsonb_set_accumulator_undrscr: #RefStr,
+                #upd_qp_jsonb_set_target_undrscr: #RefStr,
+                #upd_qp_jsonb_set_path_undrscr: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #update_qp_ts
+                #upd_qp_ts
             }
-            fn #UpdateQbSc(
-                #VSc: Self::#UpdateForQueryUcc,
-                #is_update_qb_mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+            fn #UpdQbSc(
+                #VSc: Self::#UpdForQueryUcc,
+                #is_upd_qb_mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<
                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
-                #update_qb_ts
+                #upd_qb_ts
             }
-            fn #SelectOnlyUpdatedIdsQpSc(
-                #VSc: &Self::#UpdateForQueryUcc,
+            fn #SelectOnlyUpddIdsQpSc(
+                #VSc: &Self::#UpdForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrSc: &mut #U64,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_updated_ids_qp_ts
+                #select_only_updd_ids_qp_ts
             }
-            fn #SelectOnlyUpdatedIdsQbSc<'lt>(
-                #VSc: &'lt Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_qb_mut #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
+            fn #SelectOnlyUpddIdsQbSc<'lt>(
+                #VSc: &'lt Self::#UpdForQueryUcc,
+                #is_select_only_updd_ids_qb_mut #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
-                #select_only_updated_ids_qb_ts
+                #select_only_updd_ids_qb_ts
             }
         }
     }
@@ -1195,21 +1195,21 @@ fn gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
         }
     }
 }
-fn gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
+fn gen_read_inner_into_upd_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc(#VSc: #type_ts) -> #path_ts::#UpdateUcc {
+        fn #ReadInnerIntoUpdWithNewOrTryNewUnwrapedSc(#VSc: #type_ts) -> #path_ts::#UpdUcc {
             #ts
         }
     }
 }
-fn gen_update_to_read_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_upd_to_read_ids_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #UpdateToReadIdsSc(
-            #VSc: &#path_ts::#UpdateUcc
+        fn #UpdToReadIdsSc(
+            #VSc: &#path_ts::#UpdUcc
         ) -> #path_ts::#ReadIdsUcc {
             #ts
         }
@@ -1228,11 +1228,11 @@ fn gen_read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts(
         }
     }
 }
-fn gen_previous_read_and_opt_update_into_read_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_previous_read_and_opt_upd_into_read_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #PreviousReadAndOptUpdateIntoReadSc(
+        fn #PreviousReadAndOptUpdIntoReadSc(
             #ReadSc: #path_ts::#ReadUcc,
-            #OptUpdateSc: Option<#path_ts::#UpdateUcc>,
+            #OptUpdSc: Option<#path_ts::#UpdUcc>,
         ) -> #path_ts::#ReadUcc {
             #ts
         }
@@ -1531,10 +1531,10 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     opt_vec_create_ts: &dyn ToTokens,
     read_ids_to_2_dims_vec_read_inner_ts: &dyn ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    update_to_read_ids_ts: &dyn ToTokens,
+    read_inner_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
+    upd_to_read_ids_ts: &dyn ToTokens,
     read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
-    previous_read_and_opt_update_into_read_ts: &dyn ToTokens,
+    previous_read_and_opt_upd_into_read_ts: &dyn ToTokens,
     read_ids_and_create_into_read_ts: &dyn ToTokens,
     read_ids_and_create_into_opt_v_read_ts: &dyn ToTokens,
     read_ids_and_create_into_table_type_ts: &dyn ToTokens,
@@ -1574,24 +1574,24 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_ts,
             &read_inner_into_read_with_new_or_try_new_unwraped_ts,
         );
-    let read_inner_into_update_with_new_or_try_new_unwraped_ts_c38e6621 =
-        gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
+    let read_inner_into_upd_with_new_or_try_new_unwraped_ts_c38e6621 =
+        gen_read_inner_into_upd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_type_as_pg_type_ts,
-            &read_inner_into_update_with_new_or_try_new_unwraped_ts,
+            &read_inner_into_upd_with_new_or_try_new_unwraped_ts,
         );
-    let update_to_read_ids_ts_ee17b828 =
-        gen_update_to_read_ids_ts(&self_pg_type_as_pg_type_ts, &update_to_read_ids_ts);
+    let upd_to_read_ids_ts_ee17b828 =
+        gen_upd_to_read_ids_ts(&self_pg_type_as_pg_type_ts, &upd_to_read_ids_ts);
     let read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_18ef45e8 =
         gen_read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
         );
-    let previous_read_and_opt_update_into_read_ts_c48b8ede =
-        gen_previous_read_and_opt_update_into_read_ts(
+    let previous_read_and_opt_upd_into_read_ts_c48b8ede =
+        gen_previous_read_and_opt_upd_into_read_ts(
             &self_pg_type_as_pg_type_ts,
-            &previous_read_and_opt_update_into_read_ts,
+            &previous_read_and_opt_upd_into_read_ts,
         );
     let read_ids_and_create_into_read_ts_df48e4b7 = gen_read_ids_and_create_into_read_ts(
         &self_pg_type_as_pg_type_ts,
@@ -1719,10 +1719,10 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #opt_vec_create_ts_2d58042f
             #read_ids_to_2_dims_vec_read_inner_ts_513b8046
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_affc58f5
-            #read_inner_into_update_with_new_or_try_new_unwraped_ts_c38e6621
-            #update_to_read_ids_ts_ee17b828
+            #read_inner_into_upd_with_new_or_try_new_unwraped_ts_c38e6621
+            #upd_to_read_ids_ts_ee17b828
             #read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_18ef45e8
-            #previous_read_and_opt_update_into_read_ts_c48b8ede
+            #previous_read_and_opt_upd_into_read_ts_c48b8ede
             #read_ids_and_create_into_read_ts_df48e4b7
             #read_ids_and_create_into_opt_v_read_ts_8b7e9688
             #read_ids_and_create_into_table_type_ts_f227db63
@@ -1773,11 +1773,11 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     opt_vec_create_ts: &dyn ToTokens,
     read_ids_to_2_dims_vec_read_inner_ts: &dyn ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_inner_into_update_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
+    read_inner_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_ids_into_opt_v_read_inner_ts: &dyn ToTokens,
-    update_to_read_ids_ts: &dyn ToTokens,
+    upd_to_read_ids_ts: &dyn ToTokens,
     read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
-    previous_read_and_opt_update_into_read_ts: &dyn ToTokens,
+    previous_read_and_opt_upd_into_read_ts: &dyn ToTokens,
     read_ids_and_create_into_read_ts: &dyn ToTokens,
     read_ids_and_create_into_opt_v_read_ts: &dyn ToTokens,
     read_ids_and_create_into_table_type_ts: &dyn ToTokens,
@@ -1818,26 +1818,24 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             &self_pg_json_type_as_pg_json_type_ts,
             &read_inner_into_read_with_new_or_try_new_unwraped_ts,
         );
-    let read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72 =
-        gen_read_inner_into_update_with_new_or_try_new_unwraped_ts(
+    let read_inner_into_upd_with_new_or_try_new_unwraped_ts_b45cde72 =
+        gen_read_inner_into_upd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_inner_into_update_with_new_or_try_new_unwraped_ts,
+            &read_inner_into_upd_with_new_or_try_new_unwraped_ts,
         );
-    let update_to_read_ids_ts_d7e0cbf0 = gen_update_to_read_ids_ts(
-        &self_pg_json_type_as_pg_json_type_ts,
-        &update_to_read_ids_ts,
-    );
+    let upd_to_read_ids_ts_d7e0cbf0 =
+        gen_upd_to_read_ids_ts(&self_pg_json_type_as_pg_json_type_ts, &upd_to_read_ids_ts);
     let read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_f5d1b395 =
         gen_read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts(
             *import,
             &self_pg_json_type_as_pg_json_type_ts,
             &read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
         );
-    let previous_read_and_opt_update_into_read_ts_ab0384b9 =
-        gen_previous_read_and_opt_update_into_read_ts(
+    let previous_read_and_opt_upd_into_read_ts_ab0384b9 =
+        gen_previous_read_and_opt_upd_into_read_ts(
             &self_pg_json_type_as_pg_json_type_ts,
-            &previous_read_and_opt_update_into_read_ts,
+            &previous_read_and_opt_upd_into_read_ts,
         );
     let read_ids_and_create_into_read_ts_7df2fa10 = gen_read_ids_and_create_into_read_ts(
         &self_pg_json_type_as_pg_json_type_ts,
@@ -1961,15 +1959,15 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             #opt_vec_create_ts_a442630a
             #read_ids_to_2_dims_vec_read_inner_ts_da1a7cf8
             #read_inner_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
-            #read_inner_into_update_with_new_or_try_new_unwraped_ts_b45cde72
+            #read_inner_into_upd_with_new_or_try_new_unwraped_ts_b45cde72
             fn #ReadIdsIntoOptVReadInnerSc(
                 #VSc: #self_pg_json_type_as_pg_json_type_ts::#ReadIdsUcc
             ) -> Option<#import::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
                 #read_ids_into_opt_v_read_inner_ts
             }
-            #update_to_read_ids_ts_d7e0cbf0
+            #upd_to_read_ids_ts_d7e0cbf0
             #read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_f5d1b395
-            #previous_read_and_opt_update_into_read_ts_ab0384b9
+            #previous_read_and_opt_upd_into_read_ts_ab0384b9
             #read_ids_and_create_into_read_ts_7df2fa10
             #read_ids_and_create_into_opt_v_read_ts_1f54e2bf
             #read_ids_and_create_into_table_type_ts_b605767e

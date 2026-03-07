@@ -14,7 +14,7 @@ pub struct DataEl {
     pub media: Option<String>,
     pub published: Option<String>,
     pub title: Option<String>,
-    pub updated: Option<String>,
+    pub updd: Option<String>,
 }
 #[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Optml)]
 pub struct DataElAuthor {

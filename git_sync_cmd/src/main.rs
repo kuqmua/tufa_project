@@ -47,11 +47,11 @@ fn main() {
             .expect("33aafc5b");
         println!("git checkout . {path}");
         let _unused1 = Command::new("git")
-            .args(["submodule", "update", "--init", "--recursive"])
+            .args(["submodule", "upd", "--init", "--recursive"])
             .current_dir(&path)
             .output()
             .expect("763e5b36");
-        println!("git submodule update --init --recursive {path}");
+        println!("git submodule upd --init --recursive {path}");
         let _unused2 = Command::new("git")
             .args(["pull"])
             .current_dir(&path)
