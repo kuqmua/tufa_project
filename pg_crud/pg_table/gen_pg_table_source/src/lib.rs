@@ -795,7 +795,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_op_er_init_eprintln_res_creation_ts =
+    let gen_op_er_init_eprintln_res_ts =
         |op: &Op, syn_vrt_wrapper: &SynVrtWrapper, location: &'static Location<'_>| {
             let ident_op_er_ucc = gen_ident_op_er_ucc(op);
             let ident_op_res_vrts_ucc = gen_ident_op_res_vrts_ucc(op);
@@ -924,11 +924,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &quote! {Self::#GenSelectQpSc(&#ParamsSc.#PayloadSc.#SelectSc)},
             &quote! {v_357219fb},
             &{
-                let ts = gen_op_er_init_eprintln_res_creation_ts(
-                    op,
-                    &qp_syn_vrt_wrapper,
-                    Location::caller(),
-                );
+                let ts =
+                    gen_op_er_init_eprintln_res_ts(op, &qp_syn_vrt_wrapper, Location::caller());
                 quote! {{#ts}}
             },
         )
@@ -1321,7 +1318,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             )},
             &quote! {v_d1627695},
             &{
-                let ts_b34ec240 = gen_op_er_init_eprintln_res_creation_ts(
+                let ts_b34ec240 = gen_op_er_init_eprintln_res_ts(
                     &Op::from(rm_or_dm),
                     &qp_syn_vrt_wrapper,
                     Location::caller(),
@@ -1332,14 +1329,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             },
         )
     };
-    let macros_helpers_location_location_field_attr_eo_to_err_string_serde =
+    let macros_helpers_location_field_attr_eo_to_err_string_serde =
         LocationFieldAttr::EoToErrStringSerde;
     let string_syn_punct = gen_simple_syn_punct(&["String"]);
     let try_bind_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &TryBindUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
-            macros_helpers_location_location_field_attr_eo_to_err_string_serde,
+            macros_helpers_location_field_attr_eo_to_err_string_serde,
             &TryBindSc,
             string_syn_punct.clone(),
         )],
@@ -1348,23 +1345,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         gen_match_qb_or_err_ts(
             &quote! {#import_ts PgTypeWhereFilter::qb(#ParamsSc.#PayloadSc.#WhereManySc, #QuerySc)},
             &quote! {v_03a58371},
-            &gen_op_er_init_eprintln_res_creation_ts(
-                op,
-                &try_bind_syn_vrt_wrapper,
-                Location::caller(),
-            ),
+            &gen_op_er_init_eprintln_res_ts(op, &try_bind_syn_vrt_wrapper, Location::caller()),
         )
     };
     let try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_sc =
         TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc::from_display(&ident);
     let simple_syn_punct_sqlx_error = gen_simple_syn_punct(&["sqlx", "Error"]);
-    let macros_helpers_location_location_field_attr_eo_to_err_string =
-        LocationFieldAttr::EoToErrString;
+    let macros_helpers_location_field_attr_eo_to_err_string = LocationFieldAttr::EoToErrString;
     let pg_syn_vrt_wrapper = new_syn_vrt_wrapper(
         &PgUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
-            macros_helpers_location_location_field_attr_eo_to_err_string,
+            macros_helpers_location_field_attr_eo_to_err_string,
             &PgSc,
             simple_syn_punct_sqlx_error.clone(),
         )],
@@ -1378,7 +1370,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )},
                 &quote! {v_90535a1d},
                 &{
-                    let ts_995d3d1d = gen_op_er_init_eprintln_res_creation_ts(
+                    let ts_995d3d1d = gen_op_er_init_eprintln_res_ts(
                         &Op::from(rm_or_ro),
                         &pg_syn_vrt_wrapper,
                         Location::caller(),
@@ -2000,11 +1992,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &quote! {#ts.#UpdateQpPkSc(&mut #IncrSc)},
             &quote! {v_f269a3b2},
             &{
-                let ts_75b4019b = gen_op_er_init_eprintln_res_creation_ts(
-                    op,
-                    &qp_syn_vrt_wrapper,
-                    Location::caller(),
-                );
+                let ts_75b4019b =
+                    gen_op_er_init_eprintln_res_ts(op, &qp_syn_vrt_wrapper, Location::caller());
                 quote! {{
                     #ts_75b4019b
                 }}
@@ -2016,12 +2005,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Some(StatusCode::InternalServerEr500),
         vec![
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &RowSc,
                 simple_syn_punct_sqlx_error.clone(),
             ),
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &RollbackSc,
                 simple_syn_punct_sqlx_error,
             ),
@@ -2037,7 +2026,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &NotUniqueFieldUcc,
         Some(StatusCode::BadReq400),
         vec![(
-            macros_helpers_location_location_field_attr_eo_to_err_string_serde,
+            macros_helpers_location_field_attr_eo_to_err_string_serde,
             &NotUniqueFieldSc,
             gen_simple_syn_punct(&[&ident_select_ucc.to_string()]),
         )],
@@ -2047,7 +2036,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonToStringUcc,
         None,
         vec![(
-            macros_helpers_location_location_field_attr_eo_to_err_string,
+            macros_helpers_location_field_attr_eo_to_err_string,
             &SerdeJsonToStringSc,
             simple_syn_punct_serde_error.clone(),
         )],
@@ -2058,17 +2047,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Some(StatusCode::BadReq400),
         vec![
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &ReqwestSc,
                 simple_syn_punct_reqwest_error.clone(),
             ),
@@ -2079,22 +2068,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         None,
         vec![
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string_serde,
+                macros_helpers_location_field_attr_eo_to_err_string_serde,
                 &ResTextSc,
                 string_syn_punct,
             ),
             (
-                macros_helpers_location_location_field_attr_eo_to_err_string,
+                macros_helpers_location_field_attr_eo_to_err_string,
                 &SerdeSc,
                 simple_syn_punct_serde_error.clone(),
             ),
@@ -2104,7 +2093,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &ReqwestUcc,
         None,
         vec![(
-            macros_helpers_location_location_field_attr_eo_to_err_string,
+            macros_helpers_location_field_attr_eo_to_err_string,
             &ReqwestSc,
             simple_syn_punct_reqwest_error,
         )],
@@ -2126,7 +2115,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &SerdeJsonUcc,
         Some(StatusCode::BadReq400),
         vec![(
-            macros_helpers_location_location_field_attr_eo_to_err_string,
+            macros_helpers_location_field_attr_eo_to_err_string,
             &SerdeJsonSc,
             simple_syn_punct_serde_error,
         )],
@@ -2189,14 +2178,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {#pub_handle_ts #pk_fi: #ts}
     };
     let gen_match_pg_transaction_rollback_await_ts = |op: &Op, location: &'static Location<'_>| {
-        let ts_91f19090 =
-            gen_op_er_init_eprintln_res_creation_ts(op, &pg_syn_vrt_wrapper, location);
+        let ts_91f19090 = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt_wrapper, location);
         let row_and_rollback_syn_vrt_er_init_eprintln_res_creation_ts =
-            gen_op_er_init_eprintln_res_creation_ts(
-                op,
-                &row_and_rollback_syn_vrt_wrapper,
-                location,
-            );
+            gen_op_er_init_eprintln_res_ts(op, &row_and_rollback_syn_vrt_wrapper, location);
         quote! {{
             if let Err(#Er1) = #ExecutorSc.#RollbackSc().await {
                 #row_and_rollback_syn_vrt_er_init_eprintln_res_creation_ts
@@ -2281,11 +2265,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let wrap_into_pg_transaction_begin_commit_ts = |op: &Op, ts: &dyn ToTokens| {
         let pg_transaction_begin_ts = {
-            let ts_efebc55b = gen_op_er_init_eprintln_res_creation_ts(
-                op,
-                &pg_syn_vrt_wrapper,
-                Location::caller(),
-            );
+            let ts_efebc55b =
+                gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt_wrapper, Location::caller());
             let ts0 = gen_match_ok_err_ts_c35d87fd(
                 &quote! {#SqlxAcquire::#BeginSc(#ExecutorAcquireSc).await},
                 &quote! {v_1aaca28f},
@@ -2295,11 +2276,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let pg_transaction_commit_ts = {
             let pg_syn_vrt_er_init_eprintln_res_creation_ts =
-                gen_op_er_init_eprintln_res_creation_ts(
-                    op,
-                    &pg_syn_vrt_wrapper,
-                    Location::caller(),
-                );
+                gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt_wrapper, Location::caller());
             quote! {
                 if let Err(#Er0) = #ExecutorSc.#CommitSc().await {
                     #pg_syn_vrt_er_init_eprintln_res_creation_ts
@@ -2396,7 +2373,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let ts_fa8795ea =
-            gen_op_er_init_eprintln_res_creation_ts(op, &qp_syn_vrt_wrapper, Location::caller());
+            gen_op_er_init_eprintln_res_ts(op, &qp_syn_vrt_wrapper, Location::caller());
         let gen_match_ok_err_ts_85a5eace = |ts0: &dyn ToTokens, ts1: &dyn ToTokens| {
             gen_match_ok_err_ts_c35d87fd(&ts0, &ts1, &quote! {{#ts_fa8795ea}})
         };
@@ -2636,7 +2613,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let op_handle_ts = {
                 let req_parts_preparation_ts = {
-                    let ts0 = &gen_op_er_init_eprintln_res_creation_ts(
+                    let ts0 = &gen_op_er_init_eprintln_res_ts(
                         op,
                         &header_content_type_application_json_not_found_syn_vrt_wrapper,
                         Location::caller(),
@@ -2645,7 +2622,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {#import_ts check_body_size::check_body_size(#BodySc, *#AppStateSc.get_maximum_size_of_http_body_in_bytes()).await},
                         &quote! {v_cfac9140},
                         &{
-                            let ts = gen_op_er_init_eprintln_res_creation_ts(
+                            let ts = gen_op_er_init_eprintln_res_ts(
                                 op,
                                 &check_body_size_syn_vrt_wrapper,
                                 Location::caller(),
@@ -2707,7 +2684,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &quote! {v_9e6fcd2d},
                             &{
-                                let ts = gen_op_er_init_eprintln_res_creation_ts(
+                                let ts = gen_op_er_init_eprintln_res_ts(
                                     op,
                                     &serde_json_syn_vrt_wrapper,
                                     Location::caller(),
@@ -3100,7 +3077,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let binded_query_ts = {
-                    let ts_2795ebdc = gen_op_er_init_eprintln_res_creation_ts(
+                    let ts_2795ebdc = gen_op_er_init_eprintln_res_ts(
                         op,
                         &try_bind_syn_vrt_wrapper,
                         Location::caller(),
@@ -3263,7 +3240,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let acquire_pool_and_connection_ts = {
                     let pg_syn_vrt_wrapper_er_init_eprintln_res_creation_ts =
-                        gen_op_er_init_eprintln_res_creation_ts(
+                        gen_op_er_init_eprintln_res_ts(
                             op,
                             &pg_syn_vrt_wrapper,
                             Location::caller(),
@@ -3374,7 +3351,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     let match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&RmOrRo::Rm);
                                     quote! {Some(#match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts)}
                                 },
-                                &gen_op_er_init_eprintln_res_creation_ts(
+                                &gen_op_er_init_eprintln_res_ts(
                                     op,
                                     &pg_syn_vrt_wrapper,
                                     Location::caller(),
@@ -3388,7 +3365,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         Op::Ro => gen_fetch_one_ts(
                             &ExecutorAcquireSc,
                             &gen_match_ident_read_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts(&RmOrRo::Ro),
-                            &gen_op_er_init_eprintln_res_creation_ts(op, &pg_syn_vrt_wrapper, Location::caller()),
+                            &gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt_wrapper, Location::caller()),
                         ),
                         Op::Um => wrap_into_pg_transaction_begin_commit_ts(
                             op,
@@ -3861,7 +3838,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &ident_op_er_with_serde_ucc,
                                     None,
                                     vec![(
-                                        macros_helpers_location_location_field_attr_eo_to_err_string,
+                                        macros_helpers_location_field_attr_eo_to_err_string,
                                         &op.op_er_with_serde_sc(),
                                         gen_simple_syn_punct(&[
                                             &ident_op_er_with_serde_ucc.to_string()
