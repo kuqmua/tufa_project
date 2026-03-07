@@ -3439,6 +3439,23 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ),
                 }
             };
+            let operation_payload_example_ts = {
+                let operation_payload_example_sc = operation.operation_payload_example_sc();
+                let ts = wrap_into_axum_res_ts(
+                    &{
+                        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+                        quote! {<#ident_operation_payload_ucc as #import_ts #DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()}
+                    },
+                    &quote! {http::StatusCode::OK},
+                    &ShouldAddReturn::False,
+                );
+                quote! {
+                    #MustUse
+                    pub fn #operation_payload_example_sc() -> axum::response::Response {
+                        #ts
+                    }
+                }
+            };
             quote! {
                 #[allow(clippy::single_call_fn)]
                 async fn #operation_handle_sc_ts(
@@ -3469,6 +3486,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ) -> axum::response::Response {
                     Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
                 }
+                #operation_payload_example_ts
             }
         });
         quote!{#(#ts)*}
@@ -3639,23 +3657,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_operation_payload_example_ts = |operation: &Operation| {
-        let operation_payload_example_sc = operation.operation_payload_example_sc();
-        let ts = wrap_into_axum_res_ts(
-            &{
-                let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-                quote! {<#ident_operation_payload_ucc as #import_ts #DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()}
-            },
-            &quote! {http::StatusCode::OK},
-            &ShouldAddReturn::False,
-        );
-        quote! {
-            #MustUse
-            pub fn #operation_payload_example_sc() -> axum::response::Response {
-                #ts
-            }
-        }
-    };
     let create_many_ts = {
         let operation = Operation::CreateMany;
         let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
@@ -3696,7 +3697,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -3739,7 +3739,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -3812,7 +3811,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -3880,7 +3878,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -4070,7 +4067,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -4113,7 +4109,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -4164,7 +4159,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
@@ -4221,7 +4215,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #try_operation_er_ts
             }
         };
-        impl_ident_vec_ts.push(gen_operation_payload_example_ts(&operation));
         quote! {
             #params_ts
             #operation_ts
