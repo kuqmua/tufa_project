@@ -610,6 +610,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     };
     let mut impl_ident_vec_ts = Vec::new();
+    let mut operation_routes_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
         let ts = quote! {
@@ -3456,6 +3457,42 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }
             };
+            operation_routes_ts.push({
+                let method_ts = match &operation {
+                    Operation::CreateMany |
+                    Operation::CreateOne |
+                    Operation::ReadMany |
+                    Operation::ReadOne => quote!{post},
+                    Operation::UpdateMany |
+                    Operation::UpdateOne => quote!{patch},
+                    Operation::DeleteMany |
+                    Operation::DeleteOne => quote!{delete},
+                };
+                let operation_payload_example_sc =
+                    operation.operation_payload_example_sc();
+                let (
+                    slash_operation_dq_ts,
+                    slash_operation_payload_example_dq_ts
+                ) = {
+                    let gen_ts = |
+                        v: &dyn Display
+                    | dq_ts(&format!("/{v}"));
+                    (
+                        gen_ts(&operation.self_sc_str()),
+                        gen_ts(&operation_payload_example_sc)
+                    )
+                };
+                quote!{
+                    .route(#slash_operation_dq_ts, axum::routing::#method_ts({
+                        let table_owned = table.to_owned();
+                        async move |
+                            app_state_99328dfe: axum::extract::State<std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>>,
+                            req: axum::extract::Request
+                        | Self::#operation_handle_sc_ts(app_state_99328dfe, req, &table_owned).await
+                    }))
+                    .route(#slash_operation_payload_example_dq_ts, axum::routing::get(async move||Self::#operation_payload_example_sc()))
+                }
+            });
             quote! {
                 #[allow(clippy::single_call_fn)]
                 async fn #operation_handle_sc_ts(
@@ -4228,72 +4265,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     impl_ident_vec_ts.push({
-        let routes_handle_ts = {
-            let operation_routes_ts = [
-                Operation::CreateMany,
-                Operation::CreateOne,
-                Operation::ReadMany,
-                Operation::ReadOne,
-                Operation::UpdateMany,
-                Operation::UpdateOne,
-                Operation::DeleteMany,
-                Operation::DeleteOne
-            ].into_iter().map(|operation: Operation|{
-                let method_ts = match &operation {
-                    Operation::CreateMany |
-                    Operation::CreateOne |
-                    Operation::ReadMany |
-                    Operation::ReadOne => quote!{post},
-                    Operation::UpdateMany |
-                    Operation::UpdateOne => quote!{patch},
-                    Operation::DeleteMany |
-                    Operation::DeleteOne => quote!{delete},
-                };
-                let operation_sc_ts = operation.self_handle_sc_ts();
-                let operation_payload_example_sc =
-                    operation.operation_payload_example_sc();
-                let (
-                    slash_operation_dq_ts,
-                    slash_operation_payload_example_dq_ts
-                ) = {
-                    let gen_ts = |
-                        v: &dyn Display
-                    | dq_ts(&format!("/{v}"));
-                    (
-                        gen_ts(&operation.self_sc_str()),
-                        gen_ts(&operation_payload_example_sc)
-                    )
-                };
-                quote!{
-                    .route(#slash_operation_dq_ts, axum::routing::#method_ts({
-                        let table_owned = table.to_owned();
-                        async move |
-                            app_state_99328dfe: axum::extract::State<std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>>,
-                            req: axum::extract::Request
-                        | Self::#operation_sc_ts(app_state_99328dfe, req, &table_owned).await
-                    }))
-                    .route(#slash_operation_payload_example_dq_ts, axum::routing::get(async move||Self::#operation_payload_example_sc()))
-                }
-            });
-            quote!{
-                #[allow(clippy::single_call_fn)]
-                fn #RoutesHandleSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts, #TableSc: &str) -> axum::Router {
-                    axum::Router::new().nest(
-                        &format!("/{table}"),
-                        axum::Router::new()
-                        #(#operation_routes_ts)*
-                        .with_state(#AppStateSc)
-                    )
-                }
-            }
-        };
         let routes_ts = quote!{
             pub fn #RoutesSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts) -> axum::Router {
                 Self::#RoutesHandleSc(#AppStateSc, #self_table_name_call_ts)
             }
         };
         quote! {
-            #routes_handle_ts
             #routes_ts
         }
     });
@@ -6587,6 +6564,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #AllowClippyArbitrarySourceItemOrdering
             impl #ident {
                 #(#impl_ident_vec_ts)*
+                #[allow(clippy::single_call_fn)]
+                fn #RoutesHandleSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts, #TableSc: &str) -> axum::Router {
+                    axum::Router::new().nest(
+                        &format!("/{table}"),
+                        axum::Router::new()
+                        #(#operation_routes_ts)*
+                        .with_state(#AppStateSc)
+                    )
+                }
             }
             #common_ts
             #create_many_ts
