@@ -8,7 +8,7 @@ pub fn cm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn create_one_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn co_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -16,7 +16,7 @@ pub fn read_one_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn read_many_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn rm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -44,11 +44,11 @@ pub fn cm_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn create_one_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn co_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn read_many_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn rm_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]

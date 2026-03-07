@@ -23,7 +23,7 @@ pub fn gen_cm_query_string(
     format!("insert into {table} ({columns}) values {values} returning {columns_to_return}")
 }
 #[must_use]
-pub fn gen_create_one_query_string(
+pub fn gen_co_query_string(
     table: &str,
     columns: &str,
     values: &str,
@@ -32,7 +32,7 @@ pub fn gen_create_one_query_string(
     format!("insert into {table} ({columns}) values ({values}) returning {columns_to_return}")
 }
 #[must_use]
-pub fn gen_read_many_query_string(table: &str, select_string: &str, where_string: &str) -> String {
+pub fn gen_rm_query_string(table: &str, select_string: &str, where_string: &str) -> String {
     format!("select {select_string} from {table} {where_string}")
 }
 #[must_use]

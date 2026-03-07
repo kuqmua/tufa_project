@@ -192,8 +192,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "crud"],
     ["check", "body", "size", "er"],
     ["cm", "extra", "er", "vrts"],
-    ["create", "one", "extra", "er", "vrts"],
-    ["read", "many", "extra", "er", "vrts"],
+    ["co", "extra", "er", "vrts"],
+    ["rm", "extra", "er", "vrts"],
     ["read", "one", "extra", "er", "vrts"],
     ["update", "many", "extra", "er", "vrts"],
     ["update", "one", "extra", "er", "vrts"],
@@ -201,8 +201,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["delete", "one", "extra", "er", "vrts"],
     ["common", "extra", "er", "vrts"],
     ["cm", "extra", "logic"],
-    ["create", "one", "extra", "logic"],
-    ["read", "many", "extra", "logic"],
+    ["co", "extra", "logic"],
+    ["rm", "extra", "logic"],
     ["read", "one", "extra", "logic"],
     ["update", "many", "extra", "logic"],
     ["update", "one", "extra", "logic"],
@@ -767,10 +767,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "sort", "vec", "of", "ident", "read", "with", "pk", "by", "pk"
     ],
     ["gen", "el"],
-    [
-        "some", "v", "pk", "read", "returned", "from", "create", "one"
-    ],
-    ["pk", "read", "returned", "from", "create", "one"],
+    ["some", "v", "pk", "read", "returned", "from", "co"],
+    ["pk", "read", "returned", "from", "co"],
     ["select", "pk", "fi"],
     ["select", "query", "part", "pg", "type"],
     ["select", "query", "part", "pg", "json", "type"],
@@ -780,19 +778,15 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["update", "query", "bind", "pg", "json", "type"],
     ["read", "only", "ids"],
     ["select", "only", "ids", "query", "part"],
-    ["read", "only", "ids", "returned", "from", "create", "one"],
-    [
-        "some", "v", "read", "only", "ids", "returned", "from", "create", "one"
-    ],
+    ["read", "only", "ids", "returned", "from", "co"],
+    ["some", "v", "read", "only", "ids", "returned", "from", "co"],
     ["select", "only", "updated", "ids", "query", "part"],
     ["create", "update", "delete", "are", "empty"],
     ["update", "one", "params"],
     ["update", "to", "read", "only", "ids"],
     ["self", "read", "only", "ids", "handle"],
     ["read", "only", "ids", "returned", "from", "cm"],
-    [
-        "common", "read", "only", "ids", "returned", "from", "create", "one"
-    ],
+    ["common", "read", "only", "ids", "returned", "from", "co"],
     ["gen", "pg", "table", "pk"],
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
     ["read", "only", "ids", "to", "opt", "v", "read", "inner"],
