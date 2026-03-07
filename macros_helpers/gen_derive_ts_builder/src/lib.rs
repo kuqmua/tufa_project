@@ -1,3 +1,4 @@
+use naming::param::{DSelfIfSc, DSelfSc, DSelfUcc};
 use optml::Optml;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
@@ -5,12 +6,11 @@ use quote::{ToTokens, quote};
 use serde_json::from_str;
 #[proc_macro]
 pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
-    use naming::param::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone, Optml)]
     struct El {
-        derive_trait_name_if_sc: Ts2,
-        derive_trait_name_sc: Ts2,
-        derive_trait_name_ucc: Ts2,
+        d_trait_name_if_sc: Ts2,
+        d_trait_name_sc: Ts2,
+        d_trait_name_ucc: Ts2,
         trait_type: Ts2,
     }
     let make_pub_sc_ts = quote! {make_pub};
@@ -50,16 +50,16 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                 result.trim_matches('_').to_owned()
             };
             El {
-                derive_trait_name_ucc: {
-                    let v = DeriveSelfUcc::from_display(&sc);
+                d_trait_name_ucc: {
+                    let v = DSelfUcc::from_display(&sc);
                     quote! {#v}
                 },
-                derive_trait_name_sc: {
-                    let v = DeriveSelfSc::from_display(&sc);
+                d_trait_name_sc: {
+                    let v = DSelfSc::from_display(&sc);
                     quote! {#v}
                 },
-                derive_trait_name_if_sc: {
-                    let v = DeriveSelfIfSc::from_display(&sc);
+                d_trait_name_if_sc: {
+                    let v = DSelfIfSc::from_display(&sc);
                     quote! {#v}
                 },
                 trait_type: el.parse::<Ts2>().expect("8672240f"),
@@ -78,7 +78,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
         }
         (
             gen_ts(&make_pub_ucc_ts),
-            el_vec.iter().map(|el| gen_ts(&el.derive_trait_name_ucc)),
+            el_vec.iter().map(|el| gen_ts(&el.d_trait_name_ucc)),
         )
     };
     let (make_pub_derive_trait_name_bool_ts, field_vec_ts) = {
@@ -87,7 +87,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
         }
         (
             gen_ts(&make_pub_sc_ts),
-            el_vec.iter().map(|el| gen_ts(&el.derive_trait_name_sc)),
+            el_vec.iter().map(|el| gen_ts(&el.d_trait_name_sc)),
         )
     };
     let (make_pub_derive_and_derive_if_ts, derive_and_derive_if_vec_ts) = {
@@ -112,9 +112,9 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
             {
                 let ts = el_vec.clone().into_iter().map(|el| {
                     gen_ts(
-                        &el.derive_trait_name_sc,
-                        &el.derive_trait_name_if_sc,
-                        &el.derive_trait_name_ucc,
+                        &el.d_trait_name_sc,
+                        &el.d_trait_name_if_sc,
+                        &el.d_trait_name_ucc,
                     )
                 });
                 quote! {#(#ts)*}
@@ -122,15 +122,15 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
         )
     };
     let if_self_derive_acc_push_vec_ts = el_vec.iter().map(|el| {
-        let derive_trait_name_sc = &el.derive_trait_name_sc;
+        let d_trait_name_sc = &el.d_trait_name_sc;
         let trait_type = &el.trait_type;
         quote! {
-            if self.#derive_trait_name_sc {
+            if self.#d_trait_name_sc {
                 acc_2a71375c.push(quote::quote!{#trait_type});
             }
         }
     });
-    let derive_ts_builder_ucc = quote! {DeriveTsBuilder};
+    let derive_ts_builder_ucc = quote! {DTsBuilder};
     let struct_or_enum_ucc = quote! {StructOrEnum};
     let quote_to_tokens_ts = quote! {quote::ToTokens};
     let generated: Ts2 = quote! {

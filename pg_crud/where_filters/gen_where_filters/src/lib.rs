@@ -1,5 +1,5 @@
 use gen_quotes::dq_ts;
-use macros_helpers::{DeriveSerdeDeserialize, DeriveTsBuilder};
+use macros_helpers::{DSerdeDeserialize, DTsBuilder};
 use macros_helpers::{
     FormatWithCargofmt, ShouldWriteTsIntoFile, gen_if_write_is_err_ts, mb_write_ts_into_file,
 };
@@ -131,18 +131,18 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         } else {
             &PubSc
         };
-        DeriveTsBuilder::new()
+        DTsBuilder::new()
             .make_pub()
-            .derive_debug()
-            .derive_clone()
-            .derive_partial_eq()
-            .derive_serde_serialize()
-            .derive_serde_deserialize_if(if filter_init_with_try_new_result_is_ok {
-                DeriveSerdeDeserialize::False
+            .d_debug()
+            .d_clone()
+            .d_partial_eq()
+            .d_serde_serialize()
+            .d_serde_deserialize_if(if filter_init_with_try_new_result_is_ok {
+                DSerdeDeserialize::False
             } else {
-                DeriveSerdeDeserialize::True
+                DSerdeDeserialize::True
             })
-            .derive_schemars_json_schema()
+            .d_schemars_json_schema()
             .build_struct(
                 &ident,
                 &match &generic {

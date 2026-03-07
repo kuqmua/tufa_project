@@ -1,7 +1,7 @@
 use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    DeriveSerdeDeserialize, DeriveTsBuilder, FormatWithCargofmt, ShouldWriteTsIntoFile, SynField,
+    DSerdeDeserialize, DTsBuilder, FormatWithCargofmt, ShouldWriteTsIntoFile, SynField,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
     gen_impl_from_ts, gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
     gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts,
@@ -393,11 +393,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let ident_with_id_stdrt_not_null_read_ids_ucc = SelfReadIdsUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let ident_with_id_stdrt_not_null_where_ucc = SelfWhereUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let ident_ts = {
-            let gen_struct_ident_ts = |ts: &dyn ToTokens| DeriveTsBuilder::new()
+            let gen_struct_ident_ts = |ts: &dyn ToTokens| DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_copy()
+                .d_debug()
+                .d_clone()
+                .d_copy()
                 .build_struct(
                     &ts,
                     &Ts2::new(),
@@ -616,15 +616,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 ident_ts_20954cb5: &dyn ToTokens,
                 ts: &dyn ToTokens
             | {
-                let ts_44f35e48 = DeriveTsBuilder::new()
+                let ts_44f35e48 = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize()
-                .derive_utoipa_to_schema()
-                .derive_schemars_json_schema()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
+                .d_serde_deserialize()
+                .d_utoipa_to_schema()
+                .d_schemars_json_schema()
                 .build_struct(
                     &ident_ts_20954cb5,
                     &Ts2::new(),
@@ -862,12 +862,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             ident_ts_d8fa00d3: &dyn ToTokens,
             ts_153ac202: &dyn ToTokens
         | {
-            let ts_6ea2da58 = DeriveTsBuilder::new()
+            let ts_6ea2da58 = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
                 .build_struct(
                     &ident_ts_d8fa00d3,
                     &Ts2::new(),
@@ -1096,15 +1096,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 ident_ts_6fce2985: &dyn ToTokens,
                 ts_fc7ad384: &dyn ToTokens
             | {
-                let ts_83d3ad18 = DeriveTsBuilder::new()
+                let ts_83d3ad18 = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize()
-                .derive_utoipa_to_schema()
-                .derive_schemars_json_schema()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
+                .d_serde_deserialize()
+                .d_utoipa_to_schema()
+                .d_schemars_json_schema()
                 .build_struct(
                     &ident_ts_6fce2985,
                     &Ts2::new(),
@@ -1390,15 +1390,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     IsStdrtWithId::True => &ident_with_id_stdrt_not_null_select_el_ucc,
                 };
                 let ident_select_el_or_ident_with_id_stdrt_not_null_select_el_ts = {
-                    let ts_bf3bd19e = DeriveTsBuilder::new()
+                    let ts_bf3bd19e = DTsBuilder::new()
                     .make_pub()
-                    .derive_debug()
-                    .derive_clone()
-                    .derive_partial_eq()
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .derive_utoipa_to_schema()
-                    .derive_schemars_json_schema()
+                    .d_debug()
+                    .d_clone()
+                    .d_partial_eq()
+                    .d_serde_serialize()
+                    .d_serde_deserialize()
+                    .d_utoipa_to_schema()
+                    .d_schemars_json_schema()
                     .build_enum(
                         &ident_select_el_or_ident_with_id_select_el_ucc,
                         &Ts2::new(),
@@ -1533,15 +1533,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     ident_ts_90ecb979: &dyn ToTokens,
                     ts_e1af2d89: &dyn ToTokens
                 | {
-                    let ts_60d5d187 = DeriveTsBuilder::new()
+                    let ts_60d5d187 = DTsBuilder::new()
                     .make_pub()
-                    .derive_debug()
-                    .derive_clone()
-                    .derive_partial_eq()
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .derive_utoipa_to_schema()
-                    .derive_schemars_json_schema()
+                    .d_debug()
+                    .d_clone()
+                    .d_partial_eq()
+                    .d_serde_serialize()
+                    .d_serde_deserialize()
+                    .d_utoipa_to_schema()
+                    .d_schemars_json_schema()
                     .build_enum(
                         &ident_ts_90ecb979,
                         &Ts2::new(),
@@ -1948,17 +1948,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let gen_ident_read_ts = |
                 ident_ts_fc625e96: &dyn ToTokens,
                 ts_1c85ea2c: &dyn ToTokens,
-                derive_serde_deserialize: DeriveSerdeDeserialize
+                derive_serde_deserialize: DSerdeDeserialize
             | {
-                let ts_3a67b41f = DeriveTsBuilder::new()
+                let ts_3a67b41f = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize_if(derive_serde_deserialize)
-                .derive_utoipa_to_schema()
-                .derive_schemars_json_schema()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
+                .d_serde_deserialize_if(derive_serde_deserialize)
+                .d_utoipa_to_schema()
+                .d_schemars_json_schema()
                 .build_struct(
                     &ident_ts_fc625e96,
                     &Ts2::new(),
@@ -1980,24 +1980,24 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 );
                                 quote! {{#ts}}
                             },
-                            DeriveSerdeDeserialize::False,
+                            DSerdeDeserialize::False,
                         ),
-                        IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&ident_stdrt_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
+                        IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&ident_stdrt_not_null_as_pg_json_type_read_ts)), DSerdeDeserialize::True),
                     },
                     Pattern::Arr => match &is_nullable {
-                        IsNullable::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_decl_ts(&ident_with_id_stdrt_not_null_read_ucc)), DeriveSerdeDeserialize::True),
-                        IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&ident_with_id_arr_not_null_as_pg_json_type_read_ts)), DeriveSerdeDeserialize::True),
+                        IsNullable::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_decl_ts(&ident_with_id_stdrt_not_null_read_ucc)), DSerdeDeserialize::True),
+                        IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&ident_with_id_arr_not_null_as_pg_json_type_read_ts)), DSerdeDeserialize::True),
                     },
                 };
                 gen_ident_read_ts(&ident_read_ucc, &ts, derive_serde_deserialize)
             };
-            let gen_ident_read_try_from_er_ts = |ts: &dyn ToTokens|DeriveTsBuilder::new()
+            let gen_ident_read_try_from_er_ts = |ts: &dyn ToTokens|DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_serde_serialize()
-                .derive_serde_deserialize()
-                .derive_thiserror_error()
-                .derive_location_lib_location()
+                .d_debug()
+                .d_serde_serialize()
+                .d_serde_deserialize()
+                .d_thiserror_error()
+                .d_location_lib_location()
                 .build_enum(
                     &ts,
                     &Ts2::new(),
@@ -2192,7 +2192,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         );
                         quote! {{#ts}}
                     },
-                    DeriveSerdeDeserialize::False,
+                    DSerdeDeserialize::False,
                 );
                 let ident_with_id_stdrt_not_null_read_try_from_er_ts = gen_ident_read_try_from_er_ts(&ident_with_id_stdrt_not_null_read_try_from_er_ucc);
                 let impl_ident_with_id_stdrt_not_null_read_ts = {
@@ -2289,13 +2289,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         };
         let ident_read_ids_ts = {
             let mb_ident_read_ids_handle_ts = if is_stdrt_not_null {
-                let ts_1e087f4d = DeriveTsBuilder::new()
+                let ts_1e087f4d = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
+                .d_serde_deserialize()
                 .build_struct(
                     &ident_read_ids_handle_ucc,
                     &Ts2::new(),
@@ -2309,13 +2309,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             else {
                 Ts2::new()
             };
-            let ident_read_ids_ts = DeriveTsBuilder::new()
+            let ident_read_ids_ts = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
+                .d_serde_deserialize()
                 .build_struct(
                     &ident_read_ids_ucc,
                     &Ts2::new(),
@@ -2343,13 +2343,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let mb_ident_with_id_stdrt_not_null_read_ids_ts = if is_stdrt_not_null {
                 let ident_with_id_stdrt_not_null_read_ids_ts = {
                     let ident_with_id_stdrt_not_null_read_ids_handle_ts = {
-                        let ts_fe644945 = DeriveTsBuilder::new()
+                        let ts_fe644945 = DTsBuilder::new()
                         .make_pub()
-                        .derive_debug()
-                        .derive_clone()
-                        .derive_partial_eq()
-                        .derive_serde_serialize()
-                        .derive_serde_deserialize()
+                        .d_debug()
+                        .d_clone()
+                        .d_partial_eq()
+                        .d_serde_serialize()
+                        .d_serde_deserialize()
                         .build_struct(
                             &ident_with_id_stdrt_not_null_read_ids_handle_ucc,
                             &Ts2::new(),
@@ -2360,13 +2360,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             #ts_fe644945
                         }
                     };
-                    let ident_with_id_stdrt_not_null_read_ids_ts = DeriveTsBuilder::new()
+                    let ident_with_id_stdrt_not_null_read_ids_ts = DTsBuilder::new()
                         .make_pub()
-                        .derive_debug()
-                        .derive_clone()
-                        .derive_partial_eq()
-                        .derive_serde_serialize()
-                        .derive_serde_deserialize()
+                        .d_debug()
+                        .d_clone()
+                        .d_partial_eq()
+                        .d_serde_serialize()
+                        .d_serde_deserialize()
                         .build_struct(
                             &ident_with_id_stdrt_not_null_read_ids_ucc,
                             &Ts2::new(),
@@ -2402,11 +2402,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         };
         let ident_read_inner_ts = {
             let gen_ident_read_inner_or_ident_with_id_stdrt_not_null_read_inner_ts = |is_stdrt_with_id: &IsStdrtWithId| {
-                let ts_3d7e760e = DeriveTsBuilder::new()
+                let ts_3d7e760e = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
                 .build_struct(
                     match &is_stdrt_with_id {
                         IsStdrtWithId::False => &ident_read_inner_ucc,
@@ -2520,39 +2520,39 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 ) = match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => (
-                            DeriveSerdeDeserialize::True,
+                            DSerdeDeserialize::True,
                             &wrap_into_scopes_dot_comma_ts(
                                 &gen_ident_update_stdrt_not_null_ts(&is_stdrt_with_id_false)
                             )
                         ),
                         IsNullable::True => (
-                            DeriveSerdeDeserialize::True,
+                            DSerdeDeserialize::True,
                             &gen_opt_ident_type_ts(&ident_stdrt_not_null_as_pg_json_type_update_ts)
                         ),
                     },
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => (
-                            DeriveSerdeDeserialize::False,
+                            DSerdeDeserialize::False,
                             &{
                                 let fields_ts = gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::True);
                                 quote! {{#fields_ts}}
                             }
                         ),
                         IsNullable::True => (
-                            DeriveSerdeDeserialize::True,
+                            DSerdeDeserialize::True,
                             &gen_opt_ident_type_ts(&ident_with_id_arr_not_null_as_pg_json_type_update_ts)
                         ),
                     },
                 };
-                let ts_c9a843aa = DeriveTsBuilder::new()
+                let ts_c9a843aa = DTsBuilder::new()
                 .make_pub()
-                .derive_debug()
-                .derive_clone()
-                .derive_partial_eq()
-                .derive_serde_serialize()
-                .derive_serde_deserialize_if(derive_serde_deserialize)
-                .derive_utoipa_to_schema()
-                .derive_schemars_json_schema()
+                .d_debug()
+                .d_clone()
+                .d_partial_eq()
+                .d_serde_serialize()
+                .d_serde_deserialize_if(derive_serde_deserialize)
+                .d_utoipa_to_schema()
+                .d_schemars_json_schema()
                 .build_struct(
                     &ident_update_ucc,
                     &Ts2::new(),
@@ -2567,13 +2567,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let mb_ident_update_try_new_er_ts = match &pattern {
                 Pattern::Stdrt => Ts2::new(),
                 Pattern::Arr => match &is_nullable {
-                    IsNullable::False => DeriveTsBuilder::new()
+                    IsNullable::False => DTsBuilder::new()
                         .make_pub()
-                        .derive_debug()
-                        .derive_serde_serialize()
-                        .derive_serde_deserialize()
-                        .derive_thiserror_error()
-                        .derive_location_lib_location()
+                        .d_debug()
+                        .d_serde_serialize()
+                        .d_serde_deserialize()
+                        .d_thiserror_error()
+                        .d_location_lib_location()
                         .build_enum(
                             &ident_update_try_new_er_ucc,
                             &Ts2::new(),
@@ -2939,15 +2939,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             });
             let mb_ident_update_el_ts = if is_stdrt_not_null {
                 let ident_update_el_ts = {
-                    let ts_b258e2eb = DeriveTsBuilder::new()
+                    let ts_b258e2eb = DTsBuilder::new()
                     .make_pub()
-                    .derive_debug()
-                    .derive_clone()
-                    .derive_partial_eq()
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .derive_utoipa_to_schema()
-                    .derive_schemars_json_schema()
+                    .d_debug()
+                    .d_clone()
+                    .d_partial_eq()
+                    .d_serde_serialize()
+                    .d_serde_deserialize()
+                    .d_utoipa_to_schema()
+                    .d_schemars_json_schema()
                     .build_enum(
                         &ident_stdrt_not_null_update_el_ucc,
                         &Ts2::new(),
@@ -3012,15 +3012,15 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     #FieldsSc: #ident_stdrt_not_null_as_pg_json_type_update_ts
                 };
                 let ident_with_id_stdrt_not_null_update_el_ts = {
-                    let ts_d18600a2 = DeriveTsBuilder::new()
+                    let ts_d18600a2 = DTsBuilder::new()
                     .make_pub()
-                    .derive_debug()
-                    .derive_clone()
-                    .derive_partial_eq()
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .derive_utoipa_to_schema()
-                    .derive_schemars_json_schema()
+                    .d_debug()
+                    .d_clone()
+                    .d_partial_eq()
+                    .d_serde_serialize()
+                    .d_serde_deserialize()
+                    .d_utoipa_to_schema()
+                    .d_schemars_json_schema()
                     .build_struct(
                         &ident_with_id_stdrt_not_null_update_el_ucc,
                         &Ts2::new(),
@@ -3436,12 +3436,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 }
             );
             let mb_ident_update_for_query_el_ts = if is_stdrt_not_null {
-                let ident_stdrt_not_null_update_for_query_el_ts = DeriveTsBuilder::new()
+                let ident_stdrt_not_null_update_for_query_el_ts = DTsBuilder::new()
                     .make_pub()
-                    .derive_debug()
-                    .derive_clone()
-                    .derive_partial_eq()
-                    .derive_serde_serialize()
+                    .d_debug()
+                    .d_clone()
+                    .d_partial_eq()
+                    .d_serde_serialize()
                     .build_enum(
                         &ident_stdrt_not_null_update_for_query_el_ucc,
                         &Ts2::new(),

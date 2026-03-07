@@ -182,11 +182,11 @@ impl ToTokens for Import {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum ShouldDeriveSchemarsJsonSchema {
+pub enum ShouldDSchemarsJsonSchema {
     False,
     True,
 }
-impl ToTokens for ShouldDeriveSchemarsJsonSchema {
+impl ToTokens for ShouldDSchemarsJsonSchema {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -584,7 +584,7 @@ pub fn gen_pg_type_where_ts(
     vrts: &Vec<&dyn PgFilter>,
     prefix: &dyn ToTokens,
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
-    should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
+    should_derive_schemars_json_schema: &ShouldDSchemarsJsonSchema,
     is_qb_mut: &IsQbMut,
 ) -> Ts2 {
     let ident = SelfWhereUcc::from_tokens(&prefix);

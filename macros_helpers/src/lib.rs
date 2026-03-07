@@ -21,9 +21,9 @@ mod write_string_into_file;
 mod write_ts_into_file;
 pub use attr_ident_str::AttrIdentStr;
 pub use derive_ts_builder::{
-    DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq, DeriveLocationLibLocation,
-    DeriveOrd, DerivePartialEq, DerivePartialOrd, DeriveSchemarsJsonSchema, DeriveSerdeDeserialize,
-    DeriveSerdeSerialize, DeriveThiserrorError, DeriveTsBuilder, DeriveUtoipaToSchema, MakePub,
+    DClone, DCopy, DDebug, DDefault, DEq, DLocationLibLocation, DOrd, DPartialEq, DPartialOrd,
+    DSchemarsJsonSchema, DSerdeDeserialize, DSerdeSerialize, DThiserrorError, DTsBuilder,
+    DUtoipaToSchema, MakePub,
 };
 pub use gen_field_loc_new_ts::gen_field_loc_new_ts;
 pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};

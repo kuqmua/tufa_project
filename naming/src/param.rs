@@ -900,8 +900,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "dlo", "er", "with", "serde"],
     ["self", "handle"],
     ["try", "self", "handle"],
-    ["derive", "self"],
-    ["derive", "self", "if"],
+    ["d", "self"],
+    ["d", "self", "if"],
     [
         "self", "read", "ids", "to2", "dims", "vec", "read", "inner", "acc"
     ],
