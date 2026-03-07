@@ -744,9 +744,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     [
         "read", "inner", "into", "update", "with", "new", "or", "try", "new", "unwraped"
     ],
-    [
-        "read", "ids", "to", "two", "dims", "vec", "of", "read", "inner"
-    ],
+    ["read", "ids", "to2", "dims", "vec", "of", "read", "inner"],
     ["read", "ids", "into", "opt", "v", "read", "inner"],
     ["previous", "read", "and", "opt", "update", "into", "read"],
     [
@@ -762,7 +760,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "ids", "and", "create", "into", "where", "equal", "to", "json", "field"
     ],
     ["opt", "vec", "create"],
-    ["read", "ids", "to", "two", "dims", "vec", "read", "inner"],
+    ["read", "ids", "to2", "dims", "vec", "read", "inner"],
     [
         "read", "ids", "and", "create", "into", "opt", "vec", "where", "equal", "to", "json",
         "field"

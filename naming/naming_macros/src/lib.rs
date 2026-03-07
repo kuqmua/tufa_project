@@ -9,7 +9,7 @@ use std::fmt::Write as _;
 #[allow(unused_imports)]
 use syn::{Data, DeriveInput, Fields, Ident, Type, parse};
 use token_patterns::StringTs;
-const REGEX_VALUE: &str = "^[a-zA-Z]+$";
+const REGEX_VALUE: &str = "^[a-zA-Z0-9]+$";
 fn gen_impl_to_tokens_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens) -> Ts2 {
     quote! {
         impl ToTokens for #ts0 {
@@ -119,7 +119,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
         {
             let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el0 in &el {
-                assert!(regex.is_match(el0), "4a12d90f");
+                assert!(regex.is_match(el0), "4a12d90f {el0}");
             }
         }
         let self_match_name = "self";

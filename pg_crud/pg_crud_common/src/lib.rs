@@ -194,7 +194,7 @@ pub trait PgTypeTestCases {
     type PgType: PgType;
     type Select: SelectAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_create() -> Option<Vec<<Self::PgType as PgType>::Create>>;
-    fn read_ids_to_two_dims_vec_read_inner(
+    fn read_ids_to_2_dims_vec_read_inner(
         read_ids: &<Self::PgType as PgType>::ReadIds,
     ) -> Vec<Vec<<Self::PgType as PgType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(
@@ -322,7 +322,7 @@ pub trait PgJsonTypeTestCases {
     type PgJsonType: PgJsonType;
     type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_create() -> Option<Vec<<Self::PgJsonType as PgJsonType>::Create>>;
-    fn read_ids_to_two_dims_vec_read_inner(
+    fn read_ids_to_2_dims_vec_read_inner(
         read_ids: &<Self::PgJsonType as PgJsonType>::ReadIds,
     ) -> Vec<Vec<<Self::PgJsonType as PgJsonType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(

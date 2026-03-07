@@ -903,7 +903,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["derive", "self"],
     ["derive", "self", "if"],
     [
-        "self", "read", "ids", "to", "two", "dims", "vec", "read", "inner", "acc"
+        "self", "read", "ids", "to2", "dims", "vec", "read", "inner", "acc"
     ],
     ["self", "gen", "pg", "json", "object", "type", "mod"],
     ["self", "gen", "pg", "table", "mod"]

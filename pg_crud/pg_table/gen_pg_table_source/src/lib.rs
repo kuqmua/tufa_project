@@ -50,7 +50,7 @@ use naming::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
         SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
         SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPrepPgErUcc,
-        SelfReadIdsToTwoDimsVecReadInnerAccSc, SelfReadIdsUcc, SelfReadUcc, SelfRoErWithSerdeUcc,
+        SelfReadIdsTo2DimsVecReadInnerAccSc, SelfReadIdsUcc, SelfReadUcc, SelfRoErWithSerdeUcc,
         SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc, SelfTryRoErUcc,
         SelfUmParamsUcc, SelfUmPayloadUcc, SelfUpdateForQueryUcc, SelfUpdateTryNewErUcc,
         SelfUpdateUcc, SelfWhereManyTryNewErUcc, SelfWhereManyUcc, StdOptOptSelfWhereManyUcc,
@@ -4220,12 +4220,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         ]);
         let select_dflt_all_with_max_page_size_cloned_clone_ts =
             quote! {select_dflt_all_with_max_page_size_cloned.clone()};
-        let read_ids_to_two_dims_vec_read_inner_acc_fields_ts =
+        let read_ids_to_2_dims_vec_read_inner_acc_fields_ts =
             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
-                let fi_read_ids_to_two_dims_vec_read_inner_acc_sc =
-                    SelfReadIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
-                let ident_create_dflts_for_column_read_ids_to_two_dims_vec_read_inner_ts =
+                let fi_read_ids_to_2_dims_vec_read_inner_acc_sc =
+                    SelfReadIdsTo2DimsVecReadInnerAccSc::from_tokens(&fi);
+                let ident_create_dflts_for_column_read_ids_to_2_dims_vec_read_inner_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el0: &SynFieldWrapper| {
                         let fi0 = &el0.ident;
                         let ft0 = &el0.type0;
@@ -4236,7 +4236,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &{
                                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft0);
                                     quote! {
-                                        for el_b3522b7d in #ft_ts read_ids_to_two_dims_vec_read_inner(v_a5f7e6cd) {
+                                        for el_b3522b7d in #ft_ts read_ids_to_2_dims_vec_read_inner(v_a5f7e6cd) {
                                             for _ in el_b3522b7d {
                                                 acc_458cda9e.push(ident_create_dflt.clone());
                                             }
@@ -4249,9 +4249,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     });
                 quote! {
-                    let #fi_read_ids_to_two_dims_vec_read_inner_acc_sc = {
+                    let #fi_read_ids_to_2_dims_vec_read_inner_acc_sc = {
                         let mut acc_458cda9e = Vec::new();
-                        #ident_create_dflts_for_column_read_ids_to_two_dims_vec_read_inner_ts
+                        #ident_create_dflts_for_column_read_ids_to_2_dims_vec_read_inner_ts
                         acc_458cda9e
                     };
                 }
@@ -4319,12 +4319,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     url: &str,
                     table_9c259e1c: &str,
                     select_dflt_all_with_max_page_size: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
-                    read_ids_to_two_dims_vec_read_inner_acc: Vec<#ident_create_ucc>
+                    read_ids_to_2_dims_vec_read_inner_acc: Vec<#ident_create_ucc>
                 ) -> Vec<#ident_read_ids_ucc> {
                     let read_ids_els_efeed554 = futures::StreamExt::collect::<Vec<Vec<#ident_read_ids_ucc>>>(
                         futures::StreamExt::buffer_unordered(
                             futures::stream::iter(
-                                read_ids_to_two_dims_vec_read_inner_acc
+                                read_ids_to_2_dims_vec_read_inner_acc
                                 .chunks(25)
                                 .map(Vec::from)
                                 .map(|el_8e425cb1| futures::FutureExt::boxed(async move { #ident::try_cm_handle(
@@ -5246,7 +5246,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let update = #ts read_inner_into_update_with_new_or_try_new_unwraped({
                         let mut i_e0d2f9db: usize = 0;
                         let mut opt_test_case = None;
-                        for el_3a9a65ee in #ft_ts read_ids_to_two_dims_vec_read_inner(
+                        for el_3a9a65ee in #ft_ts read_ids_to_2_dims_vec_read_inner(
                             &read_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
                         ) {
                             let mut should_break = false;
@@ -5307,8 +5307,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     } else {
                         Ts2::new()
                     };
-                    let fi_read_ids_to_two_dims_vec_read_inner_acc_sc =
-                        SelfReadIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
+                    let fi_read_ids_to_2_dims_vec_read_inner_acc_sc =
+                        SelfReadIdsTo2DimsVecReadInnerAccSc::from_tokens(&fi);
                     let ident_read_ids_upper_fields_init_without_pk_ts =
                         gen_fields_named_without_pk_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
@@ -5442,7 +5442,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &url,
                             &table_um,
                             #select_dflt_all_with_max_page_size_clone_ts,
-                            #fi_read_ids_to_two_dims_vec_read_inner_acc_sc.clone()
+                            #fi_read_ids_to_2_dims_vec_read_inner_acc_sc.clone()
                         ).await.into_iter().enumerate() {
                             #ts_2a6601e1
                         }
@@ -5470,8 +5470,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     } else {
                         Ts2::new()
                     };
-                    let fi_read_ids_to_two_dims_vec_read_inner_acc_sc =
-                        SelfReadIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
+                    let fi_read_ids_to_2_dims_vec_read_inner_acc_sc =
+                        SelfReadIdsTo2DimsVecReadInnerAccSc::from_tokens(&fi);
                     let ident_read_ids_upper_fields_init_without_pk_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el0: &SynFieldWrapper| {
                             let fi0 = &el0.ident;
@@ -5563,7 +5563,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &url,
                             &table_uo,
                             #select_dflt_all_with_max_page_size_clone_ts,
-                            #fi_read_ids_to_two_dims_vec_read_inner_acc_sc
+                            #fi_read_ids_to_2_dims_vec_read_inner_acc_sc
                         ).await.into_iter().enumerate() {
                             #ts_fedea8c3
                         }
@@ -6115,7 +6115,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let #IdentCreateDfltSc = ident_create_dflt();
                         #select_dflt_all_with_max_page_size_not_empty_unique_vec_ts
                         #common_read_ids_returned_from_co_ts
-                        #read_ids_to_two_dims_vec_read_inner_acc_fields_ts
+                        #read_ids_to_2_dims_vec_read_inner_acc_fields_ts
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
                                 let mut acc_9189f86e: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();
