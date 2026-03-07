@@ -12,7 +12,7 @@ use optimal_pack::OptimalPack;
 #[pg_crud::ro_extra_er_vrts{enum RoExtraErVrts{}}]
 #[pg_crud::um_extra_er_vrts{enum UmExtraErVrts{}}]
 #[pg_crud::uo_extra_er_vrts{enum UoExtraErVrts{}}]
-#[pg_crud::delete_many_extra_er_vrts{enum DeleteManyExtraErVrts{}}]
+#[pg_crud::dm_extra_er_vrts{enum DmExtraErVrts{}}]
 #[pg_crud::delete_one_extra_er_vrts{enum DeleteOneExtraErVrts{}}]
 #[pg_crud::common_extra_er_vrts{
     enum CommonExtraErVrts {
@@ -29,7 +29,7 @@ use optimal_pack::OptimalPack;
 #[pg_crud::ro_extra_logic{}]
 #[pg_crud::um_extra_logic{}]
 #[pg_crud::uo_extra_logic{}]
-#[pg_crud::delete_many_extra_logic{}]
+#[pg_crud::dm_extra_logic{}]
 #[pg_crud::delete_one_extra_logic{}]
 #[pg_crud::common_extra_logic{}]
 pub struct TableExample {

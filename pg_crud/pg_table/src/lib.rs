@@ -81,11 +81,7 @@ pub fn gen_uo_query_string(
     )
 }
 #[must_use]
-pub fn gen_delete_many_query_string(
-    table: &str,
-    where_string: &str,
-    pk_field_name: &str,
-) -> String {
+pub fn gen_dm_query_string(table: &str, where_string: &str, pk_field_name: &str) -> String {
     format!("delete from {table} {where_string} returning {pk_field_name}")
 }
 #[must_use]

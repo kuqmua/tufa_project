@@ -608,7 +608,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ####"^first_test_name_create$"  
 
-DELETE http://127.0.0.1:8080/table_example/delete_many HTTP/1.1
+DELETE http://127.0.0.1:8080/table_example/dm HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -1094,7 +1094,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/table_example/delete_many_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/dm_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 

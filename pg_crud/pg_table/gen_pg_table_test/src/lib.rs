@@ -58,7 +58,7 @@ server_config = {path = "../../../server_config"}"#,
                             "ro_write_into_file": "False",
                             "um_write_into_file": "False",
                             "uo_write_into_file": "False",
-                            "delete_many_write_into_file": "False",
+                            "dm_write_into_file": "False",
                             "delete_one_write_into_file": "False",
                             "tests_write_into_file": "False",
                             "common_write_into_file": "False",
@@ -70,7 +70,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::ro_extra_er_vrts{enum RoExtraErVrts{}}]
                         #[pg_crud::um_extra_er_vrts{enum UmExtraErVrts{}}]
                         #[pg_crud::uo_extra_er_vrts{enum UoExtraErVrts{}}]
-                        #[pg_crud::delete_many_extra_er_vrts{enum DeleteManyExtraErVrts{}}]
+                        #[pg_crud::dm_extra_er_vrts{enum DmExtraErVrts{}}]
                         #[pg_crud::delete_one_extra_er_vrts{enum DeleteOneExtraErVrts{}}]
                         #[pg_crud::common_extra_er_vrts{
                             enum CommonExtraErVrts {
@@ -87,7 +87,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::ro_extra_logic{}]
                         #[pg_crud::um_extra_logic{}]
                         #[pg_crud::uo_extra_logic{}]
-                        #[pg_crud::delete_many_extra_logic{}]
+                        #[pg_crud::dm_extra_logic{}]
                         #[pg_crud::delete_one_extra_logic{}]
                         #[pg_crud::common_extra_logic{}]
                         pub struct TableExample {
