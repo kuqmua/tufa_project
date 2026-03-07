@@ -1497,8 +1497,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let mut #fi: #opt_v_ft_as_pg_type_read_ts = None;
                         }
                     });
-                let (assignment_vrt_pk_ts, assignment_vrts_without_pk_ts) = {
-                    let gen_assignment_ts =
+                let (assign_vrt_pk_ts, assign_vrts_without_pk_ts) = {
+                    let gen_assign_ts =
                         |variant_ucc_ts: &dyn ToTokens,
                          pg_type_read_ts: &dyn ToTokens,
                          fi_string_dq_ts: &dyn ToTokens,
@@ -1523,7 +1523,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {#ident_select_ucc::#variant_ucc_ts(_) => #ts}
                         };
                     (
-                        gen_assignment_ts(
+                        gen_assign_ts(
                             &pk_fi_ucc_ts,
                             &pk_ft_as_pg_type_read_ucc,
                             &dq_ts(&pk_fi),
@@ -1532,7 +1532,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         fields_without_pk
                             .iter()
                             .map(|el| {
-                                gen_assignment_ts(
+                                gen_assign_ts(
                                     &ToTokensToUccTs::case_or_panic(&el.ident),
                                     &gen_as_pg_type_read_ts(&el.type0),
                                     &dq_ts(&el.ident),
@@ -1552,8 +1552,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #decl_without_pk_ts
                         for el_dca9f0b7 in #SelectSc.to_vec() {
                             match el_dca9f0b7 {
-                                #assignment_vrt_pk_ts,
-                                #(#assignment_vrts_without_pk_ts),*
+                                #assign_vrt_pk_ts,
+                                #(#assign_vrts_without_pk_ts),*
                             }
                         }
                         Ok(Self {#(#fields_init_ts),*})
@@ -3117,7 +3117,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote! {v_80ee6983},
                         ),
                         Op::Um => {
-                            let fields_named_without_pk_update_assignment_ts =
+                            let fields_named_without_pk_update_assign_ts =
                                 gen_fields_named_without_pk_without_comma_ts(&|el: &SynField| {
                                     gen_for_el_in_update_for_query_vec_ts_03fc0945(
                                         &el.ident,
@@ -3144,7 +3144,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         },
                                     )
                                 });
-                            let pk_update_assignment_ts = gen_for_el_in_update_for_query_vec_ts(
+                            let pk_update_assign_ts = gen_for_el_in_update_for_query_vec_ts(
                                 &gen_match_qb_or_err_ts_519a3119(
                                     &quote! {#pk_ft_as_pg_type_ts #UpdateQbSc(
                                         el_a72f3eac.#pk_fi,
@@ -3172,8 +3172,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     )
                                 });
                             quote! {
-                                #fields_named_without_pk_update_assignment_ts
-                                #pk_update_assignment_ts
+                                #fields_named_without_pk_update_assign_ts
+                                #pk_update_assign_ts
                                 #binded_query_select_only_updated_ids_qb_ts
                             }
                         }
