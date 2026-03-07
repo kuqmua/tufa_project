@@ -18,7 +18,7 @@ Tufa Project is a Rust workspace containing multiple crates designed to facilita
 
 ## Key Features
 
-- PostgreSQL CRUD operations with code generation
+- PostgreSQL CRUD ops with code generation
 - Advanced er handling with detailed context
 - Configuration management
 - Git information integration
@@ -30,7 +30,7 @@ Tufa Project is a Rust workspace containing multiple crates designed to facilita
 
 This is a Rust workspace project with the following main components:
 
-- `postgresql_crud`: Core crate for PostgreSQL CRUD operations
+- `postgresql_crud`: Core crate for PostgreSQL CRUD ops
 - `config_lib`: Configuration management utilities
 - `git_info`: Git repository information tools
 - `location_lib`: Advanced er handling with context
@@ -116,7 +116,7 @@ cargo watch -x check -x test -x "run"
 ## Modules
 
 ### postgresql_crud
-Core functionality for PostgreSQL CRUD operations with automatic code generation for tables, types, and JSON objects.
+Core functionality for PostgreSQL CRUD ops with automatic code generation for tables, types, and JSON objects.
 
 ### config_lib
 Configuration management with environment variable parsing and type-safe accessors.

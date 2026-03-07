@@ -1243,7 +1243,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     ))
                 }
             };
-            let gen_ts_ae2fa44d = |pg_type_ptrn: &PgTypePtrn, operation: &dyn Display| {
+            let gen_ts_ae2fa44d = |pg_type_ptrn: &PgTypePtrn, op: &dyn Display| {
                 let (
                     mb_dims_decl_ts,
                     mb_dims_default_init_ts,
@@ -1264,7 +1264,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     },
                     {
                         let format_ts = dq_ts(&format!(
-                            "{{}}(jsonb_array_length({{}}{}) {operation} ${{}})",
+                            "{{}}(jsonb_array_length({{}}{}) {op} ${{}})",
                             pg_type_kind.format_argument()
                         ));
                         let ts = gen_ts_e527a806(&format_ts, &mb_extra_params_ts);

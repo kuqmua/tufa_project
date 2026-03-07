@@ -3022,7 +3022,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 // pub type WrapperOfMyTraitAl = WrapperOfMyTrait<MyStruct>;
                 // #[derive(PartialEq, OptimalPack)]
                 // pub struct WrapperOfWrapperOfMyTraitAl(WrapperOfMyTraitAl);
-                // // er[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
+                // // er[E0369]: binary op `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
                 let ident_with_id_stdrt_not_null_update_el_fields_decl_ts = quote! {
                     #IdSc: #pg_crud_path_pg_json_type_uuid_uuid_update_ts,
                     #FieldsSc: #ident_stdrt_not_null_as_pg_json_type_update_ts
