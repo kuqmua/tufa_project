@@ -77,7 +77,7 @@ pub fn location(input: Ts) -> Ts {
     } else {
         quote! {<#(#generic_params),*>}
     };
-    let mb_generic_params_location_lib_to_err_string_annotations_ts = if generic_params.is_empty() {
+    let mb_generic_params_location_lib_to_err_string_anns_ts = if generic_params.is_empty() {
         Ts2::new()
     } else {
         let v = generic_params
@@ -297,7 +297,7 @@ pub fn location(input: Ts) -> Ts {
                 }
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &mb_generic_params_location_lib_to_err_string_annotations_ts,
+                &mb_generic_params_location_lib_to_err_string_anns_ts,
                 &ident,
                 &mb_generic_params_ts,
                 &impl_display_handle_ts,
@@ -366,14 +366,14 @@ pub fn location(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &mb_generic_params_location_lib_to_err_string_annotations_ts,
+                &mb_generic_params_location_lib_to_err_string_anns_ts,
                 &ident_with_serde_ucc,
                 &mb_generic_params_ts,
                 &impl_display_handle_ts,
             );
             let impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(
-                    &mb_generic_params_location_lib_to_err_string_annotations_ts,
+                    &mb_generic_params_location_lib_to_err_string_anns_ts,
                     &ident_with_serde_ucc,
                     &mb_generic_params_ts,
                     &quote! {format!("{self}")},
@@ -395,7 +395,7 @@ pub fn location(input: Ts) -> Ts {
                 quote! {match self { #(#vrts_ts),* }}
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &mb_generic_params_location_lib_to_err_string_annotations_ts,
+                &mb_generic_params_location_lib_to_err_string_anns_ts,
                 &ident,
                 &mb_generic_params_ts,
                 &quote! {
@@ -443,7 +443,7 @@ pub fn location(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &mb_generic_params_location_lib_to_err_string_annotations_ts,
+                &mb_generic_params_location_lib_to_err_string_anns_ts,
                 &ident_with_serde_ucc,
                 &mb_generic_params_ts,
                 &quote! {

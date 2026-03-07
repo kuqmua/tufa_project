@@ -114,7 +114,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
     let import = Import::PgCrudCommon;
     let t_ts = quote! {T};
-    let t_annotation_generic_ts = quote! {<#t_ts>};
+    let t_ann_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
     let pub_v_t_ts = quote! {pub #VSc: T};
     let unsigned_part_of_i32_ts = quote! {#import::UnsignedPartOfI32};
@@ -176,7 +176,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             &ident,
             match &generic {
                 Generic::False => &proc_macro2_ts_new,
-                Generic::True { .. } => &t_annotation_generic_ts,
+                Generic::True { .. } => &t_ann_generic_ts,
             },
             &quote! {
                 Self {
@@ -223,7 +223,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &match &generic {
                     Generic::False => &proc_macro2_ts_new,
-                    Generic::True { .. } => &t_annotation_generic_ts,
+                    Generic::True { .. } => &t_ann_generic_ts,
                 },
                 incr_param_undrscr,
                 &ColumnParamUndrscr::False,

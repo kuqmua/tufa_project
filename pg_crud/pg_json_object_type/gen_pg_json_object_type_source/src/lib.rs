@@ -1920,16 +1920,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let gen_type_as_pg_json_type_read_inner_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_read_inner);
         let gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts = |
             is_stdrt_with_id: &IsStdrtWithId,
-            read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnOrInner
+            read_with_or_without_ann_or_inner: &ReadWithOrWithoutAnnOrInner
         | {
             let ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
-                let mb_serde_skip_serializing_if_opt_is_none_ts = match &read_with_or_without_annotation_or_inner {
+                let mb_serde_skip_serializing_if_opt_is_none_ts = match &read_with_or_without_ann_or_inner {
                     ReadWithOrWithoutAnnOrInner::WithSerdeOptIsNoneAnn => quote! {#[serde(skip_serializing_if = "Option::is_none")]},
                     ReadWithOrWithoutAnnOrInner::WithoutSerdeOptIsNoneAnn |
                     ReadWithOrWithoutAnnOrInner::Inner => Ts2::new(),
                 };
                 let fi = &el0.ident;
-                let ft_as_json_type_read_ts = match &read_with_or_without_annotation_or_inner {
+                let ft_as_json_type_read_ts = match &read_with_or_without_ann_or_inner {
                     ReadWithOrWithoutAnnOrInner::Inner => gen_type_as_pg_json_type_read_inner_ts(
                         &el0.type0
                     ),
@@ -2484,12 +2484,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #import::UniqueVec::<#ident_with_id_stdrt_not_null_update_for_query_el_ucc>
         };
         let gen_create_update_delete_fields_ts_043c4057 = |
-            add_serde_skip_serializing_if_vec_is_empty_annotation: &AddSerdeSkipSerializingIfVecIsEmptyAnn,
+            add_serde_skip_serializing_if_vec_is_empty_ann: &AddSerdeSkipSerializingIfVecIsEmptyAnn,
             create_ts: &dyn ToTokens,
             update_ts: &dyn ToTokens,
             delete_ts: &dyn ToTokens
         | {
-            let mb_serde_skip_serializing_if_vec_is_empty_ts = match &add_serde_skip_serializing_if_vec_is_empty_annotation {
+            let mb_serde_skip_serializing_if_vec_is_empty_ts = match &add_serde_skip_serializing_if_vec_is_empty_ann {
                 AddSerdeSkipSerializingIfVecIsEmptyAnn::False => Ts2::new(),
                 AddSerdeSkipSerializingIfVecIsEmptyAnn::True => quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
             };

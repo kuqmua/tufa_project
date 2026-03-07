@@ -105,7 +105,7 @@ use token_patterns::{
 //todo mb add unnest to filter params if its arr ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
 //todo derive utoipa::ToSchema for what? original structs or with serialize deserialize?
-//todo need to add utoipa::ToSchema annotation #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
+//todo need to add utoipa::ToSchema ann #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
 //todo remove useless derives like useless serde::Serialize and Deserialize
 //todo mb gen compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/pg/types/index.html#rust_decimal
 //todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
