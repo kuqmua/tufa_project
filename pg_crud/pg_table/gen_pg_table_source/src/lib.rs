@@ -972,6 +972,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let _: Option<char> = #acc_ts.pop();
         }
     };
+    let gen_acc_string_pop_acc_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
+        let ts0 = gen_acc_string_pop_ts(acc_ts, ts);
+        quote! {
+            #ts0
+            #acc_ts
+        }
+    };
     let gen_if_let_some_ts = |ts0: &dyn ToTokens, ts1: &dyn ToTokens, ts2: &dyn ToTokens| {
         quote! {
             if let Some(#ts0) = #ts1 {
@@ -2771,14 +2778,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }},
                         &Er0
                     ));
-                    let ts0 = gen_acc_string_pop_ts(
+                    let ts0 = gen_acc_string_pop_acc_ts(
                         &quote!{acc_a35168d8},
                         &quote!{#(#select_only_ids_query_part_init_ts)*}
                     );
-                    quote! {{
-                        #ts0
-                        acc_a35168d8
-                    }}
+                    quote! {{#ts0}}
                 };
                 let gen_if_write_is_err_ts_f22b2dd2 = |ts: &dyn ToTokens|gen_if_write_is_err_ts(
                     &ts,
@@ -2792,7 +2796,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 "({v_f4fdd10d}),"
                             }
                         );
-                        let ts0 = gen_acc_string_pop_ts(
+                        let ts0 = gen_acc_string_pop_acc_ts(
                             &quote!{acc_8a58994e},
                             &{
                                 let ts = gen_match_ok_err_ts_dd5366af(
@@ -2816,7 +2820,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &{
                                 #incr_init_ts
                                 #ts0
-                                acc_8a58994e
                             },
                             &#select_only_ids_query_part_ts
                         )}
@@ -2994,11 +2997,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             }
                         );
-                        let ts0 = gen_acc_string_pop_ts(
+                        let ts0 = gen_acc_string_pop_acc_ts(
                             &quote!{acc_b86a253a},
                             &fields_named_without_pk_update_assignment_ts
                         );
-                        let ts1 = gen_acc_string_pop_ts(
+                        let ts1 = gen_acc_string_pop_acc_ts(
                             &quote!{acc_a95eb175},
                             &quote!{
                                 for el_9b2b56f8 in &#UpdateForQueryVecSc {
@@ -3019,11 +3022,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #incr_init_ts
                                 let els = {
                                     #ts0
-                                    acc_b86a253a
                                 };
                                 let pks = {
                                     #ts1
-                                    acc_a95eb175
                                 };
                                 let return_columns = {
                                     let mut acc_fd44b0aa = String::new();
@@ -3070,7 +3071,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let extra_params_pk_modification_ts =
                             gen_match_update_query_part_pk_ts(operation, &quote! {#UpdateForQuerySc});
-                        let ts_a6ae3308 = gen_acc_string_pop_ts(
+                        let ts_a6ae3308 = gen_acc_string_pop_acc_ts(
                             &quote!{acc_683e37b8},
                             &extra_params_modification_ts
                         );
@@ -3083,7 +3084,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #incr_init_ts
                                 let #ColumnsSc = {
                                     #ts_a6ae3308
-                                    acc_683e37b8
                                 };
                                 let #PkQueryPartSc = #extra_params_pk_modification_ts;
                                 let return_columns = #ts;
