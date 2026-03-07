@@ -611,7 +611,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let mut impl_ident_vec_ts = Vec::new();
     let mut operation_routes_ts = Vec::new();
-    let mut params_ts = Vec::new();
+    let mut content_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
         let ts = quote! {
@@ -2404,89 +2404,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts =
-        |operation: &Operation,
-         desirable_type_ts: &dyn ToTokens,
-         type_vrts_from_req_res_syn_vrts: &Vec<Variant>|
-         -> Ts2 {
-            let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
-            let ident_try_operation_logic_res_vrts_ts = {
-                let ts_c997a274 = StructOrEnumDeriveTsStreamBuilder::new()
-                    .make_pub()
-                    .derive_debug()
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .build_enum(&ident_operation_res_vrts_ucc, &Ts2::new(), &{
-                        let vrts_ts = type_vrts_from_req_res_syn_vrts
-                            .iter()
-                            .map(gen_serde_version_of_named_syn_vrt);
-                        quote! {{
-                            #DesirableUcc(#desirable_type_ts),
-                            #(#vrts_ts),*
-                        }}
-                    });
-                quote! {
-                    #AllowClippyArbitrarySourceItemOrdering
-                    #ts_c997a274
-                }
-            };
-            let ident_operation_er_ucc = gen_ident_operation_er_ucc(operation);
-            let impl_ident_operation_res_vrts_ts = {
-                let from_handle_ts = gen_from_handle_ts(&ident_operation_er_ucc, &{
-                    let vrts_ts = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
-                        let vrt_ident = &el.ident;
-                        let Fields::Named(fields_named) = &el.fields else {
-                            panic!("10764d2b");
-                        };
-                        let fields_mapped_into_ts = {
-                            let fields_ts = fields_named.named.iter().map(|field| &field.ident);
-                            quote! {#(#fields_ts),*}
-                        };
-                        let ident_operation_er_with_serde_ucc =
-                            gen_ident_operation_er_with_serde_ucc(operation);
-                        quote! {
-                            #ident_operation_er_with_serde_ucc::#vrt_ident {
-                                #fields_mapped_into_ts
-                            } => Self::#vrt_ident {
-                                #fields_mapped_into_ts
-                            }
-                        }
-                    });
-                    quote! {
-                        match #VSc.#IntoSerdeVersionSc() {
-                            #(#vrts_ts),*
-                        }
-                    }
-                });
-                quote! {
-                    impl #ident_operation_res_vrts_ucc {
-                        #from_handle_ts
-                    }
-                }
-            };
-            let ident_operation_er_ts = {
-                let ts_685e0be8 = StructOrEnumDeriveTsStreamBuilder::new()
-                    .make_pub()
-                    .derive_debug()
-                    .derive_thiserror_error()
-                    .derive_location_lib_location()
-                    .build_enum(&ident_operation_er_ucc, &Ts2::new(), &{
-                        let vrts_ts = type_vrts_from_req_res_syn_vrts
-                            .iter()
-                            .map(gen_location_vrt_ts);
-                        quote! {{#(#vrts_ts),*}}
-                    });
-                quote! {
-                    #AllowClippyArbitrarySourceItemOrdering
-                    #ts_685e0be8
-                }
-            };
-            quote! {
-                #ident_try_operation_logic_res_vrts_ts
-                #impl_ident_operation_res_vrts_ts
-                #ident_operation_er_ts
-            }
-        };
     let gen_ident_operation_payload_ucc = |operation: &Operation| match &operation {
         Operation::CreateOne => quote! {#ident_create_ucc},
         Operation::UpdateOne => quote! {#ident_update_ucc},
@@ -3454,24 +3371,37 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             #operation_payload_example_ts
         });
-        // let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-        //     &{
-        //         let mut acc = common_route_syn_vrts.clone();
-        //         if let Operation::ReadMany | Operation::ReadOne = &operation {
-        //             acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
-        //         }
-        //         if let Operation::CreateMany | Operation::ReadMany | Operation::ReadOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
-        //             acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
-        //         }
-        //         if let Operation::CreateMany | Operation::DeleteOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
-        //             acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
-        //         }
-        //         acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
-        //         acc
-        //     },
-        //     operation
-        // );
-        params_ts.push({
+        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
+            &{
+                let mut acc = common_route_syn_vrts.clone();
+                if let Operation::ReadMany | Operation::ReadOne = &operation {
+                    acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
+                }
+                if let Operation::CreateMany
+                | Operation::ReadMany
+                | Operation::ReadOne
+                | Operation::CreateOne
+                | Operation::UpdateMany
+                | Operation::UpdateOne
+                | Operation::DeleteMany = &operation
+                {
+                    acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
+                }
+                if let Operation::CreateMany
+                | Operation::DeleteOne
+                | Operation::CreateOne
+                | Operation::UpdateMany
+                | Operation::UpdateOne
+                | Operation::DeleteMany = &operation
+                {
+                    acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
+                }
+                acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
+                acc
+            },
+            operation,
+        );
+        content_ts.push({
             let payload_ts = {
                 let gen_params_payload_and_default_ts =
                     |decl_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
@@ -3719,7 +3649,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::CreateOne | Operation::UpdateOne => Ts2::new(),
                 }
             };
-            let params_ts_41360953 = {
+            let params_ts = {
                 let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
                 let ts_0d032fce = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
@@ -3737,9 +3667,99 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #ts_0d032fce
                 }
             };
+            let operation_ts = {
+                let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
+                let ident_try_operation_logic_res_vrts_ts = {
+                    let ts_c997a274 = StructOrEnumDeriveTsStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .build_enum(&ident_operation_res_vrts_ucc, &Ts2::new(), &{
+                            let vrts_ts = type_vrts_from_req_res_syn_vrts
+                                .iter()
+                                .map(gen_serde_version_of_named_syn_vrt);
+                            let desirable_type_ts: &dyn ToTokens = match &operation {
+                                Operation::ReadMany => &vec_struct_opts_ident_ts,
+                                Operation::ReadOne => &ident_read_ucc,
+                                Operation::DeleteMany => &vec_pk_ft_read_ts,
+                                Operation::DeleteOne => &pk_ft_as_pg_type_read_ucc,
+                                Operation::CreateOne |
+                                Operation::UpdateOne => &ident_read_only_ids_ucc,
+                                Operation::CreateMany |
+                                Operation::UpdateMany => &vec_ident_read_only_ids_ts,
+                            };
+                            quote! {{
+                                #DesirableUcc(#desirable_type_ts),
+                                #(#vrts_ts),*
+                            }}
+                        });
+                    quote! {
+                        #AllowClippyArbitrarySourceItemOrdering
+                        #ts_c997a274
+                    }
+                };
+                let ident_operation_er_ucc = gen_ident_operation_er_ucc(operation);
+                let impl_ident_operation_res_vrts_ts = {
+                    let from_handle_ts = gen_from_handle_ts(&ident_operation_er_ucc, &{
+                        let vrts_ts = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
+                            let vrt_ident = &el.ident;
+                            let Fields::Named(fields_named) = &el.fields else {
+                                panic!("10764d2b");
+                            };
+                            let fields_mapped_into_ts = {
+                                let fields_ts = fields_named.named.iter().map(|field| &field.ident);
+                                quote! {#(#fields_ts),*}
+                            };
+                            let ident_operation_er_with_serde_ucc =
+                                gen_ident_operation_er_with_serde_ucc(operation);
+                            quote! {
+                                #ident_operation_er_with_serde_ucc::#vrt_ident {
+                                    #fields_mapped_into_ts
+                                } => Self::#vrt_ident {
+                                    #fields_mapped_into_ts
+                                }
+                            }
+                        });
+                        quote! {
+                            match #VSc.#IntoSerdeVersionSc() {
+                                #(#vrts_ts),*
+                            }
+                        }
+                    });
+                    quote! {
+                        impl #ident_operation_res_vrts_ucc {
+                            #from_handle_ts
+                        }
+                    }
+                };
+                let ident_operation_er_ts = {
+                    let ts_685e0be8 = StructOrEnumDeriveTsStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_thiserror_error()
+                        .derive_location_lib_location()
+                        .build_enum(&ident_operation_er_ucc, &Ts2::new(), &{
+                            let vrts_ts = type_vrts_from_req_res_syn_vrts
+                                .iter()
+                                .map(gen_location_vrt_ts);
+                            quote! {{#(#vrts_ts),*}}
+                        });
+                    quote! {
+                        #AllowClippyArbitrarySourceItemOrdering
+                        #ts_685e0be8
+                    }
+                };
+                quote! {
+                    #ident_try_operation_logic_res_vrts_ts
+                    #impl_ident_operation_res_vrts_ts
+                    #ident_operation_er_ts
+                }
+            };
             quote! {
                 #payload_ts
-                #params_ts_41360953
+                #params_ts
+                #operation_ts
             }
         });
     }
@@ -3921,11 +3941,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &vec_ident_read_only_ids_ts,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -3939,7 +3954,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -3961,11 +3975,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &ident_read_only_ids_ucc,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -3979,7 +3988,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -4001,11 +4009,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &vec_struct_opts_ident_ts,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
                 let mut acc = common_http_req_syn_vrts.clone();
@@ -4022,7 +4025,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -4044,11 +4046,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &ident_read_ucc,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
                 let mut acc = common_http_req_syn_vrts.clone();
@@ -4065,7 +4062,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -4088,11 +4084,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &vec_ident_read_only_ids_ts,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4106,7 +4097,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -4128,11 +4118,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &ident_read_only_ids_ucc,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4146,7 +4131,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -4169,11 +4153,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &vec_pk_ft_read_ts,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4187,7 +4166,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -4208,11 +4186,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
-            &operation,
-            &pk_ft_as_pg_type_read_ucc,
-            &type_vrts_from_req_res_syn_vrts,
-        );
         let try_operation_ts = {
             let try_operation_er_ts =
                 gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
@@ -4226,7 +4199,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #operation_ts
             #try_operation_ts
         }
     };
@@ -6546,7 +6518,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 }
             }
-            #(#params_ts)*
+            #(#content_ts)*
             #common_ts
             #create_many_ts
             #create_one_ts
