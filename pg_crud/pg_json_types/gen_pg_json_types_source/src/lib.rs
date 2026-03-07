@@ -23,11 +23,10 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNullable,
     IsQbMutable, IsSelectOnlyCreatedIdsQbMutable, IsSelectOnlyUpdatedIdsQbMutable,
-    IsSelectQueryPartColumnFieldForErMessageUsed, IsSelectQueryPartIsPgTypeUsed,
-    IsSelectQueryPartSelfSelectUsed, IsStdrtNotNull, IsUpdateQbMutable,
-    IsUpdateQueryPartJsonbSetTargetUsed, IsUpdateQueryPartSelfUpdateUsed, PgFilter,
-    PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    gen_impl_crate_is_string_empty_for_ident_ts,
+    IsSelectQpColumnFieldForErMessageUsed, IsSelectQpIsPgTypeUsed, IsSelectQpSelfSelectUsed,
+    IsStdrtNotNull, IsUpdateQbMutable, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed,
+    PgFilter, PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema,
+    ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts,
     gen_impl_pg_json_type_test_cases_for_ident_ts, gen_impl_pg_json_type_ts,
@@ -1852,7 +1851,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let gen_dim_nbr_str = |dims_nbr: usize| format!("dim{dims_nbr}");
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
             let gen_dim_nbr_end_str = |dims_nbr: usize| format!("{}_end", gen_dim_nbr_str(dims_nbr));
-            let select_only_created_or_updated_ids_query_part_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
+            let select_only_created_or_updated_ids_qp_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object_v(&"${v_f06128be}")));
                 quote! {
                     match #import::incr_checked_add_one_returning_incr(#IncrSc) {
@@ -1881,11 +1880,11 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_create_for_query_ucc,
                 &ident_select_ucc,
                 &match &pattern {
-                    Pattern::Stdrt => IsSelectQueryPartSelfSelectUsed::False,
-                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => IsSelectQueryPartSelfSelectUsed::True,
+                    Pattern::Stdrt => IsSelectQpSelfSelectUsed::False,
+                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => IsSelectQpSelfSelectUsed::True,
                 },
-                &IsSelectQueryPartColumnFieldForErMessageUsed::False,
-                &IsSelectQueryPartIsPgTypeUsed::False,
+                &IsSelectQpColumnFieldForErMessageUsed::False,
+                &IsSelectQpIsPgTypeUsed::False,
                 &{
                     let format_handle = {
                         //last child dim v does not matter - null or type - works both good
@@ -2208,8 +2207,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                 },
-                &IsUpdateQueryPartSelfUpdateUsed::False,
-                &IsUpdateQueryPartJsonbSetTargetUsed::False,
+                &IsUpdateQpSelfUpdateUsed::False,
+                &IsUpdateQpJsonbSetTargetUsed::False,
                 &IsUpdateQbMutable::True,
                 &quote! {
                     if let Err(er) = query.try_bind(#VSc) {
@@ -2217,14 +2216,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                     Ok(query)
                 },
-                &select_only_created_or_updated_ids_query_part_ts,
+                &select_only_created_or_updated_ids_qp_ts,
                 &if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                     IsSelectOnlyUpdatedIdsQbMutable::True
                 } else {
                     IsSelectOnlyUpdatedIdsQbMutable::False
                 },
                 &select_only_created_or_updated_ids_qb_ts,
-                &select_only_created_or_updated_ids_query_part_ts,
+                &select_only_created_or_updated_ids_qp_ts,
                 &if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                     IsSelectOnlyCreatedIdsQbMutable::True
                 } else {
@@ -2282,7 +2281,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     fn get_inner(#VSc: &<Self::PgJsonType as #import::PgJsonType>::#CreateForQueryUcc) -> &Self::#ReadInnerUcc {
                         &#VSc.0.0
                     }
-                    fn incr_checked_add_one(#IncrSc: &mut #U64) -> Result<#U64, #import::QueryPartEr> {
+                    fn incr_checked_add_one(#IncrSc: &mut #U64) -> Result<#U64, #import::QpEr> {
                         #import::incr_checked_add_one_returning_incr(#IncrSc)
                     }
                 }

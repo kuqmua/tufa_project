@@ -3,7 +3,7 @@ use location_lib::{Location, loc};
 use optimal_pack::OptimalPack;
 use pg_crud_common::{
     DEFAULT_PAGINATION_LIMIT, DefaultOptSomeVecOneEl, DefaultOptSomeVecOneElMaxPageSize,
-    PaginationBase, PgTypeWhereFilter, QueryPartEr,
+    PaginationBase, PgTypeWhereFilter, QpEr,
 };
 use schemars::JsonSchema;
 use serde::de::{Error as SerdeEr, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -232,13 +232,13 @@ impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         self.0.qb(query)
     }
-    fn query_part(
+    fn qp(
         &self,
         incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
-        self.0.query_part(incr, column, is_need_to_add_operator)
+    ) -> Result<String, QpEr> {
+        self.0.qp(incr, column, is_need_to_add_operator)
     }
 }
 impl DefaultOptSomeVecOneEl for PaginationStartsWithOne {

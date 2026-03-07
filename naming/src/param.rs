@@ -420,12 +420,12 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
         "self", "reader"
     ],
-    ["pg", "type", "self", "to", "update", "query", "part", "er"],
+    ["pg", "type", "self", "to", "update", "qp", "er"],
     [
-        "pg", "type", "self", "as", "json", "to", "update", "query", "part", "er"
+        "pg", "type", "self", "as", "json", "to", "update", "qp", "er"
     ],
     [
-        "pg", "type", "self", "as", "json", "not", "null", "to", "update", "query", "part", "er"
+        "pg", "type", "self", "as", "json", "not", "null", "to", "update", "qp", "er"
     ],
     ["self", "where", "try", "new", "er"],
     ["pg", "type", "self", "where", "equal"],
@@ -825,7 +825,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "where", "second", "dim"],
     ["self", "visitor"],
     ["self", "not", "null", "try", "new", "er"],
-    ["self", "to", "update", "query", "part", "er"],
+    ["self", "to", "update", "qp", "er"],
     ["self", "length"],
     ["vec", "self", "arr", "not", "null"],
     ["vec", "self", "arr", "nullable"],
@@ -873,7 +873,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unique", "vec", "self",
         "select"
     ],
-    ["update", "query", "part", "self"],
+    ["update", "qp", "self"],
     ["self", "tests"],
     ["self", "origin", "try", "new", "er"],
     ["self", "origin", "try", "new", "for", "deserialize", "er"],

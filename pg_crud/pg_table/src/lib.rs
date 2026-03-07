@@ -40,18 +40,15 @@ pub fn gen_ro_query_string(table: &str, select_string: &str, where_string: &str)
     format!("select {select_string} from {table} where {where_string}")
 }
 #[must_use]
-pub fn gen_column_queals_v_comma_uo_query_part(column: &str, value: &str) -> String {
+pub fn gen_column_queals_v_comma_uo_qp(column: &str, value: &str) -> String {
     format!("{column} = {value},")
 }
 #[must_use]
-pub fn gen_when_column_id_then_v_um_query_part(column: &str, id: &str, value: &str) -> String {
+pub fn gen_when_column_id_then_v_um_qp(column: &str, id: &str, value: &str) -> String {
     format!("when {column} = {id} then {value} ")
 }
 #[must_use]
-pub fn gen_column_equals_case_acc_else_column_end_comma_um_query_part(
-    column: &str,
-    acc: &str,
-) -> String {
+pub fn gen_column_equals_case_acc_else_column_end_comma_um_qp(column: &str, acc: &str) -> String {
     format!("{column} = case {acc}else {column} end,")
 }
 //todo extra param for columns_to_return instead of pk_field_name in "returning {pk_field_name}""
@@ -73,11 +70,11 @@ pub fn gen_uo_query_string(
     table: &str,
     columns: &str,
     pk_field_name: &str,
-    pk_query_part: &str,
+    pk_qp: &str,
     columns_to_return: &str,
 ) -> String {
     format!(
-        "update {table} set {columns} where {pk_field_name} = {pk_query_part} returning {columns_to_return}"
+        "update {table} set {columns} where {pk_field_name} = {pk_qp} returning {columns_to_return}"
     )
 }
 #[must_use]

@@ -8,13 +8,13 @@ use naming::{
     ColumnFieldForErMessageSc, ColumnFieldSc, ColumnSc, CreateForQueryUcc,
     CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
-    CreateQbSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
+    CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElSc, DisplayPlusToTokens,
     EqualOperatorUcc, FiSc, IncrSc, IsNeedToAddOperatorSc, IsPkSc, JsonbSetAccumulatorSc,
     JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
     PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPkUcc,
     PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
-    PreviousReadMergedWithOptUpdateIntoReadSc, QbSc, QueryPartErUcc, QueryPartSc, QuerySc,
+    PreviousReadMergedWithOptUpdateIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc,
     ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
     ReadInnerUcc, ReadOnlyIdsIntoOptVReadInnerSc, ReadOnlyIdsMergedWithCreateIntoOptVReadSc,
     ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
@@ -34,10 +34,10 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc,
     ReadOnlyIdsToOptVReadDefaultOptSomeVecOneElSc, ReadOnlyIdsToTwoDimsVecReadInnerSc,
-    ReadOnlyIdsUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQueryPartSc,
-    SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQbSc, SelectOnlyUpdatedIdsQueryPartSc,
-    SelectQueryPartSc, SelectUcc, SelfUcc, TableTypeSc, TableTypeUcc, UpdateForQueryUcc,
-    UpdateQbSc, UpdateQueryPartSc, UpdateToReadOnlyIdsSc, UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
+    ReadOnlyIdsUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc,
+    SelectOnlyIdsQpSc, SelectOnlyUpdatedIdsQbSc, SelectOnlyUpdatedIdsQpSc, SelectQpSc, SelectUcc,
+    SelfUcc, TableTypeSc, TableTypeUcc, UpdateForQueryUcc, UpdateQbSc, UpdateQpSc,
+    UpdateToReadOnlyIdsSc, UpdateUcc, VSc, VUcc, ValueSc, WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optimal_pack::OptimalPack;
@@ -225,11 +225,11 @@ impl ToTokens for IsCreateQbMutable {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsSelectQueryPartSelfSelectUsed {
+pub enum IsSelectQpSelfSelectUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQueryPartSelfSelectUsed {
+impl ToTokens for IsSelectQpSelfSelectUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -238,11 +238,11 @@ impl ToTokens for IsSelectQueryPartSelfSelectUsed {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsSelectQueryPartColumnFieldForErMessageUsed {
+pub enum IsSelectQpColumnFieldForErMessageUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQueryPartColumnFieldForErMessageUsed {
+impl ToTokens for IsSelectQpColumnFieldForErMessageUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -253,11 +253,11 @@ impl ToTokens for IsSelectQueryPartColumnFieldForErMessageUsed {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsSelectQueryPartIsPgTypeUsed {
+pub enum IsSelectQpIsPgTypeUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQueryPartIsPgTypeUsed {
+impl ToTokens for IsSelectQpIsPgTypeUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -266,11 +266,11 @@ impl ToTokens for IsSelectQueryPartIsPgTypeUsed {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsUpdateQueryPartSelfUpdateUsed {
+pub enum IsUpdateQpSelfUpdateUsed {
     False,
     True,
 }
-impl ToTokens for IsUpdateQueryPartSelfUpdateUsed {
+impl ToTokens for IsUpdateQpSelfUpdateUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -279,11 +279,11 @@ impl ToTokens for IsUpdateQueryPartSelfUpdateUsed {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsUpdateQueryPartJsonbSetTargetUsed {
+pub enum IsUpdateQpJsonbSetTargetUsed {
     False,
     True,
 }
-impl ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
+impl ToTokens for IsUpdateQpJsonbSetTargetUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -488,11 +488,11 @@ impl From<&Dim> for DimIndexNbr {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum CreateQueryPartValueUnderscore {
+pub enum CreateQpValueUnderscore {
     False,
     True,
 }
-impl ToTokens for CreateQueryPartValueUnderscore {
+impl ToTokens for CreateQpValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -501,11 +501,11 @@ impl ToTokens for CreateQueryPartValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum CreateQueryPartIncrUnderscore {
+pub enum CreateQpIncrUnderscore {
     False,
     True,
 }
-impl ToTokens for CreateQueryPartIncrUnderscore {
+impl ToTokens for CreateQpIncrUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrSc.to_tokens(tokens),
@@ -527,11 +527,11 @@ impl ToTokens for CreateQbValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum SelectQueryPartValueUnderscore {
+pub enum SelectQpValueUnderscore {
     False,
     True,
 }
-impl ToTokens for SelectQueryPartValueUnderscore {
+impl ToTokens for SelectQpValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -540,11 +540,11 @@ impl ToTokens for SelectQueryPartValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQueryPartValueUnderscore {
+pub enum UpdateQpValueUnderscore {
     False,
     True,
 }
-impl ToTokens for UpdateQueryPartValueUnderscore {
+impl ToTokens for UpdateQpValueUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -553,11 +553,11 @@ impl ToTokens for UpdateQueryPartValueUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQueryPartJsonbSetAccumulatorUnderscore {
+pub enum UpdateQpJsonbSetAccumulatorUnderscore {
     False,
     True,
 }
-impl ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
+impl ToTokens for UpdateQpJsonbSetAccumulatorUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_accumulator}.to_tokens(tokens),
@@ -566,11 +566,11 @@ impl ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQueryPartJsonbSetTargetUnderscore {
+pub enum UpdateQpJsonbSetTargetUnderscore {
     False,
     True,
 }
-impl ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
+impl ToTokens for UpdateQpJsonbSetTargetUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_target}.to_tokens(tokens),
@@ -579,11 +579,11 @@ impl ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum UpdateQueryPartJsonbSetPathUnderscore {
+pub enum UpdateQpJsonbSetPathUnderscore {
     False,
     True,
 }
-impl ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
+impl ToTokens for UpdateQpJsonbSetPathUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {jsonb_set_path}.to_tokens(tokens),
@@ -628,7 +628,7 @@ pub fn gen_pg_type_where_ts(
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
                     quote! {
-                        Self::#el_ucc(#VSc) => pg_crud_common::PgTypeWhereFilter::query_part(
+                        Self::#el_ucc(#VSc) => pg_crud_common::PgTypeWhereFilter::qp(
                             #VSc,
                             #IncrSc,
                             #ColumnSc,
@@ -683,8 +683,8 @@ pub fn gen_pg_type_where_ts(
     }
 }
 #[must_use]
-pub fn pg_crud_common_query_part_er_ts() -> Ts2 {
-    quote! {pg_crud_common::#QueryPartErUcc}
+pub fn pg_crud_common_qp_er_ts() -> Ts2 {
+    quote! {pg_crud_common::#QpErUcc}
 }
 pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("struct {v}"))
@@ -725,27 +725,27 @@ pub fn gen_impl_pg_json_type_ts(
     create_type_ts: &dyn ToTokens,
     create_for_query_type_ts: &dyn ToTokens,
     select_type_ts: &dyn ToTokens,
-    is_select_query_part_self_select_used: &IsSelectQueryPartSelfSelectUsed,
-    is_select_query_part_column_field_for_er_message_used: &IsSelectQueryPartColumnFieldForErMessageUsed,
-    is_select_query_part_is_pg_type_used: &IsSelectQueryPartIsPgTypeUsed,
-    select_query_part_ts: &dyn ToTokens,
+    is_select_qp_self_select_used: &IsSelectQpSelfSelectUsed,
+    is_select_qp_column_field_for_er_message_used: &IsSelectQpColumnFieldForErMessageUsed,
+    is_select_qp_is_pg_type_used: &IsSelectQpIsPgTypeUsed,
+    select_qp_ts: &dyn ToTokens,
     where_type_ts: &dyn ToTokens,
     read_type_ts: &dyn ToTokens,
     read_only_ids_type_ts: &dyn ToTokens,
-    select_only_ids_query_part_ts: &dyn ToTokens,
+    select_only_ids_qp_ts: &dyn ToTokens,
     read_inner_type_ts: &dyn ToTokens,
     into_inner_ts: &dyn ToTokens,
     update_type_ts: &dyn ToTokens,
     update_type_for_query_ts: &dyn ToTokens,
-    update_query_part_ts: &dyn ToTokens,
-    is_update_query_part_self_update_used: &IsUpdateQueryPartSelfUpdateUsed,
-    is_update_query_part_jsonb_set_target_used: &IsUpdateQueryPartJsonbSetTargetUsed,
+    update_qp_ts: &dyn ToTokens,
+    is_update_qp_self_update_used: &IsUpdateQpSelfUpdateUsed,
+    is_update_qp_jsonb_set_target_used: &IsUpdateQpJsonbSetTargetUsed,
     is_update_qb_mutable: &IsUpdateQbMutable,
     update_qb_ts: &dyn ToTokens,
-    select_only_updated_ids_query_part_ts: &dyn ToTokens,
+    select_only_updated_ids_qp_ts: &dyn ToTokens,
     is_select_only_updated_ids_qb_mutable: &IsSelectOnlyUpdatedIdsQbMutable,
     select_only_updated_ids_qb_ts: &dyn ToTokens,
-    select_only_created_ids_query_part_ts: &dyn ToTokens,
+    select_only_created_ids_qp_ts: &dyn ToTokens,
     is_select_only_created_ids_qb_mutable: &IsSelectOnlyCreatedIdsQbMutable,
     select_only_created_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
@@ -763,22 +763,22 @@ pub fn gen_impl_pg_json_type_ts(
             type #CreateUcc = #create_type_ts;
             type #CreateForQueryUcc = #create_for_query_type_ts;
             type #SelectUcc = #select_type_ts;
-            fn #SelectQueryPartSc(
-                #is_select_query_part_self_select_used: &Self::#SelectUcc,
+            fn #SelectQpSc(
+                #is_select_qp_self_select_used: &Self::#SelectUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
-                #is_select_query_part_column_field_for_er_message_used: #RefStr,
-                #is_select_query_part_is_pg_type_used: #Bool,
-            ) -> Result<#StringTs, #path_ts #QueryPartErUcc> {
-                #select_query_part_ts
+                #is_select_qp_column_field_for_er_message_used: #RefStr,
+                #is_select_qp_is_pg_type_used: #Bool,
+            ) -> Result<#StringTs, #path_ts #QpErUcc> {
+                #select_qp_ts
             }
             type #WhereUcc = #where_type_ts;
             type #ReadUcc = #read_type_ts;
             type #ReadOnlyIdsUcc = #read_only_ids_type_ts;
-            fn #SelectOnlyIdsQueryPartSc(
+            fn #SelectOnlyIdsQpSc(
                 #ColumnFieldSc: #RefStr,
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #select_only_ids_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #select_only_ids_qp_ts
             }
             type #ReadInnerUcc = #read_inner_type_ts;
             fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
@@ -786,14 +786,14 @@ pub fn gen_impl_pg_json_type_ts(
             }
             type #UpdateUcc = #update_type_ts;
             type #UpdateForQueryUcc = #update_type_for_query_ts;
-            fn #UpdateQueryPartSc(
-                #is_update_query_part_self_update_used: &Self::#UpdateForQueryUcc,
+            fn #UpdateQpSc(
+                #is_update_qp_self_update_used: &Self::#UpdateForQueryUcc,
                 #JsonbSetAccumulatorSc: #RefStr,
-                #is_update_query_part_jsonb_set_target_used: #RefStr,
+                #is_update_qp_jsonb_set_target_used: #RefStr,
                 #JsonbSetPathSc: #RefStr,
                 #IncrSc: #reference_mut_u64_ts,
-            ) -> Result<#StringTs, #path_ts #QueryPartErUcc> {
-                #update_query_part_ts
+            ) -> Result<#StringTs, #path_ts #QpErUcc> {
+                #update_qp_ts
             }
             fn #UpdateQbSc(
                 #VSc: Self::#UpdateForQueryUcc,
@@ -801,13 +801,13 @@ pub fn gen_impl_pg_json_type_ts(
             ) -> Result<#query_pg_arguments_ts, #StringTs> {
                 #update_qb_ts
             }
-            fn #SelectOnlyUpdatedIdsQueryPartSc(
+            fn #SelectOnlyUpdatedIdsQpSc(
                 #VSc: &Self::#UpdateForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #select_only_updated_ids_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #select_only_updated_ids_qp_ts
             }
             fn #SelectOnlyUpdatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdateForQueryUcc,
@@ -815,13 +815,13 @@ pub fn gen_impl_pg_json_type_ts(
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_updated_ids_qb_ts
             }
-            fn #SelectOnlyCreatedIdsQueryPartSc(
+            fn #SelectOnlyCreatedIdsQpSc(
                 #VSc: &Self::#CreateForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #select_only_created_ids_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #select_only_created_ids_qp_ts
             }
             fn #SelectOnlyCreatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#CreateForQueryUcc,
@@ -963,7 +963,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     incr_param_underscore: &IncrParamUnderscore,
     column_param_underscore: &ColumnParamUnderscore,
     is_need_to_add_operator_underscore: &IsNeedToAddOperatorUnderscore,
-    query_part_ts: &dyn ToTokens,
+    qp_ts: &dyn ToTokens,
     is_qb_mutable: &IsQbMutable,
     qb_ts: &dyn ToTokens,
     import: &Import,
@@ -971,13 +971,13 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
         impl #impl_generic_ts #import ::#PgTypeWhereFilterUcc<'lt> for #ident_ts #ident_generic_ts {
-            fn #QueryPartSc(
+            fn #QpSc(
                 &self,
                 #incr_param_underscore: &mut #U64,
                 #column_param_underscore: &dyn #StdFmtDisplay,
                 #is_need_to_add_operator_underscore: #Bool
-            ) -> Result<#StringTs, #import::#QueryPartErUcc> {
-                #query_part_ts
+            ) -> Result<#StringTs, #import::#QpErUcc> {
+                #qp_ts
             }
             fn #QbSc(self, #is_qb_mutable query: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                 sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -1033,34 +1033,34 @@ pub fn gen_impl_pg_type_ts(
     ident: &dyn ToTokens,
     ident_table_type_ucc: &dyn ToTokens,
     is_pk_underscore: &IsPkUnderscore,
-    create_table_column_query_part_ts: &dyn ToTokens,
+    create_table_column_qp_ts: &dyn ToTokens,
     ident_create_ucc: &dyn ToTokens,
-    create_query_part_v_underscore: &CreateQueryPartValueUnderscore,
-    create_query_part_incr_underscore: &CreateQueryPartIncrUnderscore,
-    create_query_part_ts: &dyn ToTokens,
+    create_qp_v_underscore: &CreateQpValueUnderscore,
+    create_qp_incr_underscore: &CreateQpIncrUnderscore,
+    create_qp_ts: &dyn ToTokens,
     create_qb_v_underscore: &CreateQbValueUnderscore,
     is_create_qb_mutable: &IsCreateQbMutable,
     create_qb_ts: &dyn ToTokens,
     ident_select_ucc: &dyn ToTokens,
-    select_query_part_v_underscore: &SelectQueryPartValueUnderscore,
-    select_query_part_ts: &dyn ToTokens,
+    select_qp_v_underscore: &SelectQpValueUnderscore,
+    select_qp_ts: &dyn ToTokens,
     ident_where_ucc: &dyn ToTokens,
     ident_read_ucc: &dyn ToTokens,
     normalize_ts: &dyn ToTokens,
     read_only_ids_ts: &dyn ToTokens,
-    select_only_ids_query_part_ts: &dyn ToTokens,
+    select_only_ids_qp_ts: &dyn ToTokens,
     ident_read_inner_ucc: &dyn ToTokens,
     into_inner_ts: &dyn ToTokens,
     ident_update_ucc: &dyn ToTokens,
     ident_update_for_query_ucc: &dyn ToTokens,
-    update_query_part_v_underscore: &UpdateQueryPartValueUnderscore,
-    update_query_part_jsonb_set_accumulator_underscore: &UpdateQueryPartJsonbSetAccumulatorUnderscore,
-    update_query_part_jsonb_set_target_underscore: &UpdateQueryPartJsonbSetTargetUnderscore,
-    update_query_part_jsonb_set_path_underscore: &UpdateQueryPartJsonbSetPathUnderscore,
-    update_query_part_ts: &dyn ToTokens,
+    update_qp_v_underscore: &UpdateQpValueUnderscore,
+    update_qp_jsonb_set_accumulator_underscore: &UpdateQpJsonbSetAccumulatorUnderscore,
+    update_qp_jsonb_set_target_underscore: &UpdateQpJsonbSetTargetUnderscore,
+    update_qp_jsonb_set_path_underscore: &UpdateQpJsonbSetPathUnderscore,
+    update_qp_ts: &dyn ToTokens,
     is_update_qb_mutable: &IsUpdateQbMutable,
     update_qb_ts: &dyn ToTokens,
-    select_only_updated_ids_query_part_ts: &dyn ToTokens,
+    select_only_updated_ids_qp_ts: &dyn ToTokens,
     is_select_only_updated_ids_qb_mutable: &IsSelectOnlyUpdatedIdsQbMutable,
     select_only_updated_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
@@ -1070,15 +1070,15 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySourceItemOrdering
         impl #import :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
-            fn #CreateTableColumnQueryPartSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_underscore: #Bool) -> impl #StdFmtDisplay {
-                #create_table_column_query_part_ts
+            fn #CreateTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_underscore: #Bool) -> impl #StdFmtDisplay {
+                #create_table_column_qp_ts
             }
             type #CreateUcc = #ident_create_ucc;
-            fn #CreateQueryPartSc(
-                #create_query_part_v_underscore: &Self::#CreateUcc,
-                #create_query_part_incr_underscore: &mut #U64
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #create_query_part_ts
+            fn #CreateQpSc(
+                #create_qp_v_underscore: &Self::#CreateUcc,
+                #create_qp_incr_underscore: &mut #U64
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #create_qp_ts
             }
             fn #CreateQbSc(
                 #create_qb_v_underscore: Self::#CreateUcc,
@@ -1090,11 +1090,11 @@ pub fn gen_impl_pg_type_ts(
                 #create_qb_ts
             }
             type #SelectUcc = #ident_select_ucc;
-            fn #SelectQueryPartSc(
-                #select_query_part_v_underscore: &Self::#SelectUcc,
+            fn #SelectQpSc(
+                #select_qp_v_underscore: &Self::#SelectUcc,
                 #ColumnSc: #RefStr,
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #select_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #select_qp_ts
             }
             type #WhereUcc = #ident_where_ucc;
             type #ReadUcc = #ident_read_ucc;
@@ -1102,10 +1102,10 @@ pub fn gen_impl_pg_type_ts(
                 #normalize_ts
             }
             type #ReadOnlyIdsUcc = #read_only_ids_ts;
-            fn #SelectOnlyIdsQueryPartSc(
+            fn #SelectOnlyIdsQpSc(
                 #ColumnSc: #RefStr
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #select_only_ids_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #select_only_ids_qp_ts
             }
             type #ReadInnerUcc = #ident_read_inner_ucc;
             fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
@@ -1113,14 +1113,14 @@ pub fn gen_impl_pg_type_ts(
             }
             type #UpdateUcc = #ident_update_ucc;
             type #UpdateForQueryUcc = #ident_update_for_query_ucc;
-            fn #UpdateQueryPartSc(
-                #update_query_part_v_underscore: &Self::#UpdateForQueryUcc,
-                #update_query_part_jsonb_set_accumulator_underscore: #RefStr,
-                #update_query_part_jsonb_set_target_underscore: #RefStr,
-                #update_query_part_jsonb_set_path_underscore: #RefStr,
+            fn #UpdateQpSc(
+                #update_qp_v_underscore: &Self::#UpdateForQueryUcc,
+                #update_qp_jsonb_set_accumulator_underscore: #RefStr,
+                #update_qp_jsonb_set_target_underscore: #RefStr,
+                #update_qp_jsonb_set_path_underscore: #RefStr,
                 #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #update_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #update_qp_ts
             }
             fn #UpdateQbSc(
                 #VSc: Self::#UpdateForQueryUcc,
@@ -1131,12 +1131,12 @@ pub fn gen_impl_pg_type_ts(
             > {
                 #update_qb_ts
             }
-            fn #SelectOnlyUpdatedIdsQueryPartSc(
+            fn #SelectOnlyUpdatedIdsQpSc(
                 #VSc: &Self::#UpdateForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrSc: &mut #U64,
-            ) -> Result<#StringTs, #import ::#QueryPartErUcc> {
-                #select_only_updated_ids_query_part_ts
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #select_only_updated_ids_qp_ts
             }
             fn #SelectOnlyUpdatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdateForQueryUcc,
@@ -2032,8 +2032,8 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     }
 }
 #[must_use]
-pub fn pg_crud_common_query_part_er_checked_add_init_ts() -> Ts2 {
-    quote! {pg_crud_common::QueryPartEr::CheckedAdd { loc: location_lib::loc!() }}
+pub fn pg_crud_common_qp_er_checked_add_init_ts() -> Ts2 {
+    quote! {pg_crud_common::QpEr::CheckedAdd { loc: location_lib::loc!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_ts(ident: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
@@ -2370,16 +2370,16 @@ pub fn impl_pg_type_equal_operator_for_ident_ts(
     }
 }
 #[must_use]
-pub fn gen_query_part_er_write_into_buffer_ts(import: Import) -> Ts2 {
+pub fn gen_qp_er_write_into_buffer_ts(import: Import) -> Ts2 {
     quote! {
-        #import::QueryPartEr::WriteIntoBuffer {
+        #import::QpEr::WriteIntoBuffer {
             loc: location_lib::loc!()
         }
     }
 }
 #[must_use]
-pub fn gen_return_err_query_part_er_write_into_buffer_ts(import: Import) -> Ts2 {
-    let ts = gen_query_part_er_write_into_buffer_ts(import);
+pub fn gen_return_err_qp_er_write_into_buffer_ts(import: Import) -> Ts2 {
+    let ts = gen_qp_er_write_into_buffer_ts(import);
     quote! {return Err(#ts);}
 }
 #[must_use]

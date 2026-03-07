@@ -29,7 +29,7 @@ pub enum Operator {
 }
 impl Operator {
     #[must_use]
-    pub fn to_query_part(&self, is_need_to_add_operator: bool) -> String {
+    pub fn to_qp(&self, is_need_to_add_operator: bool) -> String {
         let not_space = format!("{NotSc} ");
         if is_need_to_add_operator {
             let and_space = format!("{AndSc} ");

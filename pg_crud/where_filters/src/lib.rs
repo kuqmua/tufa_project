@@ -1,7 +1,7 @@
 use location_lib::{Location, loc, loc::Loc};
 use optimal_pack::OptimalPack;
 use pg_crud_common::{
-    DefaultOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QueryPartEr,
+    DefaultOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QpEr,
     incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
@@ -85,18 +85,18 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         }
         Ok(query)
     }
-    pub fn query_part_one_by_one(
+    pub fn qp_one_by_one(
         &self,
         incr: &mut u64,
         _: &dyn Display,
         _is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
+    ) -> Result<String, QpEr> {
         let mut acc = String::default();
         for _ in self.to_vec() {
             match incr_checked_add_one_returning_incr(incr) {
                 Ok(v) => {
                     if write!(acc, "${v},").is_err() {
-                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
+                        return Err(QpEr::WriteIntoBuffer { loc: loc!() });
                     }
                 }
                 Err(er) => {
@@ -209,12 +209,12 @@ where
         }
         Ok(query)
     }
-    fn query_part(
+    fn qp(
         &self,
         incr: &mut u64,
         _: &dyn Display,
         _is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
+    ) -> Result<String, QpEr> {
         match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => Ok(format!("${v}")),
             Err(er) => Err(er),
@@ -614,7 +614,7 @@ impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTyp
         }
         Ok(query)
     }
-    fn query_part(&self, incr: &mut u64, _: &dyn Display, _: bool) -> Result<String, QueryPartEr> {
+    fn qp(&self, incr: &mut u64, _: &dyn Display, _: bool) -> Result<String, QpEr> {
         let start_incr = match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => v,
             Err(er) => {
@@ -778,13 +778,13 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
     pub fn into_inner(self) -> Vec<T> {
         self.0
     }
-    pub fn pg_json_type_query_part(
+    pub fn pg_json_type_qp(
         &self,
         incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
-        self.query_part(
+    ) -> Result<String, QpEr> {
+        self.qp(
             incr,
             column,
             is_need_to_add_operator,
@@ -792,13 +792,13 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             &Vrt::Normal,
         )
     }
-    pub fn pg_json_type_query_part_minus_one(
+    pub fn pg_json_type_qp_minus_one(
         &self,
         incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
-        self.query_part(
+    ) -> Result<String, QpEr> {
+        self.qp(
             incr,
             column,
             is_need_to_add_operator,
@@ -806,13 +806,13 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             &Vrt::MinusOne,
         )
     }
-    pub fn pg_type_query_part(
+    pub fn pg_type_qp(
         &self,
         incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
-        self.query_part(
+    ) -> Result<String, QpEr> {
+        self.qp(
             incr,
             column,
             is_need_to_add_operator,
@@ -820,13 +820,13 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             &Vrt::Normal,
         )
     }
-    pub fn pg_type_query_part_minus_one(
+    pub fn pg_type_qp_minus_one(
         &self,
         incr: &mut u64,
         column: &dyn Display,
         is_need_to_add_operator: bool,
-    ) -> Result<String, QueryPartEr> {
-        self.query_part(
+    ) -> Result<String, QpEr> {
+        self.qp(
             incr,
             column,
             is_need_to_add_operator,
@@ -845,14 +845,14 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         }
         Ok(query)
     }
-    fn query_part(
+    fn qp(
         &self,
         incr: &mut u64,
         _: &dyn Display,
         _is_need_to_add_operator: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
         vrt: &Vrt,
-    ) -> Result<String, QueryPartEr> {
+    ) -> Result<String, QpEr> {
         let mut acc = String::new();
         let len_27270409 = match &vrt {
             Vrt::MinusOne => self.0.len().saturating_sub(1),
@@ -873,7 +873,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
                     )
                     .is_err()
                     {
-                        return Err(QueryPartEr::WriteIntoBuffer { loc: loc!() });
+                        return Err(QpEr::WriteIntoBuffer { loc: loc!() });
                     }
                 }
                 Err(er) => {

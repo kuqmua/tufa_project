@@ -33,21 +33,21 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, CreateQbValueUnderscore, CreateQueryPartIncrUnderscore,
-    CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
+    ColumnParamUnderscore, CreateQbValueUnderscore, CreateQpIncrUnderscore,
+    CreateQpValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
     EqualOperatorHandle, Import, IncrParamUnderscore, IsCreateQbMutable,
     IsNeedToAddOperatorUnderscore, IsNullable, IsPkUnderscore, IsQbMutable,
     IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull, IsUpdateQbMutable, PgFilter, PgTypeFilter,
-    ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
-    ShouldDeriveUtoipaToSchema, UpdateQueryPartJsonbSetAccumulatorUnderscore,
-    UpdateQueryPartJsonbSetPathUnderscore, UpdateQueryPartJsonbSetTargetUnderscore,
-    UpdateQueryPartValueUnderscore, gen_impl_crate_is_string_empty_for_ident_ts,
+    ReadOrUpdate, SelectQpValueUnderscore, ShouldDeriveSchemarsJsonSchema,
+    ShouldDeriveUtoipaToSchema, UpdateQpJsonbSetAccumulatorUnderscore,
+    UpdateQpJsonbSetPathUnderscore, UpdateQpJsonbSetTargetUnderscore, UpdateQpValueUnderscore,
+    gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_default_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_decl_ts, gen_pg_type_where_ts,
-    gen_return_err_query_part_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
+    gen_return_err_qp_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
     gen_struct_ident_with_nbr_els_dq_ts, gen_tuple_struct_ident_dq_ts, gen_v_init_ts,
     gen_vec_tokens_decl_ts, impl_pg_type_equal_operator_for_ident_ts,
     impl_pg_type_where_filter_for_ident_ts,
@@ -4862,10 +4862,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let ok_string_from_default_ts = gen_ok_string_from_tokens_ts(&quote! {"default"});
             let ok_string_from_uuid_generate_v4_ts = gen_ok_string_from_tokens_ts(&quote! {"uuid_generate_v4()"});
-            let typical_query_part_ts = {
+            let typical_qp_ts = {
                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                     &quote! {acc_c7df00f5, "${v_ba581e0f}"},
-                    &gen_return_err_query_part_er_write_into_buffer_ts(import)
+                    &gen_return_err_qp_er_write_into_buffer_ts(import)
                 );
                 quote! {
                     let mut acc_c7df00f5 = String::default();
@@ -4881,8 +4881,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let ok_query_ts = quote! {Ok(#QuerySc)};
-            let (query_part_create_ts, bind_v_to_query_create_ts): Handle<'_> = {
-                let typical: Handle<'_> = { (&typical_query_part_ts, &typical_qb_ts) };
+            let (qp_create_ts, bind_v_to_query_create_ts): Handle<'_> = {
+                let typical: Handle<'_> = { (&typical_qp_ts, &typical_qb_ts) };
                 let default_init_by_pg: Handle<'_> = (&ok_string_from_default_ts, &ok_query_ts);
                 match &pg_type {
                     PgType::I16AsInt2
@@ -4998,12 +4998,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 },
                 &ident_create_ucc,
-                &CreateQueryPartValueUnderscore::True,
+                &CreateQpValueUnderscore::True,
                 &match &can_be_pk {
-                    CanBePk::False => CreateQueryPartIncrUnderscore::False,
-                    CanBePk::True => CreateQueryPartIncrUnderscore::True,
+                    CanBePk::False => CreateQpIncrUnderscore::False,
+                    CanBePk::True => CreateQpIncrUnderscore::True,
                 },
-                &query_part_create_ts,
+                &qp_create_ts,
                 &match &can_be_pk {
                     CanBePk::False => CreateQbValueUnderscore::False,
                     CanBePk::True => CreateQbValueUnderscore::True,
@@ -5015,8 +5015,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &bind_v_to_query_create_ts,
                 &ident_select_ucc,
                 &match &el.pg_type_pattern {
-                    PgTypePattern::Stdrt => SelectQueryPartValueUnderscore::True,
-                    PgTypePattern::ArrDim1 { .. } => SelectQueryPartValueUnderscore::False,
+                    PgTypePattern::Stdrt => SelectQpValueUnderscore::True,
+                    PgTypePattern::ArrDim1 { .. } => SelectQpValueUnderscore::False,
                 },
                 &{
                     let ts = match &pg_type_pattern {
@@ -5367,11 +5367,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &ident_update_ucc,
                 &ident_update_for_query_ucc,
-                &UpdateQueryPartValueUnderscore::True,
-                &UpdateQueryPartJsonbSetAccumulatorUnderscore::True,
-                &UpdateQueryPartJsonbSetTargetUnderscore::True,
-                &UpdateQueryPartJsonbSetPathUnderscore::True,
-                &typical_query_part_ts,
+                &UpdateQpValueUnderscore::True,
+                &UpdateQpJsonbSetAccumulatorUnderscore::True,
+                &UpdateQpJsonbSetTargetUnderscore::True,
+                &UpdateQpJsonbSetPathUnderscore::True,
+                &typical_qp_ts,
                 &IsUpdateQbMutable::True,
                 &typical_qb_ts,
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
