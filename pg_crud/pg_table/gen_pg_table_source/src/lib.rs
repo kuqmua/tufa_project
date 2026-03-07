@@ -4010,14 +4010,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &delete_one_ts,
         &FormatWithCargofmt::True,
     );
-    impl_ident_vec_ts.push({
-        let routes_ts = quote!{
-            pub fn #RoutesSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts) -> axum::Router {
-                Self::#RoutesHandleSc(#AppStateSc, #self_table_name_call_ts)
-            }
-        };
-        quote! {
-            #routes_ts
+    impl_ident_vec_ts.push(quote!{
+        pub fn #RoutesSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts) -> axum::Router {
+            Self::#RoutesHandleSc(#AppStateSc, #self_table_name_call_ts)
         }
     });
     let (operator_or_ts, operator_and_ts) = {
