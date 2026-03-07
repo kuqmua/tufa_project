@@ -2788,6 +2788,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &ts,
                     &write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts
                 );
+                let gen_select_only_updated_ids_query_part_ts = |ts: &dyn ToTokens|quote!{#ts.#SelectOnlyUpdatedIdsQueryPartSc(&mut #IncrSc)};
                 match &operation {
                     Operation::CreateMany => {
                         let if_write_is_err_ts = gen_if_write_is_err_ts_f22b2dd2(
@@ -3010,7 +3011,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         );
                         let ts2 = gen_match_ok_err_ts_dd5366af(
-                            &quote!{el_bcf0dde4.select_only_updated_ids_query_part(&mut #IncrSc)},
+                            &gen_select_only_updated_ids_query_part_ts(&quote!{el_bcf0dde4}),
                             &quote!{v_4f536654},
                             &quote!{{
                                 acc_fd44b0aa.push_str(&v_4f536654);
@@ -3076,7 +3077,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &extra_params_modification_ts
                         );
                         let ts = gen_match_ok_err_ts_85a5eace(
-                            &quote!{#UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc)},
+                            &gen_select_only_updated_ids_query_part_ts(&UpdateForQuerySc),
                             &quote!{v_7f0d86a1},
                         );
                         quote! {
