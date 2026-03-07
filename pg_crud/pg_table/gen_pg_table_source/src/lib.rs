@@ -604,31 +604,31 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let mut impl_ident_vec_ts = Vec::new();
     let mut operation_routes_ts = Vec::new();
     let mut content_ts = Vec::new();
-    let impl_ident_ts = {
-        let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
-        let ident_prepare_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
-            .make_pub()
-            .derive_debug()
-            .derive_thiserror_error()
-            .derive_location_lib_location()
-            .build_enum(&ident_prepare_pg_er_ucc, &Ts2::new(), &{
-                let ts = quote! {
-                    #[eo_to_err_string]
-                    er: sqlx::Error,
-                    loc: location_lib::loc::Loc,
-                };
-                quote! {{
-                    #CreateExtensionIfNotExistsPgJsonschemaUcc {
-                        #ts
-                    },
-                    #CreateExtensionIfNotExistsUuidOsspUcc {
-                        #ts
-                    },
-                    #PreparePgUcc {
-                        #ts
-                    },
-                }}
-            });
+    let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
+    let ident_prepare_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+        .make_pub()
+        .derive_debug()
+        .derive_thiserror_error()
+        .derive_location_lib_location()
+        .build_enum(&ident_prepare_pg_er_ucc, &Ts2::new(), &{
+            let ts = quote! {
+                #[eo_to_err_string]
+                er: sqlx::Error,
+                loc: location_lib::loc::Loc,
+            };
+            quote! {{
+                #CreateExtensionIfNotExistsPgJsonschemaUcc {
+                    #ts
+                },
+                #CreateExtensionIfNotExistsUuidOsspUcc {
+                    #ts
+                },
+                #PreparePgUcc {
+                    #ts
+                },
+            }}
+        });
+    impl_ident_vec_ts.push({
         let pub_fn_table_ts = quote! {
             #MustUse
             pub const fn #TableNameSc() -> &'static str {
@@ -760,7 +760,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        impl_ident_vec_ts.push(quote! {
+        quote! {
             #pub_fn_table_ts
             #fn_pk_ts
             #pub_async_fn_prepare_extensions_ts
@@ -768,11 +768,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #pub_async_fn_prepare_pg_ts
             #pub_fn_allow_methods_ts
             #fn_gen_select_query_part_ts
-        });
-        quote! {
-            #ident_prepare_pg_er_ts
         }
-    };
+    });
     let wrap_into_axum_res_ts =
         |axum_json_ts: &dyn ToTokens,
          status_code_ts: &dyn ToTokens,
@@ -6214,7 +6211,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let common_ts = quote! {
-        #impl_ident_ts
+        #ident_prepare_pg_er_ts
         #ident_create_ts
         #ident_where_many_ts
         #opt_ident_where_many_ts
