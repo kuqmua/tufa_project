@@ -2432,42 +2432,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             type_vrts_from_req_res_syn_vrts
         };
-    let gen_ident_try_operation_er_ts = |operation: &Operation, syn_vrts: &Vec<Variant>| -> Ts2 {
-        let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
-            .make_pub()
-            .derive_debug()
-            .derive_thiserror_error()
-            .derive_location_lib_location()
-            .build_enum(&gen_ident_try_operation_er_ucc(operation), &Ts2::new(), &{
-                let vrts = syn_vrts
-                    .iter()
-                    .cloned()
-                    .chain(once({
-                        let ident_operation_er_with_serde_ucc =
-                            gen_ident_operation_er_with_serde_ucc(operation);
-                        new_syn_vrt_wrapper(
-                            &ident_operation_er_with_serde_ucc,
-                            None,
-                            vec![(
-                                macros_helpers_location_location_field_attr_eo_to_err_string,
-                                &operation.operation_er_with_serde_sc(),
-                                gen_simple_syn_punct(&[
-                                    &ident_operation_er_with_serde_ucc.to_string()
-                                ]),
-                            )],
-                        )
-                        .get_syn_vrt()
-                        .clone()
-                    }))
-                    .collect::<Vec<Variant>>();
-                let vrts_ts = vrts.iter().map(gen_location_vrt_ts);
-                quote! {{#(#vrts_ts),*}}
-            });
-        quote! {
-            #AllowClippyArbitrarySourceItemOrdering
-            #ts_930e1a93
-        }
-    };
     let std_sync_arc_combination_of_app_state_logic_traits_ts =
         quote! {std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>};
     for operation in &[
@@ -3756,10 +3720,60 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #ident_operation_er_ts
                 }
             };
+            let try_operation_ts = {
+                let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_thiserror_error()
+                    .derive_location_lib_location()
+                    .build_enum(&gen_ident_try_operation_er_ucc(operation), &Ts2::new(), &{
+                        let syn_vrts: &Vec<Variant> = match &operation {
+                            Operation::ReadMany | Operation::ReadOne => &{
+                                let mut acc = common_http_req_syn_vrts.clone();
+                                acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
+                                acc
+                            },
+                            Operation::CreateMany |
+                            Operation::CreateOne |
+                            Operation::UpdateMany |
+                            Operation::UpdateOne |
+                            Operation::DeleteMany |
+                            Operation::DeleteOne => &common_http_req_syn_vrts,
+                        };
+                        let vrts_ts = syn_vrts
+                            .iter()
+                            .cloned()
+                            .chain(once({
+                                let ident_operation_er_with_serde_ucc =
+                                    gen_ident_operation_er_with_serde_ucc(operation);
+                                new_syn_vrt_wrapper(
+                                    &ident_operation_er_with_serde_ucc,
+                                    None,
+                                    vec![(
+                                        macros_helpers_location_location_field_attr_eo_to_err_string,
+                                        &operation.operation_er_with_serde_sc(),
+                                        gen_simple_syn_punct(&[
+                                            &ident_operation_er_with_serde_ucc.to_string()
+                                        ]),
+                                    )],
+                                )
+                                .get_syn_vrt()
+                                .clone()
+                            }))
+                            .collect::<Vec<Variant>>()
+                            .into_iter().map(|arg0: Variant| gen_location_vrt_ts(&arg0));
+                        quote! {{#(#vrts_ts),*}}
+                    });
+                quote! {
+                    #AllowClippyArbitrarySourceItemOrdering
+                    #ts_930e1a93
+                }
+            };
             quote! {
                 #payload_ts
                 #params_ts
                 #operation_ts
+                #try_operation_ts
             }
         });
     }
@@ -3941,21 +3955,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &vec_ident_read_only_ids_ts,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &vec_ident_read_only_ids_ts,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.create_many_write_into_file,
@@ -3975,21 +3980,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &ident_read_only_ids_ucc,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &ident_read_only_ids_ucc,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.create_one_write_into_file,
@@ -4009,24 +4005,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
-                let mut acc = common_http_req_syn_vrts.clone();
-                acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
-                acc
-            });
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &vec_struct_opts_ident_ts,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &vec_struct_opts_ident_ts,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.read_many_write_into_file,
@@ -4046,24 +4030,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts = gen_ident_try_operation_er_ts(&operation, &{
-                let mut acc = common_http_req_syn_vrts.clone();
-                acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt().clone());
-                acc
-            });
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &ident_read_ucc,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &ident_read_ucc,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.read_one_write_into_file,
@@ -4084,21 +4056,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &vec_ident_read_only_ids_ts,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &vec_ident_read_only_ids_ts,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.update_many_write_into_file,
@@ -4118,21 +4081,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &ident_read_only_ids_ucc,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &ident_read_only_ids_ucc,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.update_one_write_into_file,
@@ -4153,21 +4107,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &vec_pk_ft_read_ts,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &vec_pk_ft_read_ts,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.delete_many_write_into_file,
@@ -4186,21 +4131,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let try_operation_ts = {
-            let try_operation_er_ts =
-                gen_ident_try_operation_er_ts(&operation, &common_http_req_syn_vrts);
-            impl_ident_vec_ts.push(gen_try_operation_ts(
-                &operation,
-                &type_vrts_from_req_res_syn_vrts,
-                &pk_ft_as_pg_type_read_ucc,
-            ));
-            quote! {
-                #try_operation_er_ts
-            }
-        };
-        quote! {
-            #try_operation_ts
-        }
+        impl_ident_vec_ts.push(gen_try_operation_ts(
+            &operation,
+            &type_vrts_from_req_res_syn_vrts,
+            &pk_ft_as_pg_type_read_ucc,
+        ));
+        Ts2::new()
     };
     mb_write_ts_into_file(
         gen_pg_table_config.delete_one_write_into_file,
