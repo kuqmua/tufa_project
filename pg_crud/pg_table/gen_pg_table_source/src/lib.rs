@@ -2715,14 +2715,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let query_string_ts = {
+                let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
+                    operation,
+                    &query_part_syn_vrt_wrapper,
+                    Location::caller(),
+                );
                 let write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts = {
                     let query_part_er_write_into_buffer_ts =
                         gen_query_part_er_write_into_buffer_ts(import);
-                    let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
-                        operation,
-                        &query_part_syn_vrt_wrapper,
-                        Location::caller(),
-                    );
                     quote! {
                         let #Er0 = #query_part_er_write_into_buffer_ts;
                         #ts_fa8795ea
@@ -2750,16 +2750,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             acc_a35168d8.push_str(&v_aa341baf);
                         }},
                         &Er0,
-                        &{
-                            let ts_00878df8 = gen_operation_er_init_eprintln_res_creation_ts(
-                                operation,
-                                &query_part_syn_vrt_wrapper,
-                                Location::caller(),
-                            );
-                            quote!{{
-                                #ts_00878df8
-                            }}
-                        }
+                        &quote!{{#ts_fa8795ea}}
                     ));
                     let ts0 = gen_acc_string_pop_ts(
                         &quote!{acc_a35168d8},
@@ -2782,11 +2773,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 "({v_f4fdd10d}),"
                             }
                         );
-                        let ts_4b2a4911 = gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &query_part_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
                         let ts0 = gen_acc_string_pop_ts(
                             &quote!{acc_8a58994e},
                             &{
@@ -2797,9 +2783,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         #if_write_is_err_ts
                                     }},
                                     &Er0,
-                                    &quote!{{
-                                        #ts_4b2a4911
-                                    }}
+                                    &quote!{{#ts_fa8795ea}}
                                 );
                                 quote!{
                                     for el_1651705d in &#ParamsSc.#PayloadSc.0 {
@@ -2823,16 +2807,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ts = gen_match_ok_err_ts_c35d87fd(
                             &quote!{#ParamsSc.#PayloadSc.#CreateQueryPartSc(&mut 0)},
                             &quote!{v_3267d57d},
-                            &{
-                                let ts_cfcf1c2a = gen_operation_er_init_eprintln_res_creation_ts(
-                                    operation,
-                                    &query_part_syn_vrt_wrapper,
-                                    Location::caller(),
-                                );
-                                quote!{{
-                                    #ts_cfcf1c2a
-                                }}
-                            }
+                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {
                             #import_ts gen_create_one_query_string(
@@ -2851,11 +2826,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let extra_params_order_by_handle_ts =
                             dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
-                        let ts_0ec756e2 = gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &query_part_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
                         let order_by_column_match_ts =
                             gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
                                 let fi_ucc = ToTokensToUccTs::case_or_panic(&el.ident);
@@ -2897,9 +2867,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 bool::default()
                                             )},
                                             &quote!{v_742be6cf},
-                                            &quote!{{
-                                                #ts_0ec756e2
-                                            }}
+                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         quote! {
                                             #ExtraParamsSc,
@@ -2926,11 +2894,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::ReadOne => {
                         let select_query_part_params_payload_select_ts =
                             gen_select_query_part_params_payload_select_ts(operation);
-                        let ts_1ead7cf9 = gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &query_part_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
                         let ts = gen_match_ok_err_ts_c35d87fd(
                             &quote!{#pg_crud_pg_type_where_filter_query_part_ts(
                                 &#ParamsSc.#PayloadSc.#pk_fi,
@@ -2939,9 +2902,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 false
                             )},
                             &quote!{v_be9e7b7d},
-                            &quote!{{
-                                #ts_1ead7cf9
-                            }}
+                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {#import_ts gen_read_one_query_string(
                             #TableSc,
@@ -2950,11 +2911,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         )}
                     }
                     Operation::UpdateMany => {
-                        let ts_1b64e228 = gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &query_part_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
                         let gen_match_update_query_part_pk_operation_ts =
                             |ts: &dyn ToTokens| gen_match_update_query_part_pk_ts(operation, &ts);
                         let fields_named_without_pk_update_assignment_ts =
@@ -2972,16 +2928,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         let ts0 = gen_match_ok_err_ts_c35d87fd(
                                             &quote!{el_defbc401.#UpdateQueryPartPkSc(&mut #IncrSc)},
                                             &quote!{v_00890100},
-                                            &quote!{{
-                                                #ts_1b64e228
-                                            }}
+                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         let ts1 = gen_match_ok_err_ts_c35d87fd(
                                             &quote!{#ident_update_for_query_ucc::#update_query_part_fi_sc(v_3ea04126, &mut #IncrSc)},
                                             &quote!{v_8797585c},
-                                            &quote!{{
-                                                #ts_1b64e228
-                                            }}
+                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         quote!{
                                             acc_8ad06c8c.push_str(&#import_ts #gen_when_column_id_then_v_update_many_query_part_sc(
@@ -3048,9 +3000,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 acc_fd44b0aa.push_str(&v_4f536654);
                             }},
                             &Er0,
-                            &quote!{{
-                                #ts_1b64e228
-                            }}
+                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {
                             {
@@ -3085,11 +3035,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
                                 let fi_dq_ts = dq_ts(&fi);
-                                let ts_9ec6b359 = gen_operation_er_init_eprintln_res_creation_ts(
-                                    operation,
-                                    &query_part_syn_vrt_wrapper,
-                                    Location::caller(),
-                                );
                                 let gen_column_queals_v_comma_update_one_query_part_sc =
                                     GenColumnQuealsVCommaUpdateOneQueryPartSc;
                                 let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
@@ -3100,9 +3045,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         let ts = gen_match_ok_err_ts_c35d87fd(
                                             &quote!{#ident_update_for_query_ucc::#update_query_part_fi_sc(v_2d144436, &mut #IncrSc)},
                                             &quote!{v_1ec12051},
-                                            &quote!{{
-                                                #ts_9ec6b359
-                                            }}
+                                            &quote!{{#ts_fa8795ea}}
                                         );
                                         quote!{
                                             acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_update_one_query_part_sc(
@@ -3116,11 +3059,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let extra_params_pk_modification_ts =
                             gen_match_update_query_part_pk_ts(operation, &quote! {#UpdateForQuerySc});
-                        let ts_255ad2f1 = gen_operation_er_init_eprintln_res_creation_ts(
-                            operation,
-                            &query_part_syn_vrt_wrapper,
-                            Location::caller(),
-                        );
                         let ts_a6ae3308 = gen_acc_string_pop_ts(
                             &quote!{acc_683e37b8},
                             &extra_params_modification_ts
@@ -3128,9 +3066,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ts = gen_match_ok_err_ts_c35d87fd(
                             &quote!{#UpdateForQuerySc.select_only_updated_ids_query_part(&mut #IncrSc)},
                             &quote!{v_7f0d86a1},
-                            &quote!{{
-                                #ts_255ad2f1
-                            }}
+                            &quote!{{#ts_fa8795ea}}
                         );
                         quote! {
                             {
