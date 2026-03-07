@@ -252,16 +252,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     }
     impl Display for Operation {
         fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
-            match &self {
-                Self::Cm => write!(f, "Cm"),
-                Self::Co => write!(f, "Co"),
-                Self::Rm => write!(f, "Rm"),
-                Self::Ro => write!(f, "Ro"),
-                Self::Um => write!(f, "Um"),
-                Self::Uo => write!(f, "Uo"),
-                Self::Dm => write!(f, "Dm"),
-                Self::Dlo => write!(f, "Dlo"),
-            }
+            write!(
+                f,
+                "{}",
+                match &self {
+                    Self::Cm => "Cm",
+                    Self::Co => "Co",
+                    Self::Rm => "Rm",
+                    Self::Ro => "Ro",
+                    Self::Um => "Um",
+                    Self::Uo => "Uo",
+                    Self::Dm => "Dm",
+                    Self::Dlo => "Dlo",
+                }
+            )
         }
     }
     impl From<&CreateOrUpdateOrDm> for Operation {
