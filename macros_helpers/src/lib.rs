@@ -15,7 +15,7 @@ mod location;
 mod pgn_start_end_init_ts;
 mod status_code;
 mod struct_or_enum_derive_ts_builder;
-mod syn_field_wrapper;
+mod syn_field;
 mod wrap_derive;
 mod write_string_into_file;
 mod write_ts_into_file;
@@ -48,7 +48,7 @@ pub use struct_or_enum_derive_ts_builder::{
     DeriveSerdeSerialize, DeriveThiserrorError, DeriveUtoipaToSchema, MakePub,
     StructOrEnumDeriveTsStreamBuilder,
 };
-pub use syn_field_wrapper::SynFieldWrapper;
+pub use syn_field::SynField;
 pub use wrap_derive::wrap_derive;
 pub use write_string_into_file::write_string_into_file;
 pub use write_ts_into_file::{FormatWithCargofmt, ShouldWriteTsIntoFile, mb_write_ts_into_file};

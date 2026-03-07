@@ -2,7 +2,7 @@ use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
     DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTsIntoFile,
-    StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
+    StructOrEnumDeriveTsStreamBuilder, SynField, gen_if_write_is_err_curly_braces_ts,
     gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_al_ts,
@@ -267,12 +267,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 fields_named.named.iter()
                 .collect::<Vec<&Field>>()
                 .iter()
-                .map(|el0|SynFieldWrapper {
+                .map(|el0|SynField {
                     vis: el0.vis.clone(),
                     type0: el0.ty.clone(),
                     ident: el0.ident.clone().expect("3ac7f263"),
                 })
-                .collect::<Vec<SynFieldWrapper>>()
+                .collect::<Vec<SynField>>()
             } else {
                 panic!("4c305996");
             }
@@ -356,17 +356,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     },
                 }),
             };
-            SynFieldWrapper {
+            SynField {
                 vis: v.vis.clone(),
                 type0: v.ty,
                 ident: v.ident.expect("3550d755"),
             }
         };
-        let vec_syn_field_with_id: Vec<SynFieldWrapper> = vec_syn_field.clone().into_iter().fold(vec![id_syn_field], |mut acc, el0| {
+        let vec_syn_field_with_id: Vec<SynField> = vec_syn_field.clone().into_iter().fold(vec![id_syn_field], |mut acc, el0| {
             acc.push(el0);
             acc
         });
-        let get_vec_syn_field = |is_stdrt_with_id: &IsStdrtWithId| -> &Vec<SynFieldWrapper> {
+        let get_vec_syn_field = |is_stdrt_with_id: &IsStdrtWithId| -> &Vec<SynField> {
             match &is_stdrt_with_id {
                 IsStdrtWithId::False => &vec_syn_field,
                 IsStdrtWithId::True => &vec_syn_field_with_id,
@@ -585,9 +585,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             quote! {#type_as_pg_type_ts::#pg_type_subtype}
         };
         let gen_ft_as_crud_pg_json_type_from_field_ts = |
-            syn_field_wrapper: &SynFieldWrapper
+            syn_field: &SynField
         | gen_type_as_pg_json_type_ts(
-            &syn_field_wrapper.type0
+            &syn_field.type0
         );
         let gen_gen_impl_location_lib_to_err_string_wrapper_ts = |ts: &dyn ToTokens| gen_impl_to_err_string_ts(
             &Ts2::new(),
@@ -1902,7 +1902,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 }
             }
         };
-        let gen_fi_dq_ts = |v: &SynFieldWrapper| {
+        let gen_fi_dq_ts = |v: &SynField| {
             dq_ts(&v.ident)
         };
         let gen_type_as_pg_json_type_read_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_read);
