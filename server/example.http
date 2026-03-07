@@ -508,7 +508,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### 
 
-PATCH http://127.0.0.1:8080/table_example/update_one HTTP/1.1
+PATCH http://127.0.0.1:8080/table_example/uo HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -602,7 +602,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/table_example/update_one_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/uo_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 

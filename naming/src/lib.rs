@@ -196,7 +196,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["rm", "extra", "er", "vrts"],
     ["ro", "extra", "er", "vrts"],
     ["um", "extra", "er", "vrts"],
-    ["update", "one", "extra", "er", "vrts"],
+    ["uo", "extra", "er", "vrts"],
     ["delete", "many", "extra", "er", "vrts"],
     ["delete", "one", "extra", "er", "vrts"],
     ["common", "extra", "er", "vrts"],
@@ -205,7 +205,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["rm", "extra", "logic"],
     ["ro", "extra", "logic"],
     ["um", "extra", "logic"],
-    ["update", "one", "extra", "logic"],
+    ["uo", "extra", "logic"],
     ["delete", "many", "extra", "logic"],
     ["delete", "one", "extra", "logic"],
     ["common", "extra", "logic"],
@@ -709,7 +709,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["gen", "select", "query", "part"],
     ["update", "query", "part", "pk"],
     [
-        "gen", "column", "queals", "v", "comma", "update", "one", "query", "part"
+        "gen", "column", "queals", "v", "comma", "uo", "query", "part"
     ],
     ["pk", "query", "part"],
     ["columns"],
@@ -782,7 +782,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["some", "v", "read", "only", "ids", "returned", "from", "co"],
     ["select", "only", "updated", "ids", "query", "part"],
     ["create", "update", "delete", "are", "empty"],
-    ["update", "one", "params"],
+    ["uo", "params"],
     ["update", "to", "read", "only", "ids"],
     ["self", "read", "only", "ids", "handle"],
     ["read", "only", "ids", "returned", "from", "cm"],

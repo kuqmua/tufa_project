@@ -21,7 +21,7 @@ use naming::{
     DeleteManyExtraLogicSc, DeleteOneExtraErVrtsSc, DeleteOneExtraLogicSc, DeserializeResUcc,
     DesirableUcc, DisplayPlusToTokens, DisplayToScStr, ElSc, EndpointLocationSc, ErSc,
     ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc,
-    FromHandleSc, FutureSc, GenColumnQuealsVCommaUpdateOneQueryPartSc, GenPgTablePkSc,
+    FromHandleSc, FutureSc, GenColumnQuealsVCommaUoQueryPartSc, GenPgTablePkSc,
     GenSelectQueryPartSc, GenWhenColumnIdThenVUmQueryPartSc,
     HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrSc,
     IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
@@ -46,10 +46,10 @@ use naming::{
     RowSc, RowsSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPkSc,
     SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc,
     SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs,
-    TrueSc, TryBindSc, TryBindUcc, UmExtraErVrtsSc, UmExtraLogicSc, UpdateForQuerySc,
-    UpdateForQueryUcc, UpdateForQueryVecSc, UpdateOneExtraErVrtsSc, UpdateOneExtraLogicSc,
-    UpdateQueryBindSc, UpdateQueryPartPkSc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc,
-    VUcc, WhereManySc, WhereUcc,
+    TrueSc, TryBindSc, TryBindUcc, UmExtraErVrtsSc, UmExtraLogicSc, UoExtraErVrtsSc,
+    UoExtraLogicSc, UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateQueryBindSc,
+    UpdateQueryPartPkSc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, WhereManySc,
+    WhereUcc,
     param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteManyParamsUcc,
         SelfDeleteManyPayloadUcc, SelfDeleteOneErWithSerdeUcc, SelfDeleteOneParamsUcc,
@@ -104,7 +104,7 @@ use token_patterns::{
 //todo decide where to do er log (mb add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
-//todo attrs for activation generation crud methods(like gen create, update_one, delete_one)
+//todo attrs for activation generation crud methods(like gen create, uo, delete_one)
 //todo authorization for returning concrete er or just minimal info(user role)
 //todo gen rules and roles
 //todo mb add unnest sql types?
@@ -174,7 +174,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Rm,
         Ro,
         Um,
-        UpdateOne,
+        Uo,
         DeleteMany,
         DeleteOne,
     }
@@ -186,7 +186,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 | Self::Rm
                 | Self::Ro
                 | Self::Um
-                | Self::UpdateOne
+                | Self::Uo
                 | Self::DeleteMany => (DeriveClone::False, DeriveCopy::False),
                 Self::DeleteOne => (DeriveClone::True, DeriveCopy::True),
             }
@@ -194,12 +194,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         const fn desirable_status_code(self) -> StatusCode {
             match self {
                 Self::Cm | Self::Co => StatusCode::Created201,
-                Self::Rm
-                | Self::Ro
-                | Self::Um
-                | Self::UpdateOne
-                | Self::DeleteMany
-                | Self::DeleteOne => StatusCode::Ok200,
+                Self::Rm | Self::Ro | Self::Um | Self::Uo | Self::DeleteMany | Self::DeleteOne => {
+                    StatusCode::Ok200
+                }
             }
         }
         const fn gen_pg_table_attr_extra_er_vrts(self) -> GenPgTableAttr {
@@ -209,7 +206,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Rm => GenPgTableAttr::RmExtraErVrts,
                 Self::Ro => GenPgTableAttr::RoExtraErVrts,
                 Self::Um => GenPgTableAttr::UmExtraErVrts,
-                Self::UpdateOne => GenPgTableAttr::UpdateOneExtraErVrts,
+                Self::Uo => GenPgTableAttr::UoExtraErVrts,
                 Self::DeleteMany => GenPgTableAttr::DeleteManyExtraErVrts,
                 Self::DeleteOne => GenPgTableAttr::DeleteOneExtraErVrts,
             }
@@ -221,7 +218,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Rm => GenPgTableAttr::RmExtraLogic,
                 Self::Ro => GenPgTableAttr::RoExtraLogic,
                 Self::Um => GenPgTableAttr::UmExtraLogic,
-                Self::UpdateOne => GenPgTableAttr::UpdateOneExtraLogic,
+                Self::Uo => GenPgTableAttr::UoExtraLogic,
                 Self::DeleteMany => GenPgTableAttr::DeleteManyExtraLogic,
                 Self::DeleteOne => GenPgTableAttr::DeleteOneExtraLogic,
             }
@@ -229,7 +226,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         const fn http_method(self) -> OperationHttpMethod {
             match self {
                 Self::Cm | Self::Co | Self::Rm | Self::Ro => OperationHttpMethod::Post,
-                Self::Um | Self::UpdateOne => OperationHttpMethod::Patch,
+                Self::Um | Self::Uo => OperationHttpMethod::Patch,
                 Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
             }
         }
@@ -266,7 +263,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Rm => write!(f, "Rm"),
                 Self::Ro => write!(f, "Ro"),
                 Self::Um => write!(f, "Um"),
-                Self::UpdateOne => write!(f, "UpdateOne"),
+                Self::Uo => write!(f, "Uo"),
                 Self::DeleteMany => write!(f, "DeleteMany"),
                 Self::DeleteOne => write!(f, "DeleteOne"),
             }
@@ -301,7 +298,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         fn from(v: &CreateOrUpdateOrDeleteOne) -> Self {
             match &v {
                 CreateOrUpdateOrDeleteOne::Create => Self::Co,
-                CreateOrUpdateOrDeleteOne::Update => Self::UpdateOne,
+                CreateOrUpdateOrDeleteOne::Update => Self::Uo,
                 CreateOrUpdateOrDeleteOne::Delete => Self::DeleteOne,
             }
         }
@@ -330,7 +327,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         RmExtraErVrts,
         RoExtraErVrts,
         UmExtraErVrts,
-        UpdateOneExtraErVrts,
+        UoExtraErVrts,
         DeleteManyExtraErVrts,
         DeleteOneExtraErVrts,
         CommonExtraErVrts,
@@ -339,7 +336,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         RmExtraLogic,
         RoExtraLogic,
         UmExtraLogic,
-        UpdateOneExtraLogic,
+        UoExtraLogic,
         DeleteManyExtraLogic,
         DeleteOneExtraLogic,
         CommonExtraLogic,
@@ -354,7 +351,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::RmExtraErVrts => RmExtraErVrtsSc.to_string(),
                     Self::RoExtraErVrts => RoExtraErVrtsSc.to_string(),
                     Self::UmExtraErVrts => UmExtraErVrtsSc.to_string(),
-                    Self::UpdateOneExtraErVrts => UpdateOneExtraErVrtsSc.to_string(),
+                    Self::UoExtraErVrts => UoExtraErVrtsSc.to_string(),
                     Self::DeleteManyExtraErVrts => DeleteManyExtraErVrtsSc.to_string(),
                     Self::DeleteOneExtraErVrts => DeleteOneExtraErVrtsSc.to_string(),
                     Self::CommonExtraErVrts => CommonExtraErVrtsSc.to_string(),
@@ -363,7 +360,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::RmExtraLogic => RmExtraLogicSc.to_string(),
                     Self::RoExtraLogic => RoExtraLogicSc.to_string(),
                     Self::UmExtraLogic => UmExtraLogicSc.to_string(),
-                    Self::UpdateOneExtraLogic => UpdateOneExtraLogicSc.to_string(),
+                    Self::UoExtraLogic => UoExtraLogicSc.to_string(),
                     Self::DeleteManyExtraLogic => DeleteManyExtraLogicSc.to_string(),
                     Self::DeleteOneExtraLogic => DeleteOneExtraLogicSc.to_string(),
                     Self::CommonExtraLogic => CommonExtraLogicSc.to_string(),
@@ -2389,7 +2386,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let gen_ident_operation_payload_ucc = |operation: &Operation| match &operation {
         Operation::Co => quote! {#ident_create_ucc},
-        Operation::UpdateOne => quote! {#ident_update_ucc},
+        Operation::Uo => quote! {#ident_update_ucc},
         Operation::Cm
         | Operation::Rm
         | Operation::Ro
@@ -2423,7 +2420,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Operation::Rm,
         Operation::Ro,
         Operation::Um,
-        Operation::UpdateOne,
+        Operation::Uo,
         Operation::DeleteMany,
         Operation::DeleteOne,
     ] {
@@ -2463,7 +2460,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 | Operation::Ro
                 | Operation::Co
                 | Operation::Um
-                | Operation::UpdateOne
+                | Operation::Uo
                 | Operation::DeleteMany = &operation
                 {
                     acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
@@ -2472,7 +2469,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 | Operation::DeleteOne
                 | Operation::Co
                 | Operation::Um
-                | Operation::UpdateOne
+                | Operation::Uo
                 | Operation::DeleteMany = &operation
                 {
                     acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
@@ -2489,7 +2486,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Operation::Rm |
                 Operation::Ro => quote!{post},
                 Operation::Um |
-                Operation::UpdateOne => quote!{patch},
+                Operation::Uo => quote!{patch},
                 Operation::DeleteMany |
                 Operation::DeleteOne => quote!{delete},
             };
@@ -2525,7 +2522,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::Ro => &ident_read_ucc,
                     Operation::DeleteMany => &vec_pk_ft_read_ts,
                     Operation::DeleteOne => &pk_ft_as_pg_type_read_ucc,
-                    Operation::Co | Operation::UpdateOne => &ident_read_only_ids_ucc,
+                    Operation::Co | Operation::Uo => &ident_read_only_ids_ucc,
                     Operation::Cm | Operation::Um => &vec_ident_read_only_ids_ts,
                 };
                 let try_operation_sc_ts = operation.try_self_sc_ts();
@@ -2791,7 +2788,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .map(#ident_update_for_query_ucc::#FromHandleSc)
                             .collect::<Vec<#ident_update_for_query_ucc>>();
                         },
-                        Operation::UpdateOne => quote! {
+                        Operation::Uo => quote! {
                             #params_logic_ts0
                             let #UpdateForQuerySc = #ident_update_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
                         },
@@ -3083,13 +3080,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        Operation::UpdateOne => {
+                        Operation::Uo => {
                             let extra_params_modification_ts = gen_fields_named_without_pk_without_comma_ts(
                                 &|el: &SynFieldWrapper| {
                                     let fi = &el.ident;
                                     let fi_dq_ts = dq_ts(&fi);
-                                    let gen_column_queals_v_comma_update_one_query_part_sc =
-                                        GenColumnQuealsVCommaUpdateOneQueryPartSc;
+                                    let gen_column_queals_v_comma_uo_query_part_sc =
+                                        GenColumnQuealsVCommaUoQueryPartSc;
                                     let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
                                     gen_if_let_some_ts(
                                         &quote! {v_2d144436},
@@ -3100,7 +3097,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 &quote! {v_1ec12051},
                                             );
                                             quote! {
-                                                acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_update_one_query_part_sc(
+                                                acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_uo_query_part_sc(
                                                     #fi_dq_ts,
                                                     &#ts
                                                 ));
@@ -3127,7 +3124,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     };
                                     let #PkQueryPartSc = #extra_params_pk_modification_ts;
                                     let return_columns = #ts;
-                                    #import_ts gen_update_one_query_string(
+                                    #import_ts gen_uo_query_string(
                                         #TableSc,
                                         &#ColumnsSc,
                                         Self::#PkSc(),
@@ -3261,7 +3258,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #binded_query_select_only_updated_ids_query_bind_ts
                             }
                         }
-                        Operation::UpdateOne => {
+                        Operation::Uo => {
                             let gen_binded_query_ts =
                                 |var_name: proc_macro2::TokenStream,
                                  method_name: proc_macro2::TokenStream| {
@@ -3451,7 +3448,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             operation,
                             &gen_create_update_delete_many_fetch_ts(&CreateOrUpdateOrDeleteMany::Update),
                         ),
-                        Operation::UpdateOne => wrap_into_pg_transaction_begin_commit_ts(
+                        Operation::Uo => wrap_into_pg_transaction_begin_commit_ts(
                             operation,
                             &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
                         ),
@@ -3778,7 +3775,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {{#ts}}
                         },
                     ),
-                    Operation::Co | Operation::UpdateOne => Ts2::new(),
+                    Operation::Co | Operation::Uo => Ts2::new(),
                 }
             };
             let params_ts = {
@@ -3817,7 +3814,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Operation::DeleteMany => &vec_pk_ft_read_ts,
                                 Operation::DeleteOne => &pk_ft_as_pg_type_read_ucc,
                                 Operation::Co |
-                                Operation::UpdateOne => &ident_read_only_ids_ucc,
+                                Operation::Uo => &ident_read_only_ids_ucc,
                                 Operation::Cm |
                                 Operation::Um => &vec_ident_read_only_ids_ts,
                             };
@@ -3904,7 +3901,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             Operation::Cm |
                             Operation::Co |
                             Operation::Um |
-                            Operation::UpdateOne |
+                            Operation::Uo |
                             Operation::DeleteMany |
                             Operation::DeleteOne => &common_http_req_syn_vrts,
                         };
@@ -3987,7 +3984,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let ident_co_params_ucc = gen_ident_operation_params_ucc(&Operation::Co);
         let ident_ro_params_ucc = gen_ident_operation_params_ucc(&Operation::Ro);
         let ident_ro_payload_ucc = gen_ident_operation_payload_ucc(&Operation::Ro);
-        let ident_update_one_params_ucc = gen_ident_operation_params_ucc(&Operation::UpdateOne);
+        let ident_uo_params_ucc = gen_ident_operation_params_ucc(&Operation::Uo);
         let config_path_ts = quote! {server_config::Config};
         let underscore_unused_ts = quote! {_unused};
         //todo mb remove it?\
@@ -5397,7 +5394,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             },
                         );
-                    let ident_read_fields_init_without_pk_after_update_one_ts =
+                    let ident_read_fields_init_without_pk_after_uo_ts =
                         gen_fields_named_without_pk_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi0 = &syn_field_wrapper.ident;
@@ -5423,9 +5420,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                         );
                     let expected_rm_ts = {
-                        let ts = gen_ident_read_init_ts(
-                            &ident_read_fields_init_without_pk_after_update_one_ts,
-                        );
+                        let ts =
+                            gen_ident_read_init_ts(&ident_read_fields_init_without_pk_after_uo_ts);
                         if is_fields_without_pk_len_greater_than_one {
                             quote! {previous_read.into_iter().map(|el_a6bc6b2f|#ts).collect::<Vec<#ident_read_ucc>>()}
                         } else {
@@ -5514,8 +5510,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             quote! {#um_only_one_column_tests_ts}
         };
-        let update_one_tests_ts = {
-            let update_one_only_one_column_tests_ts = gen_fields_named_without_pk_without_comma_ts(
+        let uo_tests_ts = {
+            let uo_only_one_column_tests_ts = gen_fields_named_without_pk_without_comma_ts(
                 &|el: &SynFieldWrapper| {
                     let fi = &el.ident;
                     let ft = &el.type0;
@@ -5526,7 +5522,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &url_cloned,
                                 #pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
                                 #select_default_all_with_max_page_size_cloned_clone_ts,
-                                &table_update_one_cloned
+                                &table_uo_cloned
                             )
                             .await.expect("e6998b47");
                         }
@@ -5556,7 +5552,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 none_ts.clone()
                             }
                         });
-                    let ident_read_fields_init_without_pk_after_update_one_ts =
+                    let ident_read_fields_init_without_pk_after_uo_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el0: &SynFieldWrapper| {
                             let fi0 = &el0.ident;
                             let ts = if fi == fi0 {
@@ -5585,37 +5581,35 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #ident_read_only_ids_upper_fields_init_without_pk_ts
                         }},
                         &quote! {
-                            #ident::try_update_one_handle(
+                            #ident::try_uo_handle(
                                 &url_cloned,
-                                #ident_update_one_params_ucc {
+                                #ident_uo_params_ucc {
                                     payload: #ident_update_ucc::try_new(
                                         #pk_ft_as_pg_type_update_as_pg_type_pk_read_only_ids_into_update_ts,
                                         #ident_update_params_init_without_pk_ts
                                     ).expect("0e5d65a5")//todo add column ident
                                 },
-                                &table_update_one_cloned
+                                &table_uo_cloned
                             ).await.expect("4d755542")
                         },
                         &quote! {"564de31c"},
                     );
                     let assert_eq_ts_35a86616 = gen_assert_eq_ts(
-                        &gen_ident_read_init_ts(
-                            &ident_read_fields_init_without_pk_after_update_one_ts,
-                        ),
+                        &gen_ident_read_init_ts(&ident_read_fields_init_without_pk_after_uo_ts),
                         &quote! {
                             gen_ident_try_ro_handle_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
                                 select_default_all_with_max_page_size_cloned,
-                                &table_update_one_cloned
+                                &table_uo_cloned
                             )
                             .await.expect("75894c76")
                         },
                         &quote! {"d5dec823"},
                     );
                     let ts_fedea8c3 = gen_acc_push_future_ts(
-                        &quote! {table_update_one_cloned},
-                        &quote! {table_update_one},
+                        &quote! {table_uo_cloned},
+                        &quote! {table_uo},
                         &quote! {
                             #mb_previous_read_ts
                             #ts_a903994d
@@ -5626,7 +5620,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         for (i_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
                             &url,
-                            &table_update_one,
+                            &table_uo,
                             #select_default_all_with_max_page_size_clone_ts,
                             #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc
                         ).await.into_iter().enumerate() {
@@ -5635,7 +5629,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 },
             );
-            quote! {#update_one_only_one_column_tests_ts}
+            quote! {#uo_only_one_column_tests_ts}
         };
         let delete_many_tests_ts = {
             let test_delete_many_by_non_existent_pks_ts = gen_for_in_1_2_ts(
@@ -6108,7 +6102,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #(#table_fis_init_vec_ts)*
                         let table_ro = add_table_postfix("ro");
                         let table_um = add_table_postfix("um");
-                        let table_update_one = add_table_postfix("update_one");
+                        let table_uo = add_table_postfix("uo");
                         let table_delete_many = add_table_postfix("delete_many");
                         let table_delete_one = add_table_postfix("delete_one");
                         let table_names = [
@@ -6120,7 +6114,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #(#table_test_name_fis_vec_ts)*
                             &table_ro,
                             &table_um,
-                            &table_update_one,
+                            &table_uo,
                             &table_delete_many,
                             &table_delete_one,
                         ];
@@ -6191,7 +6185,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #rm_tests_ts
                                 #ro_tests_ts
                                 #um_tests_ts
-                                #update_one_tests_ts
+                                #uo_tests_ts
                                 #delete_many_tests_ts
                                 #delete_one_tests_ts
                                 acc_9189f86e

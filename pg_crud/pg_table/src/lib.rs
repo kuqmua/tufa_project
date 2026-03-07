@@ -40,7 +40,7 @@ pub fn gen_ro_query_string(table: &str, select_string: &str, where_string: &str)
     format!("select {select_string} from {table} where {where_string}")
 }
 #[must_use]
-pub fn gen_column_queals_v_comma_update_one_query_part(column: &str, value: &str) -> String {
+pub fn gen_column_queals_v_comma_uo_query_part(column: &str, value: &str) -> String {
     format!("{column} = {value},")
 }
 #[must_use]
@@ -69,7 +69,7 @@ pub fn gen_um_query_string(
 }
 //todo extra param for columns_to_return instead of pk_field_name in "returning {pk_field_name}""
 #[must_use]
-pub fn gen_update_one_query_string(
+pub fn gen_uo_query_string(
     table: &str,
     columns: &str,
     pk_field_name: &str,

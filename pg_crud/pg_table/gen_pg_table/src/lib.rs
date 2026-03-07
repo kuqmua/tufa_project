@@ -20,7 +20,7 @@ pub fn rm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn update_one_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn uo_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -60,7 +60,7 @@ pub fn um_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn update_one_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn uo_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]

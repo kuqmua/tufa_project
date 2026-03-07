@@ -57,7 +57,7 @@ server_config = {path = "../../../server_config"}"#,
                             "rm_write_into_file": "False",
                             "ro_write_into_file": "False",
                             "um_write_into_file": "False",
-                            "update_one_write_into_file": "False",
+                            "uo_write_into_file": "False",
                             "delete_many_write_into_file": "False",
                             "delete_one_write_into_file": "False",
                             "tests_write_into_file": "False",
@@ -69,7 +69,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::rm_extra_er_vrts{enum RmExtraErVrts{}}]
                         #[pg_crud::ro_extra_er_vrts{enum RoExtraErVrts{}}]
                         #[pg_crud::um_extra_er_vrts{enum UmExtraErVrts{}}]
-                        #[pg_crud::update_one_extra_er_vrts{enum UpdateOneExtraErVrts{}}]
+                        #[pg_crud::uo_extra_er_vrts{enum UoExtraErVrts{}}]
                         #[pg_crud::delete_many_extra_er_vrts{enum DeleteManyExtraErVrts{}}]
                         #[pg_crud::delete_one_extra_er_vrts{enum DeleteOneExtraErVrts{}}]
                         #[pg_crud::common_extra_er_vrts{
@@ -86,7 +86,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::rm_extra_logic{}]
                         #[pg_crud::ro_extra_logic{}]
                         #[pg_crud::um_extra_logic{}]
-                        #[pg_crud::update_one_extra_logic{}]
+                        #[pg_crud::uo_extra_logic{}]
                         #[pg_crud::delete_many_extra_logic{}]
                         #[pg_crud::delete_one_extra_logic{}]
                         #[pg_crud::common_extra_logic{}]
