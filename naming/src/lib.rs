@@ -206,7 +206,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["set"],
     ["insert"],
     ["values"],
-    ["delete"],
+    ["del"],
     ["and"],
     ["unnest"],
     ["configuration"],
@@ -332,11 +332,11 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["field", "vec"],
     ["object", "acc"],
     ["std", "opt", "opt", "object", "acc"],
-    ["create", "upd", "delete", "check", "fields", "are", "empty"],
+    ["create", "upd", "del", "check", "fields", "are", "empty"],
     ["not", "unique", "id", "in", "json", "upd", "arr"],
-    ["not", "unique", "id", "in", "json", "delete", "arr"],
+    ["not", "unique", "id", "in", "json", "del", "arr"],
     [
-        "not", "unique", "id", "in", "json", "upd", "and", "delete", "arrs"
+        "not", "unique", "id", "in", "json", "upd", "and", "del", "arrs"
     ],
     ["fields", "are", "empty"],
     ["wrap", "into", "jsonb", "build", "object"],
@@ -692,7 +692,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["read", "ids", "from", "co"],
     ["some", "v", "read", "ids", "from", "co"],
     ["select", "only", "updd", "ids", "qp"],
-    ["create", "upd", "delete", "are", "empty"],
+    ["create", "upd", "del", "are", "empty"],
     ["uo", "params"],
     ["upd", "to", "read", "ids"],
     ["self", "read", "ids", "handle"],

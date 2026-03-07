@@ -110,7 +110,7 @@ use token_patterns::{
 //todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
 //todo add transaction isolation level (see pg docs)
 //todo check on pg max length value of type
-//todo in few cases rows affected is usefull. (upd delete for example). if 0 afftected -mb its er? or mb use select then upd\delete?(rewrite query)
+//todo in few cases rows affected is usefull. (upd del for example). if 0 afftected -mb its er? or mb use select then upd\del?(rewrite query)
 //todo pg json schema validation https://youtu.be/F6X60ln2VNc
 //todo gen json schema from rust type https://docs.rs/schemars/laTest/schemars/
 //todo support read table length
@@ -215,7 +215,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             match self {
                 Self::Cm | Self::Co | Self::Rm | Self::Ro => OpHttpMethod::Post,
                 Self::Um | Self::Uo => OpHttpMethod::Patch,
-                Self::Dm | Self::Dlo => OpHttpMethod::Delete,
+                Self::Dm | Self::Dlo => OpHttpMethod::Del,
             }
         }
         fn op_er_with_serde_sc(self) -> SelfErWithSerdeSc {
@@ -266,7 +266,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             match &v {
                 CreateOrUpdOrDm::Create => Self::Cm,
                 CreateOrUpdOrDm::Upd => Self::Um,
-                CreateOrUpdOrDm::Delete => Self::Dm,
+                CreateOrUpdOrDm::Del => Self::Dm,
             }
         }
     }
@@ -291,7 +291,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             match &v {
                 CreateOrUpdOrDlo::Create => Self::Co,
                 CreateOrUpdOrDlo::Upd => Self::Uo,
-                CreateOrUpdOrDlo::Delete => Self::Dlo,
+                CreateOrUpdOrDlo::Del => Self::Dlo,
             }
         }
     }
@@ -300,7 +300,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     enum OpHttpMethod {
         Post,
         Patch,
-        Delete,
+        Del,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum RmOrDm {
@@ -368,13 +368,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     enum CreateOrUpdOrDm {
         Create,
         Upd,
-        Delete,
+        Del,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum CreateOrUpdOrDlo {
         Create,
         Upd,
-        Delete,
+        Del,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize, Optml)]
@@ -2386,7 +2386,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Op::Um |
                 Op::Uo => quote!{patch},
                 Op::Dm |
-                Op::Dlo => quote!{delete},
+                Op::Dlo => quote!{del},
             };
             let op_payload_example_sc =
                 op.op_payload_example_sc();
@@ -3265,7 +3265,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         });
                                         quote! {Some(#ts)}
                                     }
-                                    CreateOrUpdOrDm::Delete => gen_sqlx_row_try_get_pk_ts(
+                                    CreateOrUpdOrDm::Del => gen_sqlx_row_try_get_pk_ts(
                                         &pk_ft_as_pg_type_read_ucc,
                                         &quote! {Some(v_69ecb6a9)},
                                         &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
@@ -3300,7 +3300,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         CreateOrUpdOrDlo::Upd => {
                                             gen_match_ident_read_ids_as_from_row_from_row_ts(&ts)
                                         }
-                                        CreateOrUpdOrDlo::Delete => gen_sqlx_row_try_get_pk_ts(
+                                        CreateOrUpdOrDlo::Del => gen_sqlx_row_try_get_pk_ts(
                                             &quote! {#pk_ft_as_pg_type_read_ucc},
                                             &quote! {v_69ecb6a9},
                                             &ts,
@@ -3352,11 +3352,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ),
                         Op::Dm => wrap_into_pg_transaction_begin_commit_ts(
                             op,
-                            &gen_create_upd_dm_fetch_ts(&CreateOrUpdOrDm::Delete),
+                            &gen_create_upd_dm_fetch_ts(&CreateOrUpdOrDm::Del),
                         ),
                         Op::Dlo => wrap_into_pg_transaction_begin_commit_ts(
                             op,
-                            &gen_create_upd_dlo_fetch_ts(&CreateOrUpdOrDlo::Delete),
+                            &gen_create_upd_dlo_fetch_ts(&CreateOrUpdOrDlo::Del),
                         ),
                     }
                 };
@@ -4550,7 +4550,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
             quote! {#co_tests_ts}
         };
-        let add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
+        let add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
             |ts: &dyn ToTokens| {
                 quote! {
                     let read_ids_from_try_co = gen_read_ids_from_try_co_dflt(
@@ -4578,7 +4578,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_non_existent_pks},
-                    &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
+                    &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &quote!{
                             gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
@@ -4606,7 +4606,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts = gen_acc_push_future_ts(
                         &quote!{table_7e35b1ce},
                         &quote!{table_test_rm_by_equal_to_created_pks},
-                        &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
+                        &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                             let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
                                 &ts_611ddc2e,
                                 &quote! {
@@ -5514,7 +5514,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_equal_to_created_pks},
-                    &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
+                    &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &{
                             let ts = gen_try_dm_handle_ts(
                                 &quote!{
@@ -5540,7 +5540,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let ts_3240261f = gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_equal_to_created_pks},//todo is table name correct?
-                    &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
+                    &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                         let pk_ft_read_ids_into_table_type_el_pk_fi_clone_ts =
                             gen_pk_ft_as_pg_type_pk_method_call_ts(
                                 &ReadIdsIntoTableTypeSc,

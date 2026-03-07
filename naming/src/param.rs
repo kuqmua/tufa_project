@@ -44,7 +44,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "read", "inner"],
     ["self", "upd"],
     ["self", "upd", "for", "query"],
-    ["self", "delete"],
+    ["self", "del"],
     ["object", "self"],
     ["std", "opt", "opt", "object", "self"],
     ["object", "with", "id", "self"],
@@ -378,7 +378,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "to", "read"],
     ["pg", "type", "self", "to", "upd"],
     ["pg", "type", "self", "where"],
-    ["pg", "type", "self", "to", "delete"],
+    ["pg", "type", "self", "to", "del"],
     ["self", "as", "json"],
     ["self", "as", "json", "not", "null"],
     ["self", "as", "jsonb"],
@@ -567,8 +567,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "not", "null", "to", "create"],
     ["pg", "type", "self", "not", "null", "to", "read"],
     ["pg", "type", "self", "not", "null", "to", "upd"],
-    ["pg", "type", "self", "not", "null", "to", "delete"],
-    ["self", "not", "null", "to", "delete"],
+    ["pg", "type", "self", "not", "null", "to", "del"],
+    ["self", "not", "null", "to", "del"],
     [
         "pg", "type", "self", "where", "position", "equals", "try", "new", "er"
     ],

@@ -10,12 +10,12 @@ use macros_helpers::{
 use naming::{
     AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
     ContainsAllElsOfArrUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
-    CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateSc, CreateUpdDeleteAreEmptyUcc,
-    DeleteSc, DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DimOneEqualUcc, DimOneInUcc,
+    CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateSc, CreateUpdDelAreEmptyUcc, DelSc,
+    DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DimOneEqualUcc, DimOneInUcc,
     DisplayPlusToTokens, EqualUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc,
     InUcc, IncrSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
-    LengthEqualUcc, LengthGreaterThanUcc, NotUniqueIdInJsonDeleteArrUcc,
-    NotUniqueIdInJsonUpdAndDeleteArrsUcc, OptUpdSc, OptVecCreateSc, OverlapsWithArrUcc,
+    LengthEqualUcc, LengthGreaterThanUcc, NotUniqueIdInJsonDelArrUcc,
+    NotUniqueIdInJsonUpdAndDelArrsUcc, OptUpdSc, OptVecCreateSc, OverlapsWithArrUcc,
     PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeTestCasesUcc, PgTypeUcc,
     PreviousReadAndOptUpdIntoReadSc, QpErUcc, QpSc, QuerySc, ReadIdsAndCreateIntoOptVReadSc,
     ReadIdsAndCreateIntoPgJsonTypeOptVecWhereBetweenSc,
@@ -2470,11 +2470,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let import_unique_vec_ident_with_id_stdrt_not_null_upd_for_query_el_ts = quote!{
             #import::UniqueVec::<#ident_with_id_stdrt_not_null_upd_for_query_el_ucc>
         };
-        let gen_create_upd_delete_fields_ts_043c4057 = |
+        let gen_create_upd_del_fields_ts_043c4057 = |
             add_serde_skip_serializing_if_vec_is_empty_ann: &AddSerdeSkipSerializingIfVecIsEmptyAnn,
             create_ts: &dyn ToTokens,
             upd_ts: &dyn ToTokens,
-            delete_ts: &dyn ToTokens
+            del_ts: &dyn ToTokens
         | {
             let mb_serde_skip_serializing_if_vec_is_empty_ts = match &add_serde_skip_serializing_if_vec_is_empty_ann {
                 AddSerdeSkipSerializingIfVecIsEmptyAnn::False => Ts2::new(),
@@ -2485,7 +2485,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #CreateSc: #create_ts,
                 #UpdSc: #upd_ts,
                 #mb_serde_skip_serializing_if_vec_is_empty_ts
-                #DeleteSc: #delete_ts,
+                #DelSc: #del_ts,
             }
         };
         let ident_upd_ts = {
@@ -2501,8 +2501,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let vec_pg_crud_path_pg_json_type_uuid_uuid_upd_ts = gen_vec_tokens_decl_ts(
                 &pg_crud_path_pg_json_type_uuid_uuid_upd_ts
             );
-            let gen_create_upd_delete_fields_ts_ffcbdaf0 = |v: &AddSerdeSkipSerializingIfVecIsEmptyAnn| {
-                gen_create_upd_delete_fields_ts_043c4057(
+            let gen_create_upd_del_fields_ts_ffcbdaf0 = |v: &AddSerdeSkipSerializingIfVecIsEmptyAnn| {
+                gen_create_upd_del_fields_ts_043c4057(
                     v,
                     &vec_ident_with_id_stdrt_not_null_create_ts,
                     &import_unique_vec_ident_with_id_stdrt_not_null_upd_el_ts,
@@ -2533,7 +2533,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => (
                             DSerdeDeserialize::False,
                             &{
-                                let fields_ts = gen_create_upd_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::True);
+                                let fields_ts = gen_create_upd_del_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::True);
                                 quote! {{#fields_ts}}
                             }
                         ),
@@ -2577,7 +2577,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &ident_upd_try_new_er_ucc,
                             &Ts2::new(),
                             &quote!{{
-                                #CreateUpdDeleteAreEmptyUcc {
+                                #CreateUpdDelAreEmptyUcc {
                                     loc: location_lib::loc::Loc,
                                 },
                                 #IdsAreNotUniqueUcc {
@@ -2585,12 +2585,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     duplicate: #StringTs,
                                     loc: location_lib::loc::Loc,
                                 },
-                                #NotUniqueIdInJsonDeleteArrUcc {
+                                #NotUniqueIdInJsonDelArrUcc {
                                     #[eo_to_err_string_serde]
                                     er: #StringTs,
                                     loc: location_lib::loc::Loc,
                                 },
-                                #NotUniqueIdInJsonUpdAndDeleteArrsUcc {
+                                #NotUniqueIdInJsonUpdAndDelArrsUcc {
                                     #[eo_to_err_string_serde]
                                     er: #StringTs,
                                     loc: location_lib::loc::Loc,
@@ -2613,14 +2613,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => gen_pub_try_new_ts(
                             &Ts2::new(),
-                            &gen_create_upd_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::False),
+                            &gen_create_upd_del_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::False),
                             &ident_upd_try_new_er_ucc,
                             &{
                                 let custom_serde_er_deserializing_ident_upd_str = format!("custom serde er deserializing {ident_upd_ucc}");
                                 let check_if_all_empty_ts = {
                                     quote! {
-                                        if create.is_empty() && upd.is_empty() && delete.is_empty() {
-                                            return Err(#ident_upd_try_new_er_ucc::#CreateUpdDeleteAreEmptyUcc {
+                                        if create.is_empty() && upd.is_empty() && del.is_empty() {
+                                            return Err(#ident_upd_try_new_er_ucc::#CreateUpdDelAreEmptyUcc {
                                                 loc: location_lib::loc!()
                                             });
                                         }
@@ -2632,17 +2632,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         uuid_as_pg_json_type_upd_to_err_string_el_ts,
                                     ) = {
                                         #[allow(clippy::arbitrary_source_item_ordering)]
-                                        enum UpdOrDelete {
+                                        enum UpdOrDel {
                                             Upd,
-                                            Delete
+                                            Del
                                         }
                                         let gen_ts = |
-                                            upd_or_delete: &UpdOrDelete,
+                                            upd_or_del: &UpdOrDel,
                                             el_ts: &dyn ToTokens,
                                         |{
-                                            let ts: &dyn ToTokens = match &upd_or_delete {
-                                                UpdOrDelete::Upd => &quote!{&#el_ts.#IdSc},
-                                                UpdOrDelete::Delete => &el_ts
+                                            let ts: &dyn ToTokens = match &upd_or_del {
+                                                UpdOrDel::Upd => &quote!{&#el_ts.#IdSc},
+                                                UpdOrDel::Del => &el_ts
                                             };
                                             quote!{
                                                 <#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_upd_ts as location_lib::ToErrString>::to_err_string(
@@ -2652,11 +2652,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         };
                                         (
                                             gen_ts(
-                                                &UpdOrDelete::Upd,
+                                                &UpdOrDel::Upd,
                                                 &quote!{el}
                                             ),
                                             gen_ts(
-                                                &UpdOrDelete::Delete,
+                                                &UpdOrDel::Del,
                                                 &quote!{el}
                                             )
                                         )
@@ -2672,7 +2672,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             }
                                             acc_2bf4e098.push(&el.#IdSc);
                                         }
-                                        for el in &delete {
+                                        for el in &del {
                                             if acc_2bf4e098.contains(&el) {
                                                 return Err(#ident_upd_try_new_er_ucc::#IdsAreNotUniqueUcc {
                                                     duplicate: #uuid_as_pg_json_type_upd_to_err_string_el_ts,
@@ -2689,16 +2689,16 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         .map(|el|&el.#IdSc)
                                         .collect::<Vec<&#uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_upd_ts>>();
                                     };
-                                    let check_not_unique_id_in_delete_aray_ts = {
-                                        let not_unique_id_in_json_delete_arr_dq_ts = dq_ts(&format!("{custom_serde_er_deserializing_ident_upd_str}: not unique {IdSc} in json delete arr: {{}}"));
+                                    let check_not_unique_id_in_del_aray_ts = {
+                                        let not_unique_id_in_json_del_arr_dq_ts = dq_ts(&format!("{custom_serde_er_deserializing_ident_upd_str}: not unique {IdSc} in json del arr: {{}}"));
                                         quote! {
-                                            let delete_acc = {
-                                                let mut delete_acc = Vec::new();
-                                                for el in &delete {
-                                                    if delete_acc.contains(&el) {
-                                                        return Err(#ident_upd_try_new_er_ucc::#NotUniqueIdInJsonDeleteArrUcc {
+                                            let del_acc = {
+                                                let mut del_acc = Vec::new();
+                                                for el in &del {
+                                                    if del_acc.contains(&el) {
+                                                        return Err(#ident_upd_try_new_er_ucc::#NotUniqueIdInJsonDelArrUcc {
                                                             er: format!(
-                                                                #not_unique_id_in_json_delete_arr_dq_ts,
+                                                                #not_unique_id_in_json_del_arr_dq_ts,
                                                                 #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::get_inner(
                                                                     &el.clone().into()
                                                                 )
@@ -2706,20 +2706,20 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                             loc: location_lib::loc!()
                                                         });
                                                     }
-                                                    delete_acc.push(el);
+                                                    del_acc.push(el);
                                                 }
-                                                delete_acc
+                                                del_acc
                                             };
                                         }
                                     };
-                                    let check_not_unique_id_in_upd_and_delete_arrs_ts = {
-                                        let not_unique_id_in_json_upd_and_delete_arrs_dq_ts = dq_ts(&format!("{custom_serde_er_deserializing_ident_upd_str}: not unique {IdSc} in json upd and delete arrs: {{}}"));
+                                    let check_not_unique_id_in_upd_and_del_arrs_ts = {
+                                        let not_unique_id_in_json_upd_and_del_arrs_dq_ts = dq_ts(&format!("{custom_serde_er_deserializing_ident_upd_str}: not unique {IdSc} in json upd and del arrs: {{}}"));
                                         quote! {
                                             for el in upd_acc {
-                                                if delete_acc.contains(&el) {
-                                                    return Err(#ident_upd_try_new_er_ucc::#NotUniqueIdInJsonUpdAndDeleteArrsUcc {
+                                                if del_acc.contains(&el) {
+                                                    return Err(#ident_upd_try_new_er_ucc::#NotUniqueIdInJsonUpdAndDelArrsUcc {
                                                         er: format!(
-                                                            #not_unique_id_in_json_upd_and_delete_arrs_dq_ts,
+                                                            #not_unique_id_in_json_upd_and_del_arrs_dq_ts,
                                                             #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::get_inner(
                                                                 &el.clone().into()
                                                             )
@@ -2733,8 +2733,8 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     quote! {
                                         {
                                             #check_not_unique_id_in_upd_arr_ts
-                                            #check_not_unique_id_in_delete_aray_ts
-                                            #check_not_unique_id_in_upd_and_delete_arrs_ts
+                                            #check_not_unique_id_in_del_aray_ts
+                                            #check_not_unique_id_in_upd_and_del_arrs_ts
                                         }
                                     }
                                 };
@@ -2745,7 +2745,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     Ok(Self {
                                         #CreateSc,
                                         #UpdSc,
-                                        #DeleteSc
+                                        #DelSc
                                     })
                                 }
                             }
@@ -2815,7 +2815,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             match v {
                                                 "create" => Ok(__Field::f0),
                                                 "upd" => Ok(__Field::f1),
-                                                "delete" => Ok(__Field::f2),
+                                                "del" => Ok(__Field::f2),
                                                 _ => Ok(__Field::__ignore),
                                             }
                                         }
@@ -2826,7 +2826,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                             match v {
                                                 b"create" => Ok(__Field::f0),
                                                 b"upd" => Ok(__Field::f1),
-                                                b"delete" => Ok(__Field::f2),
+                                                b"del" => Ok(__Field::f2),
                                                 _ => Ok(__Field::__ignore),
                                             }
                                         }
@@ -2884,7 +2884,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                                     }
                                                     __Field::f2 => {
                                                         if Option::is_some(&f2) {
-                                                            return Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
+                                                            return Err(<__A::Error as serde::de::Error>::duplicate_field("del"));
                                                         }
                                                         f2 = Some(serde::de::MapAccess::next_value::<#vec_pg_crud_path_pg_json_type_uuid_uuid_upd_ts>(&mut __map)?);
                                                     }
@@ -2900,7 +2900,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                     #[doc(hidden)]
-                                    const FIELDS: &[&str] = &["create", "upd", "delete"];
+                                    const FIELDS: &[&str] = &["create", "upd", "del"];
                                     serde::Deserializer::deserialize_struct(
                                         __deserializer,
                                         #ident_upd_dq_ts,
@@ -2927,7 +2927,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => quote! {{
                             #CreateSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                             #UpdSc: #PgCrudDfltOptSomeVecOneElCall,
-                            #DeleteSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
+                            #DelSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                         }},
                         IsNullable::True => quote! {
                             (Some(#PgCrudDfltOptSomeVecOneElCall))
@@ -3109,7 +3109,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => gen_ident_upd_for_query_ts(
                             &{
-                                let fields_ts = gen_create_upd_delete_fields_ts_043c4057(
+                                let fields_ts = gen_create_upd_del_fields_ts_043c4057(
                                     &AddSerdeSkipSerializingIfVecIsEmptyAnn::True,
                                     &vec_ident_with_id_stdrt_not_null_create_for_query_ts,
                                     &import_unique_vec_ident_with_id_stdrt_not_null_upd_for_query_el_ts,
@@ -3421,7 +3421,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             Self {
                                 #CreateSc: #VSc.#CreateSc.into_iter().map(#ident_with_id_stdrt_not_null_create_for_query_ucc::from).collect(),
                                 #UpdSc: #import::UniqueVec::from_t1_impl_from_t2(#VSc.#UpdSc),
-                                #DeleteSc: #VSc.#DeleteSc.into_iter().map(Into::into).collect(),
+                                #DelSc: #VSc.#DelSc.into_iter().map(Into::into).collect(),
                             }
                         }
                     },
@@ -3562,7 +3562,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 }
             };
-            let gen_upd_delete_create_arr_ts = |ts: &dyn ToTokens|{
+            let gen_upd_del_create_arr_ts = |ts: &dyn ToTokens|{
                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                     &quote!{acc_2e2ad041, "{v_8333f8f4}"},
                     &return_err_qp_er_write_into_buffer_ts
@@ -3613,9 +3613,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             format!("case {acc_2e2ad041} else elem end")
                         }
                     };
-                    let delete_qp_acc = {
+                    let del_qp_acc = {
                         let mut acc_5b4cd920 = #StringTs::default();
-                        for _ in &v_58d685d3.#DeleteSc {
+                        for _ in &v_58d685d3.#DelSc {
                             let incr_cb6ba4a7 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                 Ok(v_110650cc) => v_110650cc,
                                 Err(#ErSc) => {
@@ -3641,10 +3641,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         let _: Option<char> = acc_8554f572.pop();
                         acc_8554f572
                     };
-                    let mb_where = if v_58d685d3.#DeleteSc.is_empty() {
+                    let mb_where = if v_58d685d3.#DelSc.is_empty() {
                         #StringTs::default()
                     } else {
-                        format!(" where {delete_qp_acc}")
+                        format!(" where {del_qp_acc}")
                     };
                     let mb_jsonb_build_arr = if v_58d685d3.#CreateSc.is_empty() {
                         #StringTs::default()
@@ -3655,7 +3655,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 }
             };
             let gen_upd_qp_arr_not_null_ts = |pg_type_or_pg_json_type: &PgTypeOrPgJsonType|{
-                let ts_c75c3cd1 = gen_upd_delete_create_arr_ts(&dq_ts(&match &pg_type_or_pg_json_type {
+                let ts_c75c3cd1 = gen_upd_del_create_arr_ts(&dq_ts(&match &pg_type_or_pg_json_type {
                     PgTypeOrPgJsonType::PgType => "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_where}),'[]'::jsonb)) end {mb_jsonb_build_arr})",
                     PgTypeOrPgJsonType::PgJsonType => "((select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_where}),'[]'::jsonb)) {mb_jsonb_build_arr})",
                 }));
@@ -4064,7 +4064,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             }
-                            for el in #VSc.delete {
+                            for el in #VSc.del {
                                 match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                     el,
                                     #QuerySc
@@ -4667,7 +4667,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &pg_type_or_pg_json_type_pg_json_type
                         ),
                         IsNullable::True => {
-                            let ts = gen_upd_delete_create_arr_ts(&quote!{
+                            let ts = gen_upd_del_create_arr_ts(&quote!{
                                 "(case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_where}),'[]'::jsonb)) end {mb_jsonb_build_arr})"
                             });
                             quote! {

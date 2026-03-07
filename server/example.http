@@ -368,7 +368,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   ]
                 }
               ],
-              "delete": [
+              "del": [
                 "4a11b550-14eb-449c-8c4b-bd6dcd3949ab"
               ]
             }
@@ -405,7 +405,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   ]
                 }
               ],
-              "delete": [
+              "del": [
                 "272c4b91-c9c4-4cb5-97da-d5bb5db8baaa"
               ]
             }
@@ -452,7 +452,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   ]
                 }
               ],
-              "delete": [
+              "del": [
                 "4a11b550-14eb-449c-8c4b-bd6dcd3949ab"
               ]
             }
@@ -489,7 +489,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   ]
                 }
               ],
-              "delete": [
+              "del": [
                 "272c4b91-c9c4-4cb5-97da-d5bb5db8baaa"
               ]
             }
@@ -552,7 +552,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               #   ]
               # }
             ],
-            "delete": [
+            "del": [
               # "79da8298-ee7e-4c2f-9ba4-dabc4d4d8d17"
             ]
           }
@@ -590,7 +590,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       #           ]
       #         }
       #       ],
-      #       "delete": [
+      #       "del": [
       #         "da9ff78a-e52a-4a0e-b5d6-bf4c786b1e1f"
       #       ]
       #     }
