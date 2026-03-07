@@ -211,32 +211,32 @@ pub trait PgTypeTestCases {
     fn read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
         v: &<Self::PgType as PgType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgType as PgType>::Read>>;
-    fn previous_read_merged_with_opt_update_into_read(
+    fn previous_read_and_opt_update_into_read(
         read: <Self::PgType as PgType>::Read,
         opt_update: Option<<Self::PgType as PgType>::Update>,
     ) -> <Self::PgType as PgType>::Read;
-    fn read_only_ids_merged_with_create_into_read(
+    fn read_only_ids_and_create_into_read(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> <Self::PgType as PgType>::Read;
-    fn read_only_ids_merged_with_create_into_opt_v_read(
+    fn read_only_ids_and_create_into_opt_v_read(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<V<<Self::PgType as PgType>::Read>>;
-    fn read_only_ids_merged_with_create_into_table_type(
+    fn read_only_ids_and_create_into_table_type(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> <Self::PgType as PgType>::TableType;
     //todo add prefix pg_type or pg_json_type ?
-    fn read_only_ids_merged_with_create_into_where_equal(
+    fn read_only_ids_and_create_into_where_equal(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> <Self::PgType as PgType>::Where;
-    fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
+    fn read_only_ids_and_create_into_vec_where_equal_using_fields(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> NotEmptyUniqueVec<<Self::PgType as PgType>::Where>;
-    fn read_only_ids_merged_with_create_into_opt_vec_where_equal_to_json_field(
+    fn read_only_ids_and_create_into_opt_vec_where_equal_to_json_field(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
@@ -245,24 +245,24 @@ pub trait PgTypeTestCases {
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
     fn pg_type_opt_vec_where_greater_than_test()
     -> Option<NotEmptyUniqueVec<PgTypeGreaterThanTest<Self::PgType>>>;
-    fn read_only_ids_merged_with_table_type_into_pg_type_opt_where_greater_than(
+    fn read_only_ids_and_table_type_into_pg_type_opt_where_greater_than(
         greater_than_vrt: PgTypeGreaterThanVrt,
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         table_type: <Self::PgType as PgType>::TableType,
     ) -> Option<<Self::PgType as PgType>::Where>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
@@ -272,27 +272,27 @@ pub trait PgTypeTestCases {
     fn create_into_pg_json_type_opt_vec_where_length_greater_than(
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_between(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_in(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex(
         read_only_ids: <Self::PgType as PgType>::ReadOnlyIds,
         create: <Self::PgType as PgType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
@@ -342,47 +342,47 @@ pub trait PgJsonTypeTestCases {
     fn read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
         v: &<Self::PgJsonType as PgJsonType>::ReadOnlyIds,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
-    fn previous_read_merged_with_opt_update_into_read(
+    fn previous_read_and_opt_update_into_read(
         read: <Self::PgJsonType as PgJsonType>::Read,
         opt_update: Option<<Self::PgJsonType as PgJsonType>::Update>,
     ) -> <Self::PgJsonType as PgJsonType>::Read;
-    fn read_only_ids_merged_with_create_into_read(
+    fn read_only_ids_and_create_into_read(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> <Self::PgJsonType as PgJsonType>::Read;
-    fn read_only_ids_merged_with_create_into_opt_v_read(
+    fn read_only_ids_and_create_into_opt_v_read(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<V<<Self::PgJsonType as PgJsonType>::Read>>;
-    fn read_only_ids_merged_with_create_into_table_type(
+    fn read_only_ids_and_create_into_table_type(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> <Self::PgJsonType as PgJsonType>::TableType;
-    fn read_only_ids_merged_with_create_into_where_equal(
+    fn read_only_ids_and_create_into_where_equal(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> <Self::PgJsonType as PgJsonType>::Where;
-    fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
+    fn read_only_ids_and_create_into_vec_where_equal_using_fields(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>;
-    fn read_only_ids_merged_with_create_into_vec_where_equal_to_json_field(
+    fn read_only_ids_and_create_into_vec_where_equal_to_json_field(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>>;
@@ -392,27 +392,27 @@ pub trait PgJsonTypeTestCases {
     fn create_into_pg_json_type_opt_vec_where_length_greater_than(
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJsonType as PgJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_between(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_in(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
-    fn read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex(
+    fn read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex(
         read_only_ids: <Self::PgJsonType as PgJsonType>::ReadOnlyIds,
         create: <Self::PgJsonType as PgJsonType>::Create,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;

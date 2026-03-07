@@ -8,10 +8,10 @@ use macros_helpers::{
 use naming::{
     ArrOfUcc, AsUcc, BooleanUcc, ColumnFieldSc, CreateForQueryUcc, CreateSc, EqualUcc, ErSc,
     GenPgJsonTypesModSc, IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdateSc, OptVecCreateSc,
-    PgJsonTypeUcc, QuerySc, ReadInnerUcc, ReadOnlyIdsMergedWithCreateIntoReadSc,
-    ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
-    ReadOnlyIdsMergedWithCreateIntoWhereEqualSc, ReadOnlyIdsSc, ReadOnlyIdsToTwoDimsVecReadInnerSc,
-    ReadSc, SelfSc, SelfUcc, StringUcc, UpdateForQueryUcc, UpdateUcc, VSc, VecOfUcc,
+    PgJsonTypeUcc, QuerySc, ReadInnerUcc, ReadOnlyIdsAndCreateIntoReadSc,
+    ReadOnlyIdsAndCreateIntoVecWhereEqualUsingFieldsSc, ReadOnlyIdsAndCreateIntoWhereEqualSc,
+    ReadOnlyIdsSc, ReadOnlyIdsToTwoDimsVecReadInnerSc, ReadSc, SelfSc, SelfUcc, StringUcc,
+    UpdateForQueryUcc, UpdateUcc, VSc, VecOfUcc,
     param::{
         JsonbSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfOriginUcc, SelfReadInnerUcc,
         SelfReadOnlyIdsUcc, SelfReadUcc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdateForQueryUcc,
@@ -2675,10 +2675,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 });
                 quote! {Some(#ts)}
             };
-            let previous_read_merged_with_opt_update_into_read_ts = quote! {
+            let previous_read_and_opt_update_into_read_ts = quote! {
                 #OptUpdateSc.map_or(#ReadSc, |v_f6e37412| #ident_read_ucc(v_f6e37412.into()))
             };
-            let read_only_ids_merged_with_create_into_read_ts = {
+            let read_only_ids_and_create_into_read_ts = {
                 let content_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
                     quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#VSc)}
                 } else {
@@ -2686,16 +2686,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {#ident_read_ucc(#content_ts)}
             };
-            let read_only_ids_merged_with_create_into_opt_v_read_ts = {
+            let read_only_ids_and_create_into_opt_v_read_ts = {
                 let ts = gen_v_init_ts0(&quote! {
-                    <Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoReadSc(
+                    <Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsAndCreateIntoReadSc(
                         #ReadOnlyIdsSc,
                         #CreateSc
                     )
                 });
                 quote! {Some(#ts)}
             };
-            let read_only_ids_merged_with_create_into_table_type_ts = {
+            let read_only_ids_and_create_into_table_type_ts = {
                 let ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
                     quote! {#ident_origin_ucc::new(#ReadOnlyIdsSc.0.#VSc)}
                 } else {
@@ -2703,7 +2703,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {#ident_table_type_ucc(#ts)}
             };
-            let read_only_ids_merged_with_create_into_where_equal_ts = {
+            let read_only_ids_and_create_into_where_equal_ts = {
                 let gen_equal_ts = |ts: &dyn ToTokens| {
                     quote! {
                         where_filters::PgJsonTypeWhereEqual {
@@ -2731,23 +2731,23 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts = quote! {
+            let read_only_ids_and_create_into_vec_where_equal_using_fields_ts = quote! {
                 #import::NotEmptyUniqueVec::try_new(vec![
-                    <Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoWhereEqualSc(
+                    <Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsAndCreateIntoWhereEqualSc(
                         #ReadOnlyIdsSc,
                         #CreateSc
                     )
                 ]).expect("56eb9ad4")
             };
-            let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts = quote! {<Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc(
+            let read_only_ids_and_create_into_vec_where_equal_to_json_field_ts = quote! {<Self as #import::PgJsonTypeTestCases>::#ReadOnlyIdsAndCreateIntoVecWhereEqualUsingFieldsSc(
                 #ReadOnlyIdsSc,
                 #CreateSc
             )};
             let (
-                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
+                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
             ) = {
                 let gen_ts = |dim: &Dim| {
                     let dim_i_nbr_max = DimIndexNbr::from(dim);
@@ -3182,7 +3182,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 }}
             };
             //todo additonal logic for Option<v> and el of arr? optal el of arr?
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 let (
@@ -3246,7 +3246,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 let (
@@ -3324,7 +3324,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 match &pg_json_type {
@@ -3363,7 +3363,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 match &pg_json_type {
@@ -3402,7 +3402,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 quote!{#NoneTs}
             };
             //todo add contains_el_greater_than for dim 2,3,4
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = match &pattern {
+            let read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = match &pattern {
                 Pattern::ArrDim1 { dim1_is_nullable } => {
                     if matches!((&is_nullable, &dim1_is_nullable), (
                         IsNullable::False,
@@ -3486,7 +3486,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim4 {..} => quote!{#NoneTs}
             };
             //todo add contains_el_regex for dim 2,3,4
-            let read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = match &pattern {
+            let read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = match &pattern {
                 Pattern::ArrDim1 { dim1_is_nullable } => {
                     if matches!((&is_nullable, &dim1_is_nullable), (
                         IsNullable::False,
@@ -3553,25 +3553,25 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &read_only_ids_into_opt_v_read_inner_ts,
                 &update_to_read_only_ids_ts,
                 &read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
-                &previous_read_merged_with_opt_update_into_read_ts,
-                &read_only_ids_merged_with_create_into_read_ts,
-                &read_only_ids_merged_with_create_into_opt_v_read_ts,
-                &read_only_ids_merged_with_create_into_table_type_ts,
-                &read_only_ids_merged_with_create_into_where_equal_ts,
-                &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_ts,
-                &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
+                &previous_read_and_opt_update_into_read_ts,
+                &read_only_ids_and_create_into_read_ts,
+                &read_only_ids_and_create_into_opt_v_read_ts,
+                &read_only_ids_and_create_into_table_type_ts,
+                &read_only_ids_and_create_into_where_equal_ts,
+                &read_only_ids_and_create_into_vec_where_equal_using_fields_ts,
+                &read_only_ids_and_create_into_vec_where_equal_to_json_field_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
                 &create_into_pg_json_type_opt_vec_where_length_equal_ts,
                 &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_between_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_in_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_regex_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                &read_only_ids_merged_with_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
+                &read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             )
         };
         let generated = quote! {
