@@ -37,14 +37,14 @@ server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}"#,
             &{
                 #[derive(OptimalPack)]
-                enum ShouldAddGenPgTablePk {
+                enum AddGenPgTablePk {
                     False,
                     True,
                 }
-                let gen_table_example_ts = |should_add_gen_pg_table_pk: ShouldAddGenPgTablePk| {
-                    let mb_gen_pg_table_pk_ts = match should_add_gen_pg_table_pk {
-                        ShouldAddGenPgTablePk::False => Ts2::new(),
-                        ShouldAddGenPgTablePk::True => {
+                let gen_table_example_ts = |add_gen_pg_table_pk: AddGenPgTablePk| {
+                    let mb_gen_pg_table_pk_ts = match add_gen_pg_table_pk {
+                        AddGenPgTablePk::False => Ts2::new(),
+                        AddGenPgTablePk::True => {
                             quote! {#[gen_pg_table_pk]}
                         }
                     };
@@ -100,10 +100,9 @@ server_config = {path = "../../../server_config"}"#,
                         }
                     }
                 };
-                let ts = gen_pg_table_source::gen_pg_table(gen_table_example_ts(
-                    ShouldAddGenPgTablePk::True,
-                ));
-                let table_struct_ts = gen_table_example_ts(ShouldAddGenPgTablePk::False);
+                let ts =
+                    gen_pg_table_source::gen_pg_table(gen_table_example_ts(AddGenPgTablePk::True));
+                let table_struct_ts = gen_table_example_ts(AddGenPgTablePk::False);
                 quote! {
                     #ts
                     #table_struct_ts

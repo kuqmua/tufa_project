@@ -239,7 +239,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             WithSerdeOptIsNoneAnnotation,
             WithoutSerdeOptIsNoneAnnotation,
         }
-        enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
+        enum AddSerdeSkipSerializingIfVecIsEmptyAnnotation {
             False,
             True,
         }
@@ -2485,14 +2485,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #import::UniqueVec::<#ident_with_id_stdrt_not_null_update_for_query_el_ucc>
         };
         let gen_create_update_delete_fields_ts_043c4057 = |
-            should_add_serde_skip_serializing_if_vec_is_empty_annotation: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation,
+            add_serde_skip_serializing_if_vec_is_empty_annotation: &AddSerdeSkipSerializingIfVecIsEmptyAnnotation,
             create_ts: &dyn ToTokens,
             update_ts: &dyn ToTokens,
             delete_ts: &dyn ToTokens
         | {
-            let mb_serde_skip_serializing_if_vec_is_empty_ts = match &should_add_serde_skip_serializing_if_vec_is_empty_annotation {
-                ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => Ts2::new(),
-                ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
+            let mb_serde_skip_serializing_if_vec_is_empty_ts = match &add_serde_skip_serializing_if_vec_is_empty_annotation {
+                AddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => Ts2::new(),
+                AddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
             };
             quote! {
                 #mb_serde_skip_serializing_if_vec_is_empty_ts
@@ -2515,7 +2515,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_vec_tokens_decl_ts(
                 &pg_crud_path_pg_json_type_uuid_uuid_update_ts
             );
-            let gen_create_update_delete_fields_ts_ffcbdaf0 = |v: &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
+            let gen_create_update_delete_fields_ts_ffcbdaf0 = |v: &AddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
                 gen_create_update_delete_fields_ts_043c4057(
                     v,
                     &vec_ident_with_id_stdrt_not_null_create_ts,
@@ -2547,7 +2547,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => (
                             DeriveSerdeDeserialize::False,
                             &{
-                                let fields_ts = gen_create_update_delete_fields_ts_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
+                                let fields_ts = gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
                                 quote! {{#fields_ts}}
                             }
                         ),
@@ -2627,7 +2627,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => gen_pub_try_new_ts(
                             &Ts2::new(),
-                            &gen_create_update_delete_fields_ts_ffcbdaf0(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
+                            &gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
                             &ident_update_try_new_er_ucc,
                             &{
                                 let custom_serde_er_deserializing_ident_update_str = format!("custom serde er deserializing {ident_update_ucc}");
@@ -3124,7 +3124,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => gen_ident_update_for_query_ts(
                             &{
                                 let fields_ts = gen_create_update_delete_fields_ts_043c4057(
-                                    &ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True,
+                                    &AddSerdeSkipSerializingIfVecIsEmptyAnnotation::True,
                                     &vec_ident_with_id_stdrt_not_null_create_for_query_ts,
                                     &import_unique_vec_ident_with_id_stdrt_not_null_update_for_query_el_ts,
                                     &vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts,//todo mb expand logic with where cases
@@ -4769,20 +4769,20 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     params_ts
                                 ) = {
                                     #[derive(Clone, OptimalPack)]
-                                    enum ShouldAddDotClone {
+                                    enum AddDotClone {
                                         False,
                                         True,
                                     }
                                     let gen_ts = |
-                                        should_add_dot_clone: ShouldAddDotClone,
+                                        add_dot_clone: AddDotClone,
                                         el_ts: &dyn ToTokens,
                                     |{
                                         vec_syn_field.iter().map(|el1| {
                                             let fi0 = &el1.ident;
                                             if fi == fi0 {
-                                                let mb_dot_clone_ts = match should_add_dot_clone.clone() {
-                                                    ShouldAddDotClone::False => Ts2::new(),
-                                                    ShouldAddDotClone::True => quote! { .clone() },
+                                                let mb_dot_clone_ts = match add_dot_clone.clone() {
+                                                    AddDotClone::False => Ts2::new(),
+                                                    AddDotClone::True => quote! { .clone() },
                                                 };
                                                 quote! {#el_ts #mb_dot_clone_ts}
                                             } else {
@@ -4792,11 +4792,11 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     };
                                     (
                                         gen_ts(
-                                            ShouldAddDotClone::True,
+                                            AddDotClone::True,
                                             &quote!{el_37154498}
                                         ),
                                         gen_ts(
-                                            ShouldAddDotClone::False,
+                                            AddDotClone::False,
                                             &quote!{el_37154498}
                                         )
                                     )

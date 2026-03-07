@@ -139,11 +139,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &self.vrt
         }
     }
-    enum ShouldAddBorrow {
+    enum AddBorrow {
         False,
         True,
     }
-    impl ToTokens for ShouldAddBorrow {
+    impl ToTokens for AddBorrow {
         fn to_tokens(&self, tokens: &mut Ts2) {
             match &self {
                 Self::False => Ts2::new().to_tokens(tokens),
@@ -151,7 +151,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     }
-    enum ShouldAddReturn {
+    enum AddReturn {
         False,
         True,
     }
@@ -517,14 +517,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_select_pg_crud_not_empty_unique_vec_ident_select_ts =
-        |should_add_borrow: &ShouldAddBorrow| {
-            quote! {#SelectSc: #should_add_borrow #import_ts NotEmptyUniqueVec<#ident_select_ucc>}
-        };
+    let gen_select_pg_crud_not_empty_unique_vec_ident_select_ts = |add_borrow: &AddBorrow| {
+        quote! {#SelectSc: #add_borrow #import_ts NotEmptyUniqueVec<#ident_select_ucc>}
+    };
     let select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts =
-        gen_select_pg_crud_not_empty_unique_vec_ident_select_ts(&ShouldAddBorrow::True);
+        gen_select_pg_crud_not_empty_unique_vec_ident_select_ts(&AddBorrow::True);
     let select_pg_crud_not_empty_unique_vec_ident_select_ts =
-        gen_select_pg_crud_not_empty_unique_vec_ident_select_ts(&ShouldAddBorrow::False);
+        gen_select_pg_crud_not_empty_unique_vec_ident_select_ts(&AddBorrow::False);
     let pub_select_pg_crud_not_empty_unique_vec_ident_select_ts = {
         quote! {pub #select_pg_crud_not_empty_unique_vec_ident_select_ts}
     };
@@ -760,12 +759,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
     });
     let wrap_into_axum_res_ts =
-        |axum_json_ts: &dyn ToTokens,
-         status_code_ts: &dyn ToTokens,
-         should_add_return: &ShouldAddReturn| {
-            let return_ts = match should_add_return {
-                ShouldAddReturn::False => quote! {res},
-                ShouldAddReturn::True => quote! {return res;},
+        |axum_json_ts: &dyn ToTokens, status_code_ts: &dyn ToTokens, add_return: &AddReturn| {
+            let return_ts = match add_return {
+                AddReturn::False => quote! {res},
+                AddReturn::True => quote! {return res;},
             };
             quote! {
                 let mut res = axum::response::IntoResponse::into_response(
@@ -813,7 +810,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .get_opt_status_code()
                     .expect("81efa954")
                     .to_http_status_code_ts(),
-                &ShouldAddReturn::True,
+                &AddReturn::True,
             );
             quote! {
                 let #ErSc = #ident_op_er_ucc::#syn_vrt_init_ts;
@@ -1159,14 +1156,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &fields_decl_ts,
             &ident_where_many_try_new_er_ucc,
             &{
-                let gen_fields_ts = |should_add_borrow: ShouldAddBorrow| {
+                let gen_fields_ts = |add_borrow: AddBorrow| {
                     gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
                         let fi = &el.ident;
-                        quote! {#should_add_borrow #fi}
+                        quote! {#add_borrow #fi}
                     })
                 };
-                let fields_ts = gen_fields_ts(ShouldAddBorrow::True);
-                let fields_inialization_ts = gen_fields_ts(ShouldAddBorrow::False);
+                let fields_ts = gen_fields_ts(AddBorrow::True);
+                let fields_inialization_ts = gen_fields_ts(AddBorrow::False);
                 quote! {
                     if matches!((#fields_ts), (#fields_named_with_comma_none_ts)) {
                         return Err(#ident_where_many_try_new_er_ucc::#NoFieldsProvidedUcc {
@@ -3426,7 +3423,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {#ident_op_res_vrts_ucc::#DesirableUcc(#VSc)}
                     },
                     &op.desirable_status_code().to_http_status_code_ts(),
-                    &ShouldAddReturn::False,
+                    &AddReturn::False,
                 );
                 quote! {
                     #[allow(clippy::single_call_fn)]
@@ -3472,7 +3469,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {<#ident_op_payload_ucc as #import_ts #DefaultOptSomeVecOneElUcc>::#DefaultOptSomeVecOneElSc()}
                     },
                     &quote! {http::StatusCode::OK},
-                    &ShouldAddReturn::False,
+                    &AddReturn::False,
                 );
                 quote! {
                     #MustUse
@@ -4038,18 +4035,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_co_create_ts,
             fi_read_only_ids_merged_with_create_into_opt_v_read_read_only_ids_returned_from_co_clone_ident_create_clone_ts,
         ) = {
-            enum ShouldAddDotClone {
+            enum AddDotClone {
                 False,
                 True,
             }
             let gen_ts = |read_only_ids_ts: &dyn ToTokens,
                           create_ts: &dyn ToTokens,
-                          should_add_dot_clone: &ShouldAddDotClone| {
+                          add_dot_clone: &AddDotClone| {
                 gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                     let fi = &el.ident;
-                    let mb_dot_clone_ts = match &should_add_dot_clone {
-                        ShouldAddDotClone::False => Ts2::new(),
-                        ShouldAddDotClone::True => quote! {.clone()},
+                    let mb_dot_clone_ts = match &add_dot_clone {
+                        AddDotClone::False => Ts2::new(),
+                        AddDotClone::True => quote! {.clone()},
                     };
                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                     quote! {
@@ -4063,21 +4060,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_create_name_ts = quote! {ident_create};
             let read_only_ids_returned_from_co_name_ts = quote! {read_only_ids_returned_from_co};
             (
-                gen_ts(&ReadOnlyIdsSc, &CreateSc, &ShouldAddDotClone::False),
+                gen_ts(&ReadOnlyIdsSc, &CreateSc, &AddDotClone::False),
                 gen_ts(
                     &quote! {read_only_ids_from_try_co},
                     &ident_create_name_ts,
-                    &ShouldAddDotClone::False,
+                    &AddDotClone::False,
                 ),
                 gen_ts(
                     &read_only_ids_returned_from_co_name_ts,
                     &quote! {ident_create_default},
-                    &ShouldAddDotClone::False,
+                    &AddDotClone::False,
                 ),
                 gen_ts(
                     &read_only_ids_returned_from_co_name_ts,
                     &ident_create_name_ts,
-                    &ShouldAddDotClone::True,
+                    &AddDotClone::True,
                 ),
             )
         };

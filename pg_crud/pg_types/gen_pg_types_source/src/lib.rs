@@ -1522,7 +1522,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 },
                 {
-                    enum ShouldAddDeLifetime {
+                    enum AddDeLifetime {
                         False,
                         True,
                     }
@@ -2133,19 +2133,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         )
                     };
                     let gen_impl_serde_de_visitor_for_tokens_ts = |
-                        should_add_de_lifetime: ShouldAddDeLifetime,
+                        add_de_lifetime: AddDeLifetime,
                         ident_ts_2ecd936e: &dyn ToTokens,
                         ts: &dyn ToTokens
                     | {
                         let (
                             mb_impl_lifetime_ts,
                             mb_visitor_lifetime_ts
-                        ) = match should_add_de_lifetime{
-                            ShouldAddDeLifetime::False => (
+                        ) = match add_de_lifetime{
+                            AddDeLifetime::False => (
                                 Ts2::new(),
                                 quote!{<'_>},
                             ),
-                            ShouldAddDeLifetime::True => (
+                            AddDeLifetime::True => (
                                 quote!{<'de>},
                                 quote!{<'de>},
                             ),
@@ -2175,7 +2175,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ) = {
                         let gen_ts = |zero_ts: &dyn ToTokens, first_ts: &dyn ToTokens, second_ts: &dyn ToTokens| {
                             gen_impl_serde_de_visitor_for_tokens_ts(
-                                ShouldAddDeLifetime::True,
+                                AddDeLifetime::True,
                                 &quote! {__Visitor<'de>},
                                 &quote! {
                                     type Value = #ident_stdrt_not_null_origin_ucc;
@@ -2219,7 +2219,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ) = {
                         let gen_ts = |ts: &dyn ToTokens| {
                             let impl_serde_de_visitor_for_tokens_ts = gen_impl_serde_de_visitor_for_tokens_ts(
-                                ShouldAddDeLifetime::False,
+                                AddDeLifetime::False,
                                 &field_visitor_ts,
                                 &ts
                             );
