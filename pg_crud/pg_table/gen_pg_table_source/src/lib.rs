@@ -3267,6 +3267,36 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
+        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
+            &{
+                let mut acc = common_route_syn_vrts.clone();
+                if let Operation::ReadMany | Operation::ReadOne = &operation {
+                    acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
+                }
+                if let Operation::CreateMany
+                | Operation::ReadMany
+                | Operation::ReadOne
+                | Operation::CreateOne
+                | Operation::UpdateMany
+                | Operation::UpdateOne
+                | Operation::DeleteMany = &operation
+                {
+                    acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
+                }
+                if let Operation::CreateMany
+                | Operation::DeleteOne
+                | Operation::CreateOne
+                | Operation::UpdateMany
+                | Operation::UpdateOne
+                | Operation::DeleteMany = &operation
+                {
+                    acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
+                }
+                acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
+                acc
+            },
+            operation,
+        );
         operation_routes_ts.push({
             let method_ts = match &operation {
                 Operation::CreateMany |
@@ -3303,68 +3333,213 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .route(#slash_operation_payload_example_dq_ts, axum::routing::get(async move||Self::#operation_payload_example_sc()))
             }
         });
-        impl_ident_vec_ts.push(quote! {
-            #[allow(clippy::single_call_fn)]
-            async fn #operation_handle_sc_ts(
-                #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
-                #ReqSc: axum::extract::Request,
-                #TableSc: &str,
-            ) -> axum::response::Response {
-                #req_parts_preparation_ts
-                #extra_validators_ts
-                #params_logic_ts
-                let #QueryStringSc = #query_string_ts;
-                //println!("{}", #QueryStringSc);
-                let #BindedQuerySc = {
-                    let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
-                    #binded_query_ts
-                    #QuerySc
+        impl_ident_vec_ts.push({
+            let try_operation_ts = {
+                let result_ok_type_ts: &dyn ToTokens = match &operation {
+                    Operation::ReadMany => &vec_struct_opts_ident_ts,
+                    Operation::ReadOne => &ident_read_ucc,
+                    Operation::DeleteMany => &vec_pk_ft_read_ts,
+                    Operation::DeleteOne => &pk_ft_as_pg_type_read_ucc,
+                    Operation::CreateOne | Operation::UpdateOne => &ident_read_only_ids_ucc,
+                    Operation::CreateMany | Operation::UpdateMany => &vec_ident_read_only_ids_ts,
                 };
-                #acquire_pool_and_connection_ts
-                let #VSc = {
-                    #pg_logic_ts
+                let try_operation_sc_ts = operation.try_self_sc_ts();
+                let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
+                let ident_try_operation_er_ucc = gen_ident_try_operation_er_ucc(operation);
+                let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
+                let payload_ts = {
+                    let ts = gen_match_ok_err_ts_c35d87fd(
+                        &quote! {serde_json::to_string(&#ParamsSc.#PayloadSc)},
+                        &quote! {v_1772a83e},
+                        &{
+                            let ts = gen_init_ts(&serde_json_to_string_syn_vrt_wrapper, Location::caller());
+                            quote! {{
+                                return Err(#ident_try_operation_er_ucc::#ts);
+                            }}
+                        },
+                    );
+                    quote! {
+                        let #PayloadSc = {
+                            #ts
+                        };
+                    }
                 };
-                #wraped_into_axum_res_ts
+                let url_ts = {
+                    let format_ts = dq_ts(&format!(
+                        "{{endpoint_location}}/{{table}}/{}",
+                        operation.self_sc_str()
+                    ));
+                    quote! {let #UrlSc = format!(#format_ts);}
+                };
+                let future_ts = {
+                    let operation_http_method_sc_ts =
+                        AsRefStrToScTs::case_or_panic(&operation.http_method());
+                    let commit_header_addition_ts = quote! {
+                        .header(
+                            &"commit".to_owned(),
+                            git_info::PROJECT_GIT_INFO.commit,
+                        )
+                    };
+                    let application_json_dq_ts = dq_ts(&"application/json");
+                    let content_type_application_json_header_addition_ts = quote! {
+                        .header(reqwest::header::CONTENT_TYPE, #application_json_dq_ts)
+                    };
+                    quote! {
+                        let #FutureSc = reqwest::Client::new()
+                            .#operation_http_method_sc_ts(&#UrlSc)
+                            #commit_header_addition_ts
+                            #content_type_application_json_header_addition_ts
+                            .#BodySc(#PayloadSc)
+                            .send();
+                    }
+                };
+                let res_ts = {
+                    let ts =
+                        gen_match_ok_err_ts_c35d87fd(&quote! {#FutureSc.await}, &quote! {v_180559e9}, &{
+                            let ts = gen_init_ts(&reqwest_syn_vrt_wrapper, Location::caller());
+                            quote! {{
+                                return Err(#ident_try_operation_er_ucc::#ts);
+                            }}
+                        });
+                    quote! {let #ResSc = #ts;}
+                };
+                let er_0_res_status_ts = quote! {
+                    let #Er0 = #ResSc.status();
+                };
+                let headers_ts = quote! {
+                    let #Er1 = #ResSc.headers().clone();
+                };
+                let res_text_ts = {
+                    let ts = gen_match_ok_err_ts(
+                        &quote! {#ResSc.text().await},
+                        &quote! {v_6a62b2b9},
+                        &quote! {v_6a62b2b9},
+                        &Er2,
+                        &{
+                            let failed_to_get_res_text_syn_vrt_init_ts =
+                                gen_init_ts(&failed_to_get_res_text_syn_vrt_wrapper, Location::caller());
+                            quote! {{
+                                return Err(#ident_try_operation_er_ucc::#failed_to_get_res_text_syn_vrt_init_ts);
+                            }}
+                        },
+                    );
+                    quote! {let #Er2 = #ts;}
+                };
+                let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
+                let expected_res_ts = {
+                    let deserialize_res_syn_vrt_init_ts =
+                        gen_init_ts(&deserialize_res_syn_vrt_wrapper, Location::caller());
+                    let ts = gen_match_ok_err_ts(
+                        &quote! {serde_json::from_str::<#ident_operation_res_vrts_ucc>(&#Er2)},
+                        &quote! {v_563d2a75},
+                        &quote! {v_563d2a75},
+                        &Er3,
+                        &quote! {{
+                            return Err(#ident_try_operation_er_ucc::#deserialize_res_syn_vrt_init_ts);
+                        }},
+                    );
+                    quote! {let #ExpectedResSc = #ts;}
+                };
+                let try_operation_logic_er_with_serde_ucc =
+                    gen_ident_operation_er_with_serde_ucc(operation);
+                let operation_er_with_serde_sc = &operation.operation_er_with_serde_sc();
+                let try_operation_logic_er_with_serde_ts = {
+                    let try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
+                            let vrt_ident = &el.ident;
+                            let fields_idents_ts = if let Fields::Named(fields_named) = &el.fields {
+                                let fields_idents = fields_named.named.iter().map(|field| &field.ident);
+                                quote! {#(#fields_idents),*}
+                            } else {
+                                panic!("8dcafc1c");
+                            };
+                            quote! {
+                                #ident_operation_res_vrts_ucc::#vrt_ident {
+                                    #fields_idents_ts
+                                } => #try_operation_logic_er_with_serde_ucc::#vrt_ident { #fields_idents_ts }
+                            }
+                        });
+                    quote! {
+                        let #operation_er_with_serde_sc = match #ExpectedResSc {
+                            #ident_operation_res_vrts_ucc::#DesirableUcc(#VSc) => {
+                                return Ok(#VSc);
+                            },
+                            #(#try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde),*
+                        };
+                    }
+                };
+                let return_er_ts = {
+                    let ts_6ac7b78e = gen_field_loc_new_ts(file!(), line!(), column!());
+                    quote! {
+                        Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
+                            #operation_er_with_serde_sc,
+                            #ts_6ac7b78e,
+                        })
+                    }
+                };
+                quote! {
+                    #[allow(clippy::single_call_fn)]
+                    async fn #try_operation_handle_sc_ts(
+                        #EndpointLocationSc: #RefStr,
+                        #ParamsSc: #ident_operation_params_ucc,
+                        #TableSc: &str,
+                    ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
+                        #payload_ts
+                        #url_ts
+                        #future_ts
+                        #res_ts
+                        #er_0_res_status_ts
+                        #headers_ts
+                        #res_text_ts
+                        #expected_res_ts
+                        #try_operation_logic_er_with_serde_ts
+                        #return_er_ts
+                    }
+                    pub async fn #try_operation_sc_ts(
+                        #EndpointLocationSc: #RefStr,
+                        #ParamsSc: #ident_operation_params_ucc
+                    ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
+                        Self::#try_operation_handle_sc_ts(
+                            #EndpointLocationSc,
+                            #ParamsSc,
+                            #self_table_name_call_ts
+                        ).await
+                    }
+                }
+            };
+            quote! {
+                #[allow(clippy::single_call_fn)]
+                async fn #operation_handle_sc_ts(
+                    #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
+                    #ReqSc: axum::extract::Request,
+                    #TableSc: &str,
+                ) -> axum::response::Response {
+                    #req_parts_preparation_ts
+                    #extra_validators_ts
+                    #params_logic_ts
+                    let #QueryStringSc = #query_string_ts;
+                    //println!("{}", #QueryStringSc);
+                    let #BindedQuerySc = {
+                        let mut #QuerySc = #sqlx_query_sqlx_pg_ts(&#QueryStringSc);
+                        #binded_query_ts
+                        #QuerySc
+                    };
+                    #acquire_pool_and_connection_ts
+                    let #VSc = {
+                        #pg_logic_ts
+                    };
+                    #wraped_into_axum_res_ts
+                }
+                #[allow(clippy::single_call_fn)]
+                pub async fn #operation_sc_ts(
+                    #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
+                    #ReqSc: axum::extract::Request,
+                ) -> axum::response::Response {
+                    Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
+                }
+                #operation_payload_example_ts
+                #try_operation_ts
             }
-            #[allow(clippy::single_call_fn)]
-            pub async fn #operation_sc_ts(
-                #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
-                #ReqSc: axum::extract::Request,
-            ) -> axum::response::Response {
-                Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
-            }
-            #operation_payload_example_ts
         });
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &{
-                let mut acc = common_route_syn_vrts.clone();
-                if let Operation::ReadMany | Operation::ReadOne = &operation {
-                    acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
-                }
-                if let Operation::CreateMany
-                | Operation::ReadMany
-                | Operation::ReadOne
-                | Operation::CreateOne
-                | Operation::UpdateMany
-                | Operation::UpdateOne
-                | Operation::DeleteMany = &operation
-                {
-                    acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
-                }
-                if let Operation::CreateMany
-                | Operation::DeleteOne
-                | Operation::CreateOne
-                | Operation::UpdateMany
-                | Operation::UpdateOne
-                | Operation::DeleteMany = &operation
-                {
-                    acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
-                }
-                acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
-                acc
-            },
-            operation,
-        );
         content_ts.push({
             let payload_ts = {
                 let gen_params_payload_and_default_ts =
@@ -3721,7 +3896,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let try_operation_ts = {
-                let ts_930e1a93 = StructOrEnumDeriveTsStreamBuilder::new()
+                let enum_ts = StructOrEnumDeriveTsStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_thiserror_error()
@@ -3766,7 +3941,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     });
                 quote! {
                     #AllowClippyArbitrarySourceItemOrdering
-                    #ts_930e1a93
+                    #enum_ts
                 }
             };
             quote! {
@@ -3777,266 +3952,28 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         });
     }
-    let gen_try_operation_ts = |operation: &Operation,
-                                type_vrts_from_req_res_syn_vrts: &[Variant],
-                                result_ok_type_ts: &dyn ToTokens| {
-        let try_operation_sc_ts = operation.try_self_sc_ts();
-        let try_operation_handle_sc_ts = operation.try_self_handle_sc_ts();
-        let ident_try_operation_er_ucc = gen_ident_try_operation_er_ucc(operation);
-        let ident_operation_params_ucc = gen_ident_operation_params_ucc(operation);
-        let payload_ts = {
-            let ts = gen_match_ok_err_ts_c35d87fd(
-                &quote! {serde_json::to_string(&#ParamsSc.#PayloadSc)},
-                &quote! {v_1772a83e},
-                &{
-                    let ts = gen_init_ts(&serde_json_to_string_syn_vrt_wrapper, Location::caller());
-                    quote! {{
-                        return Err(#ident_try_operation_er_ucc::#ts);
-                    }}
-                },
-            );
-            quote! {
-                let #PayloadSc = {
-                    #ts
-                };
-            }
-        };
-        let url_ts = {
-            let format_ts = dq_ts(&format!(
-                "{{endpoint_location}}/{{table}}/{}",
-                operation.self_sc_str()
-            ));
-            quote! {let #UrlSc = format!(#format_ts);}
-        };
-        let future_ts = {
-            let operation_http_method_sc_ts =
-                AsRefStrToScTs::case_or_panic(&operation.http_method());
-            let commit_header_addition_ts = quote! {
-                .header(
-                    &"commit".to_owned(),
-                    git_info::PROJECT_GIT_INFO.commit,
-                )
-            };
-            let application_json_dq_ts = dq_ts(&"application/json");
-            let content_type_application_json_header_addition_ts = quote! {
-                .header(reqwest::header::CONTENT_TYPE, #application_json_dq_ts)
-            };
-            quote! {
-                let #FutureSc = reqwest::Client::new()
-                    .#operation_http_method_sc_ts(&#UrlSc)
-                    #commit_header_addition_ts
-                    #content_type_application_json_header_addition_ts
-                    .#BodySc(#PayloadSc)
-                    .send();
-            }
-        };
-        let res_ts = {
-            let ts =
-                gen_match_ok_err_ts_c35d87fd(&quote! {#FutureSc.await}, &quote! {v_180559e9}, &{
-                    let ts = gen_init_ts(&reqwest_syn_vrt_wrapper, Location::caller());
-                    quote! {{
-                        return Err(#ident_try_operation_er_ucc::#ts);
-                    }}
-                });
-            quote! {let #ResSc = #ts;}
-        };
-        let er_0_res_status_ts = quote! {
-            let #Er0 = #ResSc.status();
-        };
-        let headers_ts = quote! {
-            let #Er1 = #ResSc.headers().clone();
-        };
-        let res_text_ts = {
-            let ts = gen_match_ok_err_ts(
-                &quote! {#ResSc.text().await},
-                &quote! {v_6a62b2b9},
-                &quote! {v_6a62b2b9},
-                &Er2,
-                &{
-                    let failed_to_get_res_text_syn_vrt_init_ts =
-                        gen_init_ts(&failed_to_get_res_text_syn_vrt_wrapper, Location::caller());
-                    quote! {{
-                        return Err(#ident_try_operation_er_ucc::#failed_to_get_res_text_syn_vrt_init_ts);
-                    }}
-                },
-            );
-            quote! {let #Er2 = #ts;}
-        };
-        let ident_operation_res_vrts_ucc = gen_ident_operation_res_vrts_ucc(operation);
-        let expected_res_ts = {
-            let deserialize_res_syn_vrt_init_ts =
-                gen_init_ts(&deserialize_res_syn_vrt_wrapper, Location::caller());
-            let ts = gen_match_ok_err_ts(
-                &quote! {serde_json::from_str::<#ident_operation_res_vrts_ucc>(&#Er2)},
-                &quote! {v_563d2a75},
-                &quote! {v_563d2a75},
-                &Er3,
-                &quote! {{
-                    return Err(#ident_try_operation_er_ucc::#deserialize_res_syn_vrt_init_ts);
-                }},
-            );
-            quote! {let #ExpectedResSc = #ts;}
-        };
-        let try_operation_logic_er_with_serde_ucc =
-            gen_ident_operation_er_with_serde_ucc(operation);
-        let operation_er_with_serde_sc = &operation.operation_er_with_serde_sc();
-        let try_operation_logic_er_with_serde_ts = {
-            let try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
-                    let vrt_ident = &el.ident;
-                    let fields_idents_ts = if let Fields::Named(fields_named) = &el.fields {
-                        let fields_idents = fields_named.named.iter().map(|field| &field.ident);
-                        quote! {#(#fields_idents),*}
-                    } else {
-                        panic!("8dcafc1c");
-                    };
-                    quote! {
-                        #ident_operation_res_vrts_ucc::#vrt_ident {
-                            #fields_idents_ts
-                        } => #try_operation_logic_er_with_serde_ucc::#vrt_ident { #fields_idents_ts }
-                    }
-                });
-            quote! {
-                let #operation_er_with_serde_sc = match #ExpectedResSc {
-                    #ident_operation_res_vrts_ucc::#DesirableUcc(#VSc) => {
-                        return Ok(#VSc);
-                    },
-                    #(#try_operation_logic_res_vrts_to_try_operation_logic_er_with_serde),*
-                };
-            }
-        };
-        let return_er_ts = {
-            let ts_6ac7b78e = gen_field_loc_new_ts(file!(), line!(), column!());
-            quote! {
-                Err(#ident_try_operation_er_ucc::#try_operation_logic_er_with_serde_ucc {
-                    #operation_er_with_serde_sc,
-                    #ts_6ac7b78e,
-                })
-            }
-        };
-        quote! {
-            #[allow(clippy::single_call_fn)]
-            async fn #try_operation_handle_sc_ts(
-                #EndpointLocationSc: #RefStr,
-                #ParamsSc: #ident_operation_params_ucc,
-                #TableSc: &str,
-            ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
-                #payload_ts
-                #url_ts
-                #future_ts
-                #res_ts
-                #er_0_res_status_ts
-                #headers_ts
-                #res_text_ts
-                #expected_res_ts
-                #try_operation_logic_er_with_serde_ts
-                #return_er_ts
-            }
-            pub async fn #try_operation_sc_ts(
-                #EndpointLocationSc: #RefStr,
-                #ParamsSc: #ident_operation_params_ucc
-            ) -> Result<#result_ok_type_ts, #ident_try_operation_er_ucc> {
-                Self::#try_operation_handle_sc_ts(
-                    #EndpointLocationSc,
-                    #ParamsSc,
-                    #self_table_name_call_ts
-                ).await
-            }
-        }
-    };
-    let create_many_ts = {
-        let operation = Operation::CreateMany;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(row_and_rollback_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &vec_ident_read_only_ids_ts,
-        ));
-        Ts2::new()
-    };
+    let create_many_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.create_many_write_into_file,
         "gen_pg_table_create_many",
         &create_many_ts,
         &FormatWithCargofmt::True,
     );
-    let create_one_ts = {
-        let operation = Operation::CreateOne;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(row_and_rollback_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &ident_read_only_ids_ucc,
-        ));
-        Ts2::new()
-    };
+    let create_one_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.create_one_write_into_file,
         "gen_pg_table_create_one",
         &create_one_ts,
         &FormatWithCargofmt::True,
     );
-    let read_many_ts = {
-        let operation = Operation::ReadMany;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(not_unique_field_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &vec_struct_opts_ident_ts,
-        ));
-        Ts2::new()
-    };
+    let read_many_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.read_many_write_into_file,
         "gen_pg_table_read_many",
         &read_many_ts,
         &FormatWithCargofmt::True,
     );
-    let read_one_ts = {
-        let operation = Operation::ReadOne;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(not_unique_field_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &ident_read_ucc,
-        ));
-        Ts2::new()
-    };
+    let read_one_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.read_one_write_into_file,
         "gen_pg_table_read_one",
@@ -4044,50 +3981,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     //todo update not only with arr of objects with ids but with WHERE and one object
-    let update_many_ts = {
-        let operation = Operation::UpdateMany;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(row_and_rollback_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &vec_ident_read_only_ids_ts,
-        ));
-        Ts2::new()
-    };
+    let update_many_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.update_many_write_into_file,
         "gen_pg_table_update_many",
         &update_many_ts,
         &FormatWithCargofmt::True,
     );
-    let update_one_ts = {
-        let operation = Operation::UpdateOne;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(row_and_rollback_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &ident_read_only_ids_ucc,
-        ));
-        Ts2::new()
-    };
+    let update_one_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.update_one_write_into_file,
         "gen_pg_table_update_one",
@@ -4095,49 +3996,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     //todo return deleted rows ids vec
-    let delete_many_ts = {
-        let operation = Operation::DeleteMany;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(row_and_rollback_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(query_part_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &vec_pk_ft_read_ts,
-        ));
-        Ts2::new()
-    };
+    let delete_many_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.delete_many_write_into_file,
         "gen_pg_table_delete_many",
         &delete_many_ts,
         &FormatWithCargofmt::True,
     );
-    let delete_one_ts = {
-        let operation = Operation::DeleteOne;
-        let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-            &common_route_syn_vrts
-                .iter()
-                .copied()
-                .chain(once(row_and_rollback_syn_vrt_wrapper.get_syn_vrt()))
-                .chain(once(try_bind_syn_vrt_wrapper.get_syn_vrt()))
-                .collect(),
-            &operation,
-        );
-        impl_ident_vec_ts.push(gen_try_operation_ts(
-            &operation,
-            &type_vrts_from_req_res_syn_vrts,
-            &pk_ft_as_pg_type_read_ucc,
-        ));
-        Ts2::new()
-    };
+    let delete_one_ts = Ts2::new();
     mb_write_ts_into_file(
         gen_pg_table_config.delete_one_write_into_file,
         "gen_pg_table_delete_one",
