@@ -26,9 +26,9 @@ use naming::{
     NotUniqueFieldUcc, NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc,
     OrderSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc,
     PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PgnSc, PkQpSc, PkSc,
-    PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc, PreparePgTableSc,
-    PreparePgUcc, QbSc, QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc,
-    ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc, ReadOnlyIdsIntoUpdateSc,
+    PoolConnectionSc, PoolSc, PrefixSc, PrepExtensionsSc, PrepPgSc, PrepPgTableSc, PrepPgUcc, QbSc,
+    QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc,
+    ReadOnlyIdsIntoTableTypeSc, ReadOnlyIdsIntoUpdateSc,
     ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
@@ -50,7 +50,7 @@ use naming::{
     param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
         SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
-        SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPreparePgErUcc,
+        SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPrepPgErUcc,
         SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc, SelfReadOnlyIdsUcc, SelfReadUcc,
         SelfRoErWithSerdeUcc, SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc,
         SelfTryRoErUcc, SelfUmParamsUcc, SelfUmPayloadUcc, SelfUpdateForQueryUcc,
@@ -590,13 +590,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let mut impl_ident_vec_ts = Vec::new();
     let mut op_routes_ts = Vec::new();
     let mut content_ts = Vec::new();
-    let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
-    let ident_prepare_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+    let ident_prep_pg_er_ucc = SelfPrepPgErUcc::from_tokens(&ident);
+    let ident_prep_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
         .make_pub()
         .derive_debug()
         .derive_thiserror_error()
         .derive_location_lib_location()
-        .build_enum(&ident_prepare_pg_er_ucc, &Ts2::new(), &{
+        .build_enum(&ident_prep_pg_er_ucc, &Ts2::new(), &{
             let ts = quote! {
                 #[eo_to_err_string]
                 er: sqlx::Error,
@@ -609,7 +609,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #CreateExtensionIfNotExistsUuidOsspUcc {
                     #ts
                 },
-                #PreparePgUcc {
+                #PrepPgUcc {
                     #ts
                 },
             }}
@@ -629,16 +629,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let pub_async_fn_prepare_extensions_ts = quote! {
-            pub async fn #PrepareExtensionsSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_pg_er_ucc> {
+        let pub_async_fn_prep_extensions_ts = quote! {
+            pub async fn #PrepExtensionsSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prep_pg_er_ucc> {
                 if let Err(er) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
-                    return Err(#ident_prepare_pg_er_ucc::#CreateExtensionIfNotExistsPgJsonschemaUcc {
+                    return Err(#ident_prep_pg_er_ucc::#CreateExtensionIfNotExistsPgJsonschemaUcc {
                         er,
                         loc: location_lib::loc!()
                     });
                 }
                 if let Err(er) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
-                    return Err(#ident_prepare_pg_er_ucc::#CreateExtensionIfNotExistsUuidOsspUcc {
+                    return Err(#ident_prep_pg_er_ucc::#CreateExtensionIfNotExistsUuidOsspUcc {
                         er,
                         loc: location_lib::loc!()
                     });
@@ -646,8 +646,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Ok(())
             }
         };
-        let pub_async_fn_prepare_pg_table_ts = {
-            let prepare_pg_dq_ts = dq_ts(&format!(
+        let pub_async_fn_prep_pg_table_ts = {
+            let prep_pg_dq_ts = dq_ts(&format!(
                 "create table if not exists {{table}} ({})",
                 fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
             ));
@@ -676,12 +676,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect::<Vec<Ts2>>()
             };
             quote! {
-                pub async fn #PreparePgTableSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_pg_er_ucc> {
+                pub async fn #PrepPgTableSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prep_pg_er_ucc> {
                     if let Err(er) = sqlx::query(&format!(
-                        #prepare_pg_dq_ts,
+                        #prep_pg_dq_ts,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_ts),*
                     )).execute(#PoolSc).await {
-                        return Err(#ident_prepare_pg_er_ucc::#PreparePgUcc {
+                        return Err(#ident_prep_pg_er_ucc::#PrepPgUcc {
                             er,
                             loc: location_lib::loc!()
                         });
@@ -690,10 +690,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let pub_async_fn_prepare_pg_ts = quote! {
-            pub async fn #PreparePgSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_pg_er_ucc> {
-                Self::#PrepareExtensionsSc(#PoolSc).await?;
-                Self::#PreparePgTableSc(#PoolSc, #ident_sc_dq_ts).await?;
+        let pub_async_fn_prep_pg_ts = quote! {
+            pub async fn #PrepPgSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prep_pg_er_ucc> {
+                Self::#PrepExtensionsSc(#PoolSc).await?;
+                Self::#PrepPgTableSc(#PoolSc, #ident_sc_dq_ts).await?;
                 Ok(())
             }
         };
@@ -749,9 +749,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         quote! {
             #pub_fn_table_ts
             #fn_pk_ts
-            #pub_async_fn_prepare_extensions_ts
-            #pub_async_fn_prepare_pg_table_ts
-            #pub_async_fn_prepare_pg_ts
+            #pub_async_fn_prep_extensions_ts
+            #pub_async_fn_prep_pg_table_ts
+            #pub_async_fn_prep_pg_ts
             #pub_fn_allow_methods_ts
             #fn_gen_select_qp_ts
         }
@@ -6085,10 +6085,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .expect("b9c1eb2e");
                         };
                         drop_all_test_tables().await;
-                        #ident::prepare_extensions(&#PgPoolSc).await.expect("0633ff48");
+                        #ident::prep_extensions(&#PgPoolSc).await.expect("0633ff48");
                         //do not make it concurrent. would be pg er: "duplicate k v violates unique constraint \"pg_class_relname_nsp_index\""
                         for el_dac43b91 in table_names {
-                            #ident::prepare_pg_table(
+                            #ident::prep_pg_table(
                                 &#PgPoolSc,
                                 el_dac43b91,
                             ).await.expect("c7952247");
@@ -6159,7 +6159,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let common_ts = quote! {
-        #ident_prepare_pg_er_ts
+        #ident_prep_pg_er_ts
         #ident_create_ts
         #ident_where_many_ts
         #opt_ident_where_many_ts

@@ -28,7 +28,7 @@ fn main() {
                 ))
                 .await
                 .expect("8b72f688");
-            TableExample::prepare_pg(&pg_pool).await.expect("647fa499");
+            TableExample::prep_pg(&pg_pool).await.expect("647fa499");
             let tcp_listener =
                 TcpListener::bind(GetServiceSocketAddress::get_service_socket_address(&config))
                     .await

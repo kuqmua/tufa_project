@@ -865,7 +865,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "with", "id", "where"],
     ["self", "read", "try", "from", "er"],
     ["el", "self"],
-    ["self", "prepare", "pg", "er"],
+    ["self", "prep", "pg", "er"],
     ["self", "where", "many"],
     ["self", "where", "many", "try", "new", "er"],
     ["std", "opt", "opt", "self", "where", "many"],

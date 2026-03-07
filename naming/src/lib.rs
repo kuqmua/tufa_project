@@ -611,8 +611,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "jsonschema"
     ],
     ["create", "extension", "if", "not", "exists", "uuid", "ossp"],
-    ["prepare", "pg"],
-    ["prepare", "pg", "table"],
+    ["prep", "pg"],
+    ["prep", "pg", "table"],
     [
         "header",
         "content",
@@ -811,8 +811,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "only", "ids", "merged", "with", "create", "into", "pg", "json", "type", "opt",
         "vec", "where", "dim", "four", "equal"
     ],
-    ["prepare", "extensions"],
-    ["prepare", "pg", "table", "and", "extensions"],
+    ["prep", "extensions"],
+    ["prep", "pg", "table", "and", "extensions"],
     ["table"],
     ["routes"],
     ["routes", "handle"],
