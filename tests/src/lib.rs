@@ -121,7 +121,7 @@ mod tests {
         }
         let mut all_uuids = Vec::new();
         let mut all_ers = Vec::new();
-        for el_fcc35079 in project_directory()
+        for el_fcc35079 in project_dir()
             .into_iter()
             .filter_entry(|el_7e9cb4cf| el_7e9cb4cf.file_name() != "target")
             .filter_map(Result::ok)
@@ -163,7 +163,7 @@ mod tests {
         }
         assert!(all_ers.is_empty(), "6062a9e9 {all_ers:#?}",);
     }
-    fn project_directory() -> WalkDir {
+    fn project_dir() -> WalkDir {
         WalkDir::new("../")
     }
     #[test]
@@ -389,7 +389,7 @@ mod tests {
             r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
         ).expect("e098a1ff");
         let mut seen = HashSet::new();
-        for el_44a8aa56 in project_directory()
+        for el_44a8aa56 in project_dir()
             .into_iter()
             .filter_entry(|el_e4adf4c5| el_e4adf4c5.file_name() != "target")
             .filter_map(Result::ok)
@@ -417,7 +417,7 @@ mod tests {
         let exceptions = [
             "../pg_crud/pg_crud_common/src/lib.rs", //contain utf-8 String test
         ];
-        for el_d87f0495 in project_directory()
+        for el_d87f0495 in project_dir()
             .into_iter()
             .filter_entry(|el_6870bc3d| {
                 let name = el_6870bc3d.file_name().to_string_lossy();
@@ -466,7 +466,7 @@ mod tests {
         let exceptions = [
             "../Cargo.toml", //workspace
         ];
-        for el_bebb7b9d in project_directory()
+        for el_bebb7b9d in project_dir()
             .into_iter()
             .filter_map(Result::ok)
             .filter(|el_6870bc3d| el_6870bc3d.file_name() == "Cargo.toml")
@@ -518,7 +518,7 @@ mod tests {
     #[test]
     fn check_no_empty_lines_in_rust_files() {
         let mut ers = Vec::new();
-        for entry in project_directory()
+        for entry in project_dir()
             .into_iter()
             .filter_entry(|el| el.file_name() != "target")
             .filter_map(Result::ok)
