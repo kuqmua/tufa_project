@@ -273,6 +273,7 @@ mod tests {
             &[
                 "disallowed_fields".to_owned(),
                 "unnecessary_trailing_comma".to_owned(),
+                "manual_pop_if".to_owned(),
             ],
         );
     }
