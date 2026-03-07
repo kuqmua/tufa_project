@@ -7,7 +7,8 @@
 - Add dependencies only when prompt explicitly requests it.
 - Disable default features unless required.
 - Prefer `std` over external crates.
-- Keep versions consistent across workspace.
+- Declare crates.io dependencies only in workspace.dependencies.
+- Use dependency.workspace = true for dependencies in workspace projects
 - Prefer borrowing over cloning, especially for large structures.
 - Use `Arc` only for cross-thread sharing.
 - Use `Mutex` only for interior mutability.
@@ -23,12 +24,10 @@
 - Keep tests deterministic.
 - If error message contains 8 random symbols then search workspace for that id.
 - Avoid allocations inside hot loops.
-- Use explicit return types.
 - Preserve behavior unless change is requested.
 - Keep diffs minimal.
 - Keep generated functions and closures inside usage scope.
-- Keep README accurate.
-- Ensure examples compile.
+- `expect()` messages must contain **8 first symbols from random UUID v4**.
 
 ## WHAT AGENT MUST NOT DO
 
@@ -37,7 +36,6 @@
 - Edit Cargo.toml of unrelated crates.
 - Add new crates unless explicitly requested.
 - Silence clippy without justification.
-- Introduce TODO markers without instruction.
 - Leave commented dead code.
 - Commit debug prints.
 - Use `unwrap()`.
@@ -45,28 +43,18 @@
 - Ignore `Result` or swallow errors.
 - Use or write `unsafe`.
 - Assume `Send` or `Sync` without proof.
-- Duplicate existing functionality.
-- Use outdated crates.
-- Clone blindly.
+- Use outdated versions in case of adding new crate.
 - Block async executors.
 - Hold locks across `.await`.
 - Mix async runtimes.
-- Use async where unnecessary.
 - Ignore cancellation safety.
 - Depend on external services in tests.
 - Use flaky time-based tests.
-- Skip tests silently.
 - Change public API without instruction.
-- Widen trait bounds unnecessarily.
 - Leak generics to users.
 - Refactor or reformat without request.
 - Rename public items casually.
 - Change semantics silently.
-- Squash unrelated changes.
-- Commit code.
-- Modify `Cargo.lock`.
-
-`expect()` messages must contain **8 random symbols from UUID v4**.
 
 ## Run before completion
 
