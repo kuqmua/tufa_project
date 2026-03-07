@@ -40,39 +40,39 @@ pub fn common_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn cm_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn cm_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn co_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn co_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn rm_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn rm_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn ro_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn ro_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn um_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn um_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn uo_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn uo_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn dm_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn dm_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn dlo_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn dlo_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn common_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn common_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_derive(GenPgTable, attributes(gen_pg_table_pk))]

@@ -23,15 +23,15 @@ use optimal_pack::OptimalPack;
         // },
     }
 }]
-#[pg_crud::cm_extra_logic{}]
-#[pg_crud::co_extra_logic{}]
-#[pg_crud::rm_extra_logic{}]
-#[pg_crud::ro_extra_logic{}]
-#[pg_crud::um_extra_logic{}]
-#[pg_crud::uo_extra_logic{}]
-#[pg_crud::dm_extra_logic{}]
-#[pg_crud::dlo_extra_logic{}]
-#[pg_crud::common_extra_logic{}]
+#[pg_crud::cm_logic{}]
+#[pg_crud::co_logic{}]
+#[pg_crud::rm_logic{}]
+#[pg_crud::ro_logic{}]
+#[pg_crud::um_logic{}]
+#[pg_crud::uo_logic{}]
+#[pg_crud::dm_logic{}]
+#[pg_crud::dlo_logic{}]
+#[pg_crud::common_logic{}]
 pub struct TableExample {
     // #[gen_pg_crud_pk]
     // pub pk: pg_crud::I64AsNotNullBigSerialInitByPg,

@@ -10,16 +10,16 @@ use macros_helpers::{
 use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
-    BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmExtraLogicSc, CoErVrtsSc,
-    CoExtraLogicSc, ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonExtraLogicSc,
+    BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CoErVrtsSc, CoLogicSc,
+    ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonLogicSc,
     CommonReadOnlyIdsReturnedFromCoSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
     CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElMaxPageSizeUcc,
     DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeserializeResUcc, DesirableUcc,
-    DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloExtraLogicSc, DmErVrtsSc, DmExtraLogicSc,
-    ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc,
+    DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloLogicSc, DmErVrtsSc, DmLogicSc, ElSc,
+    EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc,
     FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc, GenColumnQuealsVCommaUoQueryPartSc,
     GenPgTablePkSc, GenSelectQueryPartSc, GenWhenColumnIdThenVUmQueryPartSc,
     HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrSc,
@@ -40,15 +40,14 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc, ReadOnlyIdsUcc,
-    ReadUcc, ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc, RmExtraLogicSc,
-    RoErVrtsSc, RoExtraLogicSc, RollbackSc, RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc,
-    RowsSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPkSc,
-    SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc,
-    SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs,
-    TrueSc, TryBindSc, TryBindUcc, UmErVrtsSc, UmExtraLogicSc, UoErVrtsSc, UoExtraLogicSc,
-    UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateQueryBindSc,
-    UpdateQueryPartPkSc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, WhereManySc,
-    WhereUcc,
+    ReadUcc, ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc, RmLogicSc, RoErVrtsSc,
+    RoLogicSc, RollbackSc, RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc,
+    SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPkSc, SelectQueryPartSc,
+    SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc, SerdeJsonUcc,
+    SerdeSc, StatusCodeSc, TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs, TrueSc,
+    TryBindSc, TryBindUcc, UmErVrtsSc, UmLogicSc, UoErVrtsSc, UoLogicSc, UpdateForQuerySc,
+    UpdateForQueryUcc, UpdateForQueryVecSc, UpdateQueryBindSc, UpdateQueryPartPkSc,
+    UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, WhereManySc, WhereUcc,
     param::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
         SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
@@ -205,16 +204,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Dlo => GenPgTableAttr::DloErVrts,
             }
         }
-        const fn gen_pg_table_attr_extra_logic(self) -> GenPgTableAttr {
+        const fn gen_pg_table_attr_logic(self) -> GenPgTableAttr {
             match self {
-                Self::Cm => GenPgTableAttr::CmExtraLogic,
-                Self::Co => GenPgTableAttr::CoExtraLogic,
-                Self::Rm => GenPgTableAttr::RmExtraLogic,
-                Self::Ro => GenPgTableAttr::RoExtraLogic,
-                Self::Um => GenPgTableAttr::UmExtraLogic,
-                Self::Uo => GenPgTableAttr::UoExtraLogic,
-                Self::Dm => GenPgTableAttr::DmExtraLogic,
-                Self::Dlo => GenPgTableAttr::DloExtraLogic,
+                Self::Cm => GenPgTableAttr::CmLogic,
+                Self::Co => GenPgTableAttr::CoLogic,
+                Self::Rm => GenPgTableAttr::RmLogic,
+                Self::Ro => GenPgTableAttr::RoLogic,
+                Self::Um => GenPgTableAttr::UmLogic,
+                Self::Uo => GenPgTableAttr::UoLogic,
+                Self::Dm => GenPgTableAttr::DmLogic,
+                Self::Dlo => GenPgTableAttr::DloLogic,
             }
         }
         const fn http_method(self) -> OpHttpMethod {
@@ -329,15 +328,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         DmErVrts,
         DloErVrts,
         CommonErVrts,
-        CmExtraLogic,
-        CoExtraLogic,
-        RmExtraLogic,
-        RoExtraLogic,
-        UmExtraLogic,
-        UoExtraLogic,
-        DmExtraLogic,
-        DloExtraLogic,
-        CommonExtraLogic,
+        CmLogic,
+        CoLogic,
+        RmLogic,
+        RoLogic,
+        UmLogic,
+        UoLogic,
+        DmLogic,
+        DloLogic,
+        CommonLogic,
     }
     impl GenPgTableAttr {
         fn gen_path_to_attr(self) -> String {
@@ -353,15 +352,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::DmErVrts => DmErVrtsSc.to_string(),
                     Self::DloErVrts => DloErVrtsSc.to_string(),
                     Self::CommonErVrts => CommonErVrtsSc.to_string(),
-                    Self::CmExtraLogic => CmExtraLogicSc.to_string(),
-                    Self::CoExtraLogic => CoExtraLogicSc.to_string(),
-                    Self::RmExtraLogic => RmExtraLogicSc.to_string(),
-                    Self::RoExtraLogic => RoExtraLogicSc.to_string(),
-                    Self::UmExtraLogic => UmExtraLogicSc.to_string(),
-                    Self::UoExtraLogic => UoExtraLogicSc.to_string(),
-                    Self::DmExtraLogic => DmExtraLogicSc.to_string(),
-                    Self::DloExtraLogic => DloExtraLogicSc.to_string(),
-                    Self::CommonExtraLogic => CommonExtraLogicSc.to_string(),
+                    Self::CmLogic => CmLogicSc.to_string(),
+                    Self::CoLogic => CoLogicSc.to_string(),
+                    Self::RmLogic => RmLogicSc.to_string(),
+                    Self::RoLogic => RoLogicSc.to_string(),
+                    Self::UmLogic => UmLogicSc.to_string(),
+                    Self::UoLogic => UoLogicSc.to_string(),
+                    Self::DmLogic => DmLogicSc.to_string(),
+                    Self::DloLogic => DloLogicSc.to_string(),
+                    Self::CommonLogic => CommonLogicSc.to_string(),
                 }
             )
         }
@@ -2704,16 +2703,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let extra_validators_ts = {
-                    let (common_extra_logic_ts, op_extra_logic_ts) = {
+                    let (common_logic_ts, op_logic_ts) = {
                         let gen_ts = |v: &String| get_macro_attr_meta_list_ts(&di.attrs, v);
                         (
-                            gen_ts(&GenPgTableAttr::CommonExtraLogic.gen_path_to_attr()),
-                            gen_ts(&op.gen_pg_table_attr_extra_logic().gen_path_to_attr()),
+                            gen_ts(&GenPgTableAttr::CommonLogic.gen_path_to_attr()),
+                            gen_ts(&op.gen_pg_table_attr_logic().gen_path_to_attr()),
                         )
                     };
                     quote! {
-                        #common_extra_logic_ts
-                        #op_extra_logic_ts
+                        #common_logic_ts
+                        #op_logic_ts
                     }
                 };
                 let params_logic_ts = {
