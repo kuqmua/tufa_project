@@ -1130,15 +1130,15 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     &ArrDim::try_from(pattern).map_or_else(
                         |()| quote! {;},
                         |arr_dim| {
-                            let mut arguments_ts = Vec::new();
+                            let mut args_ts = Vec::new();
                             for el0 in 1..=arr_dim.to_usize() {
                                 let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>()
                                 .expect("2ad1faf7");
-                                arguments_ts.push(quote! {
+                                args_ts.push(quote! {
                                     #dim_nbr_pagination_ts: #import::PaginationStartsWithZero
                                 });
                             }
-                            quote! {{#(#arguments_ts),*}}
+                            quote! {{#(#args_ts),*}}
                         }
                     )
                 );
@@ -1150,14 +1150,14 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltOptSomeVecOneElCall,
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall,
                         };
-                        let mut arguments_ts = Vec::new();
+                        let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dim.to_usize() {
                             let dim_nbr_pagination_ts = format!("dim{el0}_pagination").parse::<Ts2>().expect("26ca29fb");
-                            arguments_ts.push(quote! {
+                            args_ts.push(quote! {
                                 #dim_nbr_pagination_ts: #content_ts
                             });
                         }
-                        quote! {#(#arguments_ts),*}
+                        quote! {#(#args_ts),*}
                     }
                 );
                 quote! {Self{#content_ts}}

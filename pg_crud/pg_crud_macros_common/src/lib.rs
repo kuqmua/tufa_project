@@ -751,9 +751,9 @@ pub fn gen_impl_pg_json_type_ts(
 ) -> Ts2 {
     let path_ts = quote! {#import ::};
     let reference_mut_u64_ts = quote! {&mut #U64};
-    let query_pg_arguments_ts =
+    let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let query_lifetime_pg_arguments_ts =
+    let query_lifetime_pg_args_ts =
         quote! {sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo mb reexport sqlx?
     quote! {
@@ -797,8 +797,8 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #UpdateQbSc(
                 #VSc: Self::#UpdateForQueryUcc,
-                #is_update_qb_mut #QuerySc: #query_pg_arguments_ts
-            ) -> Result<#query_pg_arguments_ts, #StringTs> {
+                #is_update_qb_mut #QuerySc: #query_pg_args_ts
+            ) -> Result<#query_pg_args_ts, #StringTs> {
                 #update_qb_ts
             }
             fn #SelectOnlyUpdatedIdsQpSc(
@@ -811,8 +811,8 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_qb_mut #QuerySc: #query_lifetime_pg_arguments_ts
-            ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
+                #is_select_only_updated_ids_qb_mut #QuerySc: #query_lifetime_pg_args_ts
+            ) -> Result<#query_lifetime_pg_args_ts, #StringTs> {
                 #select_only_updated_ids_qb_ts
             }
             fn #SelectOnlyCreatedIdsQpSc(
@@ -825,8 +825,8 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyCreatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#CreateForQueryUcc,
-                #is_select_only_created_ids_qb_mut #QuerySc: #query_lifetime_pg_arguments_ts
-            ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
+                #is_select_only_created_ids_qb_mut #QuerySc: #query_lifetime_pg_args_ts
+            ) -> Result<#query_lifetime_pg_args_ts, #StringTs> {
                 #select_only_created_ids_qb_ts
             }
         }
@@ -1058,7 +1058,7 @@ pub fn gen_impl_pg_type_ts(
     is_select_only_updated_ids_qb_mut: &IsSelectOnlyUpdatedIdsQbMut,
     select_only_updated_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
-    let query_pg_arguments_ts =
+    let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     quote! {
         #AllowClippyArbitrarySourceItemOrdering
@@ -1076,9 +1076,9 @@ pub fn gen_impl_pg_type_ts(
             }
             fn #CreateQbSc(
                 #create_qb_v_undrscr: Self::#CreateUcc,
-                #is_create_qb_mut #QuerySc: #query_pg_arguments_ts
+                #is_create_qb_mut #QuerySc: #query_pg_args_ts
             ) -> Result<
-                #query_pg_arguments_ts,
+                #query_pg_args_ts,
                 String
             > {
                 #create_qb_ts
