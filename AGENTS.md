@@ -26,6 +26,7 @@
 - Keep diffs minimal.
 - Keep generated functions and closures inside usage scope.
 - `expect()` messages must contain **8 first symbols from random UUID v4**.
+- Use abbreviations when creating names.
 
 ## WHAT AGENT MUST NOT DO
 
