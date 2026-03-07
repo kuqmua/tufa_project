@@ -195,7 +195,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["co", "extra", "er", "vrts"],
     ["rm", "extra", "er", "vrts"],
     ["ro", "extra", "er", "vrts"],
-    ["update", "many", "extra", "er", "vrts"],
+    ["um", "extra", "er", "vrts"],
     ["update", "one", "extra", "er", "vrts"],
     ["delete", "many", "extra", "er", "vrts"],
     ["delete", "one", "extra", "er", "vrts"],
@@ -204,7 +204,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["co", "extra", "logic"],
     ["rm", "extra", "logic"],
     ["ro", "extra", "logic"],
-    ["update", "many", "extra", "logic"],
+    ["um", "extra", "logic"],
     ["update", "one", "extra", "logic"],
     ["delete", "many", "extra", "logic"],
     ["delete", "one", "extra", "logic"],
@@ -715,7 +715,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["columns"],
     ["gen", "when", "column", "id", "then", "v"],
     [
-        "gen", "when", "column", "id", "then", "v", "update", "many", "query", "part"
+        "gen", "when", "column", "id", "then", "v", "um", "query", "part"
     ],
     ["test", "cases"],
     ["contains", "null", "byte"],

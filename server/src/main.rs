@@ -66,7 +66,7 @@ fn main() {
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::co,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::rm,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::ro,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::update_many,
+                    //     //         // server_table_example::repositories_types::server::routes::api::cats::um,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::update_one,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::delete_many,
                     //     //         // server_table_example::repositories_types::server::routes::api::cats::delete_one

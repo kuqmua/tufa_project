@@ -44,15 +44,11 @@ pub fn gen_column_queals_v_comma_update_one_query_part(column: &str, value: &str
     format!("{column} = {value},")
 }
 #[must_use]
-pub fn gen_when_column_id_then_v_update_many_query_part(
-    column: &str,
-    id: &str,
-    value: &str,
-) -> String {
+pub fn gen_when_column_id_then_v_um_query_part(column: &str, id: &str, value: &str) -> String {
     format!("when {column} = {id} then {value} ")
 }
 #[must_use]
-pub fn gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
+pub fn gen_column_equals_case_acc_else_column_end_comma_um_query_part(
     column: &str,
     acc: &str,
 ) -> String {
@@ -60,7 +56,7 @@ pub fn gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
 }
 //todo extra param for columns_to_return instead of pk_field_name in "returning {pk_field_name}""
 #[must_use]
-pub fn gen_update_many_query_string(
+pub fn gen_um_query_string(
     table: &str,
     els: &str,
     pk_field_name: &str,

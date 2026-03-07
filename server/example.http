@@ -325,7 +325,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### fix this  
  
-PATCH http://127.0.0.1:8080/table_example/update_many HTTP/1.1 
+PATCH http://127.0.0.1:8080/table_example/um HTTP/1.1 
 content-type: application/json
 commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
@@ -502,7 +502,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 ###
 
-GET http://127.0.0.1:8080/table_example/update_many_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/um_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
