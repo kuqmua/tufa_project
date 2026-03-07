@@ -33,12 +33,12 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, CreateQueryBindValueUnderscore, CreateQueryPartIncrUnderscore,
+    ColumnParamUnderscore, CreateQbValueUnderscore, CreateQueryPartIncrUnderscore,
     CreateQueryPartValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOperatorHandle, Import, IncrParamUnderscore, IsCreateQueryBindMutable,
-    IsNeedToAddOperatorUnderscore, IsNullable, IsPkUnderscore, IsQueryBindMutable,
-    IsSelectOnlyUpdatedIdsQueryBindMutable, IsStdrtNotNull, IsUpdateQueryBindMutable, PgFilter,
-    PgTypeFilter, ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
+    EqualOperatorHandle, Import, IncrParamUnderscore, IsCreateQbMutable,
+    IsNeedToAddOperatorUnderscore, IsNullable, IsPkUnderscore, IsQbMutable,
+    IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull, IsUpdateQbMutable, PgFilter, PgTypeFilter,
+    ReadOrUpdate, SelectQueryPartValueUnderscore, ShouldDeriveSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdateQueryPartJsonbSetAccumulatorUnderscore,
     UpdateQueryPartJsonbSetPathUnderscore, UpdateQueryPartJsonbSetTargetUnderscore,
     UpdateQueryPartValueUnderscore, gen_impl_crate_is_string_empty_for_ident_ts,
@@ -1193,7 +1193,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
             }
         };
-        let gen_typical_query_bind_ts = |ts: &dyn ToTokens| match &is_nullable {
+        let gen_typical_qb_ts = |ts: &dyn ToTokens| match &is_nullable {
             IsNullable::False => quote! {
                 if let Err(er) = #QuerySc.try_bind(#ts) {
                     return Err(er.to_string());
@@ -1207,7 +1207,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 Ok(#QuerySc)
             },
         };
-        let typical_query_bind_ts = gen_typical_query_bind_ts(&VSc);
+        let typical_qb_ts = gen_typical_qb_ts(&VSc);
         let ident_inner_type_ts = match &el.pg_type_pattern {
             PgTypePattern::Stdrt => match &is_nullable {
                 IsNullable::False => &inner_type_stdrt_not_null_ts,
@@ -4693,7 +4693,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             &ident,
             &ShouldDeriveUtoipaToSchema::False,
             &ShouldDeriveSchemarsJsonSchema::False,
-            &IsQueryBindMutable::False,
+            &IsQbMutable::False,
         );
         let ident_read_ts = {
             let ident_read_ts = {
@@ -4755,8 +4755,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             Err(er) => Err(er)
                         }
                     },
-                    &IsQueryBindMutable::True,
-                    &gen_typical_query_bind_ts(&SelfSc),
+                    &IsQbMutable::True,
+                    &gen_typical_qb_ts(&SelfSc),
                     &import,
                 )
             } else {
@@ -4882,7 +4882,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let ok_query_ts = quote! {Ok(#QuerySc)};
             let (query_part_create_ts, bind_v_to_query_create_ts): Handle<'_> = {
-                let typical: Handle<'_> = { (&typical_query_part_ts, &typical_query_bind_ts) };
+                let typical: Handle<'_> = { (&typical_query_part_ts, &typical_qb_ts) };
                 let default_init_by_pg: Handle<'_> = (&ok_string_from_default_ts, &ok_query_ts);
                 match &pg_type {
                     PgType::I16AsInt2
@@ -5005,12 +5005,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &query_part_create_ts,
                 &match &can_be_pk {
-                    CanBePk::False => CreateQueryBindValueUnderscore::False,
-                    CanBePk::True => CreateQueryBindValueUnderscore::True,
+                    CanBePk::False => CreateQbValueUnderscore::False,
+                    CanBePk::True => CreateQbValueUnderscore::True,
                 },
                 &match &can_be_pk {
-                    CanBePk::False => IsCreateQueryBindMutable::True,
-                    CanBePk::True => IsCreateQueryBindMutable::False,
+                    CanBePk::False => IsCreateQbMutable::True,
+                    CanBePk::True => IsCreateQbMutable::False,
                 },
                 &bind_v_to_query_create_ts,
                 &ident_select_ucc,
@@ -5372,10 +5372,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &UpdateQueryPartJsonbSetTargetUnderscore::True,
                 &UpdateQueryPartJsonbSetPathUnderscore::True,
                 &typical_query_part_ts,
-                &IsUpdateQueryBindMutable::True,
-                &typical_query_bind_ts,
+                &IsUpdateQbMutable::True,
+                &typical_qb_ts,
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
-                &IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                &IsSelectOnlyUpdatedIdsQbMutable::False,
                 &quote! {Ok(#QuerySc)},
             )
         };

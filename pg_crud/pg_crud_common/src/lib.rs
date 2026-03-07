@@ -54,7 +54,7 @@ pub trait PgType {
     fn create_table_column_query_part(column: &dyn Display, _: bool) -> impl Display;
     type Create: CreateAl;
     fn create_query_part(v: &Self::Create, incr: &mut u64) -> Result<String, QueryPartEr>;
-    fn create_query_bind(
+    fn create_qb(
         v: Self::Create,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
@@ -76,7 +76,7 @@ pub trait PgType {
         jsonb_set_path: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn update_query_bind(
+    fn update_qb(
         v: Self::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
@@ -85,7 +85,7 @@ pub trait PgType {
         column: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn select_only_updated_ids_query_bind<'lt>(
+    fn select_only_updated_ids_qb<'lt>(
         v: &'lt Self::UpdateForQuery,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
@@ -124,7 +124,7 @@ pub trait PgJsonType {
         jsonb_set_path: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn update_query_bind(
+    fn update_qb(
         v: Self::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
@@ -134,7 +134,7 @@ pub trait PgJsonType {
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn select_only_updated_ids_query_bind<'lt>(
+    fn select_only_updated_ids_qb<'lt>(
         v: &'lt Self::UpdateForQuery,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
@@ -144,7 +144,7 @@ pub trait PgJsonType {
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QueryPartEr>;
-    fn select_only_created_ids_query_bind<'lt>(
+    fn select_only_created_ids_qb<'lt>(
         v: &'lt Self::CreateForQuery,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
@@ -179,11 +179,11 @@ pub trait PgJsonTypeObjectVecElId {
         + From<<Self::PgJsonType as PgJsonType>::Update>;
     type Update: UpdateAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + ToErrString;
     type ReadInner: ReadInnerAl;
-    fn query_bind_string_as_pg_text_create_for_query(
+    fn qb_string_as_pg_text_create_for_query(
         v: <Self::PgJsonType as PgJsonType>::CreateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    fn query_bind_string_as_pg_text_update_for_query(
+    fn qb_string_as_pg_text_update_for_query(
         v: <Self::PgJsonType as PgJsonType>::UpdateForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
@@ -420,7 +420,7 @@ pub trait PgJsonTypeTestCases {
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJsonType as PgJsonType>::Where>>>;
 }
 pub trait PgTypeWhereFilter<'query_lifetime> {
-    fn query_bind(
+    fn qb(
         self,
         query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>;
@@ -451,12 +451,12 @@ where
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
         + AllEnumVrtsArrDefaultOptSomeVecOneEl,
 {
-    fn query_bind(
+    fn qb(
         self,
         query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         match self.0 {
-            Some(v) => v.query_bind(query),
+            Some(v) => v.qb(query),
             None => Ok(query), //todo mb wrong
         }
     }
@@ -695,12 +695,12 @@ const _: () = {
 impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'query_lifetime>
     for PgTypeWhere<T>
 {
-    fn query_bind(
+    fn qb(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         for el in self.v.0 {
-            match PgTypeWhereFilter::query_bind(el, query) {
+            match PgTypeWhereFilter::qb(el, query) {
                 Ok(v) => {
                     query = v;
                 }
@@ -818,7 +818,7 @@ impl PaginationBase {
     }
 }
 impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationBase {
-    fn query_bind(
+    fn qb(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
@@ -1067,11 +1067,11 @@ impl<'de> Deserialize<'de> for PaginationStartsWithZero {
     }
 }
 impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWithZero {
-    fn query_bind(
+    fn qb(
         self,
         query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
-        self.0.query_bind(query)
+        self.0.qb(query)
     }
     fn query_part(
         &self,
@@ -1248,12 +1248,12 @@ where
         + for<'t_lifetime> PgTypeWhereFilter<'t_lifetime>
         + AllEnumVrtsArrDefaultOptSomeVecOneEl,
 {
-    fn query_bind(
+    fn qb(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String> {
         for el in self.0 {
-            match el.query_bind(query) {
+            match el.qb(query) {
                 Ok(v) => {
                     query = v;
                 }

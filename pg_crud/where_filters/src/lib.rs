@@ -71,7 +71,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
-    pub fn query_bind_one_by_one<'query_lifetime>(
+    pub fn qb_one_by_one<'query_lifetime>(
         self,
         mut query: Query<'query_lifetime, Postgres, PgArguments>,
     ) -> Result<Query<'query_lifetime, Postgres, PgArguments>, String>
@@ -200,7 +200,7 @@ impl<'lt, T> PgTypeWhereFilter<'lt> for PgJsonTypeNotEmptyUniqueVec<T>
 where
     T: Serialize + 'lt,
 {
-    fn query_bind(
+    fn qb(
         self,
         mut query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
@@ -602,7 +602,7 @@ impl<T: DefaultOptSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>
 impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhereFilter<'lt>
     for Between<T>
 {
-    fn query_bind(
+    fn qb(
         self,
         mut query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
@@ -834,7 +834,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             &Vrt::MinusOne,
         )
     }
-    pub fn query_bind(
+    pub fn qb(
         self,
         mut query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {

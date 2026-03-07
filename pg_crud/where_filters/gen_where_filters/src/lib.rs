@@ -11,9 +11,9 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    ColumnParamUnderscore, Import, IncrParamUnderscore, IsNeedToAddOperatorUnderscore,
-    IsQueryBindMutable, PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType,
-    gen_impl_default_opt_some_vec_one_el_ts, impl_pg_type_where_filter_for_ident_ts,
+    ColumnParamUnderscore, Import, IncrParamUnderscore, IsNeedToAddOperatorUnderscore, IsQbMutable,
+    PgJsonTypeFilter, PgTypeFilter, PgTypeOrPgJsonType, gen_impl_default_opt_some_vec_one_el_ts,
+    impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
@@ -194,8 +194,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
          incr_param_underscore: &IncrParamUnderscore,
          is_need_to_add_operator_underscore: &IsNeedToAddOperatorUnderscore,
          query_part_ts: &dyn ToTokens,
-         is_query_bind_mutable: &IsQueryBindMutable,
-         query_bind_ts: &dyn ToTokens| {
+         is_qb_mutable: &IsQbMutable,
+         qb_ts: &dyn ToTokens| {
             impl_pg_type_where_filter_for_ident_ts(
                 &{
                     let mb_t_extra_traits_for_pg_type_where_filter_ts: &dyn ToTokens =
@@ -230,8 +230,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ColumnParamUnderscore::False,
                 is_need_to_add_operator_underscore,
                 &query_part_ts,
-                is_query_bind_mutable,
-                &query_bind_ts,
+                is_qb_mutable,
+                &qb_ts,
                 &Import::PgCrudCommon,
             )
         };
@@ -289,7 +289,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             return Err(#ErSc.to_string());
         }
     };
-    let query_bind_one_v_ts = quote! {
+    let qb_one_v_ts = quote! {
         #if_let_err_query_try_bind_self_v_ts
         Ok(#QuerySc)
     };
@@ -311,8 +311,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         }),
     };
     let pub_v_between_t_ts = quote! {pub #VSc: Between<T>};
-    let query_self_v_query_bind_ts = quote! {
-        match #SelfSc.#VSc.query_bind(#QuerySc) {
+    let query_self_v_qb_ts = quote! {
+        match #SelfSc.#VSc.qb(#QuerySc) {
             Ok(v_f6d31bdd) => {
                 #QuerySc = v_f6d31bdd;
             },
@@ -348,8 +348,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         #DimsSc: #PgCrudCommonDefaultOptSomeVecOneElCall
     };
     let dims_default_init_comma_ts = quote! {#dims_default_init_ts,};
-    let query_self_dims_query_bind_query_ts = quote! {
-        match #SelfSc.#DimsSc.query_bind(#QuerySc) {
+    let query_self_dims_qb_query_ts = quote! {
+        match #SelfSc.#DimsSc.qb(#QuerySc) {
             Ok(v_ed6f1157) => {
                 #QuerySc = v_ed6f1157;
             }
@@ -371,8 +371,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             #v_default_opt_some_vec_one_el_ts
         }
     };
-    let is_query_bind_mutable_true = IsQueryBindMutable::True;
-    let is_query_bind_mutable_false = IsQueryBindMutable::False;
+    let is_qb_mutable_true = IsQbMutable::True;
+    let is_qb_mutable_false = IsQbMutable::False;
     let gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts = |dim_nbr: &DimNbr| {
         let pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts =
             gen_pub_dims_bounded_vec_ts(&dim_nbr.dim_ts(), &KindOfUnsignedPartOfI32::CanNotBeZero);
@@ -419,7 +419,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         ),
                         PgTypeKind::ArrDim,
                         dims_ies_comma_ts.clone(),
-                        query_self_dims_query_bind_query_ts.clone(),
+                        query_self_dims_qb_query_ts.clone(),
                     )
                 },
             )
@@ -433,8 +433,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 impl_default_opt_some_vec_one_el_extra_fields_ts,
                 incr_param_underscore,
                 query_part_ts,
-                is_query_bind_mutable,
-                query_bind_ts,
+                is_qb_mutable,
+                qb_ts,
             ) = {
                 let sqlx_type_pg_encode_ts = quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>};
                 let generic_true_type_encode = Generic::True {
@@ -454,7 +454,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             mb_dims_ies_init_ts,
                             pg_type_kind,
                             mb_extra_params_ts,
-                            mb_dims_query_bind_ts,
+                            mb_dims_qb_ts,
                         ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                         (
                             generic_true_type_encode.clone(),
@@ -475,10 +475,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     ))
                                 }
                             },
-                            is_query_bind_mutable_true,
+                            is_qb_mutable_true,
                             quote! {
-                                #mb_dims_query_bind_ts
-                                #query_bind_one_v_ts
+                                #mb_dims_qb_ts
+                                #qb_one_v_ts
                             },
                         )
                     };
@@ -499,7 +499,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                     (
                         generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
@@ -526,10 +526,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
-                            #query_self_v_query_bind_ts
+                            #mb_dims_qb_ts
+                            #query_self_v_qb_ts
                         },
                     )
                 };
@@ -540,7 +540,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                     (
                         Generic::True {
@@ -589,9 +589,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
+                            #mb_dims_qb_ts
                             for el in #SelfSc.#VSc.into_vec() {
                                 if let Err(#ErSc) = #QuerySc.try_bind(el) {
                                     return Err(#ErSc.to_string());
@@ -608,7 +608,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                     (
                         generic_false.clone(),
@@ -620,9 +620,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             &mb_dims_ies_init_ts,
                             &mb_extra_params_ts,
                         ),
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
+                            #mb_dims_qb_ts
                             #if_let_err_query_try_bind_self_v_to_string_ts
                         },
                     )
@@ -634,7 +634,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                     (
                         generic_true_type_encode.clone(),
@@ -658,10 +658,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
-                            #query_bind_one_v_ts
+                            #mb_dims_qb_ts
+                            #qb_one_v_ts
                         },
                     )
                 };
@@ -672,7 +672,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                     (
                         generic_false.clone(),
@@ -701,14 +701,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             }
                         },
                         match &pg_type_ptrn {
-                            PgTypePtrn::Stdrt => is_query_bind_mutable_false,
+                            PgTypePtrn::Stdrt => is_qb_mutable_false,
                             PgTypePtrn::ArrDim1
                             | PgTypePtrn::ArrDim2
                             | PgTypePtrn::ArrDim3
-                            | PgTypePtrn::ArrDim4 => is_query_bind_mutable_true,
+                            | PgTypePtrn::ArrDim4 => is_qb_mutable_true,
                         },
                         quote! {
-                            #mb_dims_query_bind_ts
+                            #mb_dims_qb_ts
                             Ok(#QuerySc)
                         },
                     )
@@ -734,7 +734,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_type_dims_helpers_pg_type(pg_type_ptrn);
                     (
                         generic_false.clone(),
@@ -767,9 +767,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
+                            #mb_dims_qb_ts
                             if let Err(#ErSc) = #QuerySc.try_bind(self.encoded_string_representation) {
                                 return Err(#ErSc.to_string());
                             }
@@ -807,8 +807,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 }
                             }
                         },
-                        is_query_bind_mutable_true,
-                        query_bind_one_v_ts.clone(),
+                        is_qb_mutable_true,
+                        qb_one_v_ts.clone(),
                     )
                 };
                 let gen_included_lower_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
@@ -850,7 +850,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = DimNbr::try_from(pg_type_ptrn).map_or_else(
                         |()| {
                             (
@@ -891,7 +891,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     dims_ies2,
                                 },
                                 quote! {
-                                    match #SelfSc.#DimsSc.clone().query_bind(#QuerySc) {
+                                    match #SelfSc.#DimsSc.clone().qb(#QuerySc) {
                                         Ok(v_6cb14cdc) => {
                                             #QuerySc = v_6cb14cdc;
                                         },
@@ -899,7 +899,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                             return Err(#ErSc);
                                         }
                                     }
-                                    #query_self_dims_query_bind_query_ts
+                                    #query_self_dims_qb_query_ts
                                 },
                             )
                         },
@@ -930,10 +930,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
-                            #query_bind_one_v_ts
+                            #mb_dims_qb_ts
+                            #qb_one_v_ts
                         },
                     )
                 };
@@ -974,7 +974,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             mb_dims_ies_init_ts,
                             _,
                             _,
-                            mb_dims_query_bind_ts,
+                            mb_dims_qb_ts,
                         ) = gen_pg_type_dims_helpers_pg_type(&pg_type_ptrn_stdrt);
                         (
                             Generic::True {
@@ -986,8 +986,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
                             IncrParamUnderscore::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
-                            is_query_bind_mutable_true,
-                            gen_ts_eeee6e79(&mb_dims_query_bind_ts),
+                            is_qb_mutable_true,
+                            gen_ts_eeee6e79(&mb_dims_qb_ts),
                         )
                     }
                     PgTypeFilter::DimOneEqual { .. } => {
@@ -997,7 +997,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             mb_dims_ies_init_ts,
                             _,
                             _,
-                            mb_dims_query_bind_ts,
+                            mb_dims_qb_ts,
                         ) = gen_pg_type_dims_helpers_pg_type(&pg_type_ptrn_arr_dim1);
                         (
                             Generic::True {
@@ -1009,8 +1009,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_default_init_v_default_ts(&mb_dims_default_init_ts),
                             IncrParamUnderscore::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
-                            is_query_bind_mutable_true,
-                            gen_ts_eeee6e79(&mb_dims_query_bind_ts),
+                            is_qb_mutable_true,
+                            gen_ts_eeee6e79(&mb_dims_qb_ts),
                         )
                     }
                     PgTypeFilter::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
@@ -1138,8 +1138,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &incr_param_underscore,
                 &IsNeedToAddOperatorUnderscore::False,
                 &query_part_ts,
-                &is_query_bind_mutable,
-                &query_bind_ts,
+                &is_qb_mutable,
+                &qb_ts,
             );
             let gend = quote! {
                 #struct_ts
@@ -1164,7 +1164,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let pub_v_pg_json_type_not_empty_unique_vec_t_ts = quote! {
                 pub #VSc: PgJsonTypeNotEmptyUniqueVec<T>
             };
-            let query_bind_sqlx_types_json_self_v_ts = quote! {
+            let qb_sqlx_types_json_self_v_ts = quote! {
                 if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(#SelfSc.#VSc)) {
                     return Err(#ErSc.to_string());
                 }
@@ -1182,7 +1182,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         mb_dims_ies_init_ts,
                         pg_type_kind,
                         mb_extra_params_ts,
-                        mb_dims_query_bind_ts,
+                        mb_dims_qb_ts,
                     ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                     (
                         generic_true_none.clone(),
@@ -1208,10 +1208,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true,
+                        is_qb_mutable_true,
                         quote! {
-                            #mb_dims_query_bind_ts
-                            #query_bind_sqlx_types_json_self_v_ts
+                            #mb_dims_qb_ts
+                            #qb_sqlx_types_json_self_v_ts
                         },
                     )
                 };
@@ -1250,7 +1250,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_false.clone(),
@@ -1274,10 +1274,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
-                        #query_bind_one_v_ts
+                        #mb_dims_qb_ts
+                        #qb_one_v_ts
                     },
                 )
             };
@@ -1310,7 +1310,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
@@ -1351,11 +1351,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts0
                         }
                     },
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     {
                         let ts: &dyn ToTokens = match pg_type_ptrn {
                             PgTypePtrn::Stdrt => &quote! {
-                                match self.#VSc.query_bind(query) {
+                                match self.#VSc.qb(query) {
                                     Ok(v_b3d3fd36) => {
                                         query = v_b3d3fd36;
                                     },
@@ -1368,10 +1368,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             PgTypePtrn::ArrDim1
                             | PgTypePtrn::ArrDim2
                             | PgTypePtrn::ArrDim3
-                            | PgTypePtrn::ArrDim4 => &query_bind_sqlx_types_json_self_v_ts,
+                            | PgTypePtrn::ArrDim4 => &qb_sqlx_types_json_self_v_ts,
                         };
                         quote! {
-                            #mb_dims_query_bind_ts
+                            #mb_dims_qb_ts
                             #ts
                         }
                     },
@@ -1384,7 +1384,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_clone.clone(),
@@ -1412,10 +1412,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
-                        match #SelfSc.#VSc.query_bind_one_by_one(#QuerySc) {
+                        #mb_dims_qb_ts
+                        match #SelfSc.#VSc.qb_one_by_one(#QuerySc) {
                             Ok(v_c79b2256) => {
                                 #QuerySc = v_c79b2256;
                             }
@@ -1434,7 +1434,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = DimNbr::try_from(pg_type_ptrn).map_or_else(
                     |()| {
                         (
@@ -1468,7 +1468,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 last_dims_i,
                                 #DimsIesSc,
                             },
-                            query_self_dims_query_bind_query_ts.clone(),
+                            query_self_dims_qb_query_ts.clone(),
                         )
                     },
                 );
@@ -1487,9 +1487,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &mb_dims_ies_init_ts,
                         &mb_extra_params_ts,
                     ),
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
+                        #mb_dims_qb_ts
                         #if_let_err_query_try_bind_self_v_to_string_ts
                     },
                 )
@@ -1501,7 +1501,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_false.clone(),
@@ -1517,9 +1517,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &mb_dims_ies_init_ts,
                         &mb_extra_params_ts,
                     ),
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
+                        #mb_dims_qb_ts
                         #if_let_err_query_try_bind_self_v_to_string_ts
                     },
                 )
@@ -1531,7 +1531,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_false.clone(),
@@ -1547,9 +1547,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &mb_dims_ies_init_ts,
                         &mb_extra_params_ts,
                     ),
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
+                        #mb_dims_qb_ts
                         #if_let_err_query_try_bind_self_v_to_string_ts
                     },
                 )
@@ -1561,7 +1561,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_clone.clone(),
@@ -1587,10 +1587,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
-                        #query_bind_sqlx_types_json_self_v_ts
+                        #mb_dims_qb_ts
+                        #qb_sqlx_types_json_self_v_ts
                     },
                 )
             };
@@ -1601,7 +1601,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     mb_dims_ies_init_ts,
                     pg_type_kind,
                     mb_extra_params_ts,
-                    mb_dims_query_bind_ts,
+                    mb_dims_qb_ts,
                 ) = gen_pg_json_type_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_clone.clone(),
@@ -1627,10 +1627,10 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_query_bind_mutable_true,
+                    is_qb_mutable_true,
                     quote! {
-                        #mb_dims_query_bind_ts
-                        #query_bind_sqlx_types_json_self_v_ts
+                        #mb_dims_qb_ts
+                        #qb_sqlx_types_json_self_v_ts
                     },
                 )
             };
@@ -1639,8 +1639,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 struct_extra_fields_ts,
                 impl_default_opt_some_vec_one_el_extra_fields_ts,
                 query_part_ts,
-                is_query_bind_mutable,
-                query_bind_ts,
+                is_qb_mutable,
+                qb_ts,
             ) = match &filter {
                 PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_ptrn_stdrt),
                 PgJsonTypeFilter::DimOneEqual { .. } => gen_equal_ts(&pg_type_ptrn_arr_dim1),
@@ -1807,8 +1807,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &IncrParamUnderscore::False,
                 &IsNeedToAddOperatorUnderscore::False,
                 &query_part_ts,
-                &is_query_bind_mutable,
-                &query_bind_ts,
+                &is_qb_mutable,
+                &qb_ts,
             );
             let gend = quote! {
                 #struct_ts

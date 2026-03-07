@@ -226,11 +226,11 @@ impl<'de> Deserialize<'de> for PaginationStartsWithOne {
     }
 }
 impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
-    fn query_bind(
+    fn qb(
         self,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
-        self.0.query_bind(query)
+        self.0.qb(query)
     }
     fn query_part(
         &self,
