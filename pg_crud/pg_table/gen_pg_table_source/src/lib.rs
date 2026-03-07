@@ -3123,12 +3123,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &try_bind_syn_vrt_wrapper,
                     Location::caller(),
                 );
+                let gen_match_query_bind_or_err_ts_519a3119 = |
+                    ts0: &dyn ToTokens,
+                    ts1: &dyn ToTokens,
+                |gen_match_query_bind_or_err_ts(
+                    &ts0,
+                    &ts1,
+                    &ts_2795ebdc
+                );
                 match &operation {
                     Operation::CreateMany => {
-                        let ts = gen_match_query_bind_or_err_ts(
+                        let ts = gen_match_query_bind_or_err_ts_519a3119(
                             &quote!{el_7f862135.#CreateQueryBindSc(#QuerySc)},
-                            &quote!{v_011a3eb4},
-                            &ts_2795ebdc
+                            &quote!{v_011a3eb4}
                         );
                         quote! {
                             for el_7f862135 in #ParamsSc.#PayloadSc.0 {
@@ -3136,30 +3143,27 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }
                     }
-                    Operation::CreateOne => gen_match_query_bind_or_err_ts(
+                    Operation::CreateOne => gen_match_query_bind_or_err_ts_519a3119(
                         &quote!{#ParamsSc.#PayloadSc.#CreateQueryBindSc(#QuerySc)},
-                        &quote!{v_06f852cd},
-                        &ts_2795ebdc
+                        &quote!{v_06f852cd}
                     ),
                     Operation::ReadMany => {
                         let query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts = gen_query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts(operation);
-                        let ts = gen_match_query_bind_or_err_ts(
+                        let ts = gen_match_query_bind_or_err_ts_519a3119(
                             &quote!{#pg_crud_pg_type_where_filter_query_bind_ts(
                                 #ParamsSc.#PayloadSc.pagination,
                                 #QuerySc,
                             )},
                             &quote!{v_9f7e487b},
-                            &ts_2795ebdc
                         );
                         quote! {
                             #query_pg_type_where_filter_query_bind_params_payload_where_many_query_ts
                             #ts
                         }
                     }
-                    Operation::ReadOne => gen_match_query_bind_or_err_ts(
+                    Operation::ReadOne => gen_match_query_bind_or_err_ts_519a3119(
                         &quote!{#pg_crud_pg_type_where_filter_query_bind_ts(#ParamsSc.#PayloadSc.#pk_fi, #QuerySc)},
-                        &quote!{v_80ee6983},
-                        &ts_2795ebdc
+                        &quote!{v_80ee6983}
                     ),
                     Operation::UpdateMany => {
                         let fields_named_without_pk_update_assignment_ts =
@@ -3169,7 +3173,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &quote!{v_2edaa480},
                                     &quote!{&el_4b24f8f0.#fi},
                                     &{
-                                        let ts = gen_match_query_bind_or_err_ts(
+                                        let ts = gen_match_query_bind_or_err_ts_519a3119(
                                             &{
                                                 let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                                                 quote!{#as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
@@ -3178,7 +3182,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 )}
                                             },
                                             &quote!{v_600e67dc},
-                                            &ts_2795ebdc
                                         );
                                         quote!{
                                             if let Err(er_981062db) = #QuerySc.try_bind(el_4b24f8f0.#pk_fi) {
@@ -3196,13 +3199,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                             });
                         let pk_update_assignment_ts = {
-                            let ts = gen_match_query_bind_or_err_ts(
+                            let ts = gen_match_query_bind_or_err_ts_519a3119(
                                 &quote!{#pk_ft_as_pg_type_ts #UpdateQueryBindSc(
                                     el_323f7dfc.#pk_fi,
                                     #QuerySc,
                                 )},
                                 &quote!{v_c40a4522},
-                                &ts_2795ebdc
                             );
                             quote! {
                                 for el_323f7dfc in &#UpdateForQueryVecSc {
@@ -3217,13 +3219,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let ts = gen_if_let_some_ts(
                                     &quote!{v_47030ac2},
                                     &quote!{&el_a1660ed1.#fi},
-                                    &gen_match_query_bind_or_err_ts(
+                                    &gen_match_query_bind_or_err_ts_519a3119(
                                         &quote!{#as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
                                             &v_47030ac2.#VSc,
                                             #QuerySc
                                         )},
                                         &quote!{v_c5b79b95},
-                                        &ts_2795ebdc
                                     )
                                 );
                                 quote! {
@@ -3245,7 +3246,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_if_let_some_ts(
                                     &quote!{v_ed87c152},
                                     &quote!{&#UpdateForQuerySc.#fi},
-                                    &gen_match_query_bind_or_err_ts(
+                                    &gen_match_query_bind_or_err_ts_519a3119(
                                         &{
                                             let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                                             quote!{#as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
@@ -3253,18 +3254,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 #QuerySc
                                             )}
                                         },
-                                        &quote!{v_c3c1b857},
-                                        &ts_2795ebdc
+                                        &quote!{v_c3c1b857}
                                     )
                                 )
                             });
-                        let binded_query_pk_modification_ts = gen_match_query_bind_or_err_ts(
+                        let binded_query_pk_modification_ts = gen_match_query_bind_or_err_ts_519a3119(
                             &quote!{#pk_ft_as_pg_type_ts #UpdateQueryBindSc(
                                 #UpdateForQuerySc.#pk_fi,
                                 #QuerySc,
                             )},
                             &quote!{v_d64bac39},
-                            &ts_2795ebdc
                         );
                         let binded_query_select_only_updated_ids_query_bind_ts =
                             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
@@ -3272,7 +3271,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_if_let_some_ts(
                                     &quote!{v_b2902425},
                                     &quote!{&#UpdateForQuerySc.#fi},
-                                    &gen_match_query_bind_or_err_ts(
+                                    &gen_match_query_bind_or_err_ts_519a3119(
                                         &{
                                             let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                                             quote!{#as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
@@ -3281,7 +3280,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             )}
                                         },
                                         &quote!{v_cc6145f8},
-                                        &ts_2795ebdc
                                     )
                                 )
                             });
@@ -3296,13 +3294,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             operation,
                         )
                     }
-                    Operation::DeleteOne => gen_match_query_bind_or_err_ts(
+                    Operation::DeleteOne => gen_match_query_bind_or_err_ts_519a3119(
                         &quote!{#import_ts PgTypeWhereFilter::query_bind(
                             #ParamsSc.#PayloadSc.#pk_fi,
                             #QuerySc
                         )},
-                        &quote!{v_3099ea0f},
-                        &ts_2795ebdc
+                        &quote!{v_3099ea0f}
                     )
                 }
             };
