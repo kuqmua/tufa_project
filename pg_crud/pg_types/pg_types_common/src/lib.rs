@@ -236,9 +236,9 @@ impl<'lt> PgTypeWhereFilter<'lt> for PaginationStartsWithOne {
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
-        self.0.qp(incr, column, is_need_to_add_operator)
+        self.0.qp(incr, column, is_need_to_add_oprtr)
     }
 }
 impl DfltOptSomeVecOneEl for PaginationStartsWithOne {

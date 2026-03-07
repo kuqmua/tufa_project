@@ -9,10 +9,10 @@ use naming::{
     CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc,
-    DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc, DisplayPlusToTokens, EqualOperatorUcc,
-    FiSc, IncrSc, IsNeedToAddOperatorSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc,
+    DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc, DisplayPlusToTokens, EqualOprtrUcc,
+    FiSc, IncrSc, IsNeedToAddOprtrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc,
     JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdateSc, OptVecCreateSc,
-    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOperatorUcc, PgTypeNotPkUcc,
+    PgJsonTypeTestCasesUcc, PgJsonTypeUcc, PgTypeEqualOprtrUcc, PgTypeNotPkUcc,
     PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
     PreviousReadMergedWithOptUpdateIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc,
     ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSc,
@@ -370,14 +370,14 @@ impl ToTokens for ColumnParamUnderscore {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsNeedToAddOperatorUnderscore {
+pub enum IsNeedToAddOprtrUnderscore {
     False,
     True,
 }
-impl ToTokens for IsNeedToAddOperatorUnderscore {
+impl ToTokens for IsNeedToAddOprtrUnderscore {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => IsNeedToAddOperatorSc.to_tokens(tokens),
+            Self::False => IsNeedToAddOprtrSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -425,18 +425,18 @@ pub enum EqualOrEqualUsingFields {
     EqualUsingFields,
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum EqualOperatorHandle {
+pub enum EqualOprtrHandle {
     Equal,
     IsNull,
 }
-impl EqualOperatorHandle {
+impl EqualOprtrHandle {
     #[must_use]
     pub fn to_tokens_path(&self, import: &Import) -> Ts2 {
         let ts = match &self {
             Self::Equal => quote! {Equal},
             Self::IsNull => quote! {IsNull},
         };
-        quote! {#import::#EqualOperatorUcc::#ts}
+        quote! {#import::#EqualOprtrUcc::#ts}
     }
 }
 //todo mb reuse with other structs
@@ -623,7 +623,7 @@ pub fn gen_pg_type_where_ts(
             &Ts2::new(),
             &IncrParamUnderscore::False,
             &ColumnParamUnderscore::False,
-            &IsNeedToAddOperatorUnderscore::False,
+            &IsNeedToAddOprtrUnderscore::False,
             &{
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
@@ -632,7 +632,7 @@ pub fn gen_pg_type_where_ts(
                             #VSc,
                             #IncrSc,
                             #ColumnSc,
-                            #IsNeedToAddOperatorSc,
+                            #IsNeedToAddOprtrSc,
                         )
                     }
                 });
@@ -956,7 +956,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     ident_generic_ts: &dyn ToTokens,
     incr_param_underscore: &IncrParamUnderscore,
     column_param_underscore: &ColumnParamUnderscore,
-    is_need_to_add_operator_underscore: &IsNeedToAddOperatorUnderscore,
+    is_need_to_add_oprtr_underscore: &IsNeedToAddOprtrUnderscore,
     qp_ts: &dyn ToTokens,
     is_qb_mutable: &IsQbMutable,
     qb_ts: &dyn ToTokens,
@@ -969,7 +969,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
                 &self,
                 #incr_param_underscore: &mut #U64,
                 #column_param_underscore: &dyn #StdFmtDisplay,
-                #is_need_to_add_operator_underscore: #Bool
+                #is_need_to_add_oprtr_underscore: #Bool
             ) -> Result<#StringTs, #import::#QpErUcc> {
                 #qp_ts
             }
@@ -2350,14 +2350,14 @@ pub fn gen_v_decl_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
 pub fn gen_v_init_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
     quote! {#import::V { #VSc: #ts }}
 }
-pub fn impl_pg_type_equal_operator_for_ident_ts(
+pub fn impl_pg_type_equal_oprtr_for_ident_ts(
     import: &Import,
     ident: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        impl #import::#PgTypeEqualOperatorUcc for #ident {
-            fn operator(&self) -> #import::#EqualOperatorUcc {
+        impl #import::#PgTypeEqualOprtrUcc for #ident {
+            fn oprtr(&self) -> #import::#EqualOprtrUcc {
                 #ts
             }
         }

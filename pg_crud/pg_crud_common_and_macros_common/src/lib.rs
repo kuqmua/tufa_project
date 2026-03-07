@@ -20,18 +20,18 @@ pub trait AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize: Sized {
 #[derive(
     Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema, OptimalPack,
 )]
-pub enum Operator {
+pub enum Oprtr {
     And,
     AndNot,
     #[default]
     Or,
     OrNot,
 }
-impl Operator {
+impl Oprtr {
     #[must_use]
-    pub fn to_qp(&self, is_need_to_add_operator: bool) -> String {
+    pub fn to_qp(&self, is_need_to_add_oprtr: bool) -> String {
         let not_space = format!("{NotSc} ");
-        if is_need_to_add_operator {
+        if is_need_to_add_oprtr {
             let and_space = format!("{AndSc} ");
             let or_space = format!("{OrSc} ");
             match *self {
@@ -48,17 +48,17 @@ impl Operator {
         }
     }
 }
-impl Display for Operator {
+impl Display for Oprtr {
     fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         write!(f, "{self:?}")
     }
 }
-impl DfltOptSomeVecOneEl for Operator {
+impl DfltOptSomeVecOneEl for Oprtr {
     fn dflt_opt_some_vec_one_el() -> Self {
         Self::default()
     }
 }
-impl ToTokens for Operator {
+impl ToTokens for Oprtr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::And => quote! {And},
@@ -77,10 +77,10 @@ pub enum PgTypeGreaterThanVrt {
 }
 impl PgTypeGreaterThanVrt {
     #[must_use]
-    pub const fn operator(&self) -> Operator {
+    pub const fn oprtr(&self) -> Oprtr {
         match *self {
-            Self::GreaterThan => Operator::Or,
-            Self::NotGreaterThan | Self::EqualNotGreaterThan => Operator::OrNot,
+            Self::GreaterThan => Oprtr::Or,
+            Self::NotGreaterThan | Self::EqualNotGreaterThan => Oprtr::OrNot,
         }
     }
 }
@@ -102,10 +102,10 @@ pub enum PgJsonTypeLengthGreaterThanVrt {
 }
 impl PgJsonTypeLengthGreaterThanVrt {
     #[must_use]
-    pub const fn operator(&self) -> Operator {
+    pub const fn oprtr(&self) -> Oprtr {
         match *self {
-            Self::LengthGreaterThan => Operator::Or,
-            Self::NotLengthGreaterThan | Self::EqualNotLengthGreaterThan => Operator::OrNot,
+            Self::LengthGreaterThan => Oprtr::Or,
+            Self::NotLengthGreaterThan | Self::EqualNotLengthGreaterThan => Oprtr::OrNot,
         }
     }
 }

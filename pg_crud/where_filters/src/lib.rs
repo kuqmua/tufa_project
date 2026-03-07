@@ -89,7 +89,7 @@ impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
         &self,
         incr: &mut u64,
         _: &dyn Display,
-        _is_need_to_add_operator: bool,
+        _is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         let mut acc = String::default();
         for _ in self.to_vec() {
@@ -213,7 +213,7 @@ where
         &self,
         incr: &mut u64,
         _: &dyn Display,
-        _is_need_to_add_operator: bool,
+        _is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         match incr_checked_add_one_returning_incr(incr) {
             Ok(v) => Ok(format!("${v}")),
@@ -782,12 +782,12 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.qp(
             incr,
             column,
-            is_need_to_add_operator,
+            is_need_to_add_oprtr,
             &PgTypeOrPgJsonType::PgJsonType,
             &Vrt::Normal,
         )
@@ -796,12 +796,12 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.qp(
             incr,
             column,
-            is_need_to_add_operator,
+            is_need_to_add_oprtr,
             &PgTypeOrPgJsonType::PgJsonType,
             &Vrt::MinusOne,
         )
@@ -810,12 +810,12 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.qp(
             incr,
             column,
-            is_need_to_add_operator,
+            is_need_to_add_oprtr,
             &PgTypeOrPgJsonType::PgType,
             &Vrt::Normal,
         )
@@ -824,12 +824,12 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.qp(
             incr,
             column,
-            is_need_to_add_operator,
+            is_need_to_add_oprtr,
             &PgTypeOrPgJsonType::PgType,
             &Vrt::MinusOne,
         )
@@ -849,7 +849,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         &self,
         incr: &mut u64,
         _: &dyn Display,
-        _is_need_to_add_operator: bool,
+        _is_need_to_add_oprtr: bool,
         pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
         vrt: &Vrt,
     ) -> Result<String, QpEr> {

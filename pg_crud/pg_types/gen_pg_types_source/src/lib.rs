@@ -35,12 +35,12 @@ use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, CreateQbValueUnderscore, CreateQpIncrUnderscore,
     CreateQpValueUnderscore, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOperatorHandle, Import, IncrParamUnderscore, IsCreateQbMutable,
-    IsNeedToAddOperatorUnderscore, IsNullable, IsPkUnderscore, IsQbMutable,
-    IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull, IsUpdateQbMutable, PgFilter, PgTypeFilter,
-    ReadOrUpdate, SelectQpValueUnderscore, ShouldDeriveSchemarsJsonSchema,
-    ShouldDeriveUtoipaToSchema, UpdateQpJsonbSetAccumulatorUnderscore,
-    UpdateQpJsonbSetPathUnderscore, UpdateQpJsonbSetTargetUnderscore, UpdateQpValueUnderscore,
+    EqualOprtrHandle, Import, IncrParamUnderscore, IsCreateQbMutable, IsNeedToAddOprtrUnderscore,
+    IsNullable, IsPkUnderscore, IsQbMutable, IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull,
+    IsUpdateQbMutable, PgFilter, PgTypeFilter, ReadOrUpdate, SelectQpValueUnderscore,
+    ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    UpdateQpJsonbSetAccumulatorUnderscore, UpdateQpJsonbSetPathUnderscore,
+    UpdateQpJsonbSetTargetUnderscore, UpdateQpValueUnderscore,
     gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
@@ -49,7 +49,7 @@ use pg_crud_macros_common::{
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_decl_ts, gen_pg_type_where_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
     gen_struct_ident_with_nbr_els_dq_ts, gen_tuple_struct_ident_dq_ts, gen_v_init_ts,
-    gen_vec_tokens_decl_ts, impl_pg_type_equal_operator_for_ident_ts,
+    gen_vec_tokens_decl_ts, impl_pg_type_equal_oprtr_for_ident_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -4229,13 +4229,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &ident_origin_ucc, &quote! {Ok(Self(v))});
             //todo rewrite as dependency of PgType trait?
-            let impl_pg_type_equal_operator_for_ident_table_type_ts = impl_pg_type_equal_operator_for_ident_ts(
+            let impl_pg_type_equal_oprtr_for_ident_table_type_ts = impl_pg_type_equal_oprtr_for_ident_ts(
                 &import,
                 &ident_table_type_ucc,
                 //todo
                 &{
-                    let equal_ts = EqualOperatorHandle::Equal.to_tokens_path(&import);
-                    let is_null_ts = EqualOperatorHandle::IsNull.to_tokens_path(&import);
+                    let equal_ts = EqualOprtrHandle::Equal.to_tokens_path(&import);
+                    let is_null_ts = EqualOprtrHandle::IsNull.to_tokens_path(&import);
                     match &pg_type_pattern {
                         PgTypePattern::Stdrt => match &is_nullable {
                             IsNullable::False => equal_ts,
@@ -4252,7 +4252,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             IsNullable::False => match &dim1_is_nullable {
                                 IsNullable::False => equal_ts,
                                 IsNullable::True => {
-                                    //todo thats not actually usefull coz nullable arr comparison has different logic. need to refactor EqualOperatorHandle enum
+                                    //todo thats not actually usefull coz nullable arr comparison has different logic. need to refactor EqualOprtrHandle enum
                                     equal_ts
                                 }
                             },
@@ -4275,7 +4275,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_type_for_ident_table_type_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_table_type_ts
-                #impl_pg_type_equal_operator_for_ident_table_type_ts
+                #impl_pg_type_equal_oprtr_for_ident_table_type_ts
             }
         };
         let ident_stdrt_not_null_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident_stdrt_not_null_ucc);
@@ -4748,7 +4748,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &IncrParamUnderscore::False,
                     &ColumnParamUnderscore::False,
-                    &IsNeedToAddOperatorUnderscore::True,
+                    &IsNeedToAddOprtrUnderscore::True,
                     &quote! {
                         match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
@@ -6196,7 +6196,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {
                     #ident_where_ucc::#EqualUcc(where_filters::PgTypeWhereEqual {
-                        operator: #import::Operator::Or,
+                        oprtr: #import::Oprtr::Or,
                         #VSc: #ident_table_type_ucc(#ts),
                     })
                 }
@@ -6226,7 +6226,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     acc_74c71d5d.push(
                                         #ident_where_ucc::DimOneEqual(
                                             where_filters::PgTypeWhereDimOneEqual {
-                                                operator: #import::Operator::Or,
+                                                oprtr: #import::Oprtr::Or,
                                                 dims: where_filters::BoundedVec::try_from(
                                                     vec![
                                                         pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
@@ -6533,7 +6533,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {Some(#ident_where_ucc::GreaterThan(
                                 where_filters::PgTypeWhereGreaterThan {
-                                    operator: greater_than_vrt.operator(),
+                                    oprtr: greater_than_vrt.oprtr(),
                                     #VSc: #ts,
                                 }
                             ))}
@@ -6545,7 +6545,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {
                                 #ts.map(|el_886032ca| #ident_where_ucc::GreaterThan(where_filters::PgTypeWhereGreaterThan {
-                                    operator: greater_than_vrt.operator(),
+                                    oprtr: greater_than_vrt.oprtr(),
                                     #VSc: #ident_stdrt_not_null_table_type_ucc(el_886032ca),
                                 }))
                             }

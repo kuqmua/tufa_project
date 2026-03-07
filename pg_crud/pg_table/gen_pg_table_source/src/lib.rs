@@ -63,8 +63,7 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     ColumnParamUnderscore, Dim, EqualOrEqualUsingFields, Import, IncrParamUnderscore,
-    IsNeedToAddOperatorUnderscore, IsQbMutable,
-    gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
+    IsNeedToAddOprtrUnderscore, IsQbMutable, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts, gen_v_init_ts,
@@ -1232,7 +1231,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &Ts2::new(),
                 &IncrParamUnderscore::False,
                 &ColumnParamUnderscore::True,
-                &IsNeedToAddOperatorUnderscore::True,
+                &IsNeedToAddOprtrUnderscore::True,
                 &{
                     let extra_params_modification_ts = fields.iter().enumerate().map(|(i, el)| {
                         let fi = &el.ident;
@@ -3901,9 +3900,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             Self::#RoutesHandleSc(#AppStateSc, #self_table_name_call_ts)
         }
     });
-    let (operator_or_ts, operator_and_ts) = {
-        let operator_ts = quote! {#import_ts Operator::};
-        (quote! {#operator_ts Or}, quote! {#operator_ts And})
+    let (oprtr_or_ts, oprtr_and_ts) = {
+        let oprtr_ts = quote! {#import_ts Oprtr::};
+        (quote! {#oprtr_ts Or}, quote! {#oprtr_ts And})
     };
     let ident_tests_ts = {
         fn gen_assert_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens) -> Ts2 {
@@ -3916,7 +3915,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 #pk_ft_as_pg_type_where_ts::Equal(
                     #import_ts PgTypeWhereEqual {
-                        operator: #operator_or_ts,
+                        oprtr: #oprtr_or_ts,
                         #VSc: #ts0,
                     },
                 )
@@ -3942,21 +3941,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let config_path_ts = quote! {server_config::Config};
         let underscore_unused_ts = quote! {_unused};
         //todo mb remove it?\
-        let gen_some_pg_type_where_try_new_ts = |operator_ts: &dyn ToTokens, ts: &dyn ToTokens| {
+        let gen_some_pg_type_where_try_new_ts = |oprtr_ts: &dyn ToTokens, ts: &dyn ToTokens| {
             quote! {
                 Some(
                     #import_ts PgTypeWhere::try_new(
-                        #operator_ts,
+                        #oprtr_ts,
                         #ts
                     ).expect("6b0491b2"),
                 )
             }
         };
         let gen_some_pg_type_where_try_new_and_ts =
-            |ts: &dyn ToTokens| gen_some_pg_type_where_try_new_ts(&operator_and_ts, ts);
+            |ts: &dyn ToTokens| gen_some_pg_type_where_try_new_ts(&oprtr_and_ts, ts);
         let gen_pg_type_where_try_new_pk_ts = quote! {
             #import_ts PgTypeWhere::try_new(
-                operator,
+                oprtr,
                 vec
             ).expect("fd20ad6d")
         };
@@ -4309,7 +4308,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_ident_where_many_pripery_k_others_none(
                                 Some(
                                     gen_pg_type_where_try_new_pk(
-                                        #operator_or_ts,
+                                        #oprtr_or_ts,
                                         read_only_ids_els_efeed554 #ts_ffb964de
                                     )
                                 )
@@ -4461,7 +4460,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_ident_where_many_pripery_k_others_none(
                                     Some(
                                         gen_pg_type_where_try_new_pk(
-                                            #operator_or_ts,
+                                            #oprtr_or_ts,
                                             read_only_ids_from_try_cm #ts_ffb964de
                                         )
                                     )
@@ -4487,7 +4486,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     gen_ident_where_many_pripery_k_others_none(
                                         Some(
                                             gen_pg_type_where_try_new_pk(
-                                                #operator_or_ts,
+                                                #oprtr_or_ts,
                                                 {
                                                     let mut acc_87ea12c9 = Vec::new();
                                                     for el_a37bca54 in &read_only_ids_from_try_dm {
@@ -4657,7 +4656,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 gen_ident_where_many_pripery_k_others_none(
                                     Some(
                                         gen_pg_type_where_try_new_pk(
-                                            #operator_or_ts,
+                                            #oprtr_or_ts,
                                             std::iter::repeat_with(|| #pk_where_equal_uuid_new_v_ts)
                                             .take(el_30614c66)
                                             .collect::<Vec<_>>()
@@ -4687,7 +4686,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    #operator_or_ts,
+                                                    #oprtr_or_ts,
                                                     read_only_ids_from_try_cm #ts_ffb964de
                                                 )
                                             )
@@ -4712,7 +4711,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             gen_ident_where_many_pripery_k_others_none(
                                                 Some(
                                                     gen_pg_type_where_try_new_pk(
-                                                        #operator_or_ts,
+                                                        #oprtr_or_ts,
                                                         read_only_ids_from_try_dm
                                                         .iter()
                                                         .map(|el_1e9c87ce| #ts)
@@ -4818,7 +4817,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    #operator_or_ts,
+                                                    #oprtr_or_ts,
                                                     vec![#ts_75998fa9]
                                                 )
                                             )
@@ -4839,7 +4838,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote! {table_7e35b1ce},
                             &quote! {
                                 gen_pg_type_where_try_new_pk(
-                                    #operator_or_ts,
+                                    #oprtr_or_ts,
                                     vec![#ts_490b2aa3]
                                 )
                             },
@@ -4872,7 +4871,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let some_pk_where_init_ts = quote! {
                 Some(
                     gen_pg_type_where_try_new_pk(
-                        #operator_and_ts,
+                        #oprtr_and_ts,
                         vec![
                             #pk_as_pg_type_test_cases_path_ts read_only_ids_merged_with_create_into_where_equal(
                                 read_only_ids_returned_from_co.#pk_fi,
@@ -4935,7 +4934,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 EqualOrEqualUsingFields::EqualUsingFields => {
                                                     quote! {
                                                         Some(#import_ts PgTypeWhere::new(
-                                                            #operator_and_ts,
+                                                            #oprtr_and_ts,
                                                             #method_ts
                                                         ))
                                                     }
@@ -5298,7 +5297,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     gen_ident_where_many_pripery_k_others_none(
                                         Some(
                                             gen_pg_type_where_try_new_pk(
-                                                #operator_or_ts,
+                                                #oprtr_or_ts,
                                                 vec![#ts]
                                             )
                                         )
@@ -5420,7 +5419,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    #operator_or_ts,
+                                                    #oprtr_or_ts,
                                                     vec![#ts]
                                                 )
                                             )
@@ -5597,7 +5596,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &quote!{
                                     #pk_fi: Some(
                                         gen_pg_type_where_try_new_pk(
-                                            #operator_or_ts,
+                                            #oprtr_or_ts,
                                             std::iter::repeat_with(|| #pk_where_equal_uuid_new_v_ts)
                                             .take(el_39819198)
                                             .collect()
@@ -5643,7 +5642,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         gen_ident_where_many_pripery_k_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
-                                                    #operator_or_ts,
+                                                    #oprtr_or_ts,
                                                     read_only_ids_from_try_dm.into_iter().map(|el_adcc8db3| #ts).collect()
                                                 )
                                             )
@@ -5662,7 +5661,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{
                                 #pk_fi: Some(
                                     gen_pg_type_where_try_new_pk(
-                                        #operator_or_ts,
+                                        #oprtr_or_ts,
                                         read_only_ids_from_try_cm.iter().map(|el_3bb88958| #ts_212f8aca).collect()
                                     )
                                 ),
@@ -5802,7 +5801,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let gen_pg_type_where_try_new_pk_fn_ts = quote! {
             fn gen_pg_type_where_try_new_pk(
-                operator: #import_ts Operator,
+                oprtr: #import_ts Oprtr,
                 vec: Vec<#pk_ft_as_pg_type_where_ts>
             ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
                 #gen_pg_type_where_try_new_pk_ts
@@ -5813,7 +5812,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 vec_read_only_ids: &[#ident_read_only_ids_ucc]
             ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
                 gen_pg_type_where_try_new_pk(
-                    #operator_or_ts,
+                    #oprtr_or_ts,
                     vec_read_only_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
                 )
             }

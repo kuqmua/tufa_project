@@ -426,7 +426,7 @@ pub trait PgTypeWhereFilter<'query_lifetime> {
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr>;
 }
 //todo custom deserialization - must not contain more than one el
@@ -458,11 +458,11 @@ where
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{column} = 'null'")),
-            |v_b4a9fcfb| v_b4a9fcfb.qp(incr, column, is_need_to_add_operator),
+            |v_b4a9fcfb| v_b4a9fcfb.qp(incr, column, is_need_to_add_oprtr),
         )
     }
 }
@@ -499,20 +499,20 @@ pub enum QpEr {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, OptimalPack)]
 pub struct PgTypeWhere<T> {
     v: NotEmptyUniqueVec<T>,
-    operator: Operator,
+    oprtr: Oprtr,
 }
 impl<T: PartialEq + Clone> PgTypeWhere<T> {
     #[must_use]
-    pub const fn get_operator(&self) -> &Operator {
-        &self.operator
+    pub const fn get_oprtr(&self) -> &Oprtr {
+        &self.oprtr
     }
     #[must_use]
-    pub const fn new(operator: Operator, v: NotEmptyUniqueVec<T>) -> Self {
-        Self { v, operator }
+    pub const fn new(oprtr: Oprtr, v: NotEmptyUniqueVec<T>) -> Self {
+        Self { v, oprtr }
     }
-    pub fn try_new(operator: Operator, v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+    pub fn try_new(oprtr: Oprtr, v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
         match NotEmptyUniqueVec::try_new(v) {
-            Ok(v0) => Ok(Self { operator, v: v0 }),
+            Ok(v0) => Ok(Self { oprtr, v: v0 }),
             Err(er) => Err(er),
         }
     }
@@ -558,7 +558,7 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        "operator" => Ok(__Field::f0),
+                        "oprtr" => Ok(__Field::f0),
                         "v" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
@@ -568,7 +568,7 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match v {
-                        b"operator" => Ok(__Field::f0),
+                        b"oprtr" => Ok(__Field::f0),
                         b"v" => Ok(__Field::f1),
                         _ => Ok(__Field::__ignore),
                     }
@@ -600,8 +600,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(f0) = _serde::de::SeqAccess::next_element::<Operator>(&mut __seq)?
-                    else {
+                    let Some(f0) = _serde::de::SeqAccess::next_element::<Oprtr>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
                             &"struct PgTypeWhere with 2 els",
@@ -624,21 +623,17 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut f0: Option<Operator> = None;
+                    let mut f0: Option<Oprtr> = None;
                     let mut f1: Option<Vec<T>> = None;
                     while let Some(__k) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __k {
                             __Field::f0 => {
                                 if Option::is_some(&f0) {
                                     return Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                            "operator",
-                                        ),
+                                        <__A::Error as _serde::de::Error>::duplicate_field("oprtr"),
                                     );
                                 }
-                                f0 = Some(_serde::de::MapAccess::next_value::<Operator>(
-                                    &mut __map,
-                                )?);
+                                f0 = Some(_serde::de::MapAccess::next_value::<Oprtr>(&mut __map)?);
                             }
                             __Field::f1 => {
                                 if Option::is_some(&f1) {
@@ -658,7 +653,7 @@ const _: () = {
                     }
                     let f0_v = match f0 {
                         Some(v) => v,
-                        None => _serde::__private228::de::missing_field("operator")?,
+                        None => _serde::__private228::de::missing_field("oprtr")?,
                     };
                     let f1_v = match f1 {
                         Some(v) => v,
@@ -671,7 +666,7 @@ const _: () = {
                 }
             }
             #[doc(hidden)]
-            const FIELDS: &[&str] = &["operator", "v"];
+            const FIELDS: &[&str] = &["oprtr", "v"];
             Deserializer::deserialize_struct(
                 __deserializer,
                 "PgTypeWhere",
@@ -707,18 +702,18 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         let mut acc = String::default();
-        let mut is_need_to_add_operator_inner_handle = false;
+        let mut is_need_to_add_oprtr_inner_handle = false;
         for el in &self.v.0 {
-            match PgTypeWhereFilter::qp(el, incr, column, is_need_to_add_operator_inner_handle) {
+            match PgTypeWhereFilter::qp(el, incr, column, is_need_to_add_oprtr_inner_handle) {
                 Ok(v) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{v} ").is_err() {
                         return Err(QpEr::WriteIntoBuffer { loc: loc!() });
                     }
-                    is_need_to_add_operator_inner_handle = true;
+                    is_need_to_add_oprtr_inner_handle = true;
                 }
                 Err(er) => {
                     return Err(er);
@@ -728,7 +723,7 @@ impl<'query_lifetime, T: PgTypeWhereFilter<'query_lifetime>> PgTypeWhereFilter<'
         let _: Option<char> = acc.pop();
         Ok(format!(
             "{}({acc})",
-            &self.operator.to_qp(is_need_to_add_operator)
+            &self.oprtr.to_qp(is_need_to_add_oprtr)
         ))
     }
 }
@@ -737,7 +732,7 @@ impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSo
 {
     fn dflt_opt_some_vec_one_el() -> Self {
         Self {
-            operator: DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el(),
+            oprtr: DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el(),
             v: NotEmptyUniqueVec::try_new(
                 AllEnumVrtsArrDfltOptSomeVecOneEl::all_vrts_dflt_opt_some_vec_one_el(),
             )
@@ -1064,9 +1059,9 @@ impl<'query_lifetime> PgTypeWhereFilter<'query_lifetime> for PaginationStartsWit
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
-        self.0.qp(incr, column, is_need_to_add_operator)
+        self.0.qp(incr, column, is_need_to_add_oprtr)
     }
 }
 impl DfltOptSomeVecOneEl for PaginationStartsWithZero {
@@ -1255,18 +1250,14 @@ where
         &self,
         incr: &mut u64,
         column: &dyn Display,
-        is_need_to_add_operator: bool,
+        is_need_to_add_oprtr: bool,
     ) -> Result<String, QpEr> {
         let mut acc = String::default();
         for (i, v_953208ce) in self.0.iter().enumerate() {
             match v_953208ce.qp(
                 incr,
                 column,
-                if i == 0 {
-                    is_need_to_add_operator
-                } else {
-                    true
-                },
+                if i == 0 { is_need_to_add_oprtr } else { true },
             ) {
                 Ok(v) => {
                     acc.push_str(&v);
@@ -1309,11 +1300,11 @@ impl Default for NonPkPgTypeReadOnlyIds {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum EqualOperator {
+pub enum EqualOprtr {
     Equal,
     IsNull,
 }
-impl EqualOperator {
+impl EqualOprtr {
     #[must_use]
     pub const fn to_query_str(&self) -> &'static str {
         match &self {
@@ -1322,8 +1313,8 @@ impl EqualOperator {
         }
     }
 }
-pub trait PgTypeEqualOperator {
-    fn operator(&self) -> EqualOperator;
+pub trait PgTypeEqualOprtr {
+    fn oprtr(&self) -> EqualOprtr;
 }
 #[derive(
     Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, OptimalPack,
