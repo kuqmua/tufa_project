@@ -880,9 +880,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "test", "cases"],
     ["self", "some", "v", "update"],
     ["self", "some", "v", "read"],
-    ["self", "read", "only", "ids"],
+    ["self", "read", "ids"],
     ["self", "update", "handle"],
-    ["self", "read", "only", "ids", "handle"],
+    ["self", "read", "ids", "handle"],
     ["self", "last"],
     ["self", "current"],
     ["jsonb", "self"],
@@ -903,7 +903,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["derive", "self"],
     ["derive", "self", "if"],
     [
-        "self", "read", "only", "ids", "to", "two", "dims", "vec", "read", "inner", "acc"
+        "self", "read", "ids", "to", "two", "dims", "vec", "read", "inner", "acc"
     ],
     ["self", "gen", "pg", "json", "object", "type", "mod"],
     ["self", "gen", "pg", "table", "mod"]

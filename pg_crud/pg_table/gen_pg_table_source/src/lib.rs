@@ -11,9 +11,9 @@ use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
     BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CoErVrtsSc, CoLogicSc,
-    ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonLogicSc,
-    CommonReadOnlyIdsReturnedFromCoSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
-    CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
+    ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonLogicSc, CommonReadIdsReturnedFromCoSc,
+    ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc, CreateExtensionIfNotExistsUuidOsspUcc,
+    CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc, DeserializeResUcc,
     DesirableUcc, DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElMaxPageSizeUcc,
@@ -27,19 +27,19 @@ use naming::{
     OrderSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc,
     PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PgnSc, PkQpSc, PkSc,
     PoolConnectionSc, PoolSc, PrefixSc, PrepExtensionsSc, PrepPgSc, PrepPgTableSc, PrepPgUcc, QbSc,
-    QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc,
-    ReadOnlyIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc,
-    ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereBetweenSc,
-    ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
-    ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
-    ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
-    ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereInSc,
-    ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereRegexSc,
-    ReadOnlyIdsAndCreateIntoVecWhereEqualUsingFieldsSc, ReadOnlyIdsAndCreateIntoWhereEqualSc,
-    ReadOnlyIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsIntoReadSc,
-    ReadOnlyIdsIntoTableTypeSc, ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsSc, ReadOnlyIdsUcc, ReadUcc,
-    ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc, RmLogicSc, RoErVrtsSc, RoLogicSc,
-    RollbackSc, RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc, SelectOnlyIdsQpSc,
+    QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc,
+    ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc,
+    ReadIdsAndCreateIntoPgJsonTypeOptVecWhereBetweenSc,
+    ReadIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
+    ReadIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
+    ReadIdsAndCreateIntoPgJsonTypeOptVecWhereGreaterThanSc,
+    ReadIdsAndCreateIntoPgJsonTypeOptVecWhereInSc,
+    ReadIdsAndCreateIntoPgJsonTypeOptVecWhereRegexSc,
+    ReadIdsAndCreateIntoVecWhereEqualUsingFieldsSc, ReadIdsAndCreateIntoWhereEqualSc,
+    ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadIdsIntoReadSc, ReadIdsIntoTableTypeSc,
+    ReadIdsIntoUpdateSc, ReadIdsSc, ReadIdsUcc, ReadIntoTableTypeSc, ReadUcc, ReqSc, ReqwestSc,
+    ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc, RmLogicSc, RoErVrtsSc, RoLogicSc, RollbackSc,
+    RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc, SelectOnlyIdsQpSc,
     SelectOnlyUpdatedIdsQpSc, SelectPkSc, SelectQpSc, SelectSc, SelectUcc, SerdeJsonSc,
     SerdeJsonToStringSc, SerdeJsonToStringUcc, SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc,
     TableSc, ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UmErVrtsSc,
@@ -50,12 +50,12 @@ use naming::{
         ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
         SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
         SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPrepPgErUcc,
-        SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc, SelfReadOnlyIdsUcc, SelfReadUcc,
-        SelfRoErWithSerdeUcc, SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc,
-        SelfTryRoErUcc, SelfUmParamsUcc, SelfUmPayloadUcc, SelfUpdateForQueryUcc,
-        SelfUpdateTryNewErUcc, SelfUpdateUcc, SelfWhereManyTryNewErUcc, SelfWhereManyUcc,
-        StdOptOptSelfWhereManyUcc, TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc,
-        TrySelfHandleSc, TrySelfSc, UpdateQpSelfSc,
+        SelfReadIdsToTwoDimsVecReadInnerAccSc, SelfReadIdsUcc, SelfReadUcc, SelfRoErWithSerdeUcc,
+        SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc, SelfTryRoErUcc,
+        SelfUmParamsUcc, SelfUmPayloadUcc, SelfUpdateForQueryUcc, SelfUpdateTryNewErUcc,
+        SelfUpdateUcc, SelfWhereManyTryNewErUcc, SelfWhereManyUcc, StdOptOptSelfWhereManyUcc,
+        TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc, TrySelfHandleSc, TrySelfSc,
+        UpdateQpSelfSc,
     },
 };
 use optimal_pack::OptimalPack;
@@ -485,13 +485,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gen_as_pg_type_where_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &WhereUcc);
     let pk_ft_as_pg_type_where_ts = gen_as_pg_type_where_ts(&pk_ft);
     let gen_as_pg_type_read_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &ReadUcc);
-    let gen_as_pg_type_read_only_ids_ts =
-        |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &ReadOnlyIdsUcc);
+    let gen_as_pg_type_read_ids_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &ReadIdsUcc);
     let pk_ft_as_pg_type_read_ts = gen_as_pg_type_read_ts(&pk_ft);
     let gen_as_pg_type_update_ts = |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &UpdateUcc);
     let gen_as_pg_type_update_for_query_ts =
         |ts: &dyn ToTokens| gen_as_pg_type_tokens_ts(&ts, &UpdateForQueryUcc);
-    let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
+    let ident_read_ids_ucc = SelfReadIdsUcc::from_tokens(&ident);
     let ident_dm_params_ucc = SelfDmParamsUcc::from_tokens(&ident);
     let ident_dm_payload_ucc = SelfDmPayloadUcc::from_tokens(&ident);
     let ident_dlo_params_ucc = SelfDloParamsUcc::from_tokens(&ident);
@@ -501,7 +500,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_try_dlo_er_ucc = SelfTryDloErUcc::from_tokens(&ident);
     let ident_dlo_er_with_serde_ucc = SelfDloErWithSerdeUcc::from_tokens(&ident);
     let vec_pk_ft_read_ts = gen_vec_tokens_decl_ts(&pk_ft_as_pg_type_read_ucc);
-    let vec_ident_read_only_ids_ts = gen_vec_tokens_decl_ts(&ident_read_only_ids_ucc);
+    let vec_ident_read_ids_ts = gen_vec_tokens_decl_ts(&ident_read_ids_ucc);
     let pk_fi = &pk_field.ident;
     let pk_fi_ucc_ts = ToTokensToUccTs::case_or_panic(&pk_fi);
     let pk_ft_update_ts = &SelfUpdateUcc::from_type_last_segment(pk_ft);
@@ -1218,9 +1217,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
             .build_struct(&opt_ident_where_many_ucc, &Ts2::new(), &{
-                let opt_ident_read_only_ids_stdrt_not_null_ts =
+                let opt_ident_read_ids_stdrt_not_null_ts =
                     gen_opt_type_decl_ts(&ident_where_many_ucc);
-                quote! {(pub #opt_ident_read_only_ids_stdrt_not_null_ts);}
+                quote! {(pub #opt_ident_read_ids_stdrt_not_null_ts);}
             });
         let impl_pg_type_where_filter_for_opt_ident_where_many_ts =
             impl_pg_type_where_filter_for_ident_ts(
@@ -1584,8 +1583,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #impl_ident_read_ts
         }
     };
-    let ident_read_only_ids_ts = {
-        let ident_read_only_ids_ts = {
+    let ident_read_ids_ts = {
+        let ident_read_ids_ts = {
             let ts_472e3ebf = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -1593,7 +1592,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
-                .build_struct(&ident_read_only_ids_ucc, &Ts2::new(), &{
+                .build_struct(&ident_read_ids_ucc, &Ts2::new(), &{
                     enum WrapIntoOpt {
                         False,
                         True,
@@ -1601,9 +1600,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let gen_field_ts =
                         |fi: &dyn ToTokens, ft: &dyn ToTokens, wrap_into_opt: &WrapIntoOpt| {
                             let ft_ts = match &wrap_into_opt {
-                                WrapIntoOpt::False => gen_as_pg_type_read_only_ids_ts(&ft),
+                                WrapIntoOpt::False => gen_as_pg_type_read_ids_ts(&ft),
                                 WrapIntoOpt::True => {
-                                    gen_opt_type_decl_ts(&gen_as_pg_type_read_only_ids_ts(&ft))
+                                    gen_opt_type_decl_ts(&gen_as_pg_type_read_ids_ts(&ft))
                                 }
                             };
                             quote! {pub #fi: #ft_ts}
@@ -1622,22 +1621,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ts_472e3ebf
             }
         };
-        let impl_sqlx_row_for_ident_read_only_ids_ts = {
+        let impl_sqlx_row_for_ident_read_ids_ts = {
             let undescore_undrscr_row = quote! {__row};
             let where_fts_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| {
                 let ft = &el.type0;
-                let el_syn_field_ty_as_pg_type_read_only_ids_ts =
-                    gen_as_pg_type_read_only_ids_ts(&ft);
+                let el_syn_field_ty_as_pg_type_read_ids_ts = gen_as_pg_type_read_ids_ts(&ft);
                 quote! {
-                    #el_syn_field_ty_as_pg_type_read_only_ids_ts: ::sqlx::decode::Decode<'lt, R::Database>
+                    #el_syn_field_ty_as_pg_type_read_ids_ts: ::sqlx::decode::Decode<'lt, R::Database>
                 }
             });
             let pk_ts = {
-                let el_syn_field_ty_as_pg_type_read_only_ids_ts =
-                    gen_as_pg_type_read_only_ids_ts(&pk_ft);
+                let el_syn_field_ty_as_pg_type_read_ids_ts = gen_as_pg_type_read_ids_ts(&pk_ft);
                 let fi_dq_ts = dq_ts(&pk_fi);
                 let ts = gen_match_ok_err_ts_c35d87fd(
-                    &quote! {sqlx::Row::try_get::<#el_syn_field_ty_as_pg_type_read_only_ids_ts, &str>(
+                    &quote! {sqlx::Row::try_get::<#el_syn_field_ty_as_pg_type_read_ids_ts, &str>(
                         #undescore_undrscr_row,
                         #fi_dq_ts
                     )},
@@ -1655,11 +1652,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let fi = &el.ident;
                     let ft = &el.type0;
                     let fi_dq_ts = dq_ts(&quote! {#fi});
-                    let el_syn_field_ty_as_pg_type_read_only_ids_ts =
-                        gen_as_pg_type_read_only_ids_ts(&ft);
+                    let el_syn_field_ty_as_pg_type_read_ids_ts = gen_as_pg_type_read_ids_ts(&ft);
                     quote! {
                         let #fi = sqlx::Row::try_get::<
-                            #el_syn_field_ty_as_pg_type_read_only_ids_ts,
+                            #el_syn_field_ty_as_pg_type_read_ids_ts,
                             &str
                         >(#undescore_undrscr_row, #fi_dq_ts).ok();
                     }
@@ -1669,7 +1665,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {#fi}
             });
             quote! {
-                impl<'lt, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lt, R> for #ident_read_only_ids_ucc
+                impl<'lt, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lt, R> for #ident_read_ids_ucc
                 where
                     &'lt ::std::primitive::str: ::sqlx::ColumnIndex<R>,
                     #where_fts_ts
@@ -1683,11 +1679,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #ident_read_only_ids_ts
-            #impl_sqlx_row_for_ident_read_only_ids_ts
+            #ident_read_ids_ts
+            #impl_sqlx_row_for_ident_read_ids_ts
         }
     };
-    // println!("{ident_read_only_ids_ts}");
+    // println!("{ident_read_ids_ts}");
     let gen_ident_try_op_er_ucc = |op: &Op| {
         format!("{ident}Try{op}Er")
             .parse::<Ts2>()
@@ -2473,8 +2469,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Op::Ro => &ident_read_ucc,
                     Op::Dm => &vec_pk_ft_read_ts,
                     Op::Dlo => &pk_ft_as_pg_type_read_ucc,
-                    Op::Co | Op::Uo => &ident_read_only_ids_ucc,
-                    Op::Cm | Op::Um => &vec_ident_read_only_ids_ts,
+                    Op::Co | Op::Uo => &ident_read_ids_ucc,
+                    Op::Cm | Op::Um => &vec_ident_read_ids_ts,
                 };
                 let try_op_sc_ts = op.try_self_sc_ts();
                 let try_op_handle_sc_ts = op.try_self_handle_sc_ts();
@@ -3293,9 +3289,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let pg_logic_ts = {
-                    let gen_match_ident_read_only_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
+                    let gen_match_ident_read_ids_as_from_row_from_row_ts = |ts: &dyn ToTokens| {
                         gen_match_ok_err_ts_c35d87fd(
-                            &quote! {<#ident_read_only_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79)},
+                            &quote! {<#ident_read_ids_ucc as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&v_b27d7d79)},
                             &quote! {v_33759463},
                             &ts,
                         )
@@ -3308,7 +3304,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &match &create_or_update_or_dm {
                                     CreateOrUpdateOrDm::Create
                                     | CreateOrUpdateOrDm::Update => {
-                                        let ts = gen_match_ident_read_only_ids_as_from_row_from_row_ts(&{
+                                        let ts = gen_match_ident_read_ids_as_from_row_from_row_ts(&{
                                             let ts =
                                                 gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
                                                     &op_d1960edc,
@@ -3346,12 +3342,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     &ExecutorSc,
                                     &match create_or_update_or_dlo {
                                         CreateOrUpdateOrDlo::Create => {
-                                            gen_match_ident_read_only_ids_as_from_row_from_row_ts(
+                                            gen_match_ident_read_ids_as_from_row_from_row_ts(
                                                 &quote! {{#ts}},
                                             )
                                         }
                                         CreateOrUpdateOrDlo::Update => {
-                                            gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
+                                            gen_match_ident_read_ids_as_from_row_from_row_ts(&ts)
                                         }
                                         CreateOrUpdateOrDlo::Delete => gen_sqlx_row_try_get_pk_ts(
                                             &quote! {#pk_ft_as_pg_type_read_ucc},
@@ -3765,9 +3761,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Op::Dm => &vec_pk_ft_read_ts,
                                 Op::Dlo => &pk_ft_as_pg_type_read_ucc,
                                 Op::Co |
-                                Op::Uo => &ident_read_only_ids_ucc,
+                                Op::Uo => &ident_read_ids_ucc,
                                 Op::Cm |
-                                Op::Um => &vec_ident_read_only_ids_ts,
+                                Op::Um => &vec_ident_read_ids_ts,
                             };
                             quote! {{
                                 #DesirableUcc(#desirable_type_ts),
@@ -3996,47 +3992,45 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
         let pk_ft_read_into_table_type_el_pk_fi_clone_ts =
             gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadIntoTableTypeSc, &quote! {el_adcc8db3});
-        let read_only_ids_el_937c5af3_pk_fi = quote! {read_only_ids_el_937c5af3.#pk_fi};
+        let read_ids_el_937c5af3_pk_fi = quote! {read_ids_el_937c5af3.#pk_fi};
         let (
-            pk_ft_read_only_ids_into_read_el_43ab7fb5_pk_fi_ts,
-            pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
-            pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
-            pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
+            pk_ft_read_ids_into_read_el_43ab7fb5_pk_fi_ts,
+            pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
+            pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
+            pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
         ) = {
-            let gen_ts = |ts: &dyn ToTokens| {
-                gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadOnlyIdsIntoReadSc, &ts)
-            };
+            let gen_ts =
+                |ts: &dyn ToTokens| gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadIdsIntoReadSc, &ts);
             (
                 gen_ts(&quote! {el_43ab7fb5.#pk_fi}),
-                gen_ts(&quote! {read_only_ids_from_try_co.#pk_fi}),
-                gen_ts(&read_only_ids_el_937c5af3_pk_fi),
-                gen_ts(&quote! {read_only_ids_returned_from_co.#pk_fi}),
+                gen_ts(&quote! {read_ids_from_try_co.#pk_fi}),
+                gen_ts(&read_ids_el_937c5af3_pk_fi),
+                gen_ts(&quote! {read_ids_returned_from_co.#pk_fi}),
             )
         };
         let ts_ffb964de = {
-            let ts = gen_pk_where_equal_into_inner_ts(
-                &pk_ft_read_only_ids_into_read_el_43ab7fb5_pk_fi_ts,
-            );
+            let ts =
+                gen_pk_where_equal_into_inner_ts(&pk_ft_read_ids_into_read_el_43ab7fb5_pk_fi_ts);
             quote! {.iter().map(|el_43ab7fb5| #ts).collect()}
         };
-        let pk_ft_as_pg_type_update_as_pg_type_pk_read_only_ids_into_update_ts = {
+        let pk_ft_as_pg_type_update_as_pg_type_pk_read_ids_into_update_ts = {
             let method_call_ts = gen_pk_ft_as_pg_type_pk_method_call_ts(
-                &ReadOnlyIdsIntoUpdateSc,
-                &read_only_ids_el_937c5af3_pk_fi,
+                &ReadIdsIntoUpdateSc,
+                &read_ids_el_937c5af3_pk_fi,
             );
             quote! {#pk_as_pg_type_ts::Update::from(#method_call_ts)}
         };
         let (
-            fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_and_create_ts,
-            fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_from_try_co_ident_create_ts,
-            fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_returned_from_co_create_ts,
-            fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_returned_from_co_clone_ident_create_clone_ts,
+            fi_read_ids_and_create_into_opt_v_read_read_ids_and_create_ts,
+            fi_read_ids_and_create_into_opt_v_read_read_ids_from_try_co_ident_create_ts,
+            fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_create_ts,
+            fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_clone_ident_create_clone_ts,
         ) = {
             enum AddDotClone {
                 False,
                 True,
             }
-            let gen_ts = |read_only_ids_ts: &dyn ToTokens,
+            let gen_ts = |read_ids_ts: &dyn ToTokens,
                           create_ts: &dyn ToTokens,
                           add_dot_clone: &AddDotClone| {
                 gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
@@ -4047,29 +4041,29 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                     quote! {
-                        #fi: #ft_ts read_only_ids_and_create_into_opt_v_read(
-                            #read_only_ids_ts.#fi #mb_dot_clone_ts.expect("f967434c"),
+                        #fi: #ft_ts read_ids_and_create_into_opt_v_read(
+                            #read_ids_ts.#fi #mb_dot_clone_ts.expect("f967434c"),
                             #create_ts.#fi #mb_dot_clone_ts
                         )
                     }
                 })
             };
             let ident_create_name_ts = quote! {ident_create};
-            let read_only_ids_returned_from_co_name_ts = quote! {read_only_ids_returned_from_co};
+            let read_ids_returned_from_co_name_ts = quote! {read_ids_returned_from_co};
             (
-                gen_ts(&ReadOnlyIdsSc, &CreateSc, &AddDotClone::False),
+                gen_ts(&ReadIdsSc, &CreateSc, &AddDotClone::False),
                 gen_ts(
-                    &quote! {read_only_ids_from_try_co},
+                    &quote! {read_ids_from_try_co},
                     &ident_create_name_ts,
                     &AddDotClone::False,
                 ),
                 gen_ts(
-                    &read_only_ids_returned_from_co_name_ts,
+                    &read_ids_returned_from_co_name_ts,
                     &quote! {ident_create_dflt},
                     &AddDotClone::False,
                 ),
                 gen_ts(
-                    &read_only_ids_returned_from_co_name_ts,
+                    &read_ids_returned_from_co_name_ts,
                     &ident_create_name_ts,
                     &AddDotClone::True,
                 ),
@@ -4082,7 +4076,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         let select_dflt_all_with_max_page_size_clone_ts =
             quote! {select_dflt_all_with_max_page_size.clone()};
-        let common_read_only_ids_returned_from_co_ts = {
+        let common_read_ids_returned_from_co_ts = {
             let pk_read_ts = quote! {pk_read};
             let pk_read_clone_ts = quote! {pk_read.clone()};
             let ts = gen_v_init_ts0(&pk_read_clone_ts);
@@ -4117,9 +4111,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {"26e2058b"},
             );
             quote! {
-                let #CommonReadOnlyIdsReturnedFromCoSc = {
-                    let read_only_ids_from_try_co = gen_read_only_ids_from_try_co_dflt(&#UrlSc, &table_init).await;
-                    let pk_read = #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts;
+                let #CommonReadIdsReturnedFromCoSc = {
+                    let read_ids_from_try_co = gen_read_ids_from_try_co_dflt(&#UrlSc, &table_init).await;
+                    let pk_read = #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts;
                     #assert_eq_ts_4f6bbe8a
                     #assert_eq_ts_947d2096
                     gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
@@ -4128,7 +4122,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #select_dflt_all_with_max_page_size_clone_ts,
                         &table_init,
                     ).await;
-                    read_only_ids_from_try_co
+                    read_ids_from_try_co
                 };
             }
         };
@@ -4181,70 +4175,68 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ));
             }
         };
-        let table_read_only_ids_and_create_into_where_equal_name = "8e427ad7";
-        let table_read_only_ids_and_create_into_vec_where_equal_using_fields_name = "eb24448c";
-        let table_read_only_ids_and_create_into_opt_vec_where_equal_to_json_field_name = "9ac6d79a";
+        let table_read_ids_and_create_into_where_equal_name = "8e427ad7";
+        let table_read_ids_and_create_into_vec_where_equal_using_fields_name = "eb24448c";
+        let table_read_ids_and_create_into_opt_vec_where_equal_to_json_field_name = "9ac6d79a";
         let table_create_into_pg_type_opt_vec_where_dim_one_equal_name = "72940b0e";
-        let table_read_only_ids_and_table_type_into_pg_type_opt_where_greater_than_name =
-            "5a52af33";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_name =
+        let table_read_ids_and_table_type_into_pg_type_opt_where_greater_than_name = "5a52af33";
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_name =
             "1f388ef8";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_name =
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_name =
             "581c947f";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_name =
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_name =
             "de556c26";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_name =
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_name =
             "35b26a97";
         let table_create_into_pg_json_type_opt_vec_where_length_equal_name = "1ce53b67";
         let table_create_into_pg_json_type_opt_vec_where_length_greater_than_name = "6b6bdfe0";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_name =
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_name =
             "35a01678";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_name =
-            "33a3706a";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_name = "a3e2165c";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_name = "427ac837";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name =
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_between_name = "33a3706a";
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_in_name = "a3e2165c";
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_regex_name = "427ac837";
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name =
             "fe3267a0";
-        let table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_name =
+        let table_read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_name =
             "b4504737";
         fill_table_fis_vec_ts(vec![
-            &table_read_only_ids_and_create_into_where_equal_name,
-            &table_read_only_ids_and_create_into_vec_where_equal_using_fields_name,
-            &table_read_only_ids_and_create_into_opt_vec_where_equal_to_json_field_name,
+            &table_read_ids_and_create_into_where_equal_name,
+            &table_read_ids_and_create_into_vec_where_equal_using_fields_name,
+            &table_read_ids_and_create_into_opt_vec_where_equal_to_json_field_name,
             &table_create_into_pg_type_opt_vec_where_dim_one_equal_name,
-            &table_read_only_ids_and_table_type_into_pg_type_opt_where_greater_than_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_name,
+            &table_read_ids_and_table_type_into_pg_type_opt_where_greater_than_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_name,
             &table_create_into_pg_json_type_opt_vec_where_length_equal_name,
             &table_create_into_pg_json_type_opt_vec_where_length_greater_than_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
-            &table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_between_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_in_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_regex_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
+            &table_read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
         ]);
         let select_dflt_all_with_max_page_size_cloned_clone_ts =
             quote! {select_dflt_all_with_max_page_size_cloned.clone()};
-        let read_only_ids_to_two_dims_vec_read_inner_acc_fields_ts =
+        let read_ids_to_two_dims_vec_read_inner_acc_fields_ts =
             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
-                let fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc =
-                    SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
-                let ident_create_dflts_for_column_read_only_ids_to_two_dims_vec_read_inner_ts =
+                let fi_read_ids_to_two_dims_vec_read_inner_acc_sc =
+                    SelfReadIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
+                let ident_create_dflts_for_column_read_ids_to_two_dims_vec_read_inner_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el0: &SynFieldWrapper| {
                         let fi0 = &el0.ident;
                         let ft0 = &el0.type0;
                         if fi == fi0 {
                             gen_if_let_some_ts(
                                 &quote! {v_a5f7e6cd},
-                                &quote! {&common_read_only_ids_returned_from_co.#fi0},
+                                &quote! {&common_read_ids_returned_from_co.#fi0},
                                 &{
                                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft0);
                                     quote! {
-                                        for el_b3522b7d in #ft_ts read_only_ids_to_two_dims_vec_read_inner(v_a5f7e6cd) {
+                                        for el_b3522b7d in #ft_ts read_ids_to_two_dims_vec_read_inner(v_a5f7e6cd) {
                                             for _ in el_b3522b7d {
                                                 acc_458cda9e.push(ident_create_dflt.clone());
                                             }
@@ -4257,14 +4249,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     });
                 quote! {
-                    let #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc = {
+                    let #fi_read_ids_to_two_dims_vec_read_inner_acc_sc = {
                         let mut acc_458cda9e = Vec::new();
-                        #ident_create_dflts_for_column_read_only_ids_to_two_dims_vec_read_inner_ts
+                        #ident_create_dflts_for_column_read_ids_to_two_dims_vec_read_inner_ts
                         acc_458cda9e
                     };
                 }
             });
-        let gen_read_only_ids_els_ts_fe29ff70 = {
+        let gen_read_ids_els_ts_fe29ff70 = {
             let ident_read_fields_init_without_pk_ts = gen_fields_named_without_pk_with_comma_ts(
                 &|syn_field_wrapper: &SynFieldWrapper| {
                     let fi = &syn_field_wrapper.ident;
@@ -4273,7 +4265,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     quote! {
                         #fi: el_f108da5a.#fi.as_ref().map_or_else(
                             || Some(#ts),
-                            #ts0 read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el
+                            #ts0 read_ids_to_opt_v_read_dflt_opt_some_vec_one_el
                         )
                     }
                 },
@@ -4281,9 +4273,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let assert_eq_ts_d7cc4bd8 = gen_assert_eq_ts(
                 &quote! {
                     itertools::Itertools::sorted_by(
-                        read_only_ids_els_efeed554.iter().map(|el_f108da5a| {
+                        read_ids_els_efeed554.iter().map(|el_f108da5a| {
                             #ident_read_ucc {
-                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
+                                #pk_fi: #pk_as_pg_type_test_cases_path_ts read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                     &el_f108da5a.#pk_fi
                                 ),
                                 #ident_read_fields_init_without_pk_ts
@@ -4303,7 +4295,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Some(
                                     gen_pg_type_where_try_new_pk(
                                         #oprtr_or_ts,
-                                        read_only_ids_els_efeed554 #ts_ffb964de
+                                        read_ids_els_efeed554 #ts_ffb964de
                                     )
                                 )
                             ),
@@ -4323,16 +4315,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {"50198a7f"},
             );
             quote! {
-                async fn gen_read_only_ids_els_8a1ef027(
+                async fn gen_read_ids_els_8a1ef027(
                     url: &str,
                     table_9c259e1c: &str,
                     select_dflt_all_with_max_page_size: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
-                    read_only_ids_to_two_dims_vec_read_inner_acc: Vec<#ident_create_ucc>
-                ) -> Vec<#ident_read_only_ids_ucc> {
-                    let read_only_ids_els_efeed554 = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_ucc>>>(
+                    read_ids_to_two_dims_vec_read_inner_acc: Vec<#ident_create_ucc>
+                ) -> Vec<#ident_read_ids_ucc> {
+                    let read_ids_els_efeed554 = futures::StreamExt::collect::<Vec<Vec<#ident_read_ids_ucc>>>(
                         futures::StreamExt::buffer_unordered(
                             futures::stream::iter(
-                                read_only_ids_to_two_dims_vec_read_inner_acc
+                                read_ids_to_two_dims_vec_read_inner_acc
                                 .chunks(25)
                                 .map(Vec::from)
                                 .map(|el_8e425cb1| futures::FutureExt::boxed(async move { #ident::try_cm_handle(
@@ -4349,9 +4341,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .await
                     .into_iter()
                     .flatten()
-                    .collect::<Vec<#ident_read_only_ids_ucc>>();
+                    .collect::<Vec<#ident_read_ids_ucc>>();
                     #assert_eq_ts_d7cc4bd8
-                    read_only_ids_els_efeed554
+                    read_ids_els_efeed554
                 }
             }
         };
@@ -4376,10 +4368,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {itertools::Itertools::sorted(#ts).collect::<Vec<#pk_ft_as_pg_type_read_ts>>()}
         };
         let vec_pk_sorted_read_ts = gen_vec_pk_sorted_read_ts(&quote! {
-            read_only_ids_from_try_cm
+            read_ids_from_try_cm
             .into_iter()
             .map(|el_43ab7fb5| {
-                #pk_ft_read_only_ids_into_read_el_43ab7fb5_pk_fi_ts
+                #pk_ft_read_ids_into_read_el_43ab7fb5_pk_fi_ts
             })
         });
         let gen_try_dm_handle_ts = |ts: &dyn ToTokens, table_ts: &dyn ToTokens| {
@@ -4402,14 +4394,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .expect("716e470e")
             }
         };
-        let gen_read_only_ids_from_try_dm_ts = |ts: &dyn ToTokens| {
+        let gen_read_ids_from_try_dm_ts = |ts: &dyn ToTokens| {
             quote! {
-                let read_only_ids_from_try_dm = #ts;
+                let read_ids_from_try_dm = #ts;
             }
         };
-        let gen_read_only_ids_from_try_dm_sorted_pk_ts =
+        let gen_read_ids_from_try_dm_sorted_pk_ts =
             |table_ts: &dyn ToTokens, some_ts: &dyn ToTokens| {
-                gen_read_only_ids_from_try_dm_ts(&gen_vec_pk_sorted_read_ts(&{
+                gen_read_ids_from_try_dm_ts(&gen_vec_pk_sorted_read_ts(&{
                     let ts = gen_try_dm_handle_ts(
                         &quote! {
                             #pk_fi: Some(#some_ts),
@@ -4433,8 +4425,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let ts_611ddc2e = quote! {
-            gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                read_only_ids_from_try_cm.clone(),
+            gen_vec_ident_read_from_vec_ident_read_ids_with_vec_ident_create(
+                read_ids_from_try_cm.clone(),
                 ident_vec_create.clone()
             )
         };
@@ -4455,7 +4447,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     Some(
                                         gen_pg_type_where_try_new_pk(
                                             #oprtr_or_ts,
-                                            read_only_ids_from_try_cm #ts_ffb964de
+                                            read_ids_from_try_cm #ts_ffb964de
                                         )
                                     )
                                 ),
@@ -4466,7 +4458,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {"d19bbbf6"},
                     );
                     let assert_eq_ts_78d9a1bd = gen_assert_eq_ts(
-                        &quote! {read_only_ids_from_try_dm},
+                        &quote! {read_ids_from_try_dm},
                         &vec_pk_sorted_read_ts,
                         &quote! {"f58f5572"},
                     );
@@ -4483,7 +4475,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 #oprtr_or_ts,
                                                 {
                                                     let mut acc_87ea12c9 = Vec::new();
-                                                    for el_a37bca54 in &read_only_ids_from_try_dm {
+                                                    for el_a37bca54 in &read_ids_from_try_dm {
                                                         acc_87ea12c9.push(#ts);
                                                     }
                                                     acc_87ea12c9
@@ -4500,10 +4492,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                         &quote! {"4e88679a"},
                     );
-                    let ts_08a18039 = gen_read_only_ids_from_try_dm_sorted_pk_ts(
+                    let ts_08a18039 = gen_read_ids_from_try_dm_sorted_pk_ts(
                         &quote! {table_cm_cloned},
                         &quote! {
-                            gen_pg_type_where_try_new_or_pks(&read_only_ids_from_try_cm)
+                            gen_pg_type_where_try_new_or_pks(&read_ids_from_try_cm)
                         },
                     );
                     let ts_f318a803 = gen_acc_push_future_ts(
@@ -4519,7 +4511,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 }
                                 acc_92d248f7
                             };
-                            let read_only_ids_from_try_cm = #ident::try_cm_handle(
+                            let read_ids_from_try_cm = #ident::try_cm_handle(
                                 &url_cloned,
                                 #ident_cm_params_ucc {
                                     #PayloadSc: #ident_cm_payload_ucc(ident_vec_create.clone())
@@ -4550,21 +4542,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft = &el.type0;
                     let ident_create_ts_f75e4ef0 =
                         gen_ident_create_content_el_id_ts(fi, &quote! {el_7632d698});
-                    let ts = gen_v_init_ts0(
-                        &pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
-                    );
+                    let ts =
+                        gen_v_init_ts0(&pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts);
                     let ft_opt_vec_create_or_vec_ts = gen_ft_opt_vec_create_or_vec_ts(ft);
                     let assert_eq_ts_e2916686 = gen_assert_eq_ts(
                         &quote! {
                             #ident_read_ucc {
                                 #pk_fi: Some(#ts),
-                                #fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_from_try_co_ident_create_ts
+                                #fi_read_ids_and_create_into_opt_v_read_read_ids_from_try_co_ident_create_ts
                             }
                         },
                         &quote! {
                             gen_ident_try_ro_handle_pk(
                                 &url_cloned,
-                                #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
+                                #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                                 #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &table_co_cloned
                             )
@@ -4577,11 +4568,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {
                             gen_try_dlo_handle(
                                 &url_cloned,
-                                #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
+                                #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                                 &table_co_cloned
                             ).await.expect("20d5a40a")
                         },
-                        &quote! {#pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts},
+                        &quote! {#pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts},
                         &quote! {"4f563faf"},
                     );
                     let ts_eb57f4ce = gen_acc_push_future_ts(
@@ -4591,7 +4582,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ident_create = #ident_create_ucc {
                                 #ident_create_ts_f75e4ef0
                             };
-                            let read_only_ids_from_try_co = gen_read_only_ids_from_try_co(
+                            let read_ids_from_try_co = gen_read_ids_from_try_co(
                                 &url_cloned,
                                 ident_create.clone(),
                                 &table_co_cloned
@@ -4600,7 +4591,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #assert_eq_ts_f5d5140f
                             gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                                 &url_cloned,
-                                #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
+                                #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                                 select_dflt_all_with_max_page_size_cloned,
                                 &table_co_cloned,
                             ).await;
@@ -4618,19 +4609,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts =
             |ts: &dyn ToTokens| {
                 quote! {
-                    let read_only_ids_from_try_co = gen_read_only_ids_from_try_co_dflt(
+                    let read_ids_from_try_co = gen_read_ids_from_try_co_dflt(
                         &url_cloned,
                         &table_7e35b1ce
                     ).await;
                     #ts
                     let _: #pk_ft_as_pg_type_read_ts = gen_try_dlo_handle(
                         &url_cloned,
-                        #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
+                        #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                         &table_7e35b1ce
                     ).await.expect("93b4bf61");
                     gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                         &url_cloned,
-                        #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
+                        #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                         select_dflt_all_with_max_page_size_cloned,
                         &table_7e35b1ce,
                     ).await;
@@ -4681,7 +4672,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
                                                     #oprtr_or_ts,
-                                                    read_only_ids_from_try_cm #ts_ffb964de
+                                                    read_ids_from_try_cm #ts_ffb964de
                                                 )
                                             )
                                         ),
@@ -4692,7 +4683,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &quote! {"er 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"},
                             );
                             let assert_eq_ts_10f06d56 = gen_assert_eq_ts(
-                                &quote! {read_only_ids_from_try_dm},
+                                &quote! {read_ids_from_try_dm},
                                 &vec_pk_sorted_read_ts,
                                 &quote! {"ebbbea6e"},
                             );
@@ -4706,7 +4697,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 Some(
                                                     gen_pg_type_where_try_new_pk(
                                                         #oprtr_or_ts,
-                                                        read_only_ids_from_try_dm
+                                                        read_ids_from_try_dm
                                                         .iter()
                                                         .map(|el_1e9c87ce| #ts)
                                                         .collect()
@@ -4722,10 +4713,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 },
                                 &quote!{"d79c0af3"}
                             );
-                            let ts_83ae6884 = gen_read_only_ids_from_try_dm_sorted_pk_ts(
+                            let ts_83ae6884 = gen_read_ids_from_try_dm_sorted_pk_ts(
                                 &quote!{table_7e35b1ce},
                                 &quote!{
-                                    gen_pg_type_where_try_new_or_pks(&read_only_ids_from_try_cm)
+                                    gen_pg_type_where_try_new_or_pks(&read_ids_from_try_cm)
                                 }
                             );
                             quote! {
@@ -4733,7 +4724,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     ident_create_dflt_cloned.clone(),//todo mb remove
                                     el_a636d084
                                 ).collect::<Vec<#ident_create_ucc>>();
-                                let read_only_ids_from_try_cm = #ident::try_cm_handle(
+                                let read_ids_from_try_cm = #ident::try_cm_handle(
                                     &url_cloned,
                                     #ident_cm_params_ucc {
                                         payload: #ident_cm_payload_ucc(ident_vec_create.clone())
@@ -4752,14 +4743,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #ts
                 }
             });
-            let gen_read_only_ids_and_create_into_where_assert_eq_ts = |ts: &dyn ToTokens| {
+            let gen_read_ids_and_create_into_where_assert_eq_ts = |ts: &dyn ToTokens| {
                 gen_assert_eq_ts(
                     &quote! {vec![
                         #ident_read_ucc {
-                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-                                &read_only_ids_returned_from_co.#pk_fi
+                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
+                                &read_ids_returned_from_co.#pk_fi
                             ),
-                            #fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_returned_from_co_clone_ident_create_clone_ts
+                            #fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_clone_ident_create_clone_ts
                         }
                     ]},
                     &quote! {
@@ -4795,14 +4786,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ident_create_ts_013035e1 = gen_create_ts(fi);
                         let ts = gen_ts(el);
                         let assert_eq_ts_b444d33d = gen_assert_eq_ts(
-                            &quote! {read_only_ids_from_try_dm},
-                            &quote! {vec![#pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts]},
+                            &quote! {read_ids_from_try_dm},
+                            &quote! {vec![#pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts]},
                             &quote! {"9fc29fa5"},
                         );
                         let assert_ts_87ec2ac1 = gen_assert_ts(
                             &{
                                 let ts_75998fa9 = gen_pk_where_equal_into_inner_ts(
-                                    &pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts
+                                    &pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
                                 );
                                 quote! {
                                     gen_try_rm_order_by_pk_with_big_pgn(
@@ -4825,9 +4816,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote! {"38187925"},
                         );
                         let ts_490b2aa3 = gen_pk_where_equal_into_inner_ts(
-                            &pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
+                            &pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
                         );
-                        let ts_7a8c2dcc = gen_read_only_ids_from_try_dm_sorted_pk_ts(
+                        let ts_7a8c2dcc = gen_read_ids_from_try_dm_sorted_pk_ts(
                             &quote! {table_7e35b1ce},
                             &quote! {
                                 gen_pg_type_where_try_new_pk(
@@ -4843,7 +4834,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let ident_create = #ident_create_ucc {
                                     #ident_create_ts_013035e1
                                 };
-                                let read_only_ids_returned_from_co = gen_read_only_ids_from_try_co(
+                                let read_ids_returned_from_co = gen_read_ids_from_try_co(
                                     &url_cloned,
                                     ident_create.clone(),
                                     &table_7e35b1ce
@@ -4866,8 +4857,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_pg_type_where_try_new_pk(
                         #oprtr_and_ts,
                         vec![
-                            #pk_as_pg_type_test_cases_path_ts read_only_ids_and_create_into_where_equal(
-                                read_only_ids_returned_from_co.#pk_fi,
+                            #pk_as_pg_type_test_cases_path_ts read_ids_and_create_into_where_equal(
+                                read_ids_returned_from_co.#pk_fi,
                                 #PgCrudDfltOptSomeVecOneElCall
                             )
                         ]
@@ -4887,8 +4878,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 })
             };
             let (
-                read_only_ids_and_create_into_where_equal_ts,
-                read_only_ids_and_create_into_vec_where_equal_using_fields_ts,
+                read_ids_and_create_into_where_equal_ts,
+                read_ids_and_create_into_vec_where_equal_using_fields_ts,
             ) = {
                 let gen_ts =
                     |test_name: &str, equal_or_equal_using_fields: &EqualOrEqualUsingFields| {
@@ -4898,7 +4889,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &gen_ident_create_content_el_ts,
                             &|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                gen_read_only_ids_and_create_into_where_assert_eq_ts(
+                                gen_read_ids_and_create_into_where_assert_eq_ts(
                                     &gen_fields_named_with_comma_ts(&|el0: &SynFieldWrapper| {
                                         let fi0 = &el0.ident;
                                         let ft0 = &el0.type0;
@@ -4907,13 +4898,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         } else if fi0 == fi {
                                             let method_ts = {
                                                 let method_ts: &dyn ToTokens = match &equal_or_equal_using_fields {
-                                                    EqualOrEqualUsingFields::Equal => &ReadOnlyIdsAndCreateIntoWhereEqualSc,
-                                                    EqualOrEqualUsingFields::EqualUsingFields => &ReadOnlyIdsAndCreateIntoVecWhereEqualUsingFieldsSc
+                                                    EqualOrEqualUsingFields::Equal => &ReadIdsAndCreateIntoWhereEqualSc,
+                                                    EqualOrEqualUsingFields::EqualUsingFields => &ReadIdsAndCreateIntoVecWhereEqualUsingFieldsSc
                                                 };
                                                 let ts0 = gen_as_pg_type_test_cases_path_ts(&ft0);
                                                 quote! {
                                                     #ts0 #method_ts(
-                                                        read_only_ids_returned_from_co.#fi0.clone().expect("11c3740b"),
+                                                        read_ids_returned_from_co.#fi0.clone().expect("11c3740b"),
                                                         ident_create.#fi0.clone()
                                                     )
                                                 }
@@ -4943,45 +4934,43 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     };
                 (
                     gen_ts(
-                        table_read_only_ids_and_create_into_where_equal_name,
+                        table_read_ids_and_create_into_where_equal_name,
                         &EqualOrEqualUsingFields::Equal,
                     ),
                     gen_ts(
-                        table_read_only_ids_and_create_into_vec_where_equal_using_fields_name,
+                        table_read_ids_and_create_into_vec_where_equal_using_fields_name,
                         &EqualOrEqualUsingFields::EqualUsingFields,
                     ),
                 )
             };
-            let read_only_ids_and_create_into_opt_vec_where_equal_to_json_field_ts =
-                gen_read_test_ts(
-                    table_read_only_ids_and_create_into_opt_vec_where_equal_to_json_field_name,
-                    &gen_ident_ft_opt_vec_create_or_vec_ts,
-                    &gen_ident_create_content_el_ts,
-                    &|el: &SynFieldWrapper| {
-                        let fi = &el.ident;
-                        gen_if_let_some_ts(
-                            &quote! {v_d5cd3c70},
-                            &{
-                                let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                                quote! {#ft_ts #ReadOnlyIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc(
-                                    read_only_ids_returned_from_co.#fi.clone().expect("65cef584"),
-                                    ident_create.#fi.clone()
-                                )}
-                            },
-                            &{
-                                let assert_eq_ts =
-                                    gen_read_only_ids_and_create_into_where_assert_eq_ts(
-                                        &gen_ts_ccbfdac5(fi, &quote! {vec![el_48a3d976]}),
-                                    );
-                                quote! {
-                                    for el_48a3d976 in v_d5cd3c70.into_vec() {
-                                        #assert_eq_ts
-                                    }
+            let read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts = gen_read_test_ts(
+                table_read_ids_and_create_into_opt_vec_where_equal_to_json_field_name,
+                &gen_ident_ft_opt_vec_create_or_vec_ts,
+                &gen_ident_create_content_el_ts,
+                &|el: &SynFieldWrapper| {
+                    let fi = &el.ident;
+                    gen_if_let_some_ts(
+                        &quote! {v_d5cd3c70},
+                        &{
+                            let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
+                            quote! {#ft_ts #ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc(
+                                read_ids_returned_from_co.#fi.clone().expect("65cef584"),
+                                ident_create.#fi.clone()
+                            )}
+                        },
+                        &{
+                            let assert_eq_ts = gen_read_ids_and_create_into_where_assert_eq_ts(
+                                &gen_ts_ccbfdac5(fi, &quote! {vec![el_48a3d976]}),
+                            );
+                            quote! {
+                                for el_48a3d976 in v_d5cd3c70.into_vec() {
+                                    #assert_eq_ts
                                 }
-                            },
-                        )
-                    },
-                );
+                            }
+                        },
+                    )
+                },
+            );
             let create_into_pg_type_opt_vec_where_dim_one_equal_ts = gen_read_test_ts(
                 table_create_into_pg_type_opt_vec_where_dim_one_equal_name,
                 &gen_ident_ft_opt_vec_create_or_vec_ts,
@@ -4995,7 +4984,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {#ft_ts #CreateIntoPgTypeOptVecWhereDimOneEqualSc(ident_create.#fi.clone())}
                         },
                         &{
-                            let assert_eq_ts = gen_read_only_ids_and_create_into_where_assert_eq_ts(
+                            let assert_eq_ts = gen_read_ids_and_create_into_where_assert_eq_ts(
                                 &gen_ts_ccbfdac5(fi, &quote! {vec![el_39d1fb5d]}),
                             );
                             quote! {
@@ -5007,45 +4996,44 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 },
             );
-            let read_only_ids_and_table_type_into_pg_type_opt_where_greater_than_ts =
-                gen_read_test_ts(
-                    table_read_only_ids_and_table_type_into_pg_type_opt_where_greater_than_name,
-                    &|_: &Ident, ft: &Type| {
-                        quote! {
-                            <#ft as #import_ts PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
-                            .map_or_else(Vec::new, Into::into)
-                        }
-                    },
-                    &|fi: &Ident| gen_ident_create_ts(fi, &quote! {#ElSc.#CreateSc}),
-                    &|el: &SynFieldWrapper| {
-                        let fi = &el.ident;
-                        gen_if_let_some_ts(
-                            &quote! {v_60baba1f},
-                            &{
-                                let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                                quote! {#ft_ts #ReadOnlyIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc(
-                                    #ElSc.vrt,
-                                    read_only_ids_returned_from_co.#fi.clone().expect("c8d34556"),
-                                    #ElSc.greater_than,
-                                )}
-                            },
-                            &gen_read_only_ids_and_create_into_where_assert_eq_ts(
-                                &gen_ts_ccbfdac5(fi, &quote! {vec![v_60baba1f]}),
-                            ),
-                        )
-                    },
-                );
+            let read_ids_and_table_type_into_pg_type_opt_where_greater_than_ts = gen_read_test_ts(
+                table_read_ids_and_table_type_into_pg_type_opt_where_greater_than_name,
+                &|_: &Ident, ft: &Type| {
+                    quote! {
+                        <#ft as #import_ts PgTypeTestCases>::#PgTypeOptVecWhereGreaterThanTestSc()
+                        .map_or_else(Vec::new, Into::into)
+                    }
+                },
+                &|fi: &Ident| gen_ident_create_ts(fi, &quote! {#ElSc.#CreateSc}),
+                &|el: &SynFieldWrapper| {
+                    let fi = &el.ident;
+                    gen_if_let_some_ts(
+                        &quote! {v_60baba1f},
+                        &{
+                            let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
+                            quote! {#ft_ts #ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc(
+                                #ElSc.vrt,
+                                read_ids_returned_from_co.#fi.clone().expect("c8d34556"),
+                                #ElSc.greater_than,
+                            )}
+                        },
+                        &gen_read_ids_and_create_into_where_assert_eq_ts(&gen_ts_ccbfdac5(
+                            fi,
+                            &quote! {vec![v_60baba1f]},
+                        )),
+                    )
+                },
+            );
             let (
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
             ) = {
                 //todo if vec_create is empty then do different logic (for uuid). now uuid Tested using one dflt case
                 let gen_ts = |test_name: &str, dim: &Dim| {
-                    let fn_ts = dim
-                        .read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc(
-                        );
+                    let fn_ts =
+                        dim.read_ids_and_create_into_pg_json_type_opt_vec_where_dim_nbr_equal_sc();
                     gen_read_test_ts(
                         test_name,
                         &gen_fi_ft_opt_vec_create_filter_not_empty_or_vec_fi_dflt_ts,
@@ -5057,12 +5045,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_if_let_some_ts(
                                 &quote! {v_bb67b871},
                                 &quote! {#ft_ts #fn_ts(
-                                    read_only_ids_returned_from_co.#fi.clone().expect("2ed000a5"),
+                                    read_ids_returned_from_co.#fi.clone().expect("2ed000a5"),
                                     ident_create.#fi.clone()
                                 )},
                                 &{
                                     let assert_eq_ts =
-                                        gen_read_only_ids_and_create_into_where_assert_eq_ts(
+                                        gen_read_ids_and_create_into_where_assert_eq_ts(
                                             &gen_ts_ccbfdac5(fi, &quote! {vec![el_3efa0bb4]}),
                                         );
                                     quote! {
@@ -5076,10 +5064,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 };
                 (
-                    gen_ts(table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_name, &Dim::One),
-                    gen_ts(table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_name, &Dim::Two),
-                    gen_ts(table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_name, &Dim::Three),
-                    gen_ts(table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_name, &Dim::Four),
+                    gen_ts(table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_name, &Dim::One),
+                    gen_ts(table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_name, &Dim::Two),
+                    gen_ts(table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_name, &Dim::Three),
+                    gen_ts(table_read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_name, &Dim::Four),
                 )
             };
             let create_into_pg_json_type_opt_vec_where_length_equal_ts = gen_read_test_ts(
@@ -5097,7 +5085,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             )}
                         },
                         &{
-                            let assert_eq_ts = gen_read_only_ids_and_create_into_where_assert_eq_ts(
+                            let assert_eq_ts = gen_read_ids_and_create_into_where_assert_eq_ts(
                                 &gen_ts_ccbfdac5(fi, &quote! {vec![el_c09ef321]}),
                             );
                             quote! {
@@ -5124,7 +5112,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             )}
                         },
                         &{
-                            let assert_eq_ts = gen_read_only_ids_and_create_into_where_assert_eq_ts(
+                            let assert_eq_ts = gen_read_ids_and_create_into_where_assert_eq_ts(
                                 &gen_ts_ccbfdac5(fi, &quote! {vec![el_527b546b]}),
                             );
                             quote! {
@@ -5137,12 +5125,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             );
             let (
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_between_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_in_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
+                read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
             ) = {
                 let gen_ts = |table_name: &str, method_ts: &dyn ToTokens| {
                     gen_read_test_ts(
@@ -5156,12 +5144,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &{
                                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                                     quote! {#ft_ts #method_ts(
-                                        read_only_ids_returned_from_co.#fi.clone().expect("df01c8ac"),
+                                        read_ids_returned_from_co.#fi.clone().expect("df01c8ac"),
                                         ident_create.#fi.clone()
                                     )}
                                 },
                                 &{
-                                    let ts = gen_read_only_ids_and_create_into_where_assert_eq_ts(
+                                    let ts = gen_read_ids_and_create_into_where_assert_eq_ts(
                                         &gen_ts_ccbfdac5(
                                             fi,
                                             &quote! {match el_feacc53b {
@@ -5182,51 +5170,51 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 (
                     gen_ts(
-                        table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_name,
-                        &ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereGreaterThanSc
+                        table_read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_name,
+                        &ReadIdsAndCreateIntoPgJsonTypeOptVecWhereGreaterThanSc
                     ),
                     gen_ts(
-                        table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_name,
-                        &ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereBetweenSc
+                        table_read_ids_and_create_into_pg_json_type_opt_vec_where_between_name,
+                        &ReadIdsAndCreateIntoPgJsonTypeOptVecWhereBetweenSc
                     ),
                     gen_ts(
-                        table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_name,
-                        &ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereInSc
+                        table_read_ids_and_create_into_pg_json_type_opt_vec_where_in_name,
+                        &ReadIdsAndCreateIntoPgJsonTypeOptVecWhereInSc
                     ),
                     gen_ts(
-                        table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_name,
-                        &ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereRegexSc
+                        table_read_ids_and_create_into_pg_json_type_opt_vec_where_regex_name,
+                        &ReadIdsAndCreateIntoPgJsonTypeOptVecWhereRegexSc
                     ),
                     gen_ts(
-                        table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
-                        &ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
+                        table_read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_name,
+                        &ReadIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc
                     ),
                     gen_ts(
-                        table_read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
-                        &ReadOnlyIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
+                        table_read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_name,
+                        &ReadIdsAndCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc
                     )
                 )
             };
             quote! {
                 #test_rm_by_non_existent_pks_ts
                 #test_rm_by_equal_to_created_pks_ts
-                #read_only_ids_and_create_into_where_equal_ts
-                #read_only_ids_and_create_into_vec_where_equal_using_fields_ts
-                #read_only_ids_and_create_into_opt_vec_where_equal_to_json_field_ts
+                #read_ids_and_create_into_where_equal_ts
+                #read_ids_and_create_into_vec_where_equal_using_fields_ts
+                #read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts
                 #create_into_pg_type_opt_vec_where_dim_one_equal_ts
-                #read_only_ids_and_table_type_into_pg_type_opt_where_greater_than_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
+                #read_ids_and_table_type_into_pg_type_opt_where_greater_than_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts
                 #create_into_pg_json_type_opt_vec_where_length_equal_ts
                 #create_into_pg_json_type_opt_vec_where_length_greater_than_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_between_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_in_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts
-                #read_only_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_between_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_in_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts
+                #read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts
             }
         };
         let ro_tests_ts = quote! {
@@ -5245,8 +5233,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         };
         let gen_ident_read_init_ts = |ts: &dyn ToTokens| {
-            let ts0 =
-                gen_v_init_ts0(&pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3);
+            let ts0 = gen_v_init_ts0(&pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3);
             quote! {#ident_read_ucc {
                 #pk_fi: Some(#ts0),
                 #ts
@@ -5259,8 +5246,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let update = #ts read_inner_into_update_with_new_or_try_new_unwraped({
                         let mut i_e0d2f9db: usize = 0;
                         let mut opt_test_case = None;
-                        for el_3a9a65ee in #ft_ts read_only_ids_to_two_dims_vec_read_inner(
-                            &read_only_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
+                        for el_3a9a65ee in #ft_ts read_ids_to_two_dims_vec_read_inner(
+                            &read_ids_el_937c5af3.#fi.clone().expect("c4d98a71")
                         ) {
                             let mut should_break = false;
                             for el_bb734c11 in el_3a9a65ee {
@@ -5289,7 +5276,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let is_fields_without_pk_len_greater_than_one = fields_without_pk.len() > 1;
                     let mb_previous_read_ts = if is_fields_without_pk_len_greater_than_one {
                         let ts = gen_pk_where_equal_into_inner_ts(
-                            &pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
+                            &pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
                         );
                         quote! {
                             let previous_read = itertools::Itertools::sorted_by(
@@ -5320,16 +5307,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     } else {
                         Ts2::new()
                     };
-                    let fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc =
-                        SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
-                    let ident_read_only_ids_upper_fields_init_without_pk_ts =
+                    let fi_read_ids_to_two_dims_vec_read_inner_acc_sc =
+                        SelfReadIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
+                    let ident_read_ids_upper_fields_init_without_pk_ts =
                         gen_fields_named_without_pk_with_comma_ts(
                             &|syn_field_wrapper: &SynFieldWrapper| {
                                 let fi0 = &syn_field_wrapper.ident;
                                 let ft0 = &syn_field_wrapper.type0;
                                 let ts = if fi == fi0 {
                                     let ts0 = gen_as_pg_type_test_cases_path_ts(&ft0);
-                                    quote! {Some(#ts0 update_to_read_only_ids(&update))}
+                                    quote! {Some(#ts0 update_to_read_ids(&update))}
                                 } else {
                                     quote! {None}
                                 };
@@ -5359,8 +5346,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         );
                                         quote! {
                                             #ts1 previous_read_and_opt_update_into_read(
-                                                #ts1 read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-                                                    &read_only_ids_el_937c5af3.#fi0.clone().expect("96213542")
+                                                #ts1 read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
+                                                    &read_ids_el_937c5af3.#fi0.clone().expect("96213542")
                                                 ).expect("bf0d6f55").#VSc,
                                                 Some(#UpdateSc.clone())
                                             )
@@ -5386,9 +5373,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_read_inner_into_update_ts(&fi, &ft, &ft_ts, &quote! {i_7f181188});
                     let assert_eq_ts_b61aac03 = gen_assert_eq_ts(
                         &quote! {vec![
-                            #ident_read_only_ids_ucc {
-                                #pk_fi: read_only_ids_el_937c5af3.#pk_fi,
-                                #ident_read_only_ids_upper_fields_init_without_pk_ts
+                            #ident_read_ids_ucc {
+                                #pk_fi: read_ids_el_937c5af3.#pk_fi,
+                                #ident_read_ids_upper_fields_init_without_pk_ts
                             }
                         ]},
                         &quote! {
@@ -5397,7 +5384,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #ident_um_params_ucc {
                                     payload: #ident_um_payload_ucc::try_new(vec![
                                         #ident_update_ucc::try_new(
-                                            #pk_ft_as_pg_type_update_as_pg_type_pk_read_only_ids_into_update_ts,
+                                            #pk_ft_as_pg_type_update_as_pg_type_pk_read_ids_into_update_ts,
                                             #ident_update_params_init_without_pk_ts
                                         ).expect("42dc87b3")
                                     ]).expect("69e1bd8a")
@@ -5411,7 +5398,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {{#expected_rm_ts}},
                         &{
                             let ts = gen_pk_where_equal_into_inner_ts(
-                                &pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
+                                &pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
                             );
                             quote! {
                                 itertools::Itertools::sorted_by(
@@ -5451,11 +5438,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                     );
                     quote! {
-                        for (i_7f181188, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
+                        for (i_7f181188, read_ids_el_937c5af3) in gen_read_ids_els_8a1ef027(
                             &url,
                             &table_um,
                             #select_dflt_all_with_max_page_size_clone_ts,
-                            #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc.clone()
+                            #fi_read_ids_to_two_dims_vec_read_inner_acc_sc.clone()
                         ).await.into_iter().enumerate() {
                             #ts_2a6601e1
                         }
@@ -5474,7 +5461,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {
                             let previous_read = gen_ident_try_ro_handle_pk(
                                 &url_cloned,
-                                #pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
+                                #pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
                                 #select_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &table_uo_cloned
                             )
@@ -5483,14 +5470,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     } else {
                         Ts2::new()
                     };
-                    let fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc =
-                        SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
-                    let ident_read_only_ids_upper_fields_init_without_pk_ts =
+                    let fi_read_ids_to_two_dims_vec_read_inner_acc_sc =
+                        SelfReadIdsToTwoDimsVecReadInnerAccSc::from_tokens(&fi);
+                    let ident_read_ids_upper_fields_init_without_pk_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el0: &SynFieldWrapper| {
                             let fi0 = &el0.ident;
                             let ts = if fi == fi0 {
                                 let ts0 = gen_as_pg_type_test_cases_path_ts(&el0.type0);
-                                quote! {Some(#ts0 update_to_read_only_ids(&update))}
+                                quote! {Some(#ts0 update_to_read_ids(&update))}
                             } else {
                                 quote! {None}
                             };
@@ -5514,8 +5501,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     let ts0 = gen_as_pg_type_test_cases_path_ts(&el0.type0);
                                     quote! {
                                         #ts0 previous_read_and_opt_update_into_read(
-                                            #ts0 read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-                                                &read_only_ids_el_937c5af3.#fi0.clone().expect("4f19d0d2")
+                                            #ts0 read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
+                                                &read_ids_el_937c5af3.#fi0.clone().expect("4f19d0d2")
                                             ).expect("c7685b19").#VSc,
                                             Some(#UpdateSc.clone())
                                         )
@@ -5530,16 +5517,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ts_a903994d =
                         gen_read_inner_into_update_ts(&fi, &ft, &ft_ts, &quote! {i_26824592});
                     let assert_eq_ts_0ba29fe7 = gen_assert_eq_ts(
-                        &quote! {#ident_read_only_ids_ucc {
-                            #pk_fi: read_only_ids_el_937c5af3.#pk_fi,
-                            #ident_read_only_ids_upper_fields_init_without_pk_ts
+                        &quote! {#ident_read_ids_ucc {
+                            #pk_fi: read_ids_el_937c5af3.#pk_fi,
+                            #ident_read_ids_upper_fields_init_without_pk_ts
                         }},
                         &quote! {
                             #ident::try_uo_handle(
                                 &url_cloned,
                                 #ident_uo_params_ucc {
                                     payload: #ident_update_ucc::try_new(
-                                        #pk_ft_as_pg_type_update_as_pg_type_pk_read_only_ids_into_update_ts,
+                                        #pk_ft_as_pg_type_update_as_pg_type_pk_read_ids_into_update_ts,
                                         #ident_update_params_init_without_pk_ts
                                     ).expect("0e5d65a5")//todo add column ident
                                 },
@@ -5553,7 +5540,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {
                             gen_ident_try_ro_handle_pk(
                                 &url_cloned,
-                                #pk_ft_read_only_is_into_read_read_only_ids_el_pk_fi_ts_937c5af3,
+                                #pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
                                 select_dflt_all_with_max_page_size_cloned,
                                 &table_uo_cloned
                             )
@@ -5572,11 +5559,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         },
                     );
                     quote! {
-                        for (i_26824592, read_only_ids_el_937c5af3) in gen_read_only_ids_els_8a1ef027(
+                        for (i_26824592, read_ids_el_937c5af3) in gen_read_ids_els_8a1ef027(
                             &url,
                             &table_uo,
                             #select_dflt_all_with_max_page_size_clone_ts,
-                            #fi_read_only_ids_to_two_dims_vec_read_inner_acc_sc
+                            #fi_read_ids_to_two_dims_vec_read_inner_acc_sc
                         ).await.into_iter().enumerate() {
                             #ts_fedea8c3
                         }
@@ -5618,16 +5605,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_equal_to_created_pks},//todo is table name correct?
                     &add_co_dflt_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                        let pk_ft_read_only_ids_into_table_type_el_pk_fi_clone_ts =
+                        let pk_ft_read_ids_into_table_type_el_pk_fi_clone_ts =
                             gen_pk_ft_as_pg_type_pk_method_call_ts(
-                                &ReadOnlyIdsIntoTableTypeSc,
+                                &ReadIdsIntoTableTypeSc,
                                 &quote! {el_3bb88958.#pk_fi},
                             );
                         let assert_eq_ts_ea7edbc4 = gen_assert_eq_ts(
-                            &quote!{read_only_ids_from_try_dm},
+                            &quote!{read_ids_from_try_dm},
                             &quote!{{
-                                read_only_ids_from_try_cm.iter().map(|el_ba0f6b1c|
-                                    #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
+                                read_ids_from_try_cm.iter().map(|el_ba0f6b1c|
+                                    #pk_as_pg_type_test_cases_path_ts read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
                                         &el_ba0f6b1c.#pk_fi
                                     ).expect("3ee5ee86").#VSc
                                 ).collect::<Vec<#pk_ft_as_pg_type_read_ts>>()
@@ -5644,7 +5631,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
                                                     #oprtr_or_ts,
-                                                    read_only_ids_from_try_dm.into_iter().map(|el_adcc8db3| #ts).collect()
+                                                    read_ids_from_try_dm.into_iter().map(|el_adcc8db3| #ts).collect()
                                                 )
                                             )
                                         ),
@@ -5657,13 +5644,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &quote!{"77f038b0"}
                         );
-                        let ts_212f8aca = gen_pk_where_equal_ts(&pk_ft_read_only_ids_into_table_type_el_pk_fi_clone_ts);
-                        let ts_6f76ccd4 = gen_read_only_ids_from_try_dm_ts(&gen_try_dm_handle_ts(
+                        let ts_212f8aca = gen_pk_where_equal_ts(&pk_ft_read_ids_into_table_type_el_pk_fi_clone_ts);
+                        let ts_6f76ccd4 = gen_read_ids_from_try_dm_ts(&gen_try_dm_handle_ts(
                             &quote!{
                                 #pk_fi: Some(
                                     gen_pg_type_where_try_new_pk(
                                         #oprtr_or_ts,
-                                        read_only_ids_from_try_cm.iter().map(|el_3bb88958| #ts_212f8aca).collect()
+                                        read_ids_from_try_cm.iter().map(|el_3bb88958| #ts_212f8aca).collect()
                                     )
                                 ),
                                 #fields_none_init_ts
@@ -5671,7 +5658,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{table_7e35b1ce}
                         ));
                         quote! {
-                            let read_only_ids_from_try_cm = #ident::try_cm_handle(
+                            let read_ids_from_try_cm = #ident::try_cm_handle(
                                 &url_cloned,
                                 #ident_cm_params_ucc {
                                     payload: #ident_cm_payload_ucc(
@@ -5697,18 +5684,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let dlo_tests_ts = {
-            let ts = gen_v_init_ts0(
-                &pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
-            );
+            let ts = gen_v_init_ts0(&pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts);
             let assert_eq_ts_6322435c = gen_assert_eq_ts(
                 &quote! {#ident_read_ucc {
                     #pk_fi: Some(#ts),
-                    #fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_returned_from_co_create_ts
+                    #fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_create_ts
                 }},
                 &quote! {
                     gen_ident_try_ro_handle_pk(
                         &url,
-                        #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
+                        #pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
                         #select_dflt_all_with_max_page_size_cloned_clone_ts,
                         &table_dlo_cloned
                     )
@@ -5720,11 +5705,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {
                     gen_try_dlo_handle(
                         &url,
-                        #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
+                        #pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
                         &table_dlo_cloned
                     ).await.expect("7e1d1a70")
                 },
-                &quote! {#pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts},
+                &quote! {#pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts},
                 &quote! {"99f81971"},
             );
             let assert_ts_9c8cb81a = gen_assert_ts(
@@ -5759,12 +5744,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         } else {
                             panic!("9be62f9f")
                         }
-                        let read_only_ids_returned_from_co = gen_read_only_ids_from_try_co_dflt(&url, &table_dlo_cloned).await;
+                        let read_ids_returned_from_co = gen_read_ids_from_try_co_dflt(&url, &table_dlo_cloned).await;
                         #assert_eq_ts_6322435c
                         #assert_eq_ts_8812d778
                         gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                             &url,
-                            #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
+                            #pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
                             #select_dflt_all_with_max_page_size_cloned_clone_ts,
                             &table_dlo_cloned,
                         ).await;
@@ -5774,7 +5759,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let assert_ts_48ca54b1 = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
         let ts_e698d734 = gen_pk_where_equal_into_inner_ts(&quote! {
-            #pk_ft_as_pg_type_pk_ts read_only_ids_into_read(el_9530b728.#pk_fi)
+            #pk_ft_as_pg_type_pk_ts read_ids_into_read(el_9530b728.#pk_fi)
         });
         let size_of_ts = {
             let ts = gen_assert_eq_ts(
@@ -5810,11 +5795,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let gen_pg_type_where_try_new_or_pks_fn_ts = quote! {
             fn gen_pg_type_where_try_new_or_pks(
-                vec_read_only_ids: &[#ident_read_only_ids_ucc]
+                vec_read_ids: &[#ident_read_ids_ucc]
             ) -> #import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts> {
                 gen_pg_type_where_try_new_pk(
                     #oprtr_or_ts,
-                    vec_read_only_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
+                    vec_read_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
                 )
             }
         };
@@ -5910,12 +5895,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let gen_read_only_ids_from_try_co_fn_ts = quote! {
-            async fn gen_read_only_ids_from_try_co(
+        let gen_read_ids_from_try_co_fn_ts = quote! {
+            async fn gen_read_ids_from_try_co(
                 #UrlSc: &str,
                 #PayloadSc: #ident_create_ucc,
                 table: &str,
-            ) -> #ident_read_only_ids_ucc {
+            ) -> #ident_read_ids_ucc {
                 #ident::try_co_handle(
                     #UrlSc,
                     #ident_co_params_ucc {
@@ -5925,12 +5910,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ).await.expect("32e30b87")
             }
         };
-        let gen_read_only_ids_from_try_co_dflt_fn_ts = quote! {
-            async fn gen_read_only_ids_from_try_co_dflt(
+        let gen_read_ids_from_try_co_dflt_fn_ts = quote! {
+            async fn gen_read_ids_from_try_co_dflt(
                 #UrlSc: &str,
                 table: &str,
-            ) -> #ident_read_only_ids_ucc {
-                gen_read_only_ids_from_try_co(
+            ) -> #ident_read_ids_ucc {
+                gen_read_ids_from_try_co(
                     #UrlSc,
                     ident_create_dflt(),
                     table
@@ -5959,25 +5944,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 "no rows returned by a query that expected to return at least one row"
             }
         };
-        let gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts = {
+        let gen_vec_ident_read_from_vec_ident_read_ids_with_vec_ident_create_fn_ts = {
             let ts = gen_assert_eq_ts(
-                &quote! {read_only_ids_from_try_cm.len()},
+                &quote! {read_ids_from_try_cm.len()},
                 &quote! {ident_vec_create.len()},
                 &quote! {"88fb286c"},
             );
             quote! {
-                fn gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
-                    read_only_ids_from_try_cm: Vec<#ident_read_only_ids_ucc>,
+                fn gen_vec_ident_read_from_vec_ident_read_ids_with_vec_ident_create(
+                    read_ids_from_try_cm: Vec<#ident_read_ids_ucc>,
                     ident_vec_create: Vec<#ident_create_ucc>
                 ) -> Vec<#ident_read_ucc> {
                     let mut acc_1debe8fb = Vec::new();
                     #ts
-                    for (read_only_ids, create) in read_only_ids_from_try_cm.into_iter().zip(ident_vec_create) {
+                    for (read_ids, create) in read_ids_from_try_cm.into_iter().zip(ident_vec_create) {
                         acc_1debe8fb.push(#ident_read_ucc {
-                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_only_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-                                &read_only_ids.#pk_fi
+                            #pk_fi: #pk_as_pg_type_test_cases_path_ts read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
+                                &read_ids.#pk_fi
                             ),
-                            #fi_read_only_ids_and_create_into_opt_v_read_read_only_ids_and_create_ts
+                            #fi_read_ids_and_create_into_opt_v_read_read_ids_and_create_ts
                         });
                     }
                     acc_1debe8fb.sort_by(|first, second| {
@@ -6005,12 +5990,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #gen_ident_try_ro_handle_pk_fn_ts
                     #gen_check_no_rows_returned_from_ident_try_ro_handle_pk_fn_ts
                     #ident_create_dflt_fn_ts
-                    #gen_read_only_ids_from_try_co_fn_ts
-                    #gen_read_only_ids_from_try_co_dflt_fn_ts
+                    #gen_read_ids_from_try_co_fn_ts
+                    #gen_read_ids_from_try_co_dflt_fn_ts
                     #gen_try_dlo_handle_fn_ts
                     #no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
-                    #gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts
-                    #gen_read_only_ids_els_ts_fe29ff70
+                    #gen_vec_ident_read_from_vec_ident_read_ids_with_vec_ident_create_fn_ts
+                    #gen_read_ids_els_ts_fe29ff70
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21").block_on(async {
                         //todo mb refactor
@@ -6129,8 +6114,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .expect("0776170e");
                         let #IdentCreateDfltSc = ident_create_dflt();
                         #select_dflt_all_with_max_page_size_not_empty_unique_vec_ts
-                        #common_read_only_ids_returned_from_co_ts
-                        #read_only_ids_to_two_dims_vec_read_inner_acc_fields_ts
+                        #common_read_ids_returned_from_co_ts
+                        #read_ids_to_two_dims_vec_read_inner_acc_fields_ts
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
                                 let mut acc_9189f86e: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();
@@ -6167,7 +6152,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         #opt_ident_where_many_ts
         #select_ts
         #ident_read_ts
-        #ident_read_only_ids_ts
+        #ident_read_ids_ts
         // #ident_column_read_permission_ts
         #ident_update_ts
         #ident_update_for_query_ts

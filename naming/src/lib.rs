@@ -691,20 +691,20 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["update", "qp", "pg", "json", "type"],
     ["update", "qb", "pg", "type"],
     ["update", "qb", "pg", "json", "type"],
-    ["read", "only", "ids"],
+    ["read", "ids"],
     ["select", "only", "ids", "qp"],
-    ["read", "only", "ids", "returned", "from", "co"],
-    ["some", "v", "read", "only", "ids", "returned", "from", "co"],
+    ["read", "ids", "returned", "from", "co"],
+    ["some", "v", "read", "ids", "returned", "from", "co"],
     ["select", "only", "updated", "ids", "qp"],
     ["create", "update", "delete", "are", "empty"],
     ["uo", "params"],
-    ["update", "to", "read", "only", "ids"],
-    ["self", "read", "only", "ids", "handle"],
-    ["read", "only", "ids", "returned", "from", "cm"],
-    ["common", "read", "only", "ids", "returned", "from", "co"],
+    ["update", "to", "read", "ids"],
+    ["self", "read", "ids", "handle"],
+    ["read", "ids", "returned", "from", "cm"],
+    ["common", "read", "ids", "returned", "from", "co"],
     ["gen", "pg", "table", "pk"],
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
-    ["read", "only", "ids", "to", "opt", "v", "read", "inner"],
+    ["read", "ids", "to", "opt", "v", "read", "inner"],
     ["try", "bind"],
     ["select", "only", "updated", "ids", "qb"],
     ["create", "for", "query"],
@@ -712,7 +712,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "update", "new", "or", "try", "new", "unwraped", "for", "test"
     ],
     [
-        "read", "only", "ids", "to", "opt", "v", "read", "dflt", "opt", "some", "vec", "one", "el"
+        "read", "ids", "to", "opt", "v", "read", "dflt", "opt", "some", "vec", "one", "el"
     ],
     [
         "read", "from", "previous", "read", "unwraped", "and", "update"
@@ -724,9 +724,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["update", "for", "query", "vec"],
     ["read", "inner", "vec", "vec"],
     ["create", "vec"],
-    [
-        "read", "only", "ids", "and", "create", "into", "opt", "v", "read"
-    ],
+    ["read", "ids", "and", "create", "into", "opt", "v", "read"],
     [
         "dflt", "opt", "some", "vec", "one", "el", "max", "page", "size"
     ],
@@ -737,13 +735,9 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "pk"],
     ["pg", "type", "read"],
     ["pg", "type", "not", "pk"],
-    [
-        "read", "only", "ids", "and", "create", "into", "where", "equal"
-    ],
-    ["read", "only", "ids", "and", "create", "into", "read"],
-    [
-        "read", "only", "ids", "and", "create", "into", "table", "type"
-    ],
+    ["read", "ids", "and", "create", "into", "where", "equal"],
+    ["read", "ids", "and", "create", "into", "read"],
+    ["read", "ids", "and", "create", "into", "table", "type"],
     [
         "read", "inner", "into", "read", "with", "new", "or", "try", "new", "unwraped"
     ],
@@ -751,59 +745,56 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "inner", "into", "update", "with", "new", "or", "try", "new", "unwraped"
     ],
     [
-        "read", "only", "ids", "to", "two", "dims", "vec", "of", "read", "inner"
+        "read", "ids", "to", "two", "dims", "vec", "of", "read", "inner"
     ],
-    ["read", "only", "ids", "into", "opt", "v", "read", "inner"],
+    ["read", "ids", "into", "opt", "v", "read", "inner"],
     ["previous", "read", "and", "opt", "update", "into", "read"],
     [
-        "read", "only", "ids", "and", "create", "into", "vec", "where", "equal", "using", "fields"
+        "read", "ids", "and", "create", "into", "vec", "where", "equal", "using", "fields"
     ],
     ["equal", "oprtr"],
     ["pg", "type", "equal", "oprtr"],
-    ["read", "only", "ids", "into", "table", "type"],
-    ["read", "only", "ids", "into", "read"],
-    ["read", "only", "ids", "into", "update"],
+    ["read", "ids", "into", "table", "type"],
+    ["read", "ids", "into", "read"],
+    ["read", "ids", "into", "update"],
     ["read", "into", "table", "type"],
     [
-        "read", "only", "ids", "and", "create", "into", "where", "equal", "to", "json", "field"
+        "read", "ids", "and", "create", "into", "where", "equal", "to", "json", "field"
     ],
     ["opt", "vec", "create"],
+    ["read", "ids", "to", "two", "dims", "vec", "read", "inner"],
     [
-        "read", "only", "ids", "to", "two", "dims", "vec", "read", "inner"
-    ],
-    [
-        "read", "only", "ids", "and", "create", "into", "opt", "vec", "where", "equal", "to",
-        "json", "field"
-    ],
-    [
-        "read", "only", "ids", "and", "create", "into", "vec", "where", "equal", "to", "json",
+        "read", "ids", "and", "create", "into", "opt", "vec", "where", "equal", "to", "json",
         "field"
+    ],
+    [
+        "read", "ids", "and", "create", "into", "vec", "where", "equal", "to", "json", "field"
     ],
     [
         "create", "into", "pg", "type", "opt", "vec", "where", "dim", "one", "equal"
     ],
     [
-        "read", "only", "ids", "and", "table", "type", "into", "pg", "type", "opt", "where",
-        "greater", "than"
+        "read", "ids", "and", "table", "type", "into", "pg", "type", "opt", "where", "greater",
+        "than"
     ],
     [
         "pg", "type", "opt", "vec", "where", "greater", "than", "test"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "dim", "one", "equal"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where", "dim",
+        "one", "equal"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "dim", "two", "equal"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where", "dim",
+        "two", "equal"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "dim", "three", "equal"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where", "dim",
+        "three", "equal"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "dim", "four", "equal"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where", "dim",
+        "four", "equal"
     ],
     ["prep", "extensions"],
     ["prep", "pg", "table", "and", "extensions"],
@@ -818,28 +809,27 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["from", "handle"],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "greater", "than"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where",
+        "greater", "than"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "between"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where",
+        "between"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "in"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where", "in"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "regex"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where",
+        "regex"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "contains", "el", "greater", "than"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where",
+        "contains", "el", "greater", "than"
     ],
     [
-        "read", "only", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec",
-        "where", "contains", "el", "regex"
+        "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where",
+        "contains", "el", "regex"
     ],
     ["executor", "acquire"],
     ["gen", "pg", "json", "types", "mod"],
