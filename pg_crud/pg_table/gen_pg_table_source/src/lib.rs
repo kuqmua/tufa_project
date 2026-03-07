@@ -611,6 +611,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let mut impl_ident_vec_ts = Vec::new();
     let mut operation_routes_ts = Vec::new();
+    let mut params_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
         let ts = quote! {
@@ -2503,59 +2504,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .parse::<Ts2>()
             .expect("c1203fc6")
     };
-    let gen_params_pattern_ts = |operation: &Operation, payload_ts: Ts2| -> Ts2 {
-        let params_ts = {
-            let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
-            let ts_0d032fce = StructOrEnumDeriveTsStreamBuilder::new()
-                .make_pub()
-                .derive_debug()
-                .derive_clone_if(derive_clone)
-                .derive_copy_if(derive_copy)
-                .build_struct(&gen_ident_operation_params_ucc(operation), &Ts2::new(), &{
-                    let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-                    quote! {{
-                        pub #PayloadSc: #ident_operation_payload_ucc,
-                    }}
-                });
-            quote! {
-                #AllowClippyArbitrarySourceItemOrdering
-                #ts_0d032fce
-            }
-        };
-        quote! {
-            #payload_ts
-            #params_ts
-        }
-    };
-    let gen_params_payload_and_default_ts =
-        |operation: &Operation, decl_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
-            let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
-            let ident_operation_payload_ts = {
-                let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
-                let ts_ec5b096c = StructOrEnumDeriveTsStreamBuilder::new()
-                    .make_pub()
-                    .derive_debug()
-                    .derive_clone_if(derive_clone)
-                    .derive_copy_if(derive_copy)
-                    .derive_serde_serialize()
-                    .derive_serde_deserialize()
-                    .derive_utoipa_to_schema()
-                    .build_struct(&ident_operation_payload_ucc, &Ts2::new(), &decl_ts);
-                quote! {
-                    #AllowClippyArbitrarySourceItemOrdering
-                    #ts_ec5b096c
-                }
-            };
-            let impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts =
-                gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
-                    &ident_operation_payload_ucc,
-                    &quote! {Self #default_init_ts},
-                );
-            quote! {
-                #ident_operation_payload_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
-            }
-        };
     let gen_type_vrts_from_req_res_syn_vrts =
         |syn_vrts: &Vec<&Variant>, operation: &Operation| -> Vec<Variant> {
             let mut type_vrts_from_req_res_syn_vrts = Vec::new();
@@ -3438,23 +3386,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        // let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
-        //     &{
-        //         let mut acc = common_route_syn_vrts.clone();
-        //         if let Operation::ReadMany | Operation::ReadOne = &operation {
-        //             acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
-        //         }
-        //         if let Operation::CreateMany | Operation::ReadMany | Operation::ReadOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
-        //             acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
-        //         }
-        //         if let Operation::CreateMany | Operation::DeleteOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
-        //             acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
-        //         }
-        //         acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
-        //         acc
-        //     },
-        //     operation
-        // );
         operation_routes_ts.push({
             let method_ts = match &operation {
                 Operation::CreateMany |
@@ -3522,6 +3453,294 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::#operation_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
             }
             #operation_payload_example_ts
+        });
+        // let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
+        //     &{
+        //         let mut acc = common_route_syn_vrts.clone();
+        //         if let Operation::ReadMany | Operation::ReadOne = &operation {
+        //             acc.push(not_unique_field_syn_vrt_wrapper.get_syn_vrt());
+        //         }
+        //         if let Operation::CreateMany | Operation::ReadMany | Operation::ReadOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
+        //             acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
+        //         }
+        //         if let Operation::CreateMany | Operation::DeleteOne | Operation::CreateOne | Operation::UpdateMany | Operation::UpdateOne | Operation::DeleteMany = &operation {
+        //             acc.push(row_and_rollback_syn_vrt_wrapper.get_syn_vrt());
+        //         }
+        //         acc.push(try_bind_syn_vrt_wrapper.get_syn_vrt());
+        //         acc
+        //     },
+        //     operation
+        // );
+        params_ts.push({
+            let payload_ts = {
+                let gen_params_payload_and_default_ts =
+                    |decl_ts: &dyn ToTokens, default_init_ts: &dyn ToTokens| {
+                        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+                        let ident_operation_payload_ts = {
+                            let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
+                            let ts_ec5b096c = StructOrEnumDeriveTsStreamBuilder::new()
+                                .make_pub()
+                                .derive_debug()
+                                .derive_clone_if(derive_clone)
+                                .derive_copy_if(derive_copy)
+                                .derive_serde_serialize()
+                                .derive_serde_deserialize()
+                                .derive_utoipa_to_schema()
+                                .build_struct(&ident_operation_payload_ucc, &Ts2::new(), &decl_ts);
+                            quote! {
+                                #AllowClippyArbitrarySourceItemOrdering
+                                #ts_ec5b096c
+                            }
+                        };
+                        let impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts =
+                            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+                                &ident_operation_payload_ucc,
+                                &quote! {Self #default_init_ts},
+                            );
+                        quote! {
+                            #ident_operation_payload_ts
+                            #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
+                        }
+                    };
+                match &operation {
+                    Operation::CreateMany => gen_params_payload_and_default_ts(
+                        &{
+                            let vec_ident_create_ts = gen_vec_tokens_decl_ts(&ident_create_ucc);
+                            quote! {(pub #vec_ident_create_ts);}
+                        },
+                        &quote! {(vec![#PgCrudDefaultOptSomeVecOneElCall])},
+                    ),
+                    Operation::ReadMany => gen_params_payload_and_default_ts(
+                        &quote! {{
+                            #pub_where_many_opt_ident_where_many_ts,
+                            #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
+                            pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
+                            pub #PaginationSc: #import_ts PaginationStartsWithZero,
+                        }},
+                        &{
+                            let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&PaginationSc);
+                            quote! {{
+                                #where_many_pg_crud_default_opt_some_vec_one_el_call_ts,
+                                #select_pg_crud_default_opt_some_vec_one_el_call_ts,
+                                #OrderBySc: #import_ts OrderBy {
+                                    #ColumnSc: #ident_select_ucc::#pk_fi_ucc_ts(
+                                        #PgCrudDefaultOptSomeVecOneElCall
+                                    ),
+                                    #OrderSc: Some(
+                                        #PgCrudDefaultOptSomeVecOneElCall
+                                    ),
+                                },
+                                #ts,
+                            }}
+                        },
+                    ),
+                    Operation::ReadOne => gen_params_payload_and_default_ts(
+                        &{
+                            let pub_handle_pk_fi_pk_inner_type_handle_ts =
+                                gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
+                                    &SelfReadUcc::from_type_last_segment(pk_ft),
+                                );
+                            quote! {{
+                                #pub_handle_pk_fi_pk_inner_type_handle_ts,
+                                #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
+                            }}
+                        },
+                        &{
+                            let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
+                            quote! {{
+                                #ts,
+                                #select_pg_crud_default_opt_some_vec_one_el_call_ts
+                            }}
+                        },
+                    ),
+                    Operation::UpdateMany => {
+                        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+                        let vec_ident_update_ts = gen_vec_tokens_decl_ts(&ident_update_ucc);
+                        let ident_operation_payload_vec_ts = StructOrEnumDeriveTsStreamBuilder::new()
+                            .make_pub()
+                            .derive_debug()
+                            .derive_serde_serialize()
+                            .derive_utoipa_to_schema()
+                            .build_struct(
+                                &ident_operation_payload_ucc,
+                                &Ts2::new(),
+                                &quote! {(#vec_ident_update_ts);},
+                            );
+                        let ident_operation_payload_try_new_er_ucc =
+                            format!("{ident}{operation}PayloadTryNewEr")
+                                .parse::<Ts2>()
+                                .expect("3da248bb");
+                        let ident_operation_payload_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+                            .make_pub()
+                            .derive_debug()
+                            .derive_thiserror_error()
+                            .derive_location_lib_location()
+                            .build_enum(
+                                &ident_operation_payload_try_new_er_ucc,
+                                &Ts2::new(),
+                                &quote! {{
+                                    #NotUniquePkUcc {
+                                        #[eo_to_err_string]
+                                        #NotUniquePkSc: #pk_ft_update_ts,
+                                        #[eo_to_err_string]
+                                        loc: location_lib::loc::Loc,
+                                    }
+                                }},
+                            );
+                        let impl_pub_try_new_for_ident_operation_payload_ts = gen_impl_pub_try_new_for_ident_ts(
+                            &Ts2::new(),
+                            &gen_ident_operation_payload_ucc(operation),
+                            &quote! {#VSc: #vec_ident_update_ts},
+                            &ident_operation_payload_try_new_er_ucc,
+                            &quote! {
+                                let mut acc_6bf275fc = Vec::new();
+                                for el_35facc3a in &#VSc {
+                                    if acc_6bf275fc.contains(&&el_35facc3a.#pk_fi) {
+                                        return Err(#ident_operation_payload_try_new_er_ucc::#NotUniquePkUcc {
+                                            #NotUniquePkSc: el_35facc3a.#pk_fi,
+                                            loc: location_lib::loc!(),
+                                        });
+                                    }
+                                    acc_6bf275fc.push(&el_35facc3a.#pk_fi);
+                                }
+                                Ok(Self(#VSc))
+                            },
+                        );
+                        let impl_serde_deserialize_for_ident_update_many_payload_ts = {
+                            let tuple_struct_ident_operation_payload_dq_ts =
+                                dq_ts(&format!("tuple struct {ident_operation_payload_ucc}"));
+                            let tuple_struct_ident_operation_payload_with_1_el_dq_ts = dq_ts(&format!(
+                                "tuple struct {ident_operation_payload_ucc} with 1 el"
+                            ));
+                            let match_ident_update_many_payload_try_new_field0_ts =
+                                gen_match_try_new_in_deserialize_ts(&ident_operation_payload_ucc, &quote! {f0});
+                            let ident_operation_payload_dq_ts = dq_ts(&ident_operation_payload_ucc);
+                            quote! {
+                                #[allow(unused_qualifications)]
+                                #[allow(clippy::absolute_paths)]
+                                #AllowClippyArbitrarySourceItemOrdering
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for #ident_operation_payload_ucc {
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> Result<Self, __D::Error>
+                                        where
+                                            __D: _serde::Deserializer<'de>,
+                                        {
+                                            #[doc(hidden)]
+                                            struct __Visitor<'de> {
+                                                marker: _serde::__private228::PhantomData<#ident_operation_payload_ucc>,
+                                                lifetime: _serde::__private228::PhantomData<&'de ()>,
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                                type Value = #ident_operation_payload_ucc;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                                                ) -> _serde::__private228::fmt::Result {
+                                                    _serde::__private228::Formatter::write_str(
+                                                        __formatter,
+                                                        #tuple_struct_ident_operation_payload_dq_ts,
+                                                    )
+                                                }
+                                                #[inline]
+                                                fn visit_newtype_struct<__E>(
+                                                    self,
+                                                    __e: __E,
+                                                ) -> Result<Self::Value, __E::Error>
+                                                where
+                                                    __E: _serde::Deserializer<'de>,
+                                                {
+                                                    let f0: #vec_ident_update_ts = <#vec_ident_update_ts as _serde::Deserialize>::deserialize(__e)?;
+                                                    #match_ident_update_many_payload_try_new_field0_ts
+                                                }
+                                                #[inline]
+                                                fn visit_seq<__A>(
+                                                    self,
+                                                    mut __seq: __A,
+                                                ) -> Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::SeqAccess<'de>,
+                                                {
+                                                    let Some(f0) = _serde::de::SeqAccess::next_element::<#vec_ident_update_ts>(&mut __seq)? else {
+                                                        return Err(_serde::de::Error::invalid_length(0usize, &#tuple_struct_ident_operation_payload_with_1_el_dq_ts));
+                                                    };
+                                                    #match_ident_update_many_payload_try_new_field0_ts
+                                                }
+                                            }
+                                            _serde::Deserializer::deserialize_newtype_struct(
+                                                __deserializer,
+                                                #ident_operation_payload_dq_ts,
+                                                __Visitor {
+                                                    marker: _serde::__private228::PhantomData::<Self>,
+                                                    lifetime: _serde::__private228::PhantomData,
+                                                },
+                                            )
+                                        }
+                                    }
+                                };
+                            }
+                        };
+                        let impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts =
+                            gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
+                                &ident_operation_payload_ucc,
+                                &quote! {
+                                    Self(vec![#PgCrudDefaultOptSomeVecOneElCall])
+                                },
+                            );
+                        quote! {
+                            #ident_operation_payload_vec_ts
+                            #ident_operation_payload_try_new_er_ts
+                            #impl_pub_try_new_for_ident_operation_payload_ts
+                            #impl_serde_deserialize_for_ident_update_many_payload_ts
+                            #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
+                        }
+                    },
+                    Operation::DeleteMany => gen_params_payload_and_default_ts(
+                        &quote! {{#pub_where_many_opt_ident_where_many_ts}},
+                        &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
+                    ),
+                    Operation::DeleteOne => gen_params_payload_and_default_ts(
+                        &{
+                            let ts = gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
+                                &SelfReadUcc::from_type_last_segment(pk_ft),
+                            );
+                            quote! {{#ts}}
+                        },
+                        &{
+                            let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
+                            quote! {{#ts}}
+                        },
+                    ),
+                    Operation::CreateOne | Operation::UpdateOne => Ts2::new(),
+                }
+            };
+            let params_ts_41360953 = {
+                let (derive_clone, derive_copy) = operation.derive_clone_and_copy();
+                let ts_0d032fce = StructOrEnumDeriveTsStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone_if(derive_clone)
+                    .derive_copy_if(derive_copy)
+                    .build_struct(&gen_ident_operation_params_ucc(operation), &Ts2::new(), &{
+                        let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(operation);
+                        quote! {{
+                            pub #PayloadSc: #ident_operation_payload_ucc,
+                        }}
+                    });
+                quote! {
+                    #AllowClippyArbitrarySourceItemOrdering
+                    #ts_0d032fce
+                }
+            };
+            quote! {
+                #payload_ts
+                #params_ts_41360953
+            }
         });
     }
     let gen_try_operation_ts = |operation: &Operation,
@@ -3702,17 +3921,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(
-            &operation,
-            gen_params_payload_and_default_ts(
-                &operation,
-                &{
-                    let vec_ident_create_ts = gen_vec_tokens_decl_ts(&ident_create_ucc);
-                    quote! {(pub #vec_ident_create_ts);}
-                },
-                &quote! {(vec![#PgCrudDefaultOptSomeVecOneElCall])},
-            ),
-        );
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_ident_read_only_ids_ts,
@@ -3731,7 +3939,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3754,7 +3961,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &ident_read_only_ids_ucc,
@@ -3773,7 +3979,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3796,34 +4001,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(
-            &operation,
-            gen_params_payload_and_default_ts(
-                &operation,
-                &quote! {{
-                    #pub_where_many_opt_ident_where_many_ts,
-                    #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
-                    pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
-                    pub #PaginationSc: #import_ts PaginationStartsWithZero,
-                }},
-                &{
-                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&PaginationSc);
-                    quote! {{
-                        #where_many_pg_crud_default_opt_some_vec_one_el_call_ts,
-                        #select_pg_crud_default_opt_some_vec_one_el_call_ts,
-                        #OrderBySc: #import_ts OrderBy {
-                            #ColumnSc: #ident_select_ucc::#pk_fi_ucc_ts(
-                                #PgCrudDefaultOptSomeVecOneElCall
-                            ),
-                            #OrderSc: Some(
-                                #PgCrudDefaultOptSomeVecOneElCall
-                            ),
-                        },
-                        #ts,
-                    }}
-                },
-            ),
-        );
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_struct_opts_ident_ts,
@@ -3845,7 +4022,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3868,29 +4044,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(
-            &operation,
-            gen_params_payload_and_default_ts(
-                &operation,
-                &{
-                    let pub_handle_pk_fi_pk_inner_type_handle_ts =
-                        gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
-                            &SelfReadUcc::from_type_last_segment(pk_ft),
-                        );
-                    quote! {{
-                        #pub_handle_pk_fi_pk_inner_type_handle_ts,
-                        #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
-                    }}
-                },
-                &{
-                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
-                    quote! {{
-                        #ts,
-                        #select_pg_crud_default_opt_some_vec_one_el_call_ts
-                    }}
-                },
-            ),
-        );
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &ident_read_ucc,
@@ -3912,7 +4065,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -3936,153 +4088,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(&operation, {
-            let ident_operation_payload_ucc = gen_ident_operation_payload_ucc(&operation);
-            let vec_ident_update_ts = gen_vec_tokens_decl_ts(&ident_update_ucc);
-            let ident_operation_payload_vec_ts = StructOrEnumDeriveTsStreamBuilder::new()
-                .make_pub()
-                .derive_debug()
-                .derive_serde_serialize()
-                .derive_utoipa_to_schema()
-                .build_struct(
-                    &ident_operation_payload_ucc,
-                    &Ts2::new(),
-                    &quote! {(#vec_ident_update_ts);},
-                );
-            let ident_operation_payload_try_new_er_ucc =
-                format!("{ident}{operation}PayloadTryNewEr")
-                    .parse::<Ts2>()
-                    .expect("3da248bb");
-            let ident_operation_payload_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
-                .make_pub()
-                .derive_debug()
-                .derive_thiserror_error()
-                .derive_location_lib_location()
-                .build_enum(
-                    &ident_operation_payload_try_new_er_ucc,
-                    &Ts2::new(),
-                    &quote! {{
-                        #NotUniquePkUcc {
-                            #[eo_to_err_string]
-                            #NotUniquePkSc: #pk_ft_update_ts,
-                            #[eo_to_err_string]
-                            loc: location_lib::loc::Loc,
-                        }
-                    }},
-                );
-            let impl_pub_try_new_for_ident_operation_payload_ts = gen_impl_pub_try_new_for_ident_ts(
-                &Ts2::new(),
-                &gen_ident_operation_payload_ucc(&operation),
-                &quote! {#VSc: #vec_ident_update_ts},
-                &ident_operation_payload_try_new_er_ucc,
-                &quote! {
-                    let mut acc_6bf275fc = Vec::new();
-                    for el_35facc3a in &#VSc {
-                        if acc_6bf275fc.contains(&&el_35facc3a.#pk_fi) {
-                            return Err(#ident_operation_payload_try_new_er_ucc::#NotUniquePkUcc {
-                                #NotUniquePkSc: el_35facc3a.#pk_fi,
-                                loc: location_lib::loc!(),
-                            });
-                        }
-                        acc_6bf275fc.push(&el_35facc3a.#pk_fi);
-                    }
-                    Ok(Self(#VSc))
-                },
-            );
-            let impl_serde_deserialize_for_ident_update_many_payload_ts = {
-                let tuple_struct_ident_operation_payload_dq_ts =
-                    dq_ts(&format!("tuple struct {ident_operation_payload_ucc}"));
-                let tuple_struct_ident_operation_payload_with_1_el_dq_ts = dq_ts(&format!(
-                    "tuple struct {ident_operation_payload_ucc} with 1 el"
-                ));
-                let match_ident_update_many_payload_try_new_field0_ts =
-                    gen_match_try_new_in_deserialize_ts(&ident_operation_payload_ucc, &quote! {f0});
-                let ident_operation_payload_dq_ts = dq_ts(&ident_operation_payload_ucc);
-                quote! {
-                    #[allow(unused_qualifications)]
-                    #[allow(clippy::absolute_paths)]
-                    #AllowClippyArbitrarySourceItemOrdering
-                    const _: () = {
-                        #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
-                        extern crate serde as _serde;
-                        #[automatically_derived]
-                        impl<'de> _serde::Deserialize<'de> for #ident_operation_payload_ucc {
-                            fn deserialize<__D>(
-                                __deserializer: __D,
-                            ) -> Result<Self, __D::Error>
-                            where
-                                __D: _serde::Deserializer<'de>,
-                            {
-                                #[doc(hidden)]
-                                struct __Visitor<'de> {
-                                    marker: _serde::__private228::PhantomData<#ident_operation_payload_ucc>,
-                                    lifetime: _serde::__private228::PhantomData<&'de ()>,
-                                }
-                                #[automatically_derived]
-                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #ident_operation_payload_ucc;
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut _serde::__private228::Formatter<'_>,
-                                    ) -> _serde::__private228::fmt::Result {
-                                        _serde::__private228::Formatter::write_str(
-                                            __formatter,
-                                            #tuple_struct_ident_operation_payload_dq_ts,
-                                        )
-                                    }
-                                    #[inline]
-                                    fn visit_newtype_struct<__E>(
-                                        self,
-                                        __e: __E,
-                                    ) -> Result<Self::Value, __E::Error>
-                                    where
-                                        __E: _serde::Deserializer<'de>,
-                                    {
-                                        let f0: #vec_ident_update_ts = <#vec_ident_update_ts as _serde::Deserialize>::deserialize(__e)?;
-                                        #match_ident_update_many_payload_try_new_field0_ts
-                                    }
-                                    #[inline]
-                                    fn visit_seq<__A>(
-                                        self,
-                                        mut __seq: __A,
-                                    ) -> Result<Self::Value, __A::Error>
-                                    where
-                                        __A: _serde::de::SeqAccess<'de>,
-                                    {
-                                        let Some(f0) = _serde::de::SeqAccess::next_element::<#vec_ident_update_ts>(&mut __seq)? else {
-                                            return Err(_serde::de::Error::invalid_length(0usize, &#tuple_struct_ident_operation_payload_with_1_el_dq_ts));
-                                        };
-                                        #match_ident_update_many_payload_try_new_field0_ts
-                                    }
-                                }
-                                _serde::Deserializer::deserialize_newtype_struct(
-                                    __deserializer,
-                                    #ident_operation_payload_dq_ts,
-                                    __Visitor {
-                                        marker: _serde::__private228::PhantomData::<Self>,
-                                        lifetime: _serde::__private228::PhantomData,
-                                    },
-                                )
-                            }
-                        }
-                    };
-                }
-            };
-            let impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts =
-                gen_impl_pg_crud_default_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
-                    &ident_operation_payload_ucc,
-                    &quote! {
-                        Self(vec![#PgCrudDefaultOptSomeVecOneElCall])
-                    },
-                );
-            quote! {
-                #ident_operation_payload_vec_ts
-                #ident_operation_payload_try_new_er_ts
-                #impl_pub_try_new_for_ident_operation_payload_ts
-                #impl_serde_deserialize_for_ident_update_many_payload_ts
-                #impl_pg_crud_default_opt_some_vec_one_el_for_operation_payload_ts
-            }
-        });
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_ident_read_only_ids_ts,
@@ -4101,7 +4106,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4124,7 +4128,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(&operation, Ts2::new());
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &ident_read_only_ids_ucc,
@@ -4143,7 +4146,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4167,14 +4169,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(
-            &operation,
-            gen_params_payload_and_default_ts(
-                &operation,
-                &quote! {{#pub_where_many_opt_ident_where_many_ts}},
-                &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
-            ),
-        );
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &vec_pk_ft_read_ts,
@@ -4193,7 +4187,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4215,22 +4208,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .collect(),
             &operation,
         );
-        let params_ts = gen_params_pattern_ts(
-            &operation,
-            gen_params_payload_and_default_ts(
-                &operation,
-                &{
-                    let ts = gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
-                        &SelfReadUcc::from_type_last_segment(pk_ft),
-                    );
-                    quote! {{#ts}}
-                },
-                &{
-                    let ts = gen_fi_default_opt_some_vec_one_el_call_ts(&pk_fi);
-                    quote! {{#ts}}
-                },
-            ),
-        );
         let operation_ts = gen_ident_try_operation_logic_res_vrts_ident_operation_er_convert_ts(
             &operation,
             &pk_ft_as_pg_type_read_ucc,
@@ -4249,7 +4226,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         quote! {
-            #params_ts
             #operation_ts
             #try_operation_ts
         }
@@ -4362,8 +4338,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let pk_ft_as_pg_type_pk_ts = quote! {<#pk_ft as #import_ts PgTypePk>::};
         let gen_pk_ft_as_pg_type_pk_method_call_ts =
-            |method_ts: &dyn ToTokens, params_ts: &dyn ToTokens| {
-                quote! {#pk_ft_as_pg_type_pk_ts #method_ts(#params_ts)}
+            |method_ts: &dyn ToTokens, ts0: &dyn ToTokens| {
+                quote! {#pk_ft_as_pg_type_pk_ts #method_ts(#ts0)}
             };
         let pk_ft_read_into_table_type_el_pk_fi_clone_ts =
             gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadIntoTableTypeSc, &quote! {el_adcc8db3});
@@ -6570,6 +6546,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 }
             }
+            #(#params_ts)*
             #common_ts
             #create_many_ts
             #create_one_ts
