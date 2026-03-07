@@ -49,13 +49,12 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
     CreateQpValueUndrscr, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import,
-    IncrParamUndrscr, IsCreateQbMutable, IsNullable, IsPkUndrscr, IsQbMutable,
-    IsSelectOnlyCreatedIdsQbMutable, IsSelectOnlyUpdatedIdsQbMutable,
-    IsSelectQpColumnFieldForErMessageUsed, IsSelectQpIsPgTypeUsed, IsSelectQpSelfSelectUsed,
-    IsUpdateQbMutable, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed, PgTypeOrPgJsonType,
-    SelectQpValueUndrscr, UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr,
-    UpdateQpJsonbSetTargetUndrscr, UpdateQpValueUndrscr,
-    gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts,
+    IncrParamUndrscr, IsCreateQbMut, IsNullable, IsPkUndrscr, IsQbMut, IsSelectOnlyCreatedIdsQbMut,
+    IsSelectOnlyUpdatedIdsQbMut, IsSelectQpColumnFieldForErMessageUsed, IsSelectQpIsPgTypeUsed,
+    IsSelectQpSelfSelectUsed, IsUpdateQbMut, IsUpdateQpJsonbSetTargetUsed,
+    IsUpdateQpSelfUpdateUsed, PgTypeOrPgJsonType, SelectQpValueUndrscr,
+    UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr, UpdateQpJsonbSetTargetUndrscr,
+    UpdateQpValueUndrscr, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_pg_json_type_test_cases_for_ident_ts,
@@ -1669,7 +1668,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 let gen_impl_pg_type_where_filter_ts = |
                     ident_ts_e0f20014: &dyn ToTokens,
                     qp_ts: &dyn ToTokens,
-                    is_qb_mutable: IsQbMutable,
+                    is_qb_mut: IsQbMut,
                     qb_ts: &dyn ToTokens
                 | {
                     impl_pg_type_where_filter_for_ident_ts(
@@ -1680,13 +1679,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         &ColumnParamUndrscr::False,
                         &AddOprtrUndrscr::False,
                         &qp_ts,
-                        &is_qb_mutable,
+                        &is_qb_mut,
                         &qb_ts,
                         &Import::PgCrud,
                     )
                 };
                 let mb_impl_pg_crud_pg_type_pg_type_where_filter_for_ident_where_ts = {
-                    let gen_impl_pg_type_where_filter_for_ident_ts = |qp_ts: &dyn ToTokens, is_qb_mutable: IsQbMutable, qb_ts: &dyn ToTokens| gen_impl_pg_type_where_filter_ts(&ident_where_ucc, &qp_ts, is_qb_mutable, &qb_ts);
+                    let gen_impl_pg_type_where_filter_for_ident_ts = |qp_ts: &dyn ToTokens, is_qb_mut: IsQbMut, qb_ts: &dyn ToTokens| gen_impl_pg_type_where_filter_ts(&ident_where_ucc, &qp_ts, is_qb_mut, &qb_ts);
                     match &pattern {
                         Pattern::Stdrt => match &is_nullable {
                             IsNullable::False => gen_impl_pg_type_where_filter_for_ident_ts(
@@ -1699,7 +1698,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 },
-                                IsQbMutable::False,
+                                IsQbMut::False,
                                 &{
                                     let fields_ts = gen_where_filter_qb_fields_content_stdrt_not_null_ts(&is_stdrt_with_id_false);
                                     quote!{
@@ -1770,7 +1769,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            IsQbMutable::False,
+                            IsQbMut::False,
                             &{
                                 let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
                                     let fi = &el0.ident;
@@ -1866,7 +1865,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         },
-                        IsQbMutable::False,
+                        IsQbMut::False,
                         &{
                             let fields_ts = gen_where_filter_qb_fields_content_stdrt_not_null_ts(&is_stdrt_with_id_true);
                             quote!{
@@ -4003,7 +4002,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 },
                 &IsUpdateQpSelfUpdateUsed::True,
                 &IsUpdateQpJsonbSetTargetUsed::True,
-                &IsUpdateQbMutable::True,
+                &IsUpdateQbMut::True,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
@@ -4126,7 +4125,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 },
-                &IsSelectOnlyUpdatedIdsQbMutable::True,
+                &IsSelectOnlyUpdatedIdsQbMut::True,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
@@ -4508,7 +4507,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                     },
                 },
-                &IsSelectOnlyCreatedIdsQbMutable::True,
+                &IsSelectOnlyCreatedIdsQbMut::True,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
@@ -4628,7 +4627,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     }
                 },
                 &CreateQbValueUndrscr::False,
-                &IsCreateQbMutable::True,
+                &IsCreateQbMut::True,
                 &quote!{
                     if let Err(#ErSc) = #QuerySc.try_bind(
                         #self_as_pg_json_type_create_for_query_ts::from(#VSc)
@@ -4698,7 +4697,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         },
                     },
                 },
-                &IsUpdateQbMutable::False,
+                &IsUpdateQbMut::False,
                 &quote!{#self_as_pg_json_type_ts::#UpdateQbSc(
                     #VSc,
                     #QuerySc
@@ -4715,7 +4714,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 },
-                &IsSelectOnlyUpdatedIdsQbMutable::False,
+                &IsSelectOnlyUpdatedIdsQbMut::False,
                 &quote!{#self_as_pg_json_type_ts::#SelectOnlyUpdatedIdsQbSc(
                     #VSc,
                     #QuerySc

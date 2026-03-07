@@ -35,12 +35,11 @@ use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
     CreateQpValueUndrscr, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl,
-    EqualOprtrHandle, Import, IncrParamUndrscr, IsCreateQbMutable, IsNullable, IsPkUndrscr,
-    IsQbMutable, IsSelectOnlyUpdatedIdsQbMutable, IsStdrtNotNull, IsUpdateQbMutable, PgFilter,
-    PgTypeFilter, ReadOrUpdate, SelectQpValueUndrscr, ShouldDeriveSchemarsJsonSchema,
-    ShouldDeriveUtoipaToSchema, UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr,
-    UpdateQpJsonbSetTargetUndrscr, UpdateQpValueUndrscr,
-    gen_impl_crate_is_string_empty_for_ident_ts,
+    EqualOprtrHandle, Import, IncrParamUndrscr, IsCreateQbMut, IsNullable, IsPkUndrscr, IsQbMut,
+    IsSelectOnlyUpdatedIdsQbMut, IsStdrtNotNull, IsUpdateQbMut, PgFilter, PgTypeFilter,
+    ReadOrUpdate, SelectQpValueUndrscr, ShouldDeriveSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    UpdateQpJsonbSetAccumulatorUndrscr, UpdateQpJsonbSetPathUndrscr, UpdateQpJsonbSetTargetUndrscr,
+    UpdateQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
@@ -4692,7 +4691,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             &ident,
             &ShouldDeriveUtoipaToSchema::False,
             &ShouldDeriveSchemarsJsonSchema::False,
-            &IsQbMutable::False,
+            &IsQbMut::False,
         );
         let ident_read_ts = {
             let ident_read_ts = {
@@ -4754,7 +4753,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             Err(er) => Err(er)
                         }
                     },
-                    &IsQbMutable::True,
+                    &IsQbMut::True,
                     &gen_typical_qb_ts(&SelfSc),
                     &import,
                 )
@@ -5008,8 +5007,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     CanBePk::True => CreateQbValueUndrscr::True,
                 },
                 &match &can_be_pk {
-                    CanBePk::False => IsCreateQbMutable::True,
-                    CanBePk::True => IsCreateQbMutable::False,
+                    CanBePk::False => IsCreateQbMut::True,
+                    CanBePk::True => IsCreateQbMut::False,
                 },
                 &bind_v_to_query_create_ts,
                 &ident_select_ucc,
@@ -5371,10 +5370,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &UpdateQpJsonbSetTargetUndrscr::True,
                 &UpdateQpJsonbSetPathUndrscr::True,
                 &typical_qp_ts,
-                &IsUpdateQbMutable::True,
+                &IsUpdateQbMut::True,
                 &typical_qb_ts,
                 &select_only_ids_and_select_only_updated_ids_query_common_ts,
-                &IsSelectOnlyUpdatedIdsQbMutable::False,
+                &IsSelectOnlyUpdatedIdsQbMut::False,
                 &quote! {Ok(#QuerySc)},
             )
         };

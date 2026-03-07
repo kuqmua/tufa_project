@@ -63,7 +63,7 @@ use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrParamUndrscr,
-    IsQbMutable, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
+    IsQbMut, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
     gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_impl_serde_deserialize_for_struct_ts,
     gen_match_try_new_in_deserialize_ts, gen_opt_type_decl_ts, gen_qp_er_write_into_buffer_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts, gen_v_init_ts,
@@ -1275,7 +1275,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         })
                     }
                 },
-                &IsQbMutable::True,
+                &IsQbMut::True,
                 &{
                     let ts = gen_if_let_some_ts(
                         &quote! {v_27176ffb},

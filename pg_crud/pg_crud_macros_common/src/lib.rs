@@ -212,11 +212,11 @@ impl ToTokens for ShouldDeriveUtoipaToSchema {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsCreateQbMutable {
+pub enum IsCreateQbMut {
     False,
     True,
 }
-impl ToTokens for IsCreateQbMutable {
+impl ToTokens for IsCreateQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -292,11 +292,11 @@ impl ToTokens for IsUpdateQpJsonbSetTargetUsed {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsUpdateQbMutable {
+pub enum IsUpdateQbMut {
     False,
     True,
 }
-impl ToTokens for IsUpdateQbMutable {
+impl ToTokens for IsUpdateQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -305,11 +305,11 @@ impl ToTokens for IsUpdateQbMutable {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsSelectOnlyUpdatedIdsQbMutable {
+pub enum IsSelectOnlyUpdatedIdsQbMut {
     False,
     True,
 }
-impl ToTokens for IsSelectOnlyUpdatedIdsQbMutable {
+impl ToTokens for IsSelectOnlyUpdatedIdsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -318,11 +318,11 @@ impl ToTokens for IsSelectOnlyUpdatedIdsQbMutable {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsSelectOnlyCreatedIdsQbMutable {
+pub enum IsSelectOnlyCreatedIdsQbMut {
     False,
     True,
 }
-impl ToTokens for IsSelectOnlyCreatedIdsQbMutable {
+impl ToTokens for IsSelectOnlyCreatedIdsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -331,11 +331,11 @@ impl ToTokens for IsSelectOnlyCreatedIdsQbMutable {
     }
 }
 #[derive(Debug, Clone, Copy, OptimalPack)]
-pub enum IsQbMutable {
+pub enum IsQbMut {
     False,
     True,
 }
-impl ToTokens for IsQbMutable {
+impl ToTokens for IsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -597,7 +597,7 @@ pub fn gen_pg_type_where_ts(
     prefix: &dyn ToTokens,
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
     should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
-    is_qb_mutable: &IsQbMutable,
+    is_qb_mut: &IsQbMut,
 ) -> Ts2 {
     let ident = SelfWhereUcc::from_tokens(&prefix);
     let pg_type_tokens_where_ts = {
@@ -642,7 +642,7 @@ pub fn gen_pg_type_where_ts(
                     }
                 }
             },
-            is_qb_mutable,
+            is_qb_mut,
             &{
                 let vrts_ts = vrts.iter().map(|el| {
                     let el_ucc = el.ucc();
@@ -740,13 +740,13 @@ pub fn gen_impl_pg_json_type_ts(
     update_qp_ts: &dyn ToTokens,
     is_update_qp_self_update_used: &IsUpdateQpSelfUpdateUsed,
     is_update_qp_jsonb_set_target_used: &IsUpdateQpJsonbSetTargetUsed,
-    is_update_qb_mutable: &IsUpdateQbMutable,
+    is_update_qb_mut: &IsUpdateQbMut,
     update_qb_ts: &dyn ToTokens,
     select_only_updated_ids_qp_ts: &dyn ToTokens,
-    is_select_only_updated_ids_qb_mutable: &IsSelectOnlyUpdatedIdsQbMutable,
+    is_select_only_updated_ids_qb_mut: &IsSelectOnlyUpdatedIdsQbMut,
     select_only_updated_ids_qb_ts: &dyn ToTokens,
     select_only_created_ids_qp_ts: &dyn ToTokens,
-    is_select_only_created_ids_qb_mutable: &IsSelectOnlyCreatedIdsQbMutable,
+    is_select_only_created_ids_qb_mut: &IsSelectOnlyCreatedIdsQbMut,
     select_only_created_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_ts = quote! {#import ::};
@@ -797,7 +797,7 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #UpdateQbSc(
                 #VSc: Self::#UpdateForQueryUcc,
-                #is_update_qb_mutable #QuerySc: #query_pg_arguments_ts
+                #is_update_qb_mut #QuerySc: #query_pg_arguments_ts
             ) -> Result<#query_pg_arguments_ts, #StringTs> {
                 #update_qb_ts
             }
@@ -811,7 +811,7 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_qb_mutable #QuerySc: #query_lifetime_pg_arguments_ts
+                #is_select_only_updated_ids_qb_mut #QuerySc: #query_lifetime_pg_arguments_ts
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_updated_ids_qb_ts
             }
@@ -825,7 +825,7 @@ pub fn gen_impl_pg_json_type_ts(
             }
             fn #SelectOnlyCreatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#CreateForQueryUcc,
-                #is_select_only_created_ids_qb_mutable #QuerySc: #query_lifetime_pg_arguments_ts
+                #is_select_only_created_ids_qb_mut #QuerySc: #query_lifetime_pg_arguments_ts
             ) -> Result<#query_lifetime_pg_arguments_ts, #StringTs> {
                 #select_only_created_ids_qb_ts
             }
@@ -958,7 +958,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     column_param_undrscr: &ColumnParamUndrscr,
     add_oprtr_undrscr: &AddOprtrUndrscr,
     qp_ts: &dyn ToTokens,
-    is_qb_mutable: &IsQbMutable,
+    is_qb_mut: &IsQbMut,
     qb_ts: &dyn ToTokens,
     import: &Import,
 ) -> Ts2 {
@@ -973,7 +973,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
             ) -> Result<#StringTs, #import::#QpErUcc> {
                 #qp_ts
             }
-            fn #QbSc(self, #is_qb_mutable query: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+            fn #QbSc(self, #is_qb_mut query: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                 sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
@@ -1033,7 +1033,7 @@ pub fn gen_impl_pg_type_ts(
     create_qp_incr_undrscr: &CreateQpIncrUndrscr,
     create_qp_ts: &dyn ToTokens,
     create_qb_v_undrscr: &CreateQbValueUndrscr,
-    is_create_qb_mutable: &IsCreateQbMutable,
+    is_create_qb_mut: &IsCreateQbMut,
     create_qb_ts: &dyn ToTokens,
     ident_select_ucc: &dyn ToTokens,
     select_qp_v_undrscr: &SelectQpValueUndrscr,
@@ -1052,10 +1052,10 @@ pub fn gen_impl_pg_type_ts(
     update_qp_jsonb_set_target_undrscr: &UpdateQpJsonbSetTargetUndrscr,
     update_qp_jsonb_set_path_undrscr: &UpdateQpJsonbSetPathUndrscr,
     update_qp_ts: &dyn ToTokens,
-    is_update_qb_mutable: &IsUpdateQbMutable,
+    is_update_qb_mut: &IsUpdateQbMut,
     update_qb_ts: &dyn ToTokens,
     select_only_updated_ids_qp_ts: &dyn ToTokens,
-    is_select_only_updated_ids_qb_mutable: &IsSelectOnlyUpdatedIdsQbMutable,
+    is_select_only_updated_ids_qb_mut: &IsSelectOnlyUpdatedIdsQbMut,
     select_only_updated_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
     let query_pg_arguments_ts =
@@ -1076,7 +1076,7 @@ pub fn gen_impl_pg_type_ts(
             }
             fn #CreateQbSc(
                 #create_qb_v_undrscr: Self::#CreateUcc,
-                #is_create_qb_mutable #QuerySc: #query_pg_arguments_ts
+                #is_create_qb_mut #QuerySc: #query_pg_arguments_ts
             ) -> Result<
                 #query_pg_arguments_ts,
                 String
@@ -1118,7 +1118,7 @@ pub fn gen_impl_pg_type_ts(
             }
             fn #UpdateQbSc(
                 #VSc: Self::#UpdateForQueryUcc,
-                #is_update_qb_mutable #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                #is_update_qb_mut #QuerySc: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<
                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
@@ -1134,7 +1134,7 @@ pub fn gen_impl_pg_type_ts(
             }
             fn #SelectOnlyUpdatedIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdateForQueryUcc,
-                #is_select_only_updated_ids_qb_mutable #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
+                #is_select_only_updated_ids_qb_mut #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
                 #select_only_updated_ids_qb_ts
             }

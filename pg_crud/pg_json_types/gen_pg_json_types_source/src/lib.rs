@@ -21,10 +21,10 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNullable,
-    IsQbMutable, IsSelectOnlyCreatedIdsQbMutable, IsSelectOnlyUpdatedIdsQbMutable,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNullable, IsQbMut,
+    IsSelectOnlyCreatedIdsQbMut, IsSelectOnlyUpdatedIdsQbMut,
     IsSelectQpColumnFieldForErMessageUsed, IsSelectQpIsPgTypeUsed, IsSelectQpSelfSelectUsed,
-    IsStdrtNotNull, IsUpdateQbMutable, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed,
+    IsStdrtNotNull, IsUpdateQbMut, IsUpdateQpJsonbSetTargetUsed, IsUpdateQpSelfUpdateUsed,
     PgFilter, PgJsonTypeFilter, ReadOrUpdate, ShouldDeriveSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
@@ -1560,7 +1560,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident,
                 &ShouldDeriveUtoipaToSchema::True,
                 &ShouldDeriveSchemarsJsonSchema::True,
-                &IsQbMutable::False,
+                &IsQbMut::False,
             ),
             IsNullable::True => quote! {
                 pub type #ident_where_ucc = #import::NullableJsonObjectPgTypeWhereFilter<
@@ -2209,7 +2209,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &IsUpdateQpSelfUpdateUsed::False,
                 &IsUpdateQpJsonbSetTargetUsed::False,
-                &IsUpdateQbMutable::True,
+                &IsUpdateQbMut::True,
                 &quote! {
                     if let Err(er) = query.try_bind(#VSc) {
                         return Err(er.to_string());
@@ -2218,16 +2218,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &select_only_created_or_updated_ids_qp_ts,
                 &if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                    IsSelectOnlyUpdatedIdsQbMutable::True
+                    IsSelectOnlyUpdatedIdsQbMut::True
                 } else {
-                    IsSelectOnlyUpdatedIdsQbMutable::False
+                    IsSelectOnlyUpdatedIdsQbMut::False
                 },
                 &select_only_created_or_updated_ids_qb_ts,
                 &select_only_created_or_updated_ids_qp_ts,
                 &if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                    IsSelectOnlyCreatedIdsQbMutable::True
+                    IsSelectOnlyCreatedIdsQbMut::True
                 } else {
-                    IsSelectOnlyCreatedIdsQbMutable::False
+                    IsSelectOnlyCreatedIdsQbMut::False
                 },
                 &select_only_created_or_updated_ids_qb_ts,
             )

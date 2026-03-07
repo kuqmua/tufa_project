@@ -11,7 +11,7 @@ use naming::{
 use optimal_pack::OptimalPack;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    AddOprtrUndrscr, ColumnParamUndrscr, Import, IncrParamUndrscr, IsQbMutable, PgJsonTypeFilter,
+    AddOprtrUndrscr, ColumnParamUndrscr, Import, IncrParamUndrscr, IsQbMut, PgJsonTypeFilter,
     PgTypeFilter, PgTypeOrPgJsonType, gen_impl_dflt_opt_some_vec_one_el_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
@@ -194,7 +194,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
          incr_param_undrscr: &IncrParamUndrscr,
          add_oprtr_undrscr: &AddOprtrUndrscr,
          qp_ts: &dyn ToTokens,
-         is_qb_mutable: &IsQbMutable,
+         is_qb_mut: &IsQbMut,
          qb_ts: &dyn ToTokens| {
             impl_pg_type_where_filter_for_ident_ts(
                 &{
@@ -230,7 +230,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ColumnParamUndrscr::False,
                 add_oprtr_undrscr,
                 &qp_ts,
-                is_qb_mutable,
+                is_qb_mut,
                 &qb_ts,
                 &Import::PgCrudCommon,
             )
@@ -370,8 +370,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             #v_dflt_opt_some_vec_one_el_ts
         }
     };
-    let is_qb_mutable_true = IsQbMutable::True;
-    let is_qb_mutable_false = IsQbMutable::False;
+    let is_qb_mut_true = IsQbMut::True;
+    let is_qb_mut_false = IsQbMut::False;
     let gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts = |dim_nbr: &DimNbr| {
         let pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_ts =
             gen_pub_dims_bounded_vec_ts(&dim_nbr.dim_ts(), &KindOfUnsignedPartOfI32::CanNotBeZero);
@@ -432,7 +432,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 impl_dflt_opt_some_vec_one_el_extra_fields_ts,
                 incr_param_undrscr,
                 qp_ts,
-                is_qb_mutable,
+                is_qb_mut,
                 qb_ts,
             ) = {
                 let sqlx_type_pg_encode_ts = quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>};
@@ -474,7 +474,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                     ))
                                 }
                             },
-                            is_qb_mutable_true,
+                            is_qb_mut_true,
                             quote! {
                                 #mb_dims_qb_ts
                                 #qb_one_v_ts
@@ -522,7 +522,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             #query_self_v_qb_ts
@@ -585,7 +585,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             for el in #SelfSc.#VSc.into_vec() {
@@ -616,7 +616,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             &mb_dims_ies_init_ts,
                             &mb_extra_params_ts,
                         ),
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             #if_let_err_query_try_bind_self_v_to_string_ts
@@ -654,7 +654,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             #qb_one_v_ts
@@ -697,11 +697,11 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             }
                         },
                         match &pg_type_ptrn {
-                            PgTypePtrn::Stdrt => is_qb_mutable_false,
+                            PgTypePtrn::Stdrt => is_qb_mut_false,
                             PgTypePtrn::ArrDim1
                             | PgTypePtrn::ArrDim2
                             | PgTypePtrn::ArrDim3
-                            | PgTypePtrn::ArrDim4 => is_qb_mutable_true,
+                            | PgTypePtrn::ArrDim4 => is_qb_mut_true,
                         },
                         quote! {
                             #mb_dims_qb_ts
@@ -763,7 +763,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             if let Err(#ErSc) = #QuerySc.try_bind(self.encoded_string_representation) {
@@ -803,7 +803,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 }
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         qb_one_v_ts.clone(),
                     )
                 };
@@ -926,7 +926,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             #qb_one_v_ts
@@ -982,7 +982,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrParamUndrscr::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
-                            is_qb_mutable_true,
+                            is_qb_mut_true,
                             gen_ts_eeee6e79(&mb_dims_qb_ts),
                         )
                     }
@@ -1005,7 +1005,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrParamUndrscr::False,
                             gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
-                            is_qb_mutable_true,
+                            is_qb_mut_true,
                             gen_ts_eeee6e79(&mb_dims_qb_ts),
                         )
                     }
@@ -1134,7 +1134,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &incr_param_undrscr,
                 &AddOprtrUndrscr::False,
                 &qp_ts,
-                &is_qb_mutable,
+                &is_qb_mut,
                 &qb_ts,
             );
             let gend = quote! {
@@ -1204,7 +1204,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                                 ))
                             }
                         },
-                        is_qb_mutable_true,
+                        is_qb_mut_true,
                         quote! {
                             #mb_dims_qb_ts
                             #qb_sqlx_types_json_self_v_ts
@@ -1267,7 +1267,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         #qb_one_v_ts
@@ -1344,7 +1344,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts0
                         }
                     },
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     {
                         let ts: &dyn ToTokens = match pg_type_ptrn {
                             PgTypePtrn::Stdrt => &quote! {
@@ -1405,7 +1405,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         match #SelfSc.#VSc.qb_one_by_one(#QuerySc) {
@@ -1480,7 +1480,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &mb_dims_ies_init_ts,
                         &mb_extra_params_ts,
                     ),
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         #if_let_err_query_try_bind_self_v_to_string_ts
@@ -1510,7 +1510,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &mb_dims_ies_init_ts,
                         &mb_extra_params_ts,
                     ),
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         #if_let_err_query_try_bind_self_v_to_string_ts
@@ -1540,7 +1540,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                         &mb_dims_ies_init_ts,
                         &mb_extra_params_ts,
                     ),
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         #if_let_err_query_try_bind_self_v_to_string_ts
@@ -1580,7 +1580,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         #qb_sqlx_types_json_self_v_ts
@@ -1620,7 +1620,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #ts
                         }
                     },
-                    is_qb_mutable_true,
+                    is_qb_mut_true,
                     quote! {
                         #mb_dims_qb_ts
                         #qb_sqlx_types_json_self_v_ts
@@ -1632,7 +1632,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 struct_extra_fields_ts,
                 impl_dflt_opt_some_vec_one_el_extra_fields_ts,
                 qp_ts,
-                is_qb_mutable,
+                is_qb_mut,
                 qb_ts,
             ) = match &filter {
                 PgJsonTypeFilter::Equal { .. } => gen_equal_ts(&pg_type_ptrn_stdrt),
@@ -1800,7 +1800,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &IncrParamUndrscr::False,
                 &AddOprtrUndrscr::False,
                 &qp_ts,
-                &is_qb_mutable,
+                &is_qb_mut,
                 &qb_ts,
             );
             let gend = quote! {
