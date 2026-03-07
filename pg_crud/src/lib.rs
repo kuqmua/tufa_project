@@ -5,15 +5,14 @@ pub use pg_json_object_type::{
 };
 pub use pg_json_types::*;
 pub use pg_table::{
-    CombinationOfAppStateLogicTraits, GenPgTable, cm_extra_er_vrts, cm_extra_logic,
-    co_extra_er_vrts, co_extra_logic, common_extra_er_vrts, common_extra_logic, dlo_extra_er_vrts,
-    dlo_extra_logic, dm_extra_er_vrts, dm_extra_logic, gen_cm_query_string, gen_co_query_string,
+    CombinationOfAppStateLogicTraits, GenPgTable, cm_er_vrts, cm_extra_logic, co_er_vrts,
+    co_extra_logic, common_er_vrts, common_extra_logic, dlo_er_vrts, dlo_extra_logic, dm_er_vrts,
+    dm_extra_logic, gen_cm_query_string, gen_co_query_string,
     gen_column_equals_case_acc_else_column_end_comma_um_query_part,
     gen_column_queals_v_comma_uo_query_part, gen_dlo_query_string, gen_dm_query_string,
     gen_pg_table_config, gen_rm_query_string, gen_ro_query_string, gen_um_query_string,
-    gen_uo_query_string, gen_when_column_id_then_v_um_query_part, rm_extra_er_vrts, rm_extra_logic,
-    ro_extra_er_vrts, ro_extra_logic, um_extra_er_vrts, um_extra_logic, uo_extra_er_vrts,
-    uo_extra_logic,
+    gen_uo_query_string, gen_when_column_id_then_v_um_query_part, rm_er_vrts, rm_extra_logic,
+    ro_er_vrts, ro_extra_logic, um_er_vrts, um_extra_logic, uo_er_vrts, uo_extra_logic,
 };
 pub use pg_types::*;
 pub use route_validators::{check_body_size, check_commit};

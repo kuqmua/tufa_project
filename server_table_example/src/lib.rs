@@ -6,16 +6,16 @@ use optimal_pack::OptimalPack;
     "common_write_into_file": "False",
     "whole_write_into_file": "False"
 }}]
-#[pg_crud::cm_extra_er_vrts{enum CmExtraErVrts{}}]
-#[pg_crud::co_extra_er_vrts{enum CoExtraErVrts{}}]
-#[pg_crud::rm_extra_er_vrts{enum RmExtraErVrts{}}]
-#[pg_crud::ro_extra_er_vrts{enum RoExtraErVrts{}}]
-#[pg_crud::um_extra_er_vrts{enum UmExtraErVrts{}}]
-#[pg_crud::uo_extra_er_vrts{enum UoExtraErVrts{}}]
-#[pg_crud::dm_extra_er_vrts{enum DmExtraErVrts{}}]
-#[pg_crud::dlo_extra_er_vrts{enum DloExtraErVrts{}}]
-#[pg_crud::common_extra_er_vrts{
-    enum CommonExtraErVrts {
+#[pg_crud::cm_er_vrts{enum CmErVrts{}}]
+#[pg_crud::co_er_vrts{enum CoErVrts{}}]
+#[pg_crud::rm_er_vrts{enum RmErVrts{}}]
+#[pg_crud::ro_er_vrts{enum RoErVrts{}}]
+#[pg_crud::um_er_vrts{enum UmErVrts{}}]
+#[pg_crud::uo_er_vrts{enum UoErVrts{}}]
+#[pg_crud::dm_er_vrts{enum DmErVrts{}}]
+#[pg_crud::dlo_er_vrts{enum DloErVrts{}}]
+#[pg_crud::common_er_vrts{
+    enum CommonErVrts {
         // CheckCommit {
         //     #[eo_location]
         //     check_commit: pg_crud::check_commit::CommitEr,

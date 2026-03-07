@@ -10,28 +10,27 @@ use macros_helpers::{
 use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
-    BySc, CheckBodySizeSc, CheckBodySizeUcc, CmExtraErVrtsSc, CmExtraLogicSc, CoExtraErVrtsSc,
-    CoExtraLogicSc, ColumnSc, ColumnsSc, CommitSc, CommonExtraErVrtsSc, CommonExtraLogicSc,
+    BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmExtraLogicSc, CoErVrtsSc,
+    CoExtraLogicSc, ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonExtraLogicSc,
     CommonReadOnlyIdsReturnedFromCoSc, ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc,
     CreateExtensionIfNotExistsUuidOsspUcc, CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElMaxPageSizeUcc,
     DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeserializeResUcc, DesirableUcc,
-    DisplayPlusToTokens, DisplayToScStr, DloExtraErVrtsSc, DloExtraLogicSc, DmExtraErVrtsSc,
-    DmExtraLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
-    ExtraParamsSc, FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc,
-    GenColumnQuealsVCommaUoQueryPartSc, GenPgTablePkSc, GenSelectQueryPartSc,
-    GenWhenColumnIdThenVUmQueryPartSc, HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc,
-    IdentCreateDefaultSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc,
-    NotUniqueFieldUcc, NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc,
-    OrderSc, PaginationSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc,
-    PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc,
-    PgUcc, PkQueryPartSc, PkSc, PoolConnectionSc, PoolSc, PrefixSc, PrepareExtensionsSc,
-    PreparePgSc, PreparePgTableSc, PreparePgUcc, QueryBindSc, QueryPartErUcc, QueryPartSc,
-    QueryPartUcc, QuerySc, QueryStringSc, ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc,
-    ReadOnlyIdsIntoTableTypeSc, ReadOnlyIdsIntoUpdateSc,
-    ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
+    DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloExtraLogicSc, DmErVrtsSc, DmExtraLogicSc,
+    ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc,
+    FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc, GenColumnQuealsVCommaUoQueryPartSc,
+    GenPgTablePkSc, GenSelectQueryPartSc, GenWhenColumnIdThenVUmQueryPartSc,
+    HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCreateDefaultSc, IncrSc,
+    IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
+    NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc, OrderSc, PaginationSc,
+    ParamsSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
+    PgTypeOptVecWhereGreaterThanTestSc, PgTypeUcc, PgUcc, PkQueryPartSc, PkSc, PoolConnectionSc,
+    PoolSc, PrefixSc, PrepareExtensionsSc, PreparePgSc, PreparePgTableSc, PreparePgUcc,
+    QueryBindSc, QueryPartErUcc, QueryPartSc, QueryPartUcc, QuerySc, QueryStringSc,
+    ReadIntoTableTypeSc, ReadOnlyIdsIntoReadSc, ReadOnlyIdsIntoTableTypeSc,
+    ReadOnlyIdsIntoUpdateSc, ReadOnlyIdsMergedWithCreateIntoOptVecWhereEqualToJsonFieldSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereBetweenSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElGreaterThanSc,
     ReadOnlyIdsMergedWithCreateIntoPgJsonTypeOptVecWhereContainsElRegexSc,
@@ -41,13 +40,13 @@ use naming::{
     ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSc,
     ReadOnlyIdsMergedWithCreateIntoWhereEqualSc,
     ReadOnlyIdsMergedWithTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadOnlyIdsSc, ReadOnlyIdsUcc,
-    ReadUcc, ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmExtraErVrtsSc, RmExtraLogicSc,
-    RoExtraErVrtsSc, RoExtraLogicSc, RollbackSc, RoutesHandleSc, RoutesSc, RowAndRollbackUcc,
-    RowSc, RowsSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPkSc,
+    ReadUcc, ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc, RmExtraLogicSc,
+    RoErVrtsSc, RoExtraLogicSc, RollbackSc, RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc,
+    RowsSc, SelectOnlyIdsQueryPartSc, SelectOnlyUpdatedIdsQueryPartSc, SelectPkSc,
     SelectQueryPartSc, SelectSc, SelectUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc,
     SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs,
-    TrueSc, TryBindSc, TryBindUcc, UmExtraErVrtsSc, UmExtraLogicSc, UoExtraErVrtsSc,
-    UoExtraLogicSc, UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateQueryBindSc,
+    TrueSc, TryBindSc, TryBindUcc, UmErVrtsSc, UmExtraLogicSc, UoErVrtsSc, UoExtraLogicSc,
+    UpdateForQuerySc, UpdateForQueryUcc, UpdateForQueryVecSc, UpdateQueryBindSc,
     UpdateQueryPartPkSc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, WhereManySc,
     WhereUcc,
     param::{
@@ -194,16 +193,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         }
-        const fn gen_pg_table_attr_extra_er_vrts(self) -> GenPgTableAttr {
+        const fn gen_pg_table_attr_er_vrts(self) -> GenPgTableAttr {
             match self {
-                Self::Cm => GenPgTableAttr::CmExtraErVrts,
-                Self::Co => GenPgTableAttr::CoExtraErVrts,
-                Self::Rm => GenPgTableAttr::RmExtraErVrts,
-                Self::Ro => GenPgTableAttr::RoExtraErVrts,
-                Self::Um => GenPgTableAttr::UmExtraErVrts,
-                Self::Uo => GenPgTableAttr::UoExtraErVrts,
-                Self::Dm => GenPgTableAttr::DmExtraErVrts,
-                Self::Dlo => GenPgTableAttr::DloExtraErVrts,
+                Self::Cm => GenPgTableAttr::CmErVrts,
+                Self::Co => GenPgTableAttr::CoErVrts,
+                Self::Rm => GenPgTableAttr::RmErVrts,
+                Self::Ro => GenPgTableAttr::RoErVrts,
+                Self::Um => GenPgTableAttr::UmErVrts,
+                Self::Uo => GenPgTableAttr::UoErVrts,
+                Self::Dm => GenPgTableAttr::DmErVrts,
+                Self::Dlo => GenPgTableAttr::DloErVrts,
             }
         }
         const fn gen_pg_table_attr_extra_logic(self) -> GenPgTableAttr {
@@ -321,15 +320,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Display, OptimalPack)]
     enum GenPgTableAttr {
-        CmExtraErVrts,
-        CoExtraErVrts,
-        RmExtraErVrts,
-        RoExtraErVrts,
-        UmExtraErVrts,
-        UoExtraErVrts,
-        DmExtraErVrts,
-        DloExtraErVrts,
-        CommonExtraErVrts,
+        CmErVrts,
+        CoErVrts,
+        RmErVrts,
+        RoErVrts,
+        UmErVrts,
+        UoErVrts,
+        DmErVrts,
+        DloErVrts,
+        CommonErVrts,
         CmExtraLogic,
         CoExtraLogic,
         RmExtraLogic,
@@ -345,15 +344,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             format!(
                 "{PgCrudSc}::{}",
                 match self {
-                    Self::CmExtraErVrts => CmExtraErVrtsSc.to_string(),
-                    Self::CoExtraErVrts => CoExtraErVrtsSc.to_string(),
-                    Self::RmExtraErVrts => RmExtraErVrtsSc.to_string(),
-                    Self::RoExtraErVrts => RoExtraErVrtsSc.to_string(),
-                    Self::UmExtraErVrts => UmExtraErVrtsSc.to_string(),
-                    Self::UoExtraErVrts => UoExtraErVrtsSc.to_string(),
-                    Self::DmExtraErVrts => DmExtraErVrtsSc.to_string(),
-                    Self::DloExtraErVrts => DloExtraErVrtsSc.to_string(),
-                    Self::CommonExtraErVrts => CommonExtraErVrtsSc.to_string(),
+                    Self::CmErVrts => CmErVrtsSc.to_string(),
+                    Self::CoErVrts => CoErVrtsSc.to_string(),
+                    Self::RmErVrts => RmErVrtsSc.to_string(),
+                    Self::RoErVrts => RoErVrtsSc.to_string(),
+                    Self::UmErVrts => UmErVrtsSc.to_string(),
+                    Self::UoErVrts => UoErVrtsSc.to_string(),
+                    Self::DmErVrts => DmErVrtsSc.to_string(),
+                    Self::DloErVrts => DloErVrtsSc.to_string(),
+                    Self::CommonErVrts => CommonErVrtsSc.to_string(),
                     Self::CmExtraLogic => CmExtraLogicSc.to_string(),
                     Self::CoExtraLogic => CoExtraLogicSc.to_string(),
                     Self::RmExtraLogic => RmExtraLogicSc.to_string(),
@@ -2174,14 +2173,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             reqwest_syn_vrt_wrapper.get_syn_vrt().clone(),
         ]
     };
-    let gen_extra_er_vrts = |di_bde7efb1: &DeriveInput,
-                             gen_pg_table_attr: GenPgTableAttr|
+    let gen_er_vrts = |di_bde7efb1: &DeriveInput,
+                       gen_pg_table_attr: GenPgTableAttr|
      -> Vec<Variant> {
         let gen_pg_table_attr_str = gen_pg_table_attr.to_string();
-        let common_extra_er_vrts_attr_ts =
+        let common_er_vrts_attr_ts =
             get_macro_attr_meta_list_ts(&di_bde7efb1.attrs, &gen_pg_table_attr.gen_path_to_attr());
-        let di_894e3269: DeriveInput =
-            parse2((*common_extra_er_vrts_attr_ts).clone()).expect("1b80783d");
+        let di_894e3269: DeriveInput = parse2((*common_er_vrts_attr_ts).clone()).expect("1b80783d");
         assert!(di_894e3269.ident == gen_pg_table_attr_str, "8a66c852");
         let vrts = if let Data::Enum(data_enum) = di_894e3269.data {
             data_enum.variants
@@ -2190,7 +2188,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         vrts.into_iter().collect()
     };
-    let common_extra_er_vrts = gen_extra_er_vrts(&di, GenPgTableAttr::CommonExtraErVrts);
+    let common_er_vrts = gen_er_vrts(&di, GenPgTableAttr::CommonErVrts);
     let common_route_syn_vrts = {
         let mut acc = vec![
             check_body_size_syn_vrt_wrapper.get_syn_vrt(),
@@ -2198,7 +2196,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             serde_json_syn_vrt_wrapper.get_syn_vrt(),
             header_content_type_application_json_not_found_syn_vrt_wrapper.get_syn_vrt(),
         ];
-        for el in &common_extra_er_vrts {
+        for el in &common_er_vrts {
             acc.push(el);
         }
         acc
@@ -2406,7 +2404,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             for el in syn_vrts {
                 type_vrts_from_req_res_syn_vrts.push((*el).clone());
             }
-            for el in gen_extra_er_vrts(&di, operation.gen_pg_table_attr_extra_er_vrts()) {
+            for el in gen_er_vrts(&di, operation.gen_pg_table_attr_er_vrts()) {
                 type_vrts_from_req_res_syn_vrts.push(el.clone());
             }
             type_vrts_from_req_res_syn_vrts

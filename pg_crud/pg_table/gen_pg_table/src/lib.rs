@@ -4,39 +4,39 @@ pub fn gen_pg_table_config(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn cm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn cm_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn co_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn co_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn ro_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn ro_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn rm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn rm_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn uo_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn uo_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn um_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn um_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn dlo_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn dlo_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn dm_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn dm_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn common_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn common_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
