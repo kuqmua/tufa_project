@@ -36,7 +36,7 @@ pub fn gen_rm_query_string(table: &str, select_string: &str, where_string: &str)
     format!("select {select_string} from {table} {where_string}")
 }
 #[must_use]
-pub fn gen_read_one_query_string(table: &str, select_string: &str, where_string: &str) -> String {
+pub fn gen_ro_query_string(table: &str, select_string: &str, where_string: &str) -> String {
     format!("select {select_string} from {table} where {where_string}")
 }
 #[must_use]
