@@ -1,8 +1,7 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{DeriveSerdeDeserialize, StructOrEnumDeriveTsStreamBuilder};
 use macros_helpers::{
-    FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, gen_if_write_is_err_ts,
-    mb_write_ts_into_file,
+    FormatWithCargofmt, ShouldWriteTsIntoFile, gen_if_write_is_err_ts, mb_write_ts_into_file,
 };
 use naming::{
     ColumnSc, DimsIesSc, DimsSc, ErSc, IncrSc, PubSc, QuerySc, SelfSc, VSc,
@@ -106,9 +105,9 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize, OptimalPack)]
     struct GenWhereFiltersConfig {
-        pg_types_write_into_file: ShouldWriteTokenStreamIntoFile,
-        pg_json_types_write_into_file: ShouldWriteTokenStreamIntoFile,
-        whole_write_into_file: ShouldWriteTokenStreamIntoFile,
+        pg_types_write_into_file: ShouldWriteTsIntoFile,
+        pg_json_types_write_into_file: ShouldWriteTsIntoFile,
+        whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_location();
     let gen_where_filters_config =

@@ -1,7 +1,7 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
     AttrIdentStr, DeriveClone, DeriveCopy, FormatWithCargofmt, LocationFieldAttr,
-    ShouldWriteTokenStreamIntoFile, StatusCode, StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper,
+    ShouldWriteTsIntoFile, StatusCode, StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper,
     gen_field_loc_new_ts, gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
     gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
@@ -381,9 +381,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize, OptimalPack)]
     struct GenPgTableConfig {
-        tests_write_into_file: ShouldWriteTokenStreamIntoFile,
-        common_write_into_file: ShouldWriteTokenStreamIntoFile,
-        whole_write_into_file: ShouldWriteTokenStreamIntoFile,
+        tests_write_into_file: ShouldWriteTsIntoFile,
+        common_write_into_file: ShouldWriteTsIntoFile,
+        whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_location();
     let import = Import::PgCrud;

@@ -8,20 +8,17 @@ pub enum FormatWithCargofmt {
     True,
 }
 #[derive(Debug, Copy, Clone, Deserialize, OptimalPack)]
-pub enum ShouldWriteTokenStreamIntoFile {
+pub enum ShouldWriteTsIntoFile {
     False,
     True,
 }
 pub fn mb_write_ts_into_file(
-    should_write_ts_into_file: ShouldWriteTokenStreamIntoFile,
+    should_write_ts_into_file: ShouldWriteTsIntoFile,
     file_name: &str,
     ts: &Ts2,
     format_with_cargofmt: &FormatWithCargofmt,
 ) {
-    if matches!(
-        should_write_ts_into_file,
-        ShouldWriteTokenStreamIntoFile::True
-    ) {
+    if matches!(should_write_ts_into_file, ShouldWriteTsIntoFile::True) {
         let path_string = format!("{file_name}.rs");
         let path = Path::new(&path_string);
         {

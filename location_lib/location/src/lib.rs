@@ -467,7 +467,7 @@ pub fn location(input: Ts) -> Ts {
     // println!("{generated} ");
     // if ident == "" {
     //     macros_helpers::mb_write_ts_into_file(
-    //         macros_helpers::ShouldWriteTokenStreamIntoFile::True,
+    //         macros_helpers::ShouldWriteTsIntoFile::True,
     //         "location",
     //         &generated,
     //         &macros_helpers::FormatWithCargofmt::True,

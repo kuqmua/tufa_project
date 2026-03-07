@@ -1,7 +1,7 @@
 use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
+    DeriveCopy, DeriveSchemarsJsonSchema, FormatWithCargofmt, ShouldWriteTsIntoFile,
     StructOrEnumDeriveTsStreamBuilder, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, mb_write_ts_into_file,
 };
@@ -348,8 +348,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     struct GenPgJsonTypesConfig {
         vrt: ConfigVrt,
         pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types:
-            ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_gen_pg_json_types: ShouldWriteTokenStreamIntoFile,
+            ShouldWriteTsIntoFile,
+        whole_content_write_into_gen_pg_json_types: ShouldWriteTsIntoFile,
     }
     panic_location();
     let config = from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");

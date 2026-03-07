@@ -1,7 +1,7 @@
 use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
+    DeriveSerdeDeserialize, FormatWithCargofmt, ShouldWriteTsIntoFile,
     StructOrEnumDeriveTsStreamBuilder, SynFieldWrapper, gen_if_write_is_err_curly_braces_ts,
     gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
     gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_impl_to_err_string_ts,
@@ -121,9 +121,9 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, OptimalPack)]
     struct GenPgJsonTypesConfig {
         pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types:
-            ShouldWriteTokenStreamIntoFile,
+            ShouldWriteTsIntoFile,
         vrt: PgJsonObjectTypeRecord,
-        whole_write_into_gen_pg_json_object_type: ShouldWriteTokenStreamIntoFile,
+        whole_write_into_gen_pg_json_object_type: ShouldWriteTsIntoFile,
     }
     panic_location();
     let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");

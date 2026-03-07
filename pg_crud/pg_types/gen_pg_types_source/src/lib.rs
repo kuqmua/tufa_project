@@ -2,7 +2,7 @@ use enum_extension_lib::EnumExtension;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
-    DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTokenStreamIntoFile,
+    DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTsIntoFile,
     StructOrEnumDeriveTsStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
     gen_impl_display_ts, gen_impl_from_ts, gen_impl_to_err_string_ts, gen_new_ts,
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, mb_write_ts_into_file,
@@ -700,8 +700,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, serde::Deserialize, OptimalPack)]
     struct GenPgJsonTypesConfig {
         vrt: GenPgTypesConfigVrt,
-        pg_table_columns_write_into_file: ShouldWriteTokenStreamIntoFile,
-        whole_write_into_file: ShouldWriteTokenStreamIntoFile,
+        pg_table_columns_write_into_file: ShouldWriteTsIntoFile,
+        whole_write_into_file: ShouldWriteTsIntoFile,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, OptimalPack)]

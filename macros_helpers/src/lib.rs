@@ -51,6 +51,4 @@ pub use struct_or_enum_derive_ts_builder::{
 pub use syn_field_wrapper::SynFieldWrapper;
 pub use wrap_derive::wrap_derive;
 pub use write_string_into_file::write_string_into_file;
-pub use write_ts_into_file::{
-    FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, mb_write_ts_into_file,
-};
+pub use write_ts_into_file::{FormatWithCargofmt, ShouldWriteTsIntoFile, mb_write_ts_into_file};
