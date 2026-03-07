@@ -11,7 +11,7 @@ members = [
   "location_lib",
   "from_str",
   "git_info",
-  "git_sync_command",
+  "git_sync_cmd",
   "pg_crud",
   "pg_crud/pg_crud_common",
   "pg_crud/pg_crud_common_and_macros_common",

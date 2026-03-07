@@ -1,10 +1,5 @@
 #[cfg(feature = "test-utils")]
-pub fn clippy_check(
-    crate_name: &str,
-    command_path: &str,
-    extra_content: &str,
-    content_to_gen: &str,
-) {
+pub fn clippy_check(crate_name: &str, cmd_path: &str, extra_content: &str, content_to_gen: &str) {
     use std::path::PathBuf;
     use std::{fs::write, process::Command};
     let path = format!("../{crate_name}/");
@@ -37,7 +32,7 @@ workspace = true"#
         write(&path_cargo_toml, cargo_toml_content).expect("ec801a87");
     };
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let target_crate_dir = manifest_dir.join(format!("{command_path}{crate_name}"));
+    let target_crate_dir = manifest_dir.join(format!("{cmd_path}{crate_name}"));
     if let Ok(v) = Command::new("cargo")
         .current_dir(&target_crate_dir)
         .args(["fmt"])

@@ -170,7 +170,7 @@ mod tests {
     fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
         let rust_or_clippy = RustOrClippy::Rust;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
-        let lints_from_command = {
+        let lints_from_cmd = {
             let output = Command::new("rustc")
                 .args(["-W", "help"])
                 .stdout(Stdio::piped())
@@ -191,7 +191,7 @@ mod tests {
         compare_lints_vecs(
             rust_or_clippy,
             &lints_vec_from_cargo_toml,
-            &lints_from_command,
+            &lints_from_cmd,
             //todo on commit momment seems like this lints still not added to rustc, but in the list of rustc -W help
             &vec![
                 String::from("fuzzy_provenance_casts"),
