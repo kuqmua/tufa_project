@@ -1038,7 +1038,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote! {v_c3f0b59a},
                             &{
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(
-                                    &quote! {acc_a097110b, "{v_c3f0b59a},"},
+                                    &quote! {acc, "{v_c3f0b59a},"},
                                     &return_err_query_part_er_write_into_buffer_ts,
                                 );
                                 quote! {{
@@ -1063,7 +1063,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         })
                     });
                 let ts = gen_acc_string_pop_ok_acc_ts(
-                    &quote! {acc_a097110b},
+                    &quote! {acc},
                     &quote! {
                         #pk_ts
                         #column_incrs_ts
@@ -1965,7 +1965,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             return Err(#Er0);
                         }},
                     );
-                    quote! {acc_88c91f52.push_str(&#ts);}
+                    quote! {acc.push_str(&#ts);}
                 };
                 let ts = fields_without_pk.iter().map(|el: &SynFieldWrapper| {
                     let fi = &el.ident;
@@ -1988,12 +1988,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     return Err(#Er0);
                                 }}
                             );
-                            quote!{acc_88c91f52.push_str(&#ts);}
+                            quote!{acc.push_str(&#ts);}
                         }
                     )
                 });
                 let ts0 = gen_acc_string_pop_ok_acc_ts(
-                    &quote! {acc_88c91f52},
+                    &quote! {acc},
                     &quote! {
                         #pk_ts
                         #(#ts)*
