@@ -3233,24 +3233,28 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     }
                     Operation::UpdateOne => {
-                        let binded_query_modifications_ts =
+                        let gen_binded_query_ts = |var_name: proc_macro2::TokenStream, method_name: proc_macro2::TokenStream| {
                             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                                let fi = &el.ident;
                                 gen_if_let_some_ts(
-                                    &quote!{v_ed87c152},
-                                    &quote!{&#UpdateForQuerySc.#fi},
+                                    &var_name,
+                                    &{
+                                        let fi = &el.ident;
+                                        quote!{&#UpdateForQuerySc.#fi}
+                                    },
                                     &gen_match_query_bind_or_err_ts_519a3119(
                                         &{
                                             let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                                            quote!{#as_pg_crud_pg_type_pg_type_ts #UpdateQueryBindSc(
-                                                v_ed87c152.#VSc.clone(),//todo is there a way to remove .clone here?
-                                                #QuerySc
-                                            )}
+                                            quote!{#as_pg_crud_pg_type_pg_type_ts #method_name}
                                         },
-                                        &quote!{v_c3c1b857}
+                                        &quote!{v_result},
                                     )
                                 )
-                            });
+                            })
+                        };
+                        let binded_query_modifications_ts = gen_binded_query_ts(
+                            quote!{v_ed87c152},
+                            quote!{#UpdateQueryBindSc(v_ed87c152.#VSc.clone(), #QuerySc)},
+                        );
                         let binded_query_pk_modification_ts = gen_match_query_bind_or_err_ts_519a3119(
                             &quote!{#pk_ft_as_pg_type_ts #UpdateQueryBindSc(
                                 #UpdateForQuerySc.#pk_fi,
@@ -3258,24 +3262,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             )},
                             &quote!{v_d64bac39},
                         );
-                        let binded_query_select_only_updated_ids_query_bind_ts =
-                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                                let fi = &el.ident;
-                                gen_if_let_some_ts(
-                                    &quote!{v_b2902425},
-                                    &quote!{&#UpdateForQuerySc.#fi},
-                                    &gen_match_query_bind_or_err_ts_519a3119(
-                                        &{
-                                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                                            quote!{#as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                                &v_b2902425.#VSc,
-                                                #QuerySc
-                                            )}
-                                        },
-                                        &quote!{v_cc6145f8},
-                                    )
-                                )
-                            });
+                        let binded_query_select_only_updated_ids_query_bind_ts = gen_binded_query_ts(
+                            quote!{v_b2902425},
+                            quote!{select_only_updated_ids_query_bind(&v_b2902425.#VSc, #QuerySc)},
+                        );
                         quote! {
                             #binded_query_modifications_ts
                             #binded_query_pk_modification_ts
