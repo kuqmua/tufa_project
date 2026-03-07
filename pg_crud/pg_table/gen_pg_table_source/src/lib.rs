@@ -587,6 +587,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         gen_fields_named_without_pk_with_comma_ts(&|_: &SynFieldWrapper| -> Ts2 {
             none_ts.clone()
         });
+    let gen_acc_string_pop_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
+        let opt_char_ts = gen_opt_type_decl_ts(&Char);
+        quote! {
+            let mut #acc_ts = #StringTs::new();
+            #ts
+            let _: #opt_char_ts = #acc_ts.pop();
+        }
+    };
+    let gen_acc_string_pop_acc_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
+        let ts0 = gen_acc_string_pop_ts(acc_ts, ts);
+        quote! {
+            #ts0
+            #acc_ts
+        }
+    };
     let mut impl_ident_vec_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
@@ -730,17 +745,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {#ident_select_ucc::#fi_ucc_ts(#ColumnSc) #init_ts}
             });
             let opt_char_ts = gen_opt_type_decl_ts(&Char);
-            quote! {
-                fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_ts #QueryPartErUcc> {
-                    let mut acc_37c883c3 = #StringTs::default();
+            let ts0 = gen_acc_string_pop_ts(
+                &quote! {acc},
+                &quote! {
                     for el in #SelectSc.to_vec() {
-                        acc_37c883c3.push_str(&match el {
+                        acc.push_str(&match el {
                             #vrts_ts
                         });
-                        acc_37c883c3.push(',');
+                        acc.push(',');
                     }
-                    let _: #opt_char_ts = acc_37c883c3.pop();
-                    Ok(acc_37c883c3)
+                },
+            );
+            quote! {
+                fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_ts #QueryPartErUcc> {
+                    #ts0
+                    Ok(acc)
                 }
             }
         };
@@ -965,20 +984,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {{#err_ts}},
             )
         };
-    let gen_acc_string_pop_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
-        quote! {
-            let mut #acc_ts = #StringTs::new();
-            #ts
-            let _: Option<char> = #acc_ts.pop();
-        }
-    };
-    let gen_acc_string_pop_acc_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
-        let ts0 = gen_acc_string_pop_ts(acc_ts, ts);
-        quote! {
-            #ts0
-            #acc_ts
-        }
-    };
     let gen_if_let_some_ts = |ts0: &dyn ToTokens, ts1: &dyn ToTokens, ts2: &dyn ToTokens| {
         quote! {
             if let Some(#ts0) = #ts1 {
