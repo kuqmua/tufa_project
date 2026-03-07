@@ -63,7 +63,7 @@
 - Rename public items casually.
 - Change semantics silently.
 - Squash unrelated changes.
-- Commit code or generated artifacts.
+- Commit code.
 - Modify `Cargo.lock`.
 
 `expect()` messages must contain **8 random symbols from UUID v4**.
