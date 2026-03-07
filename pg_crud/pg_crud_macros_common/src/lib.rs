@@ -704,10 +704,7 @@ pub fn gen_opt_type_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
 pub fn gen_vec_tokens_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
-pub fn gen_serde_deserialize_dq_ts(
-    ident: &dyn DisplayPlusToTokens,
-    length: usize,
-) -> (Ts2, Ts2, Ts2) {
+pub fn gen_de_dq_ts(ident: &dyn DisplayPlusToTokens, length: usize) -> (Ts2, Ts2, Ts2) {
     let struct_pg_type_ident_where_tokens_dq_ts = gen_struct_ident_dq_ts(ident);
     let struct_pg_type_ident_where_tokens_with_nbr_els_dq_ts =
         gen_struct_ident_with_nbr_els_dq_ts(ident, length);

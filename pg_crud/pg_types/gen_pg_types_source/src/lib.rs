@@ -1264,7 +1264,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 StartOrEnd::Start => &StartSc,
             }
         };
-        let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
+        let (ser_derive_or_impl, de_derive_or_impl) = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True) {
             #[allow(clippy::arbitrary_source_item_ordering)]
             enum ParamNbr {
                 One,
@@ -1302,7 +1302,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_ts = gen_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc);
             (
                 {
-                    let gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens = |ts: &dyn ToTokens| {
+                    let gen_impl_ser_for_ident_stdrt_not_null_origin_tokens = |ts: &dyn ToTokens| {
                         quote! {
                             #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
@@ -1322,7 +1322,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                         }
                     };
-                    let gen_serde_serialize_content_b5af560e = |ts: &dyn ToTokens| {
+                    let gen_ser_content_b5af560e = |ts: &dyn ToTokens| {
                         quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_stdrt_not_null_origin_dq_ts, &#self_dot_zero_ts #ts)}
                     };
                     let gen_serde_state_init_ts = |param_nbr: &ParamNbr| {
@@ -1342,7 +1342,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_param_ts)?;}
                     };
                     let serde_ser_serialize_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
-                    let serde_serialize_content_e5bb5640_ts = {
+                    let ser_content_e5bb5640_ts = {
                         let gen_self_zero_tokens_ts = |ts: &dyn ToTokens| {
                             quote! {&#self_dot_zero_ts.#ts}
                         };
@@ -1355,9 +1355,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             #serde_ser_serialize_struct_end_ts
                         }
                     };
-                    let impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_ts = gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&serde_serialize_content_e5bb5640_ts);
-                    let impl_serde_serialize_for_uuid_uuid_ts = gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&gen_serde_serialize_content_b5af560e(&quote! {.to_string()}));
-                    let gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_start_end_range_tokens = |ts: &dyn ToTokens| {
+                    let impl_ser_for_pg_type_not_null_tokens_ser_content_e5bb5640_ts = gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&ser_content_e5bb5640_ts);
+                    let impl_ser_for_uuid_uuid_ts = gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&gen_ser_content_b5af560e(&quote! {.to_string()}));
+                    let gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens = |ts: &dyn ToTokens| {
                         let gen_serialize_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
                             let start_or_end_ts = gen_start_or_end_sc(start_or_end);
                             gen_serialize_field_ts(
@@ -1373,7 +1373,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let start_serialize_field_ts = gen_serialize_field_match_std_ops_bound_ts(&StartOrEnd::Start);
                         let end_serialize_field_ts = gen_serialize_field_match_std_ops_bound_ts(&StartOrEnd::End);
-                        gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&quote! {
+                        gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&quote! {
                             #serde_state_init_two_fields_ts
                             #start_serialize_field_ts
                             #end_serialize_field_ts
@@ -1381,8 +1381,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         })
                     };
                     let gen_b5af560e_ts = |ts: &dyn ToTokens|{
-                        DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(
-                            &gen_serde_serialize_content_b5af560e(&ts)
+                        DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(
+                            &gen_ser_content_b5af560e(&ts)
                         ))
                     };
                     match &pg_type {
@@ -1401,7 +1401,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
                         PgType::SqlxPgTypesPgMoneyAsMoney => gen_b5af560e_ts(&quote! {.0}),
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_b5af560e_ts(&quote! {.bytes()}),
-                        PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&{
+                        PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&{
                             let gen_field_inner_type_stdrt_not_null_ts_as_chrono_timelike_ts = |ts: &dyn ToTokens| {
                                 quote! {&(<#inner_type_stdrt_not_null_ts as chrono::Timelike>::#ts)}
                             };
@@ -1423,7 +1423,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 #serde_ser_serialize_struct_end_ts
                             }
                         })),
-                        PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&{
+                        PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&{
                             let gen_serialize_field_self_zero_ts = |v: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&v, &quote! {&self.0.#v()});
                             let hour_serialize_field_ts = gen_serialize_field_self_zero_ts(&HourSc);
                             let minute_serialize_field_ts = gen_serialize_field_self_zero_ts(&MinuteSc);
@@ -1438,7 +1438,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 #serde_ser_serialize_struct_end_ts
                             }
                         })),
-                        PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&{
+                        PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&{
                             let gen_serialize_field_handle_ts = |v: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&v, &quote! {&#self_dot_zero_ts.#v});
                             let months_serialize_field_ts = gen_serialize_field_handle_ts(&MonthsSc);
                             let days_serialize_field_ts = gen_serialize_field_handle_ts(&DaysSc);
@@ -1451,7 +1451,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 #serde_ser_serialize_struct_end_ts
                             }
                         })),
-                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&{
+                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&{
                             enum DateOrTime {
                                 Date,
                                 Time,
@@ -1485,7 +1485,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 #serde_ser_serialize_struct_end_ts
                             }
                         })),
-                        PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_tokens(&{
+                        PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&{
                             enum DateNaiveOrTime {
                                 Date,
                                 Time,
@@ -1512,11 +1512,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 #serde_ser_serialize_struct_end_ts
                             }
                         })),
-                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_serde_serialize_for_uuid_uuid_ts),
-                        PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_serde_serialize_for_pg_type_not_null_tokens_serde_serialize_content_e5bb5640_ts),
-                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
-                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
-                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_serde_serialize_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),
+                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_ser_for_uuid_uuid_ts),
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_ser_for_pg_type_not_null_tokens_ser_content_e5bb5640_ts),
+                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
+                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
+                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),
                     }
                 },
                 {
@@ -3040,11 +3040,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     IsNotNullStdrtCanBePk::False => DeriveOrd::False,
                     IsNotNullStdrtCanBePk::True => DeriveOrd::True,
                 })
-                .derive_serde_serialize_if(match &serde_serialize_derive_or_impl {
+                .derive_serde_serialize_if(match &ser_derive_or_impl {
                     DeriveOrImpl::Derive => DeriveSerdeSerialize::True,
                     DeriveOrImpl::Impl(_) => DeriveSerdeSerialize::False,
                 })
-                .derive_serde_deserialize_if(match &serde_deserialize_derive_or_impl {
+                .derive_serde_deserialize_if(match &de_derive_or_impl {
                     DeriveOrImpl::Derive => DeriveSerdeDeserialize::True,
                     DeriveOrImpl::Impl(_) => DeriveSerdeDeserialize::False,
                 })
@@ -3211,7 +3211,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let mb_pub_enum_ident_stdrt_not_null_origin_try_new_for_deserialize_er_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True)
-                && let DeriveOrImpl::Impl(_) = &serde_deserialize_derive_or_impl
+                && let DeriveOrImpl::Impl(_) = &de_derive_or_impl
             {
                 match &pg_type_deserialize {
                     PgTypeDeserialize::Derive => Ts2::new(),
@@ -3994,11 +3994,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let mb_impl_serde_serialize_for_ident_stdrt_not_null_origin_ts = match &serde_serialize_derive_or_impl {
+            let mb_impl_ser_for_ident_stdrt_not_null_origin_ts = match &ser_derive_or_impl {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(v) => v,
             };
-            let mb_impl_de_for_ident_stdrt_not_null_origin_ts = match &serde_deserialize_derive_or_impl {
+            let mb_impl_de_for_ident_stdrt_not_null_origin_ts = match &de_derive_or_impl {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(v) => v,
             };
@@ -4144,7 +4144,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_ident_origin_ts
                 #impl_from_ident_origin_for_ident_inner_type_ts
                 #mb_impl_is_string_empty_for_ident_origin_ts
-                #mb_impl_serde_serialize_for_ident_stdrt_not_null_origin_ts
+                #mb_impl_ser_for_ident_stdrt_not_null_origin_ts
                 #mb_impl_de_for_ident_stdrt_not_null_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts

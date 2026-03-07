@@ -202,17 +202,17 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             Generic::False => &proc_macro2_ts_new,
                             Generic::True { mb_extra_traits_ts } => {
                                 let send_and_lifetime_ts = quote! {Send + 'lt};
-                                let serde_serialize_ts = quote! {serde::Serialize};
+                                let ser_ts = quote! {serde::Serialize};
                                 let ts = match (&filter_type, &mb_extra_traits_ts) {
                                     (FilterType::PgType, Some(v)) => {
                                         &quote! {#v + #send_and_lifetime_ts}
                                     }
                                     (FilterType::PgType, None) => &send_and_lifetime_ts,
                                     (FilterType::PgJsonType, Some(v)) => {
-                                        &quote! {#v + #serde_serialize_ts + #send_and_lifetime_ts}
+                                        &quote! {#v + #ser_ts + #send_and_lifetime_ts}
                                     }
                                     (FilterType::PgJsonType, None) => {
-                                        &quote! {#serde_serialize_ts + #send_and_lifetime_ts}
+                                        &quote! {#ser_ts + #send_and_lifetime_ts}
                                     }
                                 };
                                 &quote! {, T: #ts}
