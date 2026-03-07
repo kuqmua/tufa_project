@@ -1103,7 +1103,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_where_many_ucc = SelfWhereManyUcc::from_tokens(&ident);
     let ident_where_many_try_new_er_ucc = SelfWhereManyTryNewErUcc::from_tokens(&ident);
-    let ident_where_many_ts = {
+    let ident_where_ts = {
         let fields_decl_ts = gen_fields_named_with_comma_ts(&|el: &SynFieldWrapper| -> Ts2 {
             let fi = &el.ident;
             let el_syn_field_ty_as_pg_type_where_ts = gen_as_pg_type_where_ts(&el.type0);
@@ -1114,7 +1114,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #fi: #opt_pg_type_where_syn_field_ty_as_pg_type_where_ts
             }
         });
-        let ident_where_many_ts = {
+        let ident_where_ts = {
             let ts_2ecd6da8 = StructOrEnumDeriveTsStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -1146,7 +1146,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }},
             );
-        let impl_pub_try_new_for_ident_where_many_ts = gen_impl_pub_try_new_for_ident_ts(
+        let impl_pub_try_new_for_ident_where_ts = gen_impl_pub_try_new_for_ident_ts(
             &Ts2::new(),
             &ident_where_many_ucc,
             &fields_decl_ts,
@@ -1170,7 +1170,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             },
         );
-        let impl_de_for_ident_where_many_ts = gen_impl_de_for_struct_ts(
+        let impl_de_for_ident_where_ts = gen_impl_de_for_struct_ts(
             &ident_where_many_ucc,
             &fields
                 .iter()
@@ -1184,7 +1184,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 )
             },
         );
-        let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_many_ts =
+        let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_ts =
             gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &ident_where_many_ucc,
                 &{
@@ -1200,16 +1200,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             );
         quote! {
-            #ident_where_many_ts
+            #ident_where_ts
             #ident_where_many_try_new_er_ts
-            #impl_pub_try_new_for_ident_where_many_ts
-            #impl_de_for_ident_where_many_ts
-            #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_many_ts
+            #impl_pub_try_new_for_ident_where_ts
+            #impl_de_for_ident_where_ts
+            #impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_ts
         }
     };
     let opt_ident_where_many_ucc = StdOptOptSelfWhereManyUcc::from_tokens(&ident);
-    let opt_ident_where_many_ts = {
-        let opt_ident_where_many_ts = StructOrEnumDeriveTsStreamBuilder::new()
+    let opt_ident_where_ts = {
+        let opt_ident_where_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1221,7 +1221,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_opt_type_decl_ts(&ident_where_many_ucc);
                 quote! {(pub #opt_ident_read_ids_stdrt_not_null_ts);}
             });
-        let impl_pg_type_where_filter_for_opt_ident_where_many_ts =
+        let impl_pg_type_where_filter_for_opt_ident_where_ts =
             impl_pg_type_where_filter_for_ident_ts(
                 &quote! {<'lt>},
                 &opt_ident_where_many_ucc,
@@ -1297,19 +1297,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
                 &Import::PgCrud,
             );
-        let impl_pg_crud_dflt_opt_some_vec_one_el_for_opt_ident_where_many_ts =
+        let impl_pg_crud_dflt_opt_some_vec_one_el_for_opt_ident_where_ts =
             gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lifetime_ts(
                 &opt_ident_where_many_ucc,
                 &quote! {Self(Some(#PgCrudDfltOptSomeVecOneElCall))},
             );
         quote! {
-            #opt_ident_where_many_ts
-            #impl_pg_type_where_filter_for_opt_ident_where_many_ts
-            #impl_pg_crud_dflt_opt_some_vec_one_el_for_opt_ident_where_many_ts
+            #opt_ident_where_ts
+            #impl_pg_type_where_filter_for_opt_ident_where_ts
+            #impl_pg_crud_dflt_opt_some_vec_one_el_for_opt_ident_where_ts
         }
     };
-    let pub_where_many_opt_ident_where_many_ts =
-        quote! {pub #WhereManySc: #opt_ident_where_many_ucc};
+    let pub_where_many_opt_ident_where_ts = quote! {pub #WhereManySc: #opt_ident_where_many_ucc};
     let where_many_pg_crud_dflt_opt_some_vec_one_el_call_ts =
         gen_fi_dflt_opt_some_vec_one_el_call_ts(&WhereManySc);
     let gen_read_or_dm_extra_params_init_ts = |rm_or_dm: &RmOrDm| {
@@ -3518,7 +3517,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ),
                     Op::Rm => gen_params_payload_and_dflt_ts(
                         &quote! {{
-                            #pub_where_many_opt_ident_where_many_ts,
+                            #pub_where_many_opt_ident_where_ts,
                             #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
                             pub #OrderBySc: #pg_crud_order_by_ts<#ident_select_ucc>,
                             pub #PgnSc: #import_ts PgnStartsWithZero,
@@ -3707,7 +3706,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     },
                     Op::Dm => gen_params_payload_and_dflt_ts(
-                        &quote! {{#pub_where_many_opt_ident_where_many_ts}},
+                        &quote! {{#pub_where_many_opt_ident_where_ts}},
                         &quote! {{#where_many_pg_crud_dflt_opt_some_vec_one_el_call_ts}},
                     ),
                     Op::Dlo => gen_params_payload_and_dflt_ts(
@@ -4069,7 +4068,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ),
             )
         };
-        let opt_ident_where_many_ts_dc1232c7 =
+        let opt_ident_where_ts_dc1232c7 =
             gen_fields_named_without_pk_with_comma_ts(&|el: &SynFieldWrapper| {
                 let fi = &el.ident;
                 quote! {#fi: None}
@@ -4405,7 +4404,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ts = gen_try_dm_handle_ts(
                         &quote! {
                             #pk_fi: Some(#some_ts),
-                            #opt_ident_where_many_ts_dc1232c7
+                            #opt_ident_where_ts_dc1232c7
                         },
                         &table_ts,
                     );
@@ -6148,8 +6147,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let common_ts = quote! {
         #ident_prep_pg_er_ts
         #ident_create_ts
-        #ident_where_many_ts
-        #opt_ident_where_many_ts
+        #ident_where_ts
+        #opt_ident_where_ts
         #select_ts
         #ident_read_ts
         #ident_read_ids_ts
