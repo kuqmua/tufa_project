@@ -393,14 +393,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize, OptimalPack)]
     struct GenPgTableConfig {
-        create_many_write_into_file: ShouldWriteTokenStreamIntoFile,
-        create_one_write_into_file: ShouldWriteTokenStreamIntoFile,
-        read_many_write_into_file: ShouldWriteTokenStreamIntoFile,
-        read_one_write_into_file: ShouldWriteTokenStreamIntoFile,
-        update_many_write_into_file: ShouldWriteTokenStreamIntoFile,
-        update_one_write_into_file: ShouldWriteTokenStreamIntoFile,
-        delete_many_write_into_file: ShouldWriteTokenStreamIntoFile,
-        delete_one_write_into_file: ShouldWriteTokenStreamIntoFile,
         tests_write_into_file: ShouldWriteTokenStreamIntoFile,
         common_write_into_file: ShouldWriteTokenStreamIntoFile,
         whole_write_into_file: ShouldWriteTokenStreamIntoFile,
@@ -614,20 +606,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let mut content_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
-        let ts = quote! {
-            #[eo_to_err_string]
-            er: sqlx::Error,
-            loc: location_lib::loc::Loc,
-        };
         let ident_prepare_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
             .derive_location_lib_location()
-            .build_enum(
-                &ident_prepare_pg_er_ucc,
-                &Ts2::new(),
-                &quote! {{
+            .build_enum(&ident_prepare_pg_er_ucc, &Ts2::new(), &{
+                let ts = quote! {
+                    #[eo_to_err_string]
+                    er: sqlx::Error,
+                    loc: location_lib::loc::Loc,
+                };
+                quote! {{
                     #CreateExtensionIfNotExistsPgJsonschemaUcc {
                         #ts
                     },
@@ -637,8 +627,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #PreparePgUcc {
                         #ts
                     },
-                }},
-            );
+                }}
+            });
         let pub_fn_table_ts = quote! {
             #MustUse
             pub const fn #TableNameSc() -> &'static str {
@@ -3952,64 +3942,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         });
     }
-    let create_many_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.create_many_write_into_file,
-        "gen_pg_table_create_many",
-        &create_many_ts,
-        &FormatWithCargofmt::True,
-    );
-    let create_one_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.create_one_write_into_file,
-        "gen_pg_table_create_one",
-        &create_one_ts,
-        &FormatWithCargofmt::True,
-    );
-    let read_many_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.read_many_write_into_file,
-        "gen_pg_table_read_many",
-        &read_many_ts,
-        &FormatWithCargofmt::True,
-    );
-    let read_one_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.read_one_write_into_file,
-        "gen_pg_table_read_one",
-        &read_one_ts,
-        &FormatWithCargofmt::True,
-    );
-    //todo update not only with arr of objects with ids but with WHERE and one object
-    let update_many_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.update_many_write_into_file,
-        "gen_pg_table_update_many",
-        &update_many_ts,
-        &FormatWithCargofmt::True,
-    );
-    let update_one_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.update_one_write_into_file,
-        "gen_pg_table_update_one",
-        &update_one_ts,
-        &FormatWithCargofmt::True,
-    );
-    //todo return deleted rows ids vec
-    let delete_many_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.delete_many_write_into_file,
-        "gen_pg_table_delete_many",
-        &delete_many_ts,
-        &FormatWithCargofmt::True,
-    );
-    let delete_one_ts = Ts2::new();
-    mb_write_ts_into_file(
-        gen_pg_table_config.delete_one_write_into_file,
-        "gen_pg_table_delete_one",
-        &delete_one_ts,
-        &FormatWithCargofmt::True,
-    );
     impl_ident_vec_ts.push(quote!{
         pub fn #RoutesSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts) -> axum::Router {
             Self::#RoutesHandleSc(#AppStateSc, #self_table_name_call_ts)
@@ -6317,14 +6249,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
             #(#content_ts)*
             #common_ts
-            #create_many_ts
-            #create_one_ts
-            #read_many_ts
-            #read_one_ts
-            #update_many_ts
-            #update_one_ts
-            #delete_many_ts
-            #delete_one_ts
             #ident_tests_ts
         };
         quote! {

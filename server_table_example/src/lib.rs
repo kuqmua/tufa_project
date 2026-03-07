@@ -2,14 +2,6 @@ use optimal_pack::OptimalPack;
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, pg_crud::GenPgTable, OptimalPack)]
 #[pg_crud::gen_pg_table_config{{
-    "create_many_write_into_file": "False",
-    "create_one_write_into_file": "False",
-    "read_many_write_into_file": "False",
-    "read_one_write_into_file": "False",
-    "update_many_write_into_file": "False",
-    "update_one_write_into_file": "False",
-    "delete_many_write_into_file": "False",
-    "delete_one_write_into_file": "False",
     "tests_write_into_file": "False",
     "common_write_into_file": "False",
     "whole_write_into_file": "False"
