@@ -2734,12 +2734,29 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #ts
                 }
             };
+            let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
+                operation,
+                &query_part_syn_vrt_wrapper,
+                Location::caller(),
+            );
+            let gen_match_ok_err_ts_85a5eace = |
+                ts0: &dyn ToTokens,
+                ts1: &dyn ToTokens,
+            |gen_match_ok_err_ts_c35d87fd(
+                &ts0,
+                &ts1,
+                &quote!{{#ts_fa8795ea}}
+            );
+            let gen_for_el_in_update_for_query_vec_ts_03fc0945 = |
+                fi: &dyn ToTokens,
+                ts0: &dyn ToTokens,
+                ts1: &dyn ToTokens
+            |gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
+                &ts0,
+                &quote!{&el_a72f3eac.#fi},
+                &ts1
+            ));
             let query_string_ts = {
-                let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
-                    operation,
-                    &query_part_syn_vrt_wrapper,
-                    Location::caller(),
-                );
                 let gen_match_ok_err_ts_dd5366af = |
                     ts0: &dyn ToTokens,
                     ts1: &dyn ToTokens,
@@ -2750,14 +2767,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &ts1,
                     &ts2,
                     &ts3,
-                    &quote!{{#ts_fa8795ea}}
-                );
-                let gen_match_ok_err_ts_85a5eace = |
-                    ts0: &dyn ToTokens,
-                    ts1: &dyn ToTokens,
-                |gen_match_ok_err_ts_c35d87fd(
-                    &ts0,
-                    &ts1,
                     &quote!{{#ts_fa8795ea}}
                 );
                 let write_into_buffer_query_part_syn_vrt_er_init_eprintln_res_creation_ts = {
@@ -2958,9 +2967,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         break;
                                     }
                                 });
-                                let ts_33401696 = gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
+                                let ts_33401696 = gen_for_el_in_update_for_query_vec_ts_03fc0945(
+                                    &fi,
                                     &quote!{v_3ea04126},
-                                    &quote!{&el_a72f3eac.#fi},
                                     &{
                                         let ts0 = gen_match_ok_err_ts_85a5eace(
                                             &quote!{el_a72f3eac.#UpdateQueryPartPkSc(&mut #IncrSc)},
@@ -2978,7 +2987,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             ));
                                         }
                                     }
-                                ));
+                                );
                                 quote! {
                                     {
                                         let mut #is_fi_update_exists_sc = false;
@@ -3169,10 +3178,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::UpdateMany => {
                         let fields_named_without_pk_update_assignment_ts =
                             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                                let fi = &el.ident;
-                                gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
+                                gen_for_el_in_update_for_query_vec_ts_03fc0945(
+                                    &el.ident,
                                     &quote!{v_2edaa480},
-                                    &quote!{&el_a72f3eac.#fi},
                                     &{
                                         let ts = gen_match_query_bind_or_err_ts_519a3119(
                                             &{
@@ -3192,7 +3200,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             #ts
                                         }
                                     }
-                                ))
+                                )
                             });
                         let pk_update_assignment_ts = gen_for_el_in_update_for_query_vec_ts(&gen_match_query_bind_or_err_ts_519a3119(
                             &quote!{#pk_ft_as_pg_type_ts #UpdateQueryBindSc(
@@ -3203,19 +3211,20 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ));
                         let binded_query_select_only_updated_ids_query_bind_ts =
                             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
-                                let fi = &el.ident;
-                                let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                                gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
+                                gen_for_el_in_update_for_query_vec_ts_03fc0945(
+                                    &el.ident,
                                     &quote!{v_47030ac2},
-                                    &quote!{&el_a72f3eac.#fi},
                                     &gen_match_query_bind_or_err_ts_519a3119(
-                                        &quote!{#as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
-                                            &v_47030ac2.#VSc,
-                                            #QuerySc
-                                        )},
+                                        &{
+                                            let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
+                                            quote!{#as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
+                                                &v_47030ac2.#VSc,
+                                                #QuerySc
+                                            )}
+                                        },
                                         &quote!{v_c5b79b95},
                                     )
-                                ))
+                                )
                             });
                         quote! {
                             #fields_named_without_pk_update_assignment_ts
