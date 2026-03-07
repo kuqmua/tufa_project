@@ -602,6 +602,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #acc_ts
         }
     };
+    let gen_acc_string_pop_ok_acc_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
+        let ts0 = gen_acc_string_pop_ts(acc_ts, ts);
+        quote! {
+            #ts0
+            Ok(#acc_ts)
+        }
+    };
     let mut impl_ident_vec_ts = Vec::new();
     let impl_ident_ts = {
         let ident_prepare_pg_er_ucc = SelfPreparePgErUcc::from_tokens(&ident);
@@ -744,8 +751,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 quote! {#ident_select_ucc::#fi_ucc_ts(#ColumnSc) #init_ts}
             });
-            let opt_char_ts = gen_opt_type_decl_ts(&Char);
-            let ts0 = gen_acc_string_pop_ts(
+            let ts0 = gen_acc_string_pop_ok_acc_ts(
                 &quote! {acc},
                 &quote! {
                     for el in #SelectSc.to_vec() {
@@ -759,7 +765,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             quote! {
                 fn #GenSelectQueryPartSc(#select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts) -> Result<#StringTs, #import_ts #QueryPartErUcc> {
                     #ts0
-                    Ok(acc)
                 }
             }
         };
@@ -1057,7 +1062,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {self.#el_fi}
                         })
                     });
-                let ts = gen_acc_string_pop_ts(
+                let ts = gen_acc_string_pop_ok_acc_ts(
                     &quote! {acc_a097110b},
                     &quote! {
                         #pk_ts
@@ -1067,7 +1072,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     fn #CreateQueryPartSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #import_ts #QueryPartErUcc> {
                         #ts
-                        Ok(acc_a097110b)
                     }
                 }
             };
@@ -1988,7 +1992,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     )
                 });
-                let ts0 = gen_acc_string_pop_ts(
+                let ts0 = gen_acc_string_pop_ok_acc_ts(
                     &quote! {acc_88c91f52},
                     &quote! {
                         #pk_ts
@@ -1998,7 +2002,6 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 quote! {
                     fn #SelectOnlyUpdatedIdsQueryPartSc(&self, #IncrSc: &mut u64) -> Result<#StringTs, #import_ts QueryPartEr> {
                         #ts0
-                        Ok(acc_88c91f52)
                     }
                 }
             };
