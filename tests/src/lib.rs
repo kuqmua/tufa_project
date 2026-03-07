@@ -208,6 +208,7 @@ mod tests {
                 String::from("shadowing_supertrait_items"),
                 String::from("unqualified_local_imports"), //need to use some kind of different test flag or something for this
                 String::from("unreachable_cfg_select_predicates"),
+                String::from("default_overrides_default_fields"),
             ],
         );
     }
@@ -361,7 +362,7 @@ mod tests {
             } else if v_table_len == 3 {
                 check_version(&v_table);
                 check_features(&v_table);
-                match v_table.get("dflt-features").expect("847a138f") {
+                match v_table.get("default-features").expect("847a138f") {
                     &Value::Boolean(_) => (),
                     &Value::String(_)
                     | &Value::Table(_)
