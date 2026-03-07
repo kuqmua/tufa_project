@@ -19,7 +19,7 @@ serde.workspace = true
 token_patterns = {path = "../token_patterns"}
 gen_quotes = {path = "../gen_quotes"}
 naming = {path = "../naming"}
-gen_struct_or_enum_derive_ts_builder = {path = "./gen_struct_or_enum_derive_ts_builder"}
+gen_derive_ts_builder = {path = "./gen_derive_ts_builder"}
 optml = {path = "../optml"}
 
 [lints]

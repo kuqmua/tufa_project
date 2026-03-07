@@ -2,10 +2,10 @@ use enum_extension_lib::EnumExtension;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::{
     DeriveCopy, DeriveDefault, DeriveEq, DeriveOrd, DerivePartialOrd, DeriveSerdeDeserialize,
-    DeriveSerdeSerialize, FormatWithCargofmt, ShouldWriteTsIntoFile,
-    StructOrEnumDeriveTsStreamBuilder, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_display_ts, gen_impl_from_ts, gen_impl_to_err_string_ts, gen_new_ts,
-    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, mb_write_ts_into_file,
+    DeriveSerdeSerialize, DeriveTsBuilder, FormatWithCargofmt, ShouldWriteTsIntoFile,
+    gen_const_new_ts, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_from_ts,
+    gen_impl_to_err_string_ts, gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts,
+    gen_pub_try_new_ts, mb_write_ts_into_file,
 };
 use naming::{
     ArrOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
@@ -2513,7 +2513,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let sqlx_types_chrono_naive_date_max_fn_ts = quote!{sqlx_types_chrono_naive_date_max};
         let sqlx_types_chrono_naive_date_max_pred_opt_expect_fn_ts = quote!{sqlx_types_chrono_naive_date_max_pred_opt_expect};
         let ident_ts = {
-            let ident_ts = StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_ts = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -2993,7 +2993,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_update_ucc = SelfUpdateUcc::from_tokens(&ident);
         let ident_origin_ts = {
-            let ident_origin_ts = StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_origin_ts = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -3123,7 +3123,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let mb_pub_enum_ident_stdrt_not_null_origin_try_new_er_ts = if matches!(&is_stdrt_not_null, IsStdrtNotNull::True)
                 && let Ok(pg_type_init_try_new) = &pg_type_init_try_new_try_from_pg_type
             {
-                let ts_d57d5de2 = StructOrEnumDeriveTsStreamBuilder::new()
+                let ts_d57d5de2 = DeriveTsBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_serde_serialize()
@@ -3217,7 +3217,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &pg_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                         PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => Ts2::new(),
                         PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(pg_type_impl_try_new_for_deserialize) => {
-                            let ts_026f2a24 = StructOrEnumDeriveTsStreamBuilder::new()
+                            let ts_026f2a24 = DeriveTsBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_serde_serialize()
@@ -4156,7 +4156,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let gen_pub_struct_tokens_ts = |ident_ts_46b769df: &dyn ToTokens, ts: &dyn ToTokens, derive_dflt: DeriveDefault| {
-            StructOrEnumDeriveTsStreamBuilder::new()
+            DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_default_if(derive_dflt)
@@ -4174,7 +4174,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_origin_struct_ts = quote!{(#ident_origin_ucc);};
         let ident_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident);
         let ident_table_type_ts = {
-            let ident_table_type_ts = StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_table_type_ts = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -4279,7 +4279,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
         let ident_create_ts = {
             let ident_create_ts = match &can_be_pk {
-                CanBePk::False => StructOrEnumDeriveTsStreamBuilder::new()
+                CanBePk::False => DeriveTsBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -4710,7 +4710,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         DeriveOrd::True
                     ),
                 };
-                StructOrEnumDeriveTsStreamBuilder::new()
+                DeriveTsBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -4772,7 +4772,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_read_ids_ucc = SelfReadIdsUcc::from_tokens(&ident);
         let ident_read_ids_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
-            let ident_read_ids_ts = StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_read_ids_ts = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -4804,7 +4804,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             pub type #ident_read_inner_ucc = #ident_inner_type_ts;
         };
         let ident_update_ts = {
-            let ident_update_ts = StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_update_ts = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -4830,7 +4830,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_update_for_query_ucc = SelfUpdateForQueryUcc::from_tokens(&ident);
         let ident_update_for_query_ts = {
-            let ident_update_for_query_ts = StructOrEnumDeriveTsStreamBuilder::new()
+            let ident_update_for_query_ts = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()

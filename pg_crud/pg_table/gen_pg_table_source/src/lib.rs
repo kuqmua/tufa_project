@@ -1,9 +1,9 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    AttrIdentStr, DeriveClone, DeriveCopy, FormatWithCargofmt, LocationFieldAttr,
-    ShouldWriteTsIntoFile, StatusCode, StructOrEnumDeriveTsStreamBuilder, SynField,
-    gen_field_loc_new_ts, gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts,
-    gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
+    AttrIdentStr, DeriveClone, DeriveCopy, DeriveTsBuilder, FormatWithCargofmt, LocationFieldAttr,
+    ShouldWriteTsIntoFile, StatusCode, SynField, gen_field_loc_new_ts,
+    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
+    gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
     loc_syn_field, mb_write_ts_into_file,
 };
@@ -586,7 +586,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let mut op_routes_ts = Vec::new();
     let mut content_ts = Vec::new();
     let ident_prep_pg_er_ucc = SelfPrepPgErUcc::from_tokens(&ident);
-    let ident_prep_pg_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+    let ident_prep_pg_er_ts = DeriveTsBuilder::new()
         .make_pub()
         .derive_debug()
         .derive_thiserror_error()
@@ -956,7 +956,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     let ident_create_ts = {
-        let ident_create_ts = StructOrEnumDeriveTsStreamBuilder::new()
+        let ident_create_ts = DeriveTsBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1108,7 +1108,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         });
         let ident_where_ts = {
-            let ts_2ecd6da8 = StructOrEnumDeriveTsStreamBuilder::new()
+            let ts_2ecd6da8 = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1120,7 +1120,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ts_2ecd6da8
             }
         };
-        let ident_where_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+        let ident_where_try_new_er_ts = DeriveTsBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
@@ -1198,7 +1198,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let opt_ident_where_ucc = StdOptOptSelfWhereManyUcc::from_tokens(&ident);
     let opt_ident_where_ts = {
-        let opt_ident_where_ts = StructOrEnumDeriveTsStreamBuilder::new()
+        let opt_ident_where_ts = DeriveTsBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1374,7 +1374,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
     let select_ts = {
         let ident_select_ts = {
-            let ts_179037cd = StructOrEnumDeriveTsStreamBuilder::new()
+            let ts_179037cd = DeriveTsBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
@@ -1435,7 +1435,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         gen_fi_dflt_opt_some_vec_one_el_call_ts(&SelectSc);
     let ident_read_ts = {
         let ident_read_ts = {
-            let ts_f80f1f3e = StructOrEnumDeriveTsStreamBuilder::new()
+            let ts_f80f1f3e = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_partial_eq()
@@ -1567,7 +1567,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_read_ids_ts = {
         let ident_read_ids_ts = {
-            let ts_472e3ebf = StructOrEnumDeriveTsStreamBuilder::new()
+            let ts_472e3ebf = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1706,7 +1706,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let ident_update_ts = {
-            let ts_a09c0471 = StructOrEnumDeriveTsStreamBuilder::new()
+            let ts_a09c0471 = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_serde_serialize()
@@ -1717,7 +1717,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #ts_a09c0471
             }
         };
-        let ident_update_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+        let ident_update_try_new_er_ts = DeriveTsBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_thiserror_error()
@@ -1808,7 +1808,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     };
     let ident_update_for_query_ts = {
         let ident_update_for_query_ts = {
-            let ts_50ae0c5f = StructOrEnumDeriveTsStreamBuilder::new()
+            let ts_50ae0c5f = DeriveTsBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_serde_serialize()
@@ -3448,7 +3448,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         let ident_op_payload_ts = {
                             let (derive_clone, derive_copy) = op.derive_clone_and_copy();
-                            let ts_ec5b096c = StructOrEnumDeriveTsStreamBuilder::new()
+                            let ts_ec5b096c = DeriveTsBuilder::new()
                                 .make_pub()
                                 .derive_debug()
                                 .derive_clone_if(derive_clone)
@@ -3526,7 +3526,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Op::Um => {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         let vec_ident_update_ts = gen_vec_tokens_decl_ts(&ident_update_ucc);
-                        let ident_op_payload_vec_ts = StructOrEnumDeriveTsStreamBuilder::new()
+                        let ident_op_payload_vec_ts = DeriveTsBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_serde_serialize()
@@ -3540,7 +3540,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             format!("{ident}{op}PayloadTryNewEr")
                                 .parse::<Ts2>()
                                 .expect("3da248bb");
-                        let ident_op_payload_try_new_er_ts = StructOrEnumDeriveTsStreamBuilder::new()
+                        let ident_op_payload_try_new_er_ts = DeriveTsBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_thiserror_error()
@@ -3691,7 +3691,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             let params_ts = {
                 let (derive_clone, derive_copy) = op.derive_clone_and_copy();
-                let ts_0d032fce = StructOrEnumDeriveTsStreamBuilder::new()
+                let ts_0d032fce = DeriveTsBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone_if(derive_clone)
@@ -3710,7 +3710,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let op_ts = {
                 let ident_op_res_vrts_ucc = gen_ident_op_res_vrts_ucc(op);
                 let ident_try_op_logic_res_vrts_ts = {
-                    let ts_c997a274 = StructOrEnumDeriveTsStreamBuilder::new()
+                    let ts_c997a274 = DeriveTsBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_serde_serialize()
@@ -3774,7 +3774,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let ident_op_er_ts = {
-                    let ts_685e0be8 = StructOrEnumDeriveTsStreamBuilder::new()
+                    let ts_685e0be8 = DeriveTsBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_thiserror_error()
@@ -3797,7 +3797,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             let try_op_ts = {
-                let enum_ts = StructOrEnumDeriveTsStreamBuilder::new()
+                let enum_ts = DeriveTsBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_thiserror_error()

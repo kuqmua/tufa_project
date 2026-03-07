@@ -1,4 +1,5 @@
 mod attr_ident_str;
+mod derive_ts_builder;
 mod gen_field_loc_new_ts;
 mod gen_if_write_is_err_ts;
 mod gen_impl_dflt_ts;
@@ -14,12 +15,16 @@ mod loc_syn_field;
 mod location;
 mod pgn_start_end_init_ts;
 mod status_code;
-mod struct_or_enum_derive_ts_builder;
 mod syn_field;
 mod wrap_derive;
 mod write_string_into_file;
 mod write_ts_into_file;
 pub use attr_ident_str::AttrIdentStr;
+pub use derive_ts_builder::{
+    DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq, DeriveLocationLibLocation,
+    DeriveOrd, DerivePartialEq, DerivePartialOrd, DeriveSchemarsJsonSchema, DeriveSerdeDeserialize,
+    DeriveSerdeSerialize, DeriveThiserrorError, DeriveTsBuilder, DeriveUtoipaToSchema, MakePub,
+};
 pub use gen_field_loc_new_ts::gen_field_loc_new_ts;
 pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};
 pub use gen_impl_dflt_ts::gen_impl_dflt_ts;
@@ -42,12 +47,6 @@ pub use loc_syn_field::loc_syn_field;
 pub use location::{LocationFieldAttr, gen_serde_version_of_named_syn_vrt};
 pub use pgn_start_end_init_ts::pgn_start_end_init_ts;
 pub use status_code::{StatusCode, get_only_one};
-pub use struct_or_enum_derive_ts_builder::{
-    DeriveClone, DeriveCopy, DeriveDebug, DeriveDefault, DeriveEq, DeriveLocationLibLocation,
-    DeriveOrd, DerivePartialEq, DerivePartialOrd, DeriveSchemarsJsonSchema, DeriveSerdeDeserialize,
-    DeriveSerdeSerialize, DeriveThiserrorError, DeriveUtoipaToSchema, MakePub,
-    StructOrEnumDeriveTsStreamBuilder,
-};
 pub use syn_field::SynField;
 pub use wrap_derive::wrap_derive;
 pub use write_string_into_file::write_string_into_file;

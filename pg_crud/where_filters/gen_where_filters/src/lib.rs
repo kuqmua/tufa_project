@@ -1,5 +1,5 @@
 use gen_quotes::dq_ts;
-use macros_helpers::{DeriveSerdeDeserialize, StructOrEnumDeriveTsStreamBuilder};
+use macros_helpers::{DeriveSerdeDeserialize, DeriveTsBuilder};
 use macros_helpers::{
     FormatWithCargofmt, ShouldWriteTsIntoFile, gen_if_write_is_err_ts, mb_write_ts_into_file,
 };
@@ -131,7 +131,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         } else {
             &PubSc
         };
-        StructOrEnumDeriveTsStreamBuilder::new()
+        DeriveTsBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()

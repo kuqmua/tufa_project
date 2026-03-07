@@ -4,7 +4,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde_json::from_str;
 #[proc_macro]
-pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
+pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
     use naming::param::{DeriveSelfIfSc, DeriveSelfSc, DeriveSelfUcc};
     #[derive(Clone, Optml)]
     struct El {
@@ -130,7 +130,7 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             }
         }
     });
-    let struct_or_enum_derive_ts_builder_ucc = quote! {StructOrEnumDeriveTsStreamBuilder};
+    let derive_ts_builder_ucc = quote! {DeriveTsBuilder};
     let struct_or_enum_ucc = quote! {StructOrEnum};
     let quote_to_tokens_ts = quote! {quote::ToTokens};
     let generated: Ts2 = quote! {
@@ -142,11 +142,11 @@ pub fn gen_struct_or_enum_derive_ts_builder(input_ts: Ts) -> Ts {
             Enum
         }
         #[derive(Debug, Default, Clone, Copy, optml::Optml)]
-        pub struct #struct_or_enum_derive_ts_builder_ucc {
+        pub struct #derive_ts_builder_ucc {
             #make_pub_derive_trait_name_bool_ts
             #(#field_vec_ts)*
         }
-        impl #struct_or_enum_derive_ts_builder_ucc {
+        impl #derive_ts_builder_ucc {
             pub fn new() -> Self {
                 Self::default()
             }

@@ -43,7 +43,7 @@ members = [
   "pg_crud/where_filters/gen_where_filters",
   "gen_quotes",
   "macros_helpers",
-  "macros_helpers/gen_struct_or_enum_derive_ts_builder",
+  "macros_helpers/gen_derive_ts_builder",
   "server",
   "server_app_state",
   "server_config",
