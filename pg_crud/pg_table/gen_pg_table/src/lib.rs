@@ -28,7 +28,7 @@ pub fn um_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn delete_one_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn dlo_extra_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -68,7 +68,7 @@ pub fn dm_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn delete_one_extra_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn dlo_extra_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]

@@ -59,7 +59,7 @@ server_config = {path = "../../../server_config"}"#,
                             "um_write_into_file": "False",
                             "uo_write_into_file": "False",
                             "dm_write_into_file": "False",
-                            "delete_one_write_into_file": "False",
+                            "dlo_write_into_file": "False",
                             "tests_write_into_file": "False",
                             "common_write_into_file": "False",
                             "whole_write_into_file": "False"
@@ -71,7 +71,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::um_extra_er_vrts{enum UmExtraErVrts{}}]
                         #[pg_crud::uo_extra_er_vrts{enum UoExtraErVrts{}}]
                         #[pg_crud::dm_extra_er_vrts{enum DmExtraErVrts{}}]
-                        #[pg_crud::delete_one_extra_er_vrts{enum DeleteOneExtraErVrts{}}]
+                        #[pg_crud::dlo_extra_er_vrts{enum DloExtraErVrts{}}]
                         #[pg_crud::common_extra_er_vrts{
                             enum CommonExtraErVrts {
                                 CheckCommit {
@@ -88,7 +88,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::um_extra_logic{}]
                         #[pg_crud::uo_extra_logic{}]
                         #[pg_crud::dm_extra_logic{}]
-                        #[pg_crud::delete_one_extra_logic{}]
+                        #[pg_crud::dlo_extra_logic{}]
                         #[pg_crud::common_extra_logic{}]
                         pub struct TableExample {
                             #mb_gen_pg_table_pk_ts

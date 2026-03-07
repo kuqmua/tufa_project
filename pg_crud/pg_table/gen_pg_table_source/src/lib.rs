@@ -17,10 +17,10 @@ use naming::{
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQueryBindSc, CreateQueryPartSc, CreateSc, CreateTableColumnQueryPartSc, CreateUcc,
     DefaultOptSomeVecOneElMaxPageSizeSc, DefaultOptSomeVecOneElMaxPageSizeUcc,
-    DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeleteOneExtraErVrtsSc,
-    DeleteOneExtraLogicSc, DeserializeResUcc, DesirableUcc, DisplayPlusToTokens, DisplayToScStr,
-    DmExtraErVrtsSc, DmExtraLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc,
-    ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc,
+    DefaultOptSomeVecOneElSc, DefaultOptSomeVecOneElUcc, DeserializeResUcc, DesirableUcc,
+    DisplayPlusToTokens, DisplayToScStr, DloExtraErVrtsSc, DloExtraLogicSc, DmExtraErVrtsSc,
+    DmExtraLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
+    ExtraParamsSc, FailedToGetResTextUcc, FalseSc, FromHandleSc, FutureSc,
     GenColumnQuealsVCommaUoQueryPartSc, GenPgTablePkSc, GenSelectQueryPartSc,
     GenWhenColumnIdThenVUmQueryPartSc, HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc,
     IdentCreateDefaultSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc,
@@ -51,16 +51,15 @@ use naming::{
     UpdateQueryPartPkSc, UpdateQueryPartSc, UpdateSc, UpdateUcc, UrlSc, VSc, VUcc, WhereManySc,
     WhereUcc,
     param::{
-        ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDeleteOneErWithSerdeUcc,
-        SelfDeleteOneParamsUcc, SelfDeleteOnePayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc,
-        SelfErWithSerdeSc, SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc,
-        SelfPreparePgErUcc, SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc, SelfReadOnlyIdsUcc,
-        SelfReadUcc, SelfRoErWithSerdeUcc, SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc,
-        SelfTryDeleteOneErUcc, SelfTryRoErUcc, SelfUmParamsUcc, SelfUmPayloadUcc,
-        SelfUpdateForQueryUcc, SelfUpdateTryNewErUcc, SelfUpdateUcc, SelfWhereManyTryNewErUcc,
-        SelfWhereManyUcc, StdOptOptSelfWhereManyUcc,
-        TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc, TrySelfHandleSc, TrySelfSc,
-        UpdateQueryPartSelfSc,
+        ErSelfSc, IsSelfUpdateExistSc, SelfCreateUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
+        SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
+        SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPreparePgErUcc,
+        SelfReadOnlyIdsToTwoDimsVecReadInnerAccSc, SelfReadOnlyIdsUcc, SelfReadUcc,
+        SelfRoErWithSerdeUcc, SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc,
+        SelfTryRoErUcc, SelfUmParamsUcc, SelfUmPayloadUcc, SelfUpdateForQueryUcc,
+        SelfUpdateTryNewErUcc, SelfUpdateUcc, SelfWhereManyTryNewErUcc, SelfWhereManyUcc,
+        StdOptOptSelfWhereManyUcc, TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc,
+        TrySelfHandleSc, TrySelfSc, UpdateQueryPartSelfSc,
     },
 };
 use optimal_pack::OptimalPack;
@@ -104,7 +103,7 @@ use token_patterns::{
 //todo decide where to do er log (mb add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
 //todo created at and updated at fields + created by + updated by
-//todo attrs for activation generation crud methods(like gen create, uo, delete_one)
+//todo attrs for activation generation crud methods(like gen create, uo, dlo)
 //todo authorization for returning concrete er or just minimal info(user role)
 //todo gen rules and roles
 //todo mb add unnest sql types?
@@ -176,7 +175,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Um,
         Uo,
         Dm,
-        DeleteOne,
+        Dlo,
     }
     impl Operation {
         const fn derive_clone_and_copy(self) -> (DeriveClone, DeriveCopy) {
@@ -184,13 +183,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Cm | Self::Co | Self::Rm | Self::Ro | Self::Um | Self::Uo | Self::Dm => {
                     (DeriveClone::False, DeriveCopy::False)
                 }
-                Self::DeleteOne => (DeriveClone::True, DeriveCopy::True),
+                Self::Dlo => (DeriveClone::True, DeriveCopy::True),
             }
         }
         const fn desirable_status_code(self) -> StatusCode {
             match self {
                 Self::Cm | Self::Co => StatusCode::Created201,
-                Self::Rm | Self::Ro | Self::Um | Self::Uo | Self::Dm | Self::DeleteOne => {
+                Self::Rm | Self::Ro | Self::Um | Self::Uo | Self::Dm | Self::Dlo => {
                     StatusCode::Ok200
                 }
             }
@@ -204,7 +203,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Um => GenPgTableAttr::UmExtraErVrts,
                 Self::Uo => GenPgTableAttr::UoExtraErVrts,
                 Self::Dm => GenPgTableAttr::DmExtraErVrts,
-                Self::DeleteOne => GenPgTableAttr::DeleteOneExtraErVrts,
+                Self::Dlo => GenPgTableAttr::DloExtraErVrts,
             }
         }
         const fn gen_pg_table_attr_extra_logic(self) -> GenPgTableAttr {
@@ -216,14 +215,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Um => GenPgTableAttr::UmExtraLogic,
                 Self::Uo => GenPgTableAttr::UoExtraLogic,
                 Self::Dm => GenPgTableAttr::DmExtraLogic,
-                Self::DeleteOne => GenPgTableAttr::DeleteOneExtraLogic,
+                Self::Dlo => GenPgTableAttr::DloExtraLogic,
             }
         }
         const fn http_method(self) -> OperationHttpMethod {
             match self {
                 Self::Cm | Self::Co | Self::Rm | Self::Ro => OperationHttpMethod::Post,
                 Self::Um | Self::Uo => OperationHttpMethod::Patch,
-                Self::Dm | Self::DeleteOne => OperationHttpMethod::Delete,
+                Self::Dm | Self::Dlo => OperationHttpMethod::Delete,
             }
         }
         fn operation_er_with_serde_sc(self) -> SelfErWithSerdeSc {
@@ -261,7 +260,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Self::Um => write!(f, "Um"),
                 Self::Uo => write!(f, "Uo"),
                 Self::Dm => write!(f, "Dm"),
-                Self::DeleteOne => write!(f, "DeleteOne"),
+                Self::Dlo => write!(f, "Dlo"),
             }
         }
     }
@@ -290,12 +289,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         }
     }
-    impl From<&CreateOrUpdateOrDeleteOne> for Operation {
-        fn from(v: &CreateOrUpdateOrDeleteOne) -> Self {
+    impl From<&CreateOrUpdateOrDlo> for Operation {
+        fn from(v: &CreateOrUpdateOrDlo) -> Self {
             match &v {
-                CreateOrUpdateOrDeleteOne::Create => Self::Co,
-                CreateOrUpdateOrDeleteOne::Update => Self::Uo,
-                CreateOrUpdateOrDeleteOne::Delete => Self::DeleteOne,
+                CreateOrUpdateOrDlo::Create => Self::Co,
+                CreateOrUpdateOrDlo::Update => Self::Uo,
+                CreateOrUpdateOrDlo::Delete => Self::Dlo,
             }
         }
     }
@@ -325,7 +324,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         UmExtraErVrts,
         UoExtraErVrts,
         DmExtraErVrts,
-        DeleteOneExtraErVrts,
+        DloExtraErVrts,
         CommonExtraErVrts,
         CmExtraLogic,
         CoExtraLogic,
@@ -334,7 +333,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         UmExtraLogic,
         UoExtraLogic,
         DmExtraLogic,
-        DeleteOneExtraLogic,
+        DloExtraLogic,
         CommonExtraLogic,
     }
     impl GenPgTableAttr {
@@ -349,7 +348,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::UmExtraErVrts => UmExtraErVrtsSc.to_string(),
                     Self::UoExtraErVrts => UoExtraErVrtsSc.to_string(),
                     Self::DmExtraErVrts => DmExtraErVrtsSc.to_string(),
-                    Self::DeleteOneExtraErVrts => DeleteOneExtraErVrtsSc.to_string(),
+                    Self::DloExtraErVrts => DloExtraErVrtsSc.to_string(),
                     Self::CommonExtraErVrts => CommonExtraErVrtsSc.to_string(),
                     Self::CmExtraLogic => CmExtraLogicSc.to_string(),
                     Self::CoExtraLogic => CoExtraLogicSc.to_string(),
@@ -358,7 +357,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::UmExtraLogic => UmExtraLogicSc.to_string(),
                     Self::UoExtraLogic => UoExtraLogicSc.to_string(),
                     Self::DmExtraLogic => DmExtraLogicSc.to_string(),
-                    Self::DeleteOneExtraLogic => DeleteOneExtraLogicSc.to_string(),
+                    Self::DloExtraLogic => DloExtraLogicSc.to_string(),
                     Self::CommonExtraLogic => CommonExtraLogicSc.to_string(),
                 }
             )
@@ -375,7 +374,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Delete,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    enum CreateOrUpdateOrDeleteOne {
+    enum CreateOrUpdateOrDlo {
         Create,
         Update,
         Delete,
@@ -498,12 +497,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_read_only_ids_ucc = SelfReadOnlyIdsUcc::from_tokens(&ident);
     let ident_dm_params_ucc = SelfDmParamsUcc::from_tokens(&ident);
     let ident_dm_payload_ucc = SelfDmPayloadUcc::from_tokens(&ident);
-    let ident_delete_one_params_ucc = SelfDeleteOneParamsUcc::from_tokens(&ident);
-    let ident_delete_one_payload_ucc = SelfDeleteOnePayloadUcc::from_tokens(&ident);
+    let ident_dlo_params_ucc = SelfDloParamsUcc::from_tokens(&ident);
+    let ident_dlo_payload_ucc = SelfDloPayloadUcc::from_tokens(&ident);
     let ident_try_ro_er_ucc = SelfTryRoErUcc::from_tokens(&ident);
     let ident_ro_er_with_serde_ucc = SelfRoErWithSerdeUcc::from_tokens(&ident);
-    let ident_try_delete_one_er_ucc = SelfTryDeleteOneErUcc::from_tokens(&ident);
-    let ident_delete_one_er_with_serde_ucc = SelfDeleteOneErWithSerdeUcc::from_tokens(&ident);
+    let ident_try_dlo_er_ucc = SelfTryDloErUcc::from_tokens(&ident);
+    let ident_dlo_er_with_serde_ucc = SelfDloErWithSerdeUcc::from_tokens(&ident);
     let vec_pk_ft_read_ts = gen_vec_tokens_decl_ts(&pk_ft_as_pg_type_read_ucc);
     let vec_ident_read_only_ids_ts = gen_vec_tokens_decl_ts(&ident_read_only_ids_ucc);
     let pk_fi = &pk_field.ident;
@@ -2388,7 +2387,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         | Operation::Ro
         | Operation::Um
         | Operation::Dm
-        | Operation::DeleteOne => format!("{ident}{operation}{PayloadUcc}")
+        | Operation::Dlo => format!("{ident}{operation}{PayloadUcc}")
             .parse::<Ts2>()
             .expect("c042f504"),
     };
@@ -2418,7 +2417,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Operation::Um,
         Operation::Uo,
         Operation::Dm,
-        Operation::DeleteOne,
+        Operation::Dlo,
     ] {
         let operation_handle_sc_ts = operation.self_handle_sc_ts();
         let operation_sc_ts = operation.self_sc_ts();
@@ -2462,7 +2461,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     acc.push(query_part_syn_vrt_wrapper.get_syn_vrt());
                 }
                 if let Operation::Cm
-                | Operation::DeleteOne
+                | Operation::Dlo
                 | Operation::Co
                 | Operation::Um
                 | Operation::Uo
@@ -2484,7 +2483,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Operation::Um |
                 Operation::Uo => quote!{patch},
                 Operation::Dm |
-                Operation::DeleteOne => quote!{delete},
+                Operation::Dlo => quote!{delete},
             };
             let operation_payload_example_sc =
                 operation.operation_payload_example_sc();
@@ -2517,7 +2516,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::Rm => &vec_struct_opts_ident_ts,
                     Operation::Ro => &ident_read_ucc,
                     Operation::Dm => &vec_pk_ft_read_ts,
-                    Operation::DeleteOne => &pk_ft_as_pg_type_read_ucc,
+                    Operation::Dlo => &pk_ft_as_pg_type_read_ucc,
                     Operation::Co | Operation::Uo => &ident_read_only_ids_ucc,
                     Operation::Cm | Operation::Um => &vec_ident_read_only_ids_ts,
                 };
@@ -2777,7 +2776,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         | Operation::Rm
                         | Operation::Ro
                         | Operation::Dm
-                        | Operation::DeleteOne => params_logic_ts0,
+                        | Operation::Dlo => params_logic_ts0,
                         Operation::Um => quote! {
                             #params_logic_ts0
                             let #UpdateForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
@@ -3143,7 +3142,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Self::#PkSc(),
                             )}
                         }
-                        Operation::DeleteOne => quote! {#import_ts gen_delete_one_query_string(
+                        Operation::Dlo => quote! {#import_ts gen_dlo_query_string(
                             #TableSc,
                             Self::#PkSc(),
                         )},
@@ -3302,7 +3301,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 operation,
                             )
                         }
-                        Operation::DeleteOne => gen_match_query_bind_or_err_ts_519a3119(
+                        Operation::Dlo => gen_match_query_bind_or_err_ts_519a3119(
                             &quote! {#import_ts PgTypeWhereFilter::query_bind(
                                 #ParamsSc.#PayloadSc.#pk_fi,
                                 #QuerySc
@@ -3379,26 +3378,26 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &ShouldWrapIntoV::True,
                             )
                         };
-                    let gen_create_update_delete_one_fetch_ts =
-                        |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
+                    let gen_create_update_dlo_fetch_ts =
+                        |create_or_update_or_dlo: &CreateOrUpdateOrDlo| {
                             wrap_into_v_ts(&{
-                                let operation0 = Operation::from(create_or_update_or_delete_one);
+                                let operation0 = Operation::from(create_or_update_or_dlo);
                                 let ts = gen_match_pg_transaction_rollback_await_ts(
                                     &operation0,
                                     Location::caller(),
                                 );
                                 gen_fetch_one_ts(
                                     &ExecutorSc,
-                                    &match create_or_update_or_delete_one {
-                                        CreateOrUpdateOrDeleteOne::Create => {
+                                    &match create_or_update_or_dlo {
+                                        CreateOrUpdateOrDlo::Create => {
                                             gen_match_ident_read_only_ids_as_from_row_from_row_ts(
                                                 &quote! {{#ts}},
                                             )
                                         }
-                                        CreateOrUpdateOrDeleteOne::Update => {
+                                        CreateOrUpdateOrDlo::Update => {
                                             gen_match_ident_read_only_ids_as_from_row_from_row_ts(&ts)
                                         }
-                                        CreateOrUpdateOrDeleteOne::Delete => gen_sqlx_row_try_get_pk_ts(
+                                        CreateOrUpdateOrDlo::Delete => gen_sqlx_row_try_get_pk_ts(
                                             &quote! {#pk_ft_as_pg_type_read_ucc},
                                             &quote! {v_69ecb6a9},
                                             &ts,
@@ -3415,7 +3414,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ),
                         Operation::Co => wrap_into_pg_transaction_begin_commit_ts(
                             operation,
-                            &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Create),
+                            &gen_create_update_dlo_fetch_ts(&CreateOrUpdateOrDlo::Create),
                         ),
                         Operation::Rm => {
                             let fetch_ts = gen_fetch_ts(
@@ -3446,15 +3445,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ),
                         Operation::Uo => wrap_into_pg_transaction_begin_commit_ts(
                             operation,
-                            &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Update),
+                            &gen_create_update_dlo_fetch_ts(&CreateOrUpdateOrDlo::Update),
                         ),
                         Operation::Dm => wrap_into_pg_transaction_begin_commit_ts(
                             operation,
                             &gen_create_update_dm_fetch_ts(&CreateOrUpdateOrDm::Delete),
                         ),
-                        Operation::DeleteOne => wrap_into_pg_transaction_begin_commit_ts(
+                        Operation::Dlo => wrap_into_pg_transaction_begin_commit_ts(
                             operation,
-                            &gen_create_update_delete_one_fetch_ts(&CreateOrUpdateOrDeleteOne::Delete),
+                            &gen_create_update_dlo_fetch_ts(&CreateOrUpdateOrDlo::Delete),
                         ),
                     }
                 };
@@ -3759,7 +3758,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {{#pub_where_many_opt_ident_where_many_ts}},
                         &quote! {{#where_many_pg_crud_default_opt_some_vec_one_el_call_ts}},
                     ),
-                    Operation::DeleteOne => gen_params_payload_and_default_ts(
+                    Operation::Dlo => gen_params_payload_and_default_ts(
                         &{
                             let ts = gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
                                 &SelfReadUcc::from_type_last_segment(pk_ft),
@@ -3808,7 +3807,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 Operation::Rm => &vec_struct_opts_ident_ts,
                                 Operation::Ro => &ident_read_ucc,
                                 Operation::Dm => &vec_pk_ft_read_ts,
-                                Operation::DeleteOne => &pk_ft_as_pg_type_read_ucc,
+                                Operation::Dlo => &pk_ft_as_pg_type_read_ucc,
                                 Operation::Co |
                                 Operation::Uo => &ident_read_only_ids_ucc,
                                 Operation::Cm |
@@ -3899,7 +3898,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             Operation::Um |
                             Operation::Uo |
                             Operation::Dm |
-                            Operation::DeleteOne => &common_http_req_syn_vrts,
+                            Operation::Dlo => &common_http_req_syn_vrts,
                         };
                         let vrts_ts = syn_vrts
                             .iter()
@@ -4151,7 +4150,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let assert_eq_ts_947d2096 = gen_assert_eq_ts(
                 &quote! {
-                    gen_try_delete_one_handle(
+                    gen_try_dlo_handle(
                         &url,
                         #pk_read_clone_ts,
                         &table_init,
@@ -4623,7 +4622,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     );
                     let assert_eq_ts_f5d5140f = gen_assert_eq_ts(
                         &quote! {
-                            gen_try_delete_one_handle(
+                            gen_try_dlo_handle(
                                 &url_cloned,
                                 #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
                                 &table_co_cloned
@@ -4671,7 +4670,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &table_7e35b1ce
                     ).await;
                     #ts
-                    let _: #pk_ft_as_pg_type_read_ts = gen_try_delete_one_handle(
+                    let _: #pk_ft_as_pg_type_read_ts = gen_try_dlo_handle(
                         &url_cloned,
                         #pk_ft_read_only_ids_into_read_read_only_ids_from_try_co_pk_fi_ts,
                         &table_7e35b1ce
@@ -5737,7 +5736,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #test_dm_by_pks_ts
             }
         };
-        let delete_one_tests_ts = {
+        let dlo_tests_ts = {
             let ts = gen_v_init_ts0(
                 &pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
             );
@@ -5751,7 +5750,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &url,
                         #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
                         #select_default_all_with_max_page_size_cloned_clone_ts,
-                        &table_delete_one_cloned
+                        &table_dlo_cloned
                     )
                     .await.expect("c8c44c89")
                 },
@@ -5759,10 +5758,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let assert_eq_ts_8812d778 = gen_assert_eq_ts(
                 &quote! {
-                    gen_try_delete_one_handle(
+                    gen_try_dlo_handle(
                         &url,
                         #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
-                        &table_delete_one_cloned
+                        &table_dlo_cloned
                     ).await.expect("7e1d1a70")
                 },
                 &quote! {#pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts},
@@ -5774,22 +5773,22 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             quote! {
                 acc_9189f86e.push({
-                    let table_delete_one_cloned = table_delete_one.clone();
+                    let table_dlo_cloned = table_dlo.clone();
                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_ts;
                     futures::FutureExt::boxed(async move {
-                        if let Err(#ErSc) = gen_try_delete_one_handle(
+                        if let Err(#ErSc) = gen_try_dlo_handle(
                             &url,
                             #pk_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
-                            &table_delete_one_cloned
+                            &table_dlo_cloned
                         ).await {
-                            if let #ident_try_delete_one_er_ucc::#ident_delete_one_er_with_serde_ucc {
-                                delete_one_er_with_serde,
+                            if let #ident_try_dlo_er_ucc::#ident_dlo_er_with_serde_ucc {
+                                dlo_er_with_serde,
                                 ..
                             } = #ErSc {
-                                if let #ident_delete_one_er_with_serde_ucc::Pg {
+                                if let #ident_dlo_er_with_serde_ucc::Pg {
                                     pg,
                                     ..
-                                } = delete_one_er_with_serde {
+                                } = dlo_er_with_serde {
                                     #assert_ts_9c8cb81a
                                 } else {
                                     panic!("e63b27a3");
@@ -5800,14 +5799,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         } else {
                             panic!("9be62f9f")
                         }
-                        let read_only_ids_returned_from_co = gen_read_only_ids_from_try_co_default(&url, &table_delete_one_cloned).await;
+                        let read_only_ids_returned_from_co = gen_read_only_ids_from_try_co_default(&url, &table_dlo_cloned).await;
                         #assert_eq_ts_6322435c
                         #assert_eq_ts_8812d778
                         gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
                             &url,
                             #pk_ft_read_only_ids_into_read_read_only_ids_returned_from_co_pk_fi_ts,
                             #select_default_all_with_max_page_size_cloned_clone_ts,
-                            &table_delete_one_cloned,
+                            &table_dlo_cloned,
                         ).await;
                     })
                 });
@@ -5978,16 +5977,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ).await
             }
         };
-        let gen_try_delete_one_handle_fn_ts = quote! {
-            async fn gen_try_delete_one_handle(
+        let gen_try_dlo_handle_fn_ts = quote! {
+            async fn gen_try_dlo_handle(
                 #UrlSc: &str,
                 #pk_fi: #pk_ft_as_pg_type_read_ts,
                 table: &str,
-            ) -> Result<#pk_ft_as_pg_type_read_ts, #ident_try_delete_one_er_ucc> {
-                #ident::try_delete_one_handle(
+            ) -> Result<#pk_ft_as_pg_type_read_ts, #ident_try_dlo_er_ucc> {
+                #ident::try_dlo_handle(
                     #UrlSc,
-                    #ident_delete_one_params_ucc {
-                        payload: #ident_delete_one_payload_ucc {
+                    #ident_dlo_params_ucc {
+                        payload: #ident_dlo_payload_ucc {
                             #pk_fi
                         }
                     },
@@ -6048,7 +6047,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #ident_create_default_fn_ts
                     #gen_read_only_ids_from_try_co_fn_ts
                     #gen_read_only_ids_from_try_co_default_fn_ts
-                    #gen_try_delete_one_handle_fn_ts
+                    #gen_try_dlo_handle_fn_ts
                     #no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
                     #gen_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create_fn_ts
                     #gen_read_only_ids_els_ts_fe29ff70
@@ -6099,7 +6098,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let table_um = add_table_postfix("um");
                         let table_uo = add_table_postfix("uo");
                         let table_dm = add_table_postfix("dm");
-                        let table_delete_one = add_table_postfix("delete_one");
+                        let table_dlo = add_table_postfix("dlo");
                         let table_names = [
                             &table_init,
                             &table_cm,
@@ -6111,7 +6110,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &table_um,
                             &table_uo,
                             &table_dm,
-                            &table_delete_one,
+                            &table_dlo,
                         ];
                         let drop_all_test_tables = async ||{
                             let _unused = futures::future::try_join_all(
@@ -6182,7 +6181,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 #um_tests_ts
                                 #uo_tests_ts
                                 #dm_tests_ts
-                                #delete_one_tests_ts
+                                #dlo_tests_ts
                                 acc_9189f86e
                             }),
                             100,

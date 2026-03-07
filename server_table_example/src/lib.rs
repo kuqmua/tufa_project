@@ -13,7 +13,7 @@ use optimal_pack::OptimalPack;
 #[pg_crud::um_extra_er_vrts{enum UmExtraErVrts{}}]
 #[pg_crud::uo_extra_er_vrts{enum UoExtraErVrts{}}]
 #[pg_crud::dm_extra_er_vrts{enum DmExtraErVrts{}}]
-#[pg_crud::delete_one_extra_er_vrts{enum DeleteOneExtraErVrts{}}]
+#[pg_crud::dlo_extra_er_vrts{enum DloExtraErVrts{}}]
 #[pg_crud::common_extra_er_vrts{
     enum CommonExtraErVrts {
         // CheckCommit {
@@ -30,7 +30,7 @@ use optimal_pack::OptimalPack;
 #[pg_crud::um_extra_logic{}]
 #[pg_crud::uo_extra_logic{}]
 #[pg_crud::dm_extra_logic{}]
-#[pg_crud::delete_one_extra_logic{}]
+#[pg_crud::dlo_extra_logic{}]
 #[pg_crud::common_extra_logic{}]
 pub struct TableExample {
     // #[gen_pg_crud_pk]
