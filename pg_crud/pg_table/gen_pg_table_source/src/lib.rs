@@ -1499,7 +1499,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     });
                 let (assign_vrt_pk_ts, assign_vrts_without_pk_ts) = {
                     let gen_assign_ts =
-                        |variant_ucc_ts: &dyn ToTokens,
+                        |vrt_ucc_ts: &dyn ToTokens,
                          pg_type_read_ts: &dyn ToTokens,
                          fi_string_dq_ts: &dyn ToTokens,
                          fi: &dyn ToTokens| {
@@ -1520,7 +1520,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     return Err(#Er0);
                                 }},
                             );
-                            quote! {#ident_select_ucc::#variant_ucc_ts(_) => #ts}
+                            quote! {#ident_select_ucc::#vrt_ucc_ts(_) => #ts}
                         };
                     (
                         gen_assign_ts(
