@@ -4258,7 +4258,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     itertools::Itertools::sorted_by(
                         gen_try_rm_order_by_pk_with_big_pgn(
                             url,
-                            gen_ident_where_many_pripery_k_others_none(
+                            gen_ident_where_pk_others_none(
                                 Some(
                                     gen_pg_type_where_try_new_pk(
                                         #oprtr_or_ts,
@@ -4409,7 +4409,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote! {
                         gen_try_rm_order_by_pk_with_big_pgn(
                             &url_cloned,
-                            gen_ident_where_many_pripery_k_others_none(
+                            gen_ident_where_pk_others_none(
                                 Some(
                                     gen_pg_type_where_try_new_pk(
                                         #oprtr_or_ts,
@@ -4434,7 +4434,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {
                             gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
-                                gen_ident_where_many_pripery_k_others_none(
+                                gen_ident_where_pk_others_none(
                                     Some(
                                         gen_pg_type_where_try_new_pk(
                                             #oprtr_or_ts,
@@ -4600,7 +4600,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote!{
                             gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
-                                gen_ident_where_many_pripery_k_others_none(
+                                gen_ident_where_pk_others_none(
                                     Some(
                                         gen_pg_type_where_try_new_pk(
                                             #oprtr_or_ts,
@@ -4630,7 +4630,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &quote! {
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
-                                        gen_ident_where_many_pripery_k_others_none(
+                                        gen_ident_where_pk_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
                                                     #oprtr_or_ts,
@@ -4655,7 +4655,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     quote!{
                                         gen_try_rm_order_by_pk_with_big_pgn(
                                             &url_cloned,
-                                            gen_ident_where_many_pripery_k_others_none(
+                                            gen_ident_where_pk_others_none(
                                                 Some(
                                                     gen_pg_type_where_try_new_pk(
                                                         #oprtr_or_ts,
@@ -4760,7 +4760,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote! {
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
-                                        gen_ident_where_many_pripery_k_others_none(
+                                        gen_ident_where_pk_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
                                                     #oprtr_or_ts,
@@ -5244,7 +5244,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let previous_read = itertools::Itertools::sorted_by(
                                 gen_try_rm_order_by_pk_with_big_pgn(
                                     &url_cloned,
-                                    gen_ident_where_many_pripery_k_others_none(
+                                    gen_ident_where_pk_others_none(
                                         Some(
                                             gen_pg_type_where_try_new_pk(
                                                 #oprtr_or_ts,
@@ -5358,7 +5358,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 itertools::Itertools::sorted_by(
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
-                                        gen_ident_where_many_pripery_k_others_none(
+                                        gen_ident_where_pk_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
                                                     #oprtr_or_ts,
@@ -5581,7 +5581,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 quote!{
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
-                                        gen_ident_where_many_pripery_k_others_none(
+                                        gen_ident_where_pk_others_none(
                                             Some(
                                                 gen_pg_type_where_try_new_pk(
                                                     #oprtr_or_ts,
@@ -5728,8 +5728,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let gen_ident_where_many_pripery_k_others_none_fn_ts = quote! {
-            fn gen_ident_where_many_pripery_k_others_none(
+        let gen_ident_where_pk_others_none_fn_ts = quote! {
+            fn gen_ident_where_pk_others_none(
                 opt_pg_type_where: Option<#import_ts PgTypeWhere<#pk_ft_as_pg_type_where_ts>>,
             ) -> #ident_where_many_ucc {
                 #ident_where_many_ucc::try_new(
@@ -5937,7 +5937,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #size_of_ts
                 #[test]
                 fn crud() {
-                    #gen_ident_where_many_pripery_k_others_none_fn_ts
+                    #gen_ident_where_pk_others_none_fn_ts
                     #gen_pg_type_where_try_new_pk_fn_ts
                     #gen_pg_type_where_try_new_or_pks_fn_ts
                     #gen_try_rm_order_by_pk_with_big_pgn_fn_ts
