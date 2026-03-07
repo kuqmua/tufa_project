@@ -234,12 +234,12 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 }
             }
         }
-        enum ReadWithOrWithoutAnnotationOrInner {
+        enum ReadWithOrWithoutAnnOrInner {
             Inner,
-            WithSerdeOptIsNoneAnnotation,
-            WithoutSerdeOptIsNoneAnnotation,
+            WithSerdeOptIsNoneAnn,
+            WithoutSerdeOptIsNoneAnn,
         }
-        enum AddSerdeSkipSerializingIfVecIsEmptyAnnotation {
+        enum AddSerdeSkipSerializingIfVecIsEmptyAnn {
             False,
             True,
         }
@@ -1921,21 +1921,21 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
         let gen_type_as_pg_json_type_read_inner_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_type_subtype_ts(&ts, &pg_json_type_subtype_read_inner);
         let gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts = |
             is_stdrt_with_id: &IsStdrtWithId,
-            read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnotationOrInner
+            read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnOrInner
         | {
             let ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                 let mb_serde_skip_serializing_if_opt_is_none_ts = match &read_with_or_without_annotation_or_inner {
-                    ReadWithOrWithoutAnnotationOrInner::WithSerdeOptIsNoneAnnotation => quote! {#[serde(skip_serializing_if = "Option::is_none")]},
-                    ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptIsNoneAnnotation |
-                    ReadWithOrWithoutAnnotationOrInner::Inner => Ts2::new(),
+                    ReadWithOrWithoutAnnOrInner::WithSerdeOptIsNoneAnn => quote! {#[serde(skip_serializing_if = "Option::is_none")]},
+                    ReadWithOrWithoutAnnOrInner::WithoutSerdeOptIsNoneAnn |
+                    ReadWithOrWithoutAnnOrInner::Inner => Ts2::new(),
                 };
                 let fi = &el0.ident;
                 let ft_as_json_type_read_ts = match &read_with_or_without_annotation_or_inner {
-                    ReadWithOrWithoutAnnotationOrInner::Inner => gen_type_as_pg_json_type_read_inner_ts(
+                    ReadWithOrWithoutAnnOrInner::Inner => gen_type_as_pg_json_type_read_inner_ts(
                         &el0.type0
                     ),
-                    ReadWithOrWithoutAnnotationOrInner::WithSerdeOptIsNoneAnnotation |
-                    ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptIsNoneAnnotation => gen_type_as_pg_json_type_read_ts(
+                    ReadWithOrWithoutAnnOrInner::WithSerdeOptIsNoneAnn |
+                    ReadWithOrWithoutAnnOrInner::WithoutSerdeOptIsNoneAnn => gen_type_as_pg_json_type_read_ts(
                         &el0.type0
                     ),
                 };
@@ -1989,7 +1989,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             {
                                 let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                                     &is_stdrt_with_id_false,
-                                    &ReadWithOrWithoutAnnotationOrInner::WithSerdeOptIsNoneAnnotation
+                                    &ReadWithOrWithoutAnnOrInner::WithSerdeOptIsNoneAnn
                                 );
                                 quote! {{#ts}}
                             },
@@ -2040,7 +2040,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &Ts2::new(),
                     &gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                         is_stdrt_with_id,
-                        &ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptIsNoneAnnotation
+                        &ReadWithOrWithoutAnnOrInner::WithoutSerdeOptIsNoneAnn
                     ),
                     &ident_read_try_from_er_or_ident_with_id_stdrt_not_null_read_try_from_er_ucc,
                     &{
@@ -2201,7 +2201,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &{
                         let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                             &is_stdrt_with_id_true,
-                            &ReadWithOrWithoutAnnotationOrInner::WithSerdeOptIsNoneAnnotation
+                            &ReadWithOrWithoutAnnOrInner::WithSerdeOptIsNoneAnn
                         );
                         quote! {{#ts}}
                     },
@@ -2429,7 +2429,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &{
                         let ts = gen_ident_or_ident_with_id_read_or_read_inner_fields_decl_ts(
                             is_stdrt_with_id,
-                            &ReadWithOrWithoutAnnotationOrInner::Inner
+                            &ReadWithOrWithoutAnnOrInner::Inner
                         );
                         quote!{{#ts}}
                     }
@@ -2485,14 +2485,14 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             #import::UniqueVec::<#ident_with_id_stdrt_not_null_update_for_query_el_ucc>
         };
         let gen_create_update_delete_fields_ts_043c4057 = |
-            add_serde_skip_serializing_if_vec_is_empty_annotation: &AddSerdeSkipSerializingIfVecIsEmptyAnnotation,
+            add_serde_skip_serializing_if_vec_is_empty_annotation: &AddSerdeSkipSerializingIfVecIsEmptyAnn,
             create_ts: &dyn ToTokens,
             update_ts: &dyn ToTokens,
             delete_ts: &dyn ToTokens
         | {
             let mb_serde_skip_serializing_if_vec_is_empty_ts = match &add_serde_skip_serializing_if_vec_is_empty_annotation {
-                AddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => Ts2::new(),
-                AddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
+                AddSerdeSkipSerializingIfVecIsEmptyAnn::False => Ts2::new(),
+                AddSerdeSkipSerializingIfVecIsEmptyAnn::True => quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
             };
             quote! {
                 #mb_serde_skip_serializing_if_vec_is_empty_ts
@@ -2515,7 +2515,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let vec_pg_crud_path_pg_json_type_uuid_uuid_update_ts = gen_vec_tokens_decl_ts(
                 &pg_crud_path_pg_json_type_uuid_uuid_update_ts
             );
-            let gen_create_update_delete_fields_ts_ffcbdaf0 = |v: &AddSerdeSkipSerializingIfVecIsEmptyAnnotation| {
+            let gen_create_update_delete_fields_ts_ffcbdaf0 = |v: &AddSerdeSkipSerializingIfVecIsEmptyAnn| {
                 gen_create_update_delete_fields_ts_043c4057(
                     v,
                     &vec_ident_with_id_stdrt_not_null_create_ts,
@@ -2547,7 +2547,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => (
                             DeriveSerdeDeserialize::False,
                             &{
-                                let fields_ts = gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
+                                let fields_ts = gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::True);
                                 quote! {{#fields_ts}}
                             }
                         ),
@@ -2627,7 +2627,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => gen_pub_try_new_ts(
                             &Ts2::new(),
-                            &gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
+                            &gen_create_update_delete_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::False),
                             &ident_update_try_new_er_ucc,
                             &{
                                 let custom_serde_er_deserializing_ident_update_str = format!("custom serde er deserializing {ident_update_ucc}");
@@ -3124,7 +3124,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         IsNullable::False => gen_ident_update_for_query_ts(
                             &{
                                 let fields_ts = gen_create_update_delete_fields_ts_043c4057(
-                                    &AddSerdeSkipSerializingIfVecIsEmptyAnnotation::True,
+                                    &AddSerdeSkipSerializingIfVecIsEmptyAnn::True,
                                     &vec_ident_with_id_stdrt_not_null_create_for_query_ts,
                                     &import_unique_vec_ident_with_id_stdrt_not_null_update_for_query_el_ts,
                                     &vec_pg_crud_path_pg_json_type_uuid_uuid_update_for_query_ts,//todo mb expand logic with where cases
