@@ -2721,6 +2721,11 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     },
                 }
             };
+            let gen_for_el_in_update_for_query_vec_ts = |ts: &dyn ToTokens|quote!{
+                for el_a72f3eac in &#UpdateForQueryVecSc {
+                    #ts
+                }
+            };
             let query_string_ts = {
                 let ts_fa8795ea = gen_operation_er_init_eprintln_res_creation_ts(
                     operation,
@@ -2932,20 +2937,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Operation::UpdateMany => {
                         let gen_match_update_query_part_pk_operation_ts =
                             |ts: &dyn ToTokens| gen_match_update_query_part_pk_ts(operation, &ts);
-                        let fields_named_without_pk_update_assignment_ts =
-                            gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
+                        let ts0 = gen_acc_string_pop_acc_ts(
+                            &quote!{acc_b86a253a},
+                            &gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
                                 let fi_dq_ts = dq_ts(&fi);
                                 let is_fi_update_exists_sc = IsSelfUpdateExistSc::from_tokens(&fi);
                                 let update_query_part_fi_sc = UpdateQueryPartSelfSc::from_tokens(&fi);
-                                let gen_when_column_id_then_v_update_many_query_part_sc =
-                                    GenWhenColumnIdThenVUpdateManyQueryPartSc;
-                                let ts = gen_if_let_some_ts(
+                                let ts_ee27d6ff = gen_for_el_in_update_for_query_vec_ts(&quote!{
+                                    if el_a72f3eac.#fi.is_some() {
+                                        #is_fi_update_exists_sc = true;
+                                        break;
+                                    }
+                                });
+                                let ts_33401696 = gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
                                     &quote!{v_3ea04126},
-                                    &quote!{&el_defbc401.#fi},
+                                    &quote!{&el_a72f3eac.#fi},
                                     &{
                                         let ts0 = gen_match_ok_err_ts_85a5eace(
-                                            &quote!{el_defbc401.#UpdateQueryPartPkSc(&mut #IncrSc)},
+                                            &quote!{el_a72f3eac.#UpdateQueryPartPkSc(&mut #IncrSc)},
                                             &quote!{v_00890100},
                                         );
                                         let ts1 = gen_match_ok_err_ts_85a5eace(
@@ -2953,32 +2963,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             &quote!{v_8797585c},
                                         );
                                         quote!{
-                                            acc_8ad06c8c.push_str(&#import_ts #gen_when_column_id_then_v_update_many_query_part_sc(
+                                            acc_8ad06c8c.push_str(&#import_ts #GenWhenColumnIdThenVUpdateManyQueryPartSc(
                                                 Self::#PkSc(),
                                                 &#ts0,
                                                 &#ts1
                                             ));
                                         }
                                     }
-                                );
+                                ));
                                 quote! {
                                     {
                                         let mut #is_fi_update_exists_sc = false;
-                                        for el_a72f3eac in &#UpdateForQueryVecSc {
-                                            if el_a72f3eac.#fi.is_some() {
-                                                #is_fi_update_exists_sc = true;
-                                                break;
-                                            }
-                                        }
+                                        #ts_ee27d6ff
                                         if #is_fi_update_exists_sc {
                                             acc_b86a253a.push_str(&
                                                 #import_ts gen_column_equals_case_acc_else_column_end_comma_update_many_query_part(
                                                     #fi_dq_ts,
                                                     &{
                                                         let mut acc_8ad06c8c = #StringTs::default();
-                                                        for el_defbc401 in &#UpdateForQueryVecSc {
-                                                            #ts
-                                                        }
+                                                        #ts_33401696
                                                         acc_8ad06c8c
                                                     }
                                                 )
@@ -2986,38 +2989,30 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         }
                                     }
                                 }
-                            });
-                        let if_write_is_err_ts = gen_if_write_is_err_ts_f22b2dd2(
-                            &{
-                                let match_update_query_part_pk_operation_ts =
-                                    gen_match_update_query_part_pk_operation_ts(&quote! {el_9b2b56f8});
-                                quote! {
-                                    acc_a95eb175,
-                                    "{},",
-                                    #match_update_query_part_pk_operation_ts
-                                }
-                            }
-                        );
-                        let ts0 = gen_acc_string_pop_acc_ts(
-                            &quote!{acc_b86a253a},
-                            &fields_named_without_pk_update_assignment_ts
+                            })
                         );
                         let ts1 = gen_acc_string_pop_acc_ts(
                             &quote!{acc_a95eb175},
-                            &quote!{
-                                for el_9b2b56f8 in &#UpdateForQueryVecSc {
-                                    #if_write_is_err_ts
+                            &gen_for_el_in_update_for_query_vec_ts(&gen_if_write_is_err_ts_f22b2dd2(
+                                &{
+                                    let match_update_query_part_pk_operation_ts =
+                                        gen_match_update_query_part_pk_operation_ts(&quote! {el_a72f3eac});
+                                    quote! {
+                                        acc_a95eb175,
+                                        "{},",
+                                        #match_update_query_part_pk_operation_ts
+                                    }
                                 }
-                            }
+                            ))
                         );
-                        let ts2 = gen_match_ok_err_ts_dd5366af(
-                            &gen_select_only_updated_ids_query_part_ts(&quote!{el_bcf0dde4}),
+                        let ts_5abb9ece = gen_for_el_in_update_for_query_vec_ts(&gen_match_ok_err_ts_dd5366af(
+                            &gen_select_only_updated_ids_query_part_ts(&quote!{el_a72f3eac}),
                             &quote!{v_4f536654},
                             &quote!{{
                                 acc_fd44b0aa.push_str(&v_4f536654);
                             }},
                             &Er0,
-                        );
+                        ));
                         quote! {
                             {
                                 #incr_init_ts
@@ -3029,9 +3024,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 };
                                 let return_columns = {
                                     let mut acc_fd44b0aa = String::new();
-                                    for el_bcf0dde4 in &#UpdateForQueryVecSc {
-                                        #ts2
-                                    }
+                                    #ts_5abb9ece
                                     acc_fd44b0aa
                                 };
                                 #import_ts gen_update_many_query_string(
@@ -3169,9 +3162,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let fields_named_without_pk_update_assignment_ts =
                             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
-                                let ts = gen_if_let_some_ts(
+                                gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
                                     &quote!{v_2edaa480},
-                                    &quote!{&el_4b24f8f0.#fi},
+                                    &quote!{&el_a72f3eac.#fi},
                                     &{
                                         let ts = gen_match_query_bind_or_err_ts_519a3119(
                                             &{
@@ -3184,41 +3177,29 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             &quote!{v_600e67dc},
                                         );
                                         quote!{
-                                            if let Err(er_981062db) = #QuerySc.try_bind(el_4b24f8f0.#pk_fi) {
+                                            if let Err(er_981062db) = #QuerySc.try_bind(el_a72f3eac.#pk_fi) {
                                                 let #Er0 = er_981062db.to_string();
                                                 #ts_2795ebdc
                                             }
                                             #ts
                                         }
                                     }
-                                );
-                                quote! {
-                                    for el_4b24f8f0 in &#UpdateForQueryVecSc {
-                                        #ts
-                                    }
-                                }
+                                ))
                             });
-                        let pk_update_assignment_ts = {
-                            let ts = gen_match_query_bind_or_err_ts_519a3119(
-                                &quote!{#pk_ft_as_pg_type_ts #UpdateQueryBindSc(
-                                    el_323f7dfc.#pk_fi,
-                                    #QuerySc,
-                                )},
-                                &quote!{v_c40a4522},
-                            );
-                            quote! {
-                                for el_323f7dfc in &#UpdateForQueryVecSc {
-                                    #ts
-                                }
-                            }
-                        };
+                        let pk_update_assignment_ts = gen_for_el_in_update_for_query_vec_ts(&gen_match_query_bind_or_err_ts_519a3119(
+                            &quote!{#pk_ft_as_pg_type_ts #UpdateQueryBindSc(
+                                el_a72f3eac.#pk_fi,
+                                #QuerySc,
+                            )},
+                            &quote!{v_c40a4522},
+                        ));
                         let binded_query_select_only_updated_ids_query_bind_ts =
                             gen_fields_named_without_pk_without_comma_ts(&|el: &SynFieldWrapper| {
                                 let fi = &el.ident;
                                 let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
-                                let ts = gen_if_let_some_ts(
+                                gen_for_el_in_update_for_query_vec_ts(&gen_if_let_some_ts(
                                     &quote!{v_47030ac2},
-                                    &quote!{&el_a1660ed1.#fi},
+                                    &quote!{&el_a72f3eac.#fi},
                                     &gen_match_query_bind_or_err_ts_519a3119(
                                         &quote!{#as_pg_crud_pg_type_pg_type_ts select_only_updated_ids_query_bind(
                                             &v_47030ac2.#VSc,
@@ -3226,12 +3207,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                         )},
                                         &quote!{v_c5b79b95},
                                     )
-                                );
-                                quote! {
-                                    for el_a1660ed1 in &#UpdateForQueryVecSc {
-                                        #ts
-                                    }
-                                }
+                                ))
                             });
                         quote! {
                             #fields_named_without_pk_update_assignment_ts
