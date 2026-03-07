@@ -11,8 +11,8 @@ use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
     BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CoErVrtsSc, CoLogicSc,
-    ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonLogicSc, CommonReadIdsReturnedFromCoSc,
-    ConfigSc, CreateExtensionIfNotExistsPgJsonschemaUcc, CreateExtensionIfNotExistsUuidOsspUcc,
+    ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonLogicSc, CommonReadIdsFromCoSc, ConfigSc,
+    CreateExtensionIfNotExistsPgJsonschemaUcc, CreateExtensionIfNotExistsUuidOsspUcc,
     CreateIntoPgJsonTypeOptVecWhereLengthEqualSc,
     CreateIntoPgJsonTypeOptVecWhereLengthGreaterThanSc, CreateIntoPgTypeOptVecWhereDimOneEqualSc,
     CreateQbSc, CreateQpSc, CreateSc, CreateTableColumnQpSc, CreateUcc, DeserializeResUcc,
@@ -3960,7 +3960,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             pk_ft_read_ids_into_read_el_43ab7fb5_pk_fi_ts,
             pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
             pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
-            pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
+            pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
         ) = {
             let gen_ts =
                 |ts: &dyn ToTokens| gen_pk_ft_as_pg_type_pk_method_call_ts(&ReadIdsIntoReadSc, &ts);
@@ -3968,7 +3968,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 gen_ts(&quote! {el_43ab7fb5.#pk_fi}),
                 gen_ts(&quote! {read_ids_from_try_co.#pk_fi}),
                 gen_ts(&read_ids_el_937c5af3_pk_fi),
-                gen_ts(&quote! {read_ids_returned_from_co.#pk_fi}),
+                gen_ts(&quote! {read_ids_from_co.#pk_fi}),
             )
         };
         let ts_ffb964de = {
@@ -3986,8 +3986,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let (
             fi_read_ids_and_create_into_opt_v_read_read_ids_and_create_ts,
             fi_read_ids_and_create_into_opt_v_read_read_ids_from_try_co_ident_create_ts,
-            fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_create_ts,
-            fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_clone_ident_create_clone_ts,
+            fi_read_ids_and_create_into_opt_v_read_read_ids_from_co_create_ts,
+            fi_read_ids_and_create_into_opt_v_read_read_ids_from_co_clone_ident_create_clone_ts,
         ) = {
             enum AddDotClone {
                 False,
@@ -4012,7 +4012,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 })
             };
             let ident_create_name_ts = quote! {ident_create};
-            let read_ids_returned_from_co_name_ts = quote! {read_ids_returned_from_co};
+            let read_ids_from_co_name_ts = quote! {read_ids_from_co};
             (
                 gen_ts(&ReadIdsSc, &CreateSc, &AddDotClone::False),
                 gen_ts(
@@ -4021,12 +4021,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &AddDotClone::False,
                 ),
                 gen_ts(
-                    &read_ids_returned_from_co_name_ts,
+                    &read_ids_from_co_name_ts,
                     &quote! {ident_create_dflt},
                     &AddDotClone::False,
                 ),
                 gen_ts(
-                    &read_ids_returned_from_co_name_ts,
+                    &read_ids_from_co_name_ts,
                     &ident_create_name_ts,
                     &AddDotClone::True,
                 ),
@@ -4039,7 +4039,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         let select_dflt_all_with_max_page_size_clone_ts =
             quote! {select_dflt_all_with_max_page_size.clone()};
-        let common_read_ids_returned_from_co_ts = {
+        let common_read_ids_from_co_ts = {
             let pk_read_ts = quote! {pk_read};
             let pk_read_clone_ts = quote! {pk_read.clone()};
             let ts = gen_v_init_ts0(&pk_read_clone_ts);
@@ -4074,12 +4074,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {"26e2058b"},
             );
             quote! {
-                let #CommonReadIdsReturnedFromCoSc = {
+                let #CommonReadIdsFromCoSc = {
                     let read_ids_from_try_co = gen_read_ids_from_try_co_dflt(&#UrlSc, &table_init).await;
                     let pk_read = #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts;
                     #assert_eq_ts_4f6bbe8a
                     #assert_eq_ts_947d2096
-                    gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
+                    gen_check_no_rows_from_ident_try_ro_handle_pk(
                         &url,
                         #pk_read_ts,
                         #select_dflt_all_with_max_page_size_clone_ts,
@@ -4195,7 +4195,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         if fi == fi0 {
                             gen_if_let_some_ts(
                                 &quote! {v_a5f7e6cd},
-                                &quote! {&common_read_ids_returned_from_co.#fi0},
+                                &quote! {&common_read_ids_from_co.#fi0},
                                 &{
                                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft0);
                                     quote! {
@@ -4547,7 +4547,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ).await;
                         #assert_eq_ts_e2916686
                         #assert_eq_ts_f5d5140f
-                        gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
+                        gen_check_no_rows_from_ident_try_ro_handle_pk(
                             &url_cloned,
                             #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                             select_dflt_all_with_max_page_size_cloned,
@@ -4576,7 +4576,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                         &table_7e35b1ce
                     ).await.expect("93b4bf61");
-                    gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
+                    gen_check_no_rows_from_ident_try_ro_handle_pk(
                         &url_cloned,
                         #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                         select_dflt_all_with_max_page_size_cloned,
@@ -4705,9 +4705,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote! {vec![
                         #ident_read_ucc {
                             #pk_fi: #pk_as_pg_type_test_cases_path_ts read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-                                &read_ids_returned_from_co.#pk_fi
+                                &read_ids_from_co.#pk_fi
                             ),
-                            #fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_clone_ident_create_clone_ts
+                            #fi_read_ids_and_create_into_opt_v_read_read_ids_from_co_clone_ident_create_clone_ts
                         }
                     ]},
                     &quote! {
@@ -4744,13 +4744,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let ts = gen_ts(el);
                         let assert_eq_ts_b444d33d = gen_assert_eq_ts(
                             &quote! {read_ids_from_try_dm},
-                            &quote! {vec![#pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts]},
+                            &quote! {vec![#pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts]},
                             &quote! {"9fc29fa5"},
                         );
                         let assert_ts_87ec2ac1 = gen_assert_ts(
                             &{
                                 let ts_75998fa9 = gen_pk_where_equal_into_inner_ts(
-                                    &pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
+                                    &pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                                 );
                                 quote! {
                                     gen_try_rm_order_by_pk_with_big_pgn(
@@ -4773,7 +4773,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote! {"38187925"},
                         );
                         let ts_490b2aa3 = gen_pk_where_equal_into_inner_ts(
-                            &pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
+                            &pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                         );
                         let ts_7a8c2dcc = gen_read_ids_from_try_dm_sorted_pk_ts(
                             &quote! {table_7e35b1ce},
@@ -4791,7 +4791,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 let ident_create = #ident_create_ucc {
                                     #ident_create_ts_013035e1
                                 };
-                                let read_ids_returned_from_co = gen_read_ids_from_try_co(
+                                let read_ids_from_co = gen_read_ids_from_try_co(
                                     &url_cloned,
                                     ident_create.clone(),
                                     &table_7e35b1ce
@@ -4815,7 +4815,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #oprtr_and_ts,
                         vec![
                             #pk_as_pg_type_test_cases_path_ts read_ids_and_create_into_where_equal(
-                                read_ids_returned_from_co.#pk_fi,
+                                read_ids_from_co.#pk_fi,
                                 #PgCrudDfltOptSomeVecOneElCall
                             )
                         ]
@@ -4861,7 +4861,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                                 let ts0 = gen_as_pg_type_test_cases_path_ts(&ft0);
                                                 quote! {
                                                     #ts0 #method_ts(
-                                                        read_ids_returned_from_co.#fi0.clone().expect("11c3740b"),
+                                                        read_ids_from_co.#fi0.clone().expect("11c3740b"),
                                                         ident_create.#fi0.clone()
                                                     )
                                                 }
@@ -4911,7 +4911,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                             quote! {#ft_ts #ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc(
-                                read_ids_returned_from_co.#fi.clone().expect("65cef584"),
+                                read_ids_from_co.#fi.clone().expect("65cef584"),
                                 ident_create.#fi.clone()
                             )}
                         },
@@ -4970,7 +4970,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                             quote! {#ft_ts #ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc(
                                 #ElSc.vrt,
-                                read_ids_returned_from_co.#fi.clone().expect("c8d34556"),
+                                read_ids_from_co.#fi.clone().expect("c8d34556"),
                                 #ElSc.greater_than,
                             )}
                         },
@@ -5002,7 +5002,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             gen_if_let_some_ts(
                                 &quote! {v_bb67b871},
                                 &quote! {#ft_ts #fn_ts(
-                                    read_ids_returned_from_co.#fi.clone().expect("2ed000a5"),
+                                    read_ids_from_co.#fi.clone().expect("2ed000a5"),
                                     ident_create.#fi.clone()
                                 )},
                                 &{
@@ -5101,7 +5101,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 &{
                                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                                     quote! {#ft_ts #method_ts(
-                                        read_ids_returned_from_co.#fi.clone().expect("df01c8ac"),
+                                        read_ids_from_co.#fi.clone().expect("df01c8ac"),
                                         ident_create.#fi.clone()
                                     )}
                                 },
@@ -5180,7 +5180,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let url_cloned = url.clone();
                 let select_dflt_all_with_max_page_size_cloned = #select_dflt_all_with_max_page_size_clone_ts;
                 futures::FutureExt::boxed(async move {
-                    gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
+                    gen_check_no_rows_from_ident_try_ro_handle_pk(
                         &url_cloned,
                         #pk_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
                         #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -5633,16 +5633,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let dlo_tests_ts = {
-            let ts = gen_v_init_ts0(&pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts);
+            let ts = gen_v_init_ts0(&pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts);
             let assert_eq_ts_6322435c = gen_assert_eq_ts(
                 &quote! {#ident_read_ucc {
                     #pk_fi: Some(#ts),
-                    #fi_read_ids_and_create_into_opt_v_read_read_ids_returned_from_co_create_ts
+                    #fi_read_ids_and_create_into_opt_v_read_read_ids_from_co_create_ts
                 }},
                 &quote! {
                     gen_ident_try_ro_handle_pk(
                         &url,
-                        #pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
+                        #pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                         #select_dflt_all_with_max_page_size_cloned_clone_ts,
                         &table_dlo_cloned
                     )
@@ -5654,15 +5654,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {
                     gen_try_dlo_handle(
                         &url,
-                        #pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
+                        #pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                         &table_dlo_cloned
                     ).await.expect("7e1d1a70")
                 },
-                &quote! {#pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts},
+                &quote! {#pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts},
                 &quote! {"99f81971"},
             );
             let assert_ts_9c8cb81a = gen_assert_ts(
-                &quote! {pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row()},
+                &quote! {pg == no_rows_by_a_query_that_expected_to_return_at_least_one_row()},
                 &quote! {"c9261bb8"},
             );
             quote! {
@@ -5693,12 +5693,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         } else {
                             panic!("9be62f9f")
                         }
-                        let read_ids_returned_from_co = gen_read_ids_from_try_co_dflt(&url, &table_dlo_cloned).await;
+                        let read_ids_from_co = gen_read_ids_from_try_co_dflt(&url, &table_dlo_cloned).await;
                         #assert_eq_ts_6322435c
                         #assert_eq_ts_8812d778
-                        gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
+                        gen_check_no_rows_from_ident_try_ro_handle_pk(
                             &url,
-                            #pk_ft_read_ids_into_read_read_ids_returned_from_co_pk_fi_ts,
+                            #pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                             #select_dflt_all_with_max_page_size_cloned_clone_ts,
                             &table_dlo_cloned,
                         ).await;
@@ -5801,13 +5801,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .await
             }
         };
-        let gen_check_no_rows_returned_from_ident_try_ro_handle_pk_fn_ts = {
+        let gen_check_no_rows_from_ident_try_ro_handle_pk_fn_ts = {
             let ts = gen_assert_ts(
-                &quote! {pg == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row()},
+                &quote! {pg == no_rows_by_a_query_that_expected_to_return_at_least_one_row()},
                 &quote! {"58b9a6a4"},
             );
             quote! {
-                async fn gen_check_no_rows_returned_from_ident_try_ro_handle_pk(
+                async fn gen_check_no_rows_from_ident_try_ro_handle_pk(
                     url: &str,
                     pk_column: #pk_ft_as_pg_type_read_ts,
                     select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
@@ -5888,8 +5888,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ).await
             }
         };
-        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts = quote! {
-            fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
+        let no_rows_by_a_query_that_expected_to_return_at_least_one_row_fn_ts = quote! {
+            fn no_rows_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
                 "no rows returned by a query that expected to return at least one row"
             }
         };
@@ -5937,12 +5937,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #gen_pg_type_where_try_new_or_pks_fn_ts
                     #gen_try_rm_order_by_pk_with_big_pgn_fn_ts
                     #gen_ident_try_ro_handle_pk_fn_ts
-                    #gen_check_no_rows_returned_from_ident_try_ro_handle_pk_fn_ts
+                    #gen_check_no_rows_from_ident_try_ro_handle_pk_fn_ts
                     #ident_create_dflt_fn_ts
                     #gen_read_ids_from_try_co_fn_ts
                     #gen_read_ids_from_try_co_dflt_fn_ts
                     #gen_try_dlo_handle_fn_ts
-                    #no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
+                    #no_rows_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
                     #gen_vec_ident_read_from_vec_ident_read_ids_with_vec_ident_create_fn_ts
                     #gen_read_ids_els_ts_fe29ff70
                     tracing_subscriber::fmt::init();
@@ -6063,7 +6063,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .expect("0776170e");
                         let #IdentCreateDfltSc = ident_create_dflt();
                         #select_dflt_all_with_max_page_size_not_empty_unique_vec_ts
-                        #common_read_ids_returned_from_co_ts
+                        #common_read_ids_from_co_ts
                         #read_ids_to_2_dims_vec_read_inner_acc_fields_ts
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
