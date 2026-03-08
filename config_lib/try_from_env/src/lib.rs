@@ -80,7 +80,7 @@ pub fn try_from_env(v: Ts) -> Ts {
             let el_ident_quotes_upper_sc_string =
                 LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
-            let el_ident_wrapper_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
+            let el_ident_w_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 let #el_ident = {
                     let env_var_name = String::from(#el_ident_quotes_upper_sc_string);
@@ -92,7 +92,7 @@ pub fn try_from_env(v: Ts) -> Ts {
                             });
                         }
                         Ok(v) => match <
-                            config_lib::#el_ident_wrapper_ucc_ts as
+                            config_lib::#el_ident_w_ucc_ts as
                             config_lib::#TryFromStdEnvVarOkUcc
                         >::try_from_std_env_var_ok(v) {
                             Err(er) => {

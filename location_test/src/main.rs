@@ -23,7 +23,7 @@ pub enum ErOne {
         eo_serde: SerdeStruct,
         #[eo_location]
         eo_location_field: ErTwo, //IN SERIALIZE DESERIALIZE nested
-        #[eo_vec_to_err_string] //todo remove wrapper under Vec
+        #[eo_vec_to_err_string] //todo remove w under Vec
         eo_vec_display_field: Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE Vec<String>
         #[eo_vec_to_err_string_serde]
         eo_vec_serde: Vec<SerdeStruct>,
