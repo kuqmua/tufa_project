@@ -847,7 +847,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let ident_arr_nn_as_pg_json_cr_for_query_ts = gen_type_as_pg_json_cr_for_query_ts(&ident_arr_nn_ucc);
         let ident_arr_nn_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&ident_arr_nn_ucc);
         let pg_crud_path_pg_json_uuid_uuid_cr_for_query_ts = gen_type_as_pg_json_cr_for_query_ts(&uuid_uuid_as_nn_jsonb_string_ts);
-        let gen_debug_clone_partialeq_serialize_pub_struct_ts = |
+        let gen_debug_clone_partialeq_ser_pub_struct_ts = |
             attrs_ts: &dyn ToTokens,
             ident_ts_d8fa00d3: &dyn ToTokens,
             ts_153ac202: &dyn ToTokens
@@ -892,7 +892,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 quote! {#(#ts),*}
             };
             let ident_cr_for_query_ts = {
-                let ident_cr_for_query_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
+                let ident_cr_for_query_ts = gen_debug_clone_partialeq_ser_pub_struct_ts(
                     &AllowClippyArbitrarySrcItemOrdering,
                     &ident_cr_for_query_ucc,
                     &match &pattern {
@@ -964,7 +964,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 }
             };
             let mb_ident_with_id_stdrt_nn_cr_for_query_ts = if is_stdrt_nn {
-                let ident_with_id_stdrt_nn_cr_for_query_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
+                let ident_with_id_stdrt_nn_cr_for_query_ts = gen_debug_clone_partialeq_ser_pub_struct_ts(
                     &AllowClippyArbitrarySrcItemOrdering,
                     &ident_with_id_stdrt_nn_cr_for_query_ucc,
                     &gen_struct_stdrt_nn_ts(&is_stdrt_with_id_true)
@@ -3061,7 +3061,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let ident_upd_for_query_ts = {
             let ident_upd_for_query_ts = {
                 let gen_ident_upd_for_query_ts = |ts: &dyn ToTokens| {
-                    gen_debug_clone_partialeq_serialize_pub_struct_ts(
+                    gen_debug_clone_partialeq_ser_pub_struct_ts(
                         &AllowClippyArbitrarySrcItemOrdering,
                         &ident_upd_for_query_ucc,
                         &ts
@@ -3487,7 +3487,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #IdSc: #pg_crud_path_pg_json_uuid_uuid_upd_for_query_ts,
                     #FieldsSc: #ident_stdrt_nn_as_pg_json_upd_for_query_ts
                 };
-                let ident_with_id_stdrt_nn_upd_for_query_el_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
+                let ident_with_id_stdrt_nn_upd_for_query_el_ts = gen_debug_clone_partialeq_ser_pub_struct_ts(
                     &AllowClippyArbitrarySrcItemOrdering,
                     &ident_with_id_stdrt_nn_upd_for_query_el_ucc,
                     &quote!{{#ident_with_id_stdrt_nn_upd_for_query_el_fields_dcl_ts}}

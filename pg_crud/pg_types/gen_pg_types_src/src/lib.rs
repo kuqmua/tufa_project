@@ -1327,30 +1327,30 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let serde_state_init_two_fields_ts = gen_serde_state_init_ts(&param_nbr_two);
                     let serde_state_init_three_fields_ts = gen_serde_state_init_ts(&param_nbr_three);
                     let serde_state_init_four_fields_ts = gen_serde_state_init_ts(&param_nbr_four);
-                    let gen_serialize_field_ts = |field_name: &dyn Display, third_param_ts: &dyn ToTokens| {
+                    let gen_ser_field_ts = |field_name: &dyn Display, third_param_ts: &dyn ToTokens| {
                         let field_name_dq_ts = dq_ts(&field_name);
                         quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_param_ts)?;}
                     };
-                    let serde_ser_serialize_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
+                    let serde_ser_ser_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
                     let ser_cnt_e5bb5640_ts = {
                         let gen_self_zero_tokens_ts = |ts: &dyn ToTokens| {
                             quote! {&#self_dot_zero_ts.#ts}
                         };
-                        let start_serialize_field_ts = gen_serialize_field_ts(&StartSc, &gen_self_zero_tokens_ts(&StartSc));
-                        let end_serialize_field_ts = gen_serialize_field_ts(&EndSc, &gen_self_zero_tokens_ts(&EndSc));
+                        let start_ser_field_ts = gen_ser_field_ts(&StartSc, &gen_self_zero_tokens_ts(&StartSc));
+                        let end_ser_field_ts = gen_ser_field_ts(&EndSc, &gen_self_zero_tokens_ts(&EndSc));
                         quote! {
                             #serde_state_init_two_fields_ts
-                            #start_serialize_field_ts
-                            #end_serialize_field_ts
-                            #serde_ser_serialize_struct_end_ts
+                            #start_ser_field_ts
+                            #end_ser_field_ts
+                            #serde_ser_ser_struct_end_ts
                         }
                     };
                     let impl_ser_for_pg_type_nn_tokens_ser_cnt_e5bb5640_ts = gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&ser_cnt_e5bb5640_ts);
                     let impl_ser_for_uuid_uuid_ts = gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&gen_ser_cnt_b5af560e(&quote! {.to_string()}));
                     let gen_impl_ser_for_ident_stdrt_nn_origin_start_end_range_tokens = |ts: &dyn ToTokens| {
-                        let gen_serialize_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
+                        let gen_ser_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
                             let start_or_end_ts = gen_start_or_end_sc(start_or_end);
-                            gen_serialize_field_ts(
+                            gen_ser_field_ts(
                                 &start_or_end_ts,
                                 &quote! {
                                     &match self.0.#start_or_end_ts {
@@ -1361,13 +1361,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 },
                             )
                         };
-                        let start_serialize_field_ts = gen_serialize_field_match_std_ops_bound_ts(&StartOrEnd::Start);
-                        let end_serialize_field_ts = gen_serialize_field_match_std_ops_bound_ts(&StartOrEnd::End);
+                        let start_ser_field_ts = gen_ser_field_match_std_ops_bound_ts(&StartOrEnd::Start);
+                        let end_ser_field_ts = gen_ser_field_match_std_ops_bound_ts(&StartOrEnd::End);
                         gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&quote! {
                             #serde_state_init_two_fields_ts
-                            #start_serialize_field_ts
-                            #end_serialize_field_ts
-                            #serde_ser_serialize_struct_end_ts
+                            #start_ser_field_ts
+                            #end_ser_field_ts
+                            #serde_ser_ser_struct_end_ts
                         })
                     };
                     let gen_b5af560e_ts = |ts: &dyn ToTokens|{
@@ -1395,10 +1395,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts = |ts: &dyn ToTokens| {
                                 quote! {&(<#inn_type_stdrt_nn_ts as chrono::Timelike>::#ts)}
                             };
-                            let hour_serialize_field_ts = gen_serialize_field_ts(&HourSc, &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {hour(&self.0)}));
-                            let min_serialize_field_ts = gen_serialize_field_ts(&MinSc, &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {minute(&self.0)}));
-                            let sec_serialize_field_ts = gen_serialize_field_ts(&SecSc, &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {second(&self.0)}));
-                            let micro_serialize_field_ts = gen_serialize_field_ts(
+                            let hour_ser_field_ts = gen_ser_field_ts(&HourSc, &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {hour(&self.0)}));
+                            let min_ser_field_ts = gen_ser_field_ts(&MinSc, &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {minute(&self.0)}));
+                            let sec_ser_field_ts = gen_ser_field_ts(&SecSc, &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {second(&self.0)}));
+                            let micro_ser_field_ts = gen_ser_field_ts(
                                 &MicroSc,
                                 &gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts(&quote! {
                                     #NanosecondSc(&self.0).checked_div(1000).expect("aea037b7")
@@ -1406,39 +1406,39 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             );
                             quote! {
                                 #serde_state_init_four_fields_ts
-                                #hour_serialize_field_ts
-                                #min_serialize_field_ts
-                                #sec_serialize_field_ts
-                                #micro_serialize_field_ts
-                                #serde_ser_serialize_struct_end_ts
+                                #hour_ser_field_ts
+                                #min_ser_field_ts
+                                #sec_ser_field_ts
+                                #micro_ser_field_ts
+                                #serde_ser_ser_struct_end_ts
                             }
                         })),
                         PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&{
-                            let gen_serialize_field_self_zero_ts = |v: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&v, &quote! {&self.0.#v()});
-                            let hour_serialize_field_ts = gen_serialize_field_self_zero_ts(&HourSc);
-                            let minute_serialize_field_ts = gen_serialize_field_self_zero_ts(&MinuteSc);
-                            let second_serialize_field_ts = gen_serialize_field_self_zero_ts(&SecondSc);
-                            let microsecond_serialize_field_ts = gen_serialize_field_self_zero_ts(&MicrosecondSc);
+                            let gen_ser_field_self_zero_ts = |v: &dyn DisplayPlusToTokens| gen_ser_field_ts(&v, &quote! {&self.0.#v()});
+                            let hour_ser_field_ts = gen_ser_field_self_zero_ts(&HourSc);
+                            let minute_ser_field_ts = gen_ser_field_self_zero_ts(&MinuteSc);
+                            let second_ser_field_ts = gen_ser_field_self_zero_ts(&SecondSc);
+                            let microsecond_ser_field_ts = gen_ser_field_self_zero_ts(&MicrosecondSc);
                             quote! {
                                 #serde_state_init_four_fields_ts
-                                #hour_serialize_field_ts
-                                #minute_serialize_field_ts
-                                #second_serialize_field_ts
-                                #microsecond_serialize_field_ts
-                                #serde_ser_serialize_struct_end_ts
+                                #hour_ser_field_ts
+                                #minute_ser_field_ts
+                                #second_ser_field_ts
+                                #microsecond_ser_field_ts
+                                #serde_ser_ser_struct_end_ts
                             }
                         })),
                         PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&{
-                            let gen_serialize_field_h_ts = |v: &dyn DisplayPlusToTokens| gen_serialize_field_ts(&v, &quote! {&#self_dot_zero_ts.#v});
-                            let months_serialize_field_ts = gen_serialize_field_h_ts(&MonthsSc);
-                            let days_serialize_field_ts = gen_serialize_field_h_ts(&DaysSc);
-                            let microseconds_serialize_field_ts = gen_serialize_field_h_ts(&MicrosecondsSc);
+                            let gen_ser_field_h_ts = |v: &dyn DisplayPlusToTokens| gen_ser_field_ts(&v, &quote! {&#self_dot_zero_ts.#v});
+                            let months_ser_field_ts = gen_ser_field_h_ts(&MonthsSc);
+                            let days_ser_field_ts = gen_ser_field_h_ts(&DaysSc);
+                            let microseconds_ser_field_ts = gen_ser_field_h_ts(&MicrosecondsSc);
                             quote! {
                                 #serde_state_init_three_fields_ts
-                                #months_serialize_field_ts
-                                #days_serialize_field_ts
-                                #microseconds_serialize_field_ts
-                                #serde_ser_serialize_struct_end_ts
+                                #months_ser_field_ts
+                                #days_ser_field_ts
+                                #microseconds_ser_field_ts
+                                #serde_ser_ser_struct_end_ts
                             }
                         })),
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&{
@@ -1446,12 +1446,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 Date,
                                 Time,
                             }
-                            let gen_serialize_field_try_new_unwrap_ts = |date_or_time: &DateOrTime| {
+                            let gen_ser_field_try_new_unwrap_ts = |date_or_time: &DateOrTime| {
                                 let date_or_time_ts: &dyn DisplayPlusToTokens = match &date_or_time {
                                     DateOrTime::Date => &DateSc,
                                     DateOrTime::Time => &TimeSc,
                                 };
-                                gen_serialize_field_ts(&date_or_time_ts, &{
+                                gen_ser_field_ts(&date_or_time_ts, &{
                                     let ident_ts_203ac73c: &dyn ToTokens = match &date_or_time {
                                         DateOrTime::Date => &sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
                                         DateOrTime::Time => &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc,
@@ -1466,13 +1466,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     }
                                 })
                             };
-                            let date_serialize_field_ts = gen_serialize_field_try_new_unwrap_ts(&DateOrTime::Date);
-                            let time_serialize_field_ts = gen_serialize_field_try_new_unwrap_ts(&DateOrTime::Time);
+                            let date_ser_field_ts = gen_ser_field_try_new_unwrap_ts(&DateOrTime::Date);
+                            let time_ser_field_ts = gen_ser_field_try_new_unwrap_ts(&DateOrTime::Time);
                             quote! {
                                 #serde_state_init_two_fields_ts
-                                #date_serialize_field_ts
-                                #time_serialize_field_ts
-                                #serde_ser_serialize_struct_end_ts
+                                #date_ser_field_ts
+                                #time_ser_field_ts
+                                #serde_ser_ser_struct_end_ts
                             }
                         })),
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_origin_tokens(&{
@@ -1480,12 +1480,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 Date,
                                 Time,
                             }
-                            let gen_serialize_field_try_new_unwrap_ts = |date_naive_or_time: &DateNaiveOrTime| {
+                            let gen_ser_field_try_new_unwrap_ts = |date_naive_or_time: &DateNaiveOrTime| {
                                 let date_naive_or_time_ts: &dyn DisplayPlusToTokens = match &date_naive_or_time {
                                     DateNaiveOrTime::Date => &DateNaiveSc,
                                     DateNaiveOrTime::Time => &TimeSc,
                                 };
-                                gen_serialize_field_ts(&date_naive_or_time_ts, &{
+                                gen_ser_field_ts(&date_naive_or_time_ts, &{
                                     let ident_ts_d3be24b2: &dyn ToTokens = match &date_naive_or_time {
                                         DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
                                         DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc,
@@ -1493,13 +1493,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {&#ident_ts_d3be24b2::#TryNewSc(self.0.#date_naive_or_time_ts()).map_err(_serde::ser::Error::custom)?}
                                 })
                             };
-                            let date_naive_serialize_field_ts = gen_serialize_field_try_new_unwrap_ts(&DateNaiveOrTime::Date);
-                            let time_serialize_field_ts = gen_serialize_field_try_new_unwrap_ts(&DateNaiveOrTime::Time);
+                            let date_naive_ser_field_ts = gen_ser_field_try_new_unwrap_ts(&DateNaiveOrTime::Date);
+                            let time_ser_field_ts = gen_ser_field_try_new_unwrap_ts(&DateNaiveOrTime::Time);
                             quote! {
                                 #serde_state_init_two_fields_ts
-                                #date_naive_serialize_field_ts
-                                #time_serialize_field_ts
-                                #serde_ser_serialize_struct_end_ts
+                                #date_naive_ser_field_ts
+                                #time_ser_field_ts
+                                #serde_ser_ser_struct_end_ts
                             }
                         })),
                         PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_ser_for_uuid_uuid_ts),
