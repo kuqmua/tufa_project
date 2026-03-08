@@ -179,8 +179,8 @@ pub struct TableExample {
     // pub column_139: pg_crud::OptVecOfSqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrOfNotNullTimestampTzRange,
     // pub column_140: pg_crud::VecOfOptSqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrOfNullableTimestampTzRange,
     // pub column_141: pg_crud::OptVecOfOptSqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrOfNullableTimestampTzRange,
-    pub column_142: server_types::AnimalAsNotNullJsonbObject,
-    // pub column_143: server_types::OptAnimalAsNullableJsonbObject,
-    // pub column_144: server_types::VecOfAnimalWithIdAsNotNullArrOfNotNullJsonbObjectWithId,
-    // pub column_145: server_types::OptVecOfAnimalWithIdAsNullableArrOfNotNullJsonbObjectWithId,
+    pub column_142: server_types::AnimalAsNotNullJsonbObj,
+    // pub column_143: server_types::OptAnimalAsNullableJsonbObj,
+    // pub column_144: server_types::VecOfAnimalWithIdAsNotNullArrOfNotNullJsonbObjWithId,
+    // pub column_145: server_types::OptVecOfAnimalWithIdAsNullableArrOfNotNullJsonbObjWithId,
 }

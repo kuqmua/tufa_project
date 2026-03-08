@@ -13,7 +13,7 @@ use naming::{
     CrIntoPgJsonOptVecWhereLengthGreaterThanSc, CrSc, CrUpdDelAreEmptyUcc, DelSc,
     DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DimOneEqualUcc, DimOneInUcc,
     DisplayPlusToTokens, EqualUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUniqueUcc,
-    InUcc, IncrSc, JsonbObjectUcc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
+    InUcc, IncrSc, JsonbObjUcc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
     LengthEqualUcc, LengthGreaterThanUcc, NotUniqueIdInJsonDelArrUcc,
     NotUniqueIdInJsonUpdAndDelArrsUcc, OptUpdSc, OptVecCrSc, OverlapsWithArrUcc,
     PgJsonTestCasesUcc, PgJsonUcc, PgTypeTestCasesUcc, PgTypeUcc, PreviousReadAndOptUpdIntoReadSc,
@@ -27,12 +27,12 @@ use naming::{
     ReadIdsToOptVReadDfltOptSomeVecOneElSc, ReadInnIntoReadWithNewOrTryNewUnwrapedSc,
     ReadInnIntoUpdWithNewOrTryNewUnwrapedSc, ReadSc, SelectOnlyCrdIdsQbSc, SelectOnlyCrdIdsQpSc,
     SelectOnlyIdsQpSc, SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc, SelectQpPgTypeSc, SelectQpSc,
-    SelfSc, SelfUcc, StdOptOptObjectAccSc, ToTokensToUccTs, UpdQbSc, UpdQpSc, UpdSc,
-    UpdToReadIdsSc, UuidUuidAsNotNullJsonbStringUcc, VSc, ValueSc, VecOfUcc, WithIdUcc,
+    SelfSc, SelfUcc, StdOptOptObjAccSc, ToTokensToUccTs, UpdQbSc, UpdQpSc, UpdSc, UpdToReadIdsSc,
+    UuidUuidAsNotNullJsonbStringUcc, VSc, ValueSc, VecOfUcc, WithIdUcc,
     param::{
-        ElSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfCurrentSc, SelfGenPgJsonObjectModSc,
-        SelfLastSc, SelfReadIdsHUcc, SelfReadIdsUcc, SelfReadInnUcc, SelfReadTryFromErUcc,
-        SelfReadUcc, SelfSelectElUcc, SelfSelectSc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdElUcc,
+        ElSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfCurrentSc, SelfGenPgJsonObjModSc, SelfLastSc,
+        SelfReadIdsHUcc, SelfReadIdsUcc, SelfReadInnUcc, SelfReadTryFromErUcc, SelfReadUcc,
+        SelfSelectElUcc, SelfSelectSc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdElUcc,
         SelfUpdForQueryElUcc, SelfUpdForQueryUcc, SelfUpdTryNewErUcc, SelfUpdUcc, SelfWhereUcc,
     },
 };
@@ -277,11 +277,11 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
             let (rust_part, pg_part, is_nullable_325dc715) = {
                 let di_ident_str = di_ident.to_string();
                 let vec_of_di_ident_with_id = format!("{VecOfUcc}{di_ident}{WithIdUcc}");
-                let jsonb_object_ucc_str = JsonbObjectUcc.to_string();
-                let arr_of_not_null_jsonb_object_with_id = format!("{ArrOfUcc}{}{JsonbObjectUcc}{WithIdUcc}", IsNullable::False.not_null_or_nullable_str());
+                let jsonb_object_ucc_str = JsonbObjUcc.to_string();
+                let arr_of_not_null_jsonb_object_with_id = format!("{ArrOfUcc}{}{JsonbObjUcc}{WithIdUcc}", IsNullable::False.not_null_or_nullable_str());
                 match &ident_pattern {
                     IdentPattern::StdrtNotNullWithoutId => (di_ident_str, jsonb_object_ucc_str, IsNullable::False),
-                    IdentPattern::StdrtNotNullWithId => (format!("{di_ident}{WithIdUcc}"), format!("{JsonbObjectUcc}{WithIdUcc}"), IsNullable::False),
+                    IdentPattern::StdrtNotNullWithId => (format!("{di_ident}{WithIdUcc}"), format!("{JsonbObjUcc}{WithIdUcc}"), IsNullable::False),
                     IdentPattern::StdrtNullableWithoutId => (di_ident_str, jsonb_object_ucc_str, IsNullable::True),
                     IdentPattern::ArrNotNullWithId => (vec_of_di_ident_with_id, arr_of_not_null_jsonb_object_with_id, IsNullable::False),
                     IdentPattern::ArrNullableWithIdentifier => (vec_of_di_ident_with_id, arr_of_not_null_jsonb_object_with_id, IsNullable::True),
@@ -3907,7 +3907,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
                 &match &pattern {
                     Pattern::Stdrt => match &is_nullable {
                         IsNullable::False => {
-                            let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptOptObjectAccSc}}})"));
+                            let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptOptObjAccSc}}})"));
                             let qp_vrts_ts = vec_syn_field.iter().map(|el0| {
                                 let vrt_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
                                 let fi_dq_ts = gen_fi_dq_ts(el0);
@@ -3916,13 +3916,13 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
                                     #ident_upd_for_query_el_ucc::#vrt_ident_ucc_ts(v_3b3fae4c) => {
                                         match #ft_as_crud_pg_json_from_field_ts::#UpdQpSc(
                                             &v_3b3fae4c.#VSc,
-                                            &#StdOptOptObjectAccSc,
+                                            &#StdOptOptObjAccSc,
                                             &#GenJsonbSetTargetSc(#fi_dq_ts),
                                             #fi_dq_ts,
                                             #IncrSc,
                                         ) {
                                             Ok(v_5edc1648) => {
-                                                #StdOptOptObjectAccSc = v_5edc1648;
+                                                #StdOptOptObjAccSc = v_5edc1648;
                                             }
                                             Err(#ErSc) => {
                                                 return Err(#ErSc);
@@ -3941,7 +3941,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
                                 }
                             };
                             quote! {
-                                let mut #StdOptOptObjectAccSc = format!(#some_format_ts);
+                                let mut #StdOptOptObjAccSc = format!(#some_format_ts);
                                 #gen_jsonb_set_target_ts
                                 for el in #VSc.0.to_vec() {
                                     match el {
@@ -3949,7 +3949,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                                 if #JsonbSetPathSc.is_empty() {
-                                    Ok(#StdOptOptObjectAccSc)
+                                    Ok(#StdOptOptObjAccSc)
                                 }
                                 else {
                                     Ok(format!(#format_ts))
@@ -7027,7 +7027,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let generated: Ts2 = {
-        let ident_gen_pg_json_object_mod = SelfGenPgJsonObjectModSc::from_tokens(&di.ident);
+        let ident_gen_pg_json_object_mod = SelfGenPgJsonObjModSc::from_tokens(&di.ident);
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
