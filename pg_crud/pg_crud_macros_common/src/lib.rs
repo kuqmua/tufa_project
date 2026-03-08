@@ -25,11 +25,10 @@ use naming::{
     RdIdsAndCrIntoWhereEqualSc, RdIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc,
     RdIdsIntoOptVRdInnSc, RdIdsSc, RdIdsTo2DimsVecRdInnSc, RdIdsToOptVRdDfltOptSomeVecOneElSc,
     RdIdsUcc, RdInnIntoRdWithNewOrTryNewUnwrapedSc, RdInnIntoUpdWithNewOrTryNewUnwrapedSc,
-    RdInnUcc, RdSc, RdUcc, SelectOnlyCrdIdsQbSc, SelectOnlyCrdIdsQpSc, SelectOnlyIdsQpSc,
-    SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc, SelectQpSc, SelectUcc, SelfUcc, TableTypeSc,
-    TableTypeUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc, UpdToRdIdsSc, UpdUcc, VSc, VUcc, ValueSc,
-    WhereUcc,
-    param::{SelfCrUcc, SelfSelectUcc, SelfWhereUcc},
+    RdInnUcc, RdSc, RdUcc, SelOnlyCrdIdsQbSc, SelOnlyCrdIdsQpSc, SelOnlyIdsQpSc,
+    SelOnlyUpddIdsQbSc, SelOnlyUpddIdsQpSc, SelQpSc, SelUcc, SelfUcc, TableTypeSc, TableTypeUcc,
+    UpdForQueryUcc, UpdQbSc, UpdQpSc, UpdToRdIdsSc, UpdUcc, VSc, VUcc, ValueSc, WhereUcc,
+    param::{SelfCrUcc, SelfSelUcc, SelfWhereUcc},
 };
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
@@ -216,11 +215,11 @@ impl ToTokens for IsCrQbMut {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectQpSelfSelectUsed {
+pub enum IsSelQpSelfSelUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQpSelfSelectUsed {
+impl ToTokens for IsSelQpSelfSelUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -229,11 +228,11 @@ impl ToTokens for IsSelectQpSelfSelectUsed {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectQpColumnFieldForErMessageUsed {
+pub enum IsSelQpColumnFieldForErMessageUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQpColumnFieldForErMessageUsed {
+impl ToTokens for IsSelQpColumnFieldForErMessageUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -244,11 +243,11 @@ impl ToTokens for IsSelectQpColumnFieldForErMessageUsed {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectQpIsPgTypeUsed {
+pub enum IsSelQpIsPgTypeUsed {
     False,
     True,
 }
-impl ToTokens for IsSelectQpIsPgTypeUsed {
+impl ToTokens for IsSelQpIsPgTypeUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
@@ -296,11 +295,11 @@ impl ToTokens for IsUpdQbMut {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectOnlyUpddIdsQbMut {
+pub enum IsSelOnlyUpddIdsQbMut {
     False,
     True,
 }
-impl ToTokens for IsSelectOnlyUpddIdsQbMut {
+impl ToTokens for IsSelOnlyUpddIdsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -309,11 +308,11 @@ impl ToTokens for IsSelectOnlyUpddIdsQbMut {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectOnlyCrdIdsQbMut {
+pub enum IsSelOnlyCrdIdsQbMut {
     False,
     True,
 }
-impl ToTokens for IsSelectOnlyCrdIdsQbMut {
+impl ToTokens for IsSelOnlyCrdIdsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -510,11 +509,11 @@ impl ToTokens for CrQbValueUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum SelectQpValueUndrscr {
+pub enum SelQpValueUndrscr {
     False,
     True,
 }
-impl ToTokens for SelectQpValueUndrscr {
+impl ToTokens for SelQpValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -704,15 +703,15 @@ pub fn gen_impl_pg_json_ts(
     table_type_type_ts: &dyn ToTokens,
     cr_type_ts: &dyn ToTokens,
     cr_for_query_type_ts: &dyn ToTokens,
-    select_type_ts: &dyn ToTokens,
-    is_select_qp_self_select_used: &IsSelectQpSelfSelectUsed,
-    is_select_qp_column_field_for_er_message_used: &IsSelectQpColumnFieldForErMessageUsed,
-    is_select_qp_is_pg_type_used: &IsSelectQpIsPgTypeUsed,
-    select_qp_ts: &dyn ToTokens,
+    sel_type_ts: &dyn ToTokens,
+    is_sel_qp_self_sel_used: &IsSelQpSelfSelUsed,
+    is_sel_qp_column_field_for_er_message_used: &IsSelQpColumnFieldForErMessageUsed,
+    is_sel_qp_is_pg_type_used: &IsSelQpIsPgTypeUsed,
+    sel_qp_ts: &dyn ToTokens,
     where_type_ts: &dyn ToTokens,
     rd_type_ts: &dyn ToTokens,
     rd_ids_type_ts: &dyn ToTokens,
-    select_only_ids_qp_ts: &dyn ToTokens,
+    sel_only_ids_qp_ts: &dyn ToTokens,
     rd_inn_type_ts: &dyn ToTokens,
     into_inn_ts: &dyn ToTokens,
     upd_type_ts: &dyn ToTokens,
@@ -722,12 +721,12 @@ pub fn gen_impl_pg_json_ts(
     is_upd_qp_jsonb_set_target_used: &IsUpdQpJsonbSetTargetUsed,
     is_upd_qb_mut: &IsUpdQbMut,
     upd_qb_ts: &dyn ToTokens,
-    select_only_updd_ids_qp_ts: &dyn ToTokens,
-    is_select_only_updd_ids_qb_mut: &IsSelectOnlyUpddIdsQbMut,
-    select_only_updd_ids_qb_ts: &dyn ToTokens,
-    select_only_crd_ids_qp_ts: &dyn ToTokens,
-    is_select_only_crd_ids_qb_mut: &IsSelectOnlyCrdIdsQbMut,
-    select_only_crd_ids_qb_ts: &dyn ToTokens,
+    sel_only_updd_ids_qp_ts: &dyn ToTokens,
+    is_sel_only_updd_ids_qb_mut: &IsSelOnlyUpddIdsQbMut,
+    sel_only_updd_ids_qb_ts: &dyn ToTokens,
+    sel_only_crd_ids_qp_ts: &dyn ToTokens,
+    is_sel_only_crd_ids_qb_mut: &IsSelOnlyCrdIdsQbMut,
+    sel_only_crd_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_ts = quote! {#import ::};
     let reference_mut_u64_ts = quote! {&mut #U64};
@@ -742,23 +741,23 @@ pub fn gen_impl_pg_json_ts(
             type #TableTypeUcc = #table_type_type_ts;
             type #CrUcc = #cr_type_ts;
             type #CrForQueryUcc = #cr_for_query_type_ts;
-            type #SelectUcc = #select_type_ts;
-            fn #SelectQpSc(
-                #is_select_qp_self_select_used: &Self::#SelectUcc,
+            type #SelUcc = #sel_type_ts;
+            fn #SelQpSc(
+                #is_sel_qp_self_sel_used: &Self::#SelUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
-                #is_select_qp_column_field_for_er_message_used: #RefStr,
-                #is_select_qp_is_pg_type_used: #Bool,
+                #is_sel_qp_column_field_for_er_message_used: #RefStr,
+                #is_sel_qp_is_pg_type_used: #Bool,
             ) -> Result<#StringTs, #path_ts #QpErUcc> {
-                #select_qp_ts
+                #sel_qp_ts
             }
             type #WhereUcc = #where_type_ts;
             type #RdUcc = #rd_type_ts;
             type #RdIdsUcc = #rd_ids_type_ts;
-            fn #SelectOnlyIdsQpSc(
+            fn #SelOnlyIdsQpSc(
                 #ColumnFieldSc: #RefStr,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_ids_qp_ts
+                #sel_only_ids_qp_ts
             }
             type #RdInnUcc = #rd_inn_type_ts;
             fn into_inn(#VSc: Self::#RdUcc) -> Self::#RdInnUcc {
@@ -781,33 +780,33 @@ pub fn gen_impl_pg_json_ts(
             ) -> Result<#query_pg_args_ts, #StringTs> {
                 #upd_qb_ts
             }
-            fn #SelectOnlyUpddIdsQpSc(
+            fn #SelOnlyUpddIdsQpSc(
                 #VSc: &Self::#UpdForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_updd_ids_qp_ts
+                #sel_only_updd_ids_qp_ts
             }
-            fn #SelectOnlyUpddIdsQbSc<'lt>(
+            fn #SelOnlyUpddIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdForQueryUcc,
-                #is_select_only_updd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+                #is_sel_only_updd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
             ) -> Result<#query_lt_pg_args_ts, #StringTs> {
-                #select_only_updd_ids_qb_ts
+                #sel_only_updd_ids_qb_ts
             }
-            fn #SelectOnlyCrdIdsQpSc(
+            fn #SelOnlyCrdIdsQpSc(
                 #VSc: &Self::#CrForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_crd_ids_qp_ts
+                #sel_only_crd_ids_qp_ts
             }
-            fn #SelectOnlyCrdIdsQbSc<'lt>(
+            fn #SelOnlyCrdIdsQbSc<'lt>(
                 #VSc: &'lt Self::#CrForQueryUcc,
-                #is_select_only_crd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+                #is_sel_only_crd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
             ) -> Result<#query_lt_pg_args_ts, #StringTs> {
-                #select_only_crd_ids_qb_ts
+                #sel_only_crd_ids_qb_ts
             }
         }
     }
@@ -1015,14 +1014,14 @@ pub fn gen_impl_pg_type_ts(
     cr_qb_v_undrscr: &CrQbValueUndrscr,
     is_cr_qb_mut: &IsCrQbMut,
     cr_qb_ts: &dyn ToTokens,
-    ident_select_ucc: &dyn ToTokens,
-    select_qp_v_undrscr: &SelectQpValueUndrscr,
-    select_qp_ts: &dyn ToTokens,
+    ident_sel_ucc: &dyn ToTokens,
+    sel_qp_v_undrscr: &SelQpValueUndrscr,
+    sel_qp_ts: &dyn ToTokens,
     ident_where_ucc: &dyn ToTokens,
     ident_rd_ucc: &dyn ToTokens,
     normalize_ts: &dyn ToTokens,
     rd_ids_ts: &dyn ToTokens,
-    select_only_ids_qp_ts: &dyn ToTokens,
+    sel_only_ids_qp_ts: &dyn ToTokens,
     ident_rd_inn_ucc: &dyn ToTokens,
     into_inn_ts: &dyn ToTokens,
     ident_upd_ucc: &dyn ToTokens,
@@ -1034,9 +1033,9 @@ pub fn gen_impl_pg_type_ts(
     upd_qp_ts: &dyn ToTokens,
     is_upd_qb_mut: &IsUpdQbMut,
     upd_qb_ts: &dyn ToTokens,
-    select_only_updd_ids_qp_ts: &dyn ToTokens,
-    is_select_only_updd_ids_qb_mut: &IsSelectOnlyUpddIdsQbMut,
-    select_only_updd_ids_qb_ts: &dyn ToTokens,
+    sel_only_updd_ids_qp_ts: &dyn ToTokens,
+    is_sel_only_updd_ids_qb_mut: &IsSelOnlyUpddIdsQbMut,
+    sel_only_updd_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
     let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
@@ -1063,12 +1062,12 @@ pub fn gen_impl_pg_type_ts(
             > {
                 #cr_qb_ts
             }
-            type #SelectUcc = #ident_select_ucc;
-            fn #SelectQpSc(
-                #select_qp_v_undrscr: &Self::#SelectUcc,
+            type #SelUcc = #ident_sel_ucc;
+            fn #SelQpSc(
+                #sel_qp_v_undrscr: &Self::#SelUcc,
                 #ColumnSc: #RefStr,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_qp_ts
+                #sel_qp_ts
             }
             type #WhereUcc = #ident_where_ucc;
             type #RdUcc = #ident_rd_ucc;
@@ -1076,10 +1075,10 @@ pub fn gen_impl_pg_type_ts(
                 #normalize_ts
             }
             type #RdIdsUcc = #rd_ids_ts;
-            fn #SelectOnlyIdsQpSc(
+            fn #SelOnlyIdsQpSc(
                 #ColumnSc: #RefStr
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_ids_qp_ts
+                #sel_only_ids_qp_ts
             }
             type #RdInnUcc = #ident_rd_inn_ucc;
             fn into_inn(#VSc: Self::#RdUcc) -> Self::#RdInnUcc {
@@ -1105,18 +1104,18 @@ pub fn gen_impl_pg_type_ts(
             > {
                 #upd_qb_ts
             }
-            fn #SelectOnlyUpddIdsQpSc(
+            fn #SelOnlyUpddIdsQpSc(
                 #VSc: &Self::#UpdForQueryUcc,
                 #ColumnSc: #RefStr,
                 #IncrSc: &mut #U64,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_updd_ids_qp_ts
+                #sel_only_updd_ids_qp_ts
             }
-            fn #SelectOnlyUpddIdsQbSc<'lt>(
+            fn #SelOnlyUpddIdsQbSc<'lt>(
                 #VSc: &'lt Self::#UpdForQueryUcc,
-                #is_select_only_updd_ids_qb_mut #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
+                #is_sel_only_updd_ids_qb_mut #QuerySc: sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
-                #select_only_updd_ids_qb_ts
+                #sel_only_updd_ids_qb_ts
             }
         }
     }
@@ -1556,7 +1555,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     let self_pg_type_as_pg_type_rd_ids_ts = quote! {#self_pg_type_as_pg_type_ts::#RdIdsUcc};
     let self_pg_type_as_pg_type_cr_ts = quote! {#self_pg_type_as_pg_type_ts::#CrUcc};
     let self_pg_type_as_pg_type_where_ts = quote! {#self_pg_type_as_pg_type_ts::#WhereUcc};
-    let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
+    let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
     let opt_vec_cr_ts_2d58042f = gen_opt_vec_cr_ts(&self_pg_type_as_pg_type_ts, &opt_vec_cr_ts);
     let rd_ids_to_2_dims_vec_rd_inn_ts_513b8046 = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
         &self_pg_type_as_pg_type_ts,
@@ -1703,7 +1702,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         #[allow(clippy::float_arithmetic)]
         impl #import::#PgTypeTestCasesUcc for #ident {
             type #PgTypeUcc = #SelfUcc;
-            type #SelectUcc = #ident_select_ucc;
+            type #SelUcc = #ident_sel_ucc;
             #opt_vec_cr_ts_2d58042f
             #rd_ids_to_2_dims_vec_rd_inn_ts_513b8046
             #rd_inn_into_rd_with_new_or_try_new_unwraped_ts_affc58f5
@@ -1789,7 +1788,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     let self_pg_json_as_pg_json_rd_ids_ts = quote! {#self_pg_json_as_pg_json_ts::#RdIdsUcc};
     let self_pg_json_as_pg_json_cr_ts = quote! {#self_pg_json_as_pg_json_ts::#CrUcc};
     let self_pg_json_as_pg_json_where_ts = quote! {#self_pg_json_as_pg_json_ts::#WhereUcc};
-    let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
+    let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
     let opt_vec_cr_ts_a442630a = gen_opt_vec_cr_ts(&self_pg_json_as_pg_json_ts, &opt_vec_cr_ts);
     let rd_ids_to_2_dims_vec_rd_inn_ts_da1a7cf8 = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
         &self_pg_json_as_pg_json_ts,
@@ -1932,7 +1931,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
         #[allow(clippy::float_arithmetic)]
         impl #import::#PgJsonTestCasesUcc for #ident {
             type #PgJsonUcc = #SelfUcc;
-            type #SelectUcc = #ident_select_ucc;
+            type #SelUcc = #ident_sel_ucc;
             #opt_vec_cr_ts_a442630a
             #rd_ids_to_2_dims_vec_rd_inn_ts_da1a7cf8
             #rd_inn_into_rd_with_new_or_try_new_unwraped_ts_ccead2b6

@@ -40,7 +40,7 @@ trait_al!(UtoipaToSchemaAndSchemarsJsonSchemaAl = for<'__> ToSchema<'__> + JsonS
 trait_al!(TableTypeAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrForQueryAl = DebugClonePartialEqSerializeAl + SqlxEncodePgSqlxTypePgAl);
-trait_al!(SelectAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
+trait_al!(SelAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(WhereAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhereFilter<'__>);
 trait_al!(RdAl = DebugClonePartialEqSerdeAl);
 trait_al!(RdIdsAl = DebugClonePartialEqSerdeAl);
@@ -58,13 +58,13 @@ pub trait PgType {
         v: Self::Cr,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    type Select: SelectAl;
-    fn select_qp(v: &Self::Select, column: &str) -> Result<String, QpEr>;
+    type Sel: SelAl;
+    fn sel_qp(v: &Self::Sel, column: &str) -> Result<String, QpEr>;
     type Where: WhereAl;
     type Rd: RdAl + for<'__> Decode<'__, Postgres> + Type<Postgres>;
     fn normalize(v: Self::Rd) -> Self::Rd;
     type RdIds: RdIdsAl;
-    fn select_only_ids_qp(column: &str) -> Result<String, QpEr>;
+    fn sel_only_ids_qp(column: &str) -> Result<String, QpEr>;
     type RdInn: RdInnAl;
     fn into_inn(v: Self::Rd) -> Self::RdInn;
     type Upd: UpdAl;
@@ -80,12 +80,12 @@ pub trait PgType {
         v: Self::UpdForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    fn select_only_updd_ids_qp(
+    fn sel_only_updd_ids_qp(
         v: &Self::UpdForQuery,
         column: &str,
         incr: &mut u64,
     ) -> Result<String, QpEr>;
-    fn select_only_updd_ids_qb<'lt>(
+    fn sel_only_updd_ids_qb<'lt>(
         v: &'lt Self::UpdForQuery,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
@@ -95,9 +95,9 @@ pub trait PgJson {
     type TableType: TableTypeAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     type Cr: CrAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     type CrForQuery: CrForQueryAl + From<Self::Cr>;
-    type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
-    fn select_qp(
-        v: &Self::Select,
+    type Sel: SelAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
+    fn sel_qp(
+        v: &Self::Sel,
         fi: &str,
         column_field: &str,
         //todo remove this coz its used properly now
@@ -112,7 +112,7 @@ pub trait PgJson {
     //todo mb add Decode trait here and Type
     type Rd: RdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneEl;
     type RdIds: RdIdsAl;
-    fn select_only_ids_qp(column_field: &str) -> Result<String, QpEr>;
+    fn sel_only_ids_qp(column_field: &str) -> Result<String, QpEr>;
     type RdInn: RdInnAl;
     fn into_inn(v: Self::Rd) -> Self::RdInn;
     type Upd: UpdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
@@ -128,23 +128,23 @@ pub trait PgJson {
         v: Self::UpdForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    fn select_only_updd_ids_qp(
+    fn sel_only_updd_ids_qp(
         v: &Self::UpdForQuery,
         fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QpEr>;
-    fn select_only_updd_ids_qb<'lt>(
+    fn sel_only_updd_ids_qb<'lt>(
         v: &'lt Self::UpdForQuery,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
-    fn select_only_crd_ids_qp(
+    fn sel_only_crd_ids_qp(
         v: &Self::CrForQuery,
         fi: &str,
         column_field: &str,
         incr: &mut u64,
     ) -> Result<String, QpEr>;
-    fn select_only_crd_ids_qb<'lt>(
+    fn sel_only_crd_ids_qb<'lt>(
         v: &'lt Self::CrForQuery,
         query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
@@ -188,7 +188,7 @@ pub trait PgJsonObjVecElId {
 #[cfg(feature = "test-utils")]
 pub trait PgTypeTestCases {
     type PgType: PgType;
-    type Select: SelectAl + DfltOptSomeVecOneElMaxPageSize;
+    type Sel: SelAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_cr() -> Option<Vec<<Self::PgType as PgType>::Cr>>;
     fn rd_ids_to_2_dims_vec_rd_inn(
         rd_ids: &<Self::PgType as PgType>::RdIds,
@@ -314,7 +314,7 @@ pub struct PgJsonLengthGreaterThanTest<T: PgJson> {
 #[cfg(feature = "test-utils")]
 pub trait PgJsonTestCases {
     type PgJson: PgJson;
-    type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
+    type Sel: SelAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_cr() -> Option<Vec<<Self::PgJson as PgJson>::Cr>>;
     fn rd_ids_to_2_dims_vec_rd_inn(
         rd_ids: &<Self::PgJson as PgJson>::RdIds,

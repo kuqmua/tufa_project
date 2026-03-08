@@ -1528,6 +1528,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                     add_regex_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
                     gen_ts_dbf9de6b(
                         &format!(
+                            //todo reuse select it
                             //todo test it properly using all strange string vrts
                             "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
                             // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",

@@ -13,18 +13,17 @@ use naming::{
     StringUcc, UpdForQueryUcc, UpdUcc, VSc, VecOfUcc,
     param::{
         JsonbSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfOriginUcc, SelfRdIdsUcc, SelfRdInnUcc,
-        SelfRdUcc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhereUcc,
+        SelfRdUcc, SelfSelUcc, SelfTableTypeUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhereUcc,
     },
 };
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNullable, IsQbMut,
-    IsSelectOnlyCrdIdsQbMut, IsSelectOnlyUpddIdsQbMut, IsSelectQpColumnFieldForErMessageUsed,
-    IsSelectQpIsPgTypeUsed, IsSelectQpSelfSelectUsed, IsStdrtNotNull, IsUpdQbMut,
-    IsUpdQpJsonbSetTargetUsed, IsUpdQpSelfUpdUsed, PgFilter, PgJsonFilter, RdOrUpd,
-    ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    gen_impl_crate_is_string_empty_for_ident_ts,
+    IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColumnFieldForErMessageUsed,
+    IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsStdrtNotNull, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
+    IsUpdQpSelfUpdUsed, PgFilter, PgJsonFilter, RdOrUpd, ShouldDSchemarsJsonSchema,
+    ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_json_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
@@ -1108,9 +1107,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_from_ident_upd_for_ident_cr_for_query_ts
             }
         };
-        let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-        let ident_select_ts = {
-            let ident_select_ts = DTsBuilder::new()
+        let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
+        let ident_sel_ts = {
+            let ident_sel_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_clone()
@@ -1121,7 +1120,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
-                    &ident_select_ucc,
+                    &ident_sel_ucc,
                     &Ts2::new(),
                     &ArrDim::try_from(pattern).map_or_else(
                         |()| quote! {;},
@@ -1158,14 +1157,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 );
                 quote! {Self{#content_ts}}
             };
-            let impl_dflt_opt_some_vec_one_el_for_pg_json_ident_select_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_select_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
-            let impl_dflt_opt_some_vec_one_el_max_page_size_for_pg_json_ident_select_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
+            let impl_dflt_opt_some_vec_one_el_for_pg_json_ident_sel_ts =
+                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
+            let impl_dflt_opt_some_vec_one_el_max_page_size_for_pg_json_ident_sel_ts =
+                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
             quote! {
-                #ident_select_ts
-                #impl_dflt_opt_some_vec_one_el_for_pg_json_ident_select_ts
-                #impl_dflt_opt_some_vec_one_el_max_page_size_for_pg_json_ident_select_ts
+                #ident_sel_ts
+                #impl_dflt_opt_some_vec_one_el_for_pg_json_ident_sel_ts
+                #impl_dflt_opt_some_vec_one_el_max_page_size_for_pg_json_ident_sel_ts
             }
         };
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
@@ -1847,7 +1846,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let gen_dim_nbr_str = |dims_nbr: usize| format!("dim{dims_nbr}");
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
             let gen_dim_nbr_end_str = |dims_nbr: usize| format!("{}_end", gen_dim_nbr_str(dims_nbr));
-            let select_only_crd_or_updd_ids_qp_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
+            let sel_only_crd_or_updd_ids_qp_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                 let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"${v_f06128be}")));
                 quote! {
                     match #import::incr_checked_add_one_returning_incr(#IncrSc) {
@@ -1858,7 +1857,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             } else {
                 quote! {Ok(gen_pg_json_common::fi_jsonb_build_obj_v(fi))}
             };
-            let select_only_crd_or_updd_ids_qb_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
+            let sel_only_crd_or_updd_ids_qb_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                 quote! {
                     if let Err(#ErSc) = #QuerySc.try_bind(#VSc) {
                         return Err(#ErSc.to_string());
@@ -1874,13 +1873,13 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ident_table_type_ucc,
                 &ident_cr_ucc,
                 &ident_cr_for_query_ucc,
-                &ident_select_ucc,
+                &ident_sel_ucc,
                 &match &pattern {
-                    Pattern::Stdrt => IsSelectQpSelfSelectUsed::False,
-                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => IsSelectQpSelfSelectUsed::True,
+                    Pattern::Stdrt => IsSelQpSelfSelUsed::False,
+                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => IsSelQpSelfSelUsed::True,
                 },
-                &IsSelectQpColumnFieldForErMessageUsed::False,
-                &IsSelectQpIsPgTypeUsed::False,
+                &IsSelQpColumnFieldForErMessageUsed::False,
+                &IsSelQpIsPgTypeUsed::False,
                 &{
                     let format_h = {
                         //last child dim v does not matter - null or type - works both good
@@ -1888,7 +1887,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         let format_h = ArrDim::try_from(pattern).map_or_else(
                             |()| column_field_fi.clone(),
                             |arr_dim| {
-                                enum ArrDimSelectPattern {
+                                enum ArrDimSelPattern {
                                     ArrDim2 {
                                         dim1_is_nullable: IsNullable,
                                     },
@@ -1902,7 +1901,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         dim3_is_nullable: IsNullable,
                                     },
                                 }
-                                impl TryFrom<&ArrDim> for ArrDimSelectPattern {
+                                impl TryFrom<&ArrDim> for ArrDimSelPattern {
                                     type Error = ();
                                     fn try_from(v: &ArrDim) -> Result<Self, Self::Error> {
                                         match &v {
@@ -1938,14 +1937,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         "select jsonb_agg(({jsonb_agg_cnt})) from jsonb_array_elements(({jsonb_arr_els_cnt})) with ordinality {ordinality_cnt} between {{{dim_nbr_start}}} and {{{dim_nbr_end}}}"
                                     )
                                 };
-                                ArrDimSelectPattern::try_from(&arr_dim).map_or_else(
+                                ArrDimSelPattern::try_from(&arr_dim).map_or_else(
                                     |()| gen_jsonb_agg(
                                         "value",
                                         &format!("select {column_field_fi}"),
                                         "where ordinality",
                                         1,
                                     ),
-                                    |arr_dim_select_pattern| {
+                                    |arr_dim_sel_pattern| {
                                         // Dim1 does not fit into pattern. its only for 2+ dims
                                         let gen_d_nbr_elem = |content: usize| format!("d{content}_elem");
                                         let gen_d_nbr_ord = |content: usize| format!("d{content}_elem");
@@ -1957,23 +1956,23 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         let one = 1;
                                         gen_jsonb_agg(
                                             &{
-                                                let mut usize_v_0ff8cf42 = match &arr_dim_select_pattern {
-                                                    ArrDimSelectPattern::ArrDim2 { .. } => 2,
-                                                    ArrDimSelectPattern::ArrDim3 { .. } => 3,
-                                                    ArrDimSelectPattern::ArrDim4 { .. } => 4,
+                                                let mut usize_v_0ff8cf42 = match &arr_dim_sel_pattern {
+                                                    ArrDimSelPattern::ArrDim2 { .. } => 2,
+                                                    ArrDimSelPattern::ArrDim3 { .. } => 3,
+                                                    ArrDimSelPattern::ArrDim4 { .. } => 4,
                                                 };
-                                                match &arr_dim_select_pattern {
-                                                    ArrDimSelectPattern::ArrDim2 {
+                                                match &arr_dim_sel_pattern {
+                                                    ArrDimSelPattern::ArrDim2 {
                                                         dim1_is_nullable,
                                                     } => vec![dim1_is_nullable],
-                                                    ArrDimSelectPattern::ArrDim3 {
+                                                    ArrDimSelPattern::ArrDim3 {
                                                         dim1_is_nullable,
                                                         dim2_is_nullable,
                                                     } => vec![
                                                         dim2_is_nullable,
                                                         dim1_is_nullable,
                                                     ],
-                                                    ArrDimSelectPattern::ArrDim4 {
+                                                    ArrDimSelPattern::ArrDim4 {
                                                         dim1_is_nullable,
                                                         dim2_is_nullable,
                                                         dim3_is_nullable,
@@ -2212,20 +2211,20 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                     Ok(query)
                 },
-                &select_only_crd_or_updd_ids_qp_ts,
+                &sel_only_crd_or_updd_ids_qp_ts,
                 &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                    IsSelectOnlyUpddIdsQbMut::True
+                    IsSelOnlyUpddIdsQbMut::True
                 } else {
-                    IsSelectOnlyUpddIdsQbMut::False
+                    IsSelOnlyUpddIdsQbMut::False
                 },
-                &select_only_crd_or_updd_ids_qb_ts,
-                &select_only_crd_or_updd_ids_qp_ts,
+                &sel_only_crd_or_updd_ids_qb_ts,
+                &sel_only_crd_or_updd_ids_qp_ts,
                 &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                    IsSelectOnlyCrdIdsQbMut::True
+                    IsSelOnlyCrdIdsQbMut::True
                 } else {
-                    IsSelectOnlyCrdIdsQbMut::False
+                    IsSelOnlyCrdIdsQbMut::False
                 },
-                &select_only_crd_or_updd_ids_qb_ts,
+                &sel_only_crd_or_updd_ids_qb_ts,
             )
         };
         let mb_impl_pg_json_obj_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
@@ -3576,7 +3575,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             #ident_table_type_ts
             #ident_cr_ts
             #ident_cr_for_query_ts
-            #ident_select_ts
+            #ident_sel_ts
             #ident_where_ts
             #ident_rd_ts
             #ident_rd_ids_ts

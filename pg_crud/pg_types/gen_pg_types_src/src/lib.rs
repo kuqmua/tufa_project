@@ -23,7 +23,7 @@ use naming::{
     UnboundedUcc, UpdUcc, VSc, VecOfUcc,
     param::{
         SelfCrUcc, SelfNotNullUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
-        SelfOriginUcc, SelfRdIdsUcc, SelfRdInnUcc, SelfRdUcc, SelfSelectUcc, SelfTableTypeUcc,
+        SelfOriginUcc, SelfRdIdsUcc, SelfRdInnUcc, SelfRdUcc, SelfSelUcc, SelfTableTypeUcc,
         SelfUpdForQueryUcc, SelfUpdUcc, SelfWhereUcc,
     },
 };
@@ -33,8 +33,8 @@ use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrH, Import,
-    IncrParamUndrscr, IsCrQbMut, IsNullable, IsPkUndrscr, IsQbMut, IsSelectOnlyUpddIdsQbMut,
-    IsStdrtNotNull, IsUpdQbMut, PgFilter, PgTypeFilter, RdOrUpd, SelectQpValueUndrscr,
+    IncrParamUndrscr, IsCrQbMut, IsNullable, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut,
+    IsStdrtNotNull, IsUpdQbMut, PgFilter, PgTypeFilter, RdOrUpd, SelQpValueUndrscr,
     ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema, UpdQpJsonbSetAccumulatorUndrscr,
     UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
     gen_impl_crate_is_string_empty_for_ident_ts,
@@ -4319,10 +4319,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_sqlx_type_for_ident_cr_ts
             }
         };
-        let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-        let ident_select_ts = {
-            let pub_struct_ident_select_ts = gen_pub_struct_tokens_ts(
-                &ident_select_ucc,
+        let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
+        let ident_sel_ts = {
+            let pub_struct_ident_sel_ts = gen_pub_struct_tokens_ts(
+                &ident_sel_ucc,
                 &match &pg_type_pattern {
                     PgTypePattern::Stdrt => quote! {;},
                     PgTypePattern::ArrDim1 { .. } => {
@@ -4338,7 +4338,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 DDefault::True,
             );
-            let (impl_dflt_opt_some_vec_one_el_for_ident_select_ts, impl_dflt_opt_some_vec_one_el_max_page_size_for_ident_select_ts) = {
+            let (impl_dflt_opt_some_vec_one_el_for_ident_sel_ts, impl_dflt_opt_some_vec_one_el_max_page_size_for_ident_sel_ts) = {
                 let gen_ts = |dflt_some_one_or_dflt_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &pg_type_pattern {
                     PgTypePattern::Stdrt => quote! {Self},
                     PgTypePattern::ArrDim1 { .. } => {
@@ -4357,14 +4357,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 (
-                    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_select_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
-                    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(&ident_select_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
+                    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
+                    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
                 )
             };
             quote! {
-                #pub_struct_ident_select_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_select_ts
-                #impl_dflt_opt_some_vec_one_el_max_page_size_for_ident_select_ts
+                #pub_struct_ident_sel_ts
+                #impl_dflt_opt_some_vec_one_el_for_ident_sel_ts
+                #impl_dflt_opt_some_vec_one_el_max_page_size_for_ident_sel_ts
             }
         };
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
@@ -4907,7 +4907,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => (&ok_string_from_uuid_generate_v4_ts, &ok_query_ts),
                 }
             };
-            let select_only_ids_and_select_only_updd_ids_query_common_ts = {
+            let sel_only_ids_and_sel_only_updd_ids_query_common_ts = {
                 let format_ts = dq_ts(&{
                     let column_comma = "{column},";
                     if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) { column_comma.to_owned() } else { format!("'{{{{\\\"v\\\": null}}}}'::jsonb as {column_comma}") }
@@ -5008,10 +5008,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     CanBePk::True => IsCrQbMut::False,
                 },
                 &bind_v_to_query_cr_ts,
-                &ident_select_ucc,
+                &ident_sel_ucc,
                 &match &el.pg_type_pattern {
-                    PgTypePattern::Stdrt => SelectQpValueUndrscr::True,
-                    PgTypePattern::ArrDim1 { .. } => SelectQpValueUndrscr::False,
+                    PgTypePattern::Stdrt => SelQpValueUndrscr::True,
+                    PgTypePattern::ArrDim1 { .. } => SelQpValueUndrscr::False,
                 },
                 &{
                     let ts = match &pg_type_pattern {
@@ -5280,7 +5280,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 } else {
                     quote! {#import_non_pk_pg_type_rd_ids_ts}
                 },
-                &select_only_ids_and_select_only_updd_ids_query_common_ts,
+                &sel_only_ids_and_sel_only_updd_ids_query_common_ts,
                 &ident_rd_inn_ucc,
                 &{
                     let gen_ident_stdrt_not_null_into_inn_ident_stdrt_not_null_rd_ts = |ts: &dyn ToTokens| {
@@ -5369,8 +5369,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &typical_qp_ts,
                 &IsUpdQbMut::True,
                 &typical_qb_ts,
-                &select_only_ids_and_select_only_updd_ids_query_common_ts,
-                &IsSelectOnlyUpddIdsQbMut::False,
+                &sel_only_ids_and_sel_only_updd_ids_query_common_ts,
+                &IsSelOnlyUpddIdsQbMut::False,
                 &quote! {Ok(#QuerySc)},
             )
         };
@@ -6637,7 +6637,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             #ident_origin_ts
             #ident_table_type_ts
             #ident_cr_ts
-            #ident_select_ts
+            #ident_sel_ts
             #ident_where_ts
             #ident_rd_ts
             #ident_rd_ids_ts

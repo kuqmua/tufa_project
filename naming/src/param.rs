@@ -52,15 +52,15 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
-    ["self", "select"],
-    ["self", "select", "without", "id"],
-    ["self", "select", "with", "id"],
-    ["obj", "self", "select"],
-    ["obj", "with", "id", "self", "select"],
-    ["std", "opt", "opt", "obj", "self", "select"],
-    ["std", "vec", "vec", "obj", "with", "id", "self", "select"],
+    ["self", "sel"],
+    ["self", "sel", "without", "id"],
+    ["self", "sel", "with", "id"],
+    ["obj", "self", "sel"],
+    ["obj", "with", "id", "self", "sel"],
+    ["std", "opt", "opt", "obj", "self", "sel"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "sel"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "select"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "sel"
     ],
     ["self", "try", "new", "er"],
     ["obj", "self", "rd"],
@@ -169,17 +169,17 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "self", "rd", "with", "or", "without", "id", "try", "from", "er"
     ],
-    ["self", "select", "try", "new", "er"],
-    ["obj", "self", "select", "try", "new", "er"],
+    ["self", "sel", "try", "new", "er"],
+    ["obj", "self", "sel", "try", "new", "er"],
     [
-        "std", "opt", "opt", "obj", "self", "select", "try", "new", "er"
+        "std", "opt", "opt", "obj", "self", "sel", "try", "new", "er"
     ],
     [
-        "std", "vec", "vec", "obj", "with", "id", "self", "select", "try", "new", "er"
+        "std", "vec", "vec", "obj", "with", "id", "self", "sel", "try", "new", "er"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "select", "try",
-        "new", "er"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "sel", "try", "new",
+        "er"
     ],
     ["obj", "self", "opt", "to", "upd", "try", "gen", "er"],
     [
@@ -242,28 +242,26 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "cr"
     ],
-    ["pg", "json", "self", "select"],
-    ["pg", "json", "obj", "self", "select"],
-    ["pg", "json", "std", "opt", "opt", "obj", "self", "select"],
+    ["pg", "json", "self", "sel"],
+    ["pg", "json", "obj", "self", "sel"],
+    ["pg", "json", "std", "opt", "opt", "obj", "self", "sel"],
     [
-        "pg", "json", "std", "vec", "vec", "obj", "with", "id", "self", "select"
+        "pg", "json", "std", "vec", "vec", "obj", "with", "id", "self", "sel"
     ],
     [
-        "pg", "json", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self",
-        "select"
+        "pg", "json", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "sel"
     ],
-    ["pg", "json", "self", "select", "try", "new", "er"],
-    ["pg", "json", "obj", "self", "select", "try", "new", "er"],
+    ["pg", "json", "self", "sel", "try", "new", "er"],
+    ["pg", "json", "obj", "self", "sel", "try", "new", "er"],
     [
-        "pg", "json", "std", "opt", "opt", "obj", "self", "select", "try", "new", "er"
-    ],
-    [
-        "pg", "json", "std", "vec", "vec", "obj", "with", "id", "self", "select", "try", "new",
-        "er"
+        "pg", "json", "std", "opt", "opt", "obj", "self", "sel", "try", "new", "er"
     ],
     [
-        "pg", "json", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self",
-        "select", "try", "new", "er"
+        "pg", "json", "std", "vec", "vec", "obj", "with", "id", "self", "sel", "try", "new", "er"
+    ],
+    [
+        "pg", "json", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "sel",
+        "try", "new", "er"
     ],
     ["pg", "json", "self", "rd"],
     ["pg", "json", "self", "rd", "without", "id"],
@@ -623,7 +621,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["pg", "json", "self", "where", "is", "null"],
     ["pg", "json", "std", "opt", "opt", "self", "to", "cr"],
-    ["pg", "json", "std", "opt", "opt", "self", "select"],
+    ["pg", "json", "std", "opt", "opt", "self", "sel"],
     ["pg", "json", "std", "opt", "opt", "self", "rd"],
     ["pg", "json", "std", "opt", "opt", "self", "where"],
     [
@@ -803,8 +801,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "vec"],
     ["self", "pg", "type"],
     ["self", "with", "id"],
-    ["self", "select", "el"],
-    ["self", "with", "id", "select", "el"],
+    ["self", "sel", "el"],
+    ["self", "with", "id", "sel", "el"],
     ["self", "with", "id", "upd", "el"],
     ["self", "with", "id", "where"],
     ["self", "rd", "try", "from", "er"],
@@ -815,7 +813,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["std", "opt", "opt", "self", "where", "many"],
     [
         "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unique", "vec", "self",
-        "select"
+        "sel"
     ],
     ["upd", "qp", "self"],
     ["self", "tests"],

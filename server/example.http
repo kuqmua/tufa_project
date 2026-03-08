@@ -267,13 +267,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       ]
     }
   },
-  "select": [
+  "sel": [
     {
       "pk_column": null
     },
     {
       "column_156": {
-        "animal_with_id_as_not_null_jsonb_obj_with_id_select": [
+        "animal_with_id_as_not_null_jsonb_obj_with_id_sel": [
           {
             "id": null
           },

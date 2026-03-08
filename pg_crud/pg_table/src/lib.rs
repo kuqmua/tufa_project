@@ -32,12 +32,12 @@ pub fn gen_co_query_string(
     format!("insert into {table} ({columns}) values ({values}) returning {columns_to_return}")
 }
 #[must_use]
-pub fn gen_rm_query_string(table: &str, select_string: &str, where_string: &str) -> String {
-    format!("select {select_string} from {table} {where_string}")
+pub fn gen_rm_query_string(table: &str, sel_string: &str, where_string: &str) -> String {
+    format!("select {sel_string} from {table} {where_string}")
 }
 #[must_use]
-pub fn gen_ro_query_string(table: &str, select_string: &str, where_string: &str) -> String {
-    format!("select {select_string} from {table} where {where_string}")
+pub fn gen_ro_query_string(table: &str, sel_string: &str, where_string: &str) -> String {
+    format!("select {sel_string} from {table} where {where_string}")
 }
 #[must_use]
 pub fn gen_column_queals_v_comma_uo_qp(column: &str, value: &str) -> String {
