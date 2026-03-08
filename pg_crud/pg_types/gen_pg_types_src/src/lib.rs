@@ -7,7 +7,7 @@ use macros_helpers::{
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, mb_write_ts_into_file,
 };
 use naming::{
-    ArrOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CreateSc, DateNaiveSc, DateNaiveUcc, DateSc,
+    ArrOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CrSc, DateNaiveSc, DateNaiveUcc, DateSc,
     DateUcc, DaysSc, DisplayPlusToTokens, EarlierDateNotSupportedUcc, EarliestSupportedDateSc,
     EndSc, EndUcc, EqualUcc, ErSc, ExcludedStartGreaterThanExcludedEndUcc,
     ExcludedStartGreaterThanIncludedEndUcc, ExcludedUcc, GenPgTypesModSc, HourSc,
@@ -15,14 +15,14 @@ use naming::{
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrSc,
     InvalidHourOrMinuteOrSecondOrMicrosecondUcc, MaxSc, MicroSc, MicrosecondSc, MicrosecondsSc,
     MinSc, MinuteSc, MonthsSc, NanosecondPrecisionIsNotSupportedUcc, NanosecondSc, NearZeroSc,
-    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptUpdSc, OptVecCreateSc, PgTypePkUcc,
-    PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc, ReadIdsAndCreateIntoReadSc,
+    NegativeLessTypicalSc, NegativeMoreTypicalSc, NewSc, OptUpdSc, OptVecCrSc, PgTypePkUcc,
+    PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc, ReadIdsAndCrIntoReadSc,
     ReadIdsIntoReadSc, ReadIdsIntoTableTypeSc, ReadIdsIntoUpdSc, ReadIdsSc,
     ReadIdsTo2DimsVecReadInnSc, ReadIdsUcc, ReadIntoTableTypeSc, ReadSc, ReadUcc, SecSc, SecondSc,
     SelfSc, SelfUcc, StartSc, StartUcc, TableTypeSc, TableTypeUcc, TimeSc, TimeUcc, ToErrStringSc,
     TryNewForDeserializeSc, TryNewSc, UnboundedUcc, UpdUcc, VSc, VecOfUcc,
     param::{
-        SelfCreateUcc, SelfNotNullUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
+        SelfCrUcc, SelfNotNullUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
         SelfOriginUcc, SelfReadIdsUcc, SelfReadInnUcc, SelfReadUcc, SelfSelectUcc,
         SelfTableTypeUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhereUcc,
     },
@@ -31,13 +31,13 @@ use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
 use pg_crud_macros_common::{
-    AddOprtrUndrscr, ColumnParamUndrscr, CreateQbValueUndrscr, CreateQpIncrUndrscr,
-    CreateQpValueUndrscr, DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrH,
-    Import, IncrParamUndrscr, IsCreateQbMut, IsNullable, IsPkUndrscr, IsQbMut,
-    IsSelectOnlyUpddIdsQbMut, IsStdrtNotNull, IsUpdQbMut, PgFilter, PgTypeFilter, ReadOrUpd,
-    SelectQpValueUndrscr, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
-    UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
+    AddOprtrUndrscr, ColumnParamUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrH, Import,
+    IncrParamUndrscr, IsCrQbMut, IsNullable, IsPkUndrscr, IsQbMut, IsSelectOnlyUpddIdsQbMut,
+    IsStdrtNotNull, IsUpdQbMut, PgFilter, PgTypeFilter, ReadOrUpd, SelectQpValueUndrscr,
+    ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema, UpdQpJsonbSetAccumulatorUndrscr,
+    UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
+    gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
@@ -4274,9 +4274,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_stdrt_not_null_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident_stdrt_not_null_ucc);
-        let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
-        let ident_create_ts = {
-            let ident_create_ts = match &can_be_pk {
+        let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
+        let ident_cr_ts = {
+            let ident_cr_ts = match &can_be_pk {
                 CanBePk::False => DTsBuilder::new()
                     .make_pub()
                     .d_debug()
@@ -4286,37 +4286,37 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .d_serde_serialize()
                     .d_serde_deserialize()
                     .build_struct(
-                        &ident_create_ucc,
+                        &ident_cr_ucc,
                         &Ts2::new(),
                         &ident_origin_struct_ts
                     ),
-                CanBePk::True => gen_pub_struct_tokens_ts(&ident_create_ucc, &quote! {(());}, DDefault::False),
+                CanBePk::True => gen_pub_struct_tokens_ts(&ident_cr_ucc, &quote! {(());}, DDefault::False),
             };
-            let mb_impl_ident_create_ts = match &can_be_pk {
-                CanBePk::False => gen_pub_const_new_or_pub_try_new_ts(&ident_create_ucc),
+            let mb_impl_ident_cr_ts = match &can_be_pk {
+                CanBePk::False => gen_pub_const_new_or_pub_try_new_ts(&ident_cr_ucc),
                 CanBePk::True => Ts2::new(),
             };
-            let impl_dflt_opt_some_vec_one_el_for_ident_create_ts = gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_create_ucc, &{
+            let impl_dflt_opt_some_vec_one_el_for_ident_cr_ts = gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_cr_ucc, &{
                 let ts: &dyn ToTokens = match &can_be_pk {
                     CanBePk::False => &PgCrudCommonDfltOptSomeVecOneElCall,
                     CanBePk::True => &quote! {()},
                 };
                 quote! {Self(#ts)}
             });
-            let mb_impl_sqlx_encode_sqlx_pg_for_ident_create_ts = match &can_be_pk {
-                CanBePk::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_create_ucc, &quote! {#SelfSc.0}),
+            let mb_impl_sqlx_encode_sqlx_pg_for_ident_cr_ts = match &can_be_pk {
+                CanBePk::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_cr_ucc, &quote! {#SelfSc.0}),
                 CanBePk::True => Ts2::new(),
             };
-            let mb_impl_sqlx_type_for_ident_create_ts = match &can_be_pk {
-                CanBePk::False => gen_impl_sqlx_type_for_ident_ts(&ident_create_ucc, &ident_origin_ucc),
+            let mb_impl_sqlx_type_for_ident_cr_ts = match &can_be_pk {
+                CanBePk::False => gen_impl_sqlx_type_for_ident_ts(&ident_cr_ucc, &ident_origin_ucc),
                 CanBePk::True => Ts2::new(),
             };
             quote! {
-                #ident_create_ts
-                #mb_impl_ident_create_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_create_ts
-                #mb_impl_sqlx_encode_sqlx_pg_for_ident_create_ts
-                #mb_impl_sqlx_type_for_ident_create_ts
+                #ident_cr_ts
+                #mb_impl_ident_cr_ts
+                #impl_dflt_opt_some_vec_one_el_for_ident_cr_ts
+                #mb_impl_sqlx_encode_sqlx_pg_for_ident_cr_ts
+                #mb_impl_sqlx_type_for_ident_cr_ts
             }
         };
         let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
@@ -4876,7 +4876,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let ok_query_ts = quote! {Ok(#QuerySc)};
-            let (qp_create_ts, bind_v_to_query_create_ts): H<'_> = {
+            let (qp_cr_ts, bind_v_to_query_cr_ts): H<'_> = {
                 let typical: H<'_> = { (&typical_qp_ts, &typical_qb_ts) };
                 let dflt_init_by_pg: H<'_> = (&ok_string_from_dflt_ts, &ok_query_ts);
                 match &pg_type {
@@ -4992,22 +4992,22 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                 },
-                &ident_create_ucc,
-                &CreateQpValueUndrscr::True,
+                &ident_cr_ucc,
+                &CrQpValueUndrscr::True,
                 &match &can_be_pk {
-                    CanBePk::False => CreateQpIncrUndrscr::False,
-                    CanBePk::True => CreateQpIncrUndrscr::True,
+                    CanBePk::False => CrQpIncrUndrscr::False,
+                    CanBePk::True => CrQpIncrUndrscr::True,
                 },
-                &qp_create_ts,
+                &qp_cr_ts,
                 &match &can_be_pk {
-                    CanBePk::False => CreateQbValueUndrscr::False,
-                    CanBePk::True => CreateQbValueUndrscr::True,
+                    CanBePk::False => CrQbValueUndrscr::False,
+                    CanBePk::True => CrQbValueUndrscr::True,
                 },
                 &match &can_be_pk {
-                    CanBePk::False => IsCreateQbMut::True,
-                    CanBePk::True => IsCreateQbMut::False,
+                    CanBePk::False => IsCrQbMut::True,
+                    CanBePk::True => IsCrQbMut::False,
                 },
-                &bind_v_to_query_create_ts,
+                &bind_v_to_query_cr_ts,
                 &ident_select_ucc,
                 &match &el.pg_type_pattern {
                     PgTypePattern::Stdrt => SelectQpValueUndrscr::True,
@@ -5783,7 +5783,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ),
                 }
             };
-            let opt_vec_create_ts = {
+            let opt_vec_cr_ts = {
                 let gen_some_acc_ts = |
                     is_nullable_27c3e340: &IsNullable,
                     ident_ts_3fadfa9d: &dyn ToTokens,
@@ -5794,15 +5794,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         (IsNullable::False, false) => (quote! {new(vec![el_0fd5865b.0.into()])}, Ts2::new()),
                         (IsNullable::True, true) => (
                             quote! {try_new(Some(el_0fd5865b.0.into())).expect("b244d498")},
-                            quote! {acc_0b59a062.push(#self_as_pg_type_ts::Create::try_new(None).expect("31878971"));},
+                            quote! {acc_0b59a062.push(#self_as_pg_type_ts::Cr::try_new(None).expect("31878971"));},
                         ),
-                        (IsNullable::True, false) => (quote! {new(Some(el_0fd5865b.0.into()))}, quote! {acc_0b59a062.push(#self_as_pg_type_ts::Create::new(None));}),
+                        (IsNullable::True, false) => (quote! {new(Some(el_0fd5865b.0.into()))}, quote! {acc_0b59a062.push(#self_as_pg_type_ts::Cr::new(None));}),
                     };
                     let ident_as_pg_type_test_cases_ts = gen_as_pg_type_test_cases_ts(&ident_ts_3fadfa9d);
                     quote! {Some({
                         let mut acc_0b59a062 = Vec::new();
-                        for el_0fd5865b in #ident_as_pg_type_test_cases_ts::#OptVecCreateSc().unwrap_or(Vec::new()) {
-                            acc_0b59a062.push(#self_as_pg_type_ts::Create::#new_or_try_new_ts);
+                        for el_0fd5865b in #ident_as_pg_type_test_cases_ts::#OptVecCrSc().unwrap_or(Vec::new()) {
+                            acc_0b59a062.push(#self_as_pg_type_ts::Cr::#new_or_try_new_ts);
                         }
                         #mb_acc_push_none_ts
                         #additonal_ts
@@ -5815,15 +5815,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             CanBePk::False => {
                                 let ts = gen_stdrt_not_null_test_case_h_ts(&IsNeedToUseInto::False);
                                 let new_or_try_new_ts = {
-                                    let self_as_pg_type_create_ts = quote!{#self_as_pg_type_ts::Create};
+                                    let self_as_pg_type_cr_ts = quote!{#self_as_pg_type_ts::Cr};
                                     if pg_type_init_try_new_try_from_pg_type.is_ok() {
                                         quote! {
-                                            |el_043a7d30|#self_as_pg_type_create_ts::try_new(
+                                            |el_043a7d30|#self_as_pg_type_cr_ts::try_new(
                                                 el_043a7d30
                                             ).expect("941bd15c")
                                         }
                                     } else {
-                                        quote! {#self_as_pg_type_create_ts::#NewSc}
+                                        quote! {#self_as_pg_type_cr_ts::#NewSc}
                                     }
                                 };
                                 quote! {Some(
@@ -5897,7 +5897,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     };
                                     (
                                         gen_new_or_try_new_ts(&quote! {
-                                            #ts::#OptVecCreateSc().unwrap_or(Vec::new())
+                                            #ts::#OptVecCrSc().unwrap_or(Vec::new())
                                             .into_iter()
                                             .map(|el_ffb375dd|el_ffb375dd.0.into())
                                             .collect()
@@ -5907,10 +5907,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     )
                                 };
                                 quote! {
-                                    acc_0b59a062.push(#self_as_pg_type_ts::Create::#first_ts);
-                                    if let Some(v_6465e8ae) = #ts::#OptVecCreateSc().unwrap_or(Vec::new()).first() {
-                                        acc_0b59a062.push(#self_as_pg_type_ts::Create::#second_ts);
-                                        acc_0b59a062.push(#self_as_pg_type_ts::Create::#third_ts);
+                                    acc_0b59a062.push(#self_as_pg_type_ts::Cr::#first_ts);
+                                    if let Some(v_6465e8ae) = #ts::#OptVecCrSc().unwrap_or(Vec::new()).first() {
+                                        acc_0b59a062.push(#self_as_pg_type_ts::Cr::#second_ts);
+                                        acc_0b59a062.push(#self_as_pg_type_ts::Cr::#third_ts);
                                     }
                                 }
                             }
@@ -6152,42 +6152,42 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let previous_read_and_opt_upd_into_read_ts = quote! {
                 #OptUpdSc.map_or(#ReadSc, |#VSc| #ident_read_ucc(#VSc.0))
             };
-            let read_ids_and_create_into_read_ts = {
+            let read_ids_and_cr_into_read_ts = {
                 let ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
                     quote! {#ReadIdsSc.0}
                 } else {
-                    quote! {#ident_read_ucc(#CreateSc.0)}
+                    quote! {#ident_read_ucc(#CrSc.0)}
                 };
                 quote! {
                     #self_pg_type_as_pg_type_ts::normalize(#ts)
                 }
             };
-            let read_ids_and_create_into_opt_v_read_ts = {
+            let read_ids_and_cr_into_opt_v_read_ts = {
                 let ts = gen_v_init_ts0(&quote! {
-                    <Self as #import::PgTypeTestCases>::#ReadIdsAndCreateIntoReadSc(
+                    <Self as #import::PgTypeTestCases>::#ReadIdsAndCrIntoReadSc(
                         #ReadIdsSc,
-                        #CreateSc
+                        #CrSc
                     )
                 });
                 quote! {Some(#ts)}
             };
-            let read_ids_and_create_into_table_type_ts = {
+            let read_ids_and_cr_into_table_type_ts = {
                 let ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
                     quote! {#ReadIdsSc.0.0}
                 } else {
-                    quote! {#CreateSc.0}
+                    quote! {#CrSc.0}
                 };
                 quote! {#ident_table_type_ucc(#ts)}
             };
             //todo mb it into fn (not in proc macro)
-            let read_ids_and_create_into_where_equal_ts = {
+            let read_ids_and_cr_into_where_equal_ts = {
                 let ts = if matches!(&pg_type_pattern, PgTypePattern::Stdrt)
                     && matches!(&is_nullable, IsNullable::False)
                     && matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True)
                 {
                     quote! {#ReadIdsSc.0.0}
                 } else {
-                    quote! {#CreateSc.0}
+                    quote! {#CrSc.0}
                 };
                 quote! {
                     #ident_where_ucc::#EqualUcc(where_filters::PgTypeWhereEqual {
@@ -6196,13 +6196,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     })
                 }
             };
-            let read_ids_and_create_into_vec_where_equal_using_fields_ts = quote! {
+            let read_ids_and_cr_into_vec_where_equal_using_fields_ts = quote! {
                 #import::NotEmptyUniqueVec::try_new(vec![
-                    #read_ids_and_create_into_where_equal_ts
+                    #read_ids_and_cr_into_where_equal_ts
                 ]).expect("4c08b551")
             };
-            let read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts = none_ts.clone();
-            let create_into_pg_type_opt_vec_where_dim_one_equal_ts = match &pg_type_pattern {
+            let read_ids_and_cr_into_opt_vec_where_equal_to_json_field_ts = none_ts.clone();
+            let cr_into_pg_type_opt_vec_where_dim_one_equal_ts = match &pg_type_pattern {
                 PgTypePattern::Stdrt => none_ts.clone(),
                 PgTypePattern::ArrDim1 { dim1_is_nullable } => {
                     let ident_stdrt_is_nullable_table_type_ucc: &dyn ToTokens = match &dim1_is_nullable {
@@ -6211,7 +6211,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let some_ts = {
                         let ts: &dyn ToTokens = match &is_nullable {
-                            IsNullable::False => &quote! {#CreateSc.0.0},
+                            IsNullable::False => &quote! {#CrSc.0.0},
                             IsNullable::True => &quote! {v_09152b2e.0},
                         };
                         quote! {
@@ -6247,7 +6247,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     match &is_nullable {
                         IsNullable::False => some_ts,
                         IsNullable::True => quote! {
-                            match #CreateSc.0.0 {
+                            match #CrSc.0.0 {
                                 Some(v_09152b2e) => #some_ts,
                                 None => None
                             }
@@ -6259,21 +6259,21 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 let greater_than = PgTypeGreaterThanVrt::GreaterThan;
                 let not_greater_than = PgTypeGreaterThanVrt::NotGreaterThan;
                 let equal_not_greater_than = PgTypeGreaterThanVrt::EqualNotGreaterThan;
-                let gen_greater_than_test_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, table_type_ts: &dyn ToTokens| {
+                let gen_greater_than_test_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, cr_ts: &dyn ToTokens, table_type_ts: &dyn ToTokens| {
                     quote! {
                         #import::PgTypeGreaterThanTest {
                             vrt: #import::PgTypeGreaterThanVrt::#greater_than_vrt_ts,
-                            create: #self_as_pg_type_ts::Create::#create_ts,
+                            cr: #self_as_pg_type_ts::Cr::#cr_ts,
                             greater_than: #self_as_pg_type_ts::TableType::#table_type_ts,
                         }
                     }
                 };
                 let gen_greater_than_test_new_new_ts =
-                    |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_vrt_ts, &quote! {new(#create_ts)}, &quote! {new(#greater_than_ts)});
-                let gen_greater_than_test_try_new_try_new_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, create_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
+                    |greater_than_vrt_ts: &PgTypeGreaterThanVrt, cr_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| gen_greater_than_test_ts(greater_than_vrt_ts, &quote! {new(#cr_ts)}, &quote! {new(#greater_than_ts)});
+                let gen_greater_than_test_try_new_try_new_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, cr_ts: &dyn ToTokens, greater_than_ts: &dyn ToTokens| {
                     gen_greater_than_test_ts(
                         greater_than_vrt_ts,
-                        &quote! {try_new(#create_ts).expect("8327c651")},
+                        &quote! {try_new(#cr_ts).expect("8327c651")},
                         &quote! {try_new(#greater_than_ts).expect("c369e6ea")},
                     )
                 };
@@ -6469,7 +6469,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     .into_iter()
                                     .map(|el_504739e6| #import::PgTypeGreaterThanTest {
                                         vrt: el_504739e6.vrt,
-                                        create: #ident_create_ucc(#ident_origin_ucc(Some(el_504739e6.create.0))),
+                                        cr: #ident_cr_ucc(#ident_origin_ucc(Some(el_504739e6.cr.0))),
                                         greater_than: #ident_table_type_ucc(#ident_origin_ucc(Some(el_504739e6.greater_than.0))),
                                     })
                                     .collect()
@@ -6484,11 +6484,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 PgTypePattern::Stdrt => {
                     enum IsNeedToImplPgTypeGreaterThanTest {
                         False,
-                        TrueFromCreate,
+                        TrueFromCr,
                         TrueFromReadIds,
                     }
-                    enum CreateReadIds {
-                        Create,
+                    enum CrReadIds {
+                        Cr,
                         ReadIds,
                     }
                     let is_need_to_impl_greater_than_test = match &pg_type {
@@ -6500,7 +6500,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesChronoNaiveTimeAsTime |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxTypesChronoNaiveDateAsDate |
-                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplPgTypeGreaterThanTest::TrueFromCreate,
+                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplPgTypeGreaterThanTest::TrueFromCr,
                         PgType::I16AsSmallSerialInitByPg |
                         PgType::I32AsSerialInitByPg |
                         PgType::I64AsBigSerialInitByPg => IsNeedToImplPgTypeGreaterThanTest::TrueFromReadIds,
@@ -6520,11 +6520,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPgTypeGreaterThanTest::False,
                     };
-                    let gen_some_ts = |v_476d047b: &CreateReadIds| match &is_nullable {
+                    let gen_some_ts = |v_476d047b: &CrReadIds| match &is_nullable {
                         IsNullable::False => {
                             let ts = match &v_476d047b {
-                                CreateReadIds::ReadIds => quote! {#ident_stdrt_not_null_table_type_ucc(#ReadIdsSc.0.0)},
-                                CreateReadIds::Create => quote! {table_type},
+                                CrReadIds::ReadIds => quote! {#ident_stdrt_not_null_table_type_ucc(#ReadIdsSc.0.0)},
+                                CrReadIds::Cr => quote! {table_type},
                             };
                             quote! {Some(#ident_where_ucc::GreaterThan(
                                 where_filters::PgTypeWhereGreaterThan {
@@ -6535,8 +6535,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                         IsNullable::True => {
                             let ts = match &v_476d047b {
-                                CreateReadIds::ReadIds => quote! {#ReadIdsSc.0},
-                                CreateReadIds::Create => quote! {#TableTypeSc.0.0},
+                                CrReadIds::ReadIds => quote! {#ReadIdsSc.0},
+                                CrReadIds::Cr => quote! {#TableTypeSc.0.0},
                             };
                             quote! {
                                 #ts.map(|el_886032ca| #ident_where_ucc::GreaterThan(where_filters::PgTypeWhereGreaterThan {
@@ -6547,58 +6547,58 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     match &is_need_to_impl_greater_than_test {
-                        IsNeedToImplPgTypeGreaterThanTest::TrueFromReadIds => gen_some_ts(&CreateReadIds::ReadIds),
-                        IsNeedToImplPgTypeGreaterThanTest::TrueFromCreate => gen_some_ts(&CreateReadIds::Create),
+                        IsNeedToImplPgTypeGreaterThanTest::TrueFromReadIds => gen_some_ts(&CrReadIds::ReadIds),
+                        IsNeedToImplPgTypeGreaterThanTest::TrueFromCr => gen_some_ts(&CrReadIds::Cr),
                         IsNeedToImplPgTypeGreaterThanTest::False => none_ts.clone(),
                     }
                 }
                 PgTypePattern::ArrDim1 { .. } => none_ts.clone(),
             };
-            let read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts = none_ts.clone();
-            let create_into_pg_json_opt_vec_where_length_equal_ts = none_ts.clone();
-            let create_into_pg_json_opt_vec_where_length_greater_than_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_between_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_in_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_regex_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts = none_ts;
+            let read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts = none_ts.clone();
+            let cr_into_pg_json_opt_vec_where_length_equal_ts = none_ts.clone();
+            let cr_into_pg_json_opt_vec_where_length_greater_than_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_between_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_in_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts = none_ts.clone();
+            let read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts = none_ts;
             gen_impl_pg_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
                 &import,
                 &ident_inn_type_ts,
                 &ident,
-                &opt_vec_create_ts,
+                &opt_vec_cr_ts,
                 &read_ids_to_2_dims_vec_read_inn_ts,
                 &read_inn_into_read_with_new_or_try_new_unwraped_ts,
                 &read_inn_into_upd_with_new_or_try_new_unwraped_ts,
                 &upd_to_read_ids_ts,
                 &read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts,
                 &previous_read_and_opt_upd_into_read_ts,
-                &read_ids_and_create_into_read_ts,
-                &read_ids_and_create_into_opt_v_read_ts,
-                &read_ids_and_create_into_table_type_ts,
-                &read_ids_and_create_into_where_equal_ts,
-                &read_ids_and_create_into_vec_where_equal_using_fields_ts,
-                &read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts,
-                &create_into_pg_type_opt_vec_where_dim_one_equal_ts,
+                &read_ids_and_cr_into_read_ts,
+                &read_ids_and_cr_into_opt_v_read_ts,
+                &read_ids_and_cr_into_table_type_ts,
+                &read_ids_and_cr_into_where_equal_ts,
+                &read_ids_and_cr_into_vec_where_equal_using_fields_ts,
+                &read_ids_and_cr_into_opt_vec_where_equal_to_json_field_ts,
+                &cr_into_pg_type_opt_vec_where_dim_one_equal_ts,
                 &pg_type_opt_vec_where_greater_than_test_ts,
                 &read_ids_and_table_type_into_pg_type_opt_where_greater_than_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts,
-                &create_into_pg_json_opt_vec_where_length_equal_ts,
-                &create_into_pg_json_opt_vec_where_length_greater_than_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_between_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_in_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_regex_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
-                &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts,
+                &cr_into_pg_json_opt_vec_where_length_equal_ts,
+                &cr_into_pg_json_opt_vec_where_length_greater_than_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_between_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_in_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
+                &read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts,
             )
         };
         let mb_impl_pg_type_pk_for_ident_stdrt_not_null_if_can_be_pk_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
@@ -6636,7 +6636,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             #ident_ts
             #ident_origin_ts
             #ident_table_type_ts
-            #ident_create_ts
+            #ident_cr_ts
             #ident_select_ts
             #ident_where_ts
             #ident_read_ts

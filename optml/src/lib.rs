@@ -154,7 +154,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             //todo
             // #[derive(Debug)]
             // pub struct MyStruct<T> {
-            //     create: T,
+            //     cr: T,
             //     vrt: u32,
             //     length_greater_than: u8,
             // }
@@ -169,7 +169,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             // const _: () = #ident::<u8>::#const_name_ts;
             // fn main() {
             //     let my_struct_u8: MyStruct<u8> = MyStruct {
-            //         create: 0,
+            //         cr: 0,
             //         vrt: 0,
             //         length_greater_than: 0,
             //     };

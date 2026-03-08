@@ -5,35 +5,33 @@ use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AddOprtrSc, AllVrtsDfltOptSomeVecOneElMaxPageSizeSc, AllVrtsDfltOptSomeVecOneElSc,
-    ColumnFieldForErMessageSc, ColumnFieldSc, ColumnSc, CreateForQueryUcc,
-    CreateIntoPgJsonOptVecWhereLengthEqualSc, CreateIntoPgJsonOptVecWhereLengthGreaterThanSc,
-    CreateIntoPgTypeOptVecWhereDimOneEqualSc, CreateQbSc, CreateQpSc, CreateSc,
-    CreateTableColumnQpSc, CreateUcc, DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc,
-    DisplayPlusToTokens, EqualOprtrUcc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc,
-    JsonbSetPathSc, JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCreateSc,
-    PgJsonTestCasesUcc, PgJsonUcc, PgTypeEqualOprtrUcc, PgTypeNotPkUcc,
-    PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhereFilterUcc,
-    PreviousReadAndOptUpdIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc, ReadIdsAndCreateIntoOptVReadSc,
-    ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereBetweenSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereContainsElGreaterThanSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereContainsElRegexSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereDimFourEqualSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereDimOneEqualSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereDimThreeEqualSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereDimTwoEqualSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereGreaterThanSc, ReadIdsAndCreateIntoPgJsonOptVecWhereInSc,
-    ReadIdsAndCreateIntoPgJsonOptVecWhereRegexSc, ReadIdsAndCreateIntoReadSc,
-    ReadIdsAndCreateIntoTableTypeSc, ReadIdsAndCreateIntoVecWhereEqualToJsonFieldSc,
-    ReadIdsAndCreateIntoVecWhereEqualUsingFieldsSc, ReadIdsAndCreateIntoWhereEqualSc,
-    ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadIdsIntoOptVReadInnSc, ReadIdsSc,
-    ReadIdsTo2DimsVecReadInnSc, ReadIdsToOptVReadDfltOptSomeVecOneElSc, ReadIdsUcc,
-    ReadInnIntoReadWithNewOrTryNewUnwrapedSc, ReadInnIntoUpdWithNewOrTryNewUnwrapedSc, ReadInnUcc,
-    ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc, SelectOnlyIdsQpSc,
-    SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc, SelectQpSc, SelectUcc, SelfUcc, TableTypeSc,
-    TableTypeUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc, UpdToReadIdsSc, UpdUcc, VSc, VUcc, ValueSc,
-    WhereUcc,
-    param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
+    ColumnFieldForErMessageSc, ColumnFieldSc, ColumnSc, CrForQueryUcc,
+    CrIntoPgJsonOptVecWhereLengthEqualSc, CrIntoPgJsonOptVecWhereLengthGreaterThanSc,
+    CrIntoPgTypeOptVecWhereDimOneEqualSc, CrQbSc, CrQpSc, CrSc, CrTableColumnQpSc, CrUcc,
+    DfltOptSomeVecOneElMaxPageSizeSc, DfltOptSomeVecOneElSc, DisplayPlusToTokens, EqualOprtrUcc,
+    FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, MutSc,
+    NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc, PgJsonUcc, PgTypeEqualOprtrUcc,
+    PgTypeNotPkUcc, PgTypeOptVecWhereGreaterThanTestSc, PgTypeTestCasesUcc, PgTypeUcc,
+    PgTypeWhereFilterUcc, PreviousReadAndOptUpdIntoReadSc, QbSc, QpErUcc, QpSc, QuerySc,
+    ReadIdsAndCrIntoOptVReadSc, ReadIdsAndCrIntoOptVecWhereEqualToJsonFieldSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereBetweenSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereContainsElGreaterThanSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereContainsElRegexSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereDimFourEqualSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereDimOneEqualSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereDimThreeEqualSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereDimTwoEqualSc, ReadIdsAndCrIntoPgJsonOptVecWhereGreaterThanSc,
+    ReadIdsAndCrIntoPgJsonOptVecWhereInSc, ReadIdsAndCrIntoPgJsonOptVecWhereRegexSc,
+    ReadIdsAndCrIntoReadSc, ReadIdsAndCrIntoTableTypeSc,
+    ReadIdsAndCrIntoVecWhereEqualToJsonFieldSc, ReadIdsAndCrIntoVecWhereEqualUsingFieldsSc,
+    ReadIdsAndCrIntoWhereEqualSc, ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc,
+    ReadIdsIntoOptVReadInnSc, ReadIdsSc, ReadIdsTo2DimsVecReadInnSc,
+    ReadIdsToOptVReadDfltOptSomeVecOneElSc, ReadIdsUcc, ReadInnIntoReadWithNewOrTryNewUnwrapedSc,
+    ReadInnIntoUpdWithNewOrTryNewUnwrapedSc, ReadInnUcc, ReadSc, ReadUcc, SelectOnlyCrdIdsQbSc,
+    SelectOnlyCrdIdsQpSc, SelectOnlyIdsQpSc, SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc,
+    SelectQpSc, SelectUcc, SelfUcc, TableTypeSc, TableTypeUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc,
+    UpdToReadIdsSc, UpdUcc, VSc, VUcc, ValueSc, WhereUcc,
+    param::{SelfCrUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
@@ -207,11 +205,11 @@ impl ToTokens for ShouldDeriveUtoipaToSchema {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsCreateQbMut {
+pub enum IsCrQbMut {
     False,
     True,
 }
-impl ToTokens for IsCreateQbMut {
+impl ToTokens for IsCrQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -313,11 +311,11 @@ impl ToTokens for IsSelectOnlyUpddIdsQbMut {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelectOnlyCreatedIdsQbMut {
+pub enum IsSelectOnlyCrdIdsQbMut {
     False,
     True,
 }
-impl ToTokens for IsSelectOnlyCreatedIdsQbMut {
+impl ToTokens for IsSelectOnlyCrdIdsQbMut {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => Ts2::new().to_tokens(tokens),
@@ -445,14 +443,14 @@ pub enum Dim {
 }
 impl Dim {
     #[must_use]
-    pub fn read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_sc(
+    pub fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_nbr_equal_sc(
         &self,
     ) -> Box<dyn DisplayPlusToTokens> {
         match self {
-            Self::One => Box::new(ReadIdsAndCreateIntoPgJsonOptVecWhereDimOneEqualSc),
-            Self::Two => Box::new(ReadIdsAndCreateIntoPgJsonOptVecWhereDimTwoEqualSc),
-            Self::Three => Box::new(ReadIdsAndCreateIntoPgJsonOptVecWhereDimThreeEqualSc),
-            Self::Four => Box::new(ReadIdsAndCreateIntoPgJsonOptVecWhereDimFourEqualSc),
+            Self::One => Box::new(ReadIdsAndCrIntoPgJsonOptVecWhereDimOneEqualSc),
+            Self::Two => Box::new(ReadIdsAndCrIntoPgJsonOptVecWhereDimTwoEqualSc),
+            Self::Three => Box::new(ReadIdsAndCrIntoPgJsonOptVecWhereDimThreeEqualSc),
+            Self::Four => Box::new(ReadIdsAndCrIntoPgJsonOptVecWhereDimFourEqualSc),
         }
     }
 }
@@ -475,11 +473,11 @@ impl From<&Dim> for DimIndexNbr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum CreateQpValueUndrscr {
+pub enum CrQpValueUndrscr {
     False,
     True,
 }
-impl ToTokens for CreateQpValueUndrscr {
+impl ToTokens for CrQpValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -488,11 +486,11 @@ impl ToTokens for CreateQpValueUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum CreateQpIncrUndrscr {
+pub enum CrQpIncrUndrscr {
     False,
     True,
 }
-impl ToTokens for CreateQpIncrUndrscr {
+impl ToTokens for CrQpIncrUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => IncrSc.to_tokens(tokens),
@@ -501,11 +499,11 @@ impl ToTokens for CreateQpIncrUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum CreateQbValueUndrscr {
+pub enum CrQbValueUndrscr {
     False,
     True,
 }
-impl ToTokens for CreateQbValueUndrscr {
+impl ToTokens for CrQbValueUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => VSc.to_tokens(tokens),
@@ -706,8 +704,8 @@ pub fn gen_impl_pg_json_ts(
     import: &Import,
     ident: &dyn ToTokens,
     table_type_type_ts: &dyn ToTokens,
-    create_type_ts: &dyn ToTokens,
-    create_for_query_type_ts: &dyn ToTokens,
+    cr_type_ts: &dyn ToTokens,
+    cr_for_query_type_ts: &dyn ToTokens,
     select_type_ts: &dyn ToTokens,
     is_select_qp_self_select_used: &IsSelectQpSelfSelectUsed,
     is_select_qp_column_field_for_er_message_used: &IsSelectQpColumnFieldForErMessageUsed,
@@ -729,9 +727,9 @@ pub fn gen_impl_pg_json_ts(
     select_only_updd_ids_qp_ts: &dyn ToTokens,
     is_select_only_updd_ids_qb_mut: &IsSelectOnlyUpddIdsQbMut,
     select_only_updd_ids_qb_ts: &dyn ToTokens,
-    select_only_created_ids_qp_ts: &dyn ToTokens,
-    is_select_only_created_ids_qb_mut: &IsSelectOnlyCreatedIdsQbMut,
-    select_only_created_ids_qb_ts: &dyn ToTokens,
+    select_only_crd_ids_qp_ts: &dyn ToTokens,
+    is_select_only_crd_ids_qb_mut: &IsSelectOnlyCrdIdsQbMut,
+    select_only_crd_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
     let path_ts = quote! {#import ::};
     let reference_mut_u64_ts = quote! {&mut #U64};
@@ -744,8 +742,8 @@ pub fn gen_impl_pg_json_ts(
         #AllowClippyArbitrarySrcItemOrdering
         impl #path_ts #PgJsonUcc for #ident {
             type #TableTypeUcc = #table_type_type_ts;
-            type #CreateUcc = #create_type_ts;
-            type #CreateForQueryUcc = #create_for_query_type_ts;
+            type #CrUcc = #cr_type_ts;
+            type #CrForQueryUcc = #cr_for_query_type_ts;
             type #SelectUcc = #select_type_ts;
             fn #SelectQpSc(
                 #is_select_qp_self_select_used: &Self::#SelectUcc,
@@ -799,19 +797,19 @@ pub fn gen_impl_pg_json_ts(
             ) -> Result<#query_lt_pg_args_ts, #StringTs> {
                 #select_only_updd_ids_qb_ts
             }
-            fn #SelectOnlyCreatedIdsQpSc(
-                #VSc: &Self::#CreateForQueryUcc,
+            fn #SelectOnlyCrdIdsQpSc(
+                #VSc: &Self::#CrForQueryUcc,
                 #FiSc: #RefStr,
                 #ColumnFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #select_only_created_ids_qp_ts
+                #select_only_crd_ids_qp_ts
             }
-            fn #SelectOnlyCreatedIdsQbSc<'lt>(
-                #VSc: &'lt Self::#CreateForQueryUcc,
-                #is_select_only_created_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+            fn #SelectOnlyCrdIdsQbSc<'lt>(
+                #VSc: &'lt Self::#CrForQueryUcc,
+                #is_select_only_crd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
             ) -> Result<#query_lt_pg_args_ts, #StringTs> {
-                #select_only_created_ids_qb_ts
+                #select_only_crd_ids_qb_ts
             }
         }
     }
@@ -1011,14 +1009,14 @@ pub fn gen_impl_pg_type_ts(
     ident: &dyn ToTokens,
     ident_table_type_ucc: &dyn ToTokens,
     is_pk_undrscr: &IsPkUndrscr,
-    create_table_column_qp_ts: &dyn ToTokens,
-    ident_create_ucc: &dyn ToTokens,
-    create_qp_v_undrscr: &CreateQpValueUndrscr,
-    create_qp_incr_undrscr: &CreateQpIncrUndrscr,
-    create_qp_ts: &dyn ToTokens,
-    create_qb_v_undrscr: &CreateQbValueUndrscr,
-    is_create_qb_mut: &IsCreateQbMut,
-    create_qb_ts: &dyn ToTokens,
+    cr_table_column_qp_ts: &dyn ToTokens,
+    ident_cr_ucc: &dyn ToTokens,
+    cr_qp_v_undrscr: &CrQpValueUndrscr,
+    cr_qp_incr_undrscr: &CrQpIncrUndrscr,
+    cr_qp_ts: &dyn ToTokens,
+    cr_qb_v_undrscr: &CrQbValueUndrscr,
+    is_cr_qb_mut: &IsCrQbMut,
+    cr_qb_ts: &dyn ToTokens,
     ident_select_ucc: &dyn ToTokens,
     select_qp_v_undrscr: &SelectQpValueUndrscr,
     select_qp_ts: &dyn ToTokens,
@@ -1048,24 +1046,24 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySrcItemOrdering
         impl #import :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
-            fn #CreateTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
-                #create_table_column_qp_ts
+            fn #CrTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
+                #cr_table_column_qp_ts
             }
-            type #CreateUcc = #ident_create_ucc;
-            fn #CreateQpSc(
-                #create_qp_v_undrscr: &Self::#CreateUcc,
-                #create_qp_incr_undrscr: &mut #U64
+            type #CrUcc = #ident_cr_ucc;
+            fn #CrQpSc(
+                #cr_qp_v_undrscr: &Self::#CrUcc,
+                #cr_qp_incr_undrscr: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #create_qp_ts
+                #cr_qp_ts
             }
-            fn #CreateQbSc(
-                #create_qb_v_undrscr: Self::#CreateUcc,
-                #is_create_qb_mut #QuerySc: #query_pg_args_ts
+            fn #CrQbSc(
+                #cr_qb_v_undrscr: Self::#CrUcc,
+                #is_cr_qb_mut #QuerySc: #query_pg_args_ts
             ) -> Result<
                 #query_pg_args_ts,
                 String
             > {
-                #create_qb_ts
+                #cr_qb_ts
             }
             type #SelectUcc = #ident_select_ucc;
             fn #SelectQpSc(
@@ -1126,16 +1124,16 @@ pub fn gen_impl_pg_type_ts(
     }
 }
 pub fn gen_impl_pg_type_not_pk_for_ident_ts(import: &Import, ident: &dyn ToTokens) -> Ts2 {
-    let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
+    let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
     quote! {
         #AllowClippyArbitrarySrcItemOrdering
         impl #import::#PgTypeNotPkUcc for #ident {
             type #PgTypeUcc = Self;
-            type #CreateUcc = #ident_create_ucc;
+            type #CrUcc = #ident_cr_ucc;
         }
     }
 }
-// fn gen_read_ids_and_create_into_where_method_ts(
+// fn gen_read_ids_and_cr_into_where_method_ts(
 //     import: &Import,
 //     method_name_ts: &dyn ToTokens,
 //     ts: &dyn ToTokens,
@@ -1144,8 +1142,8 @@ pub fn gen_impl_pg_type_not_pk_for_ident_ts(import: &Import, ident: &dyn ToToken
 //     let self_ucc = SelfUcc;
 //     let read_ids_sc = ReadIdsSc;
 //     let read_ids_ucc = ReadIdsUcc;
-//     let create_sc = CreateSc;
-//     let create_ucc = CreateUcc;
+//     let cr_sc = CrSc;
+//     let cr_ucc = CrUcc;
 //     let where_ucc = WhereUcc;
 //     let self_pg_type_or_pg_json_as_pg_json_ts = {
 //         let pg_type_or_pg_json_ts: &dyn ToTokens = match &pg_type_or_pg_json {
@@ -1159,15 +1157,15 @@ pub fn gen_impl_pg_type_not_pk_for_ident_ts(import: &Import, ident: &dyn ToToken
 //     quote!{
 //         fn #method_name_ts(
 //             #ReadIdsSc: #self_pg_type_or_pg_json_as_pg_json_ts::#ReadIdsUcc,
-//             #CreateSc: #self_pg_type_or_pg_json_as_pg_json_ts::#CreateUcc
+//             #CrSc: #self_pg_type_or_pg_json_as_pg_json_ts::#CrUcc
 //         ) -> Vec<#self_pg_type_or_pg_json_as_pg_json_ts::#WhereUcc> {
 //             #ts
 //         }
 //     }
 // }
-fn gen_opt_vec_create_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_opt_vec_cr_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #OptVecCreateSc() -> Option<Vec<#path_ts::#CreateUcc>> {
+        fn #OptVecCrSc() -> Option<Vec<#path_ts::#CrUcc>> {
             #ts
         }
     }
@@ -1237,75 +1235,75 @@ fn gen_previous_read_and_opt_upd_into_read_ts(path_ts: &dyn ToTokens, ts: &dyn T
         }
     }
 }
-fn gen_read_ids_and_create_into_read_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_read_ids_and_cr_into_read_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #ReadIdsAndCreateIntoReadSc(
+        fn #ReadIdsAndCrIntoReadSc(
             #ReadIdsSc: #path_ts::#ReadIdsUcc,
-            #CreateSc: #path_ts::#CreateUcc
+            #CrSc: #path_ts::#CrUcc
         ) -> #path_ts::#ReadUcc {
             #ts
         }
     }
 }
-fn gen_read_ids_and_create_into_opt_v_read_ts(
+fn gen_read_ids_and_cr_into_opt_v_read_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadIdsAndCreateIntoOptVReadSc(
+        fn #ReadIdsAndCrIntoOptVReadSc(
             #ReadIdsSc: #path_ts::#ReadIdsUcc,
-            #CreateSc: #path_ts::#CreateUcc
+            #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::#VUcc<#path_ts::#ReadUcc>> {
             #ts
         }
     }
 }
-fn gen_read_ids_and_create_into_table_type_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_read_ids_and_cr_into_table_type_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #ReadIdsAndCreateIntoTableTypeSc(
+        fn #ReadIdsAndCrIntoTableTypeSc(
             #ReadIdsSc: #path_ts::#ReadIdsUcc,
-            #CreateSc: #path_ts::#CreateUcc
+            #CrSc: #path_ts::#CrUcc
         ) -> #path_ts::#TableTypeUcc {
             #ts
         }
     }
 }
-pub fn gen_read_ids_and_create_into_where_equal_ts(
+pub fn gen_read_ids_and_cr_into_where_equal_ts(
     read_ids_ts: &dyn ToTokens,
-    create_ts: &dyn ToTokens,
+    cr_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadIdsAndCreateIntoWhereEqualSc(
+        fn #ReadIdsAndCrIntoWhereEqualSc(
             #ReadIdsSc: #read_ids_ts,
-            #CreateSc: #create_ts
+            #CrSc: #cr_ts
         ) -> #where_ts {
             #ts
         }
     }
 }
-pub fn gen_read_ids_and_create_into_vec_where_equal_using_fields_ts(
+pub fn gen_read_ids_and_cr_into_vec_where_equal_using_fields_ts(
     import: &Import,
     read_ids_ts: &dyn ToTokens,
-    create_ts: &dyn ToTokens,
+    cr_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadIdsAndCreateIntoVecWhereEqualUsingFieldsSc(
+        fn #ReadIdsAndCrIntoVecWhereEqualUsingFieldsSc(
             #ReadIdsSc: #read_ids_ts,
-            #CreateSc: #create_ts
+            #CrSc: #cr_ts
         ) -> #import::NotEmptyUniqueVec<#where_ts> {
             #ts
         }
     }
 }
-fn gen_read_ids_and_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_ts(
+fn gen_read_ids_and_cr_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_ts(
     import: Import,
     read_ids_ts: &dyn ToTokens,
-    create_ts: &dyn ToTokens,
+    cr_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
     pg_type_or_pg_json: PgTypeOrPgJson,
@@ -1318,35 +1316,35 @@ fn gen_read_ids_and_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type
         }
     };
     let name_ts: &dyn ToTokens = match &pg_type_or_pg_json {
-        PgTypeOrPgJson::PgType => &ReadIdsAndCreateIntoOptVecWhereEqualToJsonFieldSc,
-        PgTypeOrPgJson::PgJson => &ReadIdsAndCreateIntoVecWhereEqualToJsonFieldSc,
+        PgTypeOrPgJson::PgType => &ReadIdsAndCrIntoOptVecWhereEqualToJsonFieldSc,
+        PgTypeOrPgJson::PgJson => &ReadIdsAndCrIntoVecWhereEqualToJsonFieldSc,
     };
     quote! {
         fn #name_ts(
             #ReadIdsSc: #read_ids_ts,
-            #CreateSc: #create_ts
+            #CrSc: #cr_ts
         ) -> #return_type_ts {
             #ts
         }
     }
 }
-pub fn gen_read_ids_and_create_into_vec_where_equal_to_json_field_ts(
+pub fn gen_read_ids_and_cr_into_vec_where_equal_to_json_field_ts(
     import: Import,
     read_ids_ts: &dyn ToTokens,
-    create_ts: &dyn ToTokens,
+    cr_ts: &dyn ToTokens,
     where_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_ts(
+    gen_read_ids_and_cr_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_ts(
         import,
         &read_ids_ts,
-        &create_ts,
+        &cr_ts,
         &where_ts,
         &ts,
         PgTypeOrPgJson::PgJson,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
     import: Import,
     name_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
@@ -1355,87 +1353,87 @@ fn gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
     quote! {
         fn #name_ts(
             #ReadIdsSc: #path_ts::#ReadIdsUcc,
-            #CreateSc: #path_ts::#CreateUcc
+            #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
+    gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
         import,
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereDimOneEqualSc,
+        &ReadIdsAndCrIntoPgJsonOptVecWhereDimOneEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
+    gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
         import,
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereDimTwoEqualSc,
+        &ReadIdsAndCrIntoPgJsonOptVecWhereDimTwoEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
+    gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
         import,
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereDimThreeEqualSc,
+        &ReadIdsAndCrIntoPgJsonOptVecWhereDimThreeEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
+    gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_nbr_equal_ts(
         import,
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereDimFourEqualSc,
+        &ReadIdsAndCrIntoPgJsonOptVecWhereDimFourEqualSc,
         &path_ts,
         &ts,
     )
 }
-fn gen_create_into_pg_json_opt_vec_where_length_equal_ts(
+fn gen_cr_into_pg_json_opt_vec_where_length_equal_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CreateIntoPgJsonOptVecWhereLengthEqualSc(
-            #CreateSc: #path_ts::#CreateUcc
+        fn #CrIntoPgJsonOptVecWhereLengthEqualSc(
+            #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
-fn gen_create_into_pg_json_opt_vec_where_length_greater_than_ts(
+fn gen_cr_into_pg_json_opt_vec_where_length_greater_than_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CreateIntoPgJsonOptVecWhereLengthGreaterThanSc(
-            #CreateSc: #path_ts::#CreateUcc
+        fn #CrIntoPgJsonOptVecWhereLengthGreaterThanSc(
+            #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUniqueVec<#path_ts::#WhereUcc>> {
             #ts
         }
     }
 }
-fn gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
     method_name_ts: &dyn ToTokens,
     import: Import,
     path_ts: &dyn ToTokens,
@@ -1444,79 +1442,79 @@ fn gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multi
     quote! {
         fn #method_name_ts(
             #ReadIdsSc: #path_ts::#ReadIdsUcc,
-            #CreateSc: #path_ts::#CreateUcc
+            #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUniqueVec<#import::SingleOrMultiple<#path_ts::#WhereUcc>>> {
             #ts
         }
     }
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereGreaterThanSc,
+    gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadIdsAndCrIntoPgJsonOptVecWhereGreaterThanSc,
         import,
         path_ts,
         ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_between_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_between_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereBetweenSc,
+    gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadIdsAndCrIntoPgJsonOptVecWhereBetweenSc,
         import,
         path_ts,
         ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_in_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_in_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereInSc,
+    gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadIdsAndCrIntoPgJsonOptVecWhereInSc,
         import,
         path_ts,
         ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_regex_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereRegexSc,
+    gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadIdsAndCrIntoPgJsonOptVecWhereRegexSc,
         import,
         path_ts,
         ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereContainsElGreaterThanSc,
+    gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadIdsAndCrIntoPgJsonOptVecWhereContainsElGreaterThanSc,
         import,
         path_ts,
         ts,
     )
 }
-fn gen_read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts(
+fn gen_read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    gen_read_ids_and_create_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
-        &ReadIdsAndCreateIntoPgJsonOptVecWhereContainsElRegexSc,
+    gen_read_ids_and_cr_into_pg_json_opt_not_empty_unique_vec_single_or_multiple_where_ts(
+        &ReadIdsAndCrIntoPgJsonOptVecWhereContainsElRegexSc,
         import,
         path_ts,
         ts,
@@ -1527,42 +1525,41 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     import: &Import,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
-    opt_vec_create_ts: &dyn ToTokens,
+    opt_vec_cr_ts: &dyn ToTokens,
     read_ids_to_2_dims_vec_read_inn_ts: &dyn ToTokens,
     read_inn_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inn_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     upd_to_read_ids_ts: &dyn ToTokens,
     read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_and_opt_upd_into_read_ts: &dyn ToTokens,
-    read_ids_and_create_into_read_ts: &dyn ToTokens,
-    read_ids_and_create_into_opt_v_read_ts: &dyn ToTokens,
-    read_ids_and_create_into_table_type_ts: &dyn ToTokens,
-    read_ids_and_create_into_where_equal_ts: &dyn ToTokens,
-    read_ids_and_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
-    read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts: &dyn ToTokens,
-    create_into_pg_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
+    read_ids_and_cr_into_read_ts: &dyn ToTokens,
+    read_ids_and_cr_into_opt_v_read_ts: &dyn ToTokens,
+    read_ids_and_cr_into_table_type_ts: &dyn ToTokens,
+    read_ids_and_cr_into_where_equal_ts: &dyn ToTokens,
+    read_ids_and_cr_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
+    read_ids_and_cr_into_opt_vec_where_equal_to_json_field_ts: &dyn ToTokens,
+    cr_into_pg_type_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
     pg_type_opt_vec_where_greater_than_test_ts: &dyn ToTokens,
     read_ids_and_table_type_into_pg_type_opt_where_greater_than_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_four_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_length_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_length_greater_than_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_between_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_in_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_regex_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_four_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_length_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_length_greater_than_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_between_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_in_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts: &dyn ToTokens,
 ) -> Ts2 {
     let self_pg_type_as_pg_type_ts = quote! {<#SelfUcc::#PgTypeUcc as #import::#PgTypeUcc>};
     let self_pg_type_as_pg_type_read_ids_ts = quote! {#self_pg_type_as_pg_type_ts::#ReadIdsUcc};
-    let self_pg_type_as_pg_type_create_ts = quote! {#self_pg_type_as_pg_type_ts::#CreateUcc};
+    let self_pg_type_as_pg_type_cr_ts = quote! {#self_pg_type_as_pg_type_ts::#CrUcc};
     let self_pg_type_as_pg_type_where_ts = quote! {#self_pg_type_as_pg_type_ts::#WhereUcc};
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-    let opt_vec_create_ts_2d58042f =
-        gen_opt_vec_create_ts(&self_pg_type_as_pg_type_ts, &opt_vec_create_ts);
+    let opt_vec_cr_ts_2d58042f = gen_opt_vec_cr_ts(&self_pg_type_as_pg_type_ts, &opt_vec_cr_ts);
     let read_ids_to_2_dims_vec_read_inn_ts_513b8046 = gen_read_ids_to_2_dims_vec_read_inn_ts(
         &self_pg_type_as_pg_type_ts,
         &read_ids_to_2_dims_vec_read_inn_ts,
@@ -1592,120 +1589,116 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_ts,
             &previous_read_and_opt_upd_into_read_ts,
         );
-    let read_ids_and_create_into_read_ts_df48e4b7 = gen_read_ids_and_create_into_read_ts(
+    let read_ids_and_cr_into_read_ts_df48e4b7 = gen_read_ids_and_cr_into_read_ts(
         &self_pg_type_as_pg_type_ts,
-        &read_ids_and_create_into_read_ts,
+        &read_ids_and_cr_into_read_ts,
     );
-    let read_ids_and_create_into_opt_v_read_ts_8b7e9688 =
-        gen_read_ids_and_create_into_opt_v_read_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_opt_v_read_ts,
-        );
-    let read_ids_and_create_into_table_type_ts_f227db63 =
-        gen_read_ids_and_create_into_table_type_ts(
-            &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_table_type_ts,
-        );
-    let read_ids_and_create_into_where_equal_ts_dcde170f =
-        gen_read_ids_and_create_into_where_equal_ts(
-            &self_pg_type_as_pg_type_read_ids_ts,
-            &self_pg_type_as_pg_type_create_ts,
-            &self_pg_type_as_pg_type_where_ts,
-            &read_ids_and_create_into_where_equal_ts,
-        );
-    let read_ids_and_create_into_vec_where_equal_using_fields_ts_076c6ebd =
-        gen_read_ids_and_create_into_vec_where_equal_using_fields_ts(
+    let read_ids_and_cr_into_opt_v_read_ts_8b7e9688 = gen_read_ids_and_cr_into_opt_v_read_ts(
+        *import,
+        &self_pg_type_as_pg_type_ts,
+        &read_ids_and_cr_into_opt_v_read_ts,
+    );
+    let read_ids_and_cr_into_table_type_ts_f227db63 = gen_read_ids_and_cr_into_table_type_ts(
+        &self_pg_type_as_pg_type_ts,
+        &read_ids_and_cr_into_table_type_ts,
+    );
+    let read_ids_and_cr_into_where_equal_ts_dcde170f = gen_read_ids_and_cr_into_where_equal_ts(
+        &self_pg_type_as_pg_type_read_ids_ts,
+        &self_pg_type_as_pg_type_cr_ts,
+        &self_pg_type_as_pg_type_where_ts,
+        &read_ids_and_cr_into_where_equal_ts,
+    );
+    let read_ids_and_cr_into_vec_where_equal_using_fields_ts_076c6ebd =
+        gen_read_ids_and_cr_into_vec_where_equal_using_fields_ts(
             import,
             &self_pg_type_as_pg_type_read_ids_ts,
-            &self_pg_type_as_pg_type_create_ts,
+            &self_pg_type_as_pg_type_cr_ts,
             &self_pg_type_as_pg_type_where_ts,
-            &read_ids_and_create_into_vec_where_equal_using_fields_ts,
+            &read_ids_and_cr_into_vec_where_equal_using_fields_ts,
         );
-    let read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts_948ce180 =
-        gen_read_ids_and_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_ts(
+    let read_ids_and_cr_into_opt_vec_where_equal_to_json_field_ts_948ce180 =
+        gen_read_ids_and_cr_into_vec_or_opt_vec_where_equal_to_json_field_pg_type_or_pg_json_ts(
             *import,
             &self_pg_type_as_pg_type_read_ids_ts,
-            &self_pg_type_as_pg_type_create_ts,
+            &self_pg_type_as_pg_type_cr_ts,
             &self_pg_type_as_pg_type_where_ts,
-            &read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts,
+            &read_ids_and_cr_into_opt_vec_where_equal_to_json_field_ts,
             PgTypeOrPgJson::PgType,
         );
-    let create_into_pg_type_opt_vec_where_dim_one_equal_sc =
-        CreateIntoPgTypeOptVecWhereDimOneEqualSc;
+    let cr_into_pg_type_opt_vec_where_dim_one_equal_sc = CrIntoPgTypeOptVecWhereDimOneEqualSc;
     let read_ids_and_table_type_into_pg_type_opt_where_greater_than_sc =
         ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc;
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts_33093313 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts_33093313 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_opt_vec_where_dim_one_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_one_equal_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts_9522c7a5 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts_9522c7a5 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_opt_vec_where_dim_two_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_two_equal_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts_81696b49 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts_81696b49 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_opt_vec_where_dim_three_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_three_equal_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts_2631549b =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts_2631549b =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_opt_vec_where_dim_four_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_four_equal_ts,
         );
-    let create_into_pg_json_opt_vec_where_length_equal_ts_34b74d66 =
-        gen_create_into_pg_json_opt_vec_where_length_equal_ts(
+    let cr_into_pg_json_opt_vec_where_length_equal_ts_34b74d66 =
+        gen_cr_into_pg_json_opt_vec_where_length_equal_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_opt_vec_where_length_equal_ts,
+            &cr_into_pg_json_opt_vec_where_length_equal_ts,
         );
-    let create_into_pg_json_opt_vec_where_length_greater_than_ts_b196c70f =
-        gen_create_into_pg_json_opt_vec_where_length_greater_than_ts(
+    let cr_into_pg_json_opt_vec_where_length_greater_than_ts_b196c70f =
+        gen_cr_into_pg_json_opt_vec_where_length_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &create_into_pg_json_opt_vec_where_length_greater_than_ts,
+            &cr_into_pg_json_opt_vec_where_length_greater_than_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts_498680a8 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts_498680a8 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_between_ts_b685b98f =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_between_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_between_ts_b685b98f =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_between_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_between_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_between_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_in_ts_ac82295e =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_in_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_in_ts_ac82295e =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_in_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_in_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_in_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_regex_ts_bfe19de1 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_regex_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts_bfe19de1 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_regex_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts_ff2d3a76 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts_ff2d3a76 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts,
         );
     quote! {
         #[allow(unused_qualifications)]
@@ -1716,23 +1709,23 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         impl #import::#PgTypeTestCasesUcc for #ident {
             type #PgTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
-            #opt_vec_create_ts_2d58042f
+            #opt_vec_cr_ts_2d58042f
             #read_ids_to_2_dims_vec_read_inn_ts_513b8046
             #read_inn_into_read_with_new_or_try_new_unwraped_ts_affc58f5
             #read_inn_into_upd_with_new_or_try_new_unwraped_ts_c38e6621
             #upd_to_read_ids_ts_ee17b828
             #read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_18ef45e8
             #previous_read_and_opt_upd_into_read_ts_c48b8ede
-            #read_ids_and_create_into_read_ts_df48e4b7
-            #read_ids_and_create_into_opt_v_read_ts_8b7e9688
-            #read_ids_and_create_into_table_type_ts_f227db63
-            #read_ids_and_create_into_where_equal_ts_dcde170f
-            #read_ids_and_create_into_vec_where_equal_using_fields_ts_076c6ebd
-            #read_ids_and_create_into_opt_vec_where_equal_to_json_field_ts_948ce180
-            fn #create_into_pg_type_opt_vec_where_dim_one_equal_sc(
-                #CreateSc: #self_pg_type_as_pg_type_ts::#CreateUcc
+            #read_ids_and_cr_into_read_ts_df48e4b7
+            #read_ids_and_cr_into_opt_v_read_ts_8b7e9688
+            #read_ids_and_cr_into_table_type_ts_f227db63
+            #read_ids_and_cr_into_where_equal_ts_dcde170f
+            #read_ids_and_cr_into_vec_where_equal_using_fields_ts_076c6ebd
+            #read_ids_and_cr_into_opt_vec_where_equal_to_json_field_ts_948ce180
+            fn #cr_into_pg_type_opt_vec_where_dim_one_equal_sc(
+                #CrSc: #self_pg_type_as_pg_type_ts::#CrUcc
             ) -> Option<#import::NotEmptyUniqueVec<#self_pg_type_as_pg_type_ts::#WhereUcc>> {
-                #create_into_pg_type_opt_vec_where_dim_one_equal_ts
+                #cr_into_pg_type_opt_vec_where_dim_one_equal_ts
             }
             fn #PgTypeOptVecWhereGreaterThanTestSc() -> Option<
                 #import::NotEmptyUniqueVec<
@@ -1750,18 +1743,18 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             ) -> Option<#self_pg_type_as_pg_type_ts::#WhereUcc> {
                 #read_ids_and_table_type_into_pg_type_opt_where_greater_than_ts
             }
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts_33093313
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts_9522c7a5
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts_81696b49
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts_2631549b
-            #create_into_pg_json_opt_vec_where_length_equal_ts_34b74d66
-            #create_into_pg_json_opt_vec_where_length_greater_than_ts_b196c70f
-            #read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts_498680a8
-            #read_ids_and_create_into_pg_json_opt_vec_where_between_ts_b685b98f
-            #read_ids_and_create_into_pg_json_opt_vec_where_in_ts_ac82295e
-            #read_ids_and_create_into_pg_json_opt_vec_where_regex_ts_bfe19de1
-            #read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8
-            #read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts_ff2d3a76
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts_33093313
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts_9522c7a5
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts_81696b49
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts_2631549b
+            #cr_into_pg_json_opt_vec_where_length_equal_ts_34b74d66
+            #cr_into_pg_json_opt_vec_where_length_greater_than_ts_b196c70f
+            #read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts_498680a8
+            #read_ids_and_cr_into_pg_json_opt_vec_where_between_ts_b685b98f
+            #read_ids_and_cr_into_pg_json_opt_vec_where_in_ts_ac82295e
+            #read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts_bfe19de1
+            #read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts_8d2a6cb8
+            #read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts_ff2d3a76
         }
     }
 }
@@ -1770,7 +1763,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     import: &Import,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
-    opt_vec_create_ts: &dyn ToTokens,
+    opt_vec_cr_ts: &dyn ToTokens,
     read_ids_to_2_dims_vec_read_inn_ts: &dyn ToTokens,
     read_inn_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     read_inn_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
@@ -1778,32 +1771,31 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     upd_to_read_ids_ts: &dyn ToTokens,
     read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_and_opt_upd_into_read_ts: &dyn ToTokens,
-    read_ids_and_create_into_read_ts: &dyn ToTokens,
-    read_ids_and_create_into_opt_v_read_ts: &dyn ToTokens,
-    read_ids_and_create_into_table_type_ts: &dyn ToTokens,
-    read_ids_and_create_into_where_equal_ts: &dyn ToTokens,
-    read_ids_and_create_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
-    read_ids_and_create_into_vec_where_equal_to_json_field_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_dim_four_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_length_equal_ts: &dyn ToTokens,
-    create_into_pg_json_opt_vec_where_length_greater_than_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_between_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_in_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_regex_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
-    read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts: &dyn ToTokens,
+    read_ids_and_cr_into_read_ts: &dyn ToTokens,
+    read_ids_and_cr_into_opt_v_read_ts: &dyn ToTokens,
+    read_ids_and_cr_into_table_type_ts: &dyn ToTokens,
+    read_ids_and_cr_into_where_equal_ts: &dyn ToTokens,
+    read_ids_and_cr_into_vec_where_equal_using_fields_ts: &dyn ToTokens,
+    read_ids_and_cr_into_vec_where_equal_to_json_field_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_one_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_two_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_three_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_dim_four_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_length_equal_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_where_length_greater_than_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_between_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_in_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts: &dyn ToTokens,
+    read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts: &dyn ToTokens,
 ) -> Ts2 {
     let self_pg_json_as_pg_json_ts = quote! {<#SelfUcc::#PgJsonUcc as #import::#PgJsonUcc>};
     let self_pg_json_as_pg_json_read_ids_ts = quote! {#self_pg_json_as_pg_json_ts::#ReadIdsUcc};
-    let self_pg_json_as_pg_json_create_ts = quote! {#self_pg_json_as_pg_json_ts::#CreateUcc};
+    let self_pg_json_as_pg_json_cr_ts = quote! {#self_pg_json_as_pg_json_ts::#CrUcc};
     let self_pg_json_as_pg_json_where_ts = quote! {#self_pg_json_as_pg_json_ts::#WhereUcc};
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-    let opt_vec_create_ts_a442630a =
-        gen_opt_vec_create_ts(&self_pg_json_as_pg_json_ts, &opt_vec_create_ts);
+    let opt_vec_cr_ts_a442630a = gen_opt_vec_cr_ts(&self_pg_json_as_pg_json_ts, &opt_vec_cr_ts);
     let read_ids_to_2_dims_vec_read_inn_ts_da1a7cf8 = gen_read_ids_to_2_dims_vec_read_inn_ts(
         &self_pg_json_as_pg_json_ts,
         &read_ids_to_2_dims_vec_read_inn_ts,
@@ -1833,115 +1825,112 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &self_pg_json_as_pg_json_ts,
             &previous_read_and_opt_upd_into_read_ts,
         );
-    let read_ids_and_create_into_read_ts_7df2fa10 = gen_read_ids_and_create_into_read_ts(
+    let read_ids_and_cr_into_read_ts_7df2fa10 = gen_read_ids_and_cr_into_read_ts(
         &self_pg_json_as_pg_json_ts,
-        &read_ids_and_create_into_read_ts,
+        &read_ids_and_cr_into_read_ts,
     );
-    let read_ids_and_create_into_opt_v_read_ts_1f54e2bf =
-        gen_read_ids_and_create_into_opt_v_read_ts(
-            *import,
-            &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_opt_v_read_ts,
-        );
-    let read_ids_and_create_into_table_type_ts_b605767e =
-        gen_read_ids_and_create_into_table_type_ts(
-            &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_table_type_ts,
-        );
-    let read_ids_and_create_into_where_equal_ts_1009eb88 =
-        gen_read_ids_and_create_into_where_equal_ts(
-            &self_pg_json_as_pg_json_read_ids_ts,
-            &self_pg_json_as_pg_json_create_ts,
-            &self_pg_json_as_pg_json_where_ts,
-            &read_ids_and_create_into_where_equal_ts,
-        );
-    let read_ids_and_create_into_vec_where_equal_using_fields_ts_876245c5 =
-        gen_read_ids_and_create_into_vec_where_equal_using_fields_ts(
+    let read_ids_and_cr_into_opt_v_read_ts_1f54e2bf = gen_read_ids_and_cr_into_opt_v_read_ts(
+        *import,
+        &self_pg_json_as_pg_json_ts,
+        &read_ids_and_cr_into_opt_v_read_ts,
+    );
+    let read_ids_and_cr_into_table_type_ts_b605767e = gen_read_ids_and_cr_into_table_type_ts(
+        &self_pg_json_as_pg_json_ts,
+        &read_ids_and_cr_into_table_type_ts,
+    );
+    let read_ids_and_cr_into_where_equal_ts_1009eb88 = gen_read_ids_and_cr_into_where_equal_ts(
+        &self_pg_json_as_pg_json_read_ids_ts,
+        &self_pg_json_as_pg_json_cr_ts,
+        &self_pg_json_as_pg_json_where_ts,
+        &read_ids_and_cr_into_where_equal_ts,
+    );
+    let read_ids_and_cr_into_vec_where_equal_using_fields_ts_876245c5 =
+        gen_read_ids_and_cr_into_vec_where_equal_using_fields_ts(
             import,
             &self_pg_json_as_pg_json_read_ids_ts,
-            &self_pg_json_as_pg_json_create_ts,
+            &self_pg_json_as_pg_json_cr_ts,
             &self_pg_json_as_pg_json_where_ts,
-            &read_ids_and_create_into_vec_where_equal_using_fields_ts,
+            &read_ids_and_cr_into_vec_where_equal_using_fields_ts,
         );
-    let read_ids_and_create_into_vec_where_equal_to_json_field_ts_11560e7f =
-        gen_read_ids_and_create_into_vec_where_equal_to_json_field_ts(
+    let read_ids_and_cr_into_vec_where_equal_to_json_field_ts_11560e7f =
+        gen_read_ids_and_cr_into_vec_where_equal_to_json_field_ts(
             *import,
             &self_pg_json_as_pg_json_read_ids_ts,
-            &self_pg_json_as_pg_json_create_ts,
+            &self_pg_json_as_pg_json_cr_ts,
             &self_pg_json_as_pg_json_where_ts,
-            &read_ids_and_create_into_vec_where_equal_to_json_field_ts,
+            &read_ids_and_cr_into_vec_where_equal_to_json_field_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts_aaaa85b2 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts_aaaa85b2 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &create_into_pg_json_opt_vec_where_dim_one_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_one_equal_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts_6da8ece7 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts_6da8ece7 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &create_into_pg_json_opt_vec_where_dim_two_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_two_equal_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts_6b473c12 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts_6b473c12 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &create_into_pg_json_opt_vec_where_dim_three_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_three_equal_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts_b427508f =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts_b427508f =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &create_into_pg_json_opt_vec_where_dim_four_equal_ts,
+            &cr_into_pg_json_opt_vec_where_dim_four_equal_ts,
         );
-    let create_into_pg_json_opt_vec_where_length_equal_ts_5266addf =
-        gen_create_into_pg_json_opt_vec_where_length_equal_ts(
+    let cr_into_pg_json_opt_vec_where_length_equal_ts_5266addf =
+        gen_cr_into_pg_json_opt_vec_where_length_equal_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &create_into_pg_json_opt_vec_where_length_equal_ts,
+            &cr_into_pg_json_opt_vec_where_length_equal_ts,
         );
-    let create_into_pg_json_opt_vec_where_length_greater_than_ts_93196cce =
-        gen_create_into_pg_json_opt_vec_where_length_greater_than_ts(
+    let cr_into_pg_json_opt_vec_where_length_greater_than_ts_93196cce =
+        gen_cr_into_pg_json_opt_vec_where_length_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &create_into_pg_json_opt_vec_where_length_greater_than_ts,
+            &cr_into_pg_json_opt_vec_where_length_greater_than_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts_e0be3ff7 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts_e0be3ff7 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_between_ts_9bdb444a =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_between_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_between_ts_9bdb444a =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_between_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_between_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_between_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_in_ts_09ea1f4b =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_in_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_in_ts_09ea1f4b =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_in_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_in_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_in_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_regex_ts_1b1057eb =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_regex_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts_1b1057eb =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_regex_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
         );
-    let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts_972d3e87 =
-        gen_read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts(
+    let read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts_972d3e87 =
+        gen_read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts,
+            &read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts,
         );
     quote! {
         #[allow(unused_qualifications)]
@@ -1952,7 +1941,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
         impl #import::#PgJsonTestCasesUcc for #ident {
             type #PgJsonUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
-            #opt_vec_create_ts_a442630a
+            #opt_vec_cr_ts_a442630a
             #read_ids_to_2_dims_vec_read_inn_ts_da1a7cf8
             #read_inn_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
             #read_inn_into_upd_with_new_or_try_new_unwraped_ts_b45cde72
@@ -1964,24 +1953,24 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             #upd_to_read_ids_ts_d7e0cbf0
             #read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_f5d1b395
             #previous_read_and_opt_upd_into_read_ts_ab0384b9
-            #read_ids_and_create_into_read_ts_7df2fa10
-            #read_ids_and_create_into_opt_v_read_ts_1f54e2bf
-            #read_ids_and_create_into_table_type_ts_b605767e
-            #read_ids_and_create_into_where_equal_ts_1009eb88
-            #read_ids_and_create_into_vec_where_equal_using_fields_ts_876245c5
-            #read_ids_and_create_into_vec_where_equal_to_json_field_ts_11560e7f
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts_aaaa85b2
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts_6da8ece7
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts_6b473c12
-            #read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts_b427508f
-            #create_into_pg_json_opt_vec_where_length_equal_ts_5266addf
-            #create_into_pg_json_opt_vec_where_length_greater_than_ts_93196cce
-            #read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts_e0be3ff7
-            #read_ids_and_create_into_pg_json_opt_vec_where_between_ts_9bdb444a
-            #read_ids_and_create_into_pg_json_opt_vec_where_in_ts_09ea1f4b
-            #read_ids_and_create_into_pg_json_opt_vec_where_regex_ts_1b1057eb
-            #read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8
-            #read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts_972d3e87
+            #read_ids_and_cr_into_read_ts_7df2fa10
+            #read_ids_and_cr_into_opt_v_read_ts_1f54e2bf
+            #read_ids_and_cr_into_table_type_ts_b605767e
+            #read_ids_and_cr_into_where_equal_ts_1009eb88
+            #read_ids_and_cr_into_vec_where_equal_using_fields_ts_876245c5
+            #read_ids_and_cr_into_vec_where_equal_to_json_field_ts_11560e7f
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts_aaaa85b2
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts_6da8ece7
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts_6b473c12
+            #read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts_b427508f
+            #cr_into_pg_json_opt_vec_where_length_equal_ts_5266addf
+            #cr_into_pg_json_opt_vec_where_length_greater_than_ts_93196cce
+            #read_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts_e0be3ff7
+            #read_ids_and_cr_into_pg_json_opt_vec_where_between_ts_9bdb444a
+            #read_ids_and_cr_into_pg_json_opt_vec_where_in_ts_09ea1f4b
+            #read_ids_and_cr_into_pg_json_opt_vec_where_regex_ts_1b1057eb
+            #read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts_5dc0a6c8
+            #read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts_972d3e87
         }
     }
 }

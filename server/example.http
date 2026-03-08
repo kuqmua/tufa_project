@@ -351,7 +351,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         {
           "field_1": {
             "v": {
-              "create": [
+              "cr": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                 }
@@ -388,7 +388,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         {
           "field_3": {
             "v": {
-              "create": [
+              "cr": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                 }
@@ -435,7 +435,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         {
           "field_1": {
             "v": {
-              "create": [
+              "cr": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                 }
@@ -472,7 +472,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         {
           "field_3": {
             "v": {
-              "create": [
+              "cr": [
                 {
                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                 }
@@ -535,7 +535,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       {
         "field_1": {
           "v": {
-            "create": [
+            "cr": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": 88
               }
@@ -573,7 +573,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       # {
       #   "field_3": {
       #     "v": {
-      #       "create": [
+      #       "cr": [
       #         {
       #           "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
       #         }
@@ -606,7 +606,7 @@ GET http://127.0.0.1:8080/table_example/uo_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-####"^first_test_name_create$"  
+####"^first_test_name_cr$"  
 
 DELETE http://127.0.0.1:8080/table_example/dm HTTP/1.1
 content-type: application/json

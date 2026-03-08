@@ -7,32 +7,32 @@ use std::{
 };
 use thiserror::Error;
 #[derive(Debug, Error, Location, Optml)]
-pub enum CreateDirsAndWriteFileSyncEr {
+pub enum CrDirsAndWriteFileSyncEr {
     StdIo {
         #[eo_to_err_string]
         er: IoEr,
         loc: Loc,
     },
 }
-pub fn create_dirs_and_write_file_sync(
+pub fn cr_dirs_and_write_file_sync(
     path: &Path,
     bytes: &[u8],
-) -> Result<(), CreateDirsAndWriteFileSyncEr> {
+) -> Result<(), CrDirsAndWriteFileSyncEr> {
     if let Some(prefix) = path.parent()
         && let Err(er) = fs::create_dir_all(prefix)
     {
-        return Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
+        return Err(CrDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
     }
     match File::create(path) {
         Ok(mut file) => {
             if let Err(er) = Write::write_all(&mut file, bytes) {
-                return Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
+                return Err(CrDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
             }
             if let Err(er) = file.sync_all() {
-                return Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
+                return Err(CrDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() });
             }
             Ok(())
         }
-        Err(er) => Err(CreateDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() }),
+        Err(er) => Err(CrDirsAndWriteFileSyncEr::StdIo { er, loc: loc!() }),
     }
 }

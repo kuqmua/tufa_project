@@ -22,7 +22,7 @@ pub enum StatusCode {
     SwitchingProtocols101,
     Processing102,
     Ok200,
-    Created201,
+    Crd201,
     Accepted202,
     NonAuthoritativeInformation203,
     NoContent204,
@@ -87,7 +87,7 @@ impl StatusCode {
             Self::SwitchingProtocols101 => quote! {SWITCHING_PROTOCOLS},
             Self::Processing102 => quote! {PROCESSING},
             Self::Ok200 => quote! {OK},
-            Self::Created201 => quote! {CREATED},
+            Self::Crd201 => quote! {CREATED},
             Self::Accepted202 => quote! {ACCEPTED},
             Self::NonAuthoritativeInformation203 => quote! {NON_AUTHORITATIVE_INFORMATION},
             Self::NoContent204 => quote! {NO_CONTENT},
@@ -157,7 +157,7 @@ impl StatusCode {
             Self::SwitchingProtocols101 => quote! {"switching protocols"},
             Self::Processing102 => quote! {"processing"},
             Self::Ok200 => quote! {"ok"},
-            Self::Created201 => quote! {"created"},
+            Self::Crd201 => quote! {"crd"},
             Self::Accepted202 => quote! {"accepted"},
             Self::NonAuthoritativeInformation203 => {
                 quote! {"non authoritative information"}
@@ -234,7 +234,7 @@ impl StatusCode {
             Self::SwitchingProtocols101 => quote! {101},
             Self::Processing102 => quote! {102},
             Self::Ok200 => quote! {200},
-            Self::Created201 => quote! {201},
+            Self::Crd201 => quote! {201},
             Self::Accepted202 => quote! {202},
             Self::NonAuthoritativeInformation203 => quote! {203},
             Self::NoContent204 => quote! {204},
@@ -304,8 +304,8 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::Processing102)
         } else if v == "200_ok" {
             Ok(Self::Ok200)
-        } else if v == "created_201" {
-            Ok(Self::Created201)
+        } else if v == "crd_201" {
+            Ok(Self::Crd201)
         } else if v == "accepted_202" {
             Ok(Self::Accepted202)
         } else if v == "non_authoritative_information_203" {
