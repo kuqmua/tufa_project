@@ -5,8 +5,8 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_json_obj_type_test_cnt",
-            "../pg_crud/pg_json_obj_type/",
+            "gen_pg_json_obj_test_cnt",
+            "../pg_crud/pg_json_obj/",
             r#"[dependencies]
 sqlx.workspace = true
 serde.workspace = true
@@ -23,10 +23,10 @@ test-utils = []"#,
             &{
                 let obj_example_ts = quote!{
                     #[derive(Debug, Clone, Copy, optml::Optml)]
-                    #[pg_crud::pg_json_obj_type_config{
+                    #[pg_crud::pg_json_obj_config{
                         {
-                            "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
-                            "whole_write_into_gen_pg_json_obj_type": "False",
+                            "pg_table_columns_write_into_pg_table_columns_using_pg_json_objs": "False",
+                            "whole_write_into_gen_pg_json_obj": "False",
                             "vrt": {
                                 "is_nullable": "True",
                                 "pattern": "Arr",
@@ -40,7 +40,7 @@ test-utils = []"#,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
                     }
                 };
-                let ts = gen_pg_json_obj_type_source::gen_pg_json_obj_type(obj_example_ts.clone());
+                let ts = gen_pg_json_obj_source::gen_pg_json_obj(obj_example_ts.clone());
                 quote! {
                     #ts
                     #obj_example_ts

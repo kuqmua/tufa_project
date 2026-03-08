@@ -1,8 +1,6 @@
 pub use futures::TryStreamExt;
 pub use pg_crud_common::*;
-pub use pg_json_obj_type::{
-    GenPgJsonObjType, UniqueVec, UniqueVecTryNewEr, pg_json_obj_type_config,
-};
+pub use pg_json_obj::{GenPgJsonObj, UniqueVec, UniqueVecTryNewEr, pg_json_obj_config};
 pub use pg_json_types::*;
 pub use pg_table::{
     CombinationOfAppStateLogicTraits, GenPgTable, cm_er_vrts, cm_logic, co_er_vrts, co_logic,

@@ -1,11 +1,11 @@
 use optml::Optml;
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjType, Optml)]
-#[pg_crud::pg_json_obj_type_config{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObj, Optml)]
+#[pg_crud::pg_json_obj_config{
     {
-        "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
-        "whole_write_into_gen_pg_json_obj_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_objs": "False",
+        "whole_write_into_gen_pg_json_obj": "False",
         "vrt": 
         // {
         //     "is_nullable": "False",
@@ -846,11 +846,11 @@ pub struct Animal {
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjType, Optml)]
-#[pg_crud::pg_json_obj_type_config{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObj, Optml)]
+#[pg_crud::pg_json_obj_config{
     {
-        "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
-        "whole_write_into_gen_pg_json_obj_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_objs": "False",
+        "whole_write_into_gen_pg_json_obj": "False",
         "vrt":
         // {
         //     "is_nullable": "False",
@@ -1009,11 +1009,11 @@ pub struct Doggie {
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjType, Optml)]
-#[pg_crud::pg_json_obj_type_config{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObj, Optml)]
+#[pg_crud::pg_json_obj_config{
     {
-        "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
-        "whole_write_into_gen_pg_json_obj_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_objs": "False",
+        "whole_write_into_gen_pg_json_obj": "False",
         "vrt":
         // {
         //     "is_nullable": "False",

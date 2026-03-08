@@ -34,7 +34,7 @@ use naming::{
     UpdQpSc, UpdSc, UpdToReadIdsSc, UuidUuidAsNotNullJsonbStringUcc, VSc, ValueSc, VecOfUcc,
     WithIdUcc,
     param::{
-        ElSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc, SelfGenPgJsonObjTypeModSc,
+        ElSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc, SelfGenPgJsonObjModSc,
         SelfLastSc, SelfReadIdsHUcc, SelfReadIdsUcc, SelfReadInnerUcc, SelfReadTryFromErUcc,
         SelfReadUcc, SelfSelectElUcc, SelfSelectSc, SelfSelectUcc, SelfTableTypeUcc, SelfUpdElUcc,
         SelfUpdForQueryElUcc, SelfUpdForQueryUcc, SelfUpdTryNewErUcc, SelfUpdUcc, SelfWhereUcc,
@@ -84,7 +84,7 @@ use token_patterns::{
 //todo gen authorization rights enum for json fields
 //todo bug in upd if updating arr and creating el in jsonb arr without anything - read_ids generation logic of vec returns wrong query part
 #[must_use]
-pub fn gen_pg_json_obj_type(input_ts: Ts2) -> Ts2 {
+pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
     enum TraitGen {
         PgJsonType,
@@ -99,58 +99,58 @@ pub fn gen_pg_json_obj_type(input_ts: Ts2) -> Ts2 {
         Arr,
     }
     #[derive(Debug, PartialEq, Serialize, Deserialize, Optml)]
-    struct PgJsonObjTypeRecord {
+    struct PgJsonObjRecord {
         is_nullable: IsNullable,
         pattern: Pattern,
         trait_gen: TraitGen,
     }
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonTypesConfig {
-        pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types: ShouldWriteTsIntoFile,
-        vrt: PgJsonObjTypeRecord,
-        whole_write_into_gen_pg_json_obj_type: ShouldWriteTsIntoFile,
+        pg_table_columns_write_into_pg_table_columns_using_pg_json_objs: ShouldWriteTsIntoFile,
+        vrt: PgJsonObjRecord,
+        whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
     panic_location();
     let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import = Import::PgCrud;
-    let gen_pg_json_obj_type_config = from_str::<GenPgJsonTypesConfig>(
+    let gen_pg_json_obj_config = from_str::<GenPgJsonTypesConfig>(
         &get_macro_attr_meta_list_ts(
             &di.attrs,
-            &format!("{}::pg_json_obj_type_config", import.sc_str()),
+            &format!("{}::pg_json_obj_config", import.sc_str()),
         )
         .to_string(),
     )
     .expect("246de453");
-    let (fields_ts, pg_json_obj_type_arr) = {
-        let pg_json_obj_type_record = gen_pg_json_obj_type_config.vrt;
-        match (&pg_json_obj_type_record.is_nullable, &pg_json_obj_type_record.pattern) {
-            (IsNullable::False, Pattern::Stdrt) => vec![pg_json_obj_type_record],
+    let (fields_ts, pg_json_obj_arr) = {
+        let pg_json_obj_record = gen_pg_json_obj_config.vrt;
+        match (&pg_json_obj_record.is_nullable, &pg_json_obj_record.pattern) {
+            (IsNullable::False, Pattern::Stdrt) => vec![pg_json_obj_record],
             (IsNullable::True, Pattern::Stdrt) |
             (IsNullable::False, Pattern::Arr) => vec![
-                PgJsonObjTypeRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Stdrt,
-                    trait_gen: pg_json_obj_type_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                pg_json_obj_type_record
+                pg_json_obj_record
             ],
             (IsNullable::True, Pattern::Arr) => vec![
-                PgJsonObjTypeRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Stdrt,
-                    trait_gen: pg_json_obj_type_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                PgJsonObjTypeRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::True,
                     pattern: Pattern::Stdrt,
-                    trait_gen: pg_json_obj_type_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                PgJsonObjTypeRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Arr,
-                    trait_gen: pg_json_obj_type_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                pg_json_obj_type_record
+                pg_json_obj_record
             ]
         }
     }
@@ -7020,30 +7020,29 @@ pub fn gen_pg_json_obj_type(input_ts: Ts2) -> Ts2 {
     })
     .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     mb_write_ts_into_file(
-        gen_pg_json_obj_type_config
-            .pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types,
-        "pg_table_columns_using_pg_json_obj_types",
+        gen_pg_json_obj_config.pg_table_columns_write_into_pg_table_columns_using_pg_json_objs,
+        "pg_table_columns_using_pg_json_objs",
         &quote! {
-            pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjTypes {
+            pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjs {
                 #(#fields_ts)*
             }
         },
         &FormatWithCargofmt::True,
     );
     let generated: Ts2 = {
-        let ident_gen_pg_json_obj_type_mod = SelfGenPgJsonObjTypeModSc::from_tokens(&di.ident);
+        let ident_gen_pg_json_obj_mod = SelfGenPgJsonObjModSc::from_tokens(&di.ident);
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
-            mod #ident_gen_pg_json_obj_type_mod {
-                #(#pg_json_obj_type_arr)*
+            mod #ident_gen_pg_json_obj_mod {
+                #(#pg_json_obj_arr)*
             }
-            pub use #ident_gen_pg_json_obj_type_mod::*;
+            pub use #ident_gen_pg_json_obj_mod::*;
         }
     };
     mb_write_ts_into_file(
-        gen_pg_json_obj_type_config.whole_write_into_gen_pg_json_obj_type,
-        "gen_pg_json_obj_type",
+        gen_pg_json_obj_config.whole_write_into_gen_pg_json_obj,
+        "gen_pg_json_obj",
         &generated,
         &FormatWithCargofmt::True,
     );
