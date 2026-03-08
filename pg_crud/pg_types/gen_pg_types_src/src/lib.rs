@@ -19,12 +19,11 @@ use naming::{
     PgTypeUcc, PositiveLessTypicalSc, PositiveMoreTypicalSc, QuerySc, RdIdsAndCrIntoRdSc,
     RdIdsIntoRdSc, RdIdsIntoTtSc, RdIdsIntoUpdSc, RdIdsSc, RdIdsTo2DimsVecRdInnSc, RdIdsUcc,
     RdIntoTtSc, RdSc, RdUcc, SecSc, SecondSc, SelfSc, SelfUcc, StartSc, StartUcc, TimeSc, TimeUcc,
-    ToErrStringSc, TryNewForDeserializeSc, TryNewSc, TtSc, TtUcc, UnboundedUcc, UpdUcc, VSc,
-    VecOfUcc,
+    ToErrStringSc, TryNewForDeSc, TryNewSc, TtSc, TtUcc, UnboundedUcc, UpdUcc, VSc, VecOfUcc,
     param::{
-        SelfCrUcc, SelfNnUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeserializeErUcc,
-        SelfOriginUcc, SelfRdIdsUcc, SelfRdInnUcc, SelfRdUcc, SelfSelUcc, SelfTtUcc,
-        SelfUpdForQueryUcc, SelfUpdUcc, SelfWhUcc,
+        SelfCrUcc, SelfNnUcc, SelfOriginTryNewErUcc, SelfOriginTryNewForDeErUcc, SelfOriginUcc,
+        SelfRdIdsUcc, SelfRdInnUcc, SelfRdUcc, SelfSelUcc, SelfTtUcc, SelfUpdForQueryUcc,
+        SelfUpdUcc, SelfWhUcc,
     },
 };
 use optml::Optml;
@@ -772,7 +771,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Optml)]
-    enum PgTypeImplTryNewForDeserialize {
+    enum PgTypeImplTryNewForDe {
         StringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
@@ -781,16 +780,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeI64AsInt8Range,
     }
     #[derive(Debug, Optml)]
-    enum PgTypeImplNewForDeserializeOrTryNewForDeserialize {
+    enum PgTypeImplNewForDeserializeOrTryNewForDe {
         NewForDeserialize(PgTypeImplNewForDeserialize),
-        TryNewForDeserialize(PgTypeImplTryNewForDeserialize),
+        TryNewForDe(PgTypeImplTryNewForDe),
     }
     #[derive(Debug, Optml)]
     enum PgTypeDeserialize {
         Derive,
-        ImplNewForDeserializeOrTryNewForDeserialize(
-            PgTypeImplNewForDeserializeOrTryNewForDeserialize,
-        ),
+        ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe),
     }
     impl From<&PgType> for PgTypeDeserialize {
         fn from(v: &PgType) -> Self {
@@ -810,18 +807,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 | PgType::SqlxTypesUuidUuidAsUuidInitByClient
                 | PgType::SqlxTypesIpnetworkIpNetworkAsInet
                 | PgType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::Derive,
-                PgType::StringAsText => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::StringAsText)),
-                PgType::SqlxTypesChronoNaiveTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime)),
-                PgType::SqlxTypesTimeTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime)),
-                PgType::SqlxPgTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval)),
-                PgType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate)),
-                PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp)),
-                PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)),
-                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range)),
-                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range)),
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange)),
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange)),
-                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange)),
+                PgType::StringAsText => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(PgTypeImplTryNewForDe::StringAsText)),
+                PgType::SqlxTypesChronoNaiveTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime)),
+                PgType::SqlxTypesTimeTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime)),
+                PgType::SqlxPgTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval)),
+                PgType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate)),
+                PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp)),
+                PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)),
+                PgType::SqlxPgTypesPgRangeI32AsInt4Range => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range)),
+                PgType::SqlxPgTypesPgRangeI64AsInt8Range => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range)),
+                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange)),
+                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange)),
+                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::ImplNewForDeserializeOrTryNewForDe(PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange)),
             }
         }
     }
@@ -1624,7 +1621,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let gen_ts = |length: usize| {
                             let fields_ts = gen_vec_field_i_ts(length);
                             quote! {
-                                match #ident_stdrt_nn_origin_ucc::#TryNewForDeserializeSc(#fields_ts) {
+                                match #ident_stdrt_nn_origin_ucc::#TryNewForDeSc(#fields_ts) {
                                     Ok(v_e81dd4a5) => Ok(v_e81dd4a5),
                                     Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                                 }
@@ -2401,7 +2398,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let v_ident_inn_type_ts = quote! {#VSc: #ident_inn_type_ts};
         let ident_stdrt_nn_rd_ucc = SelfRdUcc::from_tokens(&ident_stdrt_nn_ucc);
         let ident_stdrt_nn_origin_try_new_er_ucc = SelfOriginTryNewErUcc::from_display(&ident_stdrt_nn_ucc);
-        let ident_stdrt_nn_origin_try_new_for_de_er_ucc = SelfOriginTryNewForDeserializeErUcc::from_display(&ident_stdrt_nn_ucc);
+        let ident_stdrt_nn_origin_try_new_for_de_er_ucc = SelfOriginTryNewForDeErUcc::from_display(&ident_stdrt_nn_ucc);
         let int_range_type_to_range_inn_type_ts = |int_range_type: &IntRangeType| -> Ts2 {
             match &int_range_type {
                 IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range => quote! {#I32},
@@ -3205,9 +3202,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             {
                 match &pg_type_deserialize {
                     PgTypeDeserialize::Derive => Ts2::new(),
-                    PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
-                        PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => Ts2::new(),
-                        PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(pg_type_impl_try_new_for_deserialize) => {
+                    PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDe(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
+                        PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(_) => Ts2::new(),
+                        PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => {
                             let ts_026f2a24 = DTsBuilder::new()
                             .make_pub()
                             .d_debug()
@@ -3220,8 +3217,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 &Ts2::new(),
                                 &{
                                     let ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
-                                        PgTypeImplTryNewForDeserialize::StringAsText => &string_as_text_try_new_er_vrts_ts,
-                                        PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &{
+                                        PgTypeImplTryNewForDe::StringAsText => &string_as_text_try_new_er_vrts_ts,
+                                        PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => &{
                                             let invalid_hour_or_minute_or_second_or_microsecond_var_ts = gen_loc_var_ts(
                                                 &InvalidHourOrMinuteOrSecondOrMicrosecondUcc,
                                                 &quote!{
@@ -3240,7 +3237,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 #nanosecond_precision_is_not_supported_vrt_try_new_ts
                                             }
                                         },
-                                        PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &{
+                                        PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => &{
                                             let invalid_hour_or_minute_or_second_or_microsecond_var_ts = gen_loc_var_ts(
                                                 &InvalidHourOrMinuteOrSecondOrMicrosecondUcc,
                                                 &quote!{
@@ -3261,9 +3258,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 #nanosecond_precision_is_not_supported_vrt_try_new_ts
                                             }
                                         },
-                                        PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
-                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                        PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                        PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
+                                        PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                        PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                     };
                                     quote!{{#ts}}
                                 }
@@ -3617,8 +3614,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::Stdrt => match &is_nl {
                         IsNl::False => match &pg_type_deserialize {
                             PgTypeDeserialize::Derive => Ts2::new(),
-                            PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
-                                PgTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(pg_type_impl_new_for_deserialize) => {
+                            PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDe(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
+                                PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(pg_type_impl_new_for_deserialize) => {
                                     let params_ts = {
                                         let gen_start_end_std_std_ops_bound_ts = |ts: &dyn ToTokens| {
                                             quote! {
@@ -3697,7 +3694,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     }
                                 }
-                                PgTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(pg_type_impl_try_new_for_deserialize) => {
+                                PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => {
                                     let params_ts = {
                                         let gen_v_pg_range_int_type_ts = |int_range_type: &IntRangeType| {
                                             let type_ts = {
@@ -3710,10 +3707,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                         };
                                         match &pg_type_impl_try_new_for_deserialize {
-                                            PgTypeImplTryNewForDeserialize::StringAsText | PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
+                                            PgTypeImplTryNewForDe::StringAsText | PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => {
                                                 quote! {v_356f2a0b: #ident_inn_type_ts}
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
+                                            PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => {
                                                 quote! {
                                                     #HourSc: #U32,
                                                     #MinSc: #U32,
@@ -3721,7 +3718,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     #MicroSc: #U32
                                                 }
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
+                                            PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => {
                                                 quote! {
                                                     #HourSc: #U8,
                                                     #MinuteSc: #U8,
@@ -3729,8 +3726,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     #MicrosecondSc: #U32
                                                 }
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                            PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                            PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                         }
                                     };
                                     let ts = {
@@ -3790,7 +3787,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             },
                                         );
                                         match &pg_type_impl_try_new_for_deserialize {
-                                            PgTypeImplTryNewForDeserialize::StringAsText => {
+                                            PgTypeImplTryNewForDe::StringAsText => {
                                                 let vrt_ts = quote! {
                                                     #ContainsNullByteUcc {
                                                         #VSc,
@@ -3804,7 +3801,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     },
                                                 )
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
+                                            PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => {
                                                 quote! {
                                                     match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
                                                         #HourSc,
@@ -3831,7 +3828,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     }
                                                 }
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
+                                            PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => {
                                                 quote! {
                                                     match #inn_type_stdrt_nn_ts::from_hms_micro(
                                                         #HourSc,
@@ -3859,7 +3856,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     }
                                                 }
                                             }
-                                            PgTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => gen_self_match_try_new_ts(
+                                            PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => gen_self_match_try_new_ts(
                                                 &quote!{v_356f2a0b},
                                                 &quote! {
                                                     #ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
@@ -3873,11 +3870,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     }),
                                                 },
                                             ),
-                                            PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI32AsInt4Range | PgTypeImplTryNewForDeserialize::SqlxPgTypesPgRangeI64AsInt8Range => try_new_convert_pg_range_int_ts,
+                                            PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range | PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => try_new_convert_pg_range_int_ts,
                                         }
                                     };
                                     quote! {
-                                        fn #TryNewForDeserializeSc(#params_ts) -> Result<Self, #ident_stdrt_nn_origin_try_new_for_de_er_ucc> {
+                                        fn #TryNewForDeSc(#params_ts) -> Result<Self, #ident_stdrt_nn_origin_try_new_for_de_er_ucc> {
                                             #ts
                                         }
                                     }

@@ -805,7 +805,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["upd", "qp", "self"],
     ["self", "tests"],
     ["self", "origin", "try", "new", "er"],
-    ["self", "origin", "try", "new", "for", "deserialize", "er"],
+    ["self", "origin", "try", "new", "for", "de", "er"],
     ["self", "test", "cases"],
     ["self", "some", "v", "upd"],
     ["self", "some", "v", "rd"],
