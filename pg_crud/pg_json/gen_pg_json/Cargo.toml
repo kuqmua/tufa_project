@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_json_types"
+name = "gen_pg_json"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -15,7 +15,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-gen_pg_json_types_src = {path = "../gen_pg_json_types_src"}
+gen_pg_json_src = {path = "../gen_pg_json_src"}
 
 [lints]
 workspace = true

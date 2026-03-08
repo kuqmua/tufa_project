@@ -52,7 +52,7 @@ use token_patterns::{
     PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
 };
 #[must_use]
-pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
+pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Display, Optml)]
     enum RustTypeName {
@@ -347,8 +347,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonTypesConfig {
         vrt: ConfigVrt,
-        pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json_types: ShouldWriteTsIntoFile,
-        whole_cnt_write_into_gen_pg_json_types: ShouldWriteTsIntoFile,
+        pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json: ShouldWriteTsIntoFile,
+        whole_cnt_write_into_gen_pg_json: ShouldWriteTsIntoFile,
     }
     panic_location();
     let config = from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("1123f78f");
@@ -1859,7 +1859,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             } else {
-                quote! {Ok(gen_pg_json_types_common::fi_jsonb_build_obj_v(fi))}
+                quote! {Ok(gen_pg_json_common::fi_jsonb_build_obj_v(fi))}
             };
             let select_only_created_or_updd_ids_qb_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
@@ -3600,8 +3600,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     })
     .collect::<(Vec<String>, Vec<String>)>();
     mb_write_ts_into_file(
-        config.pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json_types,
-        "pg_table_columns_using_pg_json_types",
+        config.pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json,
+        "pg_table_columns_using_pg_json",
         &{
             let fields_cnt_ts = fields_ts
                 .into_iter()
@@ -3630,8 +3630,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         }
     };
     mb_write_ts_into_file(
-        config.whole_cnt_write_into_gen_pg_json_types,
-        "gen_pg_json_types",
+        config.whole_cnt_write_into_gen_pg_json,
+        "gen_pg_json",
         &generated,
         &FormatWithCargofmt::True,
     );

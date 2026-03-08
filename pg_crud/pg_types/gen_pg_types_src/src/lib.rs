@@ -833,10 +833,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     panic_location();
-    let gen_pg_json_types_config =
+    let gen_pg_json_config =
         from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_arr) = {
-        let acc = match gen_pg_json_types_config.vrt {
+        let acc = match gen_pg_json_config.vrt {
             GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
                 for el0 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el1| {
                     match &el1 {
@@ -6663,7 +6663,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     })
     .collect::<(Vec<String>, Vec<String>)>();
     mb_write_ts_into_file(
-        gen_pg_json_types_config.pg_table_columns_write_into_file,
+        gen_pg_json_config.pg_table_columns_write_into_file,
         "pg_table_columns_using_pg_types",
         &{
             let ts = columns_ts
@@ -6693,7 +6693,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     };
     mb_write_ts_into_file(
-        gen_pg_json_types_config.whole_write_into_file,
+        gen_pg_json_config.whole_write_into_file,
         "gen_pg_types",
         &generated,
         &FormatWithCargofmt::True,

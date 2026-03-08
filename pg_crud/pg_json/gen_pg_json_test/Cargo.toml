@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_json_types_test"
+name = "gen_pg_json_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -12,7 +12,7 @@ categories = ["category"]
 [dev-dependencies]
 quote.workspace = true
 macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
-gen_pg_json_types_src = {path = "../gen_pg_json_types_src"}
+gen_pg_json_src = {path = "../gen_pg_json_src"}
 
 [lints]
 workspace = true

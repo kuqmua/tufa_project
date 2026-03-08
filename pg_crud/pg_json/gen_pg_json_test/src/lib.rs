@@ -5,8 +5,8 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_json_types_test_cnt",
-            "../pg_crud/pg_json_types/",
+            "gen_pg_json_test_cnt",
+            "../pg_crud/pg_json/",
             r#"[dependencies]
 schemars.workspace = true
 regex.workspace = true
@@ -16,17 +16,17 @@ serde.workspace = true
 utoipa.workspace = true
 location_lib = {path = "../../../location_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
-gen_pg_json_types_common = {path = "../gen_pg_json_types_common"}
+gen_pg_json_common = {path = "../gen_pg_json_common"}
 where_filters = {path = "../../where_filters"}
 optml = {path = "../../../optml"}
 [dev-dependencies]
 uuid.workspace = true
 [features]
 test-utils = []"#,
-            &gen_pg_json_types_src::gen_pg_json_types(&quote! {
+            &gen_pg_json_src::gen_pg_json(&quote! {
                 {
-                    "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json_types": "False",
-                    "whole_cnt_write_into_gen_pg_json_types": "False",
+                    "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json": "False",
+                    "whole_cnt_write_into_gen_pg_json": "False",
                     "vrt": "WithDimOne"
                 }
             })

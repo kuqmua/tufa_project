@@ -13,7 +13,7 @@ use thiserror::Error;
 use utoipa::ToSchema;
 gen_where_filters::gen_where_filters!({
     "pg_types_write_into_file": "False",
-    "pg_json_types_write_into_file": "False",
+    "pg_json_write_into_file": "False",
     "whole_write_into_file": "False"
 });
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema, Optml)]

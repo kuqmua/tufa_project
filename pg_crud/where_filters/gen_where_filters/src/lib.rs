@@ -106,7 +106,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     #[derive(Debug, serde::Deserialize, Optml)]
     struct GenWhereFiltersConfig {
         pg_types_write_into_file: ShouldWriteTsIntoFile,
-        pg_json_types_write_into_file: ShouldWriteTsIntoFile,
+        pg_json_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_location();
@@ -1809,8 +1809,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         let filter_arr_ts = PgJsonTypeFilter::into_arr().map(|el| gen_filters_ts(&el));
         let gend = quote! {#(#filter_arr_ts)*};
         mb_write_ts_into_file(
-            gen_where_filters_config.pg_json_types_write_into_file,
-            "gen_where_filters_pg_json_types",
+            gen_where_filters_config.pg_json_write_into_file,
+            "gen_where_filters_pg_json",
             &gend,
             &FormatWithCargofmt::True,
         );

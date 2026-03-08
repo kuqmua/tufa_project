@@ -1,6 +1,6 @@
-gen_pg_json_types::gen_pg_json_types!({
-    "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json_types": "False",
-    "whole_cnt_write_into_gen_pg_json_types": "False",
+gen_pg_json::gen_pg_json!({
+    "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json": "False",
+    "whole_cnt_write_into_gen_pg_json": "False",
     "vrt":
     // "WithoutDims"
     "WithDimOne"
