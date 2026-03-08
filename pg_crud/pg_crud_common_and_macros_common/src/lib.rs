@@ -5,17 +5,17 @@ use quote::{ToTokens, quote};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter, Result as StdFmtResult};
-pub trait DfltOptSomeVecOneEl: Sized {
-    fn dflt_opt_some_vec_one_el() -> Self;
+pub trait DfltSomeOneEl: Sized {
+    fn dflt_some_one_el() -> Self;
 }
-pub trait AllEnumVrtsArrDfltOptSomeVecOneEl: Sized {
-    fn all_vrts_dflt_opt_some_vec_one_el() -> Vec<Self>;
+pub trait AllEnumVrtsArrDfltSomeOneEl: Sized {
+    fn all_vrts_dflt_some_one_el() -> Vec<Self>;
 }
-pub trait DfltOptSomeVecOneElMaxPageSize: Sized {
-    fn dflt_opt_some_vec_one_el_max_page_size() -> Self;
+pub trait DfltSomeOneElMaxPageSize: Sized {
+    fn dflt_some_one_el_max_page_size() -> Self;
 }
-pub trait AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize: Sized {
-    fn all_vrts_dflt_opt_some_vec_one_el_max_page_size() -> Vec<Self>;
+pub trait AllEnumVrtsArrDfltSomeOneElMaxPageSize: Sized {
+    fn all_vrts_dflt_some_one_el_max_page_size() -> Vec<Self>;
 }
 #[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, JsonSchema, Optml)]
 pub enum Oprtr {
@@ -51,8 +51,8 @@ impl Display for Oprtr {
         write!(f, "{self:?}")
     }
 }
-impl DfltOptSomeVecOneEl for Oprtr {
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl DfltSomeOneEl for Oprtr {
+    fn dflt_some_one_el() -> Self {
         Self::default()
     }
 }

@@ -32,9 +32,7 @@ pub const DEFAULT_PAGINATION_LIMIT: i64 = 5;
 trait_al!(DebugClonePartialEqAl = Debug + Clone + PartialEq);
 trait_al!(DebugClonePartialEqSerializeAl = DebugClonePartialEqAl + Serialize);
 trait_al!(DebugClonePartialEqSerdeAl = DebugClonePartialEqSerializeAl + for<'__> Deserialize<'__>);
-trait_al!(
-    DebugClonePartialEqSerdeDefaultSomeOneAl = DebugClonePartialEqSerdeAl + DfltOptSomeVecOneEl
-);
+trait_al!(DebugClonePartialEqSerdeDefaultSomeOneAl = DebugClonePartialEqSerdeAl + DfltSomeOneEl);
 trait_al!(SqlxEncodePgSqlxTypePgAl = for<'__> Encode<'__, Postgres> + Type<Postgres>);
 trait_al!(UtoipaToSchemaAndSchemarsJsonSchemaAl = for<'__> ToSchema<'__> + JsonSchema);
 trait_al!(TableTypeAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
@@ -106,11 +104,11 @@ pub trait PgJson {
     ) -> Result<String, QpEr>;
     type Wh: WhAl
         + UtoipaToSchemaAndSchemarsJsonSchemaAl
-        + AllEnumVrtsArrDfltOptSomeVecOneEl
+        + AllEnumVrtsArrDfltSomeOneEl
         + ToErrString;
     //todo impl get fields from rd
     //todo mb add Decode trait here and Type
-    type Rd: RdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneEl;
+    type Rd: RdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltSomeOneEl;
     type RdIds: RdIdsAl;
     fn sel_only_ids_qp(column_field: &str) -> Result<String, QpEr>;
     type RdInn: RdInnAl;
@@ -188,7 +186,7 @@ pub trait PgJsonObjVecElId {
 #[cfg(feature = "test-utils")]
 pub trait PgTypeTestCases {
     type PgType: PgType;
-    type Sel: SelAl + DfltOptSomeVecOneElMaxPageSize;
+    type Sel: SelAl + DfltSomeOneElMaxPageSize;
     fn opt_vec_cr() -> Option<Vec<<Self::PgType as PgType>::Cr>>;
     fn rd_ids_to_2_dims_vec_rd_inn(
         rd_ids: &<Self::PgType as PgType>::RdIds,
@@ -200,7 +198,7 @@ pub trait PgTypeTestCases {
         v: <Self::PgType as PgType>::RdInn,
     ) -> <Self::PgType as PgType>::Upd;
     fn upd_to_rd_ids(v: &<Self::PgType as PgType>::Upd) -> <Self::PgType as PgType>::RdIds;
-    fn rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el(
+    fn rd_ids_to_opt_v_rd_dflt_some_one_el(
         v: &<Self::PgType as PgType>::RdIds,
     ) -> Option<V<<Self::PgType as PgType>::Rd>>;
     fn previous_rd_and_opt_upd_into_rd(
@@ -314,7 +312,7 @@ pub struct PgJsonLengthGreaterThanTest<T: PgJson> {
 #[cfg(feature = "test-utils")]
 pub trait PgJsonTestCases {
     type PgJson: PgJson;
-    type Sel: SelAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
+    type Sel: SelAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltSomeOneElMaxPageSize;
     fn opt_vec_cr() -> Option<Vec<<Self::PgJson as PgJson>::Cr>>;
     fn rd_ids_to_2_dims_vec_rd_inn(
         rd_ids: &<Self::PgJson as PgJson>::RdIds,
@@ -329,7 +327,7 @@ pub trait PgJsonTestCases {
         v: <Self::PgJson as PgJson>::RdIds,
     ) -> Option<V<<Self::PgJson as PgJson>::RdInn>>;
     fn upd_to_rd_ids(v: &<Self::PgJson as PgJson>::Upd) -> <Self::PgJson as PgJson>::RdIds;
-    fn rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el(
+    fn rd_ids_to_opt_v_rd_dflt_some_one_el(
         v: &<Self::PgJson as PgJson>::RdIds,
     ) -> Option<V<<Self::PgJson as PgJson>::Rd>>;
     fn previous_rd_and_opt_upd_into_rd(
@@ -417,15 +415,11 @@ pub trait PgTypeWhFilter<'query_lt> {
 //todo custom deserialization - must not contain more than one el
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct NlJsonObjPgTypeWhFilter<
-    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
+    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFilter<'lt> + AllEnumVrtsArrDfltSomeOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
 impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NlJsonObjPgTypeWhFilter<T>
 where
-    T: Debug
-        + PartialEq
-        + Clone
-        + for<'t_lt> PgTypeWhFilter<'t_lt>
-        + AllEnumVrtsArrDfltOptSomeVecOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn qb(
         self,
@@ -445,26 +439,18 @@ where
 }
 impl<T> ToErrString for NlJsonObjPgTypeWhFilter<T>
 where
-    T: Debug
-        + PartialEq
-        + Clone
-        + for<'t_lt> PgTypeWhFilter<'t_lt>
-        + AllEnumVrtsArrDfltOptSomeVecOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NlJsonObjPgTypeWhFilter<T>
+impl<T> AllEnumVrtsArrDfltSomeOneEl for NlJsonObjPgTypeWhFilter<T>
 where
-    T: Debug
-        + PartialEq
-        + Clone
-        + for<'t_lt> PgTypeWhFilter<'t_lt>
-        + AllEnumVrtsArrDfltOptSomeVecOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
-    fn all_vrts_dflt_opt_some_vec_one_el() -> Vec<Self> {
-        vec![Self(Some(DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()))]
+    fn all_vrts_dflt_some_one_el() -> Vec<Self> {
+        vec![Self(Some(DfltSomeOneEl::dflt_some_one_el()))]
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, Optml)]
@@ -694,16 +680,12 @@ impl<'query_lt, T: PgTypeWhFilter<'query_lt>> PgTypeWhFilter<'query_lt> for PgTy
         Ok(format!("{}({acc})", &self.oprtr.to_qp(add_oprtr)))
     }
 }
-impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSomeVecOneEl
-    for PgTypeWh<T>
-{
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltSomeOneEl> DfltSomeOneEl for PgTypeWh<T> {
+    fn dflt_some_one_el() -> Self {
         Self {
-            oprtr: DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el(),
-            v: NotEmptyUniqueVec::try_new(
-                AllEnumVrtsArrDfltOptSomeVecOneEl::all_vrts_dflt_opt_some_vec_one_el(),
-            )
-            .expect("a918b427"),
+            oprtr: DfltSomeOneEl::dflt_some_one_el(),
+            v: NotEmptyUniqueVec::try_new(AllEnumVrtsArrDfltSomeOneEl::all_vrts_dflt_some_one_el())
+                .expect("a918b427"),
         }
     }
 }
@@ -723,8 +705,8 @@ impl Display for Order {
         }
     }
 }
-impl DfltOptSomeVecOneEl for Order {
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl DfltSomeOneEl for Order {
+    fn dflt_some_one_el() -> Self {
         Self::default()
     }
 }
@@ -1015,15 +997,15 @@ impl<'query_lt> PgTypeWhFilter<'query_lt> for PgnStartsWithZero {
         self.0.qp(incr, column, add_oprtr)
     }
 }
-impl DfltOptSomeVecOneEl for PgnStartsWithZero {
+impl DfltSomeOneEl for PgnStartsWithZero {
     #[inline]
-    fn dflt_opt_some_vec_one_el() -> Self {
+    fn dflt_some_one_el() -> Self {
         Self(PgnBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl DfltOptSomeVecOneElMaxPageSize for PgnStartsWithZero {
+impl DfltSomeOneElMaxPageSize for PgnStartsWithZero {
     #[inline]
-    fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
+    fn dflt_some_one_el_max_page_size() -> Self {
         Self(PgnBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
@@ -1144,16 +1126,14 @@ const _: () = {
         }
     }
 };
-impl<T: AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSomeVecOneEl for NotEmptyUniqueVec<T> {
-    fn dflt_opt_some_vec_one_el() -> Self {
-        Self(AllEnumVrtsArrDfltOptSomeVecOneEl::all_vrts_dflt_opt_some_vec_one_el())
+impl<T: AllEnumVrtsArrDfltSomeOneEl> DfltSomeOneEl for NotEmptyUniqueVec<T> {
+    fn dflt_some_one_el() -> Self {
+        Self(AllEnumVrtsArrDfltSomeOneEl::all_vrts_dflt_some_one_el())
     }
 }
-impl<T: AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize> DfltOptSomeVecOneElMaxPageSize
-    for NotEmptyUniqueVec<T>
-{
-    fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
-        Self(AllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize::all_vrts_dflt_opt_some_vec_one_el_max_page_size())
+impl<T: AllEnumVrtsArrDfltSomeOneElMaxPageSize> DfltSomeOneElMaxPageSize for NotEmptyUniqueVec<T> {
+    fn dflt_some_one_el_max_page_size() -> Self {
+        Self(AllEnumVrtsArrDfltSomeOneElMaxPageSize::all_vrts_dflt_some_one_el_max_page_size())
     }
 }
 impl<T> Default for NotEmptyUniqueVec<T> {
@@ -1173,11 +1153,7 @@ impl<T1> NotEmptyUniqueVec<T1> {
 }
 impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NotEmptyUniqueVec<T>
 where
-    T: Debug
-        + PartialEq
-        + Clone
-        + for<'t_lt> PgTypeWhFilter<'t_lt>
-        + AllEnumVrtsArrDfltOptSomeVecOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn qb(
         self,
@@ -1369,8 +1345,8 @@ impl UnsignedPartOfI32 {
         self.0
     }
 }
-impl DfltOptSomeVecOneEl for UnsignedPartOfI32 {
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl DfltSomeOneEl for UnsignedPartOfI32 {
+    fn dflt_some_one_el() -> Self {
         Self(0)
     }
 }
@@ -1495,9 +1471,9 @@ impl NotZeroUnsignedPartOfI32 {
         self.0.get()
     }
 }
-impl DfltOptSomeVecOneEl for NotZeroUnsignedPartOfI32 {
-    fn dflt_opt_some_vec_one_el() -> Self {
-        Self(DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el())
+impl DfltSomeOneEl for NotZeroUnsignedPartOfI32 {
+    fn dflt_some_one_el() -> Self {
+        Self(DfltSomeOneEl::dflt_some_one_el())
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]

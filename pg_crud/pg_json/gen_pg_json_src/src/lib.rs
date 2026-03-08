@@ -24,8 +24,8 @@ use pg_crud_macros_common::{
     IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
     IsUpdQpSelfUpdUsed, PgFilter, PgJsonFilter, RdOrUpd, ShouldDSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
-    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
-    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
+    gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts,
+    gen_impl_pg_crud_common_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_json_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
@@ -44,8 +44,8 @@ use std::{
 use strum_macros::{Display, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse, NoneTs,
-    PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
-    PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
+    PgCrudCommonDfltSomeOneEl, PgCrudCommonDfltSomeOneElCall,
+    PgCrudCommonDfltSomeOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
 };
 #[must_use]
 pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
@@ -949,7 +949,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
-            let impl_dflt_opt_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_origin_ucc, &{
+            let impl_dflt_some_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => match &pg_json {
@@ -967,11 +967,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             PgJson::StringAsJsonbString => quote! {String::default()},
                             PgJson::UuidUuidAsJsonbString => quote! {uuid::Uuid::new_v4()},
                         },
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
+                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
                     },
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => match &is_nl {
-                        IsNl::False => quote! {vec![#PgCrudCommonDfltOptSomeVecOneElCall]},
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
+                        IsNl::False => quote! {vec![#PgCrudCommonDfltSomeOneElCall]},
+                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
                     },
                 };
                 quote! {Self(#content_ts)}
@@ -987,7 +987,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_is_string_empty_for_ident_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_origin_ts
+                #impl_dflt_some_one_el_for_ident_origin_ts
                 #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
             }
@@ -1017,8 +1017,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_dflt_opt_some_vec_one_el_for_ident_table_type_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_table_type_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_dflt_some_one_el_for_ident_table_type_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_table_type_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             //todo mb add to trait?
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &quote! {&#SelfSc.0});
             //todo mb add to trait?
@@ -1026,7 +1026,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_table_type_ts
                 #impl_ident_table_type_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_table_type_ts
+                #impl_dflt_some_one_el_for_ident_table_type_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts
                 #impl_sqlx_type_for_ident_table_type_ts
             }
@@ -1054,12 +1054,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_dflt_opt_some_vec_one_el_for_ident_cr_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_cr_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_dflt_some_one_el_for_ident_cr_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_cr_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             quote! {
                 #ident_cr_ts
                 #impl_ident_cr_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_cr_ts
+                #impl_dflt_some_one_el_for_ident_cr_ts
             }
         };
         let ident_cr_for_query_ts = {
@@ -1134,8 +1134,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     |()| Ts2::new(),
                     |arr_dim| {
                         let content_ts: &dyn ToTokens = match &dflt_some_one_or_dflt_some_one_with_max_page_size {
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltOptSomeVecOneElCall,
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltSomeOneElCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltSomeOneElMaxPageSizeCall,
                         };
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dim.to_usize() {
@@ -1149,14 +1149,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 );
                 quote! {Self{#content_ts}}
             };
-            let impl_dflt_opt_some_vec_one_el_for_pg_json_ident_sel_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
-            let impl_dflt_opt_some_vec_one_el_max_page_size_for_pg_json_ident_sel_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
+            let impl_dflt_some_one_el_for_pg_json_ident_sel_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
+            let impl_dflt_some_one_el_max_page_size_for_pg_json_ident_sel_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
             quote! {
                 #ident_sel_ts
-                #impl_dflt_opt_some_vec_one_el_for_pg_json_ident_sel_ts
-                #impl_dflt_opt_some_vec_one_el_max_page_size_for_pg_json_ident_sel_ts
+                #impl_dflt_some_one_el_for_pg_json_ident_sel_ts
+                #impl_dflt_some_one_el_max_page_size_for_pg_json_ident_sel_ts
             }
         };
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
@@ -1581,14 +1581,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_dflt_opt_some_vec_one_el_for_ident_rd_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_dflt_some_one_el_for_ident_rd_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &quote! {&#SelfSc.0});
             let impl_sqlx_type_for_ident_rd_ts = gen_impl_sqlx_type_for_ident_ts(&ident_rd_ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
             quote! {
                 #ident_rd_ts
                 #impl_ident_rd_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_rd_ts
+                #impl_dflt_some_one_el_for_ident_rd_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_rd_ts
                 #impl_sqlx_type_for_ident_rd_ts
             }
@@ -1792,13 +1792,13 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let impl_dflt_opt_some_vec_one_el_for_ident_upd_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_dflt_some_one_el_for_ident_upd_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             quote! {
                 #ident_upd_ts
                 #impl_ident_upd_ts
                 #impl_location_lib_to_err_string_for_ident_upd_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_upd_ts
+                #impl_dflt_some_one_el_for_ident_upd_ts
             }
         };
         let ident_upd_for_query_ts = {
@@ -2542,8 +2542,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             <
                                 <Self as #import::PgJson>::Rd
                                 as
-                                #PgCrudCommonDfltOptSomeVecOneEl
-                            >::dflt_opt_some_vec_one_el()
+                                #PgCrudCommonDfltSomeOneEl
+                            >::dflt_some_one_el()
                         )
                     }
                 });
@@ -2654,11 +2654,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 });
                 quote! {#ident_rd_ids_ucc(#ts)}
             };
-            let rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el_ts = {
+            let rd_ids_to_opt_v_rd_dflt_some_one_el_ts = {
                 let ts = gen_v_init_ts0(&if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                     quote! {#ident_rd_ucc::new(#VSc.0.#VSc.clone())}
                 } else {
-                    quote! {#PgCrudCommonDfltOptSomeVecOneElCall}
+                    quote! {#PgCrudCommonDfltSomeOneElCall}
                 });
                 quote! {Some(#ts)}
             };
@@ -3539,7 +3539,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
                 &rd_ids_into_opt_v_rd_inn_ts,
                 &upd_to_rd_ids_ts,
-                &rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el_ts,
+                &rd_ids_to_opt_v_rd_dflt_some_one_el_ts,
                 &previous_rd_and_opt_upd_into_rd_ts,
                 &rd_ids_and_cr_into_rd_ts,
                 &rd_ids_and_cr_into_opt_v_rd_ts,

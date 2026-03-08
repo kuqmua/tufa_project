@@ -37,8 +37,8 @@ use pg_crud_macros_common::{
     IsUpdQbMut, PgFilter, PgTypeFilter, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr,
     UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
-    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
-    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
+    gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts,
+    gen_impl_pg_crud_common_dflt_some_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
@@ -59,8 +59,7 @@ use std::{
 use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
-    PgCrudCommonDfltOptSomeVecOneElCall, PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, StringTs,
-    U8, U32,
+    PgCrudCommonDfltSomeOneElCall, PgCrudCommonDfltSomeOneElMaxPageSizeCall, StringTs, U8, U32,
 };
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
@@ -3995,7 +3994,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
-            let impl_dflt_opt_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_origin_ucc, &{
+            let impl_dflt_some_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_origin_ucc, &{
                 let ts = match &pg_type_pattern {
                     PgTypePattern::Stdrt => match &is_nl {
                         IsNl::False => {
@@ -4005,18 +4004,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     end: std::ops::Bound::Excluded(#CoreDefault),
                                 }
                             };
-                            let gen_as_dflt_opt_some_vec_one_el_call_ts = |ts: &dyn ToTokens| {
-                                quote! {<#ts as #import::DfltOptSomeVecOneEl>::dflt_opt_some_vec_one_el()}
+                            let gen_as_dflt_some_one_el_call_ts = |ts: &dyn ToTokens| {
+                                quote! {<#ts as #import::DfltSomeOneEl>::dflt_some_one_el()}
                             };
-                            let gen_sqlx_pg_types_pg_range_dflt_opt_some_vec_one_el_ts = |ts: &dyn ToTokens| {
-                                let ts0 = gen_as_dflt_opt_some_vec_one_el_call_ts(&ts);
+                            let gen_sqlx_pg_types_pg_range_dflt_some_one_el_ts = |ts: &dyn ToTokens| {
+                                let ts0 = gen_as_dflt_some_one_el_call_ts(&ts);
                                 quote! {sqlx::postgres::types::PgRange {
                                     #StartSc: std::ops::Bound::Included(#ts0.0),
                                     #EndSc: std::ops::Bound::Excluded(#ts0.0),
                                 }}
                             };
-                            let sqlx_types_chrono_naive_date_as_nn_date_origin_as_dflt_opt_some_vec_one_el_call_ts = gen_as_dflt_opt_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc);
-                            let sqlx_types_chrono_naive_time_as_nn_time_origin_as_dflt_opt_some_vec_one_el_call_ts = gen_as_dflt_opt_some_vec_one_el_call_ts(&sqlx_types_chrono_naive_time_as_nn_time_origin_ucc);
+                            let sqlx_types_chrono_naive_date_as_nn_date_origin_as_dflt_some_one_el_call_ts = gen_as_dflt_some_one_el_call_ts(&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc);
+                            let sqlx_types_chrono_naive_time_as_nn_time_origin_as_dflt_some_one_el_call_ts = gen_as_dflt_some_one_el_call_ts(&sqlx_types_chrono_naive_time_as_nn_time_origin_ucc);
                             let init_ts: &dyn ToTokens = match &pg_type {
                                 PgType::I16AsInt2
                                 | PgType::I32AsInt4
@@ -4042,28 +4041,28 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     #MicrosecondsSc: #CoreDefault
                                 }},
                                 PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                    #sqlx_types_chrono_naive_date_as_nn_date_origin_as_dflt_opt_some_vec_one_el_call_ts.0,
-                                    #sqlx_types_chrono_naive_time_as_nn_time_origin_as_dflt_opt_some_vec_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_date_as_nn_date_origin_as_dflt_some_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_time_as_nn_time_origin_as_dflt_some_one_el_call_ts.0,
                                 }),
                                 PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                    #sqlx_types_chrono_naive_date_as_nn_date_origin_as_dflt_opt_some_vec_one_el_call_ts.0,
-                                    #sqlx_types_chrono_naive_time_as_nn_time_origin_as_dflt_opt_some_vec_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_date_as_nn_date_origin_as_dflt_some_one_el_call_ts.0,
+                                    #sqlx_types_chrono_naive_time_as_nn_time_origin_as_dflt_some_one_el_call_ts.0,
                                 })),
                                 PgType::SqlxTypesIpnetworkIpNetworkAsInet => &quote! {
                                     sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#NewSc(core::net::Ipv4Addr::UNSPECIFIED, #CoreDefault).expect("9e9c9b57"))
                                 },
                                 PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => &pg_range_int_dflt_init_ts,
-                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_dflt_opt_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc),
-                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_sqlx_pg_types_pg_range_dflt_opt_some_vec_one_el_ts(&sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ucc),
-                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_sqlx_pg_types_pg_range_dflt_opt_some_vec_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_origin_ucc),
+                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &gen_sqlx_pg_types_pg_range_dflt_some_one_el_ts(&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc),
+                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &gen_sqlx_pg_types_pg_range_dflt_some_one_el_ts(&sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ucc),
+                                PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &gen_sqlx_pg_types_pg_range_dflt_some_one_el_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_origin_ucc),
                             };
                             quote! {#init_ts}
                         }
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
+                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
                     },
                     PgTypePattern::ArrDim1 { .. } => match &is_nl {
-                        IsNl::False => quote! {vec![#PgCrudCommonDfltOptSomeVecOneElCall]},
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
+                        IsNl::False => quote! {vec![#PgCrudCommonDfltSomeOneElCall]},
+                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
                     },
                 };
                 quote! {Self(#ts)}
@@ -4139,7 +4138,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_de_for_ident_stdrt_nn_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_origin_ts
+                #impl_dflt_some_one_el_for_ident_origin_ts
                 #impl_sqlx_type_for_ident_origin_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_origin_ts
@@ -4212,8 +4211,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_origin_struct_ts
                 );
             let impl_ident_table_type_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_table_type_ucc);
-            let impl_dflt_opt_some_vec_one_el_for_ident_table_type_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_table_type_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_dflt_some_one_el_for_ident_table_type_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_table_type_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             let impl_sqlx_type_for_ident_table_type_ts = gen_impl_sqlx_type_for_ident_ts(&ident_table_type_ucc, &ident_origin_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_table_type_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_table_type_ucc, &ident_origin_ucc, &quote! {Ok(Self(v))});
@@ -4260,7 +4259,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_table_type_ts
                 #impl_ident_table_type_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_table_type_ts
+                #impl_dflt_some_one_el_for_ident_table_type_ts
                 #impl_sqlx_type_for_ident_table_type_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_table_type_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_table_type_ts
@@ -4290,9 +4289,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 CanBePk::False => gen_pub_const_new_or_pub_try_new_ts(&ident_cr_ucc),
                 CanBePk::True => Ts2::new(),
             };
-            let impl_dflt_opt_some_vec_one_el_for_ident_cr_ts = gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_cr_ucc, &{
+            let impl_dflt_some_one_el_for_ident_cr_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_cr_ucc, &{
                 let ts: &dyn ToTokens = match &can_be_pk {
-                    CanBePk::False => &PgCrudCommonDfltOptSomeVecOneElCall,
+                    CanBePk::False => &PgCrudCommonDfltSomeOneElCall,
                     CanBePk::True => &quote! {()},
                 };
                 quote! {Self(#ts)}
@@ -4308,7 +4307,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_cr_ts
                 #mb_impl_ident_cr_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_cr_ts
+                #impl_dflt_some_one_el_for_ident_cr_ts
                 #mb_impl_sqlx_encode_sqlx_pg_for_ident_cr_ts
                 #mb_impl_sqlx_type_for_ident_cr_ts
             }
@@ -4332,13 +4331,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 DDefault::True,
             );
-            let (impl_dflt_opt_some_vec_one_el_for_ident_sel_ts, impl_dflt_opt_some_vec_one_el_max_page_size_for_ident_sel_ts) = {
+            let (impl_dflt_some_one_el_for_ident_sel_ts, impl_dflt_some_one_el_max_page_size_for_ident_sel_ts) = {
                 let gen_ts = |dflt_some_one_or_dflt_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match &pg_type_pattern {
                     PgTypePattern::Stdrt => quote! {Self},
                     PgTypePattern::ArrDim1 { .. } => {
                         let ts: &dyn ToTokens = match &dflt_some_one_or_dflt_some_one_with_max_page_size {
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltOptSomeVecOneElCall,
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltSomeOneElCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltSomeOneElMaxPageSizeCall,
                         };
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dims_nbr {
@@ -4351,14 +4350,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 (
-                    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
-                    gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
+                    gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
+                    gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
                 )
             };
             quote! {
                 #pub_struct_ident_sel_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_sel_ts
-                #impl_dflt_opt_some_vec_one_el_max_page_size_for_ident_sel_ts
+                #impl_dflt_some_one_el_for_ident_sel_ts
+                #impl_dflt_some_one_el_max_page_size_for_ident_sel_ts
             }
         };
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
@@ -4721,8 +4720,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_ident_rd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_rd_ucc);
             let impl_location_lib_to_err_string_for_ident_rd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_rd_ucc, &Ts2::new(), &quote! {self.0.to_string()});
-            let impl_crate_dflt_opt_some_vec_one_el_for_ident_rd_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_crate_dflt_some_one_el_for_ident_rd_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_rd_ucc,
@@ -4755,7 +4754,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #ident_rd_ts
                 #impl_ident_rd_ts
                 #impl_location_lib_to_err_string_for_ident_rd_ts
-                #impl_crate_dflt_opt_some_vec_one_el_for_ident_rd_ts
+                #impl_crate_dflt_some_one_el_for_ident_rd_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_rd_ts
                 #impl_sqlx_type_for_ident_rd_ts
@@ -4810,13 +4809,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_origin_struct_ts
                 );
             let impl_ident_upd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_upd_ucc);
-            let impl_dflt_opt_some_vec_one_el_for_ident_upd_ts =
-                gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltOptSomeVecOneElCall)});
+            let impl_dflt_some_one_el_for_ident_upd_ts =
+                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
             let impl_location_lib_to_err_string_for_ident_upd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_upd_ts
                 #impl_ident_upd_ts
-                #impl_dflt_opt_some_vec_one_el_for_ident_upd_ts
+                #impl_dflt_some_one_el_for_ident_upd_ts
                 #impl_location_lib_to_err_string_for_ident_upd_ts
             }
         };
@@ -6131,13 +6130,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     #import_non_pk_pg_type_rd_ids_ts(#ts)
                 }
             };
-            let rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el_ts = {
+            let rd_ids_to_opt_v_rd_dflt_some_one_el_ts = {
                 //todo that is not correct for arr of generated by pg pks but mb just need to remove this vrts and thats it?
                 let ts = gen_v_init_ts0(&{
                     let ts: &dyn ToTokens = if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) {
                         &quote! {#VSc.0 #mb_dot_clone_ts}
                     } else {
-                        &PgCrudCommonDfltOptSomeVecOneElCall
+                        &PgCrudCommonDfltSomeOneElCall
                     };
                     quote! {#self_pg_type_as_pg_type_ts::normalize(#ts)}
                 });
@@ -6570,7 +6569,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &rd_inn_into_rd_with_new_or_try_new_unwraped_ts,
                 &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
                 &upd_to_rd_ids_ts,
-                &rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el_ts,
+                &rd_ids_to_opt_v_rd_dflt_some_one_el_ts,
                 &previous_rd_and_opt_upd_into_rd_ts,
                 &rd_ids_and_cr_into_rd_ts,
                 &rd_ids_and_cr_into_opt_v_rd_ts,

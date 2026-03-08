@@ -1,7 +1,7 @@
 use location_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_common::{
-    DfltOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhFilter, QpEr,
+    DfltSomeOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhFilter, QpEr,
     incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
@@ -32,12 +32,12 @@ impl Display for EncodeFormat {
         }
     }
 }
-impl DfltOptSomeVecOneEl for EncodeFormat {
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl DfltSomeOneEl for EncodeFormat {
+    fn dflt_some_one_el() -> Self {
         Self::default()
     }
 }
-//difference between NotEmptyUniqueVec and PgJsonNotEmptyUniqueVec only in pg_crud_common::DfltOptSomeVecOneEl impl with different generic requirement and PgTypeWhFilter
+//difference between NotEmptyUniqueVec and PgJsonNotEmptyUniqueVec only in pg_crud_common::DfltSomeOneEl impl with different generic requirement and PgTypeWhFilter
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgJsonNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonNotEmptyUniqueVec<T> {
@@ -179,9 +179,9 @@ const _: () = {
         }
     }
 };
-impl<T: DfltOptSomeVecOneEl> DfltOptSomeVecOneEl for PgJsonNotEmptyUniqueVec<T> {
-    fn dflt_opt_some_vec_one_el() -> Self {
-        Self(vec![DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()])
+impl<T: DfltSomeOneEl> DfltSomeOneEl for PgJsonNotEmptyUniqueVec<T> {
+    fn dflt_some_one_el() -> Self {
+        Self(vec![DfltSomeOneEl::dflt_some_one_el()])
     }
 }
 impl<T> Default for PgJsonNotEmptyUniqueVec<T> {
@@ -345,8 +345,8 @@ impl Display for RegexRegex {
         write!(f, "{}", self.0)
     }
 }
-impl DfltOptSomeVecOneEl for RegexRegex {
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl DfltSomeOneEl for RegexRegex {
+    fn dflt_some_one_el() -> Self {
         Self(Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
@@ -355,8 +355,8 @@ pub enum RegexCase {
     Insensitive,
     Sensitive,
 }
-impl DfltOptSomeVecOneEl for RegexCase {
-    fn dflt_opt_some_vec_one_el() -> Self {
+impl DfltSomeOneEl for RegexCase {
+    fn dflt_some_one_el() -> Self {
         Self::Sensitive
     }
 }
@@ -582,13 +582,13 @@ const _: () = {
         }
     }
 };
-impl<T: DfltOptSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> DfltOptSomeVecOneEl
+impl<T: DfltSomeOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> DfltSomeOneEl
     for Between<T>
 {
-    fn dflt_opt_some_vec_one_el() -> Self {
+    fn dflt_some_one_el() -> Self {
         Self {
-            start: DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el(),
-            end: DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el(),
+            start: DfltSomeOneEl::dflt_some_one_el(),
+            end: DfltSomeOneEl::dflt_some_one_el(),
         }
     }
 }
@@ -727,9 +727,9 @@ const _: () = {
         }
     }
 };
-impl<T: DfltOptSomeVecOneEl> DfltOptSomeVecOneEl for PgTypeNotEmptyUniqueVec<T> {
-    fn dflt_opt_some_vec_one_el() -> Self {
-        Self(vec![DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()])
+impl<T: DfltSomeOneEl> DfltSomeOneEl for PgTypeNotEmptyUniqueVec<T> {
+    fn dflt_some_one_el() -> Self {
+        Self(vec![DfltSomeOneEl::dflt_some_one_el()])
     }
 }
 impl<T> Default for PgTypeNotEmptyUniqueVec<T> {
@@ -973,13 +973,8 @@ const _: () = {
         }
     }
 };
-impl<T: Clone + DfltOptSomeVecOneEl, const LENGTH: usize> DfltOptSomeVecOneEl
-    for BoundedVec<T, LENGTH>
-{
-    fn dflt_opt_some_vec_one_el() -> Self {
-        Self(vec![
-            <T as DfltOptSomeVecOneEl>::dflt_opt_some_vec_one_el();
-            LENGTH
-        ])
+impl<T: Clone + DfltSomeOneEl, const LENGTH: usize> DfltSomeOneEl for BoundedVec<T, LENGTH> {
+    fn dflt_some_one_el() -> Self {
+        Self(vec![<T as DfltSomeOneEl>::dflt_some_one_el(); LENGTH])
     }
 }

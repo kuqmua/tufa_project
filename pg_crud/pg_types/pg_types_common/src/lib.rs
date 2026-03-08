@@ -2,8 +2,8 @@ use location_lib::loc::Loc;
 use location_lib::{Location, loc};
 use optml::Optml;
 use pg_crud_common::{
-    DEFAULT_PAGINATION_LIMIT, DfltOptSomeVecOneEl, DfltOptSomeVecOneElMaxPageSize, PgTypeWhFilter,
-    PgnBase, QpEr,
+    DEFAULT_PAGINATION_LIMIT, DfltSomeOneEl, DfltSomeOneElMaxPageSize, PgTypeWhFilter, PgnBase,
+    QpEr,
 };
 use schemars::JsonSchema;
 use serde::de::{Error as SerdeEr, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -227,15 +227,15 @@ impl<'lt> PgTypeWhFilter<'lt> for PgnStartsWithOne {
         self.0.qp(incr, column, add_oprtr)
     }
 }
-impl DfltOptSomeVecOneEl for PgnStartsWithOne {
+impl DfltSomeOneEl for PgnStartsWithOne {
     #[inline]
-    fn dflt_opt_some_vec_one_el() -> Self {
+    fn dflt_some_one_el() -> Self {
         Self(PgnBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
-impl DfltOptSomeVecOneElMaxPageSize for PgnStartsWithOne {
+impl DfltSomeOneElMaxPageSize for PgnStartsWithOne {
     #[inline]
-    fn dflt_opt_some_vec_one_el_max_page_size() -> Self {
+    fn dflt_some_one_el_max_page_size() -> Self {
         let one: i32 = 1;
         Self(PgnBase::new_unchecked(
             i32::MAX.checked_sub(one).expect("c0f03c51").into(),

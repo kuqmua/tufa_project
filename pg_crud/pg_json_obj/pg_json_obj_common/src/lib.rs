@@ -1,6 +1,6 @@
 use location_lib::{Location, loc, loc::Loc};
 use optml::Optml;
-use pg_crud_common::DfltOptSomeVecOneEl;
+use pg_crud_common::DfltSomeOneEl;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -117,9 +117,9 @@ const _: () = {
         }
     }
 };
-impl<T: DfltOptSomeVecOneEl> DfltOptSomeVecOneEl for UniqueVec<T> {
-    fn dflt_opt_some_vec_one_el() -> Self {
-        Self(vec![DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()])
+impl<T: DfltSomeOneEl> DfltSomeOneEl for UniqueVec<T> {
+    fn dflt_some_one_el() -> Self {
+        Self(vec![DfltSomeOneEl::dflt_some_one_el()])
     }
 }
 impl<T> Default for UniqueVec<T> {

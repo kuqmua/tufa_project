@@ -11,7 +11,7 @@ use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Import, IncrParamUndrscr, IsQbMut, PgJsonFilter,
-    PgTypeFilter, PgTypeOrPgJson, gen_impl_dflt_opt_some_vec_one_el_ts,
+    PgTypeFilter, PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts,
     impl_pg_type_wh_filter_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
@@ -19,9 +19,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
-use token_patterns::{
-    CoreDefault, PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
-};
+use token_patterns::{CoreDefault, PgCrudCommonDfltSomeOneEl, PgCrudCommonDfltSomeOneElCall};
 #[proc_macro]
 pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     #[derive(Clone, Optml)]
@@ -119,8 +117,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let pub_v_t_ts = quote! {pub #VSc: T};
     let unsigned_part_of_i32_ts = quote! {#import::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {#import::NotZeroUnsignedPartOfI32};
-    let v_dflt_opt_some_vec_one_el_ts = quote! {
-        #VSc: #PgCrudCommonDfltOptSomeVecOneElCall
+    let v_dflt_some_one_el_ts = quote! {
+        #VSc: #PgCrudCommonDfltSomeOneElCall
     };
     let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool,
                          generic: &Generic,
@@ -160,17 +158,16 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 }},
             )
     };
-    let gen_impl_dflt_opt_some_vec_one_el_ts =
-        |generic: &Generic, ident: &dyn ToTokens, ts: &dyn ToTokens| {
-            gen_impl_dflt_opt_some_vec_one_el_ts(
+    let gen_impl_dflt_some_one_el_ts = |generic: &Generic,
+                                        ident: &dyn ToTokens,
+                                        ts: &dyn ToTokens| {
+        gen_impl_dflt_some_one_el_ts(
             &match &generic {
                 Generic::False => Ts2::new(),
-                Generic::True { mb_extra_traits_ts } => {
-                    mb_extra_traits_ts.as_ref().map_or_else(
-                        || quote! {<T: #PgCrudCommonDfltOptSomeVecOneEl>},
-                        |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCommonDfltOptSomeVecOneEl>}
-                    )
-                }
+                Generic::True { mb_extra_traits_ts } => mb_extra_traits_ts.as_ref().map_or_else(
+                    || quote! {<T: #PgCrudCommonDfltSomeOneEl>},
+                    |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCommonDfltSomeOneEl>},
+                ),
             },
             &Import::PgCrudCommon,
             &ident,
@@ -180,12 +177,12 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             },
             &quote! {
                 Self {
-                    oprtr: #PgCrudCommonDfltOptSomeVecOneElCall,
+                    oprtr: #PgCrudCommonDfltSomeOneElCall,
                     #ts
                 }
             },
         )
-        };
+    };
     let gen_impl_pg_type_wh_filter_ts =
         |filter_type: &FilterType,
          generic: &Generic,
@@ -239,8 +236,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let add_regex_case_and_v_dflt_init_ts = |ts: &dyn ToTokens| {
         quote! {
             #ts
-            regex_case: #PgCrudCommonDfltOptSomeVecOneElCall,
-            #v_dflt_opt_some_vec_one_el_ts
+            regex_case: #PgCrudCommonDfltSomeOneElCall,
+            #v_dflt_some_one_el_ts
         }
     };
     let gen_match_incr_checked_add_one_init_ts = |ts: &dyn ToTokens| {
@@ -338,7 +335,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let v_match_self_v_qp_init_ts =
         gen_ident_match_field_fn_ok_v_return_err_ts(&VSc, &VSc, &quote! {qp});
     let dims_dflt_init_ts = quote! {
-        #DimsSc: #PgCrudCommonDfltOptSomeVecOneElCall
+        #DimsSc: #PgCrudCommonDfltSomeOneElCall
     };
     let dims_dflt_init_comma_ts = quote! {#dims_dflt_init_ts,};
     let query_self_dims_qb_query_ts = quote! {
@@ -361,7 +358,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let gen_mb_dims_dflt_init_v_dflt_ts = |ts: &dyn ToTokens| {
         quote! {
             #ts
-            #v_dflt_opt_some_vec_one_el_ts
+            #v_dflt_some_one_el_ts
         }
     };
     let is_qb_mut_true = IsQbMut::True;
@@ -423,7 +420,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             let (
                 generic,
                 struct_extra_fields_ts,
-                impl_dflt_opt_some_vec_one_el_extra_fields_ts,
+                impl_dflt_some_one_el_extra_fields_ts,
                 incr_param_undrscr,
                 qp_ts,
                 is_qb_mut,
@@ -735,7 +732,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #mb_dims_dflt_init_ts
-                            encode_format: #PgCrudCommonDfltOptSomeVecOneElCall,
+                            encode_format: #PgCrudCommonDfltSomeOneElCall,
                             encoded_string_representation: #CoreDefault
                         },
                         IncrParamUndrscr::False,
@@ -785,7 +782,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     (
                         generic_false.clone(),
                         pub_v_not_zero_unsigned_part_of_i32_dcl_ts.clone(),
-                        v_dflt_opt_some_vec_one_el_ts.clone(),
+                        v_dflt_some_one_el_ts.clone(),
                         IncrParamUndrscr::False,
                         {
                             let format_ts =
@@ -1116,10 +1113,10 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 }
             };
             let struct_ts = gen_struct_ts(false, &generic, &ident, &struct_extra_fields_ts);
-            let impl_dflt_opt_some_vec_one_el_ts = gen_impl_dflt_opt_some_vec_one_el_ts(
+            let impl_dflt_some_one_el_ts = gen_impl_dflt_some_one_el_ts(
                 &generic,
                 &ident,
-                &impl_dflt_opt_some_vec_one_el_extra_fields_ts,
+                &impl_dflt_some_one_el_extra_fields_ts,
             );
             let impl_pg_type_wh_filter_ts = gen_impl_pg_type_wh_filter_ts(
                 &FilterType::PgType,
@@ -1133,7 +1130,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             );
             let gend = quote! {
                 #struct_ts
-                #impl_dflt_opt_some_vec_one_el_ts
+                #impl_dflt_some_one_el_ts
                 #impl_pg_type_wh_filter_ts
             };
             gend
@@ -1181,7 +1178,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #mb_dims_dflt_init_ts
-                            #v_dflt_opt_some_vec_one_el_ts
+                            #v_dflt_some_one_el_ts
                         },
                         {
                             let format_ts = dq_ts(&gen_format_h_str(&pg_type_kind));
@@ -1558,7 +1555,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     },
                     quote! {
                         #mb_dims_dflt_init_ts
-                        #v_dflt_opt_some_vec_one_el_ts
+                        #v_dflt_some_one_el_ts
                     },
                     {
                         let ts = gen_ts_e527a806(
@@ -1598,7 +1595,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     },
                     quote! {
                         #mb_dims_dflt_init_ts
-                        #v_dflt_opt_some_vec_one_el_ts
+                        #v_dflt_some_one_el_ts
                     },
                     {
                         let ts = gen_ts_e527a806(
@@ -1624,7 +1621,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             let (
                 generic,
                 struct_extra_fields_ts,
-                impl_dflt_opt_some_vec_one_el_extra_fields_ts,
+                impl_dflt_some_one_el_extra_fields_ts,
                 qp_ts,
                 is_qb_mut,
                 qb_ts,
@@ -1774,10 +1771,10 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 }
             };
             let struct_ts = gen_struct_ts(false, &generic, &ident, &struct_extra_fields_ts);
-            let impl_dflt_opt_some_vec_one_el_ts = gen_impl_dflt_opt_some_vec_one_el_ts(
+            let impl_dflt_some_one_el_ts = gen_impl_dflt_some_one_el_ts(
                 &generic,
                 &ident,
-                &impl_dflt_opt_some_vec_one_el_extra_fields_ts,
+                &impl_dflt_some_one_el_extra_fields_ts,
             );
             let impl_pg_type_wh_filter_ts = gen_impl_pg_type_wh_filter_ts(
                 &FilterType::PgJson,
@@ -1791,7 +1788,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             );
             let gend = quote! {
                 #struct_ts
-                #impl_dflt_opt_some_vec_one_el_ts
+                #impl_dflt_some_one_el_ts
                 #impl_pg_type_wh_filter_ts
             };
             gend
