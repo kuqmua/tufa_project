@@ -1,5 +1,5 @@
 [package]
-name = "where_filters"
+name = "wh_filters"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -16,7 +16,7 @@ schemars.workspace = true
 utoipa.workspace = true
 regex.workspace = true
 thiserror.workspace = true
-gen_where_filters = {path = "./gen_where_filters"}
+gen_wh_filters = {path = "./gen_wh_filters"}
 location_lib = {path = "../../location_lib"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
 optml = {path = "../../optml"}

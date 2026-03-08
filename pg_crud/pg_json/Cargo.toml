@@ -19,7 +19,7 @@ regex.workspace = true
 gen_pg_json = {path = "./gen_pg_json"}
 location_lib = {path = "../../location_lib"}
 pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
-where_filters = {path = "../where_filters"}
+wh_filters = {path = "../wh_filters"}
 gen_pg_json_common = {path = "./gen_pg_json_common"}
 optml = {path = "../../optml"}
 

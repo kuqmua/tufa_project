@@ -49,7 +49,7 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "where_many": {
+  "wh_many": {
     # "pk_column": {
     #   "oprtr": "Or",
     #   "v": [
@@ -613,7 +613,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "where_many": {
+  "wh_many": {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
       "oprtr": "Or",
       "v": [

@@ -37,7 +37,7 @@ pub struct TableExample {
     // pub pk: pg_crud::I64AsNotNullBigSerialInitByPg,
     #[gen_pg_table_pk]
     pub pk_column: pg_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitByPg,
-    pub column_0: pg_crud::I16AsNotNullInt2,
+    // pub column_0: pg_crud::I16AsNotNullInt2,
     // pub column_1: pg_crud::OptI16AsNullableInt2,
     // pub column_2: pg_crud::VecOfI16AsNotNullArrOfNotNullInt2,
     // pub column_3: pg_crud::OptVecOfI16AsNullableArrOfNotNullInt2,

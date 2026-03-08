@@ -2,8 +2,8 @@ use location_lib::loc::Loc;
 use location_lib::{Location, loc};
 use optml::Optml;
 use pg_crud_common::{
-    DEFAULT_PAGINATION_LIMIT, DfltOptSomeVecOneEl, DfltOptSomeVecOneElMaxPageSize,
-    PgTypeWhereFilter, PgnBase, QpEr,
+    DEFAULT_PAGINATION_LIMIT, DfltOptSomeVecOneEl, DfltOptSomeVecOneElMaxPageSize, PgTypeWhFilter,
+    PgnBase, QpEr,
 };
 use schemars::JsonSchema;
 use serde::de::{Error as SerdeEr, IgnoredAny, MapAccess, SeqAccess, Visitor};
@@ -216,7 +216,7 @@ impl<'de> Deserialize<'de> for PgnStartsWithOne {
         )
     }
 }
-impl<'lt> PgTypeWhereFilter<'lt> for PgnStartsWithOne {
+impl<'lt> PgTypeWhFilter<'lt> for PgnStartsWithOne {
     fn qb(
         self,
         query: Query<'lt, Postgres, PgArguments>,

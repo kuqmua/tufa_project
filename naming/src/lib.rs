@@ -145,7 +145,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["type"],
     ["in"],
     ["as"],
-    ["where"],
+    ["wh"],
     ["named"],
     ["unnamed"],
     ["er"],
@@ -437,7 +437,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["greater", "than", "current", "timestamp"],
     ["position", "equal"],
     ["position", "is", "less", "or", "equal", "zero"],
-    ["self", "where"],
+    ["self", "wh"],
     ["position"],
     ["bit", "vec", "position", "equal"],
     ["position", "is", "less", "than", "zero"],
@@ -492,7 +492,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["std", "vec", "vec", "std", "vec", "vec"],
     ["uuid", "uuid"],
     ["fixed", "length"],
-    ["pg", "type", "where", "filter"],
+    ["pg", "type", "wh", "filter"],
     ["is", "pk"],
     ["cr", "table", "column", "qp"],
     ["table", "type"],
@@ -604,7 +604,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "not",
         "found"
     ],
-    ["where", "many"],
+    ["wh", "many"],
     ["no", "fields", "provided"],
     ["extra", "params"],
     ["gen", "sel", "qp"],
@@ -711,7 +711,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "pk"],
     ["pg", "type", "rd"],
     ["pg", "type", "not", "pk"],
-    ["rd", "ids", "and", "cr", "into", "where", "equal"],
+    ["rd", "ids", "and", "cr", "into", "wh", "equal"],
     ["rd", "ids", "and", "cr", "into", "rd"],
     ["rd", "ids", "and", "cr", "into", "table", "type"],
     [
@@ -724,7 +724,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["rd", "ids", "into", "opt", "v", "rd", "inn"],
     ["previous", "rd", "and", "opt", "upd", "into", "rd"],
     [
-        "rd", "ids", "and", "cr", "into", "vec", "where", "equal", "using", "fields"
+        "rd", "ids", "and", "cr", "into", "vec", "wh", "equal", "using", "fields"
     ],
     ["equal", "oprtr"],
     ["pg", "type", "equal", "oprtr"],
@@ -733,41 +733,34 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["rd", "ids", "into", "upd"],
     ["rd", "into", "table", "type"],
     [
-        "rd", "ids", "and", "cr", "into", "where", "equal", "to", "json", "field"
+        "rd", "ids", "and", "cr", "into", "wh", "equal", "to", "json", "field"
     ],
     ["opt", "vec", "cr"],
     ["rd", "ids", "to2", "dims", "vec", "rd", "inn"],
     [
-        "rd", "ids", "and", "cr", "into", "opt", "vec", "where", "equal", "to", "json", "field"
+        "rd", "ids", "and", "cr", "into", "opt", "vec", "wh", "equal", "to", "json", "field"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "vec", "where", "equal", "to", "json", "field"
+        "rd", "ids", "and", "cr", "into", "vec", "wh", "equal", "to", "json", "field"
     ],
     [
-        "cr", "into", "pg", "type", "opt", "vec", "where", "dim", "one", "equal"
+        "cr", "into", "pg", "type", "opt", "vec", "wh", "dim", "one", "equal"
     ],
     [
-        "rd", "ids", "and", "table", "type", "into", "pg", "type", "opt", "where", "greater",
-        "than"
+        "rd", "ids", "and", "table", "type", "into", "pg", "type", "opt", "wh", "greater", "than"
+    ],
+    ["pg", "type", "opt", "vec", "wh", "greater", "than", "test"],
+    [
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "one", "equal"
     ],
     [
-        "pg", "type", "opt", "vec", "where", "greater", "than", "test"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "two", "equal"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "dim", "one",
-        "equal"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "three", "equal"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "dim", "two",
-        "equal"
-    ],
-    [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "dim", "three",
-        "equal"
-    ],
-    [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "dim", "four",
-        "equal"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "four", "equal"
     ],
     ["prep", "extensions"],
     ["prep", "pg", "table", "and", "extensions"],
@@ -775,30 +768,30 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["routes"],
     ["routes", "h"],
     [
-        "cr", "into", "pg", "json", "opt", "vec", "where", "length", "greater", "than"
+        "cr", "into", "pg", "json", "opt", "vec", "wh", "length", "greater", "than"
     ],
     [
-        "cr", "into", "pg", "json", "opt", "vec", "where", "length", "equal"
+        "cr", "into", "pg", "json", "opt", "vec", "wh", "length", "equal"
     ],
     ["from", "h"],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "greater", "than"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "greater", "than"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "between"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "between"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "in"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "in"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "regex"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "regex"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "contains", "el",
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "contains", "el",
         "greater", "than"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "where", "contains", "el",
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "contains", "el",
         "regex"
     ],
     ["executor", "acquire"],

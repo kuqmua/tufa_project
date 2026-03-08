@@ -1,7 +1,7 @@
 use location_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_common::{
-    DfltOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhereFilter, QpEr,
+    DfltOptSomeVecOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhFilter, QpEr,
     incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
@@ -11,7 +11,7 @@ use sqlx::{Encode, Postgres, Type, postgres::PgArguments, query::Query, types::J
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
 use thiserror::Error;
 use utoipa::ToSchema;
-gen_where_filters::gen_where_filters!({
+gen_wh_filters::gen_wh_filters!({
     "pg_types_write_into_file": "False",
     "pg_json_write_into_file": "False",
     "whole_write_into_file": "False"
@@ -37,7 +37,7 @@ impl DfltOptSomeVecOneEl for EncodeFormat {
         Self::default()
     }
 }
-//difference between NotEmptyUniqueVec and PgJsonNotEmptyUniqueVec only in pg_crud_common::DfltOptSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
+//difference between NotEmptyUniqueVec and PgJsonNotEmptyUniqueVec only in pg_crud_common::DfltOptSomeVecOneEl impl with different generic requirement and PgTypeWhFilter
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgJsonNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonNotEmptyUniqueVec<T> {
@@ -194,7 +194,7 @@ impl<T> From<PgJsonNotEmptyUniqueVec<T>> for Vec<T> {
         v.0
     }
 }
-impl<'lt, T> PgTypeWhereFilter<'lt> for PgJsonNotEmptyUniqueVec<T>
+impl<'lt, T> PgTypeWhFilter<'lt> for PgJsonNotEmptyUniqueVec<T>
 where
     T: Serialize + 'lt,
 {
@@ -592,7 +592,7 @@ impl<T: DfltOptSomeVecOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> D
         }
     }
 }
-impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhereFilter<'lt>
+impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhFilter<'lt>
     for Between<T>
 {
     fn qb(

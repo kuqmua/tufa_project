@@ -16,7 +16,7 @@ thiserror.workspace = true
 location_lib = {path = "../../../location_lib"}
 pg_crud_common = {path = "../../pg_crud_common"}
 pg_types_common = {path = "../pg_types_common"}
-where_filters = {path = "../../where_filters"}
+wh_filters = {path = "../../wh_filters"}
 optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,

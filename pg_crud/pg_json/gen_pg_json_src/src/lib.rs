@@ -8,12 +8,12 @@ use macros_helpers::{
 use naming::{
     ArrOfUcc, AsUcc, BooleanUcc, ColumnFieldSc, CrForQueryUcc, CrSc, EqualUcc, ErSc,
     GenPgJsonModSc, IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdSc, OptVecCrSc, PgJsonUcc,
-    QuerySc, RdIdsAndCrIntoRdSc, RdIdsAndCrIntoVecWhereEqualUsingFieldsSc,
-    RdIdsAndCrIntoWhereEqualSc, RdIdsSc, RdIdsTo2DimsVecRdInnSc, RdInnUcc, RdSc, SelfSc, SelfUcc,
-    StringUcc, UpdForQueryUcc, UpdUcc, VSc, VecOfUcc,
+    QuerySc, RdIdsAndCrIntoRdSc, RdIdsAndCrIntoVecWhEqualUsingFieldsSc, RdIdsAndCrIntoWhEqualSc,
+    RdIdsSc, RdIdsTo2DimsVecRdInnSc, RdInnUcc, RdSc, SelfSc, SelfUcc, StringUcc, UpdForQueryUcc,
+    UpdUcc, VSc, VecOfUcc,
     param::{
         JsonbSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfOriginUcc, SelfRdIdsUcc, SelfRdInnUcc,
-        SelfRdUcc, SelfSelUcc, SelfTableTypeUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhereUcc,
+        SelfRdUcc, SelfSelUcc, SelfTableTypeUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhUcc,
     },
 };
 use optml::Optml;
@@ -27,7 +27,7 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_max_page_size_ts,
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_json_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_where_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
 };
 use pg_crud_macros_common::{gen_jsonb_build_obj, gen_jsonb_build_obj_v};
@@ -640,7 +640,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         let ident_stdrt_not_null_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident_stdrt_not_null_ucc);
         let ident_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident);
         let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
-        let ident_where_ucc = SelfWhereUcc::from_tokens(&ident);
+        let ident_wh_ucc = SelfWhUcc::from_tokens(&ident);
         let ident_rd_ids_ucc = SelfRdIdsUcc::from_tokens(&ident);
         let ident_not_null_ts = gen_ident_ts(&IsNullable::False, pattern);
         let ident_ts = {
@@ -1168,8 +1168,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
-        let ident_where_ts = match &is_nullable {
-            IsNullable::False => gen_pg_type_where_ts(
+        let ident_wh_ts = match &is_nullable {
+            IsNullable::False => gen_pg_type_wh_ts(
                 &AllowClippyArbitrarySrcItemOrdering,
                 &{
                     #[derive(Debug, Clone, Optml)]
@@ -1558,8 +1558,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &IsQbMut::False,
             ),
             IsNullable::True => quote! {
-                pub type #ident_where_ucc = #import::NullableJsonObjPgTypeWhereFilter<
-                    <#ident_not_null_ts as #import::PgJson>::Where
+                pub type #ident_wh_ucc = #import::NullableJsonObjPgTypeWhFilter<
+                    <#ident_not_null_ts as #import::PgJson>::Wh
                 >;
             }
         };
@@ -1949,7 +1949,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         let gen_d_nbr_elem = |content: usize| format!("d{content}_elem");
                                         let gen_d_nbr_ord = |content: usize| format!("d{content}_elem");
                                         let gen_dot_v = |content: &str| format!("{content}.value");
-                                        let gen_as_v_where = |
+                                        let gen_as_v_wh = |
                                             first_cnt: &str,
                                             second_cnt: &str
                                         | format!("as {first_cnt}(value, {second_cnt}) where {second_cnt}");
@@ -1989,7 +1989,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                     let v = gen_jsonb_agg(
                                                         &acc,
                                                         &d_usize_minus_one_elem_v,
-                                                        &gen_as_v_where(&gen_d_nbr_elem(usize_v_0ff8cf42), &gen_d_nbr_ord(usize_v_0ff8cf42)),
+                                                        &gen_as_v_wh(&gen_d_nbr_elem(usize_v_0ff8cf42), &gen_d_nbr_ord(usize_v_0ff8cf42)),
                                                         usize_v_0ff8cf42,
                                                     );
                                                     acc = match &is_nullable_0ff8cf42 {
@@ -2003,7 +2003,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                 })
                                             },
                                             &column_field_fi,
-                                            &gen_as_v_where(&gen_d_nbr_elem(one), &gen_d_nbr_ord(one)),
+                                            &gen_as_v_wh(&gen_d_nbr_elem(one), &gen_d_nbr_ord(one)),
                                             one,
                                         )
                                     },
@@ -2046,7 +2046,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         Ok(format!(#dq_ts0))
                     }
                 },
-                &ident_where_ucc,
+                &ident_wh_ucc,
                 &ident_rd_ucc,
                 &ident_rd_ids_ucc,
                 &{
@@ -2698,10 +2698,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {#ident_table_type_ucc(#ts)}
             };
-            let rd_ids_and_cr_into_where_equal_ts = {
+            let rd_ids_and_cr_into_wh_equal_ts = {
                 let gen_equal_ts = |ts: &dyn ToTokens| {
                     quote! {
-                        where_filters::PgJsonWhereEqual {
+                        wh_filters::PgJsonWhEqual {
                             oprtr: #import::Oprtr::Or,
                             #VSc: #ts
                         }
@@ -2710,39 +2710,39 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 match &is_nullable {
                     IsNullable::False => {
                         let equal_ts = gen_equal_ts(&quote! {#ident_table_type_ucc::new(#CrSc.0.into())});
-                        quote! {#ident_where_ucc::#EqualUcc(#equal_ts)}
+                        quote! {#ident_wh_ucc::#EqualUcc(#equal_ts)}
                     }
                     IsNullable::True => {
-                        let ident_where_ucc_029b3848 = SelfWhereUcc::from_tokens(&ident_not_null_ts);
+                        let ident_wh_ucc_029b3848 = SelfWhUcc::from_tokens(&ident_not_null_ts);
                         let ident_table_type_ucc_db49334a = SelfTableTypeUcc::from_tokens(&ident_not_null_ts);
                         let equal_ts = gen_equal_ts(&quote! {#ident_table_type_ucc_db49334a::new(v_18544acf.into())});
                         quote! {
-                            #import::NullableJsonObjPgTypeWhereFilter(
+                            #import::NullableJsonObjPgTypeWhFilter(
                                 #CrSc.0.0.map(|v_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
-                                    vec![#ident_where_ucc_029b3848::#EqualUcc(#equal_ts)]
+                                    vec![#ident_wh_ucc_029b3848::#EqualUcc(#equal_ts)]
                                 ).expect("88bfa095"))
                             )
                         }
                     }
                 }
             };
-            let rd_ids_and_cr_into_vec_where_equal_using_fields_ts = quote! {
+            let rd_ids_and_cr_into_vec_wh_equal_using_fields_ts = quote! {
                 #import::NotEmptyUniqueVec::try_new(vec![
-                    <Self as #import::PgJsonTestCases>::#RdIdsAndCrIntoWhereEqualSc(
+                    <Self as #import::PgJsonTestCases>::#RdIdsAndCrIntoWhEqualSc(
                         #RdIdsSc,
                         #CrSc
                     )
                 ]).expect("56eb9ad4")
             };
-            let rd_ids_and_cr_into_vec_where_equal_to_json_field_ts = quote! {<Self as #import::PgJsonTestCases>::#RdIdsAndCrIntoVecWhereEqualUsingFieldsSc(
+            let rd_ids_and_cr_into_vec_wh_equal_to_json_field_ts = quote! {<Self as #import::PgJsonTestCases>::#RdIdsAndCrIntoVecWhEqualUsingFieldsSc(
                 #RdIdsSc,
                 #CrSc
             )};
             let (
-                rd_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts,
-                rd_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts,
-                rd_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts,
-                rd_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_ts
             ) = {
                 let gen_ts = |dim: &Dim| {
                     let dim_i_nbr_max = DimIndexNbr::from(dim);
@@ -2822,8 +2822,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         DimIndexNbr::Three => "Four",
                                     };
                                     let dim_nbr_starting_with_one_equal_ts = format!("Dim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("52fa34ac");
-                                    let pg_json_where_dim_nbr_starting_with_one_equal_ts = format!("PgJsonWhereDim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("15d769b0");
-                                    let where_ident_where_ucc_c994819b = SelfWhereUcc::from_tokens(&gen_ident_ts(&IsNullable::False, pattern));
+                                    let pg_json_wh_dim_nbr_starting_with_one_equal_ts = format!("PgJsonWhDim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("15d769b0");
+                                    let wh_ident_wh_ucc_c994819b = SelfWhUcc::from_tokens(&gen_ident_ts(&IsNullable::False, pattern));
                                     let ident_table_type_ucc_0d9dce86 = SelfTableTypeUcc::from_tokens(&gen_ident_ts(
                                         is_nullable_vec.last().expect("1221f6ec"),
                                         &match dim_i_nbr_max {
@@ -2856,10 +2856,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         quote! {#(#content_ts_0dc5a500),*}
                                     };
                                     quote! {
-                                        #where_ident_where_ucc_c994819b::#dim_nbr_starting_with_one_equal_ts(
-                                            where_filters::#pg_json_where_dim_nbr_starting_with_one_equal_ts {
+                                        #wh_ident_wh_ucc_c994819b::#dim_nbr_starting_with_one_equal_ts(
+                                            wh_filters::#pg_json_wh_dim_nbr_starting_with_one_equal_ts {
                                                 oprtr: #import::Oprtr::And,
-                                                dims: where_filters::BoundedVec::try_from(
+                                                dims: wh_filters::BoundedVec::try_from(
                                                     vec![#vec_cnt_ts]
                                                 ).expect("82cc0a3c"),
                                                 #VSc: #ident_table_type_ucc_0d9dce86::new(#ts.into()),
@@ -2873,7 +2873,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         &quote!{vec![#content_ts_f1ffd3b2]},
                                         &quote!{v_9328b66f},
                                         &quote!{{
-                                            acc_049ff0b3.push(#import::NullableJsonObjPgTypeWhereFilter(Some(v_9328b66f)));
+                                            acc_049ff0b3.push(#import::NullableJsonObjPgTypeWhFilter(Some(v_9328b66f)));
                                         }},
                                         &quote!{()},
                                         &quote!{panic!("2f5f648a")},
@@ -3026,7 +3026,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 )
             };
             //todo mb reuse LengthEqual and LengthGreaterThan
-            let cr_into_pg_json_opt_vec_where_length_equal_ts = match &pattern {
+            let cr_into_pg_json_opt_vec_wh_length_equal_ts = match &pattern {
                 Pattern::Stdrt => quote!{#NoneTs},
                 Pattern::ArrDim1 { .. } |
                 Pattern::ArrDim2 { .. } |
@@ -3042,7 +3042,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {
                                     ::LengthEqual(
-                                        where_filters::PgJsonWhereLengthEqual {
+                                        wh_filters::PgJsonWhLengthEqual {
                                             oprtr: #import::Oprtr::Or,
                                             #VSc: pg_crud_common::UnsignedPartOfI32::try_from(
                                                 i32::try_from(#content_ts.len()).expect("64d3424f")
@@ -3052,18 +3052,18 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             match &is_nullable {
-                                IsNullable::False => quote! {#ident_where_ucc #content_ts},
+                                IsNullable::False => quote! {#ident_wh_ucc #content_ts},
                                 IsNullable::True => {
-                                    let ident_where_ucc_db49334a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
+                                    let ident_wh_ucc_db49334a = SelfWhUcc::from_tokens(&ident_not_null_ts);
                                     let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
-                                        &quote!{vec![#ident_where_ucc_db49334a #content_ts]},
+                                        &quote!{vec![#ident_wh_ucc_db49334a #content_ts]},
                                         &quote!{v_d82bbdbe},
                                         &quote!{Some(v_d82bbdbe)},
                                         &quote!{{return None;}},
                                         &quote!{panic!("3d7ce854")},
                                     );
                                     quote! {
-                                        #import::NullableJsonObjPgTypeWhereFilter(
+                                        #import::NullableJsonObjPgTypeWhFilter(
                                             match #cr_dot_zero_dot_zero {
                                                 Some(v_1bbf74bc) => #not_empty_unique_vec_try_new_match_ts,
                                                 None => None,
@@ -3081,7 +3081,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &quote!{panic!("e9f9b021")},
                 ),
             };
-            let cr_into_pg_json_opt_vec_where_length_greater_than_ts = match &pattern {
+            let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = match &pattern {
                 Pattern::Stdrt => quote!{#NoneTs},
                 Pattern::ArrDim1 { .. } |
                 Pattern::ArrDim2 { .. } |
@@ -3097,7 +3097,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 };
                                 quote! {
                                     ::LengthGreaterThan(
-                                        where_filters::PgJsonWhereLengthGreaterThan {
+                                        wh_filters::PgJsonWhLengthGreaterThan {
                                             oprtr: #import::Oprtr::Or,
                                             #VSc: if let Ok(v_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
                                                 if let Ok(v_9dca0200) = i32::try_from(
@@ -3125,18 +3125,18 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             match &is_nullable {
-                                IsNullable::False => quote! {#ident_where_ucc #content_ts},
+                                IsNullable::False => quote! {#ident_wh_ucc #content_ts},
                                 IsNullable::True => {
-                                    let ident_where_ucc_8a412c1a = SelfWhereUcc::from_tokens(&ident_not_null_ts);
+                                    let ident_wh_ucc_8a412c1a = SelfWhUcc::from_tokens(&ident_not_null_ts);
                                     let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
-                                        &quote!{vec![#ident_where_ucc_8a412c1a #content_ts]},
+                                        &quote!{vec![#ident_wh_ucc_8a412c1a #content_ts]},
                                         &quote!{v_cdc120a8},
                                         &quote!{Some(v_cdc120a8)},
                                         &quote!{{return None;}},
                                         &quote!{panic!("584f801e")},
                                      );
                                     quote! {
-                                        #import::NullableJsonObjPgTypeWhereFilter(match #cr_dot_zero_dot_zero {
+                                        #import::NullableJsonObjPgTypeWhFilter(match #cr_dot_zero_dot_zero {
                                             Some(v_68880991) => #not_empty_unique_vec_try_new_match_ts,
                                             None => None,
                                         })
@@ -3177,7 +3177,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 }}
             };
             //todo additonal logic for Option<v> and el of arr? optal el of arr?
-            let rd_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 let (
@@ -3188,8 +3188,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let gen_ts = |ts: &dyn ToTokens|{
                         let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
                             &quote!{vec![
-                                #import::SingleOrMultiple::Single(#ident_where_ucc::GreaterThan(
-                                    where_filters::PgJsonWhereGreaterThan {
+                                #import::SingleOrMultiple::Single(#ident_wh_ucc::GreaterThan(
+                                    wh_filters::PgJsonWhGreaterThan {
                                         oprtr: #import::Oprtr::Or,
                                         #VSc: #ident_table_type_ucc(
                                             #ident_origin_ucc(v_7aa498e8)
@@ -3241,7 +3241,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_where_between_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_between_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 let (
@@ -3253,14 +3253,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         more_ts: &dyn ToTokens
                     |quote!{
                         if let (Some(start), Some(end)) = (#less_ts, #more_ts) {
-                            match where_filters::Between::try_new(
+                            match wh_filters::Between::try_new(
                                 #ident_table_type_ucc::new(start),
                                 #ident_table_type_ucc::new(end)
                             ) {
                                 Ok(v_cdde02cc) => match pg_crud_common::NotEmptyUniqueVec::try_new(vec![
                                     #import::SingleOrMultiple::Single(
-                                        #ident_where_ucc::Between(
-                                            where_filters::PgJsonWhereBetween {
+                                        #ident_wh_ucc::Between(
+                                            wh_filters::PgJsonWhBetween {
                                                 oprtr: pg_crud_common::Oprtr::Or,
                                                 #VSc: v_cdde02cc,
                                             }
@@ -3319,7 +3319,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_where_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 match &pg_json {
@@ -3335,10 +3335,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     PgJson::F64AsJsonbNbr => gen_not_empty_unique_vec_try_new_match_ts(
                         &quote!{vec![
                             #import::SingleOrMultiple::Single(
-                                #ident_where_ucc::In(
-                                    where_filters::PgJsonWhereIn {
+                                #ident_wh_ucc::In(
+                                    wh_filters::PgJsonWhIn {
                                         oprtr: #import::Oprtr::Or,
-                                        #VSc: where_filters::PgJsonNotEmptyUniqueVec::try_new(
+                                        #VSc: wh_filters::PgJsonNotEmptyUniqueVec::try_new(
                                             vec![#ident_table_type_ucc::new(#CrSc.0.0)]
                                         ).expect("2737c0ed")
                                     }
@@ -3358,7 +3358,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_where_regex_ts = if matches!(&pattern, Pattern::Stdrt) &&
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_regex_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nullable, IsNullable::False)
             {
                 match &pg_json {
@@ -3377,11 +3377,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     PgJson::StringAsJsonbString => gen_not_empty_unique_vec_try_new_match_ts(
                         &quote!{vec![
                             #import::SingleOrMultiple::Single(
-                                #ident_where_ucc::Regex(
-                                    where_filters::PgJsonWhereRegex {
+                                #ident_wh_ucc::Regex(
+                                    wh_filters::PgJsonWhRegex {
                                         oprtr: #import::Oprtr::Or,
-                                        regex_case: where_filters::RegexCase::Sensitive,
-                                        #VSc: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CrSc.0.0))).expect("3814ff38")),
+                                        regex_case: wh_filters::RegexCase::Sensitive,
+                                        #VSc: wh_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#CrSc.0.0))).expect("3814ff38")),
                                     }
                                 ),
                             )
@@ -3397,7 +3397,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote!{#NoneTs}
             };
             //todo add contains_el_greater_than for dim 2,3,4
-            let rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts = match &pattern {
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts = match &pattern {
                 Pattern::ArrDim1 { dim1_is_nullable } => {
                     if matches!((&is_nullable, &dim1_is_nullable), (
                         IsNullable::False,
@@ -3417,8 +3417,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                             Some(v_0cd93c25) => {
                                                 acc_f95ec4f2.push(
                                                     #import::SingleOrMultiple::Single(
-                                                        #ident_where_ucc::ContainsElGreaterThan(
-                                                            where_filters::PgJsonWhereContainsElGreaterThan {
+                                                        #ident_wh_ucc::ContainsElGreaterThan(
+                                                            wh_filters::PgJsonWhContainsElGreaterThan {
                                                                 oprtr: #import::Oprtr::Or,
                                                                 #VSc: #ident_stdrt_not_null_table_type_ucc(
                                                                     #ident_stdrt_not_null_origin_ucc(v_0cd93c25)
@@ -3481,7 +3481,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim4 {..} => quote!{#NoneTs}
             };
             //todo add contains_el_regex for dim 2,3,4
-            let rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts = match &pattern {
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex_ts = match &pattern {
                 Pattern::ArrDim1 { dim1_is_nullable } => {
                     if matches!((&is_nullable, &dim1_is_nullable), (
                         IsNullable::False,
@@ -3503,12 +3503,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             PgJson::StringAsJsonbString => gen_not_empty_unique_vec_try_new_match_ts(
                                 &quote!{cr.0.0.into_iter().map(|el_590fca71| {
                                     #import::SingleOrMultiple::Single(
-                                        #ident_where_ucc::ContainsElRegex(
-                                            where_filters::PgJsonWhereContainsElRegex {
+                                        #ident_wh_ucc::ContainsElRegex(
+                                            wh_filters::PgJsonWhContainsElRegex {
                                                 oprtr: #import::Oprtr::Or,
                                                 regex_case:
-                                                    where_filters::RegexCase::Sensitive,
-                                                #VSc: where_filters::RegexRegex(
+                                                    wh_filters::RegexCase::Sensitive,
+                                                #VSc: wh_filters::RegexRegex(
                                                     regex::Regex::new(&format!(
                                                         "^{}$",
                                                         regex::escape(&el_590fca71.0)
@@ -3552,21 +3552,21 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_rd_ts,
                 &rd_ids_and_cr_into_opt_v_rd_ts,
                 &rd_ids_and_cr_into_table_type_ts,
-                &rd_ids_and_cr_into_where_equal_ts,
-                &rd_ids_and_cr_into_vec_where_equal_using_fields_ts,
-                &rd_ids_and_cr_into_vec_where_equal_to_json_field_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal_ts,
-                &cr_into_pg_json_opt_vec_where_length_equal_ts,
-                &cr_into_pg_json_opt_vec_where_length_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_between_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_in_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_regex_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex_ts,
+                &rd_ids_and_cr_into_wh_equal_ts,
+                &rd_ids_and_cr_into_vec_wh_equal_using_fields_ts,
+                &rd_ids_and_cr_into_vec_wh_equal_to_json_field_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_ts,
+                &cr_into_pg_json_opt_vec_wh_length_equal_ts,
+                &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_between_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_regex_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex_ts,
             )
         };
         let generated = quote! {
@@ -3576,7 +3576,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             #ident_cr_ts
             #ident_cr_for_query_ts
             #ident_sel_ts
-            #ident_where_ts
+            #ident_wh_ts
             #ident_rd_ts
             #ident_rd_ids_ts
             #ident_rd_inn_ts

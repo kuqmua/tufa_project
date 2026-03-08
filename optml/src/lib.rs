@@ -122,7 +122,7 @@ pub fn optml(input_ts: Ts) -> Ts {
         }
     };
     let generics = &di.generics;
-    let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+    let (impl_generics, ty_generics, wh_clause) = generics.split_for_impl();
     let has_only_lts = generics
         .params
         .iter()
@@ -138,7 +138,7 @@ pub fn optml(input_ts: Ts) -> Ts {
     let const_name_ts = quote! {_OPTIMAL_PACK_CHECK};
     let impl_check_ts = quote! {
         #[allow(unused_qualifications)]
-        impl #impl_ts #ident #ty_ts #where_clause {
+        impl #impl_ts #ident #ty_ts #wh_clause {
             const #const_name_ts: () = {
                 #ts
             };

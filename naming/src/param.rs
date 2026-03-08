@@ -205,9 +205,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["not", "unique", "self"],
     ["is", "self", "upd", "exist"],
     ["self", "column", "rd", "permission"],
-    ["self", "where"],
+    ["self", "wh"],
     ["std", "opt", "opt", "self"],
-    ["where", "std", "opt", "opt", "self"],
+    ["wh", "std", "opt", "opt", "self"],
     ["sqlx", "types", "json", "obj", "self"],
     ["std", "opt", "opt", "sqlx", "types", "json", "obj", "self"],
     ["sqlx", "types", "json", "std", "opt", "opt", "obj", "self"],
@@ -330,20 +330,19 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to",
         "upd"
     ],
-    ["pg", "type", "obj", "self", "where"],
-    ["pg", "type", "std", "opt", "opt", "obj", "self", "where"],
+    ["pg", "type", "obj", "self", "wh"],
+    ["pg", "type", "std", "opt", "opt", "obj", "self", "wh"],
     [
-        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self", "where"
+        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self", "wh"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self",
-        "where"
+        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "wh"
     ],
     ["pg", "type", "self", "column"],
     ["pg", "type", "self", "to", "cr"],
     ["pg", "type", "self", "to", "rd"],
     ["pg", "type", "self", "to", "upd"],
-    ["pg", "type", "self", "where"],
+    ["pg", "type", "self", "wh"],
     ["pg", "type", "self", "to", "del"],
     ["self", "as", "json"],
     ["self", "as", "json", "not", "null"],
@@ -381,23 +380,21 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "pg", "type", "self", "as", "json", "not", "null", "to", "upd", "qp", "er"
     ],
-    ["self", "where", "try", "new", "er"],
-    ["pg", "type", "self", "where", "equal"],
-    ["pg", "type", "self", "where", "greater", "than"],
-    ["pg", "type", "self", "where", "between"],
-    ["pg", "type", "self", "where", "between", "try", "new", "er"],
-    ["pg", "type", "self", "where", "in"],
-    ["pg", "type", "self", "where", "in", "try", "new", "er"],
-    ["pg", "type", "std", "opt", "opt", "self", "where", "equal"],
+    ["self", "wh", "try", "new", "er"],
+    ["pg", "type", "self", "wh", "equal"],
+    ["pg", "type", "self", "wh", "greater", "than"],
+    ["pg", "type", "self", "wh", "between"],
+    ["pg", "type", "self", "wh", "between", "try", "new", "er"],
+    ["pg", "type", "self", "wh", "in"],
+    ["pg", "type", "self", "wh", "in", "try", "new", "er"],
+    ["pg", "type", "std", "opt", "opt", "self", "wh", "equal"],
     [
-        "pg", "type", "std", "opt", "opt", "self", "where", "greater", "than"
+        "pg", "type", "std", "opt", "opt", "self", "wh", "greater", "than"
     ],
-    [
-        "pg", "type", "std", "opt", "opt", "self", "where", "between"
-    ],
-    ["pg", "type", "std", "opt", "opt", "self", "where", "in"],
-    ["std", "opt", "opt", "self", "where"],
-    ["pg", "type", "self", "where", "case", "sensitive", "regex"],
+    ["pg", "type", "std", "opt", "opt", "self", "wh", "between"],
+    ["pg", "type", "std", "opt", "opt", "self", "wh", "in"],
+    ["std", "opt", "opt", "self", "wh"],
+    ["pg", "type", "self", "wh", "case", "sensitive", "regex"],
     [
         "pg",
         "type",
@@ -405,7 +402,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "opt",
         "opt",
         "self",
-        "where",
+        "wh",
         "case",
         "sensitive",
         "regex"
@@ -417,20 +414,12 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "opt",
         "opt",
         "self",
-        "where",
+        "wh",
         "case",
         "insensitive",
         "regex"
     ],
-    [
-        "pg",
-        "type",
-        "self",
-        "where",
-        "case",
-        "insensitive",
-        "regex"
-    ],
+    ["pg", "type", "self", "wh", "case", "insensitive", "regex"],
     [
         "pg",
         "type",
@@ -438,7 +427,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "opt",
         "opt",
         "self",
-        "where",
+        "wh",
         "hexadecimal",
         "notation",
         "equal"
@@ -447,23 +436,23 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "hexadecimal",
         "notation",
         "equal"
     ],
-    ["pg", "type", "self", "where", "length", "greater", "than"],
+    ["pg", "type", "self", "wh", "length", "greater", "than"],
     [
-        "pg", "type", "std", "opt", "opt", "self", "where", "length", "greater", "than"
+        "pg", "type", "std", "opt", "opt", "self", "wh", "length", "greater", "than"
     ],
     [
-        "pg", "type", "self", "where", "length", "greater", "than", "try", "new", "er"
+        "pg", "type", "self", "wh", "length", "greater", "than", "try", "new", "er"
     ],
     [
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "equal",
         "to",
         "encoded",
@@ -477,7 +466,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "opt",
         "opt",
         "self",
-        "where",
+        "wh",
         "equal",
         "to",
         "encoded",
@@ -488,7 +477,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "v",
         "is",
         "contained",
@@ -502,25 +491,23 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "opt",
         "opt",
         "self",
-        "where",
+        "wh",
         "v",
         "is",
         "contained",
         "within",
         "range"
     ],
+    ["pg", "type", "self", "wh", "contains", "another", "range"],
     [
-        "pg", "type", "self", "where", "contains", "another", "range"
+        "pg", "type", "std", "opt", "opt", "self", "wh", "contains", "another", "range"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "self", "where", "contains", "another", "range"
+        "pg", "type", "std", "opt", "opt", "self", "wh", "is", "null"
     ],
-    [
-        "pg", "type", "std", "opt", "opt", "self", "where", "is", "null"
-    ],
-    ["pg", "type", "self", "where", "named"],
-    ["self", "where", "range", "length", "try", "new", "er"],
-    ["self", "where", "range", "length"],
+    ["pg", "type", "self", "wh", "named"],
+    ["self", "wh", "range", "length", "try", "new", "er"],
+    ["self", "wh", "range", "length"],
     ["self", "nullable"],
     ["self", "not", "null"],
     ["pg", "type", "self", "not", "null", "to", "cr"],
@@ -529,28 +516,28 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "not", "null", "to", "del"],
     ["self", "not", "null", "to", "del"],
     [
-        "pg", "type", "self", "where", "position", "equals", "try", "new", "er"
+        "pg", "type", "self", "wh", "position", "equals", "try", "new", "er"
     ],
-    ["pg", "type", "self", "where", "position", "equals"],
+    ["pg", "type", "self", "wh", "position", "equals"],
     ["self", "as", "json", "nullable"],
     ["self", "as", "jsonb", "nullable"],
-    ["obj", "self", "where"],
-    ["std", "opt", "opt", "obj", "self", "where"],
-    ["std", "vec", "vec", "obj", "with", "id", "self", "where"],
+    ["obj", "self", "wh"],
+    ["std", "opt", "opt", "obj", "self", "wh"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "wh"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "where"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "wh"
     ],
-    ["pg", "json", "self", "where"],
-    ["pg", "json", "self", "where", "equal"],
-    ["pg", "json", "self", "where", "between"],
-    ["pg", "json", "self", "where", "between", "try", "new", "er"],
-    ["pg", "json", "self", "where", "in"],
-    ["pg", "json", "self", "where", "in", "try", "new", "er"],
+    ["pg", "json", "self", "wh"],
+    ["pg", "json", "self", "wh", "equal"],
+    ["pg", "json", "self", "wh", "between"],
+    ["pg", "json", "self", "wh", "between", "try", "new", "er"],
+    ["pg", "json", "self", "wh", "in"],
+    ["pg", "json", "self", "wh", "in", "try", "new", "er"],
     [
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "case",
         "sensitive",
         "regex",
@@ -563,7 +550,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "case",
         "sensitive",
         "regex"
@@ -573,7 +560,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "case",
         "sensitive",
         "regex",
@@ -585,7 +572,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "case",
         "insensitive",
         "regex",
@@ -598,7 +585,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "case",
         "insensitive",
         "regex",
@@ -611,53 +598,53 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "case",
         "insensitive",
         "regex"
     ],
     [
-        "pg", "json", "std", "opt", "opt", "self", "where", "is", "null"
+        "pg", "json", "std", "opt", "opt", "self", "wh", "is", "null"
     ],
-    ["pg", "json", "self", "where", "is", "null"],
+    ["pg", "json", "self", "wh", "is", "null"],
     ["pg", "json", "std", "opt", "opt", "self", "to", "cr"],
     ["pg", "json", "std", "opt", "opt", "self", "sel"],
     ["pg", "json", "std", "opt", "opt", "self", "rd"],
-    ["pg", "json", "std", "opt", "opt", "self", "where"],
+    ["pg", "json", "std", "opt", "opt", "self", "wh"],
     [
-        "pg", "json", "self", "where", "length", "greater", "than", "try", "new", "er"
+        "pg", "json", "self", "wh", "length", "greater", "than", "try", "new", "er"
     ],
-    ["pg", "json", "self", "where", "length", "greater", "than"],
+    ["pg", "json", "self", "wh", "length", "greater", "than"],
     [
-        "pg", "json", "self", "where", "position", "equals", "try", "new", "er"
+        "pg", "json", "self", "wh", "position", "equals", "try", "new", "er"
     ],
-    ["pg", "json", "self", "where", "position", "equals"],
+    ["pg", "json", "self", "wh", "position", "equals"],
     [
-        "pg", "type", "self", "where", "bit", "vec", "position", "equals", "try", "new", "er"
-    ],
-    [
-        "pg", "json", "self", "where", "bit", "vec", "position", "equals"
+        "pg", "type", "self", "wh", "bit", "vec", "position", "equals", "try", "new", "er"
     ],
     [
-        "pg", "json", "self", "where", "bit", "vec", "position", "equals", "try", "new", "er"
+        "pg", "json", "self", "wh", "bit", "vec", "position", "equals"
     ],
     [
-        "pg", "type", "self", "where", "bit", "vec", "position", "equals"
+        "pg", "json", "self", "wh", "bit", "vec", "position", "equals", "try", "new", "er"
     ],
     [
-        "pg", "type", "self", "where", "position", "greater", "than", "try", "new", "er"
+        "pg", "type", "self", "wh", "bit", "vec", "position", "equals"
     ],
     [
-        "pg", "json", "self", "where", "position", "greater", "than", "try", "new", "er"
+        "pg", "type", "self", "wh", "position", "greater", "than", "try", "new", "er"
     ],
-    ["pg", "type", "self", "where", "position", "greater", "than"],
-    ["pg", "json", "self", "where", "position", "greater", "than"],
-    ["pg", "json", "self", "where", "try", "new", "er"],
+    [
+        "pg", "json", "self", "wh", "position", "greater", "than", "try", "new", "er"
+    ],
+    ["pg", "type", "self", "wh", "position", "greater", "than"],
+    ["pg", "json", "self", "wh", "position", "greater", "than"],
+    ["pg", "json", "self", "wh", "try", "new", "er"],
     [
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "sensitive",
@@ -668,7 +655,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "sensitive",
@@ -678,7 +665,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "sensitive",
@@ -692,7 +679,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "sensitive",
@@ -705,7 +692,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "insensitive",
@@ -716,7 +703,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "insensitive",
@@ -726,7 +713,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "insensitive",
@@ -740,7 +727,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "json",
         "type",
         "self",
-        "where",
+        "wh",
         "position",
         "case",
         "insensitive",
@@ -750,21 +737,21 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "er"
     ],
     [
-        "pg", "type", "self", "where", "contains", "all", "els", "of", "arr", "try", "new", "er"
+        "pg", "type", "self", "wh", "contains", "all", "els", "of", "arr", "try", "new", "er"
     ],
     [
-        "pg", "json", "self", "where", "contains", "all", "els", "of", "arr", "try", "new", "er"
+        "pg", "json", "self", "wh", "contains", "all", "els", "of", "arr", "try", "new", "er"
     ],
     [
-        "pg", "type", "self", "where", "contains", "all", "els", "of", "arr"
+        "pg", "type", "self", "wh", "contains", "all", "els", "of", "arr"
     ],
     [
-        "pg", "json", "self", "where", "contains", "all", "els", "of", "arr"
+        "pg", "json", "self", "wh", "contains", "all", "els", "of", "arr"
     ],
     [
-        "self", "where", "bit", "vec", "position", "equals", "try", "new", "er"
+        "self", "wh", "bit", "vec", "position", "equals", "try", "new", "er"
     ],
-    ["self", "where", "second", "dim"],
+    ["self", "wh", "second", "dim"],
     ["self", "visitor"],
     ["self", "not", "null", "try", "new", "er"],
     ["self", "to", "upd", "qp", "er"],
@@ -780,15 +767,15 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd",
         "try", "gen", "er"
     ],
-    ["pg", "type", "where", "self"],
-    ["pg", "type", "where", "self", "try", "new", "er"],
+    ["pg", "type", "wh", "self"],
+    ["pg", "type", "wh", "self", "try", "new", "er"],
     [
-        "pg", "type", "where", "self", "try", "new", "er", "with", "serde"
+        "pg", "type", "wh", "self", "try", "new", "er", "with", "serde"
     ],
-    ["pg", "json", "where", "self"],
-    ["pg", "json", "where", "self", "try", "new", "er"],
+    ["pg", "json", "wh", "self"],
+    ["pg", "json", "wh", "self", "try", "new", "er"],
     [
-        "pg", "json", "where", "self", "try", "new", "er", "with", "serde"
+        "pg", "json", "wh", "self", "try", "new", "er", "with", "serde"
     ],
     ["self", "without", "id", "rd"],
     ["self", "with", "id", "rd"],
@@ -804,13 +791,13 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "sel", "el"],
     ["self", "with", "id", "sel", "el"],
     ["self", "with", "id", "upd", "el"],
-    ["self", "with", "id", "where"],
+    ["self", "with", "id", "wh"],
     ["self", "rd", "try", "from", "er"],
     ["el", "self"],
     ["self", "prep", "pg", "er"],
-    ["self", "where", "many"],
-    ["self", "where", "many", "try", "new", "er"],
-    ["std", "opt", "opt", "self", "where", "many"],
+    ["self", "wh", "many"],
+    ["self", "wh", "many", "try", "new", "er"],
+    ["std", "opt", "opt", "self", "wh", "many"],
     [
         "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unique", "vec", "self",
         "sel"

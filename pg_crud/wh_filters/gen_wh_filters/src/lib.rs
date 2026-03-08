@@ -5,14 +5,14 @@ use macros_helpers::{
 };
 use naming::{
     ColumnSc, DimsIesSc, DimsSc, ErSc, IncrSc, PubSc, QuerySc, SelfSc, VSc,
-    param::{PgJsonWhereSelfUcc, PgTypeWhereSelfUcc},
+    param::{PgJsonWhSelfUcc, PgTypeWhSelfUcc},
 };
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Import, IncrParamUndrscr, IsQbMut, PgJsonFilter,
     PgTypeFilter, PgTypeOrPgJson, gen_impl_dflt_opt_some_vec_one_el_ts,
-    impl_pg_type_where_filter_for_ident_ts,
+    impl_pg_type_wh_filter_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
@@ -23,7 +23,7 @@ use token_patterns::{
     CoreDefault, PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
 };
 #[proc_macro]
-pub fn gen_where_filters(input_ts: Ts) -> Ts {
+pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     #[derive(Clone, Optml)]
     enum Generic {
         False,
@@ -104,14 +104,14 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize, Optml)]
-    struct GenWhereFiltersConfig {
+    struct GenWhFiltersConfig {
         pg_types_write_into_file: ShouldWriteTsIntoFile,
         pg_json_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_location();
-    let gen_where_filters_config =
-        from_str::<GenWhereFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
+    let gen_wh_filters_config =
+        from_str::<GenWhFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
     let import = Import::PgCrudCommon;
     let t_ts = quote! {T};
     let t_ann_generic_ts = quote! {<#t_ts>};
@@ -186,7 +186,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             },
         )
         };
-    let gen_impl_pg_type_where_filter_ts =
+    let gen_impl_pg_type_wh_filter_ts =
         |filter_type: &FilterType,
          generic: &Generic,
          ident: &dyn ToTokens,
@@ -195,28 +195,25 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
          qp_ts: &dyn ToTokens,
          is_qb_mut: &IsQbMut,
          qb_ts: &dyn ToTokens| {
-            impl_pg_type_where_filter_for_ident_ts(
+            impl_pg_type_wh_filter_for_ident_ts(
                 &{
-                    let mb_t_extra_traits_for_pg_type_where_filter_ts: &dyn ToTokens =
-                        match &generic {
-                            Generic::False => &proc_macro2_ts_new,
-                            Generic::True { mb_extra_traits_ts } => {
-                                let send_and_lt_ts = quote! {Send + 'lt};
-                                let ser_ts = quote! {serde::Serialize};
-                                let ts = match (&filter_type, &mb_extra_traits_ts) {
-                                    (FilterType::PgType, Some(v)) => &quote! {#v + #send_and_lt_ts},
-                                    (FilterType::PgType, None) => &send_and_lt_ts,
-                                    (FilterType::PgJson, Some(v)) => {
-                                        &quote! {#v + #ser_ts + #send_and_lt_ts}
-                                    }
-                                    (FilterType::PgJson, None) => {
-                                        &quote! {#ser_ts + #send_and_lt_ts}
-                                    }
-                                };
-                                &quote! {, T: #ts}
-                            }
-                        };
-                    quote! {<'lt #mb_t_extra_traits_for_pg_type_where_filter_ts>}
+                    let mb_t_extra_traits_for_pg_type_wh_filter_ts: &dyn ToTokens = match &generic {
+                        Generic::False => &proc_macro2_ts_new,
+                        Generic::True { mb_extra_traits_ts } => {
+                            let send_and_lt_ts = quote! {Send + 'lt};
+                            let ser_ts = quote! {serde::Serialize};
+                            let ts = match (&filter_type, &mb_extra_traits_ts) {
+                                (FilterType::PgType, Some(v)) => &quote! {#v + #send_and_lt_ts},
+                                (FilterType::PgType, None) => &send_and_lt_ts,
+                                (FilterType::PgJson, Some(v)) => {
+                                    &quote! {#v + #ser_ts + #send_and_lt_ts}
+                                }
+                                (FilterType::PgJson, None) => &quote! {#ser_ts + #send_and_lt_ts},
+                            };
+                            &quote! {, T: #ts}
+                        }
+                    };
+                    quote! {<'lt #mb_t_extra_traits_for_pg_type_wh_filter_ts>}
                 },
                 &ident,
                 &match &generic {
@@ -422,7 +419,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         };
     let pg_type_ts = {
         let gen_filters_ts = |filter: &PgTypeFilter| {
-            let ident = PgTypeWhereSelfUcc::from_display(&filter);
+            let ident = PgTypeWhSelfUcc::from_display(&filter);
             let (
                 generic,
                 struct_extra_fields_ts,
@@ -1124,7 +1121,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &impl_dflt_opt_some_vec_one_el_extra_fields_ts,
             );
-            let impl_pg_type_where_filter_ts = gen_impl_pg_type_where_filter_ts(
+            let impl_pg_type_wh_filter_ts = gen_impl_pg_type_wh_filter_ts(
                 &FilterType::PgType,
                 &generic,
                 &ident,
@@ -1137,15 +1134,15 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gend = quote! {
                 #struct_ts
                 #impl_dflt_opt_some_vec_one_el_ts
-                #impl_pg_type_where_filter_ts
+                #impl_pg_type_wh_filter_ts
             };
             gend
         };
         let filter_arr_ts = PgTypeFilter::into_arr().map(|el| gen_filters_ts(&el));
         let gend = quote! {#(#filter_arr_ts)*};
         mb_write_ts_into_file(
-            gen_where_filters_config.pg_types_write_into_file,
-            "gen_where_filters_pg_types",
+            gen_wh_filters_config.pg_types_write_into_file,
+            "gen_wh_filters_pg_types",
             &gend,
             &FormatWithCargofmt::True,
         );
@@ -1153,7 +1150,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
     };
     let pg_json_ts = {
         let gen_filters_ts = |filter: &PgJsonFilter| {
-            let ident = PgJsonWhereSelfUcc::from_display(&filter);
+            let ident = PgJsonWhSelfUcc::from_display(&filter);
             let pub_v_pg_json_not_empty_unique_vec_t_ts = quote! {
                 pub #VSc: PgJsonNotEmptyUniqueVec<T>
             };
@@ -1782,7 +1779,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &impl_dflt_opt_some_vec_one_el_extra_fields_ts,
             );
-            let impl_pg_type_where_filter_ts = gen_impl_pg_type_where_filter_ts(
+            let impl_pg_type_wh_filter_ts = gen_impl_pg_type_wh_filter_ts(
                 &FilterType::PgJson,
                 &generic,
                 &ident,
@@ -1795,15 +1792,15 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
             let gend = quote! {
                 #struct_ts
                 #impl_dflt_opt_some_vec_one_el_ts
-                #impl_pg_type_where_filter_ts
+                #impl_pg_type_wh_filter_ts
             };
             gend
         };
         let filter_arr_ts = PgJsonFilter::into_arr().map(|el| gen_filters_ts(&el));
         let gend = quote! {#(#filter_arr_ts)*};
         mb_write_ts_into_file(
-            gen_where_filters_config.pg_json_write_into_file,
-            "gen_where_filters_pg_json",
+            gen_wh_filters_config.pg_json_write_into_file,
+            "gen_wh_filters_pg_json",
             &gend,
             &FormatWithCargofmt::True,
         );
@@ -1814,8 +1811,8 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
         #pg_json_ts
     };
     mb_write_ts_into_file(
-        gen_where_filters_config.whole_write_into_file,
-        "gen_where_filters",
+        gen_wh_filters_config.whole_write_into_file,
+        "gen_wh_filters",
         &gend,
         &FormatWithCargofmt::True,
     );

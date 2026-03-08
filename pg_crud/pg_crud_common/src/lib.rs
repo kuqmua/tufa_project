@@ -41,7 +41,7 @@ trait_al!(TableTypeAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrForQueryAl = DebugClonePartialEqSerializeAl + SqlxEncodePgSqlxTypePgAl);
 trait_al!(SelAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
-trait_al!(WhereAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhereFilter<'__>);
+trait_al!(WhAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhFilter<'__>);
 trait_al!(RdAl = DebugClonePartialEqSerdeAl);
 trait_al!(RdIdsAl = DebugClonePartialEqSerdeAl);
 trait_al!(RdInnAl = DebugClonePartialEqAl);
@@ -60,7 +60,7 @@ pub trait PgType {
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     type Sel: SelAl;
     fn sel_qp(v: &Self::Sel, column: &str) -> Result<String, QpEr>;
-    type Where: WhereAl;
+    type Wh: WhAl;
     type Rd: RdAl + for<'__> Decode<'__, Postgres> + Type<Postgres>;
     fn normalize(v: Self::Rd) -> Self::Rd;
     type RdIds: RdIdsAl;
@@ -104,7 +104,7 @@ pub trait PgJson {
         column_field_for_er_message: &str,
         is_pg_type: bool,
     ) -> Result<String, QpEr>;
-    type Where: WhereAl
+    type Wh: WhAl
         + UtoipaToSchemaAndSchemarsJsonSchemaAl
         + AllEnumVrtsArrDfltOptSomeVecOneEl
         + ToErrString;
@@ -220,74 +220,74 @@ pub trait PgTypeTestCases {
         cr: <Self::PgType as PgType>::Cr,
     ) -> <Self::PgType as PgType>::TableType;
     //todo add prefix pg_type or pg_json ?
-    fn rd_ids_and_cr_into_where_equal(
+    fn rd_ids_and_cr_into_wh_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> <Self::PgType as PgType>::Where;
-    fn rd_ids_and_cr_into_vec_where_equal_using_fields(
+    ) -> <Self::PgType as PgType>::Wh;
+    fn rd_ids_and_cr_into_vec_wh_equal_using_fields(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> NotEmptyUniqueVec<<Self::PgType as PgType>::Where>;
-    fn rd_ids_and_cr_into_opt_vec_where_equal_to_json_field(
+    ) -> NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>;
+    fn rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn cr_into_pg_type_opt_vec_where_dim_one_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn cr_into_pg_type_opt_vec_wh_dim_one_equal(
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn pg_type_opt_vec_where_greater_than_test()
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn pg_type_opt_vec_wh_greater_than_test()
     -> Option<NotEmptyUniqueVec<PgTypeGreaterThanTest<Self::PgType>>>;
-    fn rd_ids_and_table_type_into_pg_type_opt_where_greater_than(
+    fn rd_ids_and_table_type_into_pg_type_opt_wh_greater_than(
         greater_than_vrt: PgTypeGreaterThanVrt,
         rd_ids: <Self::PgType as PgType>::RdIds,
         table_type: <Self::PgType as PgType>::TableType,
-    ) -> Option<<Self::PgType as PgType>::Where>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal(
+    ) -> Option<<Self::PgType as PgType>::Wh>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn cr_into_pg_json_opt_vec_where_length_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn cr_into_pg_json_opt_vec_wh_length_equal(
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn cr_into_pg_json_opt_vec_where_length_greater_than(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn cr_into_pg_json_opt_vec_wh_length_greater_than(
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_greater_than(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_between(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_between(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_in(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_in(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_regex(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_regex(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Optml)]
@@ -348,66 +348,66 @@ pub trait PgJsonTestCases {
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> <Self::PgJson as PgJson>::TableType;
-    fn rd_ids_and_cr_into_where_equal(
+    fn rd_ids_and_cr_into_wh_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> <Self::PgJson as PgJson>::Where;
-    fn rd_ids_and_cr_into_vec_where_equal_using_fields(
+    ) -> <Self::PgJson as PgJson>::Wh;
+    fn rd_ids_and_cr_into_vec_wh_equal_using_fields(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>;
-    fn rd_ids_and_cr_into_vec_where_equal_to_json_field(
+    ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>;
+    fn rd_ids_and_cr_into_vec_wh_equal_to_json_field(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal(
+    ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn cr_into_pg_json_opt_vec_where_length_equal(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    fn cr_into_pg_json_opt_vec_wh_length_equal(
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn cr_into_pg_json_opt_vec_where_length_greater_than(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    fn cr_into_pg_json_opt_vec_wh_length_greater_than(
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_greater_than(
+    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_between(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_between(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_in(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_in(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_regex(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_regex(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex(
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
+    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
 }
-pub trait PgTypeWhereFilter<'query_lt> {
+pub trait PgTypeWhFilter<'query_lt> {
     fn qb(
         self,
         query: Query<'query_lt, Postgres, PgArguments>,
@@ -416,15 +416,15 @@ pub trait PgTypeWhereFilter<'query_lt> {
 }
 //todo custom deserialization - must not contain more than one el
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
-pub struct NullableJsonObjPgTypeWhereFilter<
-    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhereFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
+pub struct NullableJsonObjPgTypeWhFilter<
+    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
-impl<'query_lt, T> PgTypeWhereFilter<'query_lt> for NullableJsonObjPgTypeWhereFilter<T>
+impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NullableJsonObjPgTypeWhFilter<T>
 where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lt> PgTypeWhereFilter<'t_lt>
+        + for<'t_lt> PgTypeWhFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn qb(
@@ -443,24 +443,24 @@ where
         )
     }
 }
-impl<T> ToErrString for NullableJsonObjPgTypeWhereFilter<T>
+impl<T> ToErrString for NullableJsonObjPgTypeWhFilter<T>
 where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lt> PgTypeWhereFilter<'t_lt>
+        + for<'t_lt> PgTypeWhFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NullableJsonObjPgTypeWhereFilter<T>
+impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NullableJsonObjPgTypeWhFilter<T>
 where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lt> PgTypeWhereFilter<'t_lt>
+        + for<'t_lt> PgTypeWhFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn all_vrts_dflt_opt_some_vec_one_el() -> Vec<Self> {
@@ -474,11 +474,11 @@ pub enum QpEr {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct PgTypeWhere<T> {
+pub struct PgTypeWh<T> {
     v: NotEmptyUniqueVec<T>,
     oprtr: Oprtr,
 }
-impl<T: PartialEq + Clone> PgTypeWhere<T> {
+impl<T: PartialEq + Clone> PgTypeWh<T> {
     #[must_use]
     pub const fn get_oprtr(&self) -> &Oprtr {
         &self.oprtr
@@ -501,7 +501,7 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de> for PgTypeWhere<T> {
+    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de> for PgTypeWh<T> {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: Deserializer<'de>,
@@ -561,16 +561,16 @@ const _: () = {
                 }
             }
             #[doc(hidden)]
-            struct __Visitor<'de, PgTypeWhere> {
-                marker: _serde::__private228::PhantomData<PgTypeWhere>,
+            struct __Visitor<'de, PgTypeWh> {
+                marker: _serde::__private228::PhantomData<PgTypeWh>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
                 for __Visitor<'de, T>
             {
-                type Value = PgTypeWhere<T>;
+                type Value = PgTypeWh<T>;
                 fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(__f, "struct PgTypeWhere")
+                    Formatter::write_str(__f, "struct PgTypeWh")
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -580,17 +580,17 @@ const _: () = {
                     let Some(f0) = _serde::de::SeqAccess::next_element::<Oprtr>(&mut __seq)? else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"struct PgTypeWhere with 2 els",
+                            &"struct PgTypeWh with 2 els",
                         ));
                     };
                     let Some(f1) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             1usize,
-                            &"struct PgTypeWhere with 2 els",
+                            &"struct PgTypeWh with 2 els",
                         ));
                     };
-                    match PgTypeWhere::try_new(f0, f1) {
+                    match PgTypeWh::try_new(f0, f1) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -636,7 +636,7 @@ const _: () = {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("v")?,
                     };
-                    match PgTypeWhere::try_new(f0_v, f1_v) {
+                    match PgTypeWh::try_new(f0_v, f1_v) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -646,7 +646,7 @@ const _: () = {
             const FIELDS: &[&str] = &["oprtr", "v"];
             Deserializer::deserialize_struct(
                 __deserializer,
-                "PgTypeWhere",
+                "PgTypeWh",
                 FIELDS,
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<T>,
@@ -656,13 +656,13 @@ const _: () = {
         }
     }
 };
-impl<'query_lt, T: PgTypeWhereFilter<'query_lt>> PgTypeWhereFilter<'query_lt> for PgTypeWhere<T> {
+impl<'query_lt, T: PgTypeWhFilter<'query_lt>> PgTypeWhFilter<'query_lt> for PgTypeWh<T> {
     fn qb(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
     ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         for el in self.v.0 {
-            match PgTypeWhereFilter::qb(el, query) {
+            match PgTypeWhFilter::qb(el, query) {
                 Ok(v) => {
                     query = v;
                 }
@@ -677,7 +677,7 @@ impl<'query_lt, T: PgTypeWhereFilter<'query_lt>> PgTypeWhereFilter<'query_lt> fo
         let mut acc = String::default();
         let mut add_oprtr_inn_h = false;
         for el in &self.v.0 {
-            match PgTypeWhereFilter::qp(el, incr, column, add_oprtr_inn_h) {
+            match PgTypeWhFilter::qp(el, incr, column, add_oprtr_inn_h) {
                 Ok(v) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{v} ").is_err() {
@@ -695,7 +695,7 @@ impl<'query_lt, T: PgTypeWhereFilter<'query_lt>> PgTypeWhereFilter<'query_lt> fo
     }
 }
 impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltOptSomeVecOneEl> DfltOptSomeVecOneEl
-    for PgTypeWhere<T>
+    for PgTypeWh<T>
 {
     fn dflt_opt_some_vec_one_el() -> Self {
         Self {
@@ -764,7 +764,7 @@ impl PgnBase {
         self.offset
     }
 }
-impl<'query_lt> PgTypeWhereFilter<'query_lt> for PgnBase {
+impl<'query_lt> PgTypeWhFilter<'query_lt> for PgnBase {
     fn qb(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
@@ -1004,7 +1004,7 @@ impl<'de> Deserialize<'de> for PgnStartsWithZero {
         )
     }
 }
-impl<'query_lt> PgTypeWhereFilter<'query_lt> for PgnStartsWithZero {
+impl<'query_lt> PgTypeWhFilter<'query_lt> for PgnStartsWithZero {
     fn qb(
         self,
         query: Query<'query_lt, Postgres, PgArguments>,
@@ -1171,12 +1171,12 @@ impl<T1> NotEmptyUniqueVec<T1> {
         NotEmptyUniqueVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
-impl<'query_lt, T> PgTypeWhereFilter<'query_lt> for NotEmptyUniqueVec<T>
+impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NotEmptyUniqueVec<T>
 where
     T: Debug
         + PartialEq
         + Clone
-        + for<'t_lt> PgTypeWhereFilter<'t_lt>
+        + for<'t_lt> PgTypeWhFilter<'t_lt>
         + AllEnumVrtsArrDfltOptSomeVecOneEl,
 {
     fn qb(

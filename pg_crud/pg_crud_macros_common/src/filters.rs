@@ -33,7 +33,7 @@ use naming::{
     GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqualUcc,
     LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc, RangeLengthUcc, RegexUcc,
     StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
-    param::{PgJsonWhereSelfUcc, PgTypeWhereSelfUcc},
+    param::{PgJsonWhSelfUcc, PgTypeWhSelfUcc},
 };
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
@@ -149,8 +149,8 @@ impl PgFilter for PgTypeFilter {
             | Self::DimOneRangeLength => None,
         }
     }
-    fn prefix_where_self_ucc(&self) -> Ts2 {
-        let v = PgTypeWhereSelfUcc::from_display(&self.ucc());
+    fn prefix_wh_self_ucc(&self) -> Ts2 {
+        let v = PgTypeWhSelfUcc::from_display(&self.ucc());
         quote! {#v}
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
@@ -368,8 +368,8 @@ impl PgFilter for PgJsonFilter {
             | Self::DimFourLengthGreaterThan => None,
         }
     }
-    fn prefix_where_self_ucc(&self) -> Ts2 {
-        let v = PgJsonWhereSelfUcc::from_display(&self.ucc());
+    fn prefix_wh_self_ucc(&self) -> Ts2 {
+        let v = PgJsonWhSelfUcc::from_display(&self.ucc());
         quote! {#v}
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
@@ -449,6 +449,6 @@ impl PgFilter for PgJsonFilter {
 }
 pub trait PgFilter {
     fn mb_generic(&self) -> Option<Ts2>;
-    fn prefix_where_self_ucc(&self) -> Ts2;
+    fn prefix_wh_self_ucc(&self) -> Ts2;
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens;
 }

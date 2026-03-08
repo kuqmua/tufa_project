@@ -32,12 +32,12 @@ pub fn gen_co_query_string(
     format!("insert into {table} ({columns}) values ({values}) returning {columns_to_return}")
 }
 #[must_use]
-pub fn gen_rm_query_string(table: &str, sel_string: &str, where_string: &str) -> String {
-    format!("select {sel_string} from {table} {where_string}")
+pub fn gen_rm_query_string(table: &str, sel_string: &str, wh_string: &str) -> String {
+    format!("select {sel_string} from {table} {wh_string}")
 }
 #[must_use]
-pub fn gen_ro_query_string(table: &str, sel_string: &str, where_string: &str) -> String {
-    format!("select {sel_string} from {table} where {where_string}")
+pub fn gen_ro_query_string(table: &str, sel_string: &str, wh_string: &str) -> String {
+    format!("select {sel_string} from {table} where {wh_string}")
 }
 #[must_use]
 pub fn gen_column_queals_v_comma_uo_qp(column: &str, value: &str) -> String {
@@ -78,8 +78,8 @@ pub fn gen_uo_query_string(
     )
 }
 #[must_use]
-pub fn gen_dm_query_string(table: &str, where_string: &str, pk_field_name: &str) -> String {
-    format!("delete from {table} {where_string} returning {pk_field_name}")
+pub fn gen_dm_query_string(table: &str, wh_string: &str, pk_field_name: &str) -> String {
+    format!("delete from {table} {wh_string} returning {pk_field_name}")
 }
 #[must_use]
 pub fn gen_dlo_query_string(table: &str, pk_field_name: &str) -> String {

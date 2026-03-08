@@ -20,7 +20,7 @@ pg_table = {path = "./pg_table"}
 pg_json_obj = {path = "./pg_json_obj"}
 pg_json = {path = "./pg_json"}
 pg_types = {path = "./pg_types"}
-where_filters = {path = "./where_filters"}
+wh_filters = {path = "./wh_filters"}
 route_validators = {path = "../route_validators"}
 
 [lints]
@@ -32,5 +32,5 @@ test-utils = [
     "pg_table/test-utils",
     "pg_json/test-utils",
     "pg_types/test-utils",
-    "where_filters/test-utils"
+    "wh_filters/test-utils"
 ]
