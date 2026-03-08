@@ -21,7 +21,7 @@ optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,
             &{
-                let object_example_ts = quote!{
+                let obj_example_ts = quote!{
                     #[derive(Debug, Clone, Copy, optml::Optml)]
                     #[pg_crud::pg_json_obj_config{
                         {
@@ -40,10 +40,10 @@ test-utils = []"#,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
                     }
                 };
-                let ts = gen_pg_json_obj_src::gen_pg_json_obj(object_example_ts.clone());
+                let ts = gen_pg_json_obj_src::gen_pg_json_obj(obj_example_ts.clone());
                 quote! {
                     #ts
-                    #object_example_ts
+                    #obj_example_ts
                 }
             }
             .to_string()
