@@ -150,7 +150,7 @@ pub struct DataChildrenElData {
 // "preview": {//mb but without auth or something i cannot reach image links
 // "images": [
 // {
-// "source": {
+// "src": {
 // "url": "https://preview.redd.it/so1xw3dpd9x61.png?auto=webp&amp;s=9cc0a791c6ccd5b7fadc78cab3acfbb596527002",
 // "width": 1023,
 // "height": 750

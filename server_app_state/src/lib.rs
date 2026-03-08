@@ -1,10 +1,10 @@
 use app_state::{
-    GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetPgPool, GetSourcePlaceType,
+    GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetPgPool, GetSrcPlaceType,
     GetTimezone,
 };
 use chrono::FixedOffset;
 use common_routes::CommonRoutesParams;
-use config_lib::types::SourcePlaceType;
+use config_lib::types::SrcPlaceType;
 use git_info::{GetGitCommitLink, ProjectGitInfo};
 use optml::Optml;
 use pg_crud::CombinationOfAppStateLogicTraits;
@@ -23,9 +23,9 @@ impl GetEnableApiGitCommitCheck for ServerAppState<'_> {
         self.config.get_enable_api_git_commit_check()
     }
 }
-impl GetSourcePlaceType for ServerAppState<'_> {
-    fn get_source_place_type(&self) -> &SourcePlaceType {
-        self.config.get_source_place_type()
+impl GetSrcPlaceType for ServerAppState<'_> {
+    fn get_src_place_type(&self) -> &SrcPlaceType {
+        self.config.get_src_place_type()
     }
 }
 impl GetTimezone for ServerAppState<'_> {

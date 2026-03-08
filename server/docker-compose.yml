@@ -11,7 +11,7 @@ services:
       ENABLE_API_GIT_COMMIT_CHECK: "true"
       MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
       SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
-      SOURCE_PLACE_TYPE: "source"
+      SRC_PLACE_TYPE: "src"
       TIMEZONE: "10800"
       TRACING_LEVEL: "debug"
   postgresql_16_with_pg_jsonschema_service:

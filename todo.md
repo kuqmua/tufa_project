@@ -1,6 +1,6 @@
 # Rust Web App Development
 
-## Resources
+## Resrcs
 * [rust web app example](https://github.com/saschagrunert/webapp.rs)
 * [60% faster tests run than cargo test](https://nexte.st/)
 * [share cache between workspaces](https://github.com/mozilla/sccache)

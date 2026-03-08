@@ -51,40 +51,41 @@ impl Display for TracingLevel {
 #[derive(
     Debug, Default, Clone, Copy, PartialEq, Eq, StrumDisplay, Serialize, Deserialize, Optml,
 )]
-pub enum SourcePlaceType {
+pub enum SrcPlaceType {
     #[default]
     Github,
-    Source,
+    Src,
 }
-impl FromStr for SourcePlaceType {
+impl FromStr for SrcPlaceType {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "github" => Ok(Self::Github),
-            "source" => Ok(Self::Source),
-            _ => Err(format!("Unknown source place type: {s}")),
+            "src" => Ok(Self::Src),
+            _ => Err(format!("Unknown src place type: {s}")),
         }
     }
 }
-impl SourcePlaceType {
+impl SrcPlaceType {
     #[must_use]
     pub fn from_env_or_dflt() -> Self {
-        let fix_message = "You can set environment variable SOURCE_PLACE_TYPE to be equal \"source\" or \"github\"";
+        let fix_message =
+            "You can set environment variable SRC_PLACE_TYPE to be equal \"src\" or \"github\"";
         if let Err(er) = dotenv() {
             let dflt = Self::default();
             eprintln!(
-                "using dflt SourcePlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_message}"
+                "using dflt SrcPlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_message}"
             );
             return dflt;
         }
-        let name = "SOURCE_PLACE_TYPE";
+        let name = "SRC_PLACE_TYPE";
         match env::var(name) {
             Ok(v) => match <Self as FromStr>::from_str(&v) {
                 Ok(v0) => v0,
                 Err(er) => {
                     let dflt = Self::default();
                     eprintln!(
-                        "using dflt SourcePlaceType::{dflt:#?} (<SourcePlaceType as FromStr>::from_str(&v): {er}) {fix_message}"
+                        "using dflt SrcPlaceType::{dflt:#?} (<SrcPlaceType as FromStr>::from_str(&v): {er}) {fix_message}"
                     );
                     dflt
                 }
@@ -92,7 +93,7 @@ impl SourcePlaceType {
             Err(er) => {
                 let dflt = Self::default();
                 eprintln!(
-                    "using dflt SourcePlaceType::{dflt:#?} (env::var(\"{name}\"): {er}) {fix_message}"
+                    "using dflt SrcPlaceType::{dflt:#?} (env::var(\"{name}\"): {er}) {fix_message}"
                 );
                 dflt
             }

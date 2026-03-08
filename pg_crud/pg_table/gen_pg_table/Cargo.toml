@@ -14,7 +14,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-gen_pg_table_source = {path = "../gen_pg_table_source"}
+gen_pg_table_src = {path = "../gen_pg_table_src"}
 
 [lints]
 workspace = true

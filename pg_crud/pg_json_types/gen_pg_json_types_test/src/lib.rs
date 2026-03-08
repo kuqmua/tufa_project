@@ -23,7 +23,7 @@ optml = {path = "../../../optml"}
 uuid.workspace = true
 [features]
 test-utils = []"#,
-            &gen_pg_json_types_source::gen_pg_json_types(&quote! {
+            &gen_pg_json_types_src::gen_pg_json_types(&quote! {
                 {
                     "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json_types": "False",
                     "whole_cnt_write_into_gen_pg_json_types": "False",

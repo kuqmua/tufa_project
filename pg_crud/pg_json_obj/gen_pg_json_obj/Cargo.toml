@@ -14,7 +14,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-gen_pg_json_obj_source = {path = "../gen_pg_json_obj_source"}
+gen_pg_json_obj_src = {path = "../gen_pg_json_obj_src"}
 
 [lints]
 workspace = true

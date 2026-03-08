@@ -1,7 +1,7 @@
 use chrono::FixedOffset;
 use config_lib::{
     GenGetterTraitsForStructFields, TryFromEnv,
-    types::{SourcePlaceType, TracingLevel},
+    types::{SrcPlaceType, TracingLevel},
 };
 use optml::Optml;
 use secrecy::SecretBox;
@@ -15,7 +15,7 @@ pub struct Config {
     pub database_url: SecretBox<String>,
     pub service_socket_address: SocketAddr,
     pub timezone: FixedOffset,
-    pub source_place_type: SourcePlaceType,
+    pub src_place_type: SrcPlaceType,
     pub tracing_level: TracingLevel,
     pub enable_api_git_commit_check: bool,
 }

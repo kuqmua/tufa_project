@@ -1,4 +1,4 @@
-use app_state::SourcePlaceType;
+use app_state::SrcPlaceType;
 use chrono::{DateTime, FixedOffset, Utc};
 use git_info::PROJECT_GIT_INFO;
 use naming::GITHUB_URL;
@@ -11,7 +11,7 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use utoipa::ToSchema;
-static SOURCE_PLACE_TYPE: OnceLock<SourcePlaceType> = OnceLock::new();
+static SRC_PLACE_TYPE: OnceLock<SrcPlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct MacroOccurence {
@@ -61,15 +61,15 @@ impl Display for Loc {
         write!(
             f,
             "{} {}",
-            &match SOURCE_PLACE_TYPE.get_or_init(SourcePlaceType::from_env_or_dflt) {
-                SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(
+            &match SRC_PLACE_TYPE.get_or_init(SrcPlaceType::from_env_or_dflt) {
+                SrcPlaceType::Src => self.macro_occurence.as_ref().map_or_else(
                     || format!("{}:{}:{}", self.file, self.line, self.column),
                     |v| format!(
                         "{}:{}:{} ({}:{}:{})",
                         self.file, self.line, self.column, v.file, v.line, v.column
                     )
                 ),
-                SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
+                SrcPlaceType::Github => self.macro_occurence.as_ref().map_or_else(
                     || format!(
                         "{}/blob/{}/{}#L{}",
                         GITHUB_URL, self.commit, self.file, self.line

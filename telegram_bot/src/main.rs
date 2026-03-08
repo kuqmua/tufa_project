@@ -3,7 +3,7 @@ use teloxide::{Bot, prelude::Requester, repl, types::Message, utils::command::Bo
 #[derive(BotCommands, Clone, Optml)]
 #[command(rename_rule = "lowercase", description = "These cmds are supported:")]
 enum Cmd {
-    #[command(description = "show bot source code info ")]
+    #[command(description = "show bot src code info ")]
     GitInfo,
     #[command(description = "display this text.")]
     Help,

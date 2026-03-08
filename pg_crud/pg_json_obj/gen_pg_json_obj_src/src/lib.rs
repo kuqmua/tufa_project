@@ -78,7 +78,7 @@ use syn::{
     token::{Colon, Pub},
 };
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, MustUse, PgCrudDfltOptSomeVecOneElCall,
+    AllowClippyArbitrarySrcItemOrdering, MustUse, PgCrudDfltOptSomeVecOneElCall,
     PgCrudDfltOptSomeVecOneElMaxPageSizeCall, StringTs,
 };
 //todo gen authorization rights enum for json fields
@@ -539,7 +539,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         },
                     );
                     quote! {
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #[cfg(feature = "test-utils")]
                         impl #ident_with_id_stdrt_not_null_ucc {
                             #read_ids_and_create_into_where_equal_ts
@@ -662,7 +662,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let ident_table_type_or_ident_create_ts = gen_ident_table_type_or_create_ts(
                 &match &pg_json_type_subtype_table_type_or_create {
-                    PgJsonTypeSubtypeTableTypeOrCreate::TableType => quote!{#AllowClippyArbitrarySourceItemOrdering},
+                    PgJsonTypeSubtypeTableTypeOrCreate::TableType => quote!{#AllowClippyArbitrarySrcItemOrdering},
                     PgJsonTypeSubtypeTableTypeOrCreate::Create => Ts2::new(),
                 },
                 &ident_table_type_or_ident_create_ucc,
@@ -779,7 +779,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     PgJsonTypeSubtypeTableTypeOrCreate::Create => &is_stdrt_with_id_false,
                 };
                 let ident_with_id_table_type_or_ident_with_id_create_stdrt_not_null_ts = gen_ident_table_type_or_create_ts(
-                    &AllowClippyArbitrarySourceItemOrdering,
+                    &AllowClippyArbitrarySrcItemOrdering,
                     &ident_with_id_table_type_or_ident_with_id_stdrt_not_null_create_ucc,
                     &gen_ident_table_type_or_create_or_ident_with_id_table_type_or_create_stdrt_not_null_ts(is_stdrt_with_id_240dfa72, pg_json_type_subtype_table_type_or_create, &new_type_or_struct_decl_struct_decl),
                 );
@@ -900,7 +900,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let ident_create_for_query_ts = {
                 let ident_create_for_query_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
-                    &AllowClippyArbitrarySourceItemOrdering,
+                    &AllowClippyArbitrarySrcItemOrdering,
                     &ident_create_for_query_ucc,
                     &match &pattern {
                         Pattern::Stdrt => match &is_nullable {
@@ -972,7 +972,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let mb_ident_with_id_stdrt_not_null_create_for_query_ts = if is_stdrt_not_null {
                 let ident_with_id_stdrt_not_null_create_for_query_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
-                    &AllowClippyArbitrarySourceItemOrdering,
+                    &AllowClippyArbitrarySrcItemOrdering,
                     &ident_with_id_stdrt_not_null_create_for_query_ucc,
                     &gen_struct_stdrt_not_null_ts(&is_stdrt_with_id_true)
                 );
@@ -1115,7 +1115,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let gen_ident_select_stdrt_not_null_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                 let ident_stdrt_not_null_select_ucc = SelfSelectUcc::from_tokens(&ident_stdrt_not_null_ucc);
                 gen_pub_struct_ident_select_ts(
-                    &AllowClippyArbitrarySourceItemOrdering,
+                    &AllowClippyArbitrarySrcItemOrdering,
                     match &is_stdrt_with_id {
                         IsStdrtWithId::False => &ident_stdrt_not_null_select_ucc,
                         IsStdrtWithId::True => &ident_with_id_stdrt_not_null_select_ucc,
@@ -1131,7 +1131,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 IsNullable::False => match &pattern {
                     Pattern::Stdrt => gen_ident_select_stdrt_not_null_ts(&is_stdrt_with_id_false),
                     Pattern::Arr => gen_pub_struct_ident_select_ts(
-                        &AllowClippyArbitrarySourceItemOrdering,
+                        &AllowClippyArbitrarySrcItemOrdering,
                         &ident_select_ucc,
                         &quote! {{
                             #ident_with_id_stdrt_not_null_select_sc: #ident_with_id_stdrt_not_null_select_ucc,
@@ -1140,7 +1140,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     ),
                 },
                 IsNullable::True => gen_pub_struct_ident_select_ts(
-                    &AllowClippyArbitrarySourceItemOrdering,
+                    &AllowClippyArbitrarySrcItemOrdering,
                     &ident_select_ucc,
                     &wrap_into_scopes_dot_comma_ts(&gen_opt_type_decl_ts(&match &pattern {
                         Pattern::Stdrt => &ident_stdrt_not_null_as_pg_json_type_select_ts,
@@ -1414,7 +1414,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     );
                     quote!{
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #ts_bf3bd19e
                     }
                 };
@@ -1563,7 +1563,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 let mb_ident_where_ts = {
                     let gen_ident_where_wrapper_ts = |ts: &dyn ToTokens| gen_ident_where_ts(
-                        &AllowClippyArbitrarySourceItemOrdering,
+                        &AllowClippyArbitrarySrcItemOrdering,
                         &ident_where_ucc,
                         &ts
                     );
@@ -1824,7 +1824,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 let mb_ident_with_id_stdrt_not_null_where_ts = if is_stdrt_not_null {
                     let ident_with_id_stdrt_not_null_where_ts = gen_ident_where_ts(
-                        &AllowClippyArbitrarySourceItemOrdering,
+                        &AllowClippyArbitrarySrcItemOrdering,
                         &ident_with_id_stdrt_not_null_where_ucc,
                         &{
                             let ident_where_field_vrts_ts = gen_ident_where_field_vrts_ts(&is_stdrt_with_id_true);
@@ -1962,7 +1962,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &ts_1c85ea2c
                 );
                 quote!{
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #ts_3a67b41f
                 }
             };
@@ -2299,7 +2299,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &gen_ident_read_ids_or_ident_with_id_read_ids_ts(&IsStdrtWithId::False)
                 );
                 quote!{
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #ts_1e087f4d
                 }
             }
@@ -2353,7 +2353,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             &gen_ident_read_ids_or_ident_with_id_read_ids_ts(&IsStdrtWithId::True)
                         );
                         quote!{
-                            #AllowClippyArbitrarySourceItemOrdering
+                            #AllowClippyArbitrarySrcItemOrdering
                             #ts_fe644945
                         }
                     };
@@ -2419,7 +2419,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }
                 );
                 quote!{
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #ts_3d7e760e
                 }
             };
@@ -2556,7 +2556,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &ts_975df5c5
                 );
                 quote!{
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #ts_c9a843aa
                 }
             };
@@ -2774,7 +2774,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         );
                         quote! {
                             #[allow(clippy::absolute_paths)]
-                            #AllowClippyArbitrarySourceItemOrdering
+                            #AllowClippyArbitrarySrcItemOrdering
                             impl<'de> serde::Deserialize<'de> for #ident_upd_ucc {
                                 fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                                 where
@@ -2965,7 +2965,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     );
                     quote!{
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #ts_b258e2eb
                     }
                 };
@@ -3024,7 +3024,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         &quote!{{#ident_with_id_stdrt_not_null_upd_el_fields_decl_ts}}
                     );
                     quote!{
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #ts_d18600a2
                     }
                 };
@@ -3069,7 +3069,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let ident_upd_for_query_ts = {
                 let gen_ident_upd_for_query_ts = |ts: &dyn ToTokens| {
                     gen_debug_clone_partialeq_serialize_pub_struct_ts(
-                        &AllowClippyArbitrarySourceItemOrdering,
+                        &AllowClippyArbitrarySrcItemOrdering,
                         &ident_upd_for_query_ucc,
                         &ts
                     )
@@ -3495,7 +3495,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #FieldsSc: #ident_stdrt_not_null_as_pg_json_type_upd_for_query_ts
                 };
                 let ident_with_id_stdrt_not_null_upd_for_query_el_ts = gen_debug_clone_partialeq_serialize_pub_struct_ts(
-                    &AllowClippyArbitrarySourceItemOrdering,
+                    &AllowClippyArbitrarySrcItemOrdering,
                     &ident_with_id_stdrt_not_null_upd_for_query_el_ucc,
                     &quote!{{#ident_with_id_stdrt_not_null_upd_for_query_el_fields_decl_ts}}
                 );

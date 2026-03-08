@@ -20,7 +20,7 @@ where_filters = {path = "../../where_filters"}
 optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,
-            &gen_pg_types_source::gen_pg_types(&quote! {
+            &gen_pg_types_src::gen_pg_types(&quote! {
                 {
                     "pg_table_columns_write_into_file": "False",
                     "whole_write_into_file": "False",

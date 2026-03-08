@@ -147,21 +147,21 @@ impl TryFromStdEnvVarOk for TracingLevel {
     }
 }
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct SourcePlaceType(pub types::SourcePlaceType);
+pub struct SrcPlaceType(pub types::SrcPlaceType);
 #[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
-pub enum TryFromStdEnvVarOkSourcePlaceTypeEr {
-    AppStateSourcePlaceTypeParsing {
-        app_state_source_place_type_parsing: String,
+pub enum TryFromStdEnvVarOkSrcPlaceTypeEr {
+    AppStateSrcPlaceTypeParsing {
+        app_state_src_place_type_parsing: String,
     },
 }
-impl TryFromStdEnvVarOk for SourcePlaceType {
-    type Error = TryFromStdEnvVarOkSourcePlaceTypeEr;
+impl TryFromStdEnvVarOk for SrcPlaceType {
+    type Error = TryFromStdEnvVarOkSrcPlaceTypeEr;
     fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(match v.parse::<types::SourcePlaceType>() {
+        Ok(Self(match v.parse::<types::SrcPlaceType>() {
             Ok(v0) => v0,
             Err(er) => {
-                return Err(Self::Error::AppStateSourcePlaceTypeParsing {
-                    app_state_source_place_type_parsing: er,
+                return Err(Self::Error::AppStateSrcPlaceTypeParsing {
+                    app_state_src_place_type_parsing: er,
                 });
             }
         }))

@@ -40,7 +40,7 @@ test-utils = []"#,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
                     }
                 };
-                let ts = gen_pg_json_obj_source::gen_pg_json_obj(obj_example_ts.clone());
+                let ts = gen_pg_json_obj_src::gen_pg_json_obj(obj_example_ts.clone());
                 quote! {
                     #ts
                     #obj_example_ts

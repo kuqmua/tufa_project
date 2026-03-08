@@ -682,8 +682,8 @@ impl ToTokens for MustUse {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub struct AllowClippyArbitrarySourceItemOrdering;
-impl ToTokens for AllowClippyArbitrarySourceItemOrdering {
+pub struct AllowClippyArbitrarySrcItemOrdering;
+impl ToTokens for AllowClippyArbitrarySrcItemOrdering {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {#[allow(clippy::arbitrary_source_item_ordering)]}.to_tokens(tokens);
     }

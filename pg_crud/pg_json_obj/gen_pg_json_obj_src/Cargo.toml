@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_json_types_source"
+name = "gen_pg_json_obj_src"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -12,18 +12,18 @@ categories = ["category"]
 [dependencies]
 proc-macro2.workspace = true
 quote.workspace = true
+syn.workspace = true
 strum.workspace = true
 strum_macros.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-rayon.workspace = true
 pg_crud_macros_common = {path = "../../pg_crud_macros_common"}
-enum_extension_lib = {path = "../../../enum_extension_lib"}
 gen_quotes = {path = "../../../gen_quotes"}
 panic_location = {path = "../../../panic_location"}
-macros_helpers = {path = "../../../macros_helpers"}
 naming = {path = "../../../naming"}
+macros_helpers = {path = "../../../macros_helpers"}
 token_patterns = {path = "../../../token_patterns"}
+enum_extension_lib = {path = "../../../enum_extension_lib"}
 optml = {path = "../../../optml"}
 
 [lints]

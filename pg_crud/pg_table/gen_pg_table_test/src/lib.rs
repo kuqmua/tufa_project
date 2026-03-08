@@ -4,7 +4,7 @@ mod tests {
     use optml::Optml;
     use proc_macro2::TokenStream as Ts2;
     use quote::quote;
-    use token_patterns::AllowClippyArbitrarySourceItemOrdering;
+    use token_patterns::AllowClippyArbitrarySrcItemOrdering;
     #[test]
     fn clippy() {
         clippy_check(
@@ -49,7 +49,7 @@ server_config = {path = "../../../server_config"}"#,
                         }
                     };
                     quote! {
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #[derive(Debug, Clone, Copy, optml::Optml)]
                         #[pg_crud::gen_pg_table_config{{
                             "cm_write_into_file": "False",
@@ -101,7 +101,7 @@ server_config = {path = "../../../server_config"}"#,
                     }
                 };
                 let ts =
-                    gen_pg_table_source::gen_pg_table(gen_table_example_ts(AddGenPgTablePk::True));
+                    gen_pg_table_src::gen_pg_table(gen_table_example_ts(AddGenPgTablePk::True));
                 let table_struct_ts = gen_table_example_ts(AddGenPgTablePk::False);
                 quote! {
                     #ts

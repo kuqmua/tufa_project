@@ -77,5 +77,5 @@ pub fn common_logic(_attr: Ts, item: Ts) -> Ts {
 }
 #[proc_macro_derive(GenPgTable, attributes(gen_pg_table_pk))]
 pub fn gen_pg_table(input: Ts) -> Ts {
-    gen_pg_table_source::gen_pg_table(input.into()).into()
+    gen_pg_table_src::gen_pg_table(input.into()).into()
 }

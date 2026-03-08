@@ -59,7 +59,7 @@ use std::{
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
+    AllowClippyArbitrarySrcItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
     PgCrudCommonDfltOptSomeVecOneElCall, PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, StringTs,
     U8, U32,
 };
@@ -1304,7 +1304,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
-                            #AllowClippyArbitrarySourceItemOrdering
+                            #AllowClippyArbitrarySrcItemOrdering
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
                                 extern crate serde as _serde;
@@ -1564,7 +1564,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
-                            #AllowClippyArbitrarySourceItemOrdering
+                            #AllowClippyArbitrarySrcItemOrdering
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
                                 extern crate serde as _serde;
@@ -2966,7 +2966,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     mb_read_inner_inits_ts.is_some()
                 {
                     quote!{
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         impl #ident {
                             #mb_min_inner_type_ts
                             #mb_slightly_more_than_min_inner_type_ts
@@ -3202,7 +3202,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     );
                 quote!{
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #ts_d57d5de2
                 }
             } else {
@@ -3277,7 +3277,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             );
                             quote!{
-                                #AllowClippyArbitrarySourceItemOrdering
+                                #AllowClippyArbitrarySrcItemOrdering
                                 #ts_026f2a24
                             }
                         }
@@ -3897,7 +3897,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::ArrDim1 { .. } => Ts2::new(),
                 };
                 quote! {
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     impl #ident_origin_ucc {
                         #fn_new_or_try_new_ts
                         #mb_fn_new_or_try_new_for_deserialize_token
@@ -4371,7 +4371,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
         let ident_where_ucc = SelfWhereUcc::from_tokens(&ident);
         let ident_where_ts = gen_pg_type_where_ts(
-            &AllowClippyArbitrarySourceItemOrdering,
+            &AllowClippyArbitrarySrcItemOrdering,
             &{
                 let common_pg_type_filters = vec![PgTypeFilter::Equal { ident: quote! {#ident_table_type_ucc} }];
                 match &pg_type_pattern {
@@ -6605,7 +6605,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let mb_impl_pg_type_pk_for_ident_stdrt_not_null_if_can_be_pk_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {
             let v_as_read_ids_ts = quote! {#VSc: #self_as_pg_type_ts::#ReadIdsUcc};
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 impl #import::#PgTypePkUcc for #ident_stdrt_not_null_ucc {
                     type #PgTypeUcc = Self;
                     type #TableTypeUcc = #ident_stdrt_not_null_table_type_ucc;

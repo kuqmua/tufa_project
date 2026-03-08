@@ -44,7 +44,7 @@ use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
 use syn::{Ident, Type};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, CrateAllEnumVrtsArrDfltOptSomeVecOneEl,
+    AllowClippyArbitrarySrcItemOrdering, Bool, CrateAllEnumVrtsArrDfltOptSomeVecOneEl,
     CrateAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize, CrateDfltOptSomeVecOneEl,
     CrateDfltOptSomeVecOneElMaxPageSize, PgCrudAllEnumVrtsArrDfltOptSomeVecOneEl,
     PgCrudAllEnumVrtsArrDfltOptSomeVecOneElMaxPageSize,
@@ -742,7 +742,7 @@ pub fn gen_impl_pg_json_type_ts(
         quote! {sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo mb reexport sqlx?
     quote! {
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         impl #path_ts #PgJsonTypeUcc for #ident {
             type #TableTypeUcc = #table_type_type_ts;
             type #CreateUcc = #create_type_ts;
@@ -948,7 +948,7 @@ pub fn impl_pg_type_where_filter_for_ident_ts(
     import: &Import,
 ) -> Ts2 {
     quote! {
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         impl #impl_generic_ts #import ::#PgTypeWhereFilterUcc<'lt> for #ident_ts #ident_generic_ts {
             fn #QpSc(
                 &self,
@@ -1046,7 +1046,7 @@ pub fn gen_impl_pg_type_ts(
     let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     quote! {
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         impl #import :: #PgTypeUcc for #ident {
             type #TableTypeUcc = #ident_table_type_ucc;
             fn #CreateTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
@@ -1129,7 +1129,7 @@ pub fn gen_impl_pg_type_ts(
 pub fn gen_impl_pg_type_not_pk_for_ident_ts(import: &Import, ident: &dyn ToTokens) -> Ts2 {
     let ident_create_ucc = SelfCreateUcc::from_tokens(&ident);
     quote! {
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         impl #import::#PgTypeNotPkUcc for #ident {
             type #PgTypeUcc = Self;
             type #CreateUcc = #ident_create_ucc;
@@ -1710,7 +1710,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         #cfg_ts
         #[allow(clippy::float_arithmetic)]
         impl #import::#PgTypeTestCasesUcc for #ident {
@@ -1950,7 +1950,7 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         #cfg_ts
         #[allow(clippy::float_arithmetic)]
         impl #import::#PgJsonTypeTestCasesUcc for #ident {
@@ -2145,7 +2145,7 @@ pub fn gen_impl_de_for_struct_ts(
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
-        #AllowClippyArbitrarySourceItemOrdering
+        #AllowClippyArbitrarySrcItemOrdering
         const _: () = {
             #[allow(unused_extern_crates, clippy::useless_attribute)]
             extern crate serde as _serde;

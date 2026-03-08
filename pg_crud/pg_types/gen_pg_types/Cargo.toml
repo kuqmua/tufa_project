@@ -15,7 +15,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-gen_pg_types_source = {path = "../gen_pg_types_source"}
+gen_pg_types_src = {path = "../gen_pg_types_src"}
 
 [lints]
 workspace = true

@@ -85,7 +85,7 @@ use syn::{
 };
 #[allow(unused_imports)]
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, Char, CoreDefault,
+    AllowClippyArbitrarySrcItemOrdering, Bool, Char, CoreDefault,
     DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorLocation, Er0, Er1, Er2, Er3,
     F32, F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
     PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
@@ -1066,7 +1066,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 impl #ident_create_ucc {
                     #fn_create_qp_ts
                     #fn_create_qb_ts
@@ -1111,7 +1111,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .build_struct(&ident_where_ucc, &Ts2::new(), &quote! {{#fields_decl_ts}});
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 #ts_2ecd6da8
             }
         };
@@ -1390,7 +1390,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             );
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 #ts_179037cd
             }
         };
@@ -1460,7 +1460,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }}
                 });
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 #ts_f80f1f3e
             }
         };
@@ -1591,7 +1591,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }}
                 });
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 #ts_472e3ebf
             }
         };
@@ -1704,7 +1704,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .build_struct(&ident_upd_ucc, &Ts2::new(), &quote! {{#fields_decl_ts}});
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 #ts_a09c0471
             }
         };
@@ -1823,7 +1823,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }}
                 });
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 #ts_50ae0c5f
             }
         };
@@ -1949,7 +1949,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             });
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 impl #ident_upd_for_query_ucc {
                     #upd_qp_pk_ts
                     #upd_qp_fields_ts
@@ -3444,7 +3444,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .d_utoipa_to_schema()
                                 .build_struct(&ident_op_payload_ucc, &Ts2::new(), &decl_ts);
                             quote! {
-                                #AllowClippyArbitrarySourceItemOrdering
+                                #AllowClippyArbitrarySrcItemOrdering
                                 #ts_ec5b096c
                             }
                         };
@@ -3574,7 +3574,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {
                                 #[allow(unused_qualifications)]
                                 #[allow(clippy::absolute_paths)]
-                                #AllowClippyArbitrarySourceItemOrdering
+                                #AllowClippyArbitrarySrcItemOrdering
                                 const _: () = {
                                     #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
                                     extern crate serde as _serde;
@@ -3689,7 +3689,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }}
                     });
                 quote! {
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #ts_0d032fce
                 }
             };
@@ -3721,7 +3721,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }}
                         });
                     quote! {
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #ts_c997a274
                     }
                 };
@@ -3772,7 +3772,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             quote! {{#(#vrts_ts),*}}
                         });
                     quote! {
-                        #AllowClippyArbitrarySourceItemOrdering
+                        #AllowClippyArbitrarySrcItemOrdering
                         #ts_685e0be8
                     }
                 };
@@ -3827,7 +3827,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         quote! {{#(#vrts_ts),*}}
                     });
                 quote! {
-                    #AllowClippyArbitrarySourceItemOrdering
+                    #AllowClippyArbitrarySrcItemOrdering
                     #enum_ts
                 }
             };
@@ -5947,8 +5947,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             tracing_level: <config_lib::TracingLevel as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "er".to_owned()
                             ).expect("957178c9").0,
-                            source_place_type: <config_lib::SourcePlaceType as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                "source".to_owned()
+                            src_place_type: <config_lib::SrcPlaceType as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                "src".to_owned()
                             ).expect("bec0950e").0,
                             enable_api_git_commit_check: <config_lib::EnableApiGitCommitCheck as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "true".to_owned()
@@ -6101,7 +6101,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let gend = {
         let ident_gen_pg_table_mod_sc = SelfGenPgTableModSc::from_tokens(&ident);
         let ts_1c0e3fcd = quote! {
-            #AllowClippyArbitrarySourceItemOrdering
+            #AllowClippyArbitrarySrcItemOrdering
             impl #ident {
                 #(#impl_ident_vec_ts)*
                 #[allow(clippy::single_call_fn)]

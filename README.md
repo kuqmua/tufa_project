@@ -125,7 +125,7 @@ Configuration management with environment variable parsing and type-safe accesso
 Compile-time and runtime Git repository information retrieval.
 
 ### location_lib
-Advanced er handling system with detailed context and source tracking.
+Advanced er handling system with detailed context and src tracking.
 
 ### from_sqlx_postgres_er
 Utilities for converting SQLx PostgreSQL ers to application-specific ers.

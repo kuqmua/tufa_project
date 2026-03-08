@@ -1,6 +1,6 @@
-# Useful Rust Resources and Code Snippets
+# Useful Rust Resrcs and Code Snippets
 
-A collection of useful Rust resources, libraries, patterns, and code examples.
+A collection of useful Rust resrcs, libraries, patterns, and code examples.
 
 ## Table of Contents
 - [Serialization and Deserialization](#serialization-and-deserialization)
@@ -288,4 +288,4 @@ cargo expand your::path::to::module --lib
 
 ## Fonts
 
-Fonts source: [Google Fonts](https://fonts.google.com/)
+Fonts src: [Google Fonts](https://fonts.google.com/)

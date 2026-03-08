@@ -47,7 +47,7 @@ use std::{
 };
 use strum_macros::{Display, EnumIter};
 use token_patterns::{
-    AllowClippyArbitrarySourceItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse, NoneTs,
+    AllowClippyArbitrarySrcItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse, NoneTs,
     PgCrudCommonDfltOptSomeVecOneEl, PgCrudCommonDfltOptSomeVecOneElCall,
     PgCrudCommonDfltOptSomeVecOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
 };
@@ -897,7 +897,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         quote!{
                             #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
-                            #AllowClippyArbitrarySourceItemOrdering
+                            #AllowClippyArbitrarySrcItemOrdering
                             const _: () = {
                                 #[automatically_derived]
                                 #[allow(unused_braces)]
@@ -1174,7 +1174,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
         let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
         let ident_where_ts = match &is_nullable {
             IsNullable::False => gen_pg_type_where_ts(
-                &AllowClippyArbitrarySourceItemOrdering,
+                &AllowClippyArbitrarySrcItemOrdering,
                 &{
                     #[derive(Debug, Clone, Optml)]
                     enum PgJsonTypeSpecific {
@@ -2269,7 +2269,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 (gen_ts(&CreateOrUpdForQuery::CreateForQuery), gen_ts(&CreateOrUpdForQuery::UpdForQuery))
             };
             quote! {
-                #AllowClippyArbitrarySourceItemOrdering
+                #AllowClippyArbitrarySrcItemOrdering
                 impl #import::PgJsonTypeObjVecElId for #ident {
                     type PgJsonType = Self;
                     type #CreateForQueryUcc = #ident_create_for_query_ucc;

@@ -67,7 +67,7 @@ jobs:
         DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
         TIMEZONE: "10800"
         TRACING_LEVEL: "debug"
-        SOURCE_PLACE_TYPE: "source"
+        SRC_PLACE_TYPE: "src"
         ENABLE_API_GIT_COMMIT_CHECK: "true"
         MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
       run: cargo test --features test-utils

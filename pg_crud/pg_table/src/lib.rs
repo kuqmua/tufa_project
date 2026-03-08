@@ -1,12 +1,12 @@
 use app_state::{
-    GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetPgPool, GetSourcePlaceType,
+    GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetPgPool, GetSrcPlaceType,
     GetTimezone,
 };
 pub use gen_pg_table::*;
 pub trait CombinationOfAppStateLogicTraits:
     GetEnableApiGitCommitCheck
     + GetMaximumSizeOfHttpBodyInBytes
-    + GetSourcePlaceType
+    + GetSrcPlaceType
     + GetTimezone
     + GetPgPool
     + Send
