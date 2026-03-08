@@ -168,7 +168,7 @@ pub trait PgTypeNotPk {
     type Cr: CrAl + SqlxEncodePgSqlxTypePgAl;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-pub trait PgJsonObjVecElId {
+pub trait PgJsonObjectVecElId {
     type PgJson: PgJson;
     type CrForQuery: CrForQueryAl
         + From<<Self::PgJson as PgJson>::Cr>
@@ -418,10 +418,10 @@ pub trait PgTypeWhereFilter<'query_lt> {
 }
 //todo custom deserialization - must not contain more than one el
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
-pub struct NullableJsonObjPgTypeWhereFilter<
+pub struct NullableJsonObjectPgTypeWhereFilter<
     T: Debug + PartialEq + Clone + for<'lt> PgTypeWhereFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
-impl<'query_lt, T> PgTypeWhereFilter<'query_lt> for NullableJsonObjPgTypeWhereFilter<T>
+impl<'query_lt, T> PgTypeWhereFilter<'query_lt> for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
@@ -445,7 +445,7 @@ where
         )
     }
 }
-impl<T> ToErrString for NullableJsonObjPgTypeWhereFilter<T>
+impl<T> ToErrString for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq
@@ -457,7 +457,7 @@ where
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NullableJsonObjPgTypeWhereFilter<T>
+impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NullableJsonObjectPgTypeWhereFilter<T>
 where
     T: Debug
         + PartialEq

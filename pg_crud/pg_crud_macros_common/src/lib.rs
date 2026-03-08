@@ -2326,10 +2326,10 @@ pub fn gen_return_err_qp_er_write_into_buffer_ts(import: Import) -> Ts2 {
     quote! {return Err(#ts);}
 }
 #[must_use]
-pub fn gen_jsonb_build_obj(v: &dyn Display) -> String {
+pub fn gen_jsonb_build_object(v: &dyn Display) -> String {
     format!("jsonb_build_object({v})")
 }
 #[must_use]
-pub fn gen_jsonb_build_obj_v(v: &dyn Display) -> String {
-    gen_jsonb_build_obj(&format!("'v',{v}"))
+pub fn gen_jsonb_build_object_v(v: &dyn Display) -> String {
+    gen_jsonb_build_object(&format!("'v',{v}"))
 }

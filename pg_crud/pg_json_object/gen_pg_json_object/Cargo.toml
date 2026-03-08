@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_json_obj"
+name = "gen_pg_json_object"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -14,7 +14,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-gen_pg_json_obj_src = {path = "../gen_pg_json_obj_src"}
+gen_pg_json_object_src = {path = "../gen_pg_json_object_src"}
 
 [lints]
 workspace = true

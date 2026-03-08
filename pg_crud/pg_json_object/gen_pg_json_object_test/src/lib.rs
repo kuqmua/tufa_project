@@ -5,8 +5,8 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_json_obj_test_cnt",
-            "../pg_crud/pg_json_obj/",
+            "gen_pg_json_object_test_cnt",
+            "../pg_crud/pg_json_object/",
             r#"[dependencies]
 sqlx.workspace = true
 serde.workspace = true
@@ -21,12 +21,12 @@ optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,
             &{
-                let obj_example_ts = quote!{
+                let object_example_ts = quote!{
                     #[derive(Debug, Clone, Copy, optml::Optml)]
-                    #[pg_crud::pg_json_obj_config{
+                    #[pg_crud::pg_json_object_config{
                         {
-                            "pg_table_columns_write_into_pg_table_columns_using_pg_json_objs": "False",
-                            "whole_write_into_gen_pg_json_obj": "False",
+                            "pg_table_columns_write_into_pg_table_columns_using_pg_json_objects": "False",
+                            "whole_write_into_gen_pg_json_object": "False",
                             "vrt": {
                                 "is_nullable": "True",
                                 "pattern": "Arr",
@@ -34,16 +34,16 @@ test-utils = []"#,
                             }
                         }
                     }]
-                    pub struct ObjExample {
+                    pub struct ObjectExample {
                         pub field_0: pg_crud::I8AsNotNullJsonbNbr,
                         pub field_1: pg_crud::OptI8AsNullableJsonbNbr,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
                     }
                 };
-                let ts = gen_pg_json_obj_src::gen_pg_json_obj(obj_example_ts.clone());
+                let ts = gen_pg_json_object_src::gen_pg_json_object(object_example_ts.clone());
                 quote! {
                     #ts
-                    #obj_example_ts
+                    #object_example_ts
                 }
             }
             .to_string()
