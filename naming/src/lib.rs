@@ -330,8 +330,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["not", "unique", "field", "filter"],
     ["pgn"],
     ["field", "vec"],
-    ["object", "acc"],
-    ["std", "opt", "opt", "object", "acc"],
+    ["obj", "acc"],
+    ["std", "opt", "opt", "obj", "acc"],
     ["create", "upd", "del", "check", "fields", "are", "empty"],
     ["not", "unique", "id", "in", "json", "upd", "arr"],
     ["not", "unique", "id", "in", "json", "del", "arr"],
@@ -339,7 +339,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "not", "unique", "id", "in", "json", "upd", "and", "del", "arrs"
     ],
     ["fields", "are", "empty"],
-    ["wrap", "into", "jsonb", "build", "object"],
+    ["wrap", "into", "jsonb", "build", "obj"],
     ["gen", "jsonb", "set", "target"],
     ["gen", "jsonb", "set", "path"],
     ["column", "fi"],
@@ -386,15 +386,15 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "traits"],
     ["pg", "type"],
     ["self", "column"],
-    ["pg", "json", "type", "object", "self", "select"],
+    ["pg", "json", "type", "obj", "self", "select"],
     [
-        "pg", "json", "type", "std", "opt", "opt", "object", "self", "select"
+        "pg", "json", "type", "std", "opt", "opt", "obj", "self", "select"
     ],
     [
-        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select"
+        "pg", "json", "type", "std", "vec", "vec", "obj", "with", "id", "self", "select"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "select"
     ],
     ["true"],
@@ -504,7 +504,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["table", "type"],
     ["mut"],
     ["boolean"],
-    ["object"],
+    ["obj"],
     ["arr"],
     ["nbr"],
     ["integer"],
@@ -514,7 +514,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["arr", "of"],
     ["arr", "length", "dim", "one"],
     ["arr", "length", "greater", "than", "dim", "one"],
-    ["jsonb", "object"],
+    ["jsonb", "obj"],
     ["with", "id"],
     ["uuid", "uuid", "as", "not", "null", "jsonb", "string"],
     ["jsonb"],
@@ -587,7 +587,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["dim", "one", "range", "length"],
     ["dims"],
     ["dims", "ies"],
-    ["object", "uuid", "equal"],
+    ["obj", "uuid", "equal"],
     ["length", "equal"],
     ["length", "greater", "than"],
     ["contains", "all", "els", "of", "arr"],

@@ -34,7 +34,7 @@ use pg_crud_macros_common::{
     gen_opt_type_decl_ts, gen_pg_type_where_ts, gen_sqlx_types_json_type_decl_ts, gen_v_decl_ts,
     gen_v_init_ts, gen_vec_tokens_decl_ts,
 };
-use pg_crud_macros_common::{gen_jsonb_build_object, gen_jsonb_build_object_v};
+use pg_crud_macros_common::{gen_jsonb_build_obj, gen_jsonb_build_obj_v};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
@@ -1562,7 +1562,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &IsQbMut::False,
             ),
             IsNullable::True => quote! {
-                pub type #ident_where_ucc = #import::NullableJsonObjectPgTypeWhereFilter<
+                pub type #ident_where_ucc = #import::NullableJsonObjPgTypeWhereFilter<
                     <#ident_not_null_ts as #import::PgJsonType>::Where
                 >;
             }
@@ -1851,7 +1851,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
             let gen_dim_nbr_end_str = |dims_nbr: usize| format!("{}_end", gen_dim_nbr_str(dims_nbr));
             let select_only_created_or_updd_ids_qp_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object_v(&"${v_f06128be}")));
+                let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"${v_f06128be}")));
                 quote! {
                     match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                         Ok(v_f06128be) => Ok(format!(#dq_ts0)),
@@ -1859,7 +1859,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             } else {
-                quote! {Ok(gen_pg_json_types_common::fi_jsonb_build_object_v(fi))}
+                quote! {Ok(gen_pg_json_types_common::fi_jsonb_build_obj_v(fi))}
             };
             let select_only_created_or_updd_ids_qb_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
                 quote! {
@@ -2043,7 +2043,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         })
                     });
                     let dq_ts0 = dq_ts(
-                        &gen_jsonb_build_object(&format!("'{{fi}}',{}", gen_jsonb_build_object_v(&format!("({format_h})"))))
+                        &gen_jsonb_build_obj(&format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&format!("({format_h})"))))
                     );
                     quote! {
                         #(#mb_dims_start_end_init)*
@@ -2055,10 +2055,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &ident_read_ids_ucc,
                 &{
                     let content_ts = if matches!(&pg_json_type, PgJsonType::UuidUuidAsJsonbString) {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_object_v(&"{column_field}"));
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{column_field}"));
                         quote! {format!(#dq_ts0)}
                     } else {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_object_v(&"'null'::jsonb"));
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"'null'::jsonb"));
                         quote! {#dq_ts0.to_owned()}
                     };
                     quote! {Ok(#content_ts)}
@@ -2231,7 +2231,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &select_only_created_or_updd_ids_qb_ts,
             )
         };
-        let mb_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
+        let mb_impl_pg_json_type_obj_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
             let (qb_string_as_pg_text_create_for_query_ts, qb_string_as_pg_text_upd_for_query_ts) = {
                 enum CreateOrUpdForQuery {
                     CreateForQuery,
@@ -2270,7 +2270,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             };
             quote! {
                 #AllowClippyArbitrarySourceItemOrdering
-                impl #import::PgJsonTypeObjectVecElId for #ident {
+                impl #import::PgJsonTypeObjVecElId for #ident {
                     type PgJsonType = Self;
                     type #CreateForQueryUcc = #ident_create_for_query_ucc;
                     type #UpdUcc = #ident_upd_ucc;
@@ -2721,7 +2721,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         let ident_table_type_ucc_db49334a = SelfTableTypeUcc::from_tokens(&ident_not_null_ts);
                         let equal_ts = gen_equal_ts(&quote! {#ident_table_type_ucc_db49334a::new(v_18544acf.into())});
                         quote! {
-                            #import::NullableJsonObjectPgTypeWhereFilter(
+                            #import::NullableJsonObjPgTypeWhereFilter(
                                 #CreateSc.0.0.map(|v_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
                                     vec![#ident_where_ucc_029b3848::#EqualUcc(#equal_ts)]
                                 ).expect("88bfa095"))
@@ -2877,7 +2877,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         &quote!{vec![#content_ts_f1ffd3b2]},
                                         &quote!{v_9328b66f},
                                         &quote!{{
-                                            acc_049ff0b3.push(#import::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
+                                            acc_049ff0b3.push(#import::NullableJsonObjPgTypeWhereFilter(Some(v_9328b66f)));
                                         }},
                                         &quote!{()},
                                         &quote!{panic!("2f5f648a")},
@@ -3067,7 +3067,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         &quote!{panic!("3d7ce854")},
                                     );
                                     quote! {
-                                        #import::NullableJsonObjectPgTypeWhereFilter(
+                                        #import::NullableJsonObjPgTypeWhereFilter(
                                             match #create_dot_zero_dot_zero {
                                                 Some(v_1bbf74bc) => #not_empty_unique_vec_try_new_match_ts,
                                                 None => None,
@@ -3140,7 +3140,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                                         &quote!{panic!("584f801e")},
                                      );
                                     quote! {
-                                        #import::NullableJsonObjectPgTypeWhereFilter(match #create_dot_zero_dot_zero {
+                                        #import::NullableJsonObjPgTypeWhereFilter(match #create_dot_zero_dot_zero {
                                             Some(v_68880991) => #not_empty_unique_vec_try_new_match_ts,
                                             None => None,
                                         })
@@ -3587,7 +3587,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
             #ident_upd_ts
             #ident_upd_for_query_ts
             #impl_pg_json_type_for_ident_ts
-            #mb_impl_pg_json_type_object_vec_el_id_for_ident_origin_ts
+            #mb_impl_pg_json_type_obj_vec_el_id_for_ident_origin_ts
             #impl_pg_json_type_test_cases_for_ident_ts
         };
         (

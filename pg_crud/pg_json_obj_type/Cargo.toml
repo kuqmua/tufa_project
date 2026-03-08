@@ -1,5 +1,5 @@
 [package]
-name = "pg_json_object_type"
+name = "pg_json_obj_type"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -10,8 +10,8 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
-gen_pg_json_object_type = {path = "./gen_pg_json_object_type"}
-pg_json_object_type_common = {path = "./pg_json_object_type_common"}
+gen_pg_json_obj_type = {path = "./gen_pg_json_obj_type"}
+pg_json_obj_type_common = {path = "./pg_json_obj_type_common"}
 #pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
 
 [lints]

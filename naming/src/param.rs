@@ -45,98 +45,91 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "upd"],
     ["self", "upd", "for", "query"],
     ["self", "del"],
-    ["object", "self"],
-    ["std", "opt", "opt", "object", "self"],
-    ["object", "with", "id", "self"],
-    ["std", "vec", "vec", "object", "with", "id", "self"],
+    ["obj", "self"],
+    ["std", "opt", "opt", "obj", "self"],
+    ["obj", "with", "id", "self"],
+    ["std", "vec", "vec", "obj", "with", "id", "self"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
     ["self", "select"],
     ["self", "select", "without", "id"],
     ["self", "select", "with", "id"],
-    ["object", "self", "select"],
-    ["object", "with", "id", "self", "select"],
-    ["std", "opt", "opt", "object", "self", "select"],
+    ["obj", "self", "select"],
+    ["obj", "with", "id", "self", "select"],
+    ["std", "opt", "opt", "obj", "self", "select"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "select"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "select"
-    ],
-    [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "select"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "select"
     ],
     ["self", "try", "new", "er"],
-    ["object", "self", "read"],
-    ["std", "opt", "opt", "object", "self", "read"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "read"],
+    ["obj", "self", "read"],
+    ["std", "opt", "opt", "obj", "self", "read"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "read"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "read"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "read"
     ],
-    ["object", "self", "to", "create"],
-    ["std", "opt", "opt", "object", "self", "to", "create"],
+    ["obj", "self", "to", "create"],
+    ["std", "opt", "opt", "obj", "self", "to", "create"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "to", "create"
-    ],
-    [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "to", "create"
-    ],
-    ["object", "with", "id", "self", "read"],
-    ["object", "with", "id", "self", "to", "create"],
-    ["object", "self", "reader"],
-    ["object", "with", "id", "self", "reader"],
-    ["std", "opt", "opt", "object", "self", "reader"],
-    [
-        "std", "vec", "vec", "object", "with", "id", "self", "reader"
+        "std", "vec", "vec", "obj", "with", "id", "self", "to", "create"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "reader"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to", "create"
+    ],
+    ["obj", "with", "id", "self", "read"],
+    ["obj", "with", "id", "self", "to", "create"],
+    ["obj", "self", "reader"],
+    ["obj", "with", "id", "self", "reader"],
+    ["std", "opt", "opt", "obj", "self", "reader"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "reader"],
+    [
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "reader"
     ],
     ["self", "reader"],
+    ["std", "opt", "opt", "obj", "self", "to", "create", "origin"],
     [
-        "std", "opt", "opt", "object", "self", "to", "create", "origin"
+        "std", "vec", "vec", "obj", "with", "id", "self", "to", "create", "origin"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "to", "create", "origin"
-    ],
-    [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "to", "create",
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to", "create",
         "origin"
     ],
-    ["std", "opt", "opt", "object", "self", "read", "origin"],
+    ["std", "opt", "opt", "obj", "self", "read", "origin"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "read", "origin"
+        "std", "vec", "vec", "obj", "with", "id", "self", "read", "origin"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "read", "origin"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "read", "origin"
     ],
     ["self", "opt", "to", "upd"],
     ["self", "opt", "to", "upd", "origin"],
-    ["object", "self", "opt", "to", "upd"],
-    ["object", "self", "opt", "to", "upd", "origin"],
+    ["obj", "self", "opt", "to", "upd"],
+    ["obj", "self", "opt", "to", "upd", "origin"],
     [
-        "std", "opt", "opt", "object", "self", "opt", "to", "upd", "origin"
+        "std", "opt", "opt", "obj", "self", "opt", "to", "upd", "origin"
     ],
-    ["std", "opt", "opt", "object", "self", "opt", "to", "upd"],
+    ["std", "opt", "opt", "obj", "self", "opt", "to", "upd"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "opt", "to", "upd", "origin"
-    ],
-    [
-        "std", "vec", "vec", "object", "with", "id", "self", "opt", "to", "upd"
+        "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd", "origin"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "opt", "to",
-        "upd", "origin"
+        "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "opt", "to",
-        "upd"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd",
+        "origin"
     ],
-    ["object", "with", "id", "self", "opt", "to", "upd"],
+    [
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd"
+    ],
+    ["obj", "with", "id", "self", "opt", "to", "upd"],
     ["self", "upd", "with", "id"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "json", "arr", "change"
+        "std", "vec", "vec", "obj", "with", "id", "self", "json", "arr", "change"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "json", "arr",
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "json", "arr",
         "change"
     ],
     [
@@ -156,11 +149,11 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "self", "try", "gen", "json", "arr", "el", "upd", "bind", "incrs", "er"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "json", "arr", "change", "try", "new",
+        "std", "vec", "vec", "obj", "with", "id", "self", "json", "arr", "change", "try", "new",
         "er"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "json", "arr",
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "json", "arr",
         "change", "try", "new", "er"
     ],
     ["not", "unique", "field", "self"],
@@ -168,48 +161,48 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "read", "with", "id"],
     ["self", "opt", "to", "upd", "try", "new", "er"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "read", "try", "new", "er"
+        "std", "vec", "vec", "obj", "with", "id", "self", "read", "try", "new", "er"
     ],
     [
         "self", "gen", "pg", "json", "type", "to", "read", "from", "vec", "er"
     ],
     [
-        "std", "opt", "opt", "object", "self", "opt", "to", "upd", "try", "new", "er"
+        "std", "opt", "opt", "obj", "self", "opt", "to", "upd", "try", "new", "er"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "read", "try",
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "read", "try",
         "new", "er"
     ],
     [
         "self", "read", "with", "or", "without", "id", "try", "from", "er"
     ],
     ["self", "select", "try", "new", "er"],
-    ["object", "self", "select", "try", "new", "er"],
+    ["obj", "self", "select", "try", "new", "er"],
     [
-        "std", "opt", "opt", "object", "self", "select", "try", "new", "er"
+        "std", "opt", "opt", "obj", "self", "select", "try", "new", "er"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "select", "try", "new", "er"
+        "std", "vec", "vec", "obj", "with", "id", "self", "select", "try", "new", "er"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "select", "try",
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "select", "try",
         "new", "er"
     ],
-    ["object", "self", "opt", "to", "upd", "try", "gen", "er"],
+    ["obj", "self", "opt", "to", "upd", "try", "gen", "er"],
     [
-        "object", "self", "opt", "to", "upd", "try", "gen", "pg", "json", "type", "er", "with",
+        "obj", "self", "opt", "to", "upd", "try", "gen", "pg", "json", "type", "er", "with",
         "serde"
     ],
     [
-        "std", "opt", "opt", "object", "self", "opt", "to", "upd", "try", "gen", "er"
+        "std", "opt", "opt", "obj", "self", "opt", "to", "upd", "try", "gen", "er"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "opt", "to", "upd", "try", "gen",
-        "pg", "json", "type", "er"
+        "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd", "try", "gen", "pg",
+        "json", "type", "er"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "opt", "to",
-        "upd", "try", "gen", "pg", "json", "type", "er"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd",
+        "try", "gen", "pg", "json", "type", "er"
     ],
     ["self", "with", "serde"],
     ["self", "try", "from", "env", "er"],
@@ -223,73 +216,65 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "where"],
     ["std", "opt", "opt", "self"],
     ["where", "std", "opt", "opt", "self"],
-    ["sqlx", "types", "json", "object", "self"],
+    ["sqlx", "types", "json", "obj", "self"],
+    ["std", "opt", "opt", "sqlx", "types", "json", "obj", "self"],
+    ["sqlx", "types", "json", "std", "opt", "opt", "obj", "self"],
     [
-        "std", "opt", "opt", "sqlx", "types", "json", "object", "self"
+        "std", "opt", "opt", "sqlx", "types", "json", "std", "opt", "opt", "obj", "self"
     ],
     [
-        "sqlx", "types", "json", "std", "opt", "opt", "object", "self"
+        "sqlx", "types", "json", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
     [
-        "std", "opt", "opt", "sqlx", "types", "json", "std", "opt", "opt", "object", "self"
-    ],
-    [
-        "sqlx", "types", "json", "std", "vec", "vec", "object", "with", "id", "self"
-    ],
-    [
-        "std", "opt", "opt", "sqlx", "types", "json", "std", "vec", "vec", "object", "with", "id",
+        "std", "opt", "opt", "sqlx", "types", "json", "std", "vec", "vec", "obj", "with", "id",
         "self"
     ],
     [
-        "sqlx", "types", "json", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "sqlx", "types", "json", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self"
     ],
     [
         "std", "opt", "opt", "sqlx", "types", "json", "std", "opt", "opt", "std", "vec", "vec",
-        "object", "with", "id", "self"
+        "obj", "with", "id", "self"
     ],
-    ["object", "self", "column"],
-    ["std", "opt", "opt", "object", "self", "column"],
+    ["obj", "self", "column"],
+    ["std", "opt", "opt", "obj", "self", "column"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "column"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "column"
-    ],
-    [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "column"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "column"
     ],
     ["pg", "json", "type", "self", "to", "create"],
-    ["object", "self", "create"],
-    ["std", "opt", "opt", "object", "self", "create"],
+    ["obj", "self", "create"],
+    ["std", "opt", "opt", "obj", "self", "create"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "create"],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "create"
-    ],
-    [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "create"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "create"
     ],
     ["pg", "json", "type", "self", "select"],
-    ["pg", "json", "type", "object", "self", "select"],
+    ["pg", "json", "type", "obj", "self", "select"],
     [
-        "pg", "json", "type", "std", "opt", "opt", "object", "self", "select"
+        "pg", "json", "type", "std", "opt", "opt", "obj", "self", "select"
     ],
     [
-        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select"
+        "pg", "json", "type", "std", "vec", "vec", "obj", "with", "id", "self", "select"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "select"
     ],
     ["pg", "json", "type", "self", "select", "try", "new", "er"],
     [
-        "pg", "json", "type", "object", "self", "select", "try", "new", "er"
+        "pg", "json", "type", "obj", "self", "select", "try", "new", "er"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "object", "self", "select", "try", "new", "er"
+        "pg", "json", "type", "std", "opt", "opt", "obj", "self", "select", "try", "new", "er"
     ],
     [
-        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select", "try",
+        "pg", "json", "type", "std", "vec", "vec", "obj", "with", "id", "self", "select", "try",
         "new", "er"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "select", "try", "new", "er"
     ],
     ["pg", "json", "type", "self", "read"],
@@ -299,21 +284,21 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "json", "type", "self", "opt", "to", "upd"],
     ["self", "upd", "er"],
     ["self", "upd", "try", "new", "er"],
-    ["object", "self", "upd"],
-    ["std", "opt", "opt", "object", "self", "upd"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "upd"],
+    ["obj", "self", "upd"],
+    ["std", "opt", "opt", "obj", "self", "upd"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "upd"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "upd"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "upd"
     ],
     [
-        "std", "vec", "vec", "object", "with", "id", "self", "opt", "to", "upd", "try", "gen", "er"
+        "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd", "try", "gen", "er"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "opt", "to", "upd", "try", "gen", "pg", "json", "type", "er"
     ],
     [
-        "pg", "json", "type", "object", "self", "opt", "to", "upd", "try", "gen", "pg", "json",
+        "pg", "json", "type", "obj", "self", "opt", "to", "upd", "try", "gen", "pg", "json",
         "type", "er", "with", "serde"
     ],
     [
@@ -323,54 +308,54 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "pg", "json", "type", "self", "read", "with", "or", "without", "id", "try", "from", "er"
     ],
-    ["pg", "type", "object", "self"],
-    ["pg", "type", "std", "opt", "opt", "object", "self"],
+    ["pg", "type", "obj", "self"],
+    ["pg", "type", "std", "opt", "opt", "obj", "self"],
     [
-        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self"
+        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self"
+        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
-    ["pg", "type", "object", "self", "to", "create"],
+    ["pg", "type", "obj", "self", "to", "create"],
     [
-        "pg", "type", "std", "opt", "opt", "object", "self", "to", "create"
-    ],
-    [
-        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "create"
+        "pg", "type", "std", "opt", "opt", "obj", "self", "to", "create"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self",
-        "to", "create"
-    ],
-    ["pg", "type", "object", "self", "to", "read"],
-    [
-        "pg", "type", "std", "opt", "opt", "object", "self", "to", "read"
+        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self", "to", "create"
     ],
     [
-        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "read"
+        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to",
+        "create"
+    ],
+    ["pg", "type", "obj", "self", "to", "read"],
+    [
+        "pg", "type", "std", "opt", "opt", "obj", "self", "to", "read"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self",
-        "to", "read"
-    ],
-    ["pg", "type", "object", "self", "to", "upd"],
-    [
-        "pg", "type", "std", "opt", "opt", "object", "self", "to", "upd"
+        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self", "to", "read"
     ],
     [
-        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "to", "upd"
+        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to",
+        "read"
+    ],
+    ["pg", "type", "obj", "self", "to", "upd"],
+    [
+        "pg", "type", "std", "opt", "opt", "obj", "self", "to", "upd"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self",
-        "to", "upd"
-    ],
-    ["pg", "type", "object", "self", "where"],
-    ["pg", "type", "std", "opt", "opt", "object", "self", "where"],
-    [
-        "pg", "type", "std", "vec", "vec", "object", "with", "id", "self", "where"
+        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self", "to", "upd"
     ],
     [
-        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self",
+        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to",
+        "upd"
+    ],
+    ["pg", "type", "obj", "self", "where"],
+    ["pg", "type", "std", "opt", "opt", "obj", "self", "where"],
+    [
+        "pg", "type", "std", "vec", "vec", "obj", "with", "id", "self", "where"
+    ],
+    [
+        "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self",
         "where"
     ],
     ["pg", "type", "self", "column"],
@@ -383,38 +368,37 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "as", "json", "not", "null"],
     ["self", "as", "jsonb"],
     ["self", "as", "jsonb", "not", "null"],
-    ["pg", "json", "type", "object", "self"],
-    ["pg", "json", "type", "std", "opt", "opt", "object", "self"],
+    ["pg", "json", "type", "obj", "self"],
+    ["pg", "json", "type", "std", "opt", "opt", "obj", "self"],
     [
-        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self"
+        "pg", "json", "type", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
-        "self"
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self"
     ],
     [
-        "pg", "json", "type", "object", "self", "read", "try", "new", "er"
+        "pg", "json", "type", "obj", "self", "read", "try", "new", "er"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "object", "self", "read", "try", "new", "er"
+        "pg", "json", "type", "std", "opt", "opt", "obj", "self", "read", "try", "new", "er"
     ],
     [
-        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "read", "try",
+        "pg", "json", "type", "std", "vec", "vec", "obj", "with", "id", "self", "read", "try",
         "new", "er"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "read", "try", "new", "er"
     ],
-    ["pg", "json", "type", "object", "self", "reader"],
+    ["pg", "json", "type", "obj", "self", "reader"],
     [
-        "pg", "json", "type", "std", "opt", "opt", "object", "self", "reader"
+        "pg", "json", "type", "std", "opt", "opt", "obj", "self", "reader"
     ],
     [
-        "pg", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "reader"
+        "pg", "json", "type", "std", "vec", "vec", "obj", "with", "id", "self", "reader"
     ],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "reader"
     ],
     ["pg", "type", "self", "to", "upd", "qp", "er"],
@@ -575,11 +559,11 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "where", "position", "equals"],
     ["self", "as", "json", "nullable"],
     ["self", "as", "jsonb", "nullable"],
-    ["object", "self", "where"],
-    ["std", "opt", "opt", "object", "self", "where"],
-    ["std", "vec", "vec", "object", "with", "id", "self", "where"],
+    ["obj", "self", "where"],
+    ["std", "opt", "opt", "obj", "self", "where"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "where"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "where"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "where"
     ],
     ["pg", "json", "type", "self", "where"],
     ["pg", "json", "type", "self", "where", "equal"],
@@ -826,12 +810,12 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["vec", "self", "arr", "nullable"],
     ["self", "opt", "to", "upd", "try", "gen", "er"],
     [
-        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id",
+        "pg", "json", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id",
         "self", "opt", "to", "upd"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "object", "with", "id", "self", "opt", "to",
-        "upd", "try", "gen", "er"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd",
+        "try", "gen", "er"
     ],
     ["pg", "type", "where", "self"],
     ["pg", "type", "where", "self", "try", "new", "er"],
@@ -900,6 +884,6 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "self", "read", "ids", "to2", "dims", "vec", "read", "inner", "acc"
     ],
-    ["self", "gen", "pg", "json", "object", "type", "mod"],
+    ["self", "gen", "pg", "json", "obj", "type", "mod"],
     ["self", "gen", "pg", "table", "mod"]
 ]);

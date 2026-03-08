@@ -1,11 +1,11 @@
 use optml::Optml;
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType, Optml)]
-#[pg_crud::pg_json_object_type_config{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjType, Optml)]
+#[pg_crud::pg_json_obj_type_config{
     {
-        "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
-        "whole_write_into_gen_pg_json_object_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
+        "whole_write_into_gen_pg_json_obj_type": "False",
         "vrt": 
         // {
         //     "is_nullable": "False",
@@ -839,18 +839,18 @@ pub struct Animal {
     // pub field_803: pg_crud::OptVecOfOptVecOfOptVecOfVecOfOptUuidUuidAsNullableArrOfNullableArrOfNullableArrOfNotNullArrOfNullableJsonbString,
     // pub field_804: pg_crud::OptVecOfOptVecOfOptVecOfOptVecOfUuidUuidAsNullableArrOfNullableArrOfNullableArrOfNullableArrOfNotNullJsonbString,
     // pub field_805: pg_crud::OptVecOfOptVecOfOptVecOfOptVecOfOptUuidUuidAsNullableArrOfNullableArrOfNullableArrOfNullableArrOfNullableJsonbString,
-    pub field_806: crate::DoggieAsNotNullJsonbObject,
-    pub field_808: crate::OptDoggieAsNullableJsonbObject,
-    pub field_807: crate::VecOfDoggieWithIdAsNotNullArrOfNotNullJsonbObjectWithId,
-    pub field_809: crate::OptVecOfDoggieWithIdAsNullableArrOfNotNullJsonbObjectWithId,
+    pub field_806: crate::DoggieAsNotNullJsonbObj,
+    pub field_808: crate::OptDoggieAsNullableJsonbObj,
+    pub field_807: crate::VecOfDoggieWithIdAsNotNullArrOfNotNullJsonbObjWithId,
+    pub field_809: crate::OptVecOfDoggieWithIdAsNullableArrOfNotNullJsonbObjWithId,
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType, Optml)]
-#[pg_crud::pg_json_object_type_config{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjType, Optml)]
+#[pg_crud::pg_json_obj_type_config{
     {
-        "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
-        "whole_write_into_gen_pg_json_object_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
+        "whole_write_into_gen_pg_json_obj_type": "False",
         "vrt":
         // {
         //     "is_nullable": "False",
@@ -1002,18 +1002,18 @@ pub struct Doggie {
     // pub field_121: pg_crud::OptVecOfOptVecOfOptVecOfVecOfOptI16AsNullableArrOfNullableArrOfNullableArrOfNotNullArrOfNullableJsonbNbr,
     // pub field_122: pg_crud::OptVecOfOptVecOfOptVecOfOptVecOfI16AsNullableArrOfNullableArrOfNullableArrOfNullableArrOfNotNullJsonbNbr,
     // pub field_123: pg_crud::OptVecOfOptVecOfOptVecOfOptVecOfOptI16AsNullableArrOfNullableArrOfNullableArrOfNullableArrOfNullableJsonbNbr,
-    pub field_806: crate::CatAsNotNullJsonbObject,
-    pub field_807: crate::OptCatAsNullableJsonbObject,
-    pub field_808: crate::VecOfCatWithIdAsNotNullArrOfNotNullJsonbObjectWithId,
-    pub field_809: crate::OptVecOfCatWithIdAsNullableArrOfNotNullJsonbObjectWithId,
+    pub field_806: crate::CatAsNotNullJsonbObj,
+    pub field_807: crate::OptCatAsNullableJsonbObj,
+    pub field_808: crate::VecOfCatWithIdAsNotNullArrOfNotNullJsonbObjWithId,
+    pub field_809: crate::OptVecOfCatWithIdAsNullableArrOfNotNullJsonbObjWithId,
 }
 #[allow(unused_qualifications)]
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjectType, Optml)]
-#[pg_crud::pg_json_object_type_config{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgJsonObjType, Optml)]
+#[pg_crud::pg_json_obj_type_config{
     {
-        "pg_table_columns_write_into_pg_table_columns_using_pg_json_object_types": "False",
-        "whole_write_into_gen_pg_json_object_type": "False",
+        "pg_table_columns_write_into_pg_table_columns_using_pg_json_obj_types": "False",
+        "whole_write_into_gen_pg_json_obj_type": "False",
         "vrt":
         // {
         //     "is_nullable": "False",

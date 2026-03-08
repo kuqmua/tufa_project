@@ -116,7 +116,7 @@ cargo watch -x check -x test -x "run"
 ## Modules
 
 ### postgresql_crud
-Core functionality for PostgreSQL CRUD ops with automatic code generation for tables, types, and JSON objects.
+Core functionality for PostgreSQL CRUD ops with automatic code generation for tables, types, and JSON objs.
 
 ### config_lib
 Configuration management with environment variable parsing and type-safe accessors.
