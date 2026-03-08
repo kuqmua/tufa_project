@@ -278,13 +278,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 let di_ident_str = di_ident.to_string();
                 let vec_of_di_ident_with_id = format!("{VecOfUcc}{di_ident}{WithIdUcc}");
                 let jsonb_obj_ucc_str = JsonbObjUcc.to_string();
-                let arr_of_not_null_jsonb_object_with_id = format!("{ArrOfUcc}{}{JsonbObjUcc}{WithIdUcc}", IsNullable::False.not_null_or_nullable_str());
+                let arr_of_not_null_jsonb_obj_with_id = format!("{ArrOfUcc}{}{JsonbObjUcc}{WithIdUcc}", IsNullable::False.not_null_or_nullable_str());
                 match &ident_pattern {
                     IdentPattern::StdrtNotNullWithoutId => (di_ident_str, jsonb_obj_ucc_str, IsNullable::False),
                     IdentPattern::StdrtNotNullWithId => (format!("{di_ident}{WithIdUcc}"), format!("{JsonbObjUcc}{WithIdUcc}"), IsNullable::False),
                     IdentPattern::StdrtNullableWithoutId => (di_ident_str, jsonb_obj_ucc_str, IsNullable::True),
-                    IdentPattern::ArrNotNullWithId => (vec_of_di_ident_with_id, arr_of_not_null_jsonb_object_with_id, IsNullable::False),
-                    IdentPattern::ArrNullableWithIdentifier => (vec_of_di_ident_with_id, arr_of_not_null_jsonb_object_with_id, IsNullable::True),
+                    IdentPattern::ArrNotNullWithId => (vec_of_di_ident_with_id, arr_of_not_null_jsonb_obj_with_id, IsNullable::False),
+                    IdentPattern::ArrNullableWithIdentifier => (vec_of_di_ident_with_id, arr_of_not_null_jsonb_obj_with_id, IsNullable::True),
                 }
             };
             let is_nullable_325dc715_rust = is_nullable_325dc715.rust();
