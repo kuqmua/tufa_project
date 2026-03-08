@@ -1559,7 +1559,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &IsQbMut::False,
             ),
             IsNullable::True => quote! {
-                pub type #ident_where_ucc = #import::NullableJsonObjectPgTypeWhereFilter<
+                pub type #ident_where_ucc = #import::NullableJsonObjPgTypeWhereFilter<
                     <#ident_not_null_ts as #import::PgJson>::Where
                 >;
             }
@@ -2267,7 +2267,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                impl #import::PgJsonObjectVecElId for #ident {
+                impl #import::PgJsonObjVecElId for #ident {
                     type PgJson = Self;
                     type #CrForQueryUcc = #ident_cr_for_query_ucc;
                     type #UpdUcc = #ident_upd_ucc;
@@ -2718,7 +2718,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         let ident_table_type_ucc_db49334a = SelfTableTypeUcc::from_tokens(&ident_not_null_ts);
                         let equal_ts = gen_equal_ts(&quote! {#ident_table_type_ucc_db49334a::new(v_18544acf.into())});
                         quote! {
-                            #import::NullableJsonObjectPgTypeWhereFilter(
+                            #import::NullableJsonObjPgTypeWhereFilter(
                                 #CrSc.0.0.map(|v_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
                                     vec![#ident_where_ucc_029b3848::#EqualUcc(#equal_ts)]
                                 ).expect("88bfa095"))
@@ -2874,7 +2874,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         &quote!{vec![#content_ts_f1ffd3b2]},
                                         &quote!{v_9328b66f},
                                         &quote!{{
-                                            acc_049ff0b3.push(#import::NullableJsonObjectPgTypeWhereFilter(Some(v_9328b66f)));
+                                            acc_049ff0b3.push(#import::NullableJsonObjPgTypeWhereFilter(Some(v_9328b66f)));
                                         }},
                                         &quote!{()},
                                         &quote!{panic!("2f5f648a")},
@@ -3064,7 +3064,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         &quote!{panic!("3d7ce854")},
                                     );
                                     quote! {
-                                        #import::NullableJsonObjectPgTypeWhereFilter(
+                                        #import::NullableJsonObjPgTypeWhereFilter(
                                             match #cr_dot_zero_dot_zero {
                                                 Some(v_1bbf74bc) => #not_empty_unique_vec_try_new_match_ts,
                                                 None => None,
@@ -3137,7 +3137,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         &quote!{panic!("584f801e")},
                                      );
                                     quote! {
-                                        #import::NullableJsonObjectPgTypeWhereFilter(match #cr_dot_zero_dot_zero {
+                                        #import::NullableJsonObjPgTypeWhereFilter(match #cr_dot_zero_dot_zero {
                                             Some(v_68880991) => #not_empty_unique_vec_try_new_match_ts,
                                             None => None,
                                         })

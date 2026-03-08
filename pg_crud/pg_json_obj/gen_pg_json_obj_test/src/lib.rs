@@ -34,7 +34,7 @@ test-utils = []"#,
                             }
                         }
                     }]
-                    pub struct ObjectExample {
+                    pub struct ObjExample {
                         pub field_0: pg_crud::I8AsNotNullJsonbNbr,
                         pub field_1: pg_crud::OptI8AsNullableJsonbNbr,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,

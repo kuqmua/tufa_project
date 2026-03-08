@@ -95,7 +95,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         Arr,
     }
     #[derive(Debug, PartialEq, Serialize, Deserialize, Optml)]
-    struct PgJsonObjectRecord {
+    struct PgJsonObjRecord {
         is_nullable: IsNullable,
         pattern: Pattern,
         trait_gen: TraitGen,
@@ -103,7 +103,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonsConfig {
         pg_table_columns_write_into_pg_table_columns_using_pg_json_objs: ShouldWriteTsIntoFile,
-        vrt: PgJsonObjectRecord,
+        vrt: PgJsonObjRecord,
         whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
     panic_location();
@@ -123,7 +123,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             (IsNullable::False, Pattern::Stdrt) => vec![pg_json_obj_record],
             (IsNullable::True, Pattern::Stdrt) |
             (IsNullable::False, Pattern::Arr) => vec![
-                PgJsonObjectRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Stdrt,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
@@ -131,17 +131,17 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 pg_json_obj_record
             ],
             (IsNullable::True, Pattern::Arr) => vec![
-                PgJsonObjectRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Stdrt,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                PgJsonObjectRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::True,
                     pattern: Pattern::Stdrt,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                PgJsonObjectRecord {
+                PgJsonObjRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Arr,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
@@ -329,7 +329,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             #uuid_uuid_as_not_null_jsonb_string_as_import_pg_json_ts::Upd
         };
         let uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts = quote!{
-            <#uuid_uuid_as_not_null_jsonb_string_ts as #import::PgJsonObjectVecElId>
+            <#uuid_uuid_as_not_null_jsonb_string_ts as #import::PgJsonObjVecElId>
         };
         let id_syn_field = {
             let v = Field {
@@ -1888,7 +1888,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &pg_json_subtype_where
                 );
                 quote! {
-                    pub type #ident_where_ucc = #import::NullableJsonObjectPgTypeWhereFilter<
+                    pub type #ident_where_ucc = #import::NullableJsonObjPgTypeWhereFilter<
                         #ident_stdrt_or_ident_with_id_arr_as_pg_json_where_ts
                     >;
                 }
@@ -5830,7 +5830,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     };
                     quote! {
-                        #import::NullableJsonObjectPgTypeWhereFilter(
+                        #import::NullableJsonObjPgTypeWhereFilter(
                             match (#ReadIdsSc.0.#VSc, #CrSc.0) {
                                 (Some(read_ids_ce30c0fe), Some(cr_8fd81ed8)) => match #import::NotEmptyUniqueVec::try_new(#ts) {
                                     Ok(v_7a9cd49b) => Some(v_7a9cd49b),
@@ -5931,7 +5931,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         quote! {
-                            #import::NullableJsonObjectPgTypeWhereFilter(
+                            #import::NullableJsonObjPgTypeWhereFilter(
                                 match (#ReadIdsSc.0.#VSc, #CrSc.0) {
                                     (Some(read_ids_2898c440), Some(cr_f1c4667c)) => Some(#ts),
                                     (Some(_), None) => panic!("49e4c289"),
@@ -5991,7 +5991,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     ).into_vec() {
                                         match #import::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
                                             Ok(v_8e72cfd7) => {
-                                                acc_12b6f16d.push(#import::NullableJsonObjectPgTypeWhereFilter(Some(v_8e72cfd7)));
+                                                acc_12b6f16d.push(#import::NullableJsonObjPgTypeWhereFilter(Some(v_8e72cfd7)));
                                             },
                                             Err(er) => match er {
                                                 #import::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
@@ -6003,7 +6003,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 (Some(_), None) => panic!("b4507b4c"),
                                 (None, Some(_)) => panic!("8f458c1d"),
                                 (None, None) => {
-                                    acc_12b6f16d.push(#import::NullableJsonObjectPgTypeWhereFilter(None));
+                                    acc_12b6f16d.push(#import::NullableJsonObjPgTypeWhereFilter(None));
                                 },
                             }
                             acc_12b6f16d
@@ -6044,7 +6044,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             ) {
                                                 Ok(v_7ed84f3b) => {
                                                     acc_bd78dc08.push(
-                                                        #import::NullableJsonObjectPgTypeWhereFilter(Some(v_7ed84f3b))
+                                                        #import::NullableJsonObjPgTypeWhereFilter(Some(v_7ed84f3b))
                                                     );
                                                 },
                                                 Err(er) => match er {
@@ -6053,7 +6053,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        let v_e48110ec = #import::NullableJsonObjectPgTypeWhereFilter(Some(v_d6124e21));
+                                        let v_e48110ec = #import::NullableJsonObjPgTypeWhereFilter(Some(v_d6124e21));
                                         if !acc_bd78dc08.contains(&v_e48110ec) {
                                             acc_bd78dc08.push(v_e48110ec);
                                         }
@@ -6065,7 +6065,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 },
                                 (Some(_), None) => panic!("6abeac7b"),
                                 (None, Some(_)) => panic!("a2761cd2"),
-                                (None, None) => vec![#import::NullableJsonObjectPgTypeWhereFilter(None)]
+                                (None, None) => vec![#import::NullableJsonObjPgTypeWhereFilter(None)]
                             }
                         ) {
                             Ok(v_55f2dc3d) => Some(v_55f2dc3d),
@@ -6255,7 +6255,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         match #import::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
                                             Ok(v_15097b27) => {
                                                 acc_5c441d3a.push(
-                                                    #import::NullableJsonObjectPgTypeWhereFilter(
+                                                    #import::NullableJsonObjPgTypeWhereFilter(
                                                         Some(v_15097b27)
                                                     )
                                                 );
@@ -6266,7 +6266,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    let v_84ea8e4c = #import::NullableJsonObjectPgTypeWhereFilter(Some(v_3680a4c9));
+                                    let v_84ea8e4c = #import::NullableJsonObjPgTypeWhereFilter(Some(v_3680a4c9));
                                     if !acc_5c441d3a.contains(&v_84ea8e4c) {
                                         acc_5c441d3a.push(v_84ea8e4c);
                                     }
@@ -6276,7 +6276,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     return None;
                                 }
                             },
-                            None => vec![#import::NullableJsonObjectPgTypeWhereFilter(None)],
+                            None => vec![#import::NullableJsonObjPgTypeWhereFilter(None)],
                         }
                     ) {
                         Ok(v_72dbefbc) => Some(v_72dbefbc),
@@ -6410,7 +6410,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             for el_9bbf8527 in v_1ea95b5d.clone().into_vec() {
                                 match #import::NotEmptyUniqueVec::try_new(vec![el_9bbf8527]) {
                                     Ok(v_1d0202fc) => {
-                                        acc_87f84b5c.push(#import::NullableJsonObjectPgTypeWhereFilter(Some(v_1d0202fc)));
+                                        acc_87f84b5c.push(#import::NullableJsonObjPgTypeWhereFilter(Some(v_1d0202fc)));
                                     }
                                     Err(er) => match er {
                                         #import::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
@@ -6418,7 +6418,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     },
                                 }
                             }
-                            let v_4e4cfda3 = #import::NullableJsonObjectPgTypeWhereFilter(Some(v_1ea95b5d));
+                            let v_4e4cfda3 = #import::NullableJsonObjPgTypeWhereFilter(Some(v_1ea95b5d));
                             if !acc_87f84b5c.contains(&v_4e4cfda3) {
                                 acc_87f84b5c.push(v_4e4cfda3);
                             }
@@ -6783,11 +6783,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     for el in v_35662b3a.into_vec() {
                                         match el {
                                             #import::SingleOrMultiple::Multiple(multiple) => {
-                                                acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NullableJsonObjectPgTypeWhereFilter(Some(multiple))));
+                                                acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NullableJsonObjPgTypeWhereFilter(Some(multiple))));
                                             },
                                             #import::SingleOrMultiple::Single(single) => match #import::NotEmptyUniqueVec::try_new(vec![single]) {
                                                 Ok(v_4ce6ecd3) => {
-                                                    acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NullableJsonObjectPgTypeWhereFilter(Some(v_4ce6ecd3))));
+                                                    acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NullableJsonObjPgTypeWhereFilter(Some(v_4ce6ecd3))));
                                                 }
                                                 Err(er) => match er {
                                                     #import::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
@@ -7019,7 +7019,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         gen_pg_json_obj_config.pg_table_columns_write_into_pg_table_columns_using_pg_json_objs,
         "pg_table_columns_using_pg_json_objs",
         &quote! {
-            pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjects {
+            pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjs {
                 #(#fields_ts)*
             }
         },
