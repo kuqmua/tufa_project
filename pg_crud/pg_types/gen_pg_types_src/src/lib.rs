@@ -411,270 +411,69 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(Debug, PartialEq, Serialize, Optml)]
+    #[derive(Debug, PartialEq, Serialize, Deserialize, Optml)]
+    #[serde(try_from = "PgTypeRecordRaw")]
     struct PgTypeRecord {
         pg_type: PgType,
         is_nl: IsNl,
         pg_type_pattern: PgTypePattern,
     }
-    #[allow(unused_qualifications)]
-    #[allow(clippy::absolute_paths)]
     #[allow(clippy::arbitrary_source_item_ordering)]
-    const _: () = {
-        #[allow(
-            unused_extern_crates,
-            clippy::useless_attribute,
-            clippy::arbitrary_source_item_ordering
-        )]
-        extern crate serde as _serde;
-        #[automatically_derived]
-        impl<'de> _serde::Deserialize<'de> for PgTypeRecord {
-            fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-            where
-                __D: _serde::Deserializer<'de>,
-            {
-                #[allow(non_camel_case_types)]
-                #[doc(hidden)]
-                enum __Field {
-                    f0,
-                    f1,
-                    f2,
-                    __ignore,
-                }
-                #[doc(hidden)]
-                struct __FieldVisitor;
-                #[automatically_derived]
-                impl _serde::de::Visitor<'_> for __FieldVisitor {
-                    type Value = __Field;
-                    fn expecting(
-                        &self,
-                        __f: &mut Formatter<'_>,
-                    ) -> _serde::__private228::fmt::Result {
-                        Formatter::write_str(__f, "field identifier")
-                    }
-                    fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
-                    where
-                        __E: _serde::de::Error,
-                    {
-                        match v {
-                            0u64 => Ok(__Field::f0),
-                            1u64 => Ok(__Field::f1),
-                            2u64 => Ok(__Field::f2),
-                            _ => Ok(__Field::__ignore),
-                        }
-                    }
-                    fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
-                    where
-                        __E: _serde::de::Error,
-                    {
-                        match v {
-                            "pg_type" => Ok(__Field::f0),
-                            "is_nl" => Ok(__Field::f1),
-                            "pg_type_pattern" => Ok(__Field::f2),
-                            _ => Ok(__Field::__ignore),
-                        }
-                    }
-                    fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
-                    where
-                        __E: _serde::de::Error,
-                    {
-                        match v {
-                            b"pg_type" => Ok(__Field::f0),
-                            b"is_nl" => Ok(__Field::f1),
-                            b"pg_type_pattern" => Ok(__Field::f2),
-                            _ => Ok(__Field::__ignore),
-                        }
-                    }
-                }
-                #[automatically_derived]
-                impl<'de> _serde::Deserialize<'de> for __Field {
-                    #[inline]
-                    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-                    where
-                        __D: _serde::Deserializer<'de>,
-                    {
-                        _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                    }
-                }
-                #[doc(hidden)]
-                struct __Visitor<'de> {
-                    marker: _serde::__private228::PhantomData<PgTypeRecord>,
-                    lt: _serde::__private228::PhantomData<&'de ()>,
-                }
-                #[automatically_derived]
-                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                    type Value = PgTypeRecord;
-                    fn expecting(
-                        &self,
-                        __f: &mut Formatter<'_>,
-                    ) -> _serde::__private228::fmt::Result {
-                        Formatter::write_str(__f, "struct PgTypeRecord")
-                    }
-                    #[inline]
-                    fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                    where
-                        __A: _serde::de::SeqAccess<'de>,
-                    {
-                        let Some(f0) = _serde::de::SeqAccess::next_element::<PgType>(&mut __seq)?
-                        else {
-                            return Err(_serde::de::Error::invalid_length(
-                                0usize,
-                                &"struct PgTypeRecord with 3 els",
-                            ));
-                        };
-                        let Some(f1) = _serde::de::SeqAccess::next_element::<IsNl>(&mut __seq)?
-                        else {
-                            return Err(_serde::de::Error::invalid_length(
-                                1usize,
-                                &"struct PgTypeRecord with 3 els",
-                            ));
-                        };
-                        let Some(f2) =
-                            _serde::de::SeqAccess::next_element::<PgTypePattern>(&mut __seq)?
-                        else {
-                            return Err(_serde::de::Error::invalid_length(
-                                2usize,
-                                &"struct PgTypeRecord with 3 els",
-                            ));
-                        };
-                        match PgTypeRecord::try_from((f0, f1, f2)) {
-                            Ok(v) => Ok(v),
-                            Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                        }
-                    }
-                    #[inline]
-                    fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
-                    where
-                        __A: _serde::de::MapAccess<'de>,
-                    {
-                        let mut f0: Option<PgType> = None;
-                        let mut f1: Option<IsNl> = None;
-                        let mut f2: Option<PgTypePattern> = None;
-                        while let Some(__k) =
-                            _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
-                        {
-                            match __k {
-                                __Field::f0 => {
-                                    if Option::is_some(&f0) {
-                                        return Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field(
-                                                "pg_type",
-                                            ),
-                                        );
-                                    }
-                                    f0 = Some(_serde::de::MapAccess::next_value::<PgType>(
-                                        &mut __map,
-                                    )?);
-                                }
-                                __Field::f1 => {
-                                    if Option::is_some(&f1) {
-                                        return Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field(
-                                                "is_nl",
-                                            ),
-                                        );
-                                    }
-                                    f1 = Some(_serde::de::MapAccess::next_value::<IsNl>(
-                                        &mut __map,
-                                    )?);
-                                }
-                                __Field::f2 => {
-                                    if Option::is_some(&f2) {
-                                        return Err(
-                                            <__A::Error as _serde::de::Error>::duplicate_field(
-                                                "pg_type_pattern",
-                                            ),
-                                        );
-                                    }
-                                    f2 = Some(_serde::de::MapAccess::next_value::<PgTypePattern>(
-                                        &mut __map,
-                                    )?);
-                                }
-                                __Field::__ignore => {
-                                    let _: serde::de::IgnoredAny =
-                                        _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(
-                                            &mut __map,
-                                        )?;
-                                }
-                            }
-                        }
-                        let f0_v = match f0 {
-                            Some(v) => v,
-                            None => _serde::__private228::de::missing_field("pg_type")?,
-                        };
-                        let f1_v = match f1 {
-                            Some(v) => v,
-                            None => _serde::__private228::de::missing_field("is_nl")?,
-                        };
-                        let f2_v = match f2 {
-                            Some(v) => v,
-                            None => _serde::__private228::de::missing_field("pg_type_pattern")?,
-                        };
-                        match PgTypeRecord::try_from((f0_v, f1_v, f2_v)) {
-                            Ok(v) => Ok(v),
-                            Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                        }
-                    }
-                }
-                #[doc(hidden)]
-                const FIELDS: &[&str] = &["pg_type", "is_nl", "pg_type_pattern"];
-                _serde::Deserializer::deserialize_struct(
-                    __deserializer,
-                    "PgTypeRecord",
-                    FIELDS,
-                    __Visitor {
-                        marker: _serde::__private228::PhantomData::<Self>,
-                        lt: _serde::__private228::PhantomData,
-                    },
-                )
-            }
-        }
-    };
-    impl TryFrom<(PgType, IsNl, PgTypePattern)> for PgTypeRecord {
+    #[derive(Debug, Deserialize, Optml)]
+    struct PgTypeRecordRaw {
+        pg_type: PgType,
+        is_nl: IsNl,
+        pg_type_pattern: PgTypePattern,
+    }
+    impl TryFrom<PgTypeRecordRaw> for PgTypeRecord {
         type Error = String;
-        fn try_from(v: (PgType, IsNl, PgTypePattern)) -> Result<Self, Self::Error> {
+        fn try_from(v: PgTypeRecordRaw) -> Result<Self, Self::Error> {
             let cant_support_nl_vrts_message = "cant support nl vrts: ";
             let cant_support_arr_version_message = "cant support arr_version: ";
-            match &v.0.can_be_nl() {
+            match &v.pg_type.can_be_nl() {
                 CanBeNl::False => {
-                    if matches!(&v.1, IsNl::True) {
+                    if matches!(&v.is_nl, IsNl::True) {
                         return Err(format!("{cant_support_nl_vrts_message}{v:#?}"));
                     }
-                    match &v.2 {
+                    match &v.pg_type_pattern {
                         PgTypePattern::Stdrt => Ok(Self {
-                            pg_type: v.0,
-                            is_nl: v.1,
-                            pg_type_pattern: v.2,
+                            pg_type: v.pg_type,
+                            is_nl: v.is_nl,
+                            pg_type_pattern: v.pg_type_pattern,
                         }),
-                        PgTypePattern::ArrDim1 { dim1_is_nl } => match &v.0.can_be_an_arr_el() {
-                            CanBeAnArrEl::False => {
-                                Err(format!("{cant_support_arr_version_message}{v:#?}"))
+                        PgTypePattern::ArrDim1 { dim1_is_nl } => {
+                            match &v.pg_type.can_be_an_arr_el() {
+                                CanBeAnArrEl::False => {
+                                    Err(format!("{cant_support_arr_version_message}{v:#?}"))
+                                }
+                                CanBeAnArrEl::True => match &dim1_is_nl {
+                                    IsNl::False => Ok(Self {
+                                        pg_type: v.pg_type,
+                                        is_nl: v.is_nl,
+                                        pg_type_pattern: v.pg_type_pattern,
+                                    }),
+                                    IsNl::True => {
+                                        Err(format!("{cant_support_nl_vrts_message}{v:#?}"))
+                                    }
+                                },
                             }
-                            CanBeAnArrEl::True => match &dim1_is_nl {
-                                IsNl::False => Ok(Self {
-                                    pg_type: v.0,
-                                    is_nl: v.1,
-                                    pg_type_pattern: v.2,
-                                }),
-                                IsNl::True => Err(format!("{cant_support_nl_vrts_message}{v:#?}")),
-                            },
-                        },
+                        }
                     }
                 }
-                CanBeNl::True => match &v.2 {
+                CanBeNl::True => match &v.pg_type_pattern {
                     PgTypePattern::Stdrt => Ok(Self {
-                        pg_type: v.0,
-                        is_nl: v.1,
-                        pg_type_pattern: v.2,
+                        pg_type: v.pg_type,
+                        is_nl: v.is_nl,
+                        pg_type_pattern: v.pg_type_pattern,
                     }),
-                    PgTypePattern::ArrDim1 { .. } => match &v.0.can_be_an_arr_el() {
+                    PgTypePattern::ArrDim1 { .. } => match &v.pg_type.can_be_an_arr_el() {
                         CanBeAnArrEl::False => {
                             Err(format!("{cant_support_arr_version_message}{v:#?}"))
                         }
                         CanBeAnArrEl::True => Ok(Self {
-                            pg_type: v.0,
-                            is_nl: v.1,
-                            pg_type_pattern: v.2,
+                            pg_type: v.pg_type,
+                            is_nl: v.is_nl,
+                            pg_type_pattern: v.pg_type_pattern,
                         }),
                     },
                 },
