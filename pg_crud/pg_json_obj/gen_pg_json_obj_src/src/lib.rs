@@ -7017,7 +7017,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     mb_write_ts_into_file(
         gen_pg_json_obj_config.pg_table_columns_write_into_pg_table_columns_using_pg_json_objs,
-        "pg_table_columns_using_pg_json_objects",
+        "pg_table_columns_using_pg_json_objs",
         &quote! {
             pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjects {
                 #(#fields_ts)*
