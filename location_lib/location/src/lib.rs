@@ -425,7 +425,7 @@ pub fn location(input: Ts) -> Ts {
                     } else {
                         panic!("5749e920");
                     };
-                    let inner_type_with_serde_ts = {
+                    let inn_type_with_serde_ts = {
                         format!(
                             "{}{}",
                             {
@@ -438,7 +438,7 @@ pub fn location(input: Ts) -> Ts {
                         .parse::<Ts2>()
                         .expect("9ff40f7e")
                     };
-                    quote! {#el_ident(#inner_type_with_serde_ts)}
+                    quote! {#el_ident(#inn_type_with_serde_ts)}
                 });
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };

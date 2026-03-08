@@ -6,7 +6,7 @@ pub fn enum_extension(v: Ts) -> Ts {
     panic_location::panic_location();
     //it only supported for enums without values
     let di: DeriveInput = parse(v).expect("c6b8e80e");
-    //todo to implement into_arr() and into_vec - must implement Default for all inner vrt types
+    //todo to implement into_arr() and into_vec - must implement Default for all inn vrt types
     let len = match di.data.clone() {
         Data::Enum(enum_item) => enum_item.variants.len(),
         Data::Struct(_) | Data::Union(_) => panic!("bcbaca28"),

@@ -768,7 +768,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
     BoundedVec<T, LENGTH>
 {
     #[must_use]
-    pub fn into_inner(self) -> Vec<T> {
+    pub fn into_inn(self) -> Vec<T> {
         self.0
     }
     pub fn pg_json_type_qp(
@@ -877,7 +877,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         Ok(acc)
     }
     #[must_use]
-    pub const fn to_inner(&self) -> &Vec<T> {
+    pub const fn to_inn(&self) -> &Vec<T> {
         &self.0
     }
 }

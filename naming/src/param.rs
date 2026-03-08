@@ -41,7 +41,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "payload", "example"],
     ["self", "create"],
     ["self", "read"],
-    ["self", "read", "inner"],
+    ["self", "read", "inn"],
     ["self", "upd"],
     ["self", "upd", "for", "query"],
     ["self", "del"],
@@ -882,7 +882,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["d", "self"],
     ["d", "self", "if"],
     [
-        "self", "read", "ids", "to2", "dims", "vec", "read", "inner", "acc"
+        "self", "read", "ids", "to2", "dims", "vec", "read", "inn", "acc"
     ],
     ["self", "gen", "pg", "json", "obj", "mod"],
     ["self", "gen", "pg", "table", "mod"]

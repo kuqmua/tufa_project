@@ -59,7 +59,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["non", "existing", "p", "ks", "and", "rollback"],
     ["commit", "failed"],
     [
-        "op", "done", "but", "p", "k", "inner", "type", "try", "from", "p", "k", "inner", "type",
+        "op", "done", "but", "p", "k", "inn", "type", "try", "from", "p", "k", "inn", "type",
         "with", "serde", "failed"
     ],
     ["app", "state"],
@@ -70,19 +70,19 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["extraction", "result"],
     ["serde", "json", "to", "string"],
     [
-        "op", "done", "but", "p", "k", "inner", "type", "try", "from", "p", "k", "inner", "type",
+        "op", "done", "but", "p", "k", "inn", "type", "try", "from", "p", "k", "inn", "type",
         "with", "serde", "failed", "in", "server"
     ],
     [
-        "op", "done", "but", "p", "k", "inner", "type", "try", "from", "p", "k", "inner", "type",
+        "op", "done", "but", "p", "k", "inn", "type", "try", "from", "p", "k", "inn", "type",
         "with", "serde", "failed", "in", "client"
     ],
     [
-        "op", "done", "but", "p", "k", "inner", "type", "try", "from", "p", "k", "inner", "type",
+        "op", "done", "but", "p", "k", "inn", "type", "try", "from", "p", "k", "inn", "type",
         "with", "serde", "failed", "in", "client", "er", "unnamed"
     ],
     [
-        "op", "done", "but", "p", "k", "inner", "type", "try", "from", "p", "k", "inner", "type",
+        "op", "done", "but", "p", "k", "inn", "type", "try", "from", "p", "k", "inn", "type",
         "with", "serde", "failed", "in", "client", "many"
     ],
     ["no", "payload", "fields"],
@@ -93,14 +93,13 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["query", "string"],
     ["binded", "query"],
     ["current", "vec", "len"],
-    ["into", "inner", "type", "vec"],
+    ["into", "inn", "type", "vec"],
     ["not", "unique", "field"],
     ["get", "axum", "http", "status", "code"],
     ["body", "bytes"],
     ["into", "res"],
     [
-        "pk", "inner", "type", "try", "from", "pk", "inner", "type", "with", "serde", "in",
-        "client"
+        "pk", "inn", "type", "try", "from", "pk", "inn", "type", "with", "serde", "in", "client"
     ],
     ["check", "commit"],
     ["check", "commit", "er"],
@@ -251,7 +250,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["std"],
     ["opt"],
     ["p"],
-    ["inner"],
+    ["inn"],
     ["existing"],
     ["non"],
     ["current"],
@@ -263,7 +262,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["permission"],
     ["tvfrr"],
     ["read"],
-    ["read", "inner"],
+    ["read", "inn"],
     ["logic"],
     ["extraction"],
     ["generated"],
@@ -700,7 +699,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["common", "read", "ids", "from", "co"],
     ["gen", "pg", "table", "pk"],
     ["read", "new", "or", "try", "new", "unwraped", "for", "test"],
-    ["read", "ids", "to", "opt", "v", "read", "inner"],
+    ["read", "ids", "to", "opt", "v", "read", "inn"],
     ["try", "bind"],
     ["select", "only", "updd", "ids", "qb"],
     ["create", "for", "query"],
@@ -714,7 +713,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["select", "only", "created", "ids", "qb"],
     ["upd", "for", "query"],
     ["upd", "for", "query", "vec"],
-    ["read", "inner", "vec", "vec"],
+    ["read", "inn", "vec", "vec"],
     ["create", "vec"],
     ["read", "ids", "and", "create", "into", "opt", "v", "read"],
     [
@@ -731,13 +730,13 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["read", "ids", "and", "create", "into", "read"],
     ["read", "ids", "and", "create", "into", "table", "type"],
     [
-        "read", "inner", "into", "read", "with", "new", "or", "try", "new", "unwraped"
+        "read", "inn", "into", "read", "with", "new", "or", "try", "new", "unwraped"
     ],
     [
-        "read", "inner", "into", "upd", "with", "new", "or", "try", "new", "unwraped"
+        "read", "inn", "into", "upd", "with", "new", "or", "try", "new", "unwraped"
     ],
-    ["read", "ids", "to2", "dims", "vec", "of", "read", "inner"],
-    ["read", "ids", "into", "opt", "v", "read", "inner"],
+    ["read", "ids", "to2", "dims", "vec", "of", "read", "inn"],
+    ["read", "ids", "into", "opt", "v", "read", "inn"],
     ["previous", "read", "and", "opt", "upd", "into", "read"],
     [
         "read", "ids", "and", "create", "into", "vec", "where", "equal", "using", "fields"
@@ -752,7 +751,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "read", "ids", "and", "create", "into", "where", "equal", "to", "json", "field"
     ],
     ["opt", "vec", "create"],
-    ["read", "ids", "to2", "dims", "vec", "read", "inner"],
+    ["read", "ids", "to2", "dims", "vec", "read", "inn"],
     [
         "read", "ids", "and", "create", "into", "opt", "vec", "where", "equal", "to", "json",
         "field"

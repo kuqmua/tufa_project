@@ -44,7 +44,7 @@ trait_al!(SelectAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(WhereAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhereFilter<'__>);
 trait_al!(ReadAl = DebugClonePartialEqSerdeAl);
 trait_al!(ReadIdsAl = DebugClonePartialEqSerdeAl);
-trait_al!(ReadInnerAl = DebugClonePartialEqAl);
+trait_al!(ReadInnAl = DebugClonePartialEqAl);
 trait_al!(UpdAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(UpdForQueryAl = DebugClonePartialEqSerializeAl);
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -65,8 +65,8 @@ pub trait PgType {
     fn normalize(v: Self::Read) -> Self::Read;
     type ReadIds: ReadIdsAl;
     fn select_only_ids_qp(column: &str) -> Result<String, QpEr>;
-    type ReadInner: ReadInnerAl;
-    fn into_inner(v: Self::Read) -> Self::ReadInner;
+    type ReadInn: ReadInnAl;
+    fn into_inn(v: Self::Read) -> Self::ReadInn;
     type Upd: UpdAl;
     type UpdForQuery: UpdForQueryAl;
     fn upd_qp(
@@ -113,8 +113,8 @@ pub trait PgJsonType {
     type Read: ReadAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneEl;
     type ReadIds: ReadIdsAl;
     fn select_only_ids_qp(column_field: &str) -> Result<String, QpEr>;
-    type ReadInner: ReadInnerAl;
-    fn into_inner(v: Self::Read) -> Self::ReadInner;
+    type ReadInn: ReadInnAl;
+    fn into_inn(v: Self::Read) -> Self::ReadInn;
     type Upd: UpdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     type UpdForQuery: UpdForQueryAl + From<Self::Upd>;
     fn upd_qp(
@@ -174,7 +174,7 @@ pub trait PgJsonTypeObjVecElId {
         + From<<Self::PgJsonType as PgJsonType>::Create>
         + From<<Self::PgJsonType as PgJsonType>::Upd>;
     type Upd: UpdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + ToErrString;
-    type ReadInner: ReadInnerAl;
+    type ReadInn: ReadInnAl;
     fn qb_string_as_pg_text_create_for_query(
         v: <Self::PgJsonType as PgJsonType>::CreateForQuery,
         query: Query<'_, Postgres, PgArguments>,
@@ -183,7 +183,7 @@ pub trait PgJsonTypeObjVecElId {
         v: <Self::PgJsonType as PgJsonType>::UpdForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    fn get_inner(v: &<Self::PgJsonType as PgJsonType>::CreateForQuery) -> &Self::ReadInner;
+    fn get_inn(v: &<Self::PgJsonType as PgJsonType>::CreateForQuery) -> &Self::ReadInn;
     fn incr_checked_add_one(incr: &mut u64) -> Result<u64, QpEr>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -192,14 +192,14 @@ pub trait PgTypeTestCases {
     type PgType: PgType;
     type Select: SelectAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_create() -> Option<Vec<<Self::PgType as PgType>::Create>>;
-    fn read_ids_to_2_dims_vec_read_inner(
+    fn read_ids_to_2_dims_vec_read_inn(
         read_ids: &<Self::PgType as PgType>::ReadIds,
-    ) -> Vec<Vec<<Self::PgType as PgType>::ReadInner>>;
-    fn read_inner_into_read_with_new_or_try_new_unwraped(
-        v: <Self::PgType as PgType>::ReadInner,
+    ) -> Vec<Vec<<Self::PgType as PgType>::ReadInn>>;
+    fn read_inn_into_read_with_new_or_try_new_unwraped(
+        v: <Self::PgType as PgType>::ReadInn,
     ) -> <Self::PgType as PgType>::Read;
-    fn read_inner_into_upd_with_new_or_try_new_unwraped(
-        v: <Self::PgType as PgType>::ReadInner,
+    fn read_inn_into_upd_with_new_or_try_new_unwraped(
+        v: <Self::PgType as PgType>::ReadInn,
     ) -> <Self::PgType as PgType>::Upd;
     fn upd_to_read_ids(v: &<Self::PgType as PgType>::Upd) -> <Self::PgType as PgType>::ReadIds;
     fn read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
@@ -318,18 +318,18 @@ pub trait PgJsonTypeTestCases {
     type PgJsonType: PgJsonType;
     type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_create() -> Option<Vec<<Self::PgJsonType as PgJsonType>::Create>>;
-    fn read_ids_to_2_dims_vec_read_inner(
+    fn read_ids_to_2_dims_vec_read_inn(
         read_ids: &<Self::PgJsonType as PgJsonType>::ReadIds,
-    ) -> Vec<Vec<<Self::PgJsonType as PgJsonType>::ReadInner>>;
-    fn read_inner_into_read_with_new_or_try_new_unwraped(
-        v: <Self::PgJsonType as PgJsonType>::ReadInner,
+    ) -> Vec<Vec<<Self::PgJsonType as PgJsonType>::ReadInn>>;
+    fn read_inn_into_read_with_new_or_try_new_unwraped(
+        v: <Self::PgJsonType as PgJsonType>::ReadInn,
     ) -> <Self::PgJsonType as PgJsonType>::Read;
-    fn read_inner_into_upd_with_new_or_try_new_unwraped(
-        v: <Self::PgJsonType as PgJsonType>::ReadInner,
+    fn read_inn_into_upd_with_new_or_try_new_unwraped(
+        v: <Self::PgJsonType as PgJsonType>::ReadInn,
     ) -> <Self::PgJsonType as PgJsonType>::Upd;
-    fn read_ids_into_opt_v_read_inner(
+    fn read_ids_into_opt_v_read_inn(
         v: <Self::PgJsonType as PgJsonType>::ReadIds,
-    ) -> Option<V<<Self::PgJsonType as PgJsonType>::ReadInner>>;
+    ) -> Option<V<<Self::PgJsonType as PgJsonType>::ReadInn>>;
     fn upd_to_read_ids(
         v: &<Self::PgJsonType as PgJsonType>::Upd,
     ) -> <Self::PgJsonType as PgJsonType>::ReadIds;
@@ -679,15 +679,15 @@ impl<'query_lt, T: PgTypeWhereFilter<'query_lt>> PgTypeWhereFilter<'query_lt> fo
     }
     fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         let mut acc = String::default();
-        let mut add_oprtr_inner_h = false;
+        let mut add_oprtr_inn_h = false;
         for el in &self.v.0 {
-            match PgTypeWhereFilter::qp(el, incr, column, add_oprtr_inner_h) {
+            match PgTypeWhereFilter::qp(el, incr, column, add_oprtr_inn_h) {
                 Ok(v) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{v} ").is_err() {
                         return Err(QpEr::WriteIntoBuffer { loc: loc!() });
                     }
-                    add_oprtr_inner_h = true;
+                    add_oprtr_inn_h = true;
                 }
                 Err(er) => {
                     return Err(er);
@@ -1031,7 +1031,7 @@ impl DfltOptSomeVecOneElMaxPageSize for PgnStartsWithZero {
         Self(PgnBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
-//this needed coz serde Option<Opt<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both opts: inner and parent is null then it skip - its not correct
+//this needed coz serde Option<Opt<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both opts: inn and parent is null then it skip - its not correct
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct V<T> {
     pub v: T,

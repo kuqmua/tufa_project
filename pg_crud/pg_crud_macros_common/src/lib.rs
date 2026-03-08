@@ -27,13 +27,13 @@ use naming::{
     ReadIdsAndCreateIntoPgJsonTypeOptVecWhereRegexSc, ReadIdsAndCreateIntoReadSc,
     ReadIdsAndCreateIntoTableTypeSc, ReadIdsAndCreateIntoVecWhereEqualToJsonFieldSc,
     ReadIdsAndCreateIntoVecWhereEqualUsingFieldsSc, ReadIdsAndCreateIntoWhereEqualSc,
-    ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadIdsIntoOptVReadInnerSc, ReadIdsSc,
-    ReadIdsTo2DimsVecReadInnerSc, ReadIdsToOptVReadDfltOptSomeVecOneElSc, ReadIdsUcc,
-    ReadInnerIntoReadWithNewOrTryNewUnwrapedSc, ReadInnerIntoUpdWithNewOrTryNewUnwrapedSc,
-    ReadInnerUcc, ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc,
-    SelectOnlyIdsQpSc, SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc, SelectQpSc, SelectUcc,
-    SelfUcc, TableTypeSc, TableTypeUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc, UpdToReadIdsSc, UpdUcc,
-    VSc, VUcc, ValueSc, WhereUcc,
+    ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadIdsIntoOptVReadInnSc, ReadIdsSc,
+    ReadIdsTo2DimsVecReadInnSc, ReadIdsToOptVReadDfltOptSomeVecOneElSc, ReadIdsUcc,
+    ReadInnIntoReadWithNewOrTryNewUnwrapedSc, ReadInnIntoUpdWithNewOrTryNewUnwrapedSc, ReadInnUcc,
+    ReadSc, ReadUcc, SelectOnlyCreatedIdsQbSc, SelectOnlyCreatedIdsQpSc, SelectOnlyIdsQpSc,
+    SelectOnlyUpddIdsQbSc, SelectOnlyUpddIdsQpSc, SelectQpSc, SelectUcc, SelfUcc, TableTypeSc,
+    TableTypeUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc, UpdToReadIdsSc, UpdUcc, VSc, VUcc, ValueSc,
+    WhereUcc,
     param::{SelfCreateUcc, SelfSelectUcc, SelfWhereUcc},
 };
 use optml::Optml;
@@ -718,8 +718,8 @@ pub fn gen_impl_pg_json_type_ts(
     read_type_ts: &dyn ToTokens,
     read_ids_type_ts: &dyn ToTokens,
     select_only_ids_qp_ts: &dyn ToTokens,
-    read_inner_type_ts: &dyn ToTokens,
-    into_inner_ts: &dyn ToTokens,
+    read_inn_type_ts: &dyn ToTokens,
+    into_inn_ts: &dyn ToTokens,
     upd_type_ts: &dyn ToTokens,
     upd_type_for_query_ts: &dyn ToTokens,
     upd_qp_ts: &dyn ToTokens,
@@ -765,9 +765,9 @@ pub fn gen_impl_pg_json_type_ts(
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #select_only_ids_qp_ts
             }
-            type #ReadInnerUcc = #read_inner_type_ts;
-            fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
-                #into_inner_ts
+            type #ReadInnUcc = #read_inn_type_ts;
+            fn into_inn(#VSc: Self::#ReadUcc) -> Self::#ReadInnUcc {
+                #into_inn_ts
             }
             type #UpdUcc = #upd_type_ts;
             type #UpdForQueryUcc = #upd_type_for_query_ts;
@@ -1028,8 +1028,8 @@ pub fn gen_impl_pg_type_ts(
     normalize_ts: &dyn ToTokens,
     read_ids_ts: &dyn ToTokens,
     select_only_ids_qp_ts: &dyn ToTokens,
-    ident_read_inner_ucc: &dyn ToTokens,
-    into_inner_ts: &dyn ToTokens,
+    ident_read_inn_ucc: &dyn ToTokens,
+    into_inn_ts: &dyn ToTokens,
     ident_upd_ucc: &dyn ToTokens,
     ident_upd_for_query_ucc: &dyn ToTokens,
     upd_qp_v_undrscr: &UpdQpValueUndrscr,
@@ -1086,9 +1086,9 @@ pub fn gen_impl_pg_type_ts(
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #select_only_ids_qp_ts
             }
-            type #ReadInnerUcc = #ident_read_inner_ucc;
-            fn into_inner(#VSc: Self::#ReadUcc) -> Self::#ReadInnerUcc {
-                #into_inner_ts
+            type #ReadInnUcc = #ident_read_inn_ucc;
+            fn into_inn(#VSc: Self::#ReadUcc) -> Self::#ReadInnUcc {
+                #into_inn_ts
             }
             type #UpdUcc = #ident_upd_ucc;
             type #UpdForQueryUcc = #ident_upd_for_query_ucc;
@@ -1173,35 +1173,35 @@ fn gen_opt_vec_create_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
         }
     }
 }
-fn gen_read_ids_to_2_dims_vec_read_inner_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+fn gen_read_ids_to_2_dims_vec_read_inn_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
-        fn #ReadIdsTo2DimsVecReadInnerSc(
+        fn #ReadIdsTo2DimsVecReadInnSc(
             #ReadIdsSc: &#path_ts::#ReadIdsUcc
-        ) -> Vec<Vec<#path_ts::#ReadInnerUcc>> {
+        ) -> Vec<Vec<#path_ts::#ReadInnUcc>> {
             #ts
         }
     }
 }
-fn gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
+fn gen_read_inn_into_read_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadInnerIntoReadWithNewOrTryNewUnwrapedSc(
+        fn #ReadInnIntoReadWithNewOrTryNewUnwrapedSc(
             #VSc: #type_ts
         ) -> #path_ts::#ReadUcc {
             #ts
         }
     }
 }
-fn gen_read_inner_into_upd_with_new_or_try_new_unwraped_ts(
+fn gen_read_inn_into_upd_with_new_or_try_new_unwraped_ts(
     type_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #ReadInnerIntoUpdWithNewOrTryNewUnwrapedSc(#VSc: #type_ts) -> #path_ts::#UpdUcc {
+        fn #ReadInnIntoUpdWithNewOrTryNewUnwrapedSc(#VSc: #type_ts) -> #path_ts::#UpdUcc {
             #ts
         }
     }
@@ -1529,9 +1529,9 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
     opt_vec_create_ts: &dyn ToTokens,
-    read_ids_to_2_dims_vec_read_inner_ts: &dyn ToTokens,
-    read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_inner_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
+    read_ids_to_2_dims_vec_read_inn_ts: &dyn ToTokens,
+    read_inn_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
+    read_inn_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     upd_to_read_ids_ts: &dyn ToTokens,
     read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_and_opt_upd_into_read_ts: &dyn ToTokens,
@@ -1564,21 +1564,21 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let opt_vec_create_ts_2d58042f =
         gen_opt_vec_create_ts(&self_pg_type_as_pg_type_ts, &opt_vec_create_ts);
-    let read_ids_to_2_dims_vec_read_inner_ts_513b8046 = gen_read_ids_to_2_dims_vec_read_inner_ts(
+    let read_ids_to_2_dims_vec_read_inn_ts_513b8046 = gen_read_ids_to_2_dims_vec_read_inn_ts(
         &self_pg_type_as_pg_type_ts,
-        &read_ids_to_2_dims_vec_read_inner_ts,
+        &read_ids_to_2_dims_vec_read_inn_ts,
     );
-    let read_inner_into_read_with_new_or_try_new_unwraped_ts_affc58f5 =
-        gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
+    let read_inn_into_read_with_new_or_try_new_unwraped_ts_affc58f5 =
+        gen_read_inn_into_read_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_type_as_pg_type_ts,
-            &read_inner_into_read_with_new_or_try_new_unwraped_ts,
+            &read_inn_into_read_with_new_or_try_new_unwraped_ts,
         );
-    let read_inner_into_upd_with_new_or_try_new_unwraped_ts_c38e6621 =
-        gen_read_inner_into_upd_with_new_or_try_new_unwraped_ts(
+    let read_inn_into_upd_with_new_or_try_new_unwraped_ts_c38e6621 =
+        gen_read_inn_into_upd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_type_as_pg_type_ts,
-            &read_inner_into_upd_with_new_or_try_new_unwraped_ts,
+            &read_inn_into_upd_with_new_or_try_new_unwraped_ts,
         );
     let upd_to_read_ids_ts_ee17b828 =
         gen_upd_to_read_ids_ts(&self_pg_type_as_pg_type_ts, &upd_to_read_ids_ts);
@@ -1717,9 +1717,9 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             type #PgTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
             #opt_vec_create_ts_2d58042f
-            #read_ids_to_2_dims_vec_read_inner_ts_513b8046
-            #read_inner_into_read_with_new_or_try_new_unwraped_ts_affc58f5
-            #read_inner_into_upd_with_new_or_try_new_unwraped_ts_c38e6621
+            #read_ids_to_2_dims_vec_read_inn_ts_513b8046
+            #read_inn_into_read_with_new_or_try_new_unwraped_ts_affc58f5
+            #read_inn_into_upd_with_new_or_try_new_unwraped_ts_c38e6621
             #upd_to_read_ids_ts_ee17b828
             #read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_18ef45e8
             #previous_read_and_opt_upd_into_read_ts_c48b8ede
@@ -1771,10 +1771,10 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
     opt_vec_create_ts: &dyn ToTokens,
-    read_ids_to_2_dims_vec_read_inner_ts: &dyn ToTokens,
-    read_inner_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_inner_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
-    read_ids_into_opt_v_read_inner_ts: &dyn ToTokens,
+    read_ids_to_2_dims_vec_read_inn_ts: &dyn ToTokens,
+    read_inn_into_read_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
+    read_inn_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
+    read_ids_into_opt_v_read_inn_ts: &dyn ToTokens,
     upd_to_read_ids_ts: &dyn ToTokens,
     read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts: &dyn ToTokens,
     previous_read_and_opt_upd_into_read_ts: &dyn ToTokens,
@@ -1808,21 +1808,21 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
     let opt_vec_create_ts_a442630a =
         gen_opt_vec_create_ts(&self_pg_json_type_as_pg_json_type_ts, &opt_vec_create_ts);
-    let read_ids_to_2_dims_vec_read_inner_ts_da1a7cf8 = gen_read_ids_to_2_dims_vec_read_inner_ts(
+    let read_ids_to_2_dims_vec_read_inn_ts_da1a7cf8 = gen_read_ids_to_2_dims_vec_read_inn_ts(
         &self_pg_json_type_as_pg_json_type_ts,
-        &read_ids_to_2_dims_vec_read_inner_ts,
+        &read_ids_to_2_dims_vec_read_inn_ts,
     );
-    let read_inner_into_read_with_new_or_try_new_unwraped_ts_ccead2b6 =
-        gen_read_inner_into_read_with_new_or_try_new_unwraped_ts(
+    let read_inn_into_read_with_new_or_try_new_unwraped_ts_ccead2b6 =
+        gen_read_inn_into_read_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_inner_into_read_with_new_or_try_new_unwraped_ts,
+            &read_inn_into_read_with_new_or_try_new_unwraped_ts,
         );
-    let read_inner_into_upd_with_new_or_try_new_unwraped_ts_b45cde72 =
-        gen_read_inner_into_upd_with_new_or_try_new_unwraped_ts(
+    let read_inn_into_upd_with_new_or_try_new_unwraped_ts_b45cde72 =
+        gen_read_inn_into_upd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_json_type_as_pg_json_type_ts,
-            &read_inner_into_upd_with_new_or_try_new_unwraped_ts,
+            &read_inn_into_upd_with_new_or_try_new_unwraped_ts,
         );
     let upd_to_read_ids_ts_d7e0cbf0 =
         gen_upd_to_read_ids_ts(&self_pg_json_type_as_pg_json_type_ts, &upd_to_read_ids_ts);
@@ -1957,13 +1957,13 @@ pub fn gen_impl_pg_json_type_test_cases_for_ident_ts(
             type #PgJsonTypeUcc = #SelfUcc;
             type #SelectUcc = #ident_select_ucc;
             #opt_vec_create_ts_a442630a
-            #read_ids_to_2_dims_vec_read_inner_ts_da1a7cf8
-            #read_inner_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
-            #read_inner_into_upd_with_new_or_try_new_unwraped_ts_b45cde72
-            fn #ReadIdsIntoOptVReadInnerSc(
+            #read_ids_to_2_dims_vec_read_inn_ts_da1a7cf8
+            #read_inn_into_read_with_new_or_try_new_unwraped_ts_ccead2b6
+            #read_inn_into_upd_with_new_or_try_new_unwraped_ts_b45cde72
+            fn #ReadIdsIntoOptVReadInnSc(
                 #VSc: #self_pg_json_type_as_pg_json_type_ts::#ReadIdsUcc
-            ) -> Option<#import::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnerUcc>> {
-                #read_ids_into_opt_v_read_inner_ts
+            ) -> Option<#import::#VUcc<#self_pg_json_type_as_pg_json_type_ts::#ReadInnUcc>> {
+                #read_ids_into_opt_v_read_inn_ts
             }
             #upd_to_read_ids_ts_d7e0cbf0
             #read_ids_to_opt_v_read_dflt_opt_some_vec_one_el_ts_f5d1b395
