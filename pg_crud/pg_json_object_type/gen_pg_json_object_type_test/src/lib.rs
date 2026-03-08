@@ -5,7 +5,7 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_json_object_type_test_content",
+            "gen_pg_json_object_type_test_cnt",
             "../pg_crud/pg_json_object_type/",
             r#"[dependencies]
 sqlx.workspace = true

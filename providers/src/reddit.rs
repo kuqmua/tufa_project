@@ -58,7 +58,7 @@ pub struct DataChildrenElData {
     pub hidden: Option<bool>,
     pub is_crosspostable: Option<bool>,
     pub is_meta: Option<bool>,
-    pub is_original_content: Option<bool>,
+    pub is_original_cnt: Option<bool>,
     pub is_reddit_media_domain: Option<bool>,
     pub is_self: Option<bool>,
     pub is_video: Option<bool>,
@@ -107,7 +107,7 @@ pub struct DataChildrenElData {
 // "media_embed": {},//mb...
 // "thumbnail_width": 140,//dont think so
 // "author_flair_template_id": null,//dont think so
-// "is_original_content": false,//already
+// "is_original_cnt": false,//already
 // "user_reports": [],//mb...
 // "secure_media": null,//dont think so
 // "is_reddit_media_domain": true,//already

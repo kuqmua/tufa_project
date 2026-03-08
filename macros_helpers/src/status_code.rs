@@ -310,11 +310,11 @@ impl TryFrom<&String> for StatusCode {
             Ok(Self::Accepted202)
         } else if v == "non_authoritative_information_203" {
             Ok(Self::NonAuthoritativeInformation203)
-        } else if v == "no_content_204" {
+        } else if v == "no_cnt_204" {
             Ok(Self::NoContent204)
-        } else if v == "reset_content_205" {
+        } else if v == "reset_cnt_205" {
             Ok(Self::ResetContent205)
-        } else if v == "partial_content_206" {
+        } else if v == "partial_cnt_206" {
             Ok(Self::PartialContent206)
         } else if v == "multi_status_207" {
             Ok(Self::MultiStatus207)

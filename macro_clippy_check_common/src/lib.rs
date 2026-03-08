@@ -1,9 +1,9 @@
 #[cfg(feature = "test-utils")]
-pub fn clippy_check(crate_name: &str, cmd_path: &str, extra_content: &str, content_to_gen: &str) {
+pub fn clippy_check(crate_name: &str, cmd_path: &str, extra_cnt: &str, content_to_gen: &str) {
     use std::path::PathBuf;
     use std::{fs::write, process::Command};
     let path = format!("../{crate_name}/");
-    let cargo_toml_content = format!(
+    let cargo_toml_cnt = format!(
         r#"[package]
 name = "{crate_name}"
 version = "0.1.0"
@@ -17,19 +17,15 @@ categories = ["category"]
 [lints]
 workspace = true"#
     );
-    let lib_rs_content = "\n";
+    let lib_rs_cnt = "\n";
     let path_lib_rs = format!("{path}src/lib.rs");
     let path_cargo_toml = format!("{path}Cargo.toml");
-    write(&path_lib_rs, lib_rs_content).expect("404ab180");
-    write(
-        &path_cargo_toml,
-        format!("{cargo_toml_content}\n{extra_content}"),
-    )
-    .expect("3757da9b");
+    write(&path_lib_rs, lib_rs_cnt).expect("404ab180");
+    write(&path_cargo_toml, format!("{cargo_toml_cnt}\n{extra_cnt}")).expect("3757da9b");
     write(&path_lib_rs, content_to_gen).expect("55124f90");
     let return_to_previous = || {
-        write(&path_lib_rs, lib_rs_content).expect("79231418");
-        write(&path_cargo_toml, cargo_toml_content).expect("ec801a87");
+        write(&path_lib_rs, lib_rs_cnt).expect("79231418");
+        write(&path_cargo_toml, cargo_toml_cnt).expect("ec801a87");
     };
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let target_crate_dir = manifest_dir.join(format!("{cmd_path}{crate_name}"));

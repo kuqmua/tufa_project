@@ -1320,7 +1320,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                         }
                     };
-                    let gen_ser_content_b5af560e = |ts: &dyn ToTokens| {
+                    let gen_ser_cnt_b5af560e = |ts: &dyn ToTokens| {
                         quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_stdrt_not_null_origin_dq_ts, &#self_dot_zero_ts #ts)}
                     };
                     let gen_serde_state_init_ts = |param_nbr: &ParamNbr| {
@@ -1340,7 +1340,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_param_ts)?;}
                     };
                     let serde_ser_serialize_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
-                    let ser_content_e5bb5640_ts = {
+                    let ser_cnt_e5bb5640_ts = {
                         let gen_self_zero_tokens_ts = |ts: &dyn ToTokens| {
                             quote! {&#self_dot_zero_ts.#ts}
                         };
@@ -1353,8 +1353,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             #serde_ser_serialize_struct_end_ts
                         }
                     };
-                    let impl_ser_for_pg_type_not_null_tokens_ser_content_e5bb5640_ts = gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&ser_content_e5bb5640_ts);
-                    let impl_ser_for_uuid_uuid_ts = gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&gen_ser_content_b5af560e(&quote! {.to_string()}));
+                    let impl_ser_for_pg_type_not_null_tokens_ser_cnt_e5bb5640_ts = gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&ser_cnt_e5bb5640_ts);
+                    let impl_ser_for_uuid_uuid_ts = gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(&gen_ser_cnt_b5af560e(&quote! {.to_string()}));
                     let gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens = |ts: &dyn ToTokens| {
                         let gen_serialize_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
                             let start_or_end_ts = gen_start_or_end_sc(start_or_end);
@@ -1380,7 +1380,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let gen_b5af560e_ts = |ts: &dyn ToTokens|{
                         DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_tokens(
-                            &gen_ser_content_b5af560e(&ts)
+                            &gen_ser_cnt_b5af560e(&ts)
                         ))
                     };
                     match &pg_type {
@@ -1511,7 +1511,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })),
                         PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_ser_for_uuid_uuid_ts),
-                        PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_ser_for_pg_type_not_null_tokens_ser_content_e5bb5640_ts),
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_ser_for_pg_type_not_null_tokens_ser_cnt_e5bb5640_ts),
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_not_null_date_origin_ucc)),
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_ucc)),
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_not_null_origin_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_ucc)),

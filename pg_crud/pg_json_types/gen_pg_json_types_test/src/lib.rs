@@ -5,7 +5,7 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_json_types_test_content",
+            "gen_pg_json_types_test_cnt",
             "../pg_crud/pg_json_types/",
             r#"[dependencies]
 schemars.workspace = true
@@ -25,8 +25,8 @@ uuid.workspace = true
 test-utils = []"#,
             &gen_pg_json_types_source::gen_pg_json_types(&quote! {
                 {
-                    "pg_table_columns_content_write_into_pg_table_columns_using_pg_json_types": "False",
-                    "whole_content_write_into_gen_pg_json_types": "False",
+                    "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json_types": "False",
+                    "whole_cnt_write_into_gen_pg_json_types": "False",
                     "vrt": "WithDimOne"
                 }
             })

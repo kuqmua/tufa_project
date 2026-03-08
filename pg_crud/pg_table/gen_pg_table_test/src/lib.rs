@@ -8,7 +8,7 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_table_test_content",
+            "gen_pg_table_test_cnt",
             "../pg_crud/pg_table/",
             r#"[dependencies]
 axum.workspace = true

@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_types_test_content"
+name = "gen_pg_types_test_cnt"
 version = "0.1.0"
 edition = "2024"
 description = "description"
