@@ -273,7 +273,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     {
       "column_156": {
-        "animal_with_id_as_not_null_jsonb_obj_with_id_sel": [
+        "animal_with_id_as_nn_jsonb_obj_with_id_sel": [
           {
             "id": null
           },
@@ -335,7 +335,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     "column_0": {
       "v": 10
     },
-    "animal_as_not_null_jsonb_obj": {
+    "animal_as_nn_jsonb_obj": {
       "v": [
         {
           "field_0": {
@@ -419,7 +419,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     "column_0": {
       "v": 10
     },
-    "animal_as_not_null_jsonb_obj": {
+    "animal_as_nn_jsonb_obj": {
       "v": [
         {
           "field_0": {
@@ -518,7 +518,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "v": 78
   }
   ,
-  "animal_as_not_null_jsonb_obj": {
+  "animal_as_nn_jsonb_obj": {
     "v": [
       {
         "field_0": {
@@ -684,7 +684,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #     }
     #   ]
     # },
-    # "animal_as_not_null_jsonb_obj": {
+    # "animal_as_nn_jsonb_obj": {
     #   "oprtr": "Or",
     #   "v": [
     #     {

@@ -35,9 +35,9 @@ test-utils = []"#,
                         }
                     }]
                     pub struct ObjExample {
-                        pub field_0: pg_crud::I8AsNotNullJsonbNbr,
+                        pub field_0: pg_crud::I8AsNnJsonbNbr,
                         pub field_1: pg_crud::OptI8AsNullableJsonbNbr,
-                        pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
+                        pub field_2: pg_crud::VecOfI8AsNnArrOfNnJsonbNbr,
                     }
                 };
                 let ts = gen_pg_json_obj_src::gen_pg_json_obj(obj_example_ts.clone());

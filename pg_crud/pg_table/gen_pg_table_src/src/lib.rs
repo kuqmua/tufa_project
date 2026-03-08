@@ -1191,8 +1191,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_serde_deserialize()
             .d_utoipa_to_schema()
             .build_struct(&opt_ident_wh_ucc, &Ts2::new(), &{
-                let opt_ident_rd_ids_stdrt_not_null_ts = gen_opt_type_dcl_ts(&ident_wh_ucc);
-                quote! {(pub #opt_ident_rd_ids_stdrt_not_null_ts);}
+                let opt_ident_rd_ids_stdrt_nn_ts = gen_opt_type_dcl_ts(&ident_wh_ucc);
+                quote! {(pub #opt_ident_rd_ids_stdrt_nn_ts);}
             });
         let impl_pg_type_wh_filter_for_opt_ident_wh_ts = impl_pg_type_wh_filter_for_ident_ts(
             &quote! {<'lt>},

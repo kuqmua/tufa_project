@@ -345,9 +345,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "wh"],
     ["pg", "type", "self", "to", "del"],
     ["self", "as", "json"],
-    ["self", "as", "json", "not", "null"],
+    ["self", "as", "json", "nn"],
     ["self", "as", "jsonb"],
-    ["self", "as", "jsonb", "not", "null"],
+    ["self", "as", "jsonb", "nn"],
     ["pg", "json", "obj", "self"],
     ["pg", "json", "std", "opt", "opt", "obj", "self"],
     [
@@ -378,7 +378,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "to", "upd", "qp", "er"],
     ["pg", "type", "self", "as", "json", "to", "upd", "qp", "er"],
     [
-        "pg", "type", "self", "as", "json", "not", "null", "to", "upd", "qp", "er"
+        "pg", "type", "self", "as", "json", "nn", "to", "upd", "qp", "er"
     ],
     ["self", "wh", "try", "new", "er"],
     ["pg", "type", "self", "wh", "equal"],
@@ -509,12 +509,12 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "wh", "range", "length", "try", "new", "er"],
     ["self", "wh", "range", "length"],
     ["self", "nullable"],
-    ["self", "not", "null"],
-    ["pg", "type", "self", "not", "null", "to", "cr"],
-    ["pg", "type", "self", "not", "null", "to", "rd"],
-    ["pg", "type", "self", "not", "null", "to", "upd"],
-    ["pg", "type", "self", "not", "null", "to", "del"],
-    ["self", "not", "null", "to", "del"],
+    ["self", "nn"],
+    ["pg", "type", "self", "nn", "to", "cr"],
+    ["pg", "type", "self", "nn", "to", "rd"],
+    ["pg", "type", "self", "nn", "to", "upd"],
+    ["pg", "type", "self", "nn", "to", "del"],
+    ["self", "nn", "to", "del"],
     [
         "pg", "type", "self", "wh", "position", "equals", "try", "new", "er"
     ],
@@ -753,10 +753,10 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["self", "wh", "second", "dim"],
     ["self", "visitor"],
-    ["self", "not", "null", "try", "new", "er"],
+    ["self", "nn", "try", "new", "er"],
     ["self", "to", "upd", "qp", "er"],
     ["self", "length"],
-    ["vec", "self", "arr", "not", "null"],
+    ["vec", "self", "arr", "nn"],
     ["vec", "self", "arr", "nullable"],
     ["self", "opt", "to", "upd", "try", "gen", "er"],
     [
@@ -782,7 +782,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "without", "id", "rd", "try", "from", "er"],
     ["self", "with", "id", "rd", "try", "from", "er"],
     ["self", "table", "type"],
-    ["self", "not", "null", "origin"],
+    ["self", "nn", "origin"],
     ["self", "nullable", "origin"],
     ["self", "origin"],
     ["self", "vec"],

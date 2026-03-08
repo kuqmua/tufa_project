@@ -53,7 +53,7 @@ pub enum DeriveOrImpl {
     Impl(Ts2),
 }
 #[derive(Debug, Optml)]
-pub enum IsStdrtNotNull {
+pub enum IsStdrtNn {
     False,
     True,
 }
@@ -93,9 +93,9 @@ impl IsNullable {
         }
     }
     #[must_use]
-    pub const fn not_null_or_nullable_str(&self) -> &str {
+    pub const fn nn_or_nullable_str(&self) -> &str {
         match &self {
-            Self::False => "NotNull",
+            Self::False => "Nn",
             Self::True => "Nullable",
         }
     }
