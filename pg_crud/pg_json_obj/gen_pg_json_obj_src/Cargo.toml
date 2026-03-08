@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_json_object_src"
+name = "gen_pg_json_obj_src"
 version = "0.1.0"
 edition = "2024"
 description = "description"

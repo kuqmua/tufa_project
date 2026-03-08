@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_json_object_test"
+name = "gen_pg_json_obj_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -11,7 +11,7 @@ categories = ["category"]
 
 [dev-dependencies]
 quote.workspace = true
-gen_pg_json_object_src = {path = "../gen_pg_json_object_src"}
+gen_pg_json_obj_src = {path = "../gen_pg_json_obj_src"}
 macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
 
 [lints]

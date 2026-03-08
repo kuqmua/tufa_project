@@ -5,8 +5,8 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_json_object_test_cnt",
-            "../pg_crud/pg_json_object/",
+            "gen_pg_json_obj_test_cnt",
+            "../pg_crud/pg_json_obj/",
             r#"[dependencies]
 sqlx.workspace = true
 serde.workspace = true
@@ -40,7 +40,7 @@ test-utils = []"#,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
                     }
                 };
-                let ts = gen_pg_json_object_src::gen_pg_json_object(object_example_ts.clone());
+                let ts = gen_pg_json_obj_src::gen_pg_json_object(object_example_ts.clone());
                 quote! {
                     #ts
                     #object_example_ts
