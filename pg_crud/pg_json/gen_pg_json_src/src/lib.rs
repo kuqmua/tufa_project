@@ -31,7 +31,7 @@ use pg_crud_macros_common::{
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_where_ts,
     gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
 };
-use pg_crud_macros_common::{gen_jsonb_build_object, gen_jsonb_build_object_v};
+use pg_crud_macros_common::{gen_jsonb_build_obj, gen_jsonb_build_obj_v};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
@@ -1848,7 +1848,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
             let gen_dim_nbr_end_str = |dims_nbr: usize| format!("{}_end", gen_dim_nbr_str(dims_nbr));
             let select_only_crd_or_updd_ids_qp_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_object_v(&"${v_f06128be}")));
+                let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"${v_f06128be}")));
                 quote! {
                     match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                         Ok(v_f06128be) => Ok(format!(#dq_ts0)),
@@ -2040,7 +2040,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         })
                     });
                     let dq_ts0 = dq_ts(
-                        &gen_jsonb_build_object(&format!("'{{fi}}',{}", gen_jsonb_build_object_v(&format!("({format_h})"))))
+                        &gen_jsonb_build_obj(&format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&format!("({format_h})"))))
                     );
                     quote! {
                         #(#mb_dims_start_end_init)*
@@ -2052,10 +2052,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ident_read_ids_ucc,
                 &{
                     let content_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_object_v(&"{column_field}"));
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{column_field}"));
                         quote! {format!(#dq_ts0)}
                     } else {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_object_v(&"'null'::jsonb"));
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"'null'::jsonb"));
                         quote! {#dq_ts0.to_owned()}
                     };
                     quote! {Ok(#content_ts)}
