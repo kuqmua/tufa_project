@@ -42,9 +42,9 @@ trait_al!(CrAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrForQueryAl = DebugClonePartialEqSerializeAl + SqlxEncodePgSqlxTypePgAl);
 trait_al!(SelectAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(WhereAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhereFilter<'__>);
-trait_al!(ReadAl = DebugClonePartialEqSerdeAl);
-trait_al!(ReadIdsAl = DebugClonePartialEqSerdeAl);
-trait_al!(ReadInnAl = DebugClonePartialEqAl);
+trait_al!(RdAl = DebugClonePartialEqSerdeAl);
+trait_al!(RdIdsAl = DebugClonePartialEqSerdeAl);
+trait_al!(RdInnAl = DebugClonePartialEqAl);
 trait_al!(UpdAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(UpdForQueryAl = DebugClonePartialEqSerializeAl);
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -61,12 +61,12 @@ pub trait PgType {
     type Select: SelectAl;
     fn select_qp(v: &Self::Select, column: &str) -> Result<String, QpEr>;
     type Where: WhereAl;
-    type Read: ReadAl + for<'__> Decode<'__, Postgres> + Type<Postgres>;
-    fn normalize(v: Self::Read) -> Self::Read;
-    type ReadIds: ReadIdsAl;
+    type Rd: RdAl + for<'__> Decode<'__, Postgres> + Type<Postgres>;
+    fn normalize(v: Self::Rd) -> Self::Rd;
+    type RdIds: RdIdsAl;
     fn select_only_ids_qp(column: &str) -> Result<String, QpEr>;
-    type ReadInn: ReadInnAl;
-    fn into_inn(v: Self::Read) -> Self::ReadInn;
+    type RdInn: RdInnAl;
+    fn into_inn(v: Self::Rd) -> Self::RdInn;
     type Upd: UpdAl;
     type UpdForQuery: UpdForQueryAl;
     fn upd_qp(
@@ -108,13 +108,13 @@ pub trait PgJson {
         + UtoipaToSchemaAndSchemarsJsonSchemaAl
         + AllEnumVrtsArrDfltOptSomeVecOneEl
         + ToErrString;
-    //todo impl get fields from read
+    //todo impl get fields from rd
     //todo mb add Decode trait here and Type
-    type Read: ReadAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneEl;
-    type ReadIds: ReadIdsAl;
+    type Rd: RdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneEl;
+    type RdIds: RdIdsAl;
     fn select_only_ids_qp(column_field: &str) -> Result<String, QpEr>;
-    type ReadInn: ReadInnAl;
-    fn into_inn(v: Self::Read) -> Self::ReadInn;
+    type RdInn: RdInnAl;
+    fn into_inn(v: Self::Rd) -> Self::RdInn;
     type Upd: UpdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     type UpdForQuery: UpdForQueryAl + From<Self::Upd>;
     fn upd_qp(
@@ -153,14 +153,12 @@ pub trait PgJson {
 pub trait PgTypePk {
     type PgType: PgType;
     type TableType: TableTypeAl + PartialOrd;
-    fn read_ids_into_table_type(
-        v: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_into_table_type(
+        v: <Self::PgType as PgType>::RdIds,
     ) -> <Self::PgType as PgType>::TableType;
-    fn read_ids_into_read(v: <Self::PgType as PgType>::ReadIds) -> <Self::PgType as PgType>::Read;
-    fn read_ids_into_upd(v: <Self::PgType as PgType>::ReadIds) -> <Self::PgType as PgType>::Upd;
-    fn read_into_table_type(
-        v: <Self::PgType as PgType>::Read,
-    ) -> <Self::PgType as PgType>::TableType;
+    fn rd_ids_into_rd(v: <Self::PgType as PgType>::RdIds) -> <Self::PgType as PgType>::Rd;
+    fn rd_ids_into_upd(v: <Self::PgType as PgType>::RdIds) -> <Self::PgType as PgType>::Upd;
+    fn rd_into_table_type(v: <Self::PgType as PgType>::Rd) -> <Self::PgType as PgType>::TableType;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PgTypeNotPk {
@@ -174,7 +172,7 @@ pub trait PgJsonObjVecElId {
         + From<<Self::PgJson as PgJson>::Cr>
         + From<<Self::PgJson as PgJson>::Upd>;
     type Upd: UpdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + ToErrString;
-    type ReadInn: ReadInnAl;
+    type RdInn: RdInnAl;
     fn qb_string_as_pg_text_cr_for_query(
         v: <Self::PgJson as PgJson>::CrForQuery,
         query: Query<'_, Postgres, PgArguments>,
@@ -183,7 +181,7 @@ pub trait PgJsonObjVecElId {
         v: <Self::PgJson as PgJson>::UpdForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
-    fn get_inn(v: &<Self::PgJson as PgJson>::CrForQuery) -> &Self::ReadInn;
+    fn get_inn(v: &<Self::PgJson as PgJson>::CrForQuery) -> &Self::RdInn;
     fn incr_checked_add_one(incr: &mut u64) -> Result<u64, QpEr>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
@@ -192,46 +190,46 @@ pub trait PgTypeTestCases {
     type PgType: PgType;
     type Select: SelectAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_cr() -> Option<Vec<<Self::PgType as PgType>::Cr>>;
-    fn read_ids_to_2_dims_vec_read_inn(
-        read_ids: &<Self::PgType as PgType>::ReadIds,
-    ) -> Vec<Vec<<Self::PgType as PgType>::ReadInn>>;
-    fn read_inn_into_read_with_new_or_try_new_unwraped(
-        v: <Self::PgType as PgType>::ReadInn,
-    ) -> <Self::PgType as PgType>::Read;
-    fn read_inn_into_upd_with_new_or_try_new_unwraped(
-        v: <Self::PgType as PgType>::ReadInn,
+    fn rd_ids_to_2_dims_vec_rd_inn(
+        rd_ids: &<Self::PgType as PgType>::RdIds,
+    ) -> Vec<Vec<<Self::PgType as PgType>::RdInn>>;
+    fn rd_inn_into_rd_with_new_or_try_new_unwraped(
+        v: <Self::PgType as PgType>::RdInn,
+    ) -> <Self::PgType as PgType>::Rd;
+    fn rd_inn_into_upd_with_new_or_try_new_unwraped(
+        v: <Self::PgType as PgType>::RdInn,
     ) -> <Self::PgType as PgType>::Upd;
-    fn upd_to_read_ids(v: &<Self::PgType as PgType>::Upd) -> <Self::PgType as PgType>::ReadIds;
-    fn read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-        v: &<Self::PgType as PgType>::ReadIds,
-    ) -> Option<V<<Self::PgType as PgType>::Read>>;
-    fn previous_read_and_opt_upd_into_read(
-        read: <Self::PgType as PgType>::Read,
+    fn upd_to_rd_ids(v: &<Self::PgType as PgType>::Upd) -> <Self::PgType as PgType>::RdIds;
+    fn rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el(
+        v: &<Self::PgType as PgType>::RdIds,
+    ) -> Option<V<<Self::PgType as PgType>::Rd>>;
+    fn previous_rd_and_opt_upd_into_rd(
+        rd: <Self::PgType as PgType>::Rd,
         opt_upd: Option<<Self::PgType as PgType>::Upd>,
-    ) -> <Self::PgType as PgType>::Read;
-    fn read_ids_and_cr_into_read(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    ) -> <Self::PgType as PgType>::Rd;
+    fn rd_ids_and_cr_into_rd(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> <Self::PgType as PgType>::Read;
-    fn read_ids_and_cr_into_opt_v_read(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    ) -> <Self::PgType as PgType>::Rd;
+    fn rd_ids_and_cr_into_opt_v_rd(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<V<<Self::PgType as PgType>::Read>>;
-    fn read_ids_and_cr_into_table_type(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    ) -> Option<V<<Self::PgType as PgType>::Rd>>;
+    fn rd_ids_and_cr_into_table_type(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> <Self::PgType as PgType>::TableType;
     //todo add prefix pg_type or pg_json ?
-    fn read_ids_and_cr_into_where_equal(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_where_equal(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> <Self::PgType as PgType>::Where;
-    fn read_ids_and_cr_into_vec_where_equal_using_fields(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_vec_where_equal_using_fields(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> NotEmptyUniqueVec<<Self::PgType as PgType>::Where>;
-    fn read_ids_and_cr_into_opt_vec_where_equal_to_json_field(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_opt_vec_where_equal_to_json_field(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
     fn cr_into_pg_type_opt_vec_where_dim_one_equal(
@@ -239,25 +237,25 @@ pub trait PgTypeTestCases {
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
     fn pg_type_opt_vec_where_greater_than_test()
     -> Option<NotEmptyUniqueVec<PgTypeGreaterThanTest<Self::PgType>>>;
-    fn read_ids_and_table_type_into_pg_type_opt_where_greater_than(
+    fn rd_ids_and_table_type_into_pg_type_opt_where_greater_than(
         greater_than_vrt: PgTypeGreaterThanVrt,
-        read_ids: <Self::PgType as PgType>::ReadIds,
+        rd_ids: <Self::PgType as PgType>::RdIds,
         table_type: <Self::PgType as PgType>::TableType,
     ) -> Option<<Self::PgType as PgType>::Where>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
     fn cr_into_pg_json_opt_vec_where_length_equal(
@@ -266,28 +264,28 @@ pub trait PgTypeTestCases {
     fn cr_into_pg_json_opt_vec_where_length_greater_than(
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_greater_than(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_greater_than(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_between(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_between(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_in(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_in(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_regex(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_regex(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex(
-        read_ids: <Self::PgType as PgType>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex(
+        rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Where>>>;
 }
@@ -318,64 +316,64 @@ pub trait PgJsonTestCases {
     type PgJson: PgJson;
     type Select: SelectAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltOptSomeVecOneElMaxPageSize;
     fn opt_vec_cr() -> Option<Vec<<Self::PgJson as PgJson>::Cr>>;
-    fn read_ids_to_2_dims_vec_read_inn(
-        read_ids: &<Self::PgJson as PgJson>::ReadIds,
-    ) -> Vec<Vec<<Self::PgJson as PgJson>::ReadInn>>;
-    fn read_inn_into_read_with_new_or_try_new_unwraped(
-        v: <Self::PgJson as PgJson>::ReadInn,
-    ) -> <Self::PgJson as PgJson>::Read;
-    fn read_inn_into_upd_with_new_or_try_new_unwraped(
-        v: <Self::PgJson as PgJson>::ReadInn,
+    fn rd_ids_to_2_dims_vec_rd_inn(
+        rd_ids: &<Self::PgJson as PgJson>::RdIds,
+    ) -> Vec<Vec<<Self::PgJson as PgJson>::RdInn>>;
+    fn rd_inn_into_rd_with_new_or_try_new_unwraped(
+        v: <Self::PgJson as PgJson>::RdInn,
+    ) -> <Self::PgJson as PgJson>::Rd;
+    fn rd_inn_into_upd_with_new_or_try_new_unwraped(
+        v: <Self::PgJson as PgJson>::RdInn,
     ) -> <Self::PgJson as PgJson>::Upd;
-    fn read_ids_into_opt_v_read_inn(
-        v: <Self::PgJson as PgJson>::ReadIds,
-    ) -> Option<V<<Self::PgJson as PgJson>::ReadInn>>;
-    fn upd_to_read_ids(v: &<Self::PgJson as PgJson>::Upd) -> <Self::PgJson as PgJson>::ReadIds;
-    fn read_ids_to_opt_v_read_dflt_opt_some_vec_one_el(
-        v: &<Self::PgJson as PgJson>::ReadIds,
-    ) -> Option<V<<Self::PgJson as PgJson>::Read>>;
-    fn previous_read_and_opt_upd_into_read(
-        read: <Self::PgJson as PgJson>::Read,
+    fn rd_ids_into_opt_v_rd_inn(
+        v: <Self::PgJson as PgJson>::RdIds,
+    ) -> Option<V<<Self::PgJson as PgJson>::RdInn>>;
+    fn upd_to_rd_ids(v: &<Self::PgJson as PgJson>::Upd) -> <Self::PgJson as PgJson>::RdIds;
+    fn rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el(
+        v: &<Self::PgJson as PgJson>::RdIds,
+    ) -> Option<V<<Self::PgJson as PgJson>::Rd>>;
+    fn previous_rd_and_opt_upd_into_rd(
+        rd: <Self::PgJson as PgJson>::Rd,
         opt_upd: Option<<Self::PgJson as PgJson>::Upd>,
-    ) -> <Self::PgJson as PgJson>::Read;
-    fn read_ids_and_cr_into_read(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    ) -> <Self::PgJson as PgJson>::Rd;
+    fn rd_ids_and_cr_into_rd(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> <Self::PgJson as PgJson>::Read;
-    fn read_ids_and_cr_into_opt_v_read(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    ) -> <Self::PgJson as PgJson>::Rd;
+    fn rd_ids_and_cr_into_opt_v_rd(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<V<<Self::PgJson as PgJson>::Read>>;
-    fn read_ids_and_cr_into_table_type(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    ) -> Option<V<<Self::PgJson as PgJson>::Rd>>;
+    fn rd_ids_and_cr_into_table_type(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> <Self::PgJson as PgJson>::TableType;
-    fn read_ids_and_cr_into_where_equal(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_where_equal(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> <Self::PgJson as PgJson>::Where;
-    fn read_ids_and_cr_into_vec_where_equal_using_fields(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_vec_where_equal_using_fields(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>;
-    fn read_ids_and_cr_into_vec_where_equal_to_json_field(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_vec_where_equal_to_json_field(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_one_equal(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_two_equal(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_three_equal(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_dim_four_equal(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
     fn cr_into_pg_json_opt_vec_where_length_equal(
@@ -384,28 +382,28 @@ pub trait PgJsonTestCases {
     fn cr_into_pg_json_opt_vec_where_length_greater_than(
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Where>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_greater_than(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_greater_than(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_between(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_between(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_in(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_in(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_regex(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_regex(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_greater_than(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
-    fn read_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex(
-        read_ids: <Self::PgJson as PgJson>::ReadIds,
+    fn rd_ids_and_cr_into_pg_json_opt_vec_where_contains_el_regex(
+        rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Where>>>;
 }
@@ -1215,12 +1213,12 @@ where
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Optml)]
 pub struct JsonFieldRights {
     can_cr: bool,
-    can_read: bool,
+    can_rd: bool,
     can_upd: bool,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Optml)]
-pub struct NonPkPgTypeReadIds(pub V<Option<()>>);
-impl Decode<'_, Postgres> for NonPkPgTypeReadIds {
+pub struct NonPkPgTypeRdIds(pub V<Option<()>>);
+impl Decode<'_, Postgres> for NonPkPgTypeRdIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
         match <Json<Self> as Decode<Postgres>>::decode(value) {
             Ok(v0) => Ok(v0.0),
@@ -1228,7 +1226,7 @@ impl Decode<'_, Postgres> for NonPkPgTypeReadIds {
         }
     }
 }
-impl Type<Postgres> for NonPkPgTypeReadIds {
+impl Type<Postgres> for NonPkPgTypeRdIds {
     fn compatible(ty: &<Postgres as Database>::TypeInfo) -> bool {
         <Json<Self> as Type<Postgres>>::compatible(ty)
     }
@@ -1236,7 +1234,7 @@ impl Type<Postgres> for NonPkPgTypeReadIds {
         <Json<Self> as Type<Postgres>>::type_info()
     }
 }
-impl Default for NonPkPgTypeReadIds {
+impl Default for NonPkPgTypeRdIds {
     fn default() -> Self {
         Self(V { v: None })
     }
