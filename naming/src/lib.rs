@@ -495,7 +495,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "wh", "filter"],
     ["is", "pk"],
     ["cr", "table", "column", "qp"],
-    ["table", "type"],
+    ["tt"],
     ["mut"],
     ["boolean"],
     ["obj"],
@@ -703,7 +703,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "not", "pk"],
     ["rd", "ids", "and", "cr", "into", "wh", "equal"],
     ["rd", "ids", "and", "cr", "into", "rd"],
-    ["rd", "ids", "and", "cr", "into", "table", "type"],
+    ["rd", "ids", "and", "cr", "into", "tt"],
     [
         "rd", "inn", "into", "rd", "with", "new", "or", "try", "new", "unwraped"
     ],
@@ -718,10 +718,10 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ],
     ["equal", "oprtr"],
     ["pg", "type", "equal", "oprtr"],
-    ["rd", "ids", "into", "table", "type"],
+    ["rd", "ids", "into", "tt"],
     ["rd", "ids", "into", "rd"],
     ["rd", "ids", "into", "upd"],
-    ["rd", "into", "table", "type"],
+    ["rd", "into", "tt"],
     [
         "rd", "ids", "and", "cr", "into", "wh", "equal", "to", "json", "field"
     ],
@@ -737,7 +737,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "cr", "into", "pg", "type", "opt", "vec", "wh", "dim", "one", "equal"
     ],
     [
-        "rd", "ids", "and", "table", "type", "into", "pg", "type", "opt", "wh", "greater", "than"
+        "rd", "ids", "and", "tt", "into", "pg", "type", "opt", "wh", "greater", "than"
     ],
     ["pg", "type", "opt", "vec", "wh", "greater", "than", "test"],
     [

@@ -781,7 +781,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "with", "id", "rd"],
     ["self", "without", "id", "rd", "try", "from", "er"],
     ["self", "with", "id", "rd", "try", "from", "er"],
-    ["self", "table", "type"],
+    ["self", "tt"],
     ["self", "nn", "origin"],
     ["self", "nl", "origin"],
     ["self", "origin"],

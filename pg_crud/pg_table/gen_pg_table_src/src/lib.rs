@@ -31,24 +31,23 @@ use naming::{
     RdIdsAndCrIntoPgJsonOptVecWhContainsElRegexSc, RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhInSc, RdIdsAndCrIntoPgJsonOptVecWhRegexSc,
     RdIdsAndCrIntoVecWhEqualUsingFieldsSc, RdIdsAndCrIntoWhEqualSc,
-    RdIdsAndTableTypeIntoPgTypeOptWhGreaterThanSc, RdIdsIntoRdSc, RdIdsIntoTableTypeSc,
-    RdIdsIntoUpdSc, RdIdsSc, RdIdsUcc, RdIntoTableTypeSc, RdUcc, ReqSc, ReqwestSc, ReqwestUcc,
-    ResSc, ResTextSc, RmErVrtsSc, RmLogicSc, RoErVrtsSc, RoLogicSc, RollbackSc, RoutesHSc,
-    RoutesSc, RowAndRollbackUcc, RowSc, RowsSc, SelOnlyIdsQpSc, SelOnlyUpddIdsQpSc, SelPkSc,
-    SelQpSc, SelSc, SelUcc, SerdeJsonSc, SerdeJsonToStringSc, SerdeJsonToStringUcc, SerdeJsonUcc,
-    SerdeSc, StatusCodeSc, TableNameSc, TableSc, ToTokensToScStr, ToTokensToUccTs, TrueSc,
-    TryBindSc, TryBindUcc, UmErVrtsSc, UmLogicSc, UoErVrtsSc, UoLogicSc, UpdForQuerySc,
-    UpdForQueryUcc, UpdForQueryVecSc, UpdQbSc, UpdQpPkSc, UpdQpSc, UpdSc, UpdUcc, UrlSc, VSc, VUcc,
-    WhManySc, WhUcc,
+    RdIdsAndTtIntoPgTypeOptWhGreaterThanSc, RdIdsIntoRdSc, RdIdsIntoTtSc, RdIdsIntoUpdSc, RdIdsSc,
+    RdIdsUcc, RdIntoTtSc, RdUcc, ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc,
+    RmLogicSc, RoErVrtsSc, RoLogicSc, RollbackSc, RoutesHSc, RoutesSc, RowAndRollbackUcc, RowSc,
+    RowsSc, SelOnlyIdsQpSc, SelOnlyUpddIdsQpSc, SelPkSc, SelQpSc, SelSc, SelUcc, SerdeJsonSc,
+    SerdeJsonToStringSc, SerdeJsonToStringUcc, SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc,
+    TableSc, ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UmErVrtsSc,
+    UmLogicSc, UoErVrtsSc, UoLogicSc, UpdForQuerySc, UpdForQueryUcc, UpdForQueryVecSc, UpdQbSc,
+    UpdQpPkSc, UpdQpSc, UpdSc, UpdUcc, UrlSc, VSc, VUcc, WhManySc, WhUcc,
     param::{
         ErSelfSc, IsSelfUpdExistSc, SelfCrUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
         SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
         SelfGenPgTableModSc, SelfHSc, SelfPayloadExampleSc, SelfPrepPgErUcc,
         SelfRdIdsTo2DimsVecRdInnAccSc, SelfRdIdsUcc, SelfRdUcc, SelfRoErWithSerdeUcc, SelfSelUcc,
-        SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc, SelfTryRoErUcc, SelfUmParamsUcc,
-        SelfUmPayloadUcc, SelfUpdForQueryUcc, SelfUpdTryNewErUcc, SelfUpdUcc,
-        SelfWhManyTryNewErUcc, SelfWhManyUcc, StdOptOptSelfWhManyUcc,
-        TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelSc, TrySelfHSc, TrySelfSc, UpdQpSelfSc,
+        SelfTestsSc, SelfTryDloErUcc, SelfTryRoErUcc, SelfTtUcc, SelfUmParamsUcc, SelfUmPayloadUcc,
+        SelfUpdForQueryUcc, SelfUpdTryNewErUcc, SelfUpdUcc, SelfWhManyTryNewErUcc, SelfWhManyUcc,
+        StdOptOptSelfWhManyUcc, TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelSc, TrySelfHSc,
+        TrySelfSc, UpdQpSelfSc,
     },
 };
 use optml::Optml;
@@ -453,7 +452,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let fields_len_without_pk = fields_without_pk.len();
     let pk_ft = &pk_field.type0;
     //todo must remove this and use trait type instead
-    let pk_ft_table_type_ts = SelfTableTypeUcc::from_type_last_segment(&pk_field.type0);
+    let pk_ft_tt_ts = SelfTtUcc::from_type_last_segment(&pk_field.type0);
     let gen_as_pg_type_ts = |ts: &dyn ToTokens| {
         quote! {<#ts as #import_ts #PgTypeUcc>}
     };
@@ -3848,7 +3847,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let gen_pk_wh_equal_new_ts =
-            |ts0: &dyn ToTokens| gen_pk_wh_equal_ts(&quote! {#pk_ft_table_type_ts::new(#ts0)});
+            |ts0: &dyn ToTokens| gen_pk_wh_equal_ts(&quote! {#pk_ft_tt_ts::new(#ts0)});
         let pk_wh_equal_uuid_new_v_ts = gen_pk_wh_equal_new_ts(&quote! {uuid::Uuid::new_v4()});
         let gen_pk_wh_equal_into_inn_ts = |ts0: &dyn ToTokens| {
             gen_pk_wh_equal_new_ts(&quote! {#pk_as_pg_type_ts::into_inn(#ts0)})
@@ -3919,8 +3918,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             |method_ts: &dyn ToTokens, ts0: &dyn ToTokens| {
                 quote! {#pk_ft_as_pg_type_pk_ts #method_ts(#ts0)}
             };
-        let pk_ft_rd_into_table_type_el_pk_fi_clone_ts =
-            gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIntoTableTypeSc, &quote! {el_adcc8db3});
+        let pk_ft_rd_into_tt_el_pk_fi_clone_ts =
+            gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIntoTtSc, &quote! {el_adcc8db3});
         let rd_ids_el_937c5af3_pk_fi = quote! {rd_ids_el_937c5af3.#pk_fi};
         let (
             pk_ft_rd_ids_into_rd_el_43ab7fb5_pk_fi_ts,
@@ -4104,7 +4103,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let table_rd_ids_and_cr_into_vec_wh_equal_using_fields_name = "eb24448c";
         let table_rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_name = "9ac6d79a";
         let table_cr_into_pg_type_opt_vec_wh_dim_one_equal_name = "72940b0e";
-        let table_rd_ids_and_table_type_into_pg_type_opt_wh_greater_than_name = "5a52af33";
+        let table_rd_ids_and_tt_into_pg_type_opt_wh_greater_than_name = "5a52af33";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_name = "1f388ef8";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_name = "581c947f";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_name = "de556c26";
@@ -4122,7 +4121,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &table_rd_ids_and_cr_into_vec_wh_equal_using_fields_name,
             &table_rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_name,
             &table_cr_into_pg_type_opt_vec_wh_dim_one_equal_name,
-            &table_rd_ids_and_table_type_into_pg_type_opt_wh_greater_than_name,
+            &table_rd_ids_and_tt_into_pg_type_opt_wh_greater_than_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_name,
@@ -4903,8 +4902,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 },
             );
-            let rd_ids_and_table_type_into_pg_type_opt_wh_greater_than_ts = gen_rd_test_ts(
-                table_rd_ids_and_table_type_into_pg_type_opt_wh_greater_than_name,
+            let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts = gen_rd_test_ts(
+                table_rd_ids_and_tt_into_pg_type_opt_wh_greater_than_name,
                 &|_: &Ident, ft: &Type| {
                     quote! {
                         <#ft as #import_ts PgTypeTestCases>::#PgTypeOptVecWhGreaterThanTestSc()
@@ -4918,7 +4917,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {v_60baba1f},
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                            quote! {#ft_ts #RdIdsAndTableTypeIntoPgTypeOptWhGreaterThanSc(
+                            quote! {#ft_ts #RdIdsAndTtIntoPgTypeOptWhGreaterThanSc(
                                 #ElSc.vrt,
                                 rd_ids_from_co.#fi.clone().expect("c8d34556"),
                                 #ElSc.greater_than,
@@ -5119,7 +5118,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #rd_ids_and_cr_into_vec_wh_equal_using_fields_ts
                 #rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_ts
                 #cr_into_pg_type_opt_vec_wh_dim_one_equal_ts
-                #rd_ids_and_table_type_into_pg_type_opt_wh_greater_than_ts
+                #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts
@@ -5512,9 +5511,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote!{table_7e35b1ce},
                     &quote!{table_test_rm_by_equal_to_crd_pks},//todo is table name correct?
                     &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                        let pk_ft_rd_ids_into_table_type_el_pk_fi_clone_ts =
+                        let pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts =
                             gen_pk_ft_as_pg_type_pk_method_call_ts(
-                                &RdIdsIntoTableTypeSc,
+                                &RdIdsIntoTtSc,
                                 &quote! {el_3bb88958.#pk_fi},
                             );
                         let assert_eq_ts_ea7edbc4 = gen_assert_eq_ts(
@@ -5530,7 +5529,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let assert_ts_d6ec39a3 = gen_assert_ts(
                             &{
-                                let ts = gen_pk_wh_equal_ts(&pk_ft_rd_into_table_type_el_pk_fi_clone_ts);
+                                let ts = gen_pk_wh_equal_ts(&pk_ft_rd_into_tt_el_pk_fi_clone_ts);
                                 quote!{
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
@@ -5551,7 +5550,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &quote!{"77f038b0"}
                         );
-                        let ts_212f8aca = gen_pk_wh_equal_ts(&pk_ft_rd_ids_into_table_type_el_pk_fi_clone_ts);
+                        let ts_212f8aca = gen_pk_wh_equal_ts(&pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts);
                         let ts_6f76ccd4 = gen_rd_ids_from_try_dm_ts(&gen_try_dm_h_ts(
                             &quote!{
                                 #pk_fi: Some(
