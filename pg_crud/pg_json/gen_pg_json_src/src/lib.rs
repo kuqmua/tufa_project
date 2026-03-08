@@ -19,7 +19,7 @@ use naming::{
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNullable, IsQbMut,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNl, IsQbMut,
     IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColumnFieldForErMessageUsed,
     IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
     IsUpdQpSelfUpdUsed, PgFilter, PgJsonFilter, RdOrUpd, ShouldDSchemarsJsonSchema,
@@ -176,22 +176,22 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     enum Pattern {
         Stdrt,
         ArrDim1 {
-            dim1_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
         },
         ArrDim2 {
-            dim1_is_nullable: IsNullable,
-            dim2_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
+            dim2_is_nl: IsNl,
         },
         ArrDim3 {
-            dim1_is_nullable: IsNullable,
-            dim2_is_nullable: IsNullable,
-            dim3_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
+            dim2_is_nl: IsNl,
+            dim3_is_nl: IsNl,
         },
         ArrDim4 {
-            dim1_is_nullable: IsNullable,
-            dim2_is_nullable: IsNullable,
-            dim3_is_nullable: IsNullable,
-            dim4_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
+            dim2_is_nl: IsNl,
+            dim3_is_nl: IsNl,
+            dim4_is_nl: IsNl,
         },
     }
     impl Pattern {
@@ -199,28 +199,26 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             match &self {
                 Self::Stdrt => None,
                 Self::ArrDim1 { .. } => Some(Self::Stdrt),
-                Self::ArrDim2 {
-                    dim2_is_nullable, ..
-                } => Some(Self::ArrDim1 {
-                    dim1_is_nullable: *dim2_is_nullable,
+                Self::ArrDim2 { dim2_is_nl, .. } => Some(Self::ArrDim1 {
+                    dim1_is_nl: *dim2_is_nl,
                 }),
                 Self::ArrDim3 {
-                    dim2_is_nullable,
-                    dim3_is_nullable,
+                    dim2_is_nl,
+                    dim3_is_nl,
                     ..
                 } => Some(Self::ArrDim2 {
-                    dim1_is_nullable: *dim2_is_nullable,
-                    dim2_is_nullable: *dim3_is_nullable,
+                    dim1_is_nl: *dim2_is_nl,
+                    dim2_is_nl: *dim3_is_nl,
                 }),
                 Self::ArrDim4 {
-                    dim2_is_nullable,
-                    dim3_is_nullable,
-                    dim4_is_nullable,
+                    dim2_is_nl,
+                    dim3_is_nl,
+                    dim4_is_nl,
                     ..
                 } => Some(Self::ArrDim3 {
-                    dim1_is_nullable: *dim2_is_nullable,
-                    dim2_is_nullable: *dim3_is_nullable,
-                    dim3_is_nullable: *dim4_is_nullable,
+                    dim1_is_nl: *dim2_is_nl,
+                    dim2_is_nl: *dim3_is_nl,
+                    dim3_is_nl: *dim4_is_nl,
                 }),
             }
         }
@@ -228,18 +226,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             match &self {
                 Self::Stdrt | Self::ArrDim1 { .. } => None,
                 Self::ArrDim2 { .. } => Some(Self::Stdrt),
-                Self::ArrDim3 {
-                    dim3_is_nullable, ..
-                } => Some(Self::ArrDim1 {
-                    dim1_is_nullable: *dim3_is_nullable,
+                Self::ArrDim3 { dim3_is_nl, .. } => Some(Self::ArrDim1 {
+                    dim1_is_nl: *dim3_is_nl,
                 }),
                 Self::ArrDim4 {
-                    dim3_is_nullable,
-                    dim4_is_nullable,
+                    dim3_is_nl,
+                    dim4_is_nl,
                     ..
                 } => Some(Self::ArrDim2 {
-                    dim1_is_nullable: *dim3_is_nullable,
-                    dim2_is_nullable: *dim4_is_nullable,
+                    dim1_is_nl: *dim3_is_nl,
+                    dim2_is_nl: *dim4_is_nl,
                 }),
             }
         }
@@ -247,10 +243,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             match &self {
                 Self::Stdrt | Self::ArrDim1 { .. } | Self::ArrDim2 { .. } => None,
                 Self::ArrDim3 { .. } => Some(Self::Stdrt),
-                Self::ArrDim4 {
-                    dim4_is_nullable, ..
-                } => Some(Self::ArrDim1 {
-                    dim1_is_nullable: *dim4_is_nullable,
+                Self::ArrDim4 { dim4_is_nl, .. } => Some(Self::ArrDim1 {
+                    dim1_is_nl: *dim4_is_nl,
                 }),
             }
         }
@@ -267,16 +261,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     enum ArrDim {
         ArrDim1,
         ArrDim2 {
-            dim1_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
         },
         ArrDim3 {
-            dim1_is_nullable: IsNullable,
-            dim2_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
+            dim2_is_nl: IsNl,
         },
         ArrDim4 {
-            dim1_is_nullable: IsNullable,
-            dim2_is_nullable: IsNullable,
-            dim3_is_nullable: IsNullable,
+            dim1_is_nl: IsNl,
+            dim2_is_nl: IsNl,
+            dim3_is_nl: IsNl,
         },
     }
     impl ArrDim {
@@ -295,28 +289,26 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             match &v {
                 Pattern::Stdrt => Err(()),
                 Pattern::ArrDim1 { .. } => Ok(Self::ArrDim1),
-                Pattern::ArrDim2 {
-                    dim1_is_nullable, ..
-                } => Ok(Self::ArrDim2 {
-                    dim1_is_nullable: *dim1_is_nullable,
+                Pattern::ArrDim2 { dim1_is_nl, .. } => Ok(Self::ArrDim2 {
+                    dim1_is_nl: *dim1_is_nl,
                 }),
                 Pattern::ArrDim3 {
-                    dim1_is_nullable,
-                    dim2_is_nullable,
+                    dim1_is_nl,
+                    dim2_is_nl,
                     ..
                 } => Ok(Self::ArrDim3 {
-                    dim1_is_nullable: *dim1_is_nullable,
-                    dim2_is_nullable: *dim2_is_nullable,
+                    dim1_is_nl: *dim1_is_nl,
+                    dim2_is_nl: *dim2_is_nl,
                 }),
                 Pattern::ArrDim4 {
-                    dim1_is_nullable,
-                    dim2_is_nullable,
-                    dim3_is_nullable,
+                    dim1_is_nl,
+                    dim2_is_nl,
+                    dim3_is_nl,
                     ..
                 } => Ok(Self::ArrDim4 {
-                    dim1_is_nullable: *dim1_is_nullable,
-                    dim2_is_nullable: *dim2_is_nullable,
-                    dim3_is_nullable: *dim3_is_nullable,
+                    dim1_is_nl: *dim1_is_nl,
+                    dim2_is_nl: *dim2_is_nl,
+                    dim3_is_nl: *dim3_is_nl,
                 }),
             }
         }
@@ -325,7 +317,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Optml)]
     struct Record {
         pg_json: PgJson,
-        is_nullable: IsNullable,
+        is_nl: IsNl,
         pattern: Pattern,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -370,37 +362,37 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         if include {
                             match pattern {
                                 Pattern::Stdrt => {
-                                    for is_nullable in IsNullable::into_arr() {
+                                    for is_nl in IsNl::into_arr() {
                                         acc.push(Record {
                                             pg_json: pg_json.clone(),
-                                            is_nullable,
+                                            is_nl,
                                             pattern: Pattern::Stdrt,
                                         });
                                     }
                                 }
                                 Pattern::ArrDim1 { .. } => {
-                                    for is_nullable in IsNullable::into_arr() {
-                                        for dim1_is_nullable in IsNullable::into_arr() {
+                                    for is_nl in IsNl::into_arr() {
+                                        for dim1_is_nl in IsNl::into_arr() {
                                             acc.push(Record {
                                                 pg_json: pg_json.clone(),
-                                                is_nullable,
+                                                is_nl,
                                                 pattern: Pattern::ArrDim1 {
-                                                    dim1_is_nullable,
+                                                    dim1_is_nl,
                                                 },
                                             });
                                         }
                                     }
                                 }
                                 Pattern::ArrDim2 { .. } => {
-                                    for is_nullable in IsNullable::into_arr() {
-                                        for dim1_is_nullable in IsNullable::into_arr() {
-                                            for dim2_is_nullable in IsNullable::into_arr() {
+                                    for is_nl in IsNl::into_arr() {
+                                        for dim1_is_nl in IsNl::into_arr() {
+                                            for dim2_is_nl in IsNl::into_arr() {
                                                 acc.push(Record {
                                                     pg_json: pg_json.clone(),
-                                                    is_nullable,
+                                                    is_nl,
                                                     pattern: Pattern::ArrDim2 {
-                                                        dim1_is_nullable,
-                                                        dim2_is_nullable,
+                                                        dim1_is_nl,
+                                                        dim2_is_nl,
                                                     },
                                                 });
                                             }
@@ -408,17 +400,17 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     }
                                 }
                                 Pattern::ArrDim3 { .. } => {
-                                    for is_nullable in IsNullable::into_arr() {
-                                        for dim1_is_nullable in IsNullable::into_arr() {
-                                            for dim2_is_nullable in IsNullable::into_arr() {
-                                                for dim3_is_nullable in IsNullable::into_arr() {
+                                    for is_nl in IsNl::into_arr() {
+                                        for dim1_is_nl in IsNl::into_arr() {
+                                            for dim2_is_nl in IsNl::into_arr() {
+                                                for dim3_is_nl in IsNl::into_arr() {
                                                     acc.push(Record {
                                                         pg_json: pg_json.clone(),
-                                                        is_nullable,
+                                                        is_nl,
                                                         pattern: Pattern::ArrDim3 {
-                                                            dim1_is_nullable,
-                                                            dim2_is_nullable,
-                                                            dim3_is_nullable,
+                                                            dim1_is_nl,
+                                                            dim2_is_nl,
+                                                            dim3_is_nl,
                                                         },
                                                     });
                                                 }
@@ -427,19 +419,19 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     }
                                 }
                                 Pattern::ArrDim4 { .. } => {
-                                    for is_nullable in IsNullable::into_arr() {
-                                        for dim1_is_nullable in IsNullable::into_arr() {
-                                            for dim2_is_nullable in IsNullable::into_arr() {
-                                                for dim3_is_nullable in IsNullable::into_arr() {
-                                                    for dim4_is_nullable in IsNullable::into_arr() {
+                                    for is_nl in IsNl::into_arr() {
+                                        for dim1_is_nl in IsNl::into_arr() {
+                                            for dim2_is_nl in IsNl::into_arr() {
+                                                for dim3_is_nl in IsNl::into_arr() {
+                                                    for dim4_is_nl in IsNl::into_arr() {
                                                         acc.push(Record {
                                                             pg_json: pg_json.clone(),
-                                                            is_nullable,
+                                                            is_nl,
                                                             pattern: Pattern::ArrDim4 {
-                                                                dim1_is_nullable,
-                                                                dim2_is_nullable,
-                                                                dim3_is_nullable,
-                                                                dim4_is_nullable,
+                                                                dim1_is_nl,
+                                                                dim2_is_nl,
+                                                                dim3_is_nl,
+                                                                dim4_is_nl,
                                                             },
                                                         });
                                                     }
@@ -476,71 +468,71 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         for el0 in {
             #[derive(Clone, Optml)]
             struct RecordH {
-                is_nullable: IsNullable,
+                is_nl: IsNl,
                 pattern: Pattern,
             }
             fn gen_record_h_vec(record_h: RecordH) -> Vec<RecordH> {
                 let gen_vec = |record_h_1e4b61e4: RecordH| gen_record_h_vec(
                     record_h_1e4b61e4
                 ).into_iter().chain(once(record_h.clone())).collect();
-                match (&record_h.is_nullable, &record_h.pattern) {
-                    (IsNullable::False, Pattern::Stdrt) => vec![record_h],
-                    (IsNullable::True, Pattern::Stdrt) => gen_vec(RecordH {
-                        is_nullable: IsNullable::False,
+                match (&record_h.is_nl, &record_h.pattern) {
+                    (IsNl::False, Pattern::Stdrt) => vec![record_h],
+                    (IsNl::True, Pattern::Stdrt) => gen_vec(RecordH {
+                        is_nl: IsNl::False,
                         pattern: Pattern::Stdrt,
                     }),
-                    (IsNullable::False, Pattern::ArrDim1 { dim1_is_nullable }) => gen_vec(RecordH {
-                        is_nullable: *dim1_is_nullable,
+                    (IsNl::False, Pattern::ArrDim1 { dim1_is_nl }) => gen_vec(RecordH {
+                        is_nl: *dim1_is_nl,
                         pattern: record_h.pattern.down_by_1().expect("0e970a4f"),
                     }),
-                    (IsNullable::False, Pattern::ArrDim2 { dim1_is_nullable, .. }) => gen_vec(RecordH {
-                        is_nullable: *dim1_is_nullable,
+                    (IsNl::False, Pattern::ArrDim2 { dim1_is_nl, .. }) => gen_vec(RecordH {
+                        is_nl: *dim1_is_nl,
                         pattern: record_h.pattern.down_by_1().expect("85f8ed83"),
                     }),
                     (
-                        IsNullable::False,
+                        IsNl::False,
                         Pattern::ArrDim3 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
                         },
                     ) => gen_vec(RecordH {
-                        is_nullable: *dim1_is_nullable,
+                        is_nl: *dim1_is_nl,
                         pattern: Pattern::ArrDim2 {
-                            dim1_is_nullable: *dim2_is_nullable,
-                            dim2_is_nullable: *dim3_is_nullable,
+                            dim1_is_nl: *dim2_is_nl,
+                            dim2_is_nl: *dim3_is_nl,
                         },
                     }),
                     (
-                        IsNullable::False,
+                        IsNl::False,
                         Pattern::ArrDim4 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
-                            dim4_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
+                            dim4_is_nl,
                         },
                     ) => gen_vec(RecordH {
-                        is_nullable: *dim1_is_nullable,
+                        is_nl: *dim1_is_nl,
                         pattern: Pattern::ArrDim3 {
-                            dim1_is_nullable: *dim2_is_nullable,
-                            dim2_is_nullable: *dim3_is_nullable,
-                            dim3_is_nullable: *dim4_is_nullable,
+                            dim1_is_nl: *dim2_is_nl,
+                            dim2_is_nl: *dim3_is_nl,
+                            dim3_is_nl: *dim4_is_nl,
                         },
                     }),
-                    (IsNullable::True, Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. }) => gen_vec(RecordH {
-                        is_nullable: IsNullable::False,
+                    (IsNl::True, Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. }) => gen_vec(RecordH {
+                        is_nl: IsNl::False,
                         pattern: record_h.pattern.clone(),
                     }),
                 }
             }
             gen_record_h_vec(RecordH {
-                is_nullable: el.is_nullable,
+                is_nl: el.is_nl,
                 pattern: el.pattern,
             })
         } {
             let record = Record {
                 pg_json: el.pg_json.clone(),
-                is_nullable: el0.is_nullable,
+                is_nl: el0.is_nl,
                 pattern: el0.pattern,
             };
             if !acc.contains(&record) {
@@ -564,85 +556,85 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             True,
         }
         let pg_json = &el.pg_json;
-        let is_nullable = &el.is_nullable;
+        let is_nl = &el.is_nl;
         let pattern = &el.pattern;
         let rust_type_name = RustTypeName::from(pg_json);
         let pg_json_name = PgJsonName::from(pg_json);
-        let is_stdrt_nn = if matches!((&pattern, &is_nullable), (Pattern::Stdrt, IsNullable::False)) {
+        let is_stdrt_nn = if matches!((&pattern, &is_nl), (Pattern::Stdrt, IsNl::False)) {
             IsStdrtNn::True
         } else {
             IsStdrtNn::False
         };
-        let is_stdrt_nn_uuid = if matches!((&is_nullable, &pattern, &pg_json), (IsNullable::False, Pattern::Stdrt, PgJson::UuidUuidAsJsonbString)) {
+        let is_stdrt_nn_uuid = if matches!((&is_nl, &pattern, &pg_json), (IsNl::False, Pattern::Stdrt, PgJson::UuidUuidAsJsonbString)) {
             IsStdrtNnUuid::True
         } else {
             IsStdrtNnUuid::False
         };
         let import = Import::PgCrudCommon;
         let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
-        let gen_ident_ts = |is_nullable_ddf79d44: &IsNullable, pattern_2c09ee59: &Pattern| {
-            let is_nullable_rust = is_nullable_ddf79d44.rust();
+        let gen_ident_ts = |is_nl_ddf79d44: &IsNl, pattern_2c09ee59: &Pattern| {
+            let is_nl_rust = is_nl_ddf79d44.rust();
             let (rust_part, pg_part) = match &pattern_2c09ee59 {
                 Pattern::Stdrt => (rust_type_name.to_string(), pg_json_name.to_string()),
-                Pattern::ArrDim1 { dim1_is_nullable } => {
-                    let d1 = dim1_is_nullable.nn_or_nullable_str();
-                    let d1_rust = dim1_is_nullable.rust();
+                Pattern::ArrDim1 { dim1_is_nl } => {
+                    let d1 = dim1_is_nl.nn_or_nl_str();
+                    let d1_rust = dim1_is_nl.rust();
                     (format!("{VecOfUcc}{d1_rust}{rust_type_name}"), format!("{ArrOfUcc}{d1}{pg_json_name}"))
                 }
-                Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => {
-                    let d1 = dim1_is_nullable.nn_or_nullable_str();
-                    let d1_rust = dim1_is_nullable.rust();
-                    let d2 = dim2_is_nullable.nn_or_nullable_str();
-                    let d2_rust = dim2_is_nullable.rust();
+                Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
+                    let d1 = dim1_is_nl.nn_or_nl_str();
+                    let d1_rust = dim1_is_nl.rust();
+                    let d2 = dim2_is_nl.nn_or_nl_str();
+                    let d2_rust = dim2_is_nl.rust();
                     (format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{rust_type_name}"), format!("{ArrOfUcc}{d1}{ArrOfUcc}{d2}{pg_json_name}"))
                 }
                 Pattern::ArrDim3 {
-                    dim1_is_nullable,
-                    dim2_is_nullable,
-                    dim3_is_nullable,
+                    dim1_is_nl,
+                    dim2_is_nl,
+                    dim3_is_nl,
                 } => {
-                    let d1 = dim1_is_nullable.nn_or_nullable_str();
-                    let d1_rust = dim1_is_nullable.rust();
-                    let d2 = dim2_is_nullable.nn_or_nullable_str();
-                    let d2_rust = dim2_is_nullable.rust();
-                    let d3 = dim3_is_nullable.nn_or_nullable_str();
-                    let d3_rust = dim3_is_nullable.rust();
+                    let d1 = dim1_is_nl.nn_or_nl_str();
+                    let d1_rust = dim1_is_nl.rust();
+                    let d2 = dim2_is_nl.nn_or_nl_str();
+                    let d2_rust = dim2_is_nl.rust();
+                    let d3 = dim3_is_nl.nn_or_nl_str();
+                    let d3_rust = dim3_is_nl.rust();
                     (
                         format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{VecOfUcc}{d3_rust}{rust_type_name}"),
                         format!("{ArrOfUcc}{d1}{ArrOfUcc}{d2}{ArrOfUcc}{d3}{pg_json_name}"),
                     )
                 }
                 Pattern::ArrDim4 {
-                    dim1_is_nullable,
-                    dim2_is_nullable,
-                    dim3_is_nullable,
-                    dim4_is_nullable,
+                    dim1_is_nl,
+                    dim2_is_nl,
+                    dim3_is_nl,
+                    dim4_is_nl,
                 } => {
-                    let d1 = dim1_is_nullable.nn_or_nullable_str();
-                    let d1_rust = dim1_is_nullable.rust();
-                    let d2 = dim2_is_nullable.nn_or_nullable_str();
-                    let d2_rust = dim2_is_nullable.rust();
-                    let d3 = dim3_is_nullable.nn_or_nullable_str();
-                    let d3_rust = dim3_is_nullable.rust();
-                    let d4 = dim4_is_nullable.nn_or_nullable_str();
-                    let d4_rust = dim4_is_nullable.rust();
+                    let d1 = dim1_is_nl.nn_or_nl_str();
+                    let d1_rust = dim1_is_nl.rust();
+                    let d2 = dim2_is_nl.nn_or_nl_str();
+                    let d2_rust = dim2_is_nl.rust();
+                    let d3 = dim3_is_nl.nn_or_nl_str();
+                    let d3_rust = dim3_is_nl.rust();
+                    let d4 = dim4_is_nl.nn_or_nl_str();
+                    let d4_rust = dim4_is_nl.rust();
                     (
                         format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{VecOfUcc}{d3_rust}{VecOfUcc}{d4_rust}{rust_type_name}"),
                         format!("{ArrOfUcc}{d1}{ArrOfUcc}{d2}{ArrOfUcc}{d3}{ArrOfUcc}{d4}{pg_json_name}"),
                     )
                 }
             };
-            let nn_or_nullable_str = is_nullable_ddf79d44.nn_or_nullable_str();
-            format!("{is_nullable_rust}{rust_part}{AsUcc}{nn_or_nullable_str}{pg_part}").parse::<Ts2>().expect("998d1471")
+            let nn_or_nl_str = is_nl_ddf79d44.nn_or_nl_str();
+            format!("{is_nl_rust}{rust_part}{AsUcc}{nn_or_nl_str}{pg_part}").parse::<Ts2>().expect("998d1471")
         };
-        let ident = &gen_ident_ts(is_nullable, pattern);
-        let ident_stdrt_nn_ucc = &gen_ident_ts(&IsNullable::False, &Pattern::Stdrt);
+        let ident = &gen_ident_ts(is_nl, pattern);
+        let ident_stdrt_nn_ucc = &gen_ident_ts(&IsNl::False, &Pattern::Stdrt);
         let ident_stdrt_nn_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident_stdrt_nn_ucc);
         let ident_table_type_ucc = SelfTableTypeUcc::from_tokens(&ident);
         let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
         let ident_wh_ucc = SelfWhUcc::from_tokens(&ident);
         let ident_rd_ids_ucc = SelfRdIdsUcc::from_tokens(&ident);
-        let ident_nn_ts = gen_ident_ts(&IsNullable::False, pattern);
+        let ident_nn_ts = gen_ident_ts(&IsNl::False, pattern);
         let ident_ts = {
             let ident_ts = DTsBuilder::new()
                 .make_pub()
@@ -692,9 +684,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         );
         let self_ident_origin_new_v_ts = quote! {Self(#ident_origin_ucc::new(#VSc))};
         let mb_const_fn = match &pattern {
-            Pattern::Stdrt => match &is_nullable {
-                IsNullable::False => ConstFn::True,
-                IsNullable::True => ConstFn::False,
+            Pattern::Stdrt => match &is_nl {
+                IsNl::False => ConstFn::True,
+                IsNl::True => ConstFn::False,
             },
             Pattern::ArrDim1 { .. } |
             Pattern::ArrDim2 { .. } |
@@ -754,9 +746,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         };
         let ident_origin_ts = {
             let gen_ident_origin_non_wrapping_6c0934a6 = |
-                is_nullable_e7d1d83c: &IsNullable,
+                is_nl_e7d1d83c: &IsNl,
                 pattern_1ca83c6c: &Pattern
-            | SelfOriginUcc::from_tokens(&gen_ident_ts(is_nullable_e7d1d83c, pattern_1ca83c6c));
+            | SelfOriginUcc::from_tokens(&gen_ident_ts(is_nl_e7d1d83c, pattern_1ca83c6c));
             let ident_origin_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
@@ -793,29 +785,29 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &{
                         let content_ts: &dyn ToTokens = {
-                            let gen_ident_origin_6f054930 = |is_nullable_70fb22e6: &IsNullable, pattern_042c1c1d: &Pattern| {
-                                let v = gen_ident_origin_non_wrapping_6c0934a6(is_nullable_70fb22e6, pattern_042c1c1d);
-                                match &is_nullable {
-                                    IsNullable::False => gen_vec_tokens_dcl_ts(&v),
-                                    IsNullable::True => gen_opt_type_dcl_ts(&v),
+                            let gen_ident_origin_6f054930 = |is_nl_70fb22e6: &IsNl, pattern_042c1c1d: &Pattern| {
+                                let v = gen_ident_origin_non_wrapping_6c0934a6(is_nl_70fb22e6, pattern_042c1c1d);
+                                match &is_nl {
+                                    IsNl::False => gen_vec_tokens_dcl_ts(&v),
+                                    IsNl::True => gen_opt_type_dcl_ts(&v),
                                 }
                             };
-                            let gen_dims_ts = |dim1_is_nullable_a5c667cd: &IsNullable|{
-                                let (is_nullable_79be16e9, pattern_3437adad): (&IsNullable, &Pattern) = match &is_nullable {
-                                    IsNullable::False => (dim1_is_nullable_a5c667cd, &pattern.down_by_1().expect("e994797d")),
-                                    IsNullable::True => (&IsNullable::False, pattern),
+                            let gen_dims_ts = |dim1_is_nl_a5c667cd: &IsNl|{
+                                let (is_nl_79be16e9, pattern_3437adad): (&IsNl, &Pattern) = match &is_nl {
+                                    IsNl::False => (dim1_is_nl_a5c667cd, &pattern.down_by_1().expect("e994797d")),
+                                    IsNl::True => (&IsNl::False, pattern),
                                 };
-                                gen_ident_origin_6f054930(is_nullable_79be16e9, pattern_3437adad)
+                                gen_ident_origin_6f054930(is_nl_79be16e9, pattern_3437adad)
                             };
                             match &pattern {
-                                Pattern::Stdrt => match &is_nullable {
-                                    IsNullable::False => &ident_rd_inn_stdrt_nn_al_ts,
-                                    IsNullable::True => &gen_opt_type_dcl_ts(&ident_stdrt_nn_origin_ucc),
+                                Pattern::Stdrt => match &is_nl {
+                                    IsNl::False => &ident_rd_inn_stdrt_nn_al_ts,
+                                    IsNl::True => &gen_opt_type_dcl_ts(&ident_stdrt_nn_origin_ucc),
                                 },
-                                Pattern::ArrDim1 { dim1_is_nullable } |
-                                Pattern::ArrDim2 { dim1_is_nullable, .. } |
-                                Pattern::ArrDim3 { dim1_is_nullable, .. } |
-                                Pattern::ArrDim4 { dim1_is_nullable, .. } => &gen_dims_ts(dim1_is_nullable),
+                                Pattern::ArrDim1 { dim1_is_nl } |
+                                Pattern::ArrDim2 { dim1_is_nl, .. } |
+                                Pattern::ArrDim3 { dim1_is_nl, .. } |
+                                Pattern::ArrDim4 { dim1_is_nl, .. } => &gen_dims_ts(dim1_is_nl),
                             }
                         };
                         quote!{(#content_ts);}
@@ -823,42 +815,42 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 );
             let ident_origin_impl_new_self_cnt_ts = {
                 let gen_v_map_type_new_ts = |ts: &dyn ToTokens| quote! {#VSc.map(#ts::#NewSc)};
-                let gen_arr_dims_init_ts = |ts: &dyn ToTokens| match &is_nullable {
-                    IsNullable::False => quote! {#VSc.into_iter().map(#ts::#NewSc).collect()},
-                    IsNullable::True => gen_v_map_type_new_ts(&ts),
+                let gen_arr_dims_init_ts = |ts: &dyn ToTokens| match &is_nl {
+                    IsNl::False => quote! {#VSc.into_iter().map(#ts::#NewSc).collect()},
+                    IsNl::True => gen_v_map_type_new_ts(&ts),
                 };
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {#VSc},
-                        IsNullable::True => gen_v_map_type_new_ts(&ident_stdrt_nn_origin_ucc),
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => quote! {#VSc},
+                        IsNl::True => gen_v_map_type_new_ts(&ident_stdrt_nn_origin_ucc),
                     },
-                    Pattern::ArrDim1 { dim1_is_nullable } => gen_arr_dims_init_ts(&{
-                        let (pattern_38178717, is_nullable_b0d116f8): (&Pattern, &IsNullable) = match &is_nullable {
-                            IsNullable::False => (&pattern.down_by_1().expect("1160d3df"), dim1_is_nullable),
-                            IsNullable::True => (pattern, &IsNullable::False),
+                    Pattern::ArrDim1 { dim1_is_nl } => gen_arr_dims_init_ts(&{
+                        let (pattern_38178717, is_nl_b0d116f8): (&Pattern, &IsNl) = match &is_nl {
+                            IsNl::False => (&pattern.down_by_1().expect("1160d3df"), dim1_is_nl),
+                            IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nullable_b0d116f8, pattern_38178717)
+                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_b0d116f8, pattern_38178717)
                     }),
-                    Pattern::ArrDim2 { dim1_is_nullable, .. } => gen_arr_dims_init_ts(&{
-                        let (pattern_8e2a682a, is_nullable_c378003c): (&Pattern, &IsNullable) = match &is_nullable {
-                            IsNullable::False => (&pattern.down_by_1().expect("8ab62f4e"), dim1_is_nullable),
-                            IsNullable::True => (pattern, &IsNullable::False),
+                    Pattern::ArrDim2 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
+                        let (pattern_8e2a682a, is_nl_c378003c): (&Pattern, &IsNl) = match &is_nl {
+                            IsNl::False => (&pattern.down_by_1().expect("8ab62f4e"), dim1_is_nl),
+                            IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nullable_c378003c, pattern_8e2a682a)
+                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_c378003c, pattern_8e2a682a)
                     }),
-                    Pattern::ArrDim3 { dim1_is_nullable, .. } => gen_arr_dims_init_ts(&{
-                        let (pattern_305989a9, is_nullable_4a8825a3): (&Pattern, &IsNullable) = match &is_nullable {
-                            IsNullable::False => (&pattern.down_by_1().expect("ed64919d"), dim1_is_nullable),
-                            IsNullable::True => (pattern, &IsNullable::False),
+                    Pattern::ArrDim3 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
+                        let (pattern_305989a9, is_nl_4a8825a3): (&Pattern, &IsNl) = match &is_nl {
+                            IsNl::False => (&pattern.down_by_1().expect("ed64919d"), dim1_is_nl),
+                            IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nullable_4a8825a3, pattern_305989a9)
+                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_4a8825a3, pattern_305989a9)
                     }),
-                    Pattern::ArrDim4 { dim1_is_nullable, .. } => gen_arr_dims_init_ts(&{
-                        let (pattern_ea606504, is_nullable_63d0fe05): (&Pattern, &IsNullable) = match &is_nullable {
-                            IsNullable::False => (&pattern.down_by_1().expect("25646d29"), dim1_is_nullable),
-                            IsNullable::True => (pattern, &IsNullable::False),
+                    Pattern::ArrDim4 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
+                        let (pattern_ea606504, is_nl_63d0fe05): (&Pattern, &IsNl) = match &is_nl {
+                            IsNl::False => (&pattern.down_by_1().expect("25646d29"), dim1_is_nl),
+                            IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nullable_63d0fe05, pattern_ea606504)
+                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_63d0fe05, pattern_ea606504)
                     }),
                 }
             };
@@ -959,8 +951,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_dflt_opt_some_vec_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts(&ident_origin_ucc, &{
                 let content_ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => match &pg_json {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => match &pg_json {
                             PgJson::I8AsJsonbNbr
                             | PgJson::I16AsJsonbNbr
                             | PgJson::I32AsJsonbNbr
@@ -975,11 +967,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             PgJson::StringAsJsonbString => quote! {String::default()},
                             PgJson::UuidUuidAsJsonbString => quote! {uuid::Uuid::new_v4()},
                         },
-                        IsNullable::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
+                        IsNl::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
                     },
-                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => match &is_nullable {
-                        IsNullable::False => quote! {vec![#PgCrudCommonDfltOptSomeVecOneElCall]},
-                        IsNullable::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
+                    Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => match &is_nl {
+                        IsNl::False => quote! {vec![#PgCrudCommonDfltOptSomeVecOneElCall]},
+                        IsNl::True => quote! {Some(#PgCrudCommonDfltOptSomeVecOneElCall)},
                     },
                 };
                 quote! {Self(#content_ts)}
@@ -1168,8 +1160,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
-        let ident_wh_ts = match &is_nullable {
-            IsNullable::False => gen_pg_type_wh_ts(
+        let ident_wh_ts = match &is_nl {
+            IsNl::False => gen_pg_type_wh_ts(
                 &AllowClippyArbitrarySrcItemOrdering,
                 &{
                     #[derive(Debug, Clone, Optml)]
@@ -1225,9 +1217,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        Pattern::ArrDim1 { dim1_is_nullable } => {
+                        Pattern::ArrDim1 { dim1_is_nl } => {
                             let arr_dim1_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("21eaebaf")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("21eaebaf")));
                                 quote! {#v}
                             };
                             let common_arr_dim1_pg_json_filters = {
@@ -1280,13 +1272,13 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => {
+                        Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
                             let arr_dim1_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("0c4491c4")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("0c4491c4")));
                                 quote! {#v}
                             };
                             let arr_dim2_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("2d4ee5d4")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nl, &pattern.down_by_2().expect("2d4ee5d4")));
                                 quote! {#v}
                             };
                             let common_arr_dim2_pg_json_filters = {
@@ -1351,20 +1343,20 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         Pattern::ArrDim3 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
                         } => {
                             let arr_dim1_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("3450bef4")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("3450bef4")));
                                 quote! {#v}
                             };
                             let arr_dim2_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("3c0d10f4")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nl, &pattern.down_by_2().expect("3c0d10f4")));
                                 quote! {#v}
                             };
                             let arr_dim3_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nullable, &pattern.down_by_3().expect("9aaf9e82")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nl, &pattern.down_by_3().expect("9aaf9e82")));
                                 quote! {#v}
                             };
                             let common_arr_dim3_pg_json_filters = {
@@ -1440,25 +1432,25 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         Pattern::ArrDim4 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
-                            dim4_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
+                            dim4_is_nl,
                         } => {
                             let arr_dim1_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("550d313b")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("550d313b")));
                                 quote! {#v}
                             };
                             let arr_dim2_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nullable, &pattern.down_by_2().expect("7bda1424")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim2_is_nl, &pattern.down_by_2().expect("7bda1424")));
                                 quote! {#v}
                             };
                             let arr_dim3_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nullable, &pattern.down_by_3().expect("b43aa5bd")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim3_is_nl, &pattern.down_by_3().expect("b43aa5bd")));
                                 quote! {#v}
                             };
                             let arr_dim4_inn_el_ident_table_type_ucc = {
-                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim4_is_nullable, &pattern.down_by_4().expect("a246885a")));
+                                let v = SelfTableTypeUcc::from_tokens(&gen_ident_ts(dim4_is_nl, &pattern.down_by_4().expect("a246885a")));
                                 quote! {#v}
                             };
                             let common_arr_dim4_pg_json_filters = {
@@ -1557,8 +1549,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ShouldDSchemarsJsonSchema::True,
                 &IsQbMut::False,
             ),
-            IsNullable::True => quote! {
-                pub type #ident_wh_ucc = #import::NullableJsonObjPgTypeWhFilter<
+            IsNl::True => quote! {
+                pub type #ident_wh_ucc = #import::NlJsonObjPgTypeWhFilter<
                     <#ident_nn_ts as #import::PgJson>::Wh
                 >;
             }
@@ -1618,86 +1610,86 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let content_ts = gen_v_dcl_ts(&import, &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                         match &pattern {
                             Pattern::Stdrt => {
-                                let ts1 = match &is_nullable {
-                                    IsNullable::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
+                                let ts1 = match &is_nl {
+                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
+                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
                                 };
                                 quote! {#ts1}
                             }
-                            Pattern::ArrDim1 { dim1_is_nullable } => {
-                                let ts1 = vec_ts(&match &dim1_is_nullable {
-                                    IsNullable::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
+                            Pattern::ArrDim1 { dim1_is_nl } => {
+                                let ts1 = vec_ts(&match &dim1_is_nl {
+                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
+                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
                                 });
-                                let ts2 = match &is_nullable {
-                                    IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts1),
+                                let ts2 = match &is_nl {
+                                    IsNl::False => ts1,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
                                 };
                                 quote! {#ts2}
                             }
-                            Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => {
-                                let ts1 = vec_ts(&match &dim2_is_nullable {
-                                    IsNullable::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
+                            Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
+                                let ts1 = vec_ts(&match &dim2_is_nl {
+                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
+                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
                                 });
-                                let ts2 = vec_ts(&match &dim1_is_nullable {
-                                    IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts1),
+                                let ts2 = vec_ts(&match &dim1_is_nl {
+                                    IsNl::False => ts1,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
                                 });
-                                let ts3 = match &is_nullable {
-                                    IsNullable::False => ts2,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts2),
+                                let ts3 = match &is_nl {
+                                    IsNl::False => ts2,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts2),
                                 };
                                 quote! {#ts3}
                             }
                             Pattern::ArrDim3 {
-                                dim1_is_nullable,
-                                dim2_is_nullable,
-                                dim3_is_nullable,
+                                dim1_is_nl,
+                                dim2_is_nl,
+                                dim3_is_nl,
                             } => {
-                                let ts1 = vec_ts(&match &dim3_is_nullable {
-                                    IsNullable::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
+                                let ts1 = vec_ts(&match &dim3_is_nl {
+                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
+                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
                                 });
-                                let ts2 = vec_ts(&match &dim2_is_nullable {
-                                    IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts1),
+                                let ts2 = vec_ts(&match &dim2_is_nl {
+                                    IsNl::False => ts1,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
                                 });
-                                let ts3 = vec_ts(&match &dim1_is_nullable {
-                                    IsNullable::False => ts2,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts2),
+                                let ts3 = vec_ts(&match &dim1_is_nl {
+                                    IsNl::False => ts2,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts2),
                                 });
-                                let ts4 = match &is_nullable {
-                                    IsNullable::False => ts3,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts3),
+                                let ts4 = match &is_nl {
+                                    IsNl::False => ts3,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts3),
                                 };
                                 quote! {#ts4}
                             }
                             Pattern::ArrDim4 {
-                                dim1_is_nullable,
-                                dim2_is_nullable,
-                                dim3_is_nullable,
-                                dim4_is_nullable,
+                                dim1_is_nl,
+                                dim2_is_nl,
+                                dim3_is_nl,
+                                dim4_is_nl,
                             } => {
-                                let ts1 = vec_ts(&match &dim4_is_nullable {
-                                    IsNullable::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
+                                let ts1 = vec_ts(&match &dim4_is_nl {
+                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
+                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
                                 });
-                                let ts2 = vec_ts(&match &dim3_is_nullable {
-                                    IsNullable::False => ts1,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts1),
+                                let ts2 = vec_ts(&match &dim3_is_nl {
+                                    IsNl::False => ts1,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
                                 });
-                                let ts3 = vec_ts(&match &dim2_is_nullable {
-                                    IsNullable::False => ts2,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts2),
+                                let ts3 = vec_ts(&match &dim2_is_nl {
+                                    IsNl::False => ts2,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts2),
                                 });
-                                let ts4 = vec_ts(&match &dim1_is_nullable {
-                                    IsNullable::False => ts3,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts3),
+                                let ts4 = vec_ts(&match &dim1_is_nl {
+                                    IsNl::False => ts3,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts3),
                                 });
-                                let ts5 = match &is_nullable {
-                                    IsNullable::False => ts4,
-                                    IsNullable::True => gen_opt_type_dcl_ts(&ts4),
+                                let ts5 = match &is_nl {
+                                    IsNl::False => ts4,
+                                    IsNl::True => gen_opt_type_dcl_ts(&ts4),
                                 };
                                 quote! {#ts5}
                             }
@@ -1710,40 +1702,40 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             );
         let ident_rd_inn_ts = {
             let type_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => &ident_rd_inn_stdrt_nn_al_ts,
-                    IsNullable::True => &gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => &ident_rd_inn_stdrt_nn_al_ts,
+                    IsNl::True => &gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
                 },
-                Pattern::ArrDim1 { dim1_is_nullable } => &{
-                    let dim1_type = dim1_is_nullable.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
+                Pattern::ArrDim1 { dim1_is_nl } => &{
+                    let dim1_type = dim1_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
+                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
                 },
-                Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => &{
-                    let dim2_type = dim2_is_nullable.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    let dim1_type = dim1_is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
-                    is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
+                Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => &{
+                    let dim2_type = dim2_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
+                    let dim1_type = dim1_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
+                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
                 },
                 Pattern::ArrDim3 {
-                    dim1_is_nullable,
-                    dim2_is_nullable,
-                    dim3_is_nullable,
+                    dim1_is_nl,
+                    dim2_is_nl,
+                    dim3_is_nl,
                 } => &{
-                    let dim3_type = dim3_is_nullable.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    let dim2_type = dim2_is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim3_type));
-                    let dim1_type = dim1_is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
-                    is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
+                    let dim3_type = dim3_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
+                    let dim2_type = dim2_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim3_type));
+                    let dim1_type = dim1_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
+                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
                 },
                 Pattern::ArrDim4 {
-                    dim1_is_nullable,
-                    dim2_is_nullable,
-                    dim3_is_nullable,
-                    dim4_is_nullable,
+                    dim1_is_nl,
+                    dim2_is_nl,
+                    dim3_is_nl,
+                    dim4_is_nl,
                 } => &{
-                    let dim4_type = dim4_is_nullable.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    let dim3_type = dim3_is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim4_type));
-                    let dim2_type = dim2_is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim3_type));
-                    let dim1_type = dim1_is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
-                    is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
+                    let dim4_type = dim4_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
+                    let dim3_type = dim3_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim4_type));
+                    let dim2_type = dim2_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim3_type));
+                    let dim1_type = dim1_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
+                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
                 },
             };
             let impl_from_ident_origin_for_ident_rd_inn_ts = gen_impl_from_ts(
@@ -1751,18 +1743,18 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ident_rd_inn_ucc,
                 &{
                     let v_dot_zero_ts = quote!{#VSc.0};
-                    let nullable_ts = quote!{#v_dot_zero_ts.map(Into::into)};
+                    let nl_ts = quote!{#v_dot_zero_ts.map(Into::into)};
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => v_dot_zero_ts,
-                            IsNullable::True => nullable_ts,
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => v_dot_zero_ts,
+                            IsNl::True => nl_ts,
                         },
                         Pattern::ArrDim1 {..} |
                         Pattern::ArrDim2 {..} |
                         Pattern::ArrDim3 {..} |
-                        Pattern::ArrDim4 {..} => match &is_nullable {
-                            IsNullable::False => quote!{#v_dot_zero_ts.into_iter().map(Into::into).collect()},
-                            IsNullable::True => nullable_ts
+                        Pattern::ArrDim4 {..} => match &is_nl {
+                            IsNl::False => quote!{#v_dot_zero_ts.into_iter().map(Into::into).collect()},
+                            IsNl::True => nl_ts
                         },
                     }
                 },
@@ -1889,16 +1881,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             |arr_dim| {
                                 enum ArrDimSelPattern {
                                     ArrDim2 {
-                                        dim1_is_nullable: IsNullable,
+                                        dim1_is_nl: IsNl,
                                     },
                                     ArrDim3 {
-                                        dim1_is_nullable: IsNullable,
-                                        dim2_is_nullable: IsNullable,
+                                        dim1_is_nl: IsNl,
+                                        dim2_is_nl: IsNl,
                                     },
                                     ArrDim4 {
-                                        dim1_is_nullable: IsNullable,
-                                        dim2_is_nullable: IsNullable,
-                                        dim3_is_nullable: IsNullable,
+                                        dim1_is_nl: IsNl,
+                                        dim2_is_nl: IsNl,
+                                        dim3_is_nl: IsNl,
                                     },
                                 }
                                 impl TryFrom<&ArrDim> for ArrDimSelPattern {
@@ -1907,25 +1899,25 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         match &v {
                                             ArrDim::ArrDim1 => Err(()),
                                             ArrDim::ArrDim2 {
-                                                dim1_is_nullable,
+                                                dim1_is_nl,
                                             } => Ok(Self::ArrDim2 {
-                                                dim1_is_nullable: *dim1_is_nullable,
+                                                dim1_is_nl: *dim1_is_nl,
                                             }),
                                             ArrDim::ArrDim3 {
-                                                dim1_is_nullable,
-                                                dim2_is_nullable,
+                                                dim1_is_nl,
+                                                dim2_is_nl,
                                             } => Ok(Self::ArrDim3 {
-                                                dim1_is_nullable: *dim1_is_nullable,
-                                                dim2_is_nullable: *dim2_is_nullable,
+                                                dim1_is_nl: *dim1_is_nl,
+                                                dim2_is_nl: *dim2_is_nl,
                                             }),
                                             ArrDim::ArrDim4 {
-                                                dim1_is_nullable,
-                                                dim2_is_nullable,
-                                                dim3_is_nullable,
+                                                dim1_is_nl,
+                                                dim2_is_nl,
+                                                dim3_is_nl,
                                             } => Ok(Self::ArrDim4 {
-                                                dim1_is_nullable: *dim1_is_nullable,
-                                                dim2_is_nullable: *dim2_is_nullable,
-                                                dim3_is_nullable: *dim3_is_nullable,
+                                                dim1_is_nl: *dim1_is_nl,
+                                                dim2_is_nl: *dim2_is_nl,
+                                                dim3_is_nl: *dim3_is_nl,
                                             }),
                                         }
                                     }
@@ -1963,27 +1955,27 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                 };
                                                 match &arr_dim_sel_pattern {
                                                     ArrDimSelPattern::ArrDim2 {
-                                                        dim1_is_nullable,
-                                                    } => vec![dim1_is_nullable],
+                                                        dim1_is_nl,
+                                                    } => vec![dim1_is_nl],
                                                     ArrDimSelPattern::ArrDim3 {
-                                                        dim1_is_nullable,
-                                                        dim2_is_nullable,
+                                                        dim1_is_nl,
+                                                        dim2_is_nl,
                                                     } => vec![
-                                                        dim2_is_nullable,
-                                                        dim1_is_nullable,
+                                                        dim2_is_nl,
+                                                        dim1_is_nl,
                                                     ],
                                                     ArrDimSelPattern::ArrDim4 {
-                                                        dim1_is_nullable,
-                                                        dim2_is_nullable,
-                                                        dim3_is_nullable,
+                                                        dim1_is_nl,
+                                                        dim2_is_nl,
+                                                        dim3_is_nl,
                                                     } => vec![
-                                                        dim3_is_nullable,
-                                                        dim2_is_nullable,
-                                                        dim1_is_nullable,
+                                                        dim3_is_nl,
+                                                        dim2_is_nl,
+                                                        dim1_is_nl,
                                                     ],
                                                 }
                                                 .into_iter()
-                                                .fold(gen_dot_v(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc, is_nullable_0ff8cf42| {
+                                                .fold(gen_dot_v(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc, is_nl_0ff8cf42| {
                                                     let usize_v_minus_one_0ff8cf42 = usize_v_0ff8cf42.checked_sub(one).expect("a35e873e");
                                                     let d_usize_minus_one_elem_v = gen_dot_v(&gen_d_nbr_elem(usize_v_minus_one_0ff8cf42));
                                                     let v = gen_jsonb_agg(
@@ -1992,9 +1984,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                         &gen_as_v_wh(&gen_d_nbr_elem(usize_v_0ff8cf42), &gen_d_nbr_ord(usize_v_0ff8cf42)),
                                                         usize_v_0ff8cf42,
                                                     );
-                                                    acc = match &is_nullable_0ff8cf42 {
-                                                        IsNullable::False => v,
-                                                        IsNullable::True => {
+                                                    acc = match &is_nl_0ff8cf42 {
+                                                        IsNl::False => v,
+                                                        IsNl::True => {
                                                             format!("case when jsonb_typeof({d_usize_minus_one_elem_v})='arr' then ({v}) else null end")
                                                         }
                                                     };
@@ -2010,9 +2002,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 )
                             },
                         );
-                        match &is_nullable {
-                            IsNullable::False => format_h,
-                            IsNullable::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_h}) end"),
+                        match &is_nl {
+                            IsNl::False => format_h,
+                            IsNl::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_h}) end"),
                         }
                     };
                     let mb_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
@@ -2075,15 +2067,15 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     | {
                         quote! {.into_iter().map(|#el_ts|#content_ts).collect()}
                     };
-                    let gen_into_iter_map_el_collect_is_nullable_ts = |
+                    let gen_into_iter_map_el_collect_is_nl_ts = |
                         el_ts: &dyn ToTokens,
-                        is_nullable_d9400a66: &IsNullable
+                        is_nl_d9400a66: &IsNl
                     | {
                         gen_into_iter_map_el_collect_ts(
                             &el_ts,
-                            &match &is_nullable_d9400a66 {
-                                IsNullable::False => quote! {#el_ts.0},
-                                IsNullable::True => gen_match_el_zero_ts(
+                            &match &is_nl_d9400a66 {
+                                IsNl::False => quote! {#el_ts.0},
+                                IsNl::True => gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
                                     &quote! {v_f8b0b01d},
                                     &Ts2::new()
@@ -2091,18 +2083,18 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }
                         )
                     };
-                    let gen_into_iter_map_el_collect_is_nullable_cnt_ts = |
+                    let gen_into_iter_map_el_collect_is_nl_cnt_ts = |
                         el_ts: &dyn ToTokens,
                         v_ts: &dyn ToTokens,
-                        is_nullable_d9400a66: &IsNullable,
+                        is_nl_d9400a66: &IsNl,
                         content_ts_d9400a66: &dyn ToTokens
                     | {
-                        match &is_nullable_d9400a66 {
-                            IsNullable::False => gen_into_iter_map_el_collect_ts(
+                        match &is_nl_d9400a66 {
+                            IsNl::False => gen_into_iter_map_el_collect_ts(
                                 &el_ts,
                                 &quote! {#el_ts.0 #content_ts_d9400a66}
                             ),
-                            IsNullable::True => {
+                            IsNl::True => {
                                 let match_el_zero_ts = gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
                                     &v_ts,
@@ -2114,77 +2106,77 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     };
                     let into_inn_cnt_ts = match &pattern {
                         Pattern::Stdrt => Ts2::new(),
-                        Pattern::ArrDim1 { dim1_is_nullable } => gen_into_iter_map_el_collect_is_nullable_ts(
+                        Pattern::ArrDim1 { dim1_is_nl } => gen_into_iter_map_el_collect_is_nl_ts(
                             &quote!{el_0fdb74a5},
-                            dim1_is_nullable,
+                            dim1_is_nl,
                         ),
-                        Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => {
-                            let dim2_is_nullable_cnt_ts = gen_into_iter_map_el_collect_is_nullable_ts(
+                        Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
+                            let dim2_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_ts(
                                 &quote!{el_dac5ba56},
-                                dim2_is_nullable
+                                dim2_is_nl
                             );
-                            gen_into_iter_map_el_collect_is_nullable_cnt_ts(
+                            gen_into_iter_map_el_collect_is_nl_cnt_ts(
                                 &quote!{el_cf5646e9},
                                 &quote!{v_1c90c80c},
-                                dim1_is_nullable,
-                                &dim2_is_nullable_cnt_ts
+                                dim1_is_nl,
+                                &dim2_is_nl_cnt_ts
                             )
                         }
                         Pattern::ArrDim3 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
                         } => {
-                            let dim3_is_nullable_cnt_ts = gen_into_iter_map_el_collect_is_nullable_ts(
+                            let dim3_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_ts(
                                 &quote!{el_c935a865},
-                                dim3_is_nullable
+                                dim3_is_nl
                             );
-                            let dim2_is_nullable_cnt_ts = gen_into_iter_map_el_collect_is_nullable_cnt_ts(
+                            let dim2_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
                                 &quote!{el_dc9e788b},
                                 &quote!{v_3d1307e8},
-                                dim2_is_nullable,
-                                &dim3_is_nullable_cnt_ts
+                                dim2_is_nl,
+                                &dim3_is_nl_cnt_ts
                             );
-                            gen_into_iter_map_el_collect_is_nullable_cnt_ts(
+                            gen_into_iter_map_el_collect_is_nl_cnt_ts(
                                 &quote!{el_bf67606b},
                                 &quote!{v_721e4164},
-                                dim1_is_nullable,
-                                &dim2_is_nullable_cnt_ts
+                                dim1_is_nl,
+                                &dim2_is_nl_cnt_ts
                             )
                         }
                         Pattern::ArrDim4 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
-                            dim4_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
+                            dim4_is_nl,
                         } => {
-                            let dim4_is_nullable_cnt_ts = gen_into_iter_map_el_collect_is_nullable_ts(
+                            let dim4_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_ts(
                                 &quote!{el_144c60e6},
-                                dim4_is_nullable
+                                dim4_is_nl
                             );
-                            let dim3_is_nullable_cnt_ts = gen_into_iter_map_el_collect_is_nullable_cnt_ts(
+                            let dim3_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
                                 &quote!{el_98961cb7},
                                 &quote!{v_995a5fbe},
-                                dim3_is_nullable,
-                                &dim4_is_nullable_cnt_ts
+                                dim3_is_nl,
+                                &dim4_is_nl_cnt_ts
                             );
-                            let dim2_is_nullable_cnt_ts = gen_into_iter_map_el_collect_is_nullable_cnt_ts(
+                            let dim2_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
                                 &quote!{el_34e95172},
                                 &quote!{v_75b18ade},
-                                dim2_is_nullable,
-                                &dim3_is_nullable_cnt_ts
+                                dim2_is_nl,
+                                &dim3_is_nl_cnt_ts
                             );
-                            gen_into_iter_map_el_collect_is_nullable_cnt_ts(
+                            gen_into_iter_map_el_collect_is_nl_cnt_ts(
                                 &quote!{el_f64124e2},
                                 &quote!{v_7fc1b146},
-                                dim1_is_nullable,
-                                &dim2_is_nullable_cnt_ts
+                                dim1_is_nl,
+                                &dim2_is_nl_cnt_ts
                             )
                         }
                     };
-                    match &is_nullable {
-                        IsNullable::False => quote! {#content_ts_0ff8cf42 #into_inn_cnt_ts},
-                        IsNullable::True => gen_match_el_zero_ts(
+                    match &is_nl {
+                        IsNl::False => quote! {#content_ts_0ff8cf42 #into_inn_cnt_ts},
+                        IsNl::True => gen_match_el_zero_ts(
                             &content_ts_0ff8cf42,
                             &quote!{v_3432e728},
                             &into_inn_cnt_ts
@@ -2312,14 +2304,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 PgJson::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
             let opt_vec_cr_ts = {
-                let gen_some_acc_cnt_ts = |is_nullable_c964bb93: &IsNullable, ident_ts_dc0d5797: &dyn ToTokens| {
-                    let (new_cnt_ts, mb_acc_push_none_ts) = match &is_nullable_c964bb93 {
-                        IsNullable::False => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
-                        IsNullable::True => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import::PgJson>::Cr::new(#NoneTs));}),
+                let gen_some_acc_cnt_ts = |is_nl_c964bb93: &IsNl, ident_ts_dc0d5797: &dyn ToTokens| {
+                    let (new_cnt_ts, mb_acc_push_none_ts) = match &is_nl_c964bb93 {
+                        IsNl::False => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
+                        IsNl::True => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import::PgJson>::Cr::new(#NoneTs));}),
                     };
                     //todo check - mb need to add something here
-                    let mb_acc_push_long_vec_ts = match &is_nullable {
-                        IsNullable::False => quote! {
+                    let mb_acc_push_long_vec_ts = match &is_nl {
+                        IsNl::False => quote! {
                             let mut acc_27624e5e = Vec::new();
                             for el_0dcb405a in v_8de026a4 {
                                 acc_27624e5e.push(el_0dcb405a.0.into());
@@ -2328,11 +2320,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 acc_50e99088.push(<Self as #import::PgJson>::Cr::new(acc_27624e5e));
                             }
                         },
-                        IsNullable::True => Ts2::new(),
+                        IsNl::True => Ts2::new(),
                     };
-                    let mb_dot_clone_ts = match &is_nullable {
-                        IsNullable::False => quote!{.clone()},
-                        IsNullable::True => Ts2::new(),
+                    let mb_dot_clone_ts = match &is_nl {
+                        IsNl::False => quote!{.clone()},
+                        IsNl::True => Ts2::new(),
                     };
                     quote! {Some({
                         let mut acc_50e99088 = Vec::new();
@@ -2347,40 +2339,40 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     })}
                 };
                 let content_ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => quote! {
                             Some(
                                 #import::#stdrt_nn_test_cases_vec_name_ts().into_iter().map(<Self as #import::PgJson>::Cr::new).collect()
                             )
                         },
-                        IsNullable::True => gen_some_acc_cnt_ts(is_nullable, &gen_ident_ts(&IsNullable::False, &Pattern::Stdrt)),
+                        IsNl::True => gen_some_acc_cnt_ts(is_nl, &gen_ident_ts(&IsNl::False, &Pattern::Stdrt)),
                     },
-                    Pattern::ArrDim1 { dim1_is_nullable } => gen_some_acc_cnt_ts(
-                        is_nullable,
-                        &match &is_nullable {
-                            IsNullable::False => gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("dec468c0")),
-                            IsNullable::True => gen_ident_ts(&IsNullable::False, pattern),
+                    Pattern::ArrDim1 { dim1_is_nl } => gen_some_acc_cnt_ts(
+                        is_nl,
+                        &match &is_nl {
+                            IsNl::False => gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("dec468c0")),
+                            IsNl::True => gen_ident_ts(&IsNl::False, pattern),
                         },
                     ),
-                    Pattern::ArrDim2 { dim1_is_nullable, .. } => gen_some_acc_cnt_ts(
-                        is_nullable,
-                        &match &is_nullable {
-                            IsNullable::False => gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("4010ebf7")),
-                            IsNullable::True => gen_ident_ts(&IsNullable::False, pattern),
+                    Pattern::ArrDim2 { dim1_is_nl, .. } => gen_some_acc_cnt_ts(
+                        is_nl,
+                        &match &is_nl {
+                            IsNl::False => gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("4010ebf7")),
+                            IsNl::True => gen_ident_ts(&IsNl::False, pattern),
                         },
                     ),
-                    Pattern::ArrDim3 { dim1_is_nullable, .. } => gen_some_acc_cnt_ts(
-                        is_nullable,
-                        &match &is_nullable {
-                            IsNullable::False => gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("acdbb564")),
-                            IsNullable::True => gen_ident_ts(&IsNullable::False, pattern),
+                    Pattern::ArrDim3 { dim1_is_nl, .. } => gen_some_acc_cnt_ts(
+                        is_nl,
+                        &match &is_nl {
+                            IsNl::False => gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("acdbb564")),
+                            IsNl::True => gen_ident_ts(&IsNl::False, pattern),
                         },
                     ),
-                    Pattern::ArrDim4 { dim1_is_nullable, .. } => gen_some_acc_cnt_ts(
-                        is_nullable,
-                        &match &is_nullable {
-                            IsNullable::False => gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("5abf9504")),
-                            IsNullable::True => gen_ident_ts(&IsNullable::False, pattern),
+                    Pattern::ArrDim4 { dim1_is_nl, .. } => gen_some_acc_cnt_ts(
+                        is_nl,
+                        &match &is_nl {
+                            IsNl::False => gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("5abf9504")),
+                            IsNl::True => gen_ident_ts(&IsNl::False, pattern),
                         },
                     ),
                 };
@@ -2425,9 +2417,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         let el_82c7dc0a_clone_ts = quote! {el_82c7dc0a.clone()};
                         let first = quote! {vec![#el_82c7dc0a_clone_ts]};
                         let second = quote! {vec![#el_82c7dc0a_clone_ts, #el_82c7dc0a_clone_ts]};
-                        let (first_cnt_ts, second_cnt_ts) = match &is_nullable {
-                            IsNullable::False => (first, second),
-                            IsNullable::True => {
+                        let (first_cnt_ts, second_cnt_ts) = match &is_nl {
+                            IsNl::False => (first, second),
+                            IsNl::True => {
                                 let gen_ts = |ts: &dyn ToTokens| quote! {Some(#ts)};
                                 (gen_ts(&first), gen_ts(&second))
                             }
@@ -2463,16 +2455,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                                 acc_6cd5b60a
                             }};
-                            match &is_nullable {
-                                IsNullable::False => inn_cnt_ts,
-                                IsNullable::True => quote! {Some(#inn_cnt_ts)},
+                            match &is_nl {
+                                IsNl::False => inn_cnt_ts,
+                                IsNl::True => quote! {Some(#inn_cnt_ts)},
                             }
                         };
                         quote! {acc_0a07db18.push(vec![#content_ts]);}
                     };
-                    let mb_acc_push_vec_none_ts = match &is_nullable {
-                        IsNullable::False => Ts2::new(),
-                        IsNullable::True => quote! {acc_0a07db18.push(vec![#NoneTs]);},
+                    let mb_acc_push_vec_none_ts = match &is_nl {
+                        IsNl::False => Ts2::new(),
+                        IsNl::True => quote! {acc_0a07db18.push(vec![#NoneTs]);},
                     };
                     quote! {
                         let mut acc_0a07db18 = Vec::new();
@@ -2499,9 +2491,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let content_ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {vec![#import::#stdrt_nn_test_cases_vec_name_ts().into()]},
-                        IsNullable::True => quote! {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => quote! {vec![#import::#stdrt_nn_test_cases_vec_name_ts().into()]},
+                        IsNl::True => quote! {
                             let mut acc_97242d4d = Vec::new();
                             for el_8f3646f9 in <#ident_stdrt_nn_ucc as #import::PgJsonTestCases>::#RdIdsTo2DimsVecRdInnSc(&#ident_rd_ids_stdrt_nn_ucc(rd_ids.0.clone())) {
                                 for el_35a4dba9 in el_8f3646f9 {
@@ -2512,16 +2504,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             acc_97242d4d
                         },
                     },
-                    Pattern::ArrDim1 { dim1_is_nullable } => gen_acc_cnt_h_ts(
-                        &gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("d6f89137")),
-                        &match &dim1_is_nullable {
-                            IsNullable::False => &has_len_greater_than_one_for_for_ts,
-                            IsNullable::True => &has_len_greater_than_one_ts,
+                    Pattern::ArrDim1 { dim1_is_nl } => gen_acc_cnt_h_ts(
+                        &gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("d6f89137")),
+                        &match &dim1_is_nl {
+                            IsNl::False => &has_len_greater_than_one_for_for_ts,
+                            IsNl::True => &has_len_greater_than_one_ts,
                         },
                     ),
-                    Pattern::ArrDim2 { dim1_is_nullable, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
-                    Pattern::ArrDim3 { dim1_is_nullable, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
-                    Pattern::ArrDim4 { dim1_is_nullable, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim2 { dim1_is_nl, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim3 { dim1_is_nl, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim4 { dim1_is_nl, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
                 };
                 match &pg_json {
                     PgJson::I8AsJsonbNbr
@@ -2560,17 +2552,17 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let upd_to_rd_ids_ts = {
                 let ts = gen_v_init_ts0(&if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                     let gen_iter_or_match_ts = |
-                        is_nullable_1d9cc9dd: &IsNullable,
+                        is_nl_1d9cc9dd: &IsNl,
                         ident_ts_36d8e080: &dyn ToTokens,
-                        upd_is_nullable_69216aba: &IsNullable
+                        upd_is_nl_69216aba: &IsNl
                     | {
                         let v_zero_zero_ts = quote! {#VSc.0.0};
                         let content_ts = {
                             let ident_upd_ts_7c40250a = SelfUpdUcc::from_tokens(&ident_ts_36d8e080);
                             let content_ts = {
-                                let content_ts = match &upd_is_nullable_69216aba {
-                                    IsNullable::False => quote! {el_aa999306.clone()},
-                                    IsNullable::True => quote! {v_92de91cc.clone()},
+                                let content_ts = match &upd_is_nl_69216aba {
+                                    IsNl::False => quote! {el_aa999306.clone()},
+                                    IsNl::True => quote! {v_92de91cc.clone()},
                                 };
                                 quote! {#ident_upd_ts_7c40250a(#content_ts)}
                             };
@@ -2582,79 +2574,79 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 >::upd_to_rd_ids(&#content_ts).0.#VSc
                             }
                         };
-                        match &is_nullable_1d9cc9dd {
-                            IsNullable::False => quote! {
+                        match &is_nl_1d9cc9dd {
+                            IsNl::False => quote! {
                                 #v_zero_zero_ts.iter().map(|el_aa999306|#content_ts).collect()
                             },
-                            IsNullable::True => quote! {
+                            IsNl::True => quote! {
                                 #v_zero_zero_ts.as_ref().map(|v_92de91cc| #content_ts)
                             },
                         }
                     };
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => quote! {#VSc.0.clone().into()},
-                            IsNullable::True => gen_iter_or_match_ts(
-                                is_nullable,
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => quote! {#VSc.0.clone().into()},
+                            IsNl::True => gen_iter_or_match_ts(
+                                is_nl,
                                 &ident_nn_ts,
-                                is_nullable
+                                is_nl
                             ),
                         },
-                        Pattern::ArrDim1 { dim1_is_nullable } => gen_iter_or_match_ts(
-                            is_nullable,
+                        Pattern::ArrDim1 { dim1_is_nl } => gen_iter_or_match_ts(
+                            is_nl,
                             &gen_ident_ts(
-                                &match &is_nullable {
-                                    IsNullable::False => *dim1_is_nullable,
-                                    IsNullable::True => IsNullable::False,
+                                &match &is_nl {
+                                    IsNl::False => *dim1_is_nl,
+                                    IsNl::True => IsNl::False,
                                 },
-                                &match &is_nullable {
-                                    IsNullable::False => pattern.down_by_1().expect("e84064c3"),
-                                    IsNullable::True => pattern.clone(),
+                                &match &is_nl {
+                                    IsNl::False => pattern.down_by_1().expect("e84064c3"),
+                                    IsNl::True => pattern.clone(),
                                 },
                             ),
-                            is_nullable,
+                            is_nl,
                         ),
-                        Pattern::ArrDim2 { dim1_is_nullable, .. } => gen_iter_or_match_ts(
-                            is_nullable,
+                        Pattern::ArrDim2 { dim1_is_nl, .. } => gen_iter_or_match_ts(
+                            is_nl,
                             &gen_ident_ts(
-                                &match &is_nullable {
-                                    IsNullable::False => *dim1_is_nullable,
-                                    IsNullable::True => IsNullable::False,
+                                &match &is_nl {
+                                    IsNl::False => *dim1_is_nl,
+                                    IsNl::True => IsNl::False,
                                 },
-                                &match &is_nullable {
-                                    IsNullable::False => pattern.down_by_1().expect("226c6318"),
-                                    IsNullable::True => pattern.clone(),
+                                &match &is_nl {
+                                    IsNl::False => pattern.down_by_1().expect("226c6318"),
+                                    IsNl::True => pattern.clone(),
                                 },
                             ),
-                            is_nullable,
+                            is_nl,
                         ),
-                        Pattern::ArrDim3 { dim1_is_nullable, .. } => gen_iter_or_match_ts(
-                            is_nullable,
+                        Pattern::ArrDim3 { dim1_is_nl, .. } => gen_iter_or_match_ts(
+                            is_nl,
                             &gen_ident_ts(
-                                &match &is_nullable {
-                                    IsNullable::False => *dim1_is_nullable,
-                                    IsNullable::True => IsNullable::False,
+                                &match &is_nl {
+                                    IsNl::False => *dim1_is_nl,
+                                    IsNl::True => IsNl::False,
                                 },
-                                &match &is_nullable {
-                                    IsNullable::False => pattern.down_by_1().expect("3ae1e9f8"),
-                                    IsNullable::True => pattern.clone(),
+                                &match &is_nl {
+                                    IsNl::False => pattern.down_by_1().expect("3ae1e9f8"),
+                                    IsNl::True => pattern.clone(),
                                 },
                             ),
-                            is_nullable,
+                            is_nl,
                         ),
-                        Pattern::ArrDim4 { dim1_is_nullable, .. } => gen_iter_or_match_ts(
-                            is_nullable,
+                        Pattern::ArrDim4 { dim1_is_nl, .. } => gen_iter_or_match_ts(
+                            is_nl,
                             &gen_ident_ts(
-                                &match &is_nullable {
-                                    IsNullable::False => *dim1_is_nullable,
-                                    IsNullable::True => IsNullable::False,
+                                &match &is_nl {
+                                    IsNl::False => *dim1_is_nl,
+                                    IsNl::True => IsNl::False,
                                 },
-                                &match &is_nullable {
-                                    IsNullable::False => pattern.down_by_1().expect("44d51dc5"),
-                                    IsNullable::True => pattern.clone(),
+                                &match &is_nl {
+                                    IsNl::False => pattern.down_by_1().expect("44d51dc5"),
+                                    IsNl::True => pattern.clone(),
                                 },
                             ),
-                            is_nullable,
+                            is_nl,
                         ),
                     }
                 } else {
@@ -2707,17 +2699,17 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                 };
-                match &is_nullable {
-                    IsNullable::False => {
+                match &is_nl {
+                    IsNl::False => {
                         let equal_ts = gen_equal_ts(&quote! {#ident_table_type_ucc::new(#CrSc.0.into())});
                         quote! {#ident_wh_ucc::#EqualUcc(#equal_ts)}
                     }
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ident_wh_ucc_029b3848 = SelfWhUcc::from_tokens(&ident_nn_ts);
                         let ident_table_type_ucc_db49334a = SelfTableTypeUcc::from_tokens(&ident_nn_ts);
                         let equal_ts = gen_equal_ts(&quote! {#ident_table_type_ucc_db49334a::new(v_18544acf.into())});
                         quote! {
-                            #import::NullableJsonObjPgTypeWhFilter(
+                            #import::NlJsonObjPgTypeWhFilter(
                                 #CrSc.0.0.map(|v_18544acf| pg_crud_common::NotEmptyUniqueVec::try_new(
                                     vec![#ident_wh_ucc_029b3848::#EqualUcc(#equal_ts)]
                                 ).expect("88bfa095"))
@@ -2746,8 +2738,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             ) = {
                 let gen_ts = |dim: &Dim| {
                     let dim_i_nbr_max = DimIndexNbr::from(dim);
-                    let gen_dim_i_nbr_ts = |is_nullable_vec: &[&IsNullable]|{
-                        assert!(!is_nullable_vec.is_empty(), "c1a5939d");
+                    let gen_dim_i_nbr_ts = |is_nl_vec: &[&IsNl]|{
+                        assert!(!is_nl_vec.is_empty(), "c1a5939d");
                         let content_ts_c85923bd = {
                             let gen_i_nbr_ts = |i_c1128a3e: usize|format!("i_{i_c1128a3e}").parse::<Ts2>().expect("afbe7252");
                             let gen_v_nbr_ts = |i_0abe6039: usize|format!("v{i_0abe6039}").parse::<Ts2>().expect("568d8eb6");
@@ -2793,11 +2785,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 &gen_v_nbr_ts(i_9f1fbc9f),
                                 &content_ts_832b20d5
                             );
-                            let gen_i = |start_i: usize, is_nullable_vec_41b82a0c: &[&IsNullable]| -> usize {
+                            let gen_i = |start_i: usize, is_nl_vec_41b82a0c: &[&IsNl]| -> usize {
                                 start_i.checked_add(
-                                    is_nullable_vec_41b82a0c
+                                    is_nl_vec_41b82a0c
                                     .iter()
-                                    .filter(|el0| matches!(el0, IsNullable::True))
+                                    .filter(|el0| matches!(el0, IsNl::True))
                                     .count()
                                 ).expect("de4c4116")
                             };
@@ -2805,14 +2797,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 let content_ts_f1ffd3b2 = {
                                     let ts = gen_v_nbr_ts(
                                         gen_i(
-                                            is_nullable_vec.len().saturating_sub(1),
-                                            &once(is_nullable)
+                                            is_nl_vec.len().saturating_sub(1),
+                                            &once(is_nl)
                                             .chain(
-                                                is_nullable_vec
+                                                is_nl_vec
                                                     .iter()
-                                                    .take(is_nullable_vec.len().saturating_sub(1))
+                                                    .take(is_nl_vec.len().saturating_sub(1))
                                                     .copied(),
-                                            ).collect::<Vec<&IsNullable>>()
+                                            ).collect::<Vec<&IsNl>>()
                                         )
                                     );
                                     let to_nbr_starting_with_one_word_str = |dim_i_nbr: &DimIndexNbr| match dim_i_nbr {
@@ -2823,9 +2815,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     };
                                     let dim_nbr_starting_with_one_equal_ts = format!("Dim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("52fa34ac");
                                     let pg_json_wh_dim_nbr_starting_with_one_equal_ts = format!("PgJsonWhDim{}Equal", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("15d769b0");
-                                    let wh_ident_wh_ucc_c994819b = SelfWhUcc::from_tokens(&gen_ident_ts(&IsNullable::False, pattern));
+                                    let wh_ident_wh_ucc_c994819b = SelfWhUcc::from_tokens(&gen_ident_ts(&IsNl::False, pattern));
                                     let ident_table_type_ucc_0d9dce86 = SelfTableTypeUcc::from_tokens(&gen_ident_ts(
-                                        is_nullable_vec.last().expect("1221f6ec"),
+                                        is_nl_vec.last().expect("1221f6ec"),
                                         &match dim_i_nbr_max {
                                             DimIndexNbr::Zero => pattern.down_by_1().expect("1a47af86"),
                                             DimIndexNbr::One => pattern.down_by_2().expect("d8260225"),
@@ -2867,55 +2859,55 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         )
                                     }
                                 };
-                                match is_nullable {
-                                    IsNullable::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
-                                    IsNullable::True => gen_not_empty_unique_vec_try_new_match_ts(
+                                match is_nl {
+                                    IsNl::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
+                                    IsNl::True => gen_not_empty_unique_vec_try_new_match_ts(
                                         &quote!{vec![#content_ts_f1ffd3b2]},
                                         &quote!{v_9328b66f},
                                         &quote!{{
-                                            acc_049ff0b3.push(#import::NullableJsonObjPgTypeWhFilter(Some(v_9328b66f)));
+                                            acc_049ff0b3.push(#import::NlJsonObjPgTypeWhFilter(Some(v_9328b66f)));
                                         }},
                                         &quote!{()},
                                         &quote!{panic!("2f5f648a")},
                                     )
                                 }
                             };
-                            for (i_ef936914, _) in is_nullable_vec.iter().take(is_nullable_vec.len().saturating_sub(1)).enumerate() {
-                                let is_nullable_vec_e7e7f6f8 = is_nullable_vec
+                            for (i_ef936914, _) in is_nl_vec.iter().take(is_nl_vec.len().saturating_sub(1)).enumerate() {
+                                let is_nl_vec_e7e7f6f8 = is_nl_vec
                                 .iter()
                                 .take(
-                                    is_nullable_vec
+                                    is_nl_vec
                                         .len()
                                         .saturating_sub(i_ef936914.checked_add(1).expect("75d5ed28")),
                                 )
                                 .copied()
-                                .collect::<Vec<&IsNullable>>();
-                                let is_nullable_vec_e7e7f6f8_len = is_nullable_vec_e7e7f6f8.len();
-                                let is_nullable_vec_e7e7f6f8_len_saturating_sub_one = is_nullable_vec_e7e7f6f8_len.saturating_sub(1);
+                                .collect::<Vec<&IsNl>>();
+                                let is_nl_vec_e7e7f6f8_len = is_nl_vec_e7e7f6f8.len();
+                                let is_nl_vec_e7e7f6f8_len_saturating_sub_one = is_nl_vec_e7e7f6f8_len.saturating_sub(1);
                                 content_ts_4c106eea = {
                                     let i_74ae6d77 = gen_i(
-                                        is_nullable_vec_e7e7f6f8_len_saturating_sub_one,
-                                        &once(is_nullable)
+                                        is_nl_vec_e7e7f6f8_len_saturating_sub_one,
+                                        &once(is_nl)
                                         .chain(
-                                            is_nullable_vec_e7e7f6f8
+                                            is_nl_vec_e7e7f6f8
                                                 .iter()
-                                                .take(is_nullable_vec_e7e7f6f8_len_saturating_sub_one)
+                                                .take(is_nl_vec_e7e7f6f8_len_saturating_sub_one)
                                                 .copied(),
-                                        ).collect::<Vec<&IsNullable>>()
+                                        ).collect::<Vec<&IsNl>>()
                                     );
                                     let i_74ae6d77_incr_by_1 = i_74ae6d77.checked_add(1).expect("96e90e72");
-                                    match &is_nullable_vec_e7e7f6f8.last().expect("88548240") {
-                                        IsNullable::False => gen_for_v_i_dot_zero_into_iter_enumerate_ts(
-                                            is_nullable_vec_e7e7f6f8_len,
+                                    match &is_nl_vec_e7e7f6f8.last().expect("88548240") {
+                                        IsNl::False => gen_for_v_i_dot_zero_into_iter_enumerate_ts(
+                                            is_nl_vec_e7e7f6f8_len,
                                             i_74ae6d77_incr_by_1,
                                             i_74ae6d77,
                                             &content_ts_4c106eea,
                                         ),
-                                        IsNullable::True => gen_if_let_some_equals_v_i_dot_zero_ts(
+                                        IsNl::True => gen_if_let_some_equals_v_i_dot_zero_ts(
                                             i_74ae6d77_incr_by_1,
                                             i_74ae6d77,
                                             &gen_for_v_i_dot_zero_into_iter_enumerate_ts(
-                                                is_nullable_vec_e7e7f6f8_len,
+                                                is_nl_vec_e7e7f6f8_len,
                                                 i_74ae6d77.checked_add(2).expect("00da046c"),
                                                 i_74ae6d77_incr_by_1,
                                                 &content_ts_4c106eea,
@@ -2925,14 +2917,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 };
                             }
                             let cr_dot_zero_ts = quote!{cr.0};
-                            match &is_nullable {
-                                IsNullable::False => gen_for_in_ts(
+                            match &is_nl {
+                                IsNl::False => gen_for_in_ts(
                                     &gen_i_nbr_ts(0),
                                     &gen_v_nbr_ts(0),
                                     &cr_dot_zero_ts,
                                     &content_ts_4c106eea
                                 ),
-                                IsNullable::True => gen_if_let_some_ts(
+                                IsNl::True => gen_if_let_some_ts(
                                     &gen_v_nbr_ts(0),
                                     &cr_dot_zero_ts,
                                     &gen_for_v_i_dot_zero_into_iter_enumerate_ts(
@@ -2954,65 +2946,65 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     };
                     match &pattern {
                         Pattern::Stdrt => quote!{#NoneTs},
-                        Pattern::ArrDim1 { dim1_is_nullable } => match dim_i_nbr_max {
+                        Pattern::ArrDim1 { dim1_is_nl } => match dim_i_nbr_max {
                             DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                dim1_is_nullable,
+                                dim1_is_nl,
                             ]),
                             DimIndexNbr::One | DimIndexNbr::Two | DimIndexNbr::Three => quote!{#NoneTs},
                         },
-                        Pattern::ArrDim2 { dim1_is_nullable, dim2_is_nullable } => match dim_i_nbr_max {
+                        Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => match dim_i_nbr_max {
                             DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                dim1_is_nullable,
+                                dim1_is_nl,
                             ]),
                             DimIndexNbr::One => gen_dim_i_nbr_ts(&[
-                                dim1_is_nullable,
-                                dim2_is_nullable
+                                dim1_is_nl,
+                                dim2_is_nl
                             ]),
                             DimIndexNbr::Two | DimIndexNbr::Three => quote!{#NoneTs},
                         },
                         Pattern::ArrDim3 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
                         } => match dim_i_nbr_max {
                             DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                dim1_is_nullable,
+                                dim1_is_nl,
                             ]),
                             DimIndexNbr::One => gen_dim_i_nbr_ts(&[
-                                dim1_is_nullable,
-                                dim2_is_nullable,
+                                dim1_is_nl,
+                                dim2_is_nl,
                             ]),
                             DimIndexNbr::Two => gen_dim_i_nbr_ts(&[
-                                dim1_is_nullable,
-                                dim2_is_nullable,
-                                dim3_is_nullable
+                                dim1_is_nl,
+                                dim2_is_nl,
+                                dim3_is_nl
                             ]),
                             DimIndexNbr::Three => quote!{#NoneTs},
                         },
                         Pattern::ArrDim4 {
-                            dim1_is_nullable,
-                            dim2_is_nullable,
-                            dim3_is_nullable,
-                            dim4_is_nullable,
+                            dim1_is_nl,
+                            dim2_is_nl,
+                            dim3_is_nl,
+                            dim4_is_nl,
                         } => {
                             match dim_i_nbr_max {
                                 DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nullable
+                                    dim1_is_nl
                                 ]),
                                 DimIndexNbr::One => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nullable,
-                                    dim2_is_nullable,
+                                    dim1_is_nl,
+                                    dim2_is_nl,
                                 ]),
                                 DimIndexNbr::Two => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nullable,
-                                    dim2_is_nullable,
-                                    dim3_is_nullable,
+                                    dim1_is_nl,
+                                    dim2_is_nl,
+                                    dim3_is_nl,
                                 ]),
                                 DimIndexNbr::Three => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nullable,
-                                    dim2_is_nullable,
-                                    dim3_is_nullable,
-                                    dim4_is_nullable
+                                    dim1_is_nl,
+                                    dim2_is_nl,
+                                    dim3_is_nl,
+                                    dim4_is_nl
                                 ])
                             }
                         }
@@ -3036,9 +3028,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         let content_ts = {
                             let cr_dot_zero_dot_zero = quote! {#CrSc.0.0};
                             let content_ts = {
-                                let content_ts: &dyn ToTokens = match &is_nullable {
-                                    IsNullable::False => &cr_dot_zero_dot_zero,
-                                    IsNullable::True => &quote! {v_1bbf74bc.0},
+                                let content_ts: &dyn ToTokens = match &is_nl {
+                                    IsNl::False => &cr_dot_zero_dot_zero,
+                                    IsNl::True => &quote! {v_1bbf74bc.0},
                                 };
                                 quote! {
                                     ::LengthEqual(
@@ -3051,9 +3043,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     )
                                 }
                             };
-                            match &is_nullable {
-                                IsNullable::False => quote! {#ident_wh_ucc #content_ts},
-                                IsNullable::True => {
+                            match &is_nl {
+                                IsNl::False => quote! {#ident_wh_ucc #content_ts},
+                                IsNl::True => {
                                     let ident_wh_ucc_db49334a = SelfWhUcc::from_tokens(&ident_nn_ts);
                                     let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
                                         &quote!{vec![#ident_wh_ucc_db49334a #content_ts]},
@@ -3063,7 +3055,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         &quote!{panic!("3d7ce854")},
                                     );
                                     quote! {
-                                        #import::NullableJsonObjPgTypeWhFilter(
+                                        #import::NlJsonObjPgTypeWhFilter(
                                             match #cr_dot_zero_dot_zero {
                                                 Some(v_1bbf74bc) => #not_empty_unique_vec_try_new_match_ts,
                                                 None => None,
@@ -3091,9 +3083,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         let content_ts = {
                             let cr_dot_zero_dot_zero = quote! {#CrSc.0.0};
                             let content_ts = {
-                                let content_ts: &dyn ToTokens = match &is_nullable {
-                                    IsNullable::False => &cr_dot_zero_dot_zero,
-                                    IsNullable::True => &quote! {v_68880991.0},
+                                let content_ts: &dyn ToTokens = match &is_nl {
+                                    IsNl::False => &cr_dot_zero_dot_zero,
+                                    IsNl::True => &quote! {v_68880991.0},
                                 };
                                 quote! {
                                     ::LengthGreaterThan(
@@ -3124,9 +3116,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     )
                                 }
                             };
-                            match &is_nullable {
-                                IsNullable::False => quote! {#ident_wh_ucc #content_ts},
-                                IsNullable::True => {
+                            match &is_nl {
+                                IsNl::False => quote! {#ident_wh_ucc #content_ts},
+                                IsNl::True => {
                                     let ident_wh_ucc_8a412c1a = SelfWhUcc::from_tokens(&ident_nn_ts);
                                     let not_empty_unique_vec_try_new_match_ts = gen_not_empty_unique_vec_try_new_match_ts(
                                         &quote!{vec![#ident_wh_ucc_8a412c1a #content_ts]},
@@ -3136,7 +3128,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         &quote!{panic!("584f801e")},
                                      );
                                     quote! {
-                                        #import::NullableJsonObjPgTypeWhFilter(match #cr_dot_zero_dot_zero {
+                                        #import::NlJsonObjPgTypeWhFilter(match #cr_dot_zero_dot_zero {
                                             Some(v_68880991) => #not_empty_unique_vec_try_new_match_ts,
                                             None => None,
                                         })
@@ -3178,7 +3170,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             //todo additonal logic for Option<v> and el of arr? optal el of arr?
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nullable, IsNullable::False)
+                matches!(&is_nl, IsNl::False)
             {
                 let (
                     int_greater_than_one_less_ts,
@@ -3242,7 +3234,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote!{#NoneTs}
             };
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_between_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nullable, IsNullable::False)
+                matches!(&is_nl, IsNl::False)
             {
                 let (
                     between_one_less_and_one_more_int_ts,
@@ -3320,7 +3312,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote!{#NoneTs}
             };
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nullable, IsNullable::False)
+                matches!(&is_nl, IsNl::False)
             {
                 match &pg_json {
                     PgJson::I8AsJsonbNbr |
@@ -3359,7 +3351,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote!{#NoneTs}
             };
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_regex_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nullable, IsNullable::False)
+                matches!(&is_nl, IsNl::False)
             {
                 match &pg_json {
                     PgJson::I8AsJsonbNbr |
@@ -3398,10 +3390,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             //todo add contains_el_greater_than for dim 2,3,4
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts = match &pattern {
-                Pattern::ArrDim1 { dim1_is_nullable } => {
-                    if matches!((&is_nullable, &dim1_is_nullable), (
-                        IsNullable::False,
-                        IsNullable::False
+                Pattern::ArrDim1 { dim1_is_nl } => {
+                    if matches!((&is_nl, &dim1_is_nl), (
+                        IsNl::False,
+                        IsNl::False
                     )) {
                         let (
                             int_greater_than_one_less_ts,
@@ -3482,10 +3474,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             //todo add contains_el_regex for dim 2,3,4
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex_ts = match &pattern {
-                Pattern::ArrDim1 { dim1_is_nullable } => {
-                    if matches!((&is_nullable, &dim1_is_nullable), (
-                        IsNullable::False,
-                        IsNullable::False
+                Pattern::ArrDim1 { dim1_is_nl } => {
+                    if matches!((&is_nl, &dim1_is_nl), (
+                        IsNl::False,
+                        IsNl::False
                     )) {
                         match &pg_json {
                             PgJson::I8AsJsonbNbr |

@@ -95,7 +95,7 @@ server_config = {path = "../../../server_config"}"#,
                             pub pk_column:
                                 pg_crud::SqlxTypesUuidUuidAsNnUuidV4InitByPg,
                             pub column_0: pg_crud::I16AsNnInt2,
-                            pub column_1: pg_crud::OptI16AsNullableInt2,
+                            pub column_1: pg_crud::OptI16AsNlInt2,
                             pub column_2: pg_crud::VecOfI16AsNnArrOfNnInt2,
                         }
                     }

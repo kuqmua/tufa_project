@@ -503,7 +503,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["nbr"],
     ["integer"],
     ["nn"],
-    ["nullable"],
+    ["nl"],
     ["vec", "of"],
     ["arr", "of"],
     ["arr", "length", "dim", "one"],

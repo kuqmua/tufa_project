@@ -72,12 +72,12 @@ pub enum IsStdrtNn {
     EnumExtension,
     Optml,
 )]
-pub enum IsNullable {
+pub enum IsNl {
     #[default]
     False,
     True,
 }
-impl IsNullable {
+impl IsNl {
     #[must_use]
     pub fn mb_opt_wrap(&self, ts: Ts2) -> Ts2 {
         match &self {
@@ -93,10 +93,10 @@ impl IsNullable {
         }
     }
     #[must_use]
-    pub const fn nn_or_nullable_str(&self) -> &str {
+    pub const fn nn_or_nl_str(&self) -> &str {
         match &self {
             Self::False => "Nn",
-            Self::True => "Nullable",
+            Self::True => "Nl",
         }
     }
     #[must_use]

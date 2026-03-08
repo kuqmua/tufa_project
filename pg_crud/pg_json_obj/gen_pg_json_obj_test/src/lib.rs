@@ -28,7 +28,7 @@ test-utils = []"#,
                             "pg_table_columns_write_into_pg_table_columns_using_pg_json_objs": "False",
                             "whole_write_into_gen_pg_json_obj": "False",
                             "vrt": {
-                                "is_nullable": "True",
+                                "is_nl": "True",
                                 "pattern": "Arr",
                                 "trait_gen": "PgTypeAndPgJson"
                             }
@@ -36,7 +36,7 @@ test-utils = []"#,
                     }]
                     pub struct ObjExample {
                         pub field_0: pg_crud::I8AsNnJsonbNbr,
-                        pub field_1: pg_crud::OptI8AsNullableJsonbNbr,
+                        pub field_1: pg_crud::OptI8AsNlJsonbNbr,
                         pub field_2: pg_crud::VecOfI8AsNnArrOfNnJsonbNbr,
                     }
                 };

@@ -416,10 +416,10 @@ pub trait PgTypeWhFilter<'query_lt> {
 }
 //todo custom deserialization - must not contain more than one el
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
-pub struct NullableJsonObjPgTypeWhFilter<
+pub struct NlJsonObjPgTypeWhFilter<
     T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFilter<'lt> + AllEnumVrtsArrDfltOptSomeVecOneEl,
 >(pub Option<NotEmptyUniqueVec<T>>);
-impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NullableJsonObjPgTypeWhFilter<T>
+impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NlJsonObjPgTypeWhFilter<T>
 where
     T: Debug
         + PartialEq
@@ -443,7 +443,7 @@ where
         )
     }
 }
-impl<T> ToErrString for NullableJsonObjPgTypeWhFilter<T>
+impl<T> ToErrString for NlJsonObjPgTypeWhFilter<T>
 where
     T: Debug
         + PartialEq
@@ -455,7 +455,7 @@ where
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NullableJsonObjPgTypeWhFilter<T>
+impl<T> AllEnumVrtsArrDfltOptSomeVecOneEl for NlJsonObjPgTypeWhFilter<T>
 where
     T: Debug
         + PartialEq

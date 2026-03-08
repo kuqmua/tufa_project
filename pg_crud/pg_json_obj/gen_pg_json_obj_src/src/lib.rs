@@ -39,8 +39,8 @@ use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrParamUndrscr, IsCrQbMut,
-    IsNullable, IsPkUndrscr, IsQbMut, IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrParamUndrscr, IsCrQbMut, IsNl,
+    IsPkUndrscr, IsQbMut, IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut,
     IsSelQpColumnFieldForErMessageUsed, IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsUpdQbMut,
     IsUpdQpJsonbSetTargetUsed, IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr,
     UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
@@ -95,7 +95,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     }
     #[derive(Debug, PartialEq, Serialize, Deserialize, Optml)]
     struct PgJsonObjRecord {
-        is_nullable: IsNullable,
+        is_nl: IsNl,
         pattern: Pattern,
         trait_gen: TraitGen,
     }
@@ -118,30 +118,30 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     .expect("246de453");
     let (fields_ts, pg_json_obj_arr) = {
         let pg_json_obj_record = gen_pg_json_obj_config.vrt;
-        match (&pg_json_obj_record.is_nullable, &pg_json_obj_record.pattern) {
-            (IsNullable::False, Pattern::Stdrt) => vec![pg_json_obj_record],
-            (IsNullable::True, Pattern::Stdrt) |
-            (IsNullable::False, Pattern::Arr) => vec![
+        match (&pg_json_obj_record.is_nl, &pg_json_obj_record.pattern) {
+            (IsNl::False, Pattern::Stdrt) => vec![pg_json_obj_record],
+            (IsNl::True, Pattern::Stdrt) |
+            (IsNl::False, Pattern::Arr) => vec![
                 PgJsonObjRecord {
-                    is_nullable: IsNullable::False,
+                    is_nl: IsNl::False,
                     pattern: Pattern::Stdrt,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
                 pg_json_obj_record
             ],
-            (IsNullable::True, Pattern::Arr) => vec![
+            (IsNl::True, Pattern::Arr) => vec![
                 PgJsonObjRecord {
-                    is_nullable: IsNullable::False,
+                    is_nl: IsNl::False,
                     pattern: Pattern::Stdrt,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
                 PgJsonObjRecord {
-                    is_nullable: IsNullable::True,
+                    is_nl: IsNl::True,
                     pattern: Pattern::Stdrt,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
                 PgJsonObjRecord {
-                    is_nullable: IsNullable::False,
+                    is_nl: IsNl::False,
                     pattern: Pattern::Arr,
                     trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
@@ -161,9 +161,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         enum IdentPattern {
             StdrtNnWithoutId,
             StdrtNnWithId,
-            StdrtNullableWithoutId,
+            StdrtNlWithoutId,
             ArrNnWithId,
-            ArrNullableWithIdentifier,//Identifier instead of Id - just to fix clippy lint
+            ArrNlWithIdentifier,//Identifier instead of Id - just to fix clippy lint
         }
         #[allow(clippy::arbitrary_source_item_ordering)]
         #[derive(Debug, Clone, Display, Optml)]
@@ -226,7 +226,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             NewType,
             StructDcl,
         }
-        let is_nullable = &el.is_nullable;
+        let is_nl = &el.is_nl;
         let pattern = &el.pattern;
         let trait_gen = &el.trait_gen;
         let self_field_vec_ts = quote! {.0.to_vec()};
@@ -273,34 +273,34 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let is_stdrt_with_id_false = IsStdrtWithId::False;
         let is_stdrt_with_id_true = IsStdrtWithId::True;
         let gen_ident_ucc = |ident_pattern: &IdentPattern| {
-            let (rust_part, pg_part, is_nullable_325dc715) = {
+            let (rust_part, pg_part, is_nl_325dc715) = {
                 let di_ident_str = di_ident.to_string();
                 let vec_of_di_ident_with_id = format!("{VecOfUcc}{di_ident}{WithIdUcc}");
                 let jsonb_obj_ucc_str = JsonbObjUcc.to_string();
-                let arr_of_nn_jsonb_obj_with_id = format!("{ArrOfUcc}{}{JsonbObjUcc}{WithIdUcc}", IsNullable::False.nn_or_nullable_str());
+                let arr_of_nn_jsonb_obj_with_id = format!("{ArrOfUcc}{}{JsonbObjUcc}{WithIdUcc}", IsNl::False.nn_or_nl_str());
                 match &ident_pattern {
-                    IdentPattern::StdrtNnWithoutId => (di_ident_str, jsonb_obj_ucc_str, IsNullable::False),
-                    IdentPattern::StdrtNnWithId => (format!("{di_ident}{WithIdUcc}"), format!("{JsonbObjUcc}{WithIdUcc}"), IsNullable::False),
-                    IdentPattern::StdrtNullableWithoutId => (di_ident_str, jsonb_obj_ucc_str, IsNullable::True),
-                    IdentPattern::ArrNnWithId => (vec_of_di_ident_with_id, arr_of_nn_jsonb_obj_with_id, IsNullable::False),
-                    IdentPattern::ArrNullableWithIdentifier => (vec_of_di_ident_with_id, arr_of_nn_jsonb_obj_with_id, IsNullable::True),
+                    IdentPattern::StdrtNnWithoutId => (di_ident_str, jsonb_obj_ucc_str, IsNl::False),
+                    IdentPattern::StdrtNnWithId => (format!("{di_ident}{WithIdUcc}"), format!("{JsonbObjUcc}{WithIdUcc}"), IsNl::False),
+                    IdentPattern::StdrtNlWithoutId => (di_ident_str, jsonb_obj_ucc_str, IsNl::True),
+                    IdentPattern::ArrNnWithId => (vec_of_di_ident_with_id, arr_of_nn_jsonb_obj_with_id, IsNl::False),
+                    IdentPattern::ArrNlWithIdentifier => (vec_of_di_ident_with_id, arr_of_nn_jsonb_obj_with_id, IsNl::True),
                 }
             };
-            let is_nullable_325dc715_rust = is_nullable_325dc715.rust();
-            let nn_or_nullable_str = is_nullable_325dc715.nn_or_nullable_str();
-            format!("{is_nullable_325dc715_rust}{rust_part}{AsUcc}{nn_or_nullable_str}{pg_part}").parse::<Ts2>().expect("43784dd3")
+            let is_nl_325dc715_rust = is_nl_325dc715.rust();
+            let nn_or_nl_str = is_nl_325dc715.nn_or_nl_str();
+            format!("{is_nl_325dc715_rust}{rust_part}{AsUcc}{nn_or_nl_str}{pg_part}").parse::<Ts2>().expect("43784dd3")
         };
-        let ident = &gen_ident_ucc(&match (&is_nullable, &pattern) {
-            (IsNullable::False, Pattern::Stdrt) => IdentPattern::StdrtNnWithoutId,
-            (IsNullable::False, Pattern::Arr) => IdentPattern::ArrNnWithId,
-            (IsNullable::True, Pattern::Stdrt) => IdentPattern::StdrtNullableWithoutId,
-            (IsNullable::True, Pattern::Arr) => IdentPattern::ArrNullableWithIdentifier,
+        let ident = &gen_ident_ucc(&match (&is_nl, &pattern) {
+            (IsNl::False, Pattern::Stdrt) => IdentPattern::StdrtNnWithoutId,
+            (IsNl::False, Pattern::Arr) => IdentPattern::ArrNnWithId,
+            (IsNl::True, Pattern::Stdrt) => IdentPattern::StdrtNlWithoutId,
+            (IsNl::True, Pattern::Arr) => IdentPattern::ArrNlWithIdentifier,
         });
         let ident_stdrt_nn_ucc = &gen_ident_ucc(&IdentPattern::StdrtNnWithoutId);
         let ident_arr_nn_ucc = &gen_ident_ucc(&IdentPattern::ArrNnWithId);
         let ident_with_id_stdrt_nn_ucc = &gen_ident_ucc(&IdentPattern::StdrtNnWithId);
         let ident_with_id_arr_nn_ucc = &gen_ident_ucc(&IdentPattern::ArrNnWithId);
-        let is_stdrt_nn = matches!((&is_nullable, pattern), (IsNullable::False, Pattern::Stdrt));
+        let is_stdrt_nn = matches!((&is_nl, pattern), (IsNl::False, Pattern::Stdrt));
         let gen_type_as_import_ts = |first_type_ts: &dyn ToTokens, second_type_ts: &dyn ToTokens|{
             quote! {<#first_type_ts as #import::#second_type_ts>}
         };
@@ -662,15 +662,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 },
                 &ident_table_type_or_ident_cr_ucc,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => gen_ident_table_type_or_cr_or_ident_with_id_table_type_or_cr_stdrt_nn_ts(&is_stdrt_with_id_false, pg_json_subtype_table_type_or_cr, &new_type_or_struct_dcl_struct_dcl),
-                        IsNullable::True => wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&gen_tokens_table_type_or_cr_ts(ident_stdrt_nn_ucc))),
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => gen_ident_table_type_or_cr_or_ident_with_id_table_type_or_cr_stdrt_nn_ts(&is_stdrt_with_id_false, pg_json_subtype_table_type_or_cr, &new_type_or_struct_dcl_struct_dcl),
+                        IsNl::True => wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&gen_tokens_table_type_or_cr_ts(ident_stdrt_nn_ucc))),
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_dcl_ts(
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_dcl_ts(
                             &gen_tokens_table_type_or_cr_ts(&ident_with_id_stdrt_nn_ucc)
                         )),
-                        IsNullable::True => wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&gen_tokens_table_type_or_cr_ts(&ident_with_id_arr_nn_ucc))),
+                        IsNl::True => wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&gen_tokens_table_type_or_cr_ts(&ident_with_id_arr_nn_ucc))),
                     },
                 }
             );
@@ -684,32 +684,32 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         quote! {#VSc: #ts}
                     };
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => gen_ident_table_type_or_cr_or_ident_with_id_table_type_or_cr_stdrt_nn_ts(&is_stdrt_with_id_false, pg_json_subtype_table_type_or_cr, &new_type_or_struct_dcl_new_type),
-                            IsNullable::True => gen_wrap_into_v_param_ts(&gen_opt_type_dcl_ts(&gen_tokens_table_type_or_cr_ts(ident_stdrt_nn_ucc))),
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => gen_ident_table_type_or_cr_or_ident_with_id_table_type_or_cr_stdrt_nn_ts(&is_stdrt_with_id_false, pg_json_subtype_table_type_or_cr, &new_type_or_struct_dcl_new_type),
+                            IsNl::True => gen_wrap_into_v_param_ts(&gen_opt_type_dcl_ts(&gen_tokens_table_type_or_cr_ts(ident_stdrt_nn_ucc))),
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => gen_wrap_into_v_param_ts(&gen_vec_tokens_dcl_ts(&gen_tokens_table_type_or_cr_ts(&ident_with_id_stdrt_nn_ucc))),
-                            IsNullable::True => gen_wrap_into_v_param_ts(&gen_opt_type_dcl_ts(&gen_vec_tokens_dcl_ts(&gen_tokens_table_type_or_cr_ts(
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => gen_wrap_into_v_param_ts(&gen_vec_tokens_dcl_ts(&gen_tokens_table_type_or_cr_ts(&ident_with_id_stdrt_nn_ucc))),
+                            IsNl::True => gen_wrap_into_v_param_ts(&gen_opt_type_dcl_ts(&gen_vec_tokens_dcl_ts(&gen_tokens_table_type_or_cr_ts(
                                 &ident_with_id_stdrt_nn_ucc,
                             )))),
                         },
                     }
                 };
                 let ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => gen_self_cnt_for_ident_or_ident_with_id_table_type_or_cr_ts(&is_stdrt_with_id_false),
-                        IsNullable::True => self_v_ts.clone(),
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => gen_self_cnt_for_ident_or_ident_with_id_table_type_or_cr_ts(&is_stdrt_with_id_false),
+                        IsNl::True => self_v_ts.clone(),
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => self_v_ts.clone(),
-                        IsNullable::True => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => self_v_ts.clone(),
+                        IsNl::True => {
                             let ident_arr_nn_with_id_postfix_ucc = gen_tokens_table_type_or_cr_ts(&gen_ident_ucc(&IdentPattern::ArrNnWithId));
                             quote! {Self(#VSc.map(#ident_arr_nn_with_id_postfix_ucc::new))}
                         }
                     },
                 };
-                if matches!(&pattern, Pattern::Arr) && matches!(&is_nullable, IsNullable::True) {
+                if matches!(&pattern, Pattern::Arr) && matches!(&is_nl, IsNl::True) {
                     gen_impl_pub_new_for_ident_ts(
                         &ident_table_type_or_ident_cr_ucc,
                         &MustUse,
@@ -748,12 +748,12 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_ident_cr_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_cr_ts(
                 &ident_table_type_or_ident_cr_ucc,
-                match &is_nullable {
-                    IsNullable::False => match &pattern {
+                match &is_nl {
+                    IsNl::False => match &pattern {
                         Pattern::Stdrt => &impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_table_type_or_cr_stdrt_nn_ts,
                         Pattern::Arr => &scopes_vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                     },
-                    IsNullable::True => &scopes_some_pg_crud_dflt_opt_some_vec_one_el_call_ts,
+                    IsNl::True => &scopes_some_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                 },
             );
             let impl_sqlx_encode_sqlx_pg_for_ident_table_type_or_ident_cr_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
@@ -898,9 +898,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &AllowClippyArbitrarySrcItemOrdering,
                     &ident_cr_for_query_ucc,
                     &match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => gen_struct_stdrt_nn_ts(&is_stdrt_with_id_false),
-                            IsNullable::True => {
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => gen_struct_stdrt_nn_ts(&is_stdrt_with_id_false),
+                            IsNl::True => {
                                 wrap_into_scopes_dot_comma_ts(
                                     &gen_opt_type_dcl_ts(
                                         &gen_type_as_pg_json_subtype_ts(
@@ -911,13 +911,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 )
                             },
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => wrap_into_scopes_dot_comma_ts(
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => wrap_into_scopes_dot_comma_ts(
                                 &gen_vec_tokens_dcl_ts(
                                     &ident_with_id_stdrt_nn_cr_for_query_ucc
                                 )
                             ),
-                            IsNullable::True => wrap_into_scopes_dot_comma_ts(
+                            IsNl::True => wrap_into_scopes_dot_comma_ts(
                                 &gen_opt_type_dcl_ts(
                                     &gen_type_as_pg_json_subtype_ts(
                                         &ident_arr_nn_ucc,
@@ -932,14 +932,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &ident_cr_ucc,
                     &ident_cr_for_query_ucc,
                     &{
-                        let ts = match &is_nullable {
-                            IsNullable::False => match &pattern {
+                        let ts = match &is_nl {
+                            IsNl::False => match &pattern {
                                 Pattern::Stdrt => quote! {{#impl_from_stdrt_nn_without_id_ts}},
                                 Pattern::Arr => quote!{(
                                     #VSc.0.into_iter().map(#ident_with_id_stdrt_nn_cr_for_query_ucc::from).collect()
                                 )},
                             },
-                            IsNullable::True => {
+                            IsNl::True => {
                                 let ts: &dyn ToTokens = match &pattern {
                                     Pattern::Stdrt => &ident_stdrt_nn_as_pg_json_cr_for_query_ts,
                                     Pattern::Arr => &ident_arr_nn_as_pg_json_cr_for_query_ts,
@@ -1122,8 +1122,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 )
             };
             let import_pgn_ts = quote! {#import::PgnStartsWithZero};
-            let ident_sel_ts = match &is_nullable {
-                IsNullable::False => match &pattern {
+            let ident_sel_ts = match &is_nl {
+                IsNl::False => match &pattern {
                     Pattern::Stdrt => gen_ident_sel_stdrt_nn_ts(&is_stdrt_with_id_false),
                     Pattern::Arr => gen_pub_struct_ident_sel_ts(
                         &AllowClippyArbitrarySrcItemOrdering,
@@ -1134,7 +1134,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }},
                     ),
                 },
-                IsNullable::True => gen_pub_struct_ident_sel_ts(
+                IsNl::True => gen_pub_struct_ident_sel_ts(
                     &AllowClippyArbitrarySrcItemOrdering,
                     &ident_sel_ucc,
                     &wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&match &pattern {
@@ -1148,37 +1148,37 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     let params_ts = {
                         let unique_vec_ident_sel_el_stdrt_nn_ts = gen_unique_vec_w_ts(&ident_stdrt_nn_sel_el_ucc);
                         match &pattern {
-                            Pattern::Stdrt => match &is_nullable {
-                                IsNullable::False => gen_v_type_ts(&unique_vec_ident_sel_el_stdrt_nn_ts),
-                                IsNullable::True => gen_v_type_ts(&gen_opt_type_dcl_ts(&unique_vec_ident_sel_el_stdrt_nn_ts)),
+                            Pattern::Stdrt => match &is_nl {
+                                IsNl::False => gen_v_type_ts(&unique_vec_ident_sel_el_stdrt_nn_ts),
+                                IsNl::True => gen_v_type_ts(&gen_opt_type_dcl_ts(&unique_vec_ident_sel_el_stdrt_nn_ts)),
                             },
-                            Pattern::Arr => match &is_nullable {
-                                IsNullable::False => quote! {
+                            Pattern::Arr => match &is_nl {
+                                IsNl::False => quote! {
                                     #ident_with_id_stdrt_nn_sel_sc: #ident_with_id_stdrt_nn_sel_ucc,
                                     #dim1_pgn_ts: #import_pgn_ts
                                 },
-                                IsNullable::True => gen_v_type_ts(&gen_opt_type_dcl_ts(&ident_with_id_arr_nn_as_pg_json_sel_ts)),
+                                IsNl::True => gen_v_type_ts(&gen_opt_type_dcl_ts(&ident_with_id_arr_nn_as_pg_json_sel_ts)),
                             },
                         }
                     };
                     let ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => self_v_ts.clone(),
-                            IsNullable::True => quote! {
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => self_v_ts.clone(),
+                            IsNl::True => quote! {
                                 Self(#VSc.map(#ident_stdrt_nn_as_pg_json_sel_ts::new))
                             },
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => {
                                 quote! {Self {
                                     #ident_with_id_stdrt_nn_sel_sc,
                                     #dim1_pgn_ts,
                                 }}
                             }
-                            IsNullable::True => self_v_ts.clone(),
+                            IsNl::True => self_v_ts.clone(),
                         },
                     };
-                    if matches!(&pattern, Pattern::Stdrt) && matches!(&is_nullable, IsNullable::True) {
+                    if matches!(&pattern, Pattern::Stdrt) && matches!(&is_nl, IsNl::True) {
                         gen_pub_new_ts(
                             &MustUse,
                             &params_ts,
@@ -1194,7 +1194,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 let mb_sel_qp_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nullable, IsNullable::False) {
+                matches!(&is_nl, IsNl::False) {
                     let acc_ac57d097_ts = quote!{acc_ac57d097};
                     let sel_qp_for_loop_ts = gen_sel_qp_for_loop_ts(
                         &acc_ac57d097_ts,
@@ -1222,14 +1222,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 let sel_qp_pg_type_ts = {
                     let ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => quote! {
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => quote! {
                                 #SelfSc.#SelQpSc(
                                     #ColumnSc,
                                     #ColumnSc,
                                 )
                             },
-                            IsNullable::True => {
+                            IsNl::True => {
                                 let ident_740c9034 = match &pattern {
                                     Pattern::Stdrt => &ident_stdrt_nn_as_pg_json_sel_ts,
                                     Pattern::Arr => &ident_with_id_arr_nn_as_pg_json_sel_ts,
@@ -1246,8 +1246,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => {
                                 let acc_399d9786_ts = quote!{acc_399d9786};
                                 let sel_qp_for_loop_ts = gen_sel_qp_for_loop_ts(
                                     &acc_399d9786_ts,
@@ -1272,7 +1272,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     Ok(format!(#format_ts))
                                 }
                             }
-                            IsNullable::True => {
+                            IsNl::True => {
                                 let format_ts = dq_ts(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
                                 let ident_with_id_arr_nn_as_pg_json_sel_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                     &ident_with_id_arr_nn_as_pg_json_sel_ts
@@ -1321,18 +1321,18 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             ) = {
                 let gen_ts = |dflt_some_one_or_dflt_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => quote! {#impl_pg_crud_dflt_opt_some_vec_one_el_stdrt_nn_ts},
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => quote! {#impl_pg_crud_dflt_opt_some_vec_one_el_max_page_size_stdrt_nn_ts},
                             },
-                            IsNullable::True => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                            IsNl::True => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts.clone(),
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_dflt_opt_some_vec_one_el_max_page_size_call_ts.clone(),
                             },
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => {
                                 let (
                                     ident_with_id_stdrt_nn_sel_ts,
                                     dim1_pgn_ts_364caa54
@@ -1356,7 +1356,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             },
-                            IsNullable::True => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
+                            IsNl::True => match &dflt_some_one_or_dflt_some_one_with_max_page_size {
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts.clone(),
                                 DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_pg_crud_dflt_opt_some_vec_one_el_max_page_size_call_ts.clone(),
                             },
@@ -1503,8 +1503,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             }
         };
         let ident_wh_ucc = SelfWhUcc::from_tokens(&ident);
-        let ident_wh_ts = match &is_nullable {
-            IsNullable::False => {
+        let ident_wh_ts = match &is_nl {
+            IsNl::False => {
                 let gen_ident_wh_field_vrts_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                     let vrts_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                         let fi_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
@@ -1562,8 +1562,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         &ident_wh_ucc,
                         &ts
                     );
-                    match &is_nullable {
-                        IsNullable::False => match &pattern {
+                    match &is_nl {
+                        IsNl::False => match &pattern {
                             Pattern::Stdrt => gen_ident_wh_w_ts(&{
                                 let ident_wh_field_vrts_ts = gen_ident_wh_field_vrts_ts(&is_stdrt_with_id_false);
                                 quote!{
@@ -1619,7 +1619,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }),
                         },
-                        IsNullable::True => Ts2::new(),
+                        IsNl::True => Ts2::new(),
                     }
                 };
                 let gen_wh_filter_qp_fields_cnt_stdrt_nn_ts = |is_stdrt_with_id: &IsStdrtWithId| {
@@ -1667,8 +1667,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 let mb_impl_pg_crud_pg_type_pg_type_wh_filter_for_ident_wh_ts = {
                     let gen_impl_pg_type_wh_filter_for_ident_ts = |qp_ts: &dyn ToTokens, is_qb_mut: IsQbMut, qb_ts: &dyn ToTokens| gen_impl_pg_type_wh_filter_ts(&ident_wh_ucc, &qp_ts, is_qb_mut, &qb_ts);
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => gen_impl_pg_type_wh_filter_for_ident_ts(
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => gen_impl_pg_type_wh_filter_for_ident_ts(
                                 &{
                                     let fields_ts = gen_wh_filter_qp_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_false);
                                     quote!{
@@ -1689,7 +1689,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             ),
-                            IsNullable::True => Ts2::new(),
+                            IsNl::True => Ts2::new(),
                         },
                         Pattern::Arr => gen_impl_pg_type_wh_filter_for_ident_ts(
                             &{
@@ -1773,7 +1773,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         ),
                     }
                 };
-                let mb_impl_location_lib_to_err_string_for_ident_wh_ts = if matches!((&pattern, &is_nullable), (Pattern::Stdrt, IsNullable::True)) {
+                let mb_impl_location_lib_to_err_string_for_ident_wh_ts = if matches!((&pattern, &is_nl), (Pattern::Stdrt, IsNl::True)) {
                     Ts2::new()
                 } else {
                     gen_gen_impl_location_lib_to_err_string_w_ts(&ident_wh_ucc)
@@ -1792,9 +1792,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     ]}
                 };
                 let mb_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_for_ident_wh_ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_wh_ucc, &gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_cnt_stdrt_nn_wh(&is_stdrt_with_id_false)),
-                        IsNullable::True => Ts2::new(),
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_wh_ucc, &gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_cnt_stdrt_nn_wh(&is_stdrt_with_id_false)),
+                        IsNl::True => Ts2::new(),
                     },
                     Pattern::Arr => gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts(&ident_wh_ucc, &{
                         let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
@@ -1878,7 +1878,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #mb_ident_with_id_stdrt_nn_wh_ts
                 }
             }
-            IsNullable::True => {
+            IsNl::True => {
                 let ident_stdrt_or_ident_with_id_arr_as_pg_json_wh_ts = gen_type_as_pg_json_subtype_ts(
                     &match &pattern {
                         Pattern::Stdrt => &ident_stdrt_nn_ucc,
@@ -1887,7 +1887,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &pg_json_subtype_wh
                 );
                 quote! {
-                    pub type #ident_wh_ucc = #import::NullableJsonObjPgTypeWhFilter<
+                    pub type #ident_wh_ucc = #import::NlJsonObjPgTypeWhFilter<
                         #ident_stdrt_or_ident_with_id_arr_as_pg_json_wh_ts
                     >;
                 }
@@ -1963,8 +1963,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let ident_rd_ts = {
                 let (ts, derive_serde_deserialize) = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => (
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => (
                             {
                                 let ts = gen_ident_or_ident_with_id_rd_or_rd_inn_fields_dcl_ts(
                                     &is_stdrt_with_id_false,
@@ -1974,11 +1974,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             },
                             DSerdeDeserialize::False,
                         ),
-                        IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&ident_stdrt_nn_as_pg_json_rd_ts)), DSerdeDeserialize::True),
+                        IsNl::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&ident_stdrt_nn_as_pg_json_rd_ts)), DSerdeDeserialize::True),
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_dcl_ts(&ident_with_id_stdrt_nn_rd_ucc)), DSerdeDeserialize::True),
-                        IsNullable::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&ident_with_id_arr_nn_as_pg_json_rd_ts)), DSerdeDeserialize::True),
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => (wrap_into_scopes_dot_comma_ts(&gen_vec_tokens_dcl_ts(&ident_with_id_stdrt_nn_rd_ucc)), DSerdeDeserialize::True),
+                        IsNl::True => (wrap_into_scopes_dot_comma_ts(&gen_opt_type_dcl_ts(&ident_with_id_arr_nn_as_pg_json_rd_ts)), DSerdeDeserialize::True),
                     },
                 };
                 gen_ident_rd_ts(&ident_rd_ucc, &ts, derive_serde_deserialize)
@@ -2000,9 +2000,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }}
                 );
             let mb_ident_rd_try_from_er_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => gen_ident_rd_try_from_er_ts(&ident_rd_try_from_er_ucc),
-                    IsNullable::True => Ts2::new(),
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => gen_ident_rd_try_from_er_ts(&ident_rd_try_from_er_ucc),
+                    IsNl::True => Ts2::new(),
                 },
                 Pattern::Arr => Ts2::new(),
             };
@@ -2079,9 +2079,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 let pub_new_or_try_new_ts = {
                     let vec_ident_with_id_stdrt_nn_rd_ts = gen_vec_tokens_dcl_ts(&ident_with_id_stdrt_nn_rd_ucc);
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => gen_pub_try_new_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
-                            IsNullable::True => gen_pub_const_new_ts(
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => gen_pub_try_new_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
+                            IsNl::True => gen_pub_const_new_ts(
                                 &MustUse,
                                 &gen_v_type_ts(
                                     &gen_opt_type_dcl_ts(
@@ -2091,15 +2091,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 &self_v_ts
                             ),
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => gen_pub_const_new_ts(
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => gen_pub_const_new_ts(
                                 &MustUse,
                                 &gen_v_type_ts(
                                     &vec_ident_with_id_stdrt_nn_rd_ts
                                 ),
                                 &self_v_ts
                             ),
-                            IsNullable::True => gen_pub_new_ts(
+                            IsNl::True => gen_pub_new_ts(
                                 &MustUse,
                                 &gen_v_type_ts(
                                     &gen_opt_type_dcl_ts(
@@ -2134,9 +2134,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 )
             };
             let mb_impl_de_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => gen_impl_de_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
-                    IsNullable::True => Ts2::new(),
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => gen_impl_de_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
+                    IsNl::True => Ts2::new(),
                 },
                 Pattern::Arr => Ts2::new(),
             };
@@ -2153,19 +2153,19 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 })
             };
             let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
-                    IsNullable::True => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts),
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
+                    IsNl::True => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts),
                 },
-                Pattern::Arr => match &is_nullable {
-                    IsNullable::False => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
+                Pattern::Arr => match &is_nl {
+                    IsNl::False => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(
                         &ident_rd_ucc,
                         &Ts2::new(),
                         &quote! {
                             Self(#vec_pg_crud_dflt_opt_some_vec_one_el_call_ts)
                         },
                     ),
-                    IsNullable::True => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts),
+                    IsNl::True => gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_opt_some_vec_one_el_call_ts),
                 },
             };
             let impl_sqlx_type_for_ident_rd_ts = gen_sqlx_types_json_type_dcl_w_ts(&ident_rd_ucc);
@@ -2312,14 +2312,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &ident_rd_ids_ucc,
                     &Ts2::new(),
                     &{
-                        let ts = gen_v_dcl_ts0(&match &is_nullable {
-                            IsNullable::False => match &pattern {
+                        let ts = gen_v_dcl_ts0(&match &is_nl {
+                            IsNl::False => match &pattern {
                                 Pattern::Stdrt => quote!{#ident_rd_ids_h_ucc},
                                 Pattern::Arr => gen_vec_tokens_dcl_ts(
                                     &ident_with_id_stdrt_nn_rd_ids_ucc
                                 ),
                             },
-                            IsNullable::True => gen_opt_type_dcl_ts(&{
+                            IsNl::True => gen_opt_type_dcl_ts(&{
                                 let ts0: &dyn ToTokens = match &pattern {
                                     Pattern::Stdrt => &ident_stdrt_nn_rd_ids_ucc,
                                     Pattern::Arr => &SelfRdIdsUcc::from_tokens(&gen_ident_ucc(&IdentPattern::ArrNnWithId)),
@@ -2421,15 +2421,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let ident_rd_inn_ts = {
                 let gen_pub_type_ident_rd_inn_al_ts = |ts: &dyn ToTokens| gen_pub_type_al_ts(&ident_rd_inn_ucc, &ts);
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => gen_ident_rd_inn_or_ident_with_id_stdrt_nn_rd_inn_ts(&IsStdrtWithId::False),
-                        IsNullable::True => gen_pub_type_ident_rd_inn_al_ts(&gen_opt_type_dcl_ts(&gen_type_as_pg_json_rd_inn_ts(&ident_stdrt_nn_ucc))),
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => gen_ident_rd_inn_or_ident_with_id_stdrt_nn_rd_inn_ts(&IsStdrtWithId::False),
+                        IsNl::True => gen_pub_type_ident_rd_inn_al_ts(&gen_opt_type_dcl_ts(&gen_type_as_pg_json_rd_inn_ts(&ident_stdrt_nn_ucc))),
                     },
-                    Pattern::Arr => gen_pub_type_ident_rd_inn_al_ts(&match &is_nullable {
-                        IsNullable::False => gen_vec_tokens_dcl_ts(
+                    Pattern::Arr => gen_pub_type_ident_rd_inn_al_ts(&match &is_nl {
+                        IsNl::False => gen_vec_tokens_dcl_ts(
                             &ident_with_id_stdrt_nn_rd_inn_ucc
                         ),
-                        IsNullable::True => gen_opt_type_dcl_ts(&gen_type_as_pg_json_rd_inn_ts(&ident_with_id_arr_nn_ucc)),
+                        IsNl::True => gen_opt_type_dcl_ts(&gen_type_as_pg_json_rd_inn_ts(&ident_with_id_arr_nn_ucc)),
                     }),
                 }
             };
@@ -2510,27 +2510,27 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     derive_serde_deserialize,
                     ts_975df5c5
                 ) = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => (
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => (
                             DSerdeDeserialize::True,
                             &wrap_into_scopes_dot_comma_ts(
                                 &gen_ident_upd_stdrt_nn_ts(&is_stdrt_with_id_false)
                             )
                         ),
-                        IsNullable::True => (
+                        IsNl::True => (
                             DSerdeDeserialize::True,
                             &gen_opt_ident_type_ts(&ident_stdrt_nn_as_pg_json_upd_ts)
                         ),
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => (
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => (
                             DSerdeDeserialize::False,
                             &{
                                 let fields_ts = gen_cr_upd_del_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::True);
                                 quote! {{#fields_ts}}
                             }
                         ),
-                        IsNullable::True => (
+                        IsNl::True => (
                             DSerdeDeserialize::True,
                             &gen_opt_ident_type_ts(&ident_with_id_arr_nn_as_pg_json_upd_ts)
                         ),
@@ -2558,8 +2558,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let ident_upd_try_new_er_ucc = &SelfUpdTryNewErUcc::from_tokens(&ident);
             let mb_ident_upd_try_new_er_ts = match &pattern {
                 Pattern::Stdrt => Ts2::new(),
-                Pattern::Arr => match &is_nullable {
-                    IsNullable::False => DTsBuilder::new()
+                Pattern::Arr => match &is_nl {
+                    IsNl::False => DTsBuilder::new()
                         .make_pub()
                         .d_debug()
                         .d_serde_serialize()
@@ -2590,21 +2590,21 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 },
                             }}
                         ),
-                    IsNullable::True => Ts2::new(),
+                    IsNl::True => Ts2::new(),
                 },
             };
             let impl_ident_upd_ts = {
                 let mb_pub_new_or_try_new_for_ident_upd_ts = match &pattern {
                     Pattern::Stdrt => gen_pub_const_new_ts(
                         &MustUse,
-                        &gen_v_type_ts(&match &is_nullable {
-                            IsNullable::False => gen_unique_vec_w_ts(&ident_stdrt_nn_upd_el_ucc),
-                            IsNullable::True => gen_opt_type_dcl_ts(&ident_stdrt_nn_as_pg_json_upd_ts)
+                        &gen_v_type_ts(&match &is_nl {
+                            IsNl::False => gen_unique_vec_w_ts(&ident_stdrt_nn_upd_el_ucc),
+                            IsNl::True => gen_opt_type_dcl_ts(&ident_stdrt_nn_as_pg_json_upd_ts)
                         }),
                         &self_v_ts
                     ),
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => gen_pub_try_new_ts(
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => gen_pub_try_new_ts(
                             &Ts2::new(),
                             &gen_cr_upd_del_fields_ts_ffcbdaf0(&AddSerdeSkipSerializingIfVecIsEmptyAnn::False),
                             &ident_upd_try_new_er_ucc,
@@ -2743,7 +2743,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         ),
-                        IsNullable::True => gen_pub_const_new_v_type_cnt_self_v_ts(
+                        IsNl::True => gen_pub_const_new_v_type_cnt_self_v_ts(
                             &gen_opt_type_dcl_ts(
                                 &ident_with_id_arr_nn_as_pg_json_upd_ts
                             )
@@ -2758,8 +2758,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let mb_impl_de_for_ident_upd_ts = match &pattern {
                 Pattern::Stdrt => Ts2::new(),
-                Pattern::Arr => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Arr => match &is_nl {
+                    IsNl::False => {
                         //todo mb reuse?
                         let tuple_struct_ident_upd_dq_ts = dq_ts(&format!("tuple struct {ident_upd_ucc}"));
                         let ident_upd_dq_ts = dq_ts(&ident_upd_ucc);
@@ -2907,22 +2907,22 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     }
-                    IsNullable::True => Ts2::new(),
+                    IsNl::True => Ts2::new(),
                 },
             };
             let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_upd_ts = gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts(&ident_upd_ucc, &Ts2::new(), &{
                 let v = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote! {(#PgCrudDfltOptSomeVecOneElCall)},
-                        IsNullable::True => quote! {(Some(#PgCrudDfltOptSomeVecOneElCall))},
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => quote! {(#PgCrudDfltOptSomeVecOneElCall)},
+                        IsNl::True => quote! {(Some(#PgCrudDfltOptSomeVecOneElCall))},
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => quote! {{
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => quote! {{
                             #CrSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                             #UpdSc: #PgCrudDfltOptSomeVecOneElCall,
                             #DelSc: #vec_pg_crud_dflt_opt_some_vec_one_el_call_ts,
                         }},
-                        IsNullable::True => quote! {
+                        IsNl::True => quote! {
                             (Some(#PgCrudDfltOptSomeVecOneElCall))
                         },
                     },
@@ -3085,22 +3085,22 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &pg_crud_path_pg_json_uuid_uuid_upd_for_query_ts
                 );
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => gen_ident_upd_for_query_ts(
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => gen_ident_upd_for_query_ts(
                             &wrap_into_scopes_dot_comma_ts(
                                 &gen_ident_upd_for_query_stdrt_nn_ts(
                                     &is_stdrt_with_id_false
                                 )
                             )
                         ),
-                        IsNullable::True => gen_ident_upd_for_query_ts(
+                        IsNl::True => gen_ident_upd_for_query_ts(
                             &gen_opt_ident_type_ts(
                                 &ident_stdrt_nn_as_pg_json_upd_for_query_ts
                             )
                         ),
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => gen_ident_upd_for_query_ts(
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => gen_ident_upd_for_query_ts(
                             &{
                                 let fields_ts = gen_cr_upd_del_fields_ts_043c4057(
                                     &AddSerdeSkipSerializingIfVecIsEmptyAnn::True,
@@ -3111,7 +3111,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 quote! {{#fields_ts}}
                             }
                         ),
-                        IsNullable::True => gen_ident_upd_for_query_ts(
+                        IsNl::True => gen_ident_upd_for_query_ts(
                             &gen_opt_ident_type_ts(&ident_with_id_arr_nn_as_pg_json_upd_for_query_ts)
                         ),
                     },
@@ -3120,8 +3120,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let impl_ident_upd_for_query_ts = {
                 let sel_only_updd_ids_qp_ts = {
                     let ts = match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => {
                                 let match_vrts_ts = vec_syn_field.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
@@ -3165,7 +3165,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     Ok(acc_8e628eaf)
                                 }
                             },
-                            IsNullable::True => {
+                            IsNl::True => {
                                 let match_ts = vec_syn_field.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
@@ -3216,8 +3216,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             },
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => {
                                 let match_vrts_ts = vec_syn_field.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
@@ -3362,7 +3362,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     ))
                                 }
                             },
-                            IsNullable::True => {
+                            IsNl::True => {
                                 let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{}"));
                                 quote!{
                                     Ok(match &self.0 {
@@ -3405,8 +3405,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let impl_from_ident_stdrt_nn_upd_for_ident_stdrt_nn_upd_for_query_ts = gen_impl_from_ts(
                 &quote!{#ident_as_import_pg_json_ts::Upd},
                 &quote!{#ident_as_import_pg_json_ts::UpdForQuery},
-                &match &is_nullable {
-                    IsNullable::False => match &pattern {
+                &match &is_nl {
+                    IsNl::False => match &pattern {
                         Pattern::Stdrt => quote!{
                             Self(#import::NotEmptyUniqueVec::from_t1_impl_from_t2(#VSc.0))
                         },
@@ -3418,7 +3418,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     },
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ts: &dyn ToTokens = match &pattern {
                             Pattern::Stdrt => &ident_stdrt_nn_as_import_pg_json_ts,
                             Pattern::Arr => &ident_arr_nn_as_import_pg_json_ts
@@ -3534,7 +3534,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let (impl_pg_crud_pg_json_for_ident_ts, mb_impl_pg_crud_pg_types_pg_type_pg_type_ts) = {
             let pg_type_or_pg_json_pg_type = PgTypeOrPgJson::PgType;
             let pg_type_or_pg_json_pg_json = PgTypeOrPgJson::PgJson;
-            let gen_upd_qp_stdrt_nullable_ts = |pg_type_or_pg_json: &PgTypeOrPgJson|{
+            let gen_upd_qp_stdrt_nl_ts = |pg_type_or_pg_json: &PgTypeOrPgJson|{
                 let format_ts = dq_ts(&match &pg_type_or_pg_json {
                     PgTypeOrPgJson::PgType => format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',${{v_27b8537f}})"),
                     PgTypeOrPgJson::PgJson => "${v_27b8537f}".to_owned(),
@@ -3668,8 +3668,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &IsSelQpColumnFieldForErMessageUsed::True,
                 &IsSelQpIsPgTypeUsed::True,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let dq_ts0 = dq_ts(&gen_jsonb_build_obj(&format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&"{v_156121ad}"))));
                             quote! {
                                 match #VSc.#SelQpSc(
@@ -3691,7 +3691,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         },
-                        IsNullable::True => {
+                        IsNl::True => {
                             let ident_stdrt_nn_as_pg_json_sel_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                 &ident_stdrt_nn_as_pg_json_sel_ts
                             );
@@ -3721,8 +3721,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         },
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let acc_41dea548_ts = quote!{acc_41dea548};
                             let sel_qp_for_loop_ts = {
                                 let v_dq_ts = dq_ts(&ValueSc);
@@ -3754,7 +3754,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(format!(#format_ts))
                             }
                         }
-                        IsNullable::True => {
+                        IsNl::True => {
                             let format_ts = dq_ts(
                                 &format!(
                                     "case when jsonb_typeof({{column_field}}->'{{fi}}') = 'null' then {} else ({{v_d7bbd03c}}) end",
@@ -3789,8 +3789,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &ident_wh_ucc,
                 &ident_rd_ucc,
                 &ident_rd_ids_ucc,
-                &match &is_nullable {
-                    IsNullable::False => {
+                &match &is_nl {
+                    IsNl::False => {
                         let ts_a5fb2689 = {
                             let ts = {
                                 let acc_push_ts = get_vec_syn_field(match &pattern {
@@ -3842,7 +3842,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         };
                         quote! {Ok(#ts_a5fb2689)}
                     },
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ts: &dyn ToTokens = match &pattern {
                             Pattern::Stdrt => &ident_stdrt_nn_as_pg_json_ts,
                             Pattern::Arr => &ident_with_id_arr_nn_as_pg_json_ts,
@@ -3884,15 +3884,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     };
-                    match &is_nullable {
-                        IsNullable::False => match &pattern {
+                    match &is_nl {
+                        IsNl::False => match &pattern {
                             Pattern::Stdrt => gen_impl_into_inn_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&IsStdrtWithId::False),
                             Pattern::Arr => {
                                 let ts = gen_impl_into_inn_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&IsStdrtWithId::True);
                                 quote! {#VSc.0.into_iter().map(|el_34d57236|#ts).collect()}
                             },
                         },
-                        IsNullable::True => {
+                        IsNl::True => {
                             let ident_ddcdad63 = gen_type_as_pg_json_ts(&match &pattern {
                                 Pattern::Stdrt => ident_stdrt_nn_ucc,
                                 Pattern::Arr => ident_arr_nn_ucc,
@@ -3904,8 +3904,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &ident_upd_ucc,
                 &ident_upd_for_query_ucc,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptOptObjAccSc}}})"));
                             let qp_vrts_ts = vec_syn_field.iter().map(|el0| {
                                 let vrt_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
@@ -3955,15 +3955,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         },
-                        IsNullable::True => gen_upd_qp_stdrt_nullable_ts(
+                        IsNl::True => gen_upd_qp_stdrt_nl_ts(
                             &pg_type_or_pg_json_pg_type
                         )
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => gen_upd_qp_arr_nn_ts(
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => gen_upd_qp_arr_nn_ts(
                             &pg_type_or_pg_json_pg_type
                         ),
-                        IsNullable::True => quote! {
+                        IsNl::True => quote! {
                             match &#VSc.0 {
                                 Some(v_3245b79f) => #ident_arr_nn_as_pg_json_ts::#UpdQpSc(
                                     v_3245b79f,
@@ -3984,8 +3984,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &IsUpdQpJsonbSetTargetUsed::True,
                 &IsUpdQbMut::True,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let upd_qb_vrts_ts = vec_syn_field.iter().map(|el0| {
                                 let vrt_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
                                 let ft_as_crud_pg_json_from_field_ts = gen_ft_as_crud_pg_json_from_field_ts(
@@ -4016,7 +4016,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNullable::True => quote! {
+                        IsNl::True => quote! {
                             match #VSc.0 {
                                 Some(v_269a0d34) => #ident_stdrt_nn_as_pg_json_ts::upd_qb(
                                     v_269a0d34,
@@ -4031,8 +4031,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => quote! {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => quote! {
                             for el in #VSc.#UpdSc.into_vec() {
                                 match #uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                     el.#IdSc,
@@ -4077,7 +4077,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                             Ok(#QuerySc)
                         },
-                        IsNullable::True => quote! {
+                        IsNl::True => quote! {
                             match #VSc.0 {
                                 Some(v_a2156b3e) => #ident_arr_nn_as_pg_json_ts::upd_qb(
                                     v_a2156b3e,
@@ -4107,8 +4107,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 },
                 &IsSelOnlyUpddIdsQbMut::True,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let match_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4138,7 +4138,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNullable::True => quote!{
+                        IsNl::True => quote!{
                             if let Some(v_6334d77d) = &#VSc.0 {
                                 match #ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_6334d77d, #QuerySc) {
                                     Ok(v_0bd3ba6f) => {
@@ -4152,8 +4152,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             Ok(#QuerySc)
                         },
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let sel_only_crd_ids_qb_ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4228,7 +4228,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNullable::True => quote!{
+                        IsNl::True => quote!{
                             if let Some(v_107e6639) = &#VSc.0 {
                                 match #ident_arr_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_107e6639, #QuerySc) {
                                     Ok(v_ecf1b8de) => {
@@ -4244,8 +4244,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     },
                 },
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4291,7 +4291,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 ))
                             }
                         },
-                        IsNullable::True => {
+                        IsNl::True => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4345,8 +4345,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         },
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4412,7 +4412,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 ))
                             }
                         },
-                        IsNullable::True => {
+                        IsNl::True => {
                             let ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4489,8 +4489,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 },
                 &IsSelOnlyCrdIdsQbMut::True,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4513,7 +4513,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNullable::True => {
+                        IsNl::True => {
                             quote!{
                                 if let Some(v_a1ccd526) = &#VSc.0 {
                                     match #ident_stdrt_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(
@@ -4532,8 +4532,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         },
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
@@ -4568,7 +4568,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNullable::True => {
+                        IsNl::True => {
                             quote!{
                                 if let Some(v_0b55a65a) = &#VSc.0 {
                                     match #ident_arr_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(v_0b55a65a, #QuerySc) {
@@ -4643,23 +4643,23 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &UpdQpJsonbSetTargetUndrscr::False,
                 &UpdQpJsonbSetPathUndrscr::False,
                 &match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => quote!{#self_as_pg_json_ts::#UpdQpSc(
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => quote!{#self_as_pg_json_ts::#UpdQpSc(
                             #VSc,
                             jsonb_set_accumulator,
                             jsonb_set_target,
                             jsonb_set_path,
                             incr
                         )},
-                        IsNullable::True => gen_upd_qp_stdrt_nullable_ts(
+                        IsNl::True => gen_upd_qp_stdrt_nl_ts(
                             &pg_type_or_pg_json_pg_json
                         )
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => gen_upd_qp_arr_nn_ts(
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => gen_upd_qp_arr_nn_ts(
                             &pg_type_or_pg_json_pg_json
                         ),
-                        IsNullable::True => {
+                        IsNl::True => {
                             let ts = gen_upd_del_cr_arr_ts(&quote!{
                                 "(case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_wh}),'[]'::jsonb)) end {mb_jsonb_build_arr})"
                             });
@@ -4708,8 +4708,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let self_pg_json_ts = quote!{#SelfUcc::#PgJsonUcc};
         let impl_pg_json_test_cases_for_ident_ts = {
             let opt_vec_cr_ts = {
-                let ts = match &is_nullable {
-                    IsNullable::False => match &pattern {
+                let ts = match &is_nl {
+                    IsNl::False => match &pattern {
                         Pattern::Stdrt => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -4833,7 +4833,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             quote! {#(#ts)*}
                         },
                     },
-                    IsNullable::True => {
+                    IsNl::True => {
                         let (
                             ident_nn_as_pg_json_test_cases_ts_e690553a,
                             ts
@@ -4875,8 +4875,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 })}
             };
             let rd_ids_to_2_dims_vec_rd_inn_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => {
                         let fields_last_init_ts = {
                             if vec_syn_field.len() == 1 {
                                 Ts2::new()
@@ -4941,7 +4941,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             acc_ef081dc3
                         }
                     }
-                    IsNullable::True => {
+                    IsNl::True => {
                         quote! {
                             #RdIdsSc.0.#VSc.as_ref().into_iter().flat_map(|v_5fa0668c| {
                                 #ident_stdrt_nn_as_pg_json_test_cases_ts::
@@ -4956,8 +4956,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 },
-                Pattern::Arr => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Arr => match &is_nl {
+                    IsNl::False => {
                         let ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
                             let fields_ts = vec_syn_field.iter().map(|el1| {
@@ -5004,7 +5004,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             .collect()
                         }
                     }
-                    IsNullable::True => {
+                    IsNl::True => {
                         quote! {
                             let mut acc_fb5111f1 = Vec::new();
                             if let Some(v_6ee5750e) = &#RdIdsSc.0.#VSc {
@@ -5021,8 +5021,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 },
             };
             let rd_inn_into_rd_with_new_or_try_new_unwraped_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => {
                         let self_el_as_pg_type_rd_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_ts, &PgTypeSubtype::Rd);
                         let params_ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
@@ -5034,7 +5034,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         });
                         quote! {#self_el_as_pg_type_rd_ts::try_new(#(#params_ts),*).expect("3aeeabba")}
                     }
-                    IsNullable::True => {
+                    IsNl::True => {
                         let self_el_as_pg_type_rd_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_ts, &PgTypeSubtype::Rd);
                         quote! {
                             #self_el_as_pg_type_rd_ts::new(
@@ -5043,8 +5043,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 },
-                Pattern::Arr => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Arr => match &is_nl {
+                    IsNl::False => {
                         let ts = vec_syn_field_with_id.iter().map(|el0| {
                             let fi = &el0.ident;
                             let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
@@ -5061,7 +5061,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             )
                         }
                     }
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ts = vec_syn_field_with_id.iter().map(|el0| {
                             let fi = &el0.ident;
                             let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
@@ -5097,8 +5097,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }
                 },
             };
-            let rd_inn_into_upd_with_new_or_try_new_unwraped_ts = match &is_nullable {
-                IsNullable::False => match &pattern {
+            let rd_inn_into_upd_with_new_or_try_new_unwraped_ts = match &is_nl {
+                IsNl::False => match &pattern {
                     Pattern::Stdrt => {
                         let self_el_as_pg_type_upd_ts = gen_type_as_pg_type_subtype_ts(&self_pg_json_ts, &PgTypeSubtype::Upd);
                         let params_ts = vec_syn_field.iter().map(|el0| {
@@ -5150,7 +5150,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 },
-                IsNullable::True => {
+                IsNl::True => {
                     let ts = gen_type_as_pg_type_test_cases_ts(match &pattern {
                         Pattern::Stdrt => &ident_stdrt_nn_ucc,
                         Pattern::Arr => &ident_with_id_arr_nn_ucc,
@@ -5164,9 +5164,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 },
             };
             let rd_ids_into_opt_v_rd_inn_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => gen_fields_rd_ids_into_opt_v_rd_inn_ts(&is_stdrt_with_id_false, &VSc),
-                    IsNullable::True => {
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => gen_fields_rd_ids_into_opt_v_rd_inn_ts(&is_stdrt_with_id_false, &VSc),
+                    IsNl::True => {
                         let ts = gen_v_init_ts0(&quote!{
                             #VSc.0.#VSc.and_then(|v_5d7e3961| match #ident_stdrt_nn_as_pg_json_test_cases_ts::rd_ids_into_opt_v_rd_inn(
                                 v_5d7e3961
@@ -5178,8 +5178,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         quote! {Some(#ts)}
                     }
                 },
-                Pattern::Arr => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Arr => match &is_nl {
+                    IsNl::False => {
                         let ts = gen_v_init_ts0(&{
                             let ts0 = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -5210,7 +5210,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         });
                         quote! {Some(#ts)}
                     }
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ts = gen_v_init_ts0(&quote!{
                             #VSc.0.#VSc.and_then(|v_f816032d| match #ident_arr_nn_as_pg_json_test_cases_ts::#RdIdsIntoOptVRdInnSc(
                                 v_f816032d
@@ -5225,8 +5225,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let upd_to_rd_ids_ts = {
                 let ts = match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let fields_init_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 quote! {let mut #fi = None;}
@@ -5260,14 +5260,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 #ts0
                             }}
                         }
-                        IsNullable::True => gen_v_init_ts0(&{
+                        IsNl::True => gen_v_init_ts0(&{
                             quote!{
                                 #VSc.0.as_ref().map(#ident_stdrt_nn_as_pg_json_test_cases_ts::#UpdToRdIdsSc)
                             }
                         })
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => gen_v_init_ts0(&{
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => gen_v_init_ts0(&{
                             let init_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 quote! {let mut #fi = None;}
@@ -5342,7 +5342,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }).collect()
                             }
                         }),
-                        IsNullable::True => gen_v_init_ts0(&quote!{
+                        IsNl::True => gen_v_init_ts0(&quote!{
                             #VSc.0.as_ref().map(#ident_arr_nn_as_pg_json_test_cases_ts::#UpdToRdIdsSc)
                         })
                     },
@@ -5351,8 +5351,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el_ts = {
                 let ts = gen_v_init_ts0(&match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let params_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
@@ -5368,7 +5368,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 ).expect("57820868")
                             }
                         }
-                        IsNullable::True => quote! {
+                        IsNl::True => quote! {
                             #ident_rd_ucc::new(
                                 #VSc.0.#VSc.as_ref().and_then(|v_dfa7815e| match #ident_stdrt_nn_as_pg_json_test_cases_ts::rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el(
                                     v_dfa7815e
@@ -5379,8 +5379,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             )
                         }
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let params_ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
@@ -5415,7 +5415,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 })
                             }
                         }
-                        IsNullable::True => quote! {
+                        IsNl::True => quote! {
                             #ident_rd_ucc::new(
                                 #VSc.0.#VSc.as_ref().and_then(|v_16ab4136| match #ident_arr_nn_as_pg_json_test_cases_ts::rd_ids_to_opt_v_rd_dflt_opt_some_vec_one_el(
                                     v_16ab4136
@@ -5482,8 +5482,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 };
-                match &is_nullable {
-                    IsNullable::False => match &pattern {
+                match &is_nl {
+                    IsNl::False => match &pattern {
                         Pattern::Stdrt => {
                             let struct_init_ts = gen_struct_init_ts(&|ts: &dyn ToTokens|{
                                 quote!{
@@ -5549,11 +5549,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         },
                     },
-                    IsNullable::True => gen_opt_ts(pattern)
+                    IsNl::True => gen_opt_ts(pattern)
                 }
             };
             let rd_ids_and_cr_into_rd_ts = {
-                let gen_nullable_ts = |ident_ts_3eb17505: &dyn ToTokens, ts: &dyn ToTokens|{
+                let gen_nl_ts = |ident_ts_3eb17505: &dyn ToTokens, ts: &dyn ToTokens|{
                     let ident_as_pg_json_test_cases_ts_3eb17505 = gen_type_as_pg_json_test_cases_ts(&ident_ts_3eb17505);
                     quote! {
                         #ident_rd_ucc::new(
@@ -5574,8 +5574,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let params_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
@@ -5592,13 +5592,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 ).expect("52ad3994")
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(
+                        IsNl::True => gen_nl_ts(
                             &ident_stdrt_nn_ucc,
                             &Ts2::new()
                         )
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&ft);
                                 quote! {
@@ -5635,7 +5635,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 })
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(
+                        IsNl::True => gen_nl_ts(
                             &ident_arr_nn_ucc,
                             &quote!{.0}
                         )
@@ -5652,7 +5652,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 quote!{Some(#ts)}
             };
             let rd_ids_and_cr_into_table_type_ts = {
-                let gen_nullable_ts = |ident_ts_971139d7: &dyn ToTokens, ts: &dyn ToTokens|{
+                let gen_nl_ts = |ident_ts_971139d7: &dyn ToTokens, ts: &dyn ToTokens|{
                     let ident_as_pg_json_test_cases_ts_971139d7 = gen_type_as_pg_json_test_cases_ts(&ident_ts_971139d7);
                     quote! {
                         #ident_table_type_ucc::new(
@@ -5673,8 +5673,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let params_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
@@ -5691,13 +5691,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 )
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(
+                        IsNl::True => gen_nl_ts(
                             &ident_stdrt_nn_ucc,
                             &Ts2::new()
                         )
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let gen_param_ts = |ft: &dyn ToTokens, fi: &dyn ToTokens, ts: &dyn ToTokens|{
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&ft);
                                 quote! {
@@ -5734,15 +5734,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 })
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(
+                        IsNl::True => gen_nl_ts(
                             &ident_arr_nn_ucc,
                             &quote!{.0}
                         )
                     },
                 }
             };
-            let rd_ids_and_cr_into_wh_equal_ts = match &is_nullable {
-                IsNullable::False => match &pattern {
+            let rd_ids_and_cr_into_wh_equal_ts = match &is_nl {
+                IsNl::False => match &pattern {
                     Pattern::Stdrt => {
                         let params_ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
@@ -5813,7 +5813,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     }
                 },
-                IsNullable::True => {
+                IsNl::True => {
                     let ts = {
                         let ident_ts_bdc5fdf7 = gen_type_as_pg_json_test_cases_ts(&gen_ident_ucc(&match &pattern {
                             Pattern::Stdrt => IdentPattern::StdrtNnWithoutId,
@@ -5829,7 +5829,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     };
                     quote! {
-                        #import::NullableJsonObjPgTypeWhFilter(
+                        #import::NlJsonObjPgTypeWhFilter(
                             match (#RdIdsSc.0.#VSc, #CrSc.0) {
                                 (Some(rd_ids_ce30c0fe), Some(cr_8fd81ed8)) => match #import::NotEmptyUniqueVec::try_new(#ts) {
                                     Ok(v_7a9cd49b) => Some(v_7a9cd49b),
@@ -5847,8 +5847,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 },
             };
             let rd_ids_and_cr_into_vec_wh_equal_using_fields_ts = {
-                let ts = match &is_nullable {
-                    IsNullable::False => match &pattern {
+                let ts = match &is_nl {
+                    IsNl::False => match &pattern {
                         Pattern::Stdrt => {
                             let els_ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -5916,7 +5916,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     },
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ts = {
                             let ident_ts_b9e61412 = gen_type_as_pg_json_test_cases_ts(&gen_ident_ucc(&match &pattern {
                                 Pattern::Stdrt => IdentPattern::StdrtNnWithoutId,
@@ -5930,7 +5930,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         quote! {
-                            #import::NullableJsonObjPgTypeWhFilter(
+                            #import::NlJsonObjPgTypeWhFilter(
                                 match (#RdIdsSc.0.#VSc, #CrSc.0) {
                                     (Some(rd_ids_2898c440), Some(cr_f1c4667c)) => Some(#ts),
                                     (Some(_), None) => panic!("49e4c289"),
@@ -5948,8 +5948,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 }
             };
             let rd_ids_and_cr_into_vec_wh_equal_to_json_field_ts = match &pattern {
-                Pattern::Stdrt => match &is_nullable {
-                    IsNullable::False => {
+                Pattern::Stdrt => match &is_nl {
+                    IsNl::False => {
                         let ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
                             let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
@@ -5979,7 +5979,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }).expect("9c50391c")
                         }
                     },
-                    IsNullable::True => quote!{
+                    IsNl::True => quote!{
                         #import::NotEmptyUniqueVec::try_new({
                             let mut acc_12b6f16d = Vec::new();
                             match (#RdIdsSc.0.#VSc, #CrSc.0) {
@@ -5990,7 +5990,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     ).into_vec() {
                                         match #import::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
                                             Ok(v_8e72cfd7) => {
-                                                acc_12b6f16d.push(#import::NullableJsonObjPgTypeWhFilter(Some(v_8e72cfd7)));
+                                                acc_12b6f16d.push(#import::NlJsonObjPgTypeWhFilter(Some(v_8e72cfd7)));
                                             },
                                             Err(er) => match er {
                                                 #import::NotEmptyUniqueVecTryNewEr::IsEmpty {..} => (),
@@ -6002,7 +6002,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 (Some(_), None) => panic!("b4507b4c"),
                                 (None, Some(_)) => panic!("8f458c1d"),
                                 (None, None) => {
-                                    acc_12b6f16d.push(#import::NullableJsonObjPgTypeWhFilter(None));
+                                    acc_12b6f16d.push(#import::NlJsonObjPgTypeWhFilter(None));
                                 },
                             }
                             acc_12b6f16d
@@ -6024,7 +6024,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             ) = {
                 let gen_ts = |dim: &Dim|{
                     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_equal_sc = dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_equal_sc();
-                    let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
+                    let gen_nl_ts = |ts: &dyn ToTokens|quote! {
                         match #import::NotEmptyUniqueVec::try_new(
                             match (#RdIdsSc.0.#VSc, #CrSc.0) {
                                 (Some(rd_ids_cdcb6239), Some(cr_fdd53941)) => match <
@@ -6043,7 +6043,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             ) {
                                                 Ok(v_7ed84f3b) => {
                                                     acc_bd78dc08.push(
-                                                        #import::NullableJsonObjPgTypeWhFilter(Some(v_7ed84f3b))
+                                                        #import::NlJsonObjPgTypeWhFilter(Some(v_7ed84f3b))
                                                     );
                                                 },
                                                 Err(er) => match er {
@@ -6052,7 +6052,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        let v_e48110ec = #import::NullableJsonObjPgTypeWhFilter(Some(v_d6124e21));
+                                        let v_e48110ec = #import::NlJsonObjPgTypeWhFilter(Some(v_d6124e21));
                                         if !acc_bd78dc08.contains(&v_e48110ec) {
                                             acc_bd78dc08.push(v_e48110ec);
                                         }
@@ -6064,7 +6064,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 },
                                 (Some(_), None) => panic!("6abeac7b"),
                                 (None, Some(_)) => panic!("a2761cd2"),
-                                (None, None) => vec![#import::NullableJsonObjPgTypeWhFilter(None)]
+                                (None, None) => vec![#import::NlJsonObjPgTypeWhFilter(None)]
                             }
                         ) {
                             Ok(v_55f2dc3d) => Some(v_55f2dc3d),
@@ -6075,8 +6075,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     };
                     match &pattern {
-                        Pattern::Stdrt => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Stdrt => match &is_nl {
+                            IsNl::False => {
                                 let ts = vec_syn_field.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
@@ -6122,10 +6122,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             }
-                            IsNullable::True => gen_nullable_ts(&ident_stdrt_nn_ucc)
+                            IsNl::True => gen_nl_ts(&ident_stdrt_nn_ucc)
                         },
-                        Pattern::Arr => match &is_nullable {
-                            IsNullable::False => {
+                        Pattern::Arr => match &is_nl {
+                            IsNl::False => {
                                 let ts_f0710cd9 = {
                                     let ts_57d244f8 = vec_syn_field.iter().map(|el0| {
                                         let fi = &el0.ident;
@@ -6228,7 +6228,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                             }
-                            IsNullable::True => gen_nullable_ts(&ident_arr_nn_ucc)
+                            IsNl::True => gen_nl_ts(&ident_arr_nn_ucc)
                         },
                     }
                 };
@@ -6240,7 +6240,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 )
             };
             let cr_into_pg_json_opt_vec_wh_length_equal_ts = {
-                let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
+                let gen_nl_ts = |ts: &dyn ToTokens|quote! {
                     match #import::NotEmptyUniqueVec::try_new(
                         match #CrSc.0 {
                             Some(cr_09a81dae) => match <
@@ -6254,7 +6254,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         match #import::NotEmptyUniqueVec::try_new(vec![el_a8b181a0]) {
                                             Ok(v_15097b27) => {
                                                 acc_5c441d3a.push(
-                                                    #import::NullableJsonObjPgTypeWhFilter(
+                                                    #import::NlJsonObjPgTypeWhFilter(
                                                         Some(v_15097b27)
                                                     )
                                                 );
@@ -6265,7 +6265,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    let v_84ea8e4c = #import::NullableJsonObjPgTypeWhFilter(Some(v_3680a4c9));
+                                    let v_84ea8e4c = #import::NlJsonObjPgTypeWhFilter(Some(v_3680a4c9));
                                     if !acc_5c441d3a.contains(&v_84ea8e4c) {
                                         acc_5c441d3a.push(v_84ea8e4c);
                                     }
@@ -6275,7 +6275,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     return None;
                                 }
                             },
-                            None => vec![#import::NullableJsonObjPgTypeWhFilter(None)],
+                            None => vec![#import::NlJsonObjPgTypeWhFilter(None)],
                         }
                     ) {
                         Ok(v_72dbefbc) => Some(v_72dbefbc),
@@ -6286,8 +6286,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     }
                 };
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
@@ -6332,10 +6332,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(&ident_stdrt_nn_ucc)
+                        IsNl::True => gen_nl_ts(&ident_stdrt_nn_ucc)
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
@@ -6392,12 +6392,12 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(&ident_arr_nn_ucc)
+                        IsNl::True => gen_nl_ts(&ident_arr_nn_ucc)
                     },
                 }
             };
             let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = {
-                let gen_nullable_ts = |ts: &dyn ToTokens|quote! {
+                let gen_nl_ts = |ts: &dyn ToTokens|quote! {
                     #CrSc.0.map_or_else(|| None, |cr_612f2a61| <
                         #ts
                         as
@@ -6409,7 +6409,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             for el_9bbf8527 in v_1ea95b5d.clone().into_vec() {
                                 match #import::NotEmptyUniqueVec::try_new(vec![el_9bbf8527]) {
                                     Ok(v_1d0202fc) => {
-                                        acc_87f84b5c.push(#import::NullableJsonObjPgTypeWhFilter(Some(v_1d0202fc)));
+                                        acc_87f84b5c.push(#import::NlJsonObjPgTypeWhFilter(Some(v_1d0202fc)));
                                     }
                                     Err(er) => match er {
                                         #import::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
@@ -6417,7 +6417,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     },
                                 }
                             }
-                            let v_4e4cfda3 = #import::NullableJsonObjPgTypeWhFilter(Some(v_1ea95b5d));
+                            let v_4e4cfda3 = #import::NlJsonObjPgTypeWhFilter(Some(v_1ea95b5d));
                             if !acc_87f84b5c.contains(&v_4e4cfda3) {
                                 acc_87f84b5c.push(v_4e4cfda3);
                             }
@@ -6432,8 +6432,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     ))
                 };
                 match &pattern {
-                    Pattern::Stdrt => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Stdrt => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
@@ -6478,10 +6478,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(&ident_stdrt_nn_ucc)
+                        IsNl::True => gen_nl_ts(&ident_stdrt_nn_ucc)
                     },
-                    Pattern::Arr => match &is_nullable {
-                        IsNullable::False => {
+                    Pattern::Arr => match &is_nl {
+                        IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
@@ -6542,7 +6542,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        IsNullable::True => gen_nullable_ts(&ident_arr_nn_ucc)
+                        IsNl::True => gen_nl_ts(&ident_arr_nn_ucc)
                     },
                 }
             };
@@ -6554,8 +6554,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
                 rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex_ts
             ) = {
-                let gen_ts = |ts: &dyn ToTokens|match &is_nullable {
-                    IsNullable::False => match &pattern {
+                let gen_ts = |ts: &dyn ToTokens|match &is_nl {
+                    IsNl::False => match &pattern {
                         Pattern::Stdrt => {
                             let ts0 = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
@@ -6767,7 +6767,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     },
-                    IsNullable::True => {
+                    IsNl::True => {
                         let ident_ts_a8bc30fc = gen_type_as_pg_json_test_cases_ts(&gen_ident_ucc(&match &pattern {
                             Pattern::Stdrt => IdentPattern::StdrtNnWithoutId,
                             Pattern::Arr => IdentPattern::ArrNnWithId,
@@ -6782,11 +6782,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     for el in v_35662b3a.into_vec() {
                                         match el {
                                             #import::SingleOrMultiple::Multiple(multiple) => {
-                                                acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NullableJsonObjPgTypeWhFilter(Some(multiple))));
+                                                acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NlJsonObjPgTypeWhFilter(Some(multiple))));
                                             },
                                             #import::SingleOrMultiple::Single(single) => match #import::NotEmptyUniqueVec::try_new(vec![single]) {
                                                 Ok(v_4ce6ecd3) => {
-                                                    acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NullableJsonObjPgTypeWhFilter(Some(v_4ce6ecd3))));
+                                                    acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NlJsonObjPgTypeWhFilter(Some(v_4ce6ecd3))));
                                                 }
                                                 Err(er) => match er {
                                                     #import::NotEmptyUniqueVecTryNewEr::IsEmpty { .. } => (),
