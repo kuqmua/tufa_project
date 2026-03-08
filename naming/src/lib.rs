@@ -595,15 +595,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["cr", "extension", "if", "not", "exists", "uuid", "ossp"],
     ["prep", "pg"],
     ["prep", "pg", "table"],
-    [
-        "header",
-        "content",
-        "type",
-        "application",
-        "json",
-        "not",
-        "found"
-    ],
+    ["header", "content", "type", "app", "json", "not", "found"],
     ["wh", "many"],
     ["no", "fields", "provided"],
     ["extra", "params"],

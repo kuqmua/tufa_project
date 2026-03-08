@@ -20,14 +20,14 @@ use naming::{
     DloLogicSc, DmErVrtsSc, DmLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc,
     ExecutorSc, ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc, FromHSc, FutureSc,
     GenColumnQuealsVCommaUoQpSc, GenPgTablePkSc, GenSelQpSc, GenWhenColumnIdThenVUmQpSc,
-    HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc, IdentCrDfltSc, IncrSc,
-    IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc,
-    NotUniquePkSc, NotUniquePkUcc, OptVecCrSc, OrderBySc, OrderByUcc, OrderSc, ParamsSc, PayloadSc,
-    PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
-    PgTypeOptVecWhGreaterThanTestSc, PgTypeUcc, PgUcc, PgnSc, PkQpSc, PkSc, PoolConnectionSc,
-    PoolSc, PrefixSc, PrepExtensionsSc, PrepPgSc, PrepPgTableSc, PrepPgUcc, QbSc, QpErUcc, QpSc,
-    QpUcc, QuerySc, QueryStringSc, RdIdsAndCrIntoOptVecWhEqualToJsonFieldSc,
-    RdIdsAndCrIntoPgJsonOptVecWhBetweenSc, RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
+    HeaderContentTypeAppJsonNotFoundUcc, HeadersSc, IdentCrDfltSc, IncrSc, IntoSerdeVersionSc,
+    LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc, NotUniqueFieldUcc, NotUniquePkSc, NotUniquePkUcc,
+    OptVecCrSc, OrderBySc, OrderByUcc, OrderSc, ParamsSc, PayloadSc, PayloadUcc, PgCrudSc,
+    PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc, PgTypeOptVecWhGreaterThanTestSc, PgTypeUcc,
+    PgUcc, PgnSc, PkQpSc, PkSc, PoolConnectionSc, PoolSc, PrefixSc, PrepExtensionsSc, PrepPgSc,
+    PrepPgTableSc, PrepPgUcc, QbSc, QpErUcc, QpSc, QpUcc, QuerySc, QueryStringSc,
+    RdIdsAndCrIntoOptVecWhEqualToJsonFieldSc, RdIdsAndCrIntoPgJsonOptVecWhBetweenSc,
+    RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhContainsElRegexSc, RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhInSc, RdIdsAndCrIntoPgJsonOptVecWhRegexSc,
     RdIdsAndCrIntoVecWhEqualUsingFieldsSc, RdIdsAndCrIntoWhEqualSc,
@@ -2089,8 +2089,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             simple_syn_punct_serde_error,
         )],
     );
-    let header_cnt_type_application_json_not_found_syn_vrt = new_syn_vrt(
-        &HeaderContentTypeApplicationJsonNotFoundUcc,
+    let header_cnt_type_app_json_not_found_syn_vrt = new_syn_vrt(
+        &HeaderContentTypeAppJsonNotFoundUcc,
         Some(StatusCode::BadReq400),
         Vec::<(
             LocationFieldAttr,
@@ -2127,7 +2127,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             check_body_size_syn_vrt.get_syn_vrt(),
             pg_syn_vrt.get_syn_vrt(),
             serde_json_syn_vrt.get_syn_vrt(),
-            header_cnt_type_application_json_not_found_syn_vrt.get_syn_vrt(),
+            header_cnt_type_app_json_not_found_syn_vrt.get_syn_vrt(),
         ];
         for el in &common_er_vrts {
             acc.push(el);
@@ -2452,15 +2452,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             git_info::PROJECT_GIT_INFO.commit,
                         )
                     };
-                    let application_json_dq_ts = dq_ts(&"application/json");
-                    let content_type_application_json_header_addition_ts = quote! {
-                        .header(reqwest::header::CONTENT_TYPE, #application_json_dq_ts)
+                    let app_json_dq_ts = dq_ts(&"application/json");
+                    let content_type_app_json_header_addition_ts = quote! {
+                        .header(reqwest::header::CONTENT_TYPE, #app_json_dq_ts)
                     };
                     quote! {
                         let #FutureSc = reqwest::Client::new()
                             .#op_http_method_sc_ts(&#UrlSc)
                             #commit_header_addition_ts
-                            #content_type_application_json_header_addition_ts
+                            #content_type_app_json_header_addition_ts
                             .#BodySc(#PayloadSc)
                             .send();
                     }
@@ -2582,7 +2582,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let req_parts_preparation_ts = {
                     let ts0 = &gen_op_er_init_eprintln_res_ts(
                         op,
-                        &header_cnt_type_application_json_not_found_syn_vrt,
+                        &header_cnt_type_app_json_not_found_syn_vrt,
                         Location::caller(),
                     );
                     let ts1 = gen_match_ok_err_ts_c35d87fd(
