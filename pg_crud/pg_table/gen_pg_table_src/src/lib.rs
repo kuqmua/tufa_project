@@ -637,7 +637,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let pub_async_fn_prep_pg_table_ts = {
             let prep_pg_dq_ts = dq_ts(&format!(
-                "cr table if not exists {{table}} ({})",
+                "create table if not exists {{table}} ({})",
                 fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
             ));
             let serde_json_to_string_schemars_schema_for_generic_unwrap_ts = {
