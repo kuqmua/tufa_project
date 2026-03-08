@@ -117,36 +117,36 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         .to_string(),
     )
     .expect("246de453");
-    let (fields_ts, pg_json_object_arr) = {
-        let pg_json_object_record = gen_pg_json_obj_config.vrt;
-        match (&pg_json_object_record.is_nullable, &pg_json_object_record.pattern) {
-            (IsNullable::False, Pattern::Stdrt) => vec![pg_json_object_record],
+    let (fields_ts, pg_json_obj_arr) = {
+        let pg_json_obj_record = gen_pg_json_obj_config.vrt;
+        match (&pg_json_obj_record.is_nullable, &pg_json_obj_record.pattern) {
+            (IsNullable::False, Pattern::Stdrt) => vec![pg_json_obj_record],
             (IsNullable::True, Pattern::Stdrt) |
             (IsNullable::False, Pattern::Arr) => vec![
                 PgJsonObjectRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Stdrt,
-                    trait_gen: pg_json_object_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                pg_json_object_record
+                pg_json_obj_record
             ],
             (IsNullable::True, Pattern::Arr) => vec![
                 PgJsonObjectRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Stdrt,
-                    trait_gen: pg_json_object_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
                 PgJsonObjectRecord {
                     is_nullable: IsNullable::True,
                     pattern: Pattern::Stdrt,
-                    trait_gen: pg_json_object_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
                 PgJsonObjectRecord {
                     is_nullable: IsNullable::False,
                     pattern: Pattern::Arr,
-                    trait_gen: pg_json_object_record.trait_gen.clone(),
+                    trait_gen: pg_json_obj_record.trait_gen.clone(),
                 },
-                pg_json_object_record
+                pg_json_obj_record
             ]
         }
     }
@@ -7031,7 +7031,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
             mod #ident_gen_pg_json_obj_mod {
-                #(#pg_json_object_arr)*
+                #(#pg_json_obj_arr)*
             }
             pub use #ident_gen_pg_json_obj_mod::*;
         }
