@@ -4,6 +4,6 @@ pub fn pg_json_obj_config(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_derive(GenPgJsonObject)]
-pub fn gen_pg_json_object(input_ts: Ts) -> Ts {
-    gen_pg_json_obj_src::gen_pg_json_object(input_ts.into()).into()
+pub fn gen_pg_json_obj(input_ts: Ts) -> Ts {
+    gen_pg_json_obj_src::gen_pg_json_obj(input_ts.into()).into()
 }

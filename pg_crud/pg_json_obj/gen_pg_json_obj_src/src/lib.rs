@@ -80,7 +80,7 @@ use token_patterns::{
 //todo gen authorization rights enum for json fields
 //todo bug in upd if updating arr and creating el in jsonb arr without anything - read_ids generation logic of vec returns wrong query part
 #[must_use]
-pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
+pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
     enum TraitGen {
         PgJson,
@@ -104,7 +104,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
     struct GenPgJsonsConfig {
         pg_table_columns_write_into_pg_table_columns_using_pg_json_objects: ShouldWriteTsIntoFile,
         vrt: PgJsonObjectRecord,
-        whole_write_into_gen_pg_json_object: ShouldWriteTsIntoFile,
+        whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
     panic_location();
     let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
@@ -7026,19 +7026,19 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let generated: Ts2 = {
-        let ident_gen_pg_json_object_mod = SelfGenPgJsonObjModSc::from_tokens(&di.ident);
+        let ident_gen_pg_json_obj_mod = SelfGenPgJsonObjModSc::from_tokens(&di.ident);
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
-            mod #ident_gen_pg_json_object_mod {
+            mod #ident_gen_pg_json_obj_mod {
                 #(#pg_json_object_arr)*
             }
-            pub use #ident_gen_pg_json_object_mod::*;
+            pub use #ident_gen_pg_json_obj_mod::*;
         }
     };
     mb_write_ts_into_file(
-        gen_pg_json_obj_config.whole_write_into_gen_pg_json_object,
-        "gen_pg_json_object",
+        gen_pg_json_obj_config.whole_write_into_gen_pg_json_obj,
+        "gen_pg_json_obj",
         &generated,
         &FormatWithCargofmt::True,
     );

@@ -26,7 +26,7 @@ test-utils = []"#,
                     #[pg_crud::pg_json_obj_config{
                         {
                             "pg_table_columns_write_into_pg_table_columns_using_pg_json_objects": "False",
-                            "whole_write_into_gen_pg_json_object": "False",
+                            "whole_write_into_gen_pg_json_obj": "False",
                             "vrt": {
                                 "is_nullable": "True",
                                 "pattern": "Arr",
@@ -40,7 +40,7 @@ test-utils = []"#,
                         pub field_2: pg_crud::VecOfI8AsNotNullArrOfNotNullJsonbNbr,
                     }
                 };
-                let ts = gen_pg_json_obj_src::gen_pg_json_object(object_example_ts.clone());
+                let ts = gen_pg_json_obj_src::gen_pg_json_obj(object_example_ts.clone());
                 quote! {
                     #ts
                     #object_example_ts
