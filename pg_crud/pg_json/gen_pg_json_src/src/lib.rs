@@ -3330,7 +3330,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 #ident_wh_ucc::In(
                                     wh_filters::PgJsonWhIn {
                                         oprtr: #import::Oprtr::Or,
-                                        #VSc: wh_filters::PgJsonNotEmptyUniqueVec::try_new(
+                                        #VSc: wh_filters::PgJsonNotEmptyUniqueVec::try_from(
                                             vec![#ident_tt_ucc::new(#CrSc.0.0)]
                                         ).expect("2737c0ed")
                                     }

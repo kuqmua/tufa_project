@@ -49,24 +49,6 @@ impl<T: PartialEq + Clone> PgJsonNotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
-        if v.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
-        }
-        {
-            let mut acc = Vec::new();
-            for el in &v {
-                if acc.contains(&el) {
-                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
-                        v: el.clone(),
-                        loc: loc!(),
-                    });
-                }
-                acc.push(el);
-            }
-        }
-        Ok(Self(v))
-    }
 }
 impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUniqueVec<T> {
     pub fn qb_one_by_one<'query_lt>(
@@ -104,6 +86,27 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUniqueVec<T> {
         }
         let _: Option<char> = acc.pop();
         Ok(acc)
+    }
+}
+impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgJsonNotEmptyUniqueVec<T> {
+    type Error = NotEmptyUniqueVecTryNewEr<T>;
+    fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
+        if v.is_empty() {
+            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
+        }
+        {
+            let mut acc = Vec::new();
+            for el in &v {
+                if acc.contains(&el) {
+                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
+                        v: el.clone(),
+                        loc: loc!(),
+                    });
+                }
+                acc.push(el);
+            }
+        }
+        Ok(Self(v))
     }
 }
 #[allow(unused_qualifications)]
@@ -162,7 +165,7 @@ const _: () = {
                             &"tuple struct PgJsonNotEmptyUniqueVec with 1 el",
                         ));
                     };
-                    match PgJsonNotEmptyUniqueVec::try_new(f0) {
+                    match PgJsonNotEmptyUniqueVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
