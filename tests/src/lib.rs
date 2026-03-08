@@ -209,6 +209,7 @@ mod tests {
                 String::from("unqualified_local_imports"), //need to use some kind of different test flag or something for this
                 String::from("unreachable_cfg_select_predicates"),
                 String::from("default_overrides_default_fields"),
+                String::from("linker_info"),
             ],
         );
     }
