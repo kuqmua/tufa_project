@@ -33,7 +33,7 @@ use naming::{
     GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqualUcc,
     LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc, RangeLengthUcc, RegexUcc,
     StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
-    param::{PgJsonTypeWhereSelfUcc, PgTypeWhereSelfUcc},
+    param::{PgJsonWhereSelfUcc, PgTypeWhereSelfUcc},
 };
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
@@ -220,7 +220,7 @@ impl PgFilter for PgTypeFilter {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
-pub enum PgJsonTypeFilter {
+pub enum PgJsonFilter {
     Equal { ident: Ts2 },
     DimOneEqual { ident: Ts2 },
     DimTwoEqual { ident: Ts2 },
@@ -293,7 +293,7 @@ pub enum PgJsonTypeFilter {
     DimThreeOverlapsWithArr { ident: Ts2 },
     DimFourOverlapsWithArr { ident: Ts2 },
 }
-impl PgFilter for PgJsonTypeFilter {
+impl PgFilter for PgJsonFilter {
     fn mb_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Equal { ident }
@@ -369,7 +369,7 @@ impl PgFilter for PgJsonTypeFilter {
         }
     }
     fn prefix_where_self_ucc(&self) -> Ts2 {
-        let v = PgJsonTypeWhereSelfUcc::from_display(&self.ucc());
+        let v = PgJsonWhereSelfUcc::from_display(&self.ucc());
         quote! {#v}
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {

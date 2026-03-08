@@ -10,25 +10,25 @@ use optml::Optml;
         // {
         //     "is_nullable": "False",
         //     "pattern": "Stdrt",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         // {
         //     "is_nullable": "True",
         //     "pattern": "Stdrt",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         // {
         //     "is_nullable": "False",
         //     "pattern": "Arr",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         {
             "is_nullable": "True",
             "pattern": "Arr",
-            "trait_gen": "PgTypeAndPgJsonType"
+            "trait_gen": "PgTypeAndPgJson"
         }
     }
 }]
@@ -855,25 +855,25 @@ pub struct Animal {
         // {
         //     "is_nullable": "False",
         //     "pattern": "Stdrt",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         // {
         //     "is_nullable": "True",
         //     "pattern": "Stdrt",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         // {
         //     "is_nullable": "False",
         //     "pattern": "Arr",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         {
             "is_nullable": "True",
             "pattern": "Arr",
-            "trait_gen": "PgTypeAndPgJsonType"
+            "trait_gen": "PgTypeAndPgJson"
         }
     }
 }]
@@ -1018,25 +1018,25 @@ pub struct Doggie {
         // {
         //     "is_nullable": "False",
         //     "pattern": "Stdrt",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         // {
         //     "is_nullable": "True",
         //     "pattern": "Stdrt",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         // {
         //     "is_nullable": "False",
         //     "pattern": "Arr",
-        //     "trait_gen": "PgTypeAndPgJsonType"
+        //     "trait_gen": "PgTypeAndPgJson"
         // }
         // ,
         {
             "is_nullable": "True",
             "pattern": "Arr",
-            "trait_gen": "PgTypeAndPgJsonType"
+            "trait_gen": "PgTypeAndPgJson"
         }
     }
 }]

@@ -696,7 +696,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize, Optml)]
-    struct GenPgJsonTypesConfig {
+    struct GenPgJsonsConfig {
         vrt: GenPgTypesConfigVrt,
         pg_table_columns_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
@@ -833,8 +833,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     panic_location();
-    let gen_pg_json_config =
-        from_str::<GenPgJsonTypesConfig>(&input_ts.to_string()).expect("80485f71");
+    let gen_pg_json_config = from_str::<GenPgJsonsConfig>(&input_ts.to_string()).expect("80485f71");
     let (columns_ts, pg_type_arr) = {
         let acc = match gen_pg_json_config.vrt {
             GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
@@ -6555,18 +6554,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
                 PgTypePattern::ArrDim1 { .. } => none_ts.clone(),
             };
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts = none_ts.clone();
-            let create_into_pg_json_type_opt_vec_where_length_equal_ts = none_ts.clone();
-            let create_into_pg_json_type_opt_vec_where_length_greater_than_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_between_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_in_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts = none_ts.clone();
-            let read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts = none_ts;
+            let read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts = none_ts.clone();
+            let create_into_pg_json_opt_vec_where_length_equal_ts = none_ts.clone();
+            let create_into_pg_json_opt_vec_where_length_greater_than_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_between_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_in_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_regex_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts = none_ts.clone();
+            let read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts = none_ts;
             gen_impl_pg_type_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
                 &import,
@@ -6588,18 +6587,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &create_into_pg_type_opt_vec_where_dim_one_equal_ts,
                 &pg_type_opt_vec_where_greater_than_test_ts,
                 &read_ids_and_table_type_into_pg_type_opt_where_greater_than_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_dim_one_equal_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_dim_two_equal_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_dim_three_equal_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_dim_four_equal_ts,
-                &create_into_pg_json_type_opt_vec_where_length_equal_ts,
-                &create_into_pg_json_type_opt_vec_where_length_greater_than_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_greater_than_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_between_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_in_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_regex_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_greater_than_ts,
-                &read_ids_and_create_into_pg_json_type_opt_vec_where_contains_el_regex_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_dim_one_equal_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_dim_two_equal_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_dim_three_equal_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_dim_four_equal_ts,
+                &create_into_pg_json_opt_vec_where_length_equal_ts,
+                &create_into_pg_json_opt_vec_where_length_greater_than_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_greater_than_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_between_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_in_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_regex_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_greater_than_ts,
+                &read_ids_and_create_into_pg_json_opt_vec_where_contains_el_regex_ts,
             )
         };
         let mb_impl_pg_type_pk_for_ident_stdrt_not_null_if_can_be_pk_ts = if matches!(&is_not_null_stdrt_can_be_pk, IsNotNullStdrtCanBePk::True) {

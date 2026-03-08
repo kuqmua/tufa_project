@@ -12,55 +12,55 @@ gen_pg_json::gen_pg_json!({
     // {
     //   "Concrete": [
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Stdrt"
+    //             "pg_json_pattern": "Stdrt"
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": "Stdrt"
+    //             "pg_json_pattern": "Stdrt"
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim1": {
     //                     "dim1_is_nullable": "True"
     //                 }
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False"
@@ -68,9 +68,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True"
@@ -78,9 +78,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False"
@@ -88,9 +88,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True"
@@ -98,9 +98,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False"
@@ -108,9 +108,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True"
@@ -118,9 +118,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False"
@@ -128,9 +128,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim2": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True"
@@ -138,9 +138,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -149,9 +149,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -160,9 +160,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -171,9 +171,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -182,9 +182,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -193,9 +193,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -204,9 +204,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -215,9 +215,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -226,9 +226,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -237,9 +237,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -248,9 +248,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -259,9 +259,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -270,9 +270,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -281,9 +281,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -292,9 +292,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -303,9 +303,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim3": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -314,9 +314,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -326,9 +326,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -338,9 +338,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -350,9 +350,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -362,9 +362,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -374,9 +374,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -386,9 +386,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -398,9 +398,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -410,9 +410,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -422,9 +422,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -434,9 +434,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -446,9 +446,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -458,9 +458,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -470,9 +470,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -482,9 +482,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -494,9 +494,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -506,9 +506,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -518,9 +518,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -530,9 +530,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -542,9 +542,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "False",
@@ -554,9 +554,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -566,9 +566,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -578,9 +578,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -590,9 +590,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "False",
     //                     "dim2_is_nullable": "True",
@@ -602,9 +602,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -614,9 +614,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -626,9 +626,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -638,9 +638,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "False",
@@ -650,9 +650,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -662,9 +662,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -674,9 +674,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -686,9 +686,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim4": {
     //                     "dim1_is_nullable": "True",
     //                     "dim2_is_nullable": "True",
@@ -698,9 +698,9 @@ gen_pg_json::gen_pg_json!({
     //             }
     //         },
     //         {
-    //             "pg_json_type": "UuidUuidAsJsonbString",
+    //             "pg_json": "UuidUuidAsJsonbString",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Stdrt"
+    //             "pg_json_pattern": "Stdrt"
     //         }
     //   ]
     // }
@@ -708,55 +708,55 @@ gen_pg_json::gen_pg_json!({
     // {
     //     "Concrete": [
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Stdrt"
+    //             "pg_json_pattern": "Stdrt"
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "True",
-    //             "pg_json_type_pattern": "Stdrt"
+    //             "pg_json_pattern": "Stdrt"
     //         },
     //         {
-    //             "pg_json_type": "I8AsJsonbNbr",
+    //             "pg_json": "I8AsJsonbNbr",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": {
+    //             "pg_json_pattern": {
     //                 "ArrDim1": {
     //                     "dim1_is_nullable": "False"
     //                 }
     //             }
     //         },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -764,9 +764,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -774,9 +774,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -784,9 +784,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -794,9 +794,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -804,9 +804,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -814,9 +814,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -824,9 +824,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -834,9 +834,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -845,9 +845,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -856,9 +856,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -867,9 +867,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -878,9 +878,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -889,9 +889,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -900,9 +900,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -911,9 +911,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -922,9 +922,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -933,9 +933,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -944,9 +944,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -955,9 +955,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -966,9 +966,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -977,9 +977,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -988,9 +988,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -999,9 +999,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1010,9 +1010,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1022,9 +1022,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1034,9 +1034,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1046,9 +1046,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1058,9 +1058,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1070,9 +1070,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1082,9 +1082,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1094,9 +1094,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1106,9 +1106,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1118,9 +1118,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1130,9 +1130,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1142,9 +1142,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1154,9 +1154,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1166,9 +1166,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1178,9 +1178,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1190,9 +1190,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1202,9 +1202,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1214,9 +1214,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1226,9 +1226,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1238,9 +1238,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1250,9 +1250,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1262,9 +1262,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1274,9 +1274,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1286,9 +1286,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1298,9 +1298,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1310,9 +1310,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1322,9 +1322,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1334,9 +1334,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1346,9 +1346,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1358,9 +1358,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1370,9 +1370,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1382,9 +1382,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I8AsJsonbNbr",
+    //         //     "pg_json": "I8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1394,55 +1394,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -1450,9 +1450,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -1460,9 +1460,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -1470,9 +1470,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -1480,9 +1480,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -1490,9 +1490,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -1500,9 +1500,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -1510,9 +1510,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -1520,9 +1520,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1531,9 +1531,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1542,9 +1542,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1553,9 +1553,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1564,9 +1564,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1575,9 +1575,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1586,9 +1586,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1597,9 +1597,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1608,9 +1608,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1619,9 +1619,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1630,9 +1630,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1641,9 +1641,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1652,9 +1652,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1663,9 +1663,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1674,9 +1674,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1685,9 +1685,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1696,9 +1696,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1708,9 +1708,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1720,9 +1720,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1732,9 +1732,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1744,9 +1744,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1756,9 +1756,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1768,9 +1768,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1780,9 +1780,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1792,9 +1792,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1804,9 +1804,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1816,9 +1816,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1828,9 +1828,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1840,9 +1840,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1852,9 +1852,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1864,9 +1864,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1876,9 +1876,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -1888,9 +1888,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1900,9 +1900,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1912,9 +1912,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1924,9 +1924,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -1936,9 +1936,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1948,9 +1948,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1960,9 +1960,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1972,9 +1972,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -1984,9 +1984,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -1996,9 +1996,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2008,9 +2008,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2020,9 +2020,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2032,9 +2032,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2044,9 +2044,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2056,9 +2056,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2068,9 +2068,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I16AsJsonbNbr",
+    //         //     "pg_json": "I16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2080,55 +2080,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -2136,9 +2136,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -2146,9 +2146,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -2156,9 +2156,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -2166,9 +2166,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -2176,9 +2176,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -2186,9 +2186,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -2196,9 +2196,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -2206,9 +2206,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2217,9 +2217,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2228,9 +2228,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2239,9 +2239,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2250,9 +2250,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2261,9 +2261,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2272,9 +2272,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2283,9 +2283,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2294,9 +2294,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2305,9 +2305,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2316,9 +2316,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2327,9 +2327,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2338,9 +2338,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2349,9 +2349,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2360,9 +2360,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2371,9 +2371,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2382,9 +2382,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2394,9 +2394,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2406,9 +2406,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2418,9 +2418,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2430,9 +2430,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2442,9 +2442,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2454,9 +2454,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2466,9 +2466,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2478,9 +2478,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2490,9 +2490,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2502,9 +2502,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2514,9 +2514,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2526,9 +2526,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2538,9 +2538,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2550,9 +2550,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2562,9 +2562,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2574,9 +2574,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2586,9 +2586,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2598,9 +2598,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2610,9 +2610,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2622,9 +2622,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2634,9 +2634,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2646,9 +2646,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2658,9 +2658,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2670,9 +2670,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2682,9 +2682,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2694,9 +2694,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2706,9 +2706,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2718,9 +2718,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2730,9 +2730,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2742,9 +2742,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2754,9 +2754,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I32AsJsonbNbr",
+    //         //     "pg_json": "I32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2766,55 +2766,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -2822,9 +2822,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -2832,9 +2832,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -2842,9 +2842,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -2852,9 +2852,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -2862,9 +2862,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -2872,9 +2872,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -2882,9 +2882,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -2892,9 +2892,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2903,9 +2903,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2914,9 +2914,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2925,9 +2925,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -2936,9 +2936,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2947,9 +2947,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -2958,9 +2958,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2969,9 +2969,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -2980,9 +2980,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -2991,9 +2991,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3002,9 +3002,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3013,9 +3013,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3024,9 +3024,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3035,9 +3035,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3046,9 +3046,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3057,9 +3057,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3068,9 +3068,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3080,9 +3080,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3092,9 +3092,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3104,9 +3104,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3116,9 +3116,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3128,9 +3128,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3140,9 +3140,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3152,9 +3152,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3164,9 +3164,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3176,9 +3176,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3188,9 +3188,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3200,9 +3200,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3212,9 +3212,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3224,9 +3224,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3236,9 +3236,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3248,9 +3248,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3260,9 +3260,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3272,9 +3272,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3284,9 +3284,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3296,9 +3296,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3308,9 +3308,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3320,9 +3320,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3332,9 +3332,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3344,9 +3344,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3356,9 +3356,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3368,9 +3368,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3380,9 +3380,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3392,9 +3392,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3404,9 +3404,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3416,9 +3416,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3428,9 +3428,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3440,9 +3440,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "I64AsJsonbNbr",
+    //         //     "pg_json": "I64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3452,55 +3452,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -3508,9 +3508,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -3518,9 +3518,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -3528,9 +3528,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -3538,9 +3538,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -3548,9 +3548,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -3558,9 +3558,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -3568,9 +3568,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -3578,9 +3578,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3589,9 +3589,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3600,9 +3600,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3611,9 +3611,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3622,9 +3622,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3633,9 +3633,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3644,9 +3644,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3655,9 +3655,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3666,9 +3666,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3677,9 +3677,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3688,9 +3688,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3699,9 +3699,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3710,9 +3710,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3721,9 +3721,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3732,9 +3732,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3743,9 +3743,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3754,9 +3754,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3766,9 +3766,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3778,9 +3778,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3790,9 +3790,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3802,9 +3802,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3814,9 +3814,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3826,9 +3826,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3838,9 +3838,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -3850,9 +3850,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3862,9 +3862,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3874,9 +3874,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3886,9 +3886,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -3898,9 +3898,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3910,9 +3910,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3922,9 +3922,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3934,9 +3934,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -3946,9 +3946,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3958,9 +3958,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3970,9 +3970,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3982,9 +3982,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -3994,9 +3994,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4006,9 +4006,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4018,9 +4018,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4030,9 +4030,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4042,9 +4042,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4054,9 +4054,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4066,9 +4066,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4078,9 +4078,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4090,9 +4090,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4102,9 +4102,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4114,9 +4114,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4126,9 +4126,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U8AsJsonbNbr",
+    //         //     "pg_json": "U8AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4138,55 +4138,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -4194,9 +4194,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -4204,9 +4204,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -4214,9 +4214,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -4224,9 +4224,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -4234,9 +4234,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -4244,9 +4244,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -4254,9 +4254,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -4264,9 +4264,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4275,9 +4275,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4286,9 +4286,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4297,9 +4297,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4308,9 +4308,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4319,9 +4319,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4330,9 +4330,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4341,9 +4341,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4352,9 +4352,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4363,9 +4363,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4374,9 +4374,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4385,9 +4385,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4396,9 +4396,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4407,9 +4407,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4418,9 +4418,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4429,9 +4429,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4440,9 +4440,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4452,9 +4452,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4464,9 +4464,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4476,9 +4476,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4488,9 +4488,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4500,9 +4500,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4512,9 +4512,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4524,9 +4524,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4536,9 +4536,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4548,9 +4548,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4560,9 +4560,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4572,9 +4572,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4584,9 +4584,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4596,9 +4596,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4608,9 +4608,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4620,9 +4620,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4632,9 +4632,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4644,9 +4644,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4656,9 +4656,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4668,9 +4668,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4680,9 +4680,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4692,9 +4692,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4704,9 +4704,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4716,9 +4716,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4728,9 +4728,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4740,9 +4740,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4752,9 +4752,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4764,9 +4764,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -4776,9 +4776,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4788,9 +4788,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4800,9 +4800,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4812,9 +4812,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U16AsJsonbNbr",
+    //         //     "pg_json": "U16AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -4824,55 +4824,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -4880,9 +4880,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -4890,9 +4890,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -4900,9 +4900,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -4910,9 +4910,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -4920,9 +4920,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -4930,9 +4930,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -4940,9 +4940,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -4950,9 +4950,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4961,9 +4961,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -4972,9 +4972,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4983,9 +4983,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -4994,9 +4994,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5005,9 +5005,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5016,9 +5016,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5027,9 +5027,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5038,9 +5038,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5049,9 +5049,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5060,9 +5060,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5071,9 +5071,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5082,9 +5082,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5093,9 +5093,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5104,9 +5104,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5115,9 +5115,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5126,9 +5126,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5138,9 +5138,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5150,9 +5150,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5162,9 +5162,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5174,9 +5174,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5186,9 +5186,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5198,9 +5198,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5210,9 +5210,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5222,9 +5222,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5234,9 +5234,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5246,9 +5246,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5258,9 +5258,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5270,9 +5270,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5282,9 +5282,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5294,9 +5294,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5306,9 +5306,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5318,9 +5318,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5330,9 +5330,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5342,9 +5342,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5354,9 +5354,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5366,9 +5366,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5378,9 +5378,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5390,9 +5390,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5402,9 +5402,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5414,9 +5414,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5426,9 +5426,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5438,9 +5438,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5450,9 +5450,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5462,9 +5462,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5474,9 +5474,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5486,9 +5486,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5498,9 +5498,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U32AsJsonbNbr",
+    //         //     "pg_json": "U32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5510,55 +5510,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -5566,9 +5566,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -5576,9 +5576,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -5586,9 +5586,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -5596,9 +5596,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -5606,9 +5606,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -5616,9 +5616,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -5626,9 +5626,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -5636,9 +5636,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5647,9 +5647,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5658,9 +5658,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5669,9 +5669,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5680,9 +5680,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5691,9 +5691,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5702,9 +5702,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5713,9 +5713,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5724,9 +5724,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5735,9 +5735,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5746,9 +5746,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5757,9 +5757,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5768,9 +5768,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5779,9 +5779,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5790,9 +5790,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5801,9 +5801,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5812,9 +5812,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5824,9 +5824,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5836,9 +5836,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5848,9 +5848,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -5860,9 +5860,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5872,9 +5872,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5884,9 +5884,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5896,9 +5896,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -5908,9 +5908,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5920,9 +5920,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5932,9 +5932,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5944,9 +5944,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -5956,9 +5956,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5968,9 +5968,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5980,9 +5980,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -5992,9 +5992,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6004,9 +6004,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6016,9 +6016,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6028,9 +6028,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6040,9 +6040,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6052,9 +6052,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6064,9 +6064,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6076,9 +6076,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6088,9 +6088,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6100,9 +6100,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6112,9 +6112,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6124,9 +6124,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6136,9 +6136,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6148,9 +6148,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6160,9 +6160,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6172,9 +6172,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6184,9 +6184,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "U64AsJsonbNbr",
+    //         //     "pg_json": "U64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6196,55 +6196,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -6252,9 +6252,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -6262,9 +6262,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -6272,9 +6272,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -6282,9 +6282,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -6292,9 +6292,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -6302,9 +6302,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -6312,9 +6312,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -6322,9 +6322,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6333,9 +6333,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6344,9 +6344,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6355,9 +6355,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6366,9 +6366,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6377,9 +6377,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6388,9 +6388,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6399,9 +6399,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6410,9 +6410,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6421,9 +6421,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6432,9 +6432,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6443,9 +6443,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6454,9 +6454,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6465,9 +6465,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6476,9 +6476,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6487,9 +6487,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6498,9 +6498,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6510,9 +6510,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6522,9 +6522,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6534,9 +6534,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6546,9 +6546,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6558,9 +6558,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6570,9 +6570,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6582,9 +6582,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6594,9 +6594,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6606,9 +6606,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6618,9 +6618,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6630,9 +6630,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6642,9 +6642,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6654,9 +6654,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6666,9 +6666,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6678,9 +6678,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6690,9 +6690,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6702,9 +6702,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6714,9 +6714,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6726,9 +6726,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -6738,9 +6738,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6750,9 +6750,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6762,9 +6762,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6774,9 +6774,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -6786,9 +6786,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6798,9 +6798,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6810,9 +6810,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6822,9 +6822,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -6834,9 +6834,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6846,9 +6846,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6858,9 +6858,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6870,9 +6870,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F32AsJsonbNbr",
+    //         //     "pg_json": "F32AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -6882,55 +6882,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -6938,9 +6938,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -6948,9 +6948,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -6958,9 +6958,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -6968,9 +6968,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -6978,9 +6978,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -6988,9 +6988,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -6998,9 +6998,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -7008,9 +7008,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7019,9 +7019,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7030,9 +7030,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7041,9 +7041,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7052,9 +7052,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7063,9 +7063,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7074,9 +7074,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7085,9 +7085,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7096,9 +7096,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7107,9 +7107,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7118,9 +7118,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7129,9 +7129,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7140,9 +7140,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7151,9 +7151,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7162,9 +7162,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7173,9 +7173,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7184,9 +7184,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7196,9 +7196,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7208,9 +7208,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7220,9 +7220,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7232,9 +7232,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7244,9 +7244,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7256,9 +7256,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7268,9 +7268,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7280,9 +7280,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7292,9 +7292,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7304,9 +7304,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7316,9 +7316,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7328,9 +7328,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7340,9 +7340,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7352,9 +7352,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7364,9 +7364,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7376,9 +7376,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7388,9 +7388,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7400,9 +7400,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7412,9 +7412,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7424,9 +7424,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7436,9 +7436,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7448,9 +7448,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7460,9 +7460,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7472,9 +7472,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7484,9 +7484,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7496,9 +7496,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7508,9 +7508,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7520,9 +7520,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7532,9 +7532,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7544,9 +7544,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7556,9 +7556,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "F64AsJsonbNbr",
+    //         //     "pg_json": "F64AsJsonbNbr",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7568,55 +7568,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -7624,9 +7624,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -7634,9 +7634,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -7644,9 +7644,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -7654,9 +7654,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -7664,9 +7664,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -7674,9 +7674,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -7684,9 +7684,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -7694,9 +7694,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7705,9 +7705,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7716,9 +7716,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7727,9 +7727,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7738,9 +7738,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7749,9 +7749,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7760,9 +7760,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7771,9 +7771,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7782,9 +7782,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7793,9 +7793,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7804,9 +7804,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7815,9 +7815,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7826,9 +7826,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7837,9 +7837,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7848,9 +7848,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7859,9 +7859,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -7870,9 +7870,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7882,9 +7882,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7894,9 +7894,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7906,9 +7906,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -7918,9 +7918,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7930,9 +7930,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7942,9 +7942,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7954,9 +7954,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -7966,9 +7966,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7978,9 +7978,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -7990,9 +7990,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8002,9 +8002,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8014,9 +8014,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8026,9 +8026,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8038,9 +8038,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8050,9 +8050,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8062,9 +8062,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8074,9 +8074,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8086,9 +8086,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8098,9 +8098,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8110,9 +8110,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8122,9 +8122,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8134,9 +8134,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8146,9 +8146,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8158,9 +8158,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8170,9 +8170,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8182,9 +8182,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8194,9 +8194,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8206,9 +8206,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8218,9 +8218,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8230,9 +8230,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8242,9 +8242,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "BoolAsJsonbBoolean",
+    //         //     "pg_json": "BoolAsJsonbBoolean",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8254,55 +8254,55 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -8310,9 +8310,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -8320,9 +8320,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -8330,9 +8330,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -8340,9 +8340,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -8350,9 +8350,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -8360,9 +8360,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -8370,9 +8370,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -8380,9 +8380,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8391,9 +8391,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8402,9 +8402,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8413,9 +8413,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8424,9 +8424,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8435,9 +8435,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8446,9 +8446,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8457,9 +8457,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8468,9 +8468,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8479,9 +8479,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8490,9 +8490,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8501,9 +8501,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8512,9 +8512,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8523,9 +8523,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8534,9 +8534,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8545,9 +8545,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8556,9 +8556,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8568,201 +8568,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8772,9 +8580,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8784,9 +8592,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -8796,9 +8604,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8808,9 +8616,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8820,9 +8628,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8832,9 +8640,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -8844,9 +8652,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8856,9 +8664,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8868,9 +8676,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8880,9 +8688,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -8892,9 +8700,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8904,9 +8712,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8916,9 +8724,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8928,9 +8736,201 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "StringAsJsonbString",
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "StringAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -8940,56 +8940,56 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         {
-    //             "pg_json_type": "UuidUuidAsJsonbString",
+    //             "pg_json": "UuidUuidAsJsonbString",
     //             "is_nullable": "False",
-    //             "pg_json_type_pattern": "Stdrt"
+    //             "pg_json_pattern": "Stdrt"
     //         }
     //         // ,
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": "Stdrt"
+    //         //     "pg_json_pattern": "Stdrt"
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "False"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim1": {
     //         //             "dim1_is_nullable": "True"
     //         //         }
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -8997,9 +8997,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -9007,9 +9007,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -9017,9 +9017,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -9027,9 +9027,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False"
@@ -9037,9 +9037,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True"
@@ -9047,9 +9047,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False"
@@ -9057,9 +9057,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim2": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True"
@@ -9067,9 +9067,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9078,9 +9078,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9089,9 +9089,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9100,9 +9100,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9111,9 +9111,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9122,9 +9122,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9133,9 +9133,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9144,9 +9144,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9155,9 +9155,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9166,9 +9166,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9177,9 +9177,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9188,9 +9188,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9199,9 +9199,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9210,9 +9210,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9221,9 +9221,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9232,9 +9232,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim3": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9243,9 +9243,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9255,201 +9255,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "False",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "True",
-    //         //             "dim2_is_nullable": "True",
-    //         //             "dim3_is_nullable": "True",
-    //         //             "dim4_is_nullable": "True"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
-    //         //         "ArrDim4": {
-    //         //             "dim1_is_nullable": "False",
-    //         //             "dim2_is_nullable": "False",
-    //         //             "dim3_is_nullable": "False",
-    //         //             "dim4_is_nullable": "False"
-    //         //         }
-    //         //     }
-    //         // },
-    //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9459,9 +9267,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9471,9 +9279,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "False",
@@ -9483,9 +9291,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9495,9 +9303,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9507,9 +9315,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9519,9 +9327,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "False",
     //         //             "dim2_is_nullable": "True",
@@ -9531,9 +9339,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9543,9 +9351,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9555,9 +9363,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9567,9 +9375,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "False",
@@ -9579,9 +9387,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9591,9 +9399,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9603,9 +9411,9 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
-    //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",
@@ -9615,9 +9423,201 @@ gen_pg_json::gen_pg_json!({
     //         //     }
     //         // },
     //         // {
-    //         //     "pg_json_type": "UuidUuidAsJsonbString",
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "False",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
     //         //     "is_nullable": "True",
-    //         //     "pg_json_type_pattern": {
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "False",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "False",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "False",
+    //         //             "dim4_is_nullable": "True"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
+    //         //         "ArrDim4": {
+    //         //             "dim1_is_nullable": "True",
+    //         //             "dim2_is_nullable": "True",
+    //         //             "dim3_is_nullable": "True",
+    //         //             "dim4_is_nullable": "False"
+    //         //         }
+    //         //     }
+    //         // },
+    //         // {
+    //         //     "pg_json": "UuidUuidAsJsonbString",
+    //         //     "is_nullable": "True",
+    //         //     "pg_json_pattern": {
     //         //         "ArrDim4": {
     //         //             "dim1_is_nullable": "True",
     //         //             "dim2_is_nullable": "True",

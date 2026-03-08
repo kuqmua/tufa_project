@@ -30,7 +30,7 @@ test-utils = []"#,
                             "vrt": {
                                 "is_nullable": "True",
                                 "pattern": "Arr",
-                                "trait_gen": "PgTypeAndPgJsonType"
+                                "trait_gen": "PgTypeAndPgJson"
                             }
                         }
                     }]

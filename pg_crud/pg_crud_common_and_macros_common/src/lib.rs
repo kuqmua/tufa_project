@@ -93,12 +93,12 @@ impl ToTokens for PgTypeGreaterThanVrt {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum PgJsonTypeLengthGreaterThanVrt {
+pub enum PgJsonLengthGreaterThanVrt {
     EqualNotLengthGreaterThan,
     LengthGreaterThan,
     NotLengthGreaterThan,
 }
-impl PgJsonTypeLengthGreaterThanVrt {
+impl PgJsonLengthGreaterThanVrt {
     #[must_use]
     pub const fn oprtr(&self) -> Oprtr {
         match *self {
@@ -107,7 +107,7 @@ impl PgJsonTypeLengthGreaterThanVrt {
         }
     }
 }
-impl ToTokens for PgJsonTypeLengthGreaterThanVrt {
+impl ToTokens for PgJsonLengthGreaterThanVrt {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match *self {
             Self::EqualNotLengthGreaterThan => quote! {EqualNotLengthGreaterThan},

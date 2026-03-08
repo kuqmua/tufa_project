@@ -37,10 +37,10 @@ impl DfltOptSomeVecOneEl for EncodeFormat {
         Self::default()
     }
 }
-//difference between NotEmptyUniqueVec and PgJsonTypeNotEmptyUniqueVec only in pg_crud_common::DfltOptSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
+//difference between NotEmptyUniqueVec and PgJsonNotEmptyUniqueVec only in pg_crud_common::DfltOptSomeVecOneEl impl with different generic requirement and PgTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct PgJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
+pub struct PgJsonNotEmptyUniqueVec<T>(Vec<T>);
+impl<T: PartialEq + Clone> PgJsonNotEmptyUniqueVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
@@ -68,7 +68,7 @@ impl<T: PartialEq + Clone> PgJsonTypeNotEmptyUniqueVec<T> {
         Ok(Self(v))
     }
 }
-impl<T: PartialEq + Clone + Serialize> PgJsonTypeNotEmptyUniqueVec<T> {
+impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUniqueVec<T> {
     pub fn qb_one_by_one<'query_lt>(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
@@ -114,7 +114,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PgJsonTypeNotEmptyUniqueVec<T>
+        _serde::Deserialize<'de> for PgJsonNotEmptyUniqueVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -125,21 +125,21 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<PgJsonTypeNotEmptyUniqueVec<T>>,
+                marker: _serde::__private228::PhantomData<PgJsonNotEmptyUniqueVec<T>>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
-                type Value = PgJsonTypeNotEmptyUniqueVec<T>;
+                type Value = PgJsonNotEmptyUniqueVec<T>;
                 fn expecting(
                     &self,
                     __f: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(
                         __f,
-                        "tuple struct PgJsonTypeNotEmptyUniqueVec",
+                        "tuple struct PgJsonNotEmptyUniqueVec",
                     )
                 }
                 #[inline]
@@ -148,7 +148,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(PgJsonTypeNotEmptyUniqueVec(f0))
+                    Ok(PgJsonNotEmptyUniqueVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -159,10 +159,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct PgJsonTypeNotEmptyUniqueVec with 1 el",
+                            &"tuple struct PgJsonNotEmptyUniqueVec with 1 el",
                         ));
                     };
-                    match PgJsonTypeNotEmptyUniqueVec::try_new(f0) {
+                    match PgJsonNotEmptyUniqueVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -170,7 +170,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "PgJsonTypeNotEmptyUniqueVec",
+                "PgJsonNotEmptyUniqueVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lt: _serde::__private228::PhantomData,
@@ -179,22 +179,22 @@ const _: () = {
         }
     }
 };
-impl<T: DfltOptSomeVecOneEl> DfltOptSomeVecOneEl for PgJsonTypeNotEmptyUniqueVec<T> {
+impl<T: DfltOptSomeVecOneEl> DfltOptSomeVecOneEl for PgJsonNotEmptyUniqueVec<T> {
     fn dflt_opt_some_vec_one_el() -> Self {
         Self(vec![DfltOptSomeVecOneEl::dflt_opt_some_vec_one_el()])
     }
 }
-impl<T> Default for PgJsonTypeNotEmptyUniqueVec<T> {
+impl<T> Default for PgJsonNotEmptyUniqueVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
 }
-impl<T> From<PgJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(v: PgJsonTypeNotEmptyUniqueVec<T>) -> Self {
+impl<T> From<PgJsonNotEmptyUniqueVec<T>> for Vec<T> {
+    fn from(v: PgJsonNotEmptyUniqueVec<T>) -> Self {
         v.0
     }
 }
-impl<'lt, T> PgTypeWhereFilter<'lt> for PgJsonTypeNotEmptyUniqueVec<T>
+impl<'lt, T> PgTypeWhereFilter<'lt> for PgJsonNotEmptyUniqueVec<T>
 where
     T: Serialize + 'lt,
 {
@@ -756,8 +756,8 @@ pub enum BoundedVecTryNewEr {
         loc: Loc,
     },
 }
-enum PgTypeOrPgJsonType {
-    PgJsonType,
+enum PgTypeOrPgJson {
+    PgJson,
     PgType,
 }
 enum Vrt {
@@ -771,7 +771,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
     pub fn into_inn(self) -> Vec<T> {
         self.0
     }
-    pub fn pg_json_type_qp(
+    pub fn pg_json_qp(
         &self,
         incr: &mut u64,
         column: &dyn Display,
@@ -781,11 +781,11 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             incr,
             column,
             add_oprtr,
-            &PgTypeOrPgJsonType::PgJsonType,
+            &PgTypeOrPgJson::PgJson,
             &Vrt::Normal,
         )
     }
-    pub fn pg_json_type_qp_minus_one(
+    pub fn pg_json_qp_minus_one(
         &self,
         incr: &mut u64,
         column: &dyn Display,
@@ -795,7 +795,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             incr,
             column,
             add_oprtr,
-            &PgTypeOrPgJsonType::PgJsonType,
+            &PgTypeOrPgJson::PgJson,
             &Vrt::MinusOne,
         )
     }
@@ -809,7 +809,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             incr,
             column,
             add_oprtr,
-            &PgTypeOrPgJsonType::PgType,
+            &PgTypeOrPgJson::PgType,
             &Vrt::Normal,
         )
     }
@@ -823,7 +823,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             incr,
             column,
             add_oprtr,
-            &PgTypeOrPgJsonType::PgType,
+            &PgTypeOrPgJson::PgType,
             &Vrt::MinusOne,
         )
     }
@@ -843,7 +843,7 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         incr: &mut u64,
         _: &dyn Display,
         _add_oprtr: bool,
-        pg_type_or_pg_json_type: &PgTypeOrPgJsonType,
+        pg_type_or_pg_json: &PgTypeOrPgJson,
         vrt: &Vrt,
     ) -> Result<String, QpEr> {
         let mut acc = String::new();
@@ -857,9 +857,9 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
                     if write!(
                         acc,
                         "{}",
-                        &match &pg_type_or_pg_json_type {
-                            PgTypeOrPgJsonType::PgType => format!("[${v}]"),
-                            PgTypeOrPgJsonType::PgJsonType => {
+                        &match &pg_type_or_pg_json {
+                            PgTypeOrPgJson::PgType => format!("[${v}]"),
+                            PgTypeOrPgJson::PgJson => {
                                 format!("->${v}")
                             }
                         }
