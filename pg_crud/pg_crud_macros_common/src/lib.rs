@@ -2342,7 +2342,7 @@ pub fn gen_return_err_qp_er_write_into_buffer_ts(import: Import) -> Ts2 {
 }
 #[must_use]
 pub fn gen_jsonb_build_obj(v: &dyn Display) -> String {
-    format!("jsonb_build_obj({v})")
+    format!("jsonb_build_object({v})")
 }
 #[must_use]
 pub fn gen_jsonb_build_obj_v(v: &dyn Display) -> String {
