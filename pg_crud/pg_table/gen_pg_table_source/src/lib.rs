@@ -20,7 +20,7 @@ use naming::{
     DfltOptSomeVecOneElSc, DfltOptSomeVecOneElUcc, DisplayPlusToTokens, DisplayToScStr,
     DloErVrtsSc, DloLogicSc, DmErVrtsSc, DmLogicSc, ElSc, EndpointLocationSc, ErSc,
     ExecutorAcquireSc, ExecutorSc, ExpectedResSc, ExtraParamsSc, FailedToGetResTextUcc, FalseSc,
-    FromHandleSc, FutureSc, GenColumnQuealsVCommaUoQpSc, GenPgTablePkSc, GenSelectQpSc,
+    FromHSc, FutureSc, GenColumnQuealsVCommaUoQpSc, GenPgTablePkSc, GenSelectQpSc,
     GenWhenColumnIdThenVUmQpSc, HeaderContentTypeApplicationJsonNotFoundUcc, HeadersSc,
     IdentCreateDfltSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc, NotUniqueFieldSc,
     NotUniqueFieldUcc, NotUniquePkSc, NotUniquePkUcc, OptVecCreateSc, OrderBySc, OrderByUcc,
@@ -39,7 +39,7 @@ use naming::{
     ReadIdsAndTableTypeIntoPgTypeOptWhereGreaterThanSc, ReadIdsIntoReadSc, ReadIdsIntoTableTypeSc,
     ReadIdsIntoUpdSc, ReadIdsSc, ReadIdsUcc, ReadIntoTableTypeSc, ReadUcc, ReqSc, ReqwestSc,
     ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc, RmLogicSc, RoErVrtsSc, RoLogicSc, RollbackSc,
-    RoutesHandleSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc, SelectOnlyIdsQpSc,
+    RoutesHSc, RoutesSc, RowAndRollbackUcc, RowSc, RowsSc, SelectOnlyIdsQpSc,
     SelectOnlyUpddIdsQpSc, SelectPkSc, SelectQpSc, SelectSc, SelectUcc, SerdeJsonSc,
     SerdeJsonToStringSc, SerdeJsonToStringUcc, SerdeJsonUcc, SerdeSc, StatusCodeSc, TableNameSc,
     TableSc, ToTokensToScStr, ToTokensToUccTs, TrueSc, TryBindSc, TryBindUcc, UmErVrtsSc,
@@ -48,13 +48,12 @@ use naming::{
     param::{
         ErSelfSc, IsSelfUpdExistSc, SelfCreateUcc, SelfDloErWithSerdeUcc, SelfDloParamsUcc,
         SelfDloPayloadUcc, SelfDmParamsUcc, SelfDmPayloadUcc, SelfErWithSerdeSc,
-        SelfGenPgTableModSc, SelfHandleSc, SelfPayloadExampleSc, SelfPrepPgErUcc,
+        SelfGenPgTableModSc, SelfHSc, SelfPayloadExampleSc, SelfPrepPgErUcc,
         SelfReadIdsTo2DimsVecReadInnerAccSc, SelfReadIdsUcc, SelfReadUcc, SelfRoErWithSerdeUcc,
         SelfSelectUcc, SelfTableTypeUcc, SelfTestsSc, SelfTryDloErUcc, SelfTryRoErUcc,
         SelfUmParamsUcc, SelfUmPayloadUcc, SelfUpdForQueryUcc, SelfUpdTryNewErUcc, SelfUpdUcc,
         SelfWhereManyTryNewErUcc, SelfWhereManyUcc, StdOptOptSelfWhereManyUcc,
-        TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc, TrySelfHandleSc, TrySelfSc,
-        UpdQpSelfSc,
+        TryFromSqlxPgPgRowWithNotEmptyUniqueVecSelfSelectSc, TrySelfHSc, TrySelfSc, UpdQpSelfSc,
     },
 };
 use optml::Optml;
@@ -215,7 +214,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             match self {
                 Self::Cm | Self::Co | Self::Rm | Self::Ro => OpHttpMethod::Post,
                 Self::Um | Self::Uo => OpHttpMethod::Patch,
-                Self::Dm | Self::Dlo => OpHttpMethod::Del,
+                Self::Dm | Self::Dlo => OpHttpMethod::Delete,
             }
         }
         fn op_er_with_serde_sc(self) -> SelfErWithSerdeSc {
@@ -224,8 +223,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         fn op_payload_example_sc(self) -> impl DisplayPlusToTokens {
             SelfPayloadExampleSc::from_display(&self)
         }
-        fn self_handle_sc_ts(self) -> Ts2 {
-            let v = SelfHandleSc::from_tokens(&self.self_sc_ts());
+        fn self_h_sc_ts(self) -> Ts2 {
+            let v = SelfHSc::from_tokens(&self.self_sc_ts());
             quote! {#v}
         }
         fn self_sc_str(self) -> String {
@@ -234,8 +233,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         fn self_sc_ts(self) -> Ts2 {
             AsRefStrToScTs::case_or_panic(&self.to_string())
         }
-        fn try_self_handle_sc_ts(self) -> Ts2 {
-            let v = TrySelfHandleSc::from_tokens(&self.self_sc_ts());
+        fn try_self_h_sc_ts(self) -> Ts2 {
+            let v = TrySelfHSc::from_tokens(&self.self_sc_ts());
             quote! {#v}
         }
         fn try_self_sc_ts(self) -> Ts2 {
@@ -300,7 +299,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     enum OpHttpMethod {
         Post,
         Patch,
-        Del,
+        Delete,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     enum RmOrDm {
@@ -505,9 +504,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let pk_ft_upd_ts = &SelfUpdUcc::from_type_last_segment(pk_ft);
     let pk_ft_upd_for_query_ts = &SelfUpdForQueryUcc::from_type_last_segment(pk_ft);
     let ident_select_ucc = SelfSelectUcc::from_tokens(&ident);
-    let gen_from_handle_ts = |ident_ts: &dyn ToTokens, ts: &dyn ToTokens| {
+    let gen_from_h_ts = |ident_ts: &dyn ToTokens, ts: &dyn ToTokens| {
         quote! {
-            fn #FromHandleSc(#VSc: #ident_ts) -> Self {
+            fn #FromHSc(#VSc: #ident_ts) -> Self {
                 #ts
             }
         }
@@ -797,7 +796,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let ident_op_res_vrts_ucc = gen_ident_op_res_vrts_ucc(op);
             let syn_vrt_init_ts = gen_init_ts(syn_vrt, location);
             let ts = wrap_into_axum_res_ts(
-                &quote! {#ident_op_res_vrts_ucc::#FromHandleSc(#ErSc)},
+                &quote! {#ident_op_res_vrts_ucc::#FromHSc(#ErSc)},
                 &syn_vrt
                     .get_opt_status_code()
                     .expect("81efa954")
@@ -1930,7 +1929,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }
             };
-            let upd_handle_ts = gen_from_handle_ts(&ident_upd_ucc, &{
+            let upd_h_ts = gen_from_h_ts(&ident_upd_ucc, &{
                 let pk_ft_as_pg_type_upd_for_query_ts = gen_as_pg_type_upd_for_query_ts(&pk_ft);
                 let fields_named_without_pk_ts =
                     gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| -> Ts2 {
@@ -1955,7 +1954,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #upd_qp_pk_ts
                     #upd_qp_fields_ts
                     #select_only_updd_ids_qp_ts
-                    #upd_handle_ts
+                    #upd_h_ts
                 }
             }
         };
@@ -2142,17 +2141,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         }
         acc
     };
-    let gen_pub_handle_ts = |is_pub: bool| {
+    let gen_pub_h_ts = |is_pub: bool| {
         if is_pub {
             quote! {pub}
         } else {
             Ts2::new()
         }
     };
-    let gen_pub_handle_pk_fi_pk_inner_type_handle_ts = |ts: &dyn ToTokens| {
+    let gen_pub_h_pk_fi_pk_inner_type_h_ts = |ts: &dyn ToTokens| {
         let is_pub = true;
-        let pub_handle_ts = gen_pub_handle_ts(is_pub);
-        quote! {#pub_handle_ts #pk_fi: #ts}
+        let pub_h_ts = gen_pub_h_ts(is_pub);
+        quote! {#pub_h_ts #pk_fi: #ts}
     };
     let gen_match_pg_transaction_rollback_await_ts = |op: &Op, location: &'static Location<'_>| {
         let ts_91f19090 = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, location);
@@ -2165,7 +2164,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             #ts_91f19090
         }}
     };
-    let gen_drop_rows_match_pg_transaction_rollback_await_handle_ts =
+    let gen_drop_rows_match_pg_transaction_rollback_await_h_ts =
         |op: &Op, location: &'static Location<'_>| {
             let match_pg_transaction_rollback_await_ts =
                 gen_match_pg_transaction_rollback_await_ts(op, location);
@@ -2339,7 +2338,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         Op::Dm,
         Op::Dlo,
     ] {
-        let op_handle_sc_ts = op.self_handle_sc_ts();
+        let op_h_sc_ts = op.self_h_sc_ts();
         let op_sc_ts = op.self_sc_ts();
         let gen_for_el_in_upd_for_query_vec_ts = |ts: &dyn ToTokens| {
             quote! {
@@ -2386,7 +2385,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 Op::Um |
                 Op::Uo => quote!{patch},
                 Op::Dm |
-                Op::Dlo => quote!{del},
+                Op::Dlo => quote!{delete},
             };
             let op_payload_example_sc =
                 op.op_payload_example_sc();
@@ -2408,7 +2407,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     async move |
                         app_state_99328dfe: axum::extract::State<std::sync::Arc<dyn #import_ts CombinationOfAppStateLogicTraits>>,
                         req: axum::extract::Request
-                    | Self::#op_handle_sc_ts(app_state_99328dfe, req, &table_owned).await
+                    | Self::#op_h_sc_ts(app_state_99328dfe, req, &table_owned).await
                 }))
                 .route(#slash_op_payload_example_dq_ts, axum::routing::get(async move||Self::#op_payload_example_sc()))
             }
@@ -2424,7 +2423,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Op::Cm | Op::Um => &vec_ident_read_ids_ts,
                 };
                 let try_op_sc_ts = op.try_self_sc_ts();
-                let try_op_handle_sc_ts = op.try_self_handle_sc_ts();
+                let try_op_h_sc_ts = op.try_self_h_sc_ts();
                 let ident_try_op_er_ucc = gen_ident_try_op_er_ucc(op);
                 let ident_op_params_ucc = gen_ident_op_params_ucc(op);
                 let payload_ts = {
@@ -2558,7 +2557,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 quote! {
                     #[allow(clippy::single_call_fn)]
-                    async fn #try_op_handle_sc_ts(
+                    async fn #try_op_h_sc_ts(
                         #EndpointLocationSc: #RefStr,
                         #ParamsSc: #ident_op_params_ucc,
                         #TableSc: &str,
@@ -2578,7 +2577,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #EndpointLocationSc: #RefStr,
                         #ParamsSc: #ident_op_params_ucc
                     ) -> Result<#result_ok_type_ts, #ident_try_op_er_ucc> {
-                        Self::#try_op_handle_sc_ts(
+                        Self::#try_op_h_sc_ts(
                             #EndpointLocationSc,
                             #ParamsSc,
                             #self_table_name_call_ts
@@ -2586,7 +2585,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 }
             };
-            let op_handle_ts = {
+            let op_h_ts = {
                 let req_parts_preparation_ts = {
                     let ts0 = &gen_op_er_init_eprintln_res_ts(
                         op,
@@ -2683,12 +2682,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         Op::Um => quote! {
                             #params_logic_ts0
                             let #UpdForQueryVecSc = #ParamsSc.#PayloadSc.0.into_iter()
-                            .map(#ident_upd_for_query_ucc::#FromHandleSc)
+                            .map(#ident_upd_for_query_ucc::#FromHSc)
                             .collect::<Vec<#ident_upd_for_query_ucc>>();
                         },
                         Op::Uo => quote! {
                             #params_logic_ts0
-                            let #UpdForQuerySc = #ident_upd_for_query_ucc::#FromHandleSc(#ParamsSc.#PayloadSc);
+                            let #UpdForQuerySc = #ident_upd_for_query_ucc::#FromHSc(#ParamsSc.#PayloadSc);
                         },
                     }
                 };
@@ -2793,7 +2792,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let extra_params_init_ts = gen_read_or_dm_extra_params_init_ts(
                                 &RmOrDm::Rm,
                             );
-                            let extra_params_order_by_handle_ts =
+                            let extra_params_order_by_h_ts =
                                 dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
                             let order_by_column_match_ts =
                                 gen_fields_named_with_comma_ts(&|el: &SynField| {
@@ -2813,7 +2812,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 (
                                     gen_if_write_is_err_curly_braces_ts_f9cf9cf2(&quote! {
                                         #ExtraParamsSc,
-                                        #extra_params_order_by_handle_ts,
+                                        #extra_params_order_by_h_ts,
                                         #PrefixSc,
                                         &match &#ParamsSc.#PayloadSc.#OrderBySc.#ColumnSc {
                                             #order_by_column_match_ts
@@ -3257,7 +3256,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     | CreateOrUpdOrDm::Upd => {
                                         let ts = gen_match_ident_read_ids_as_from_row_from_row_ts(&{
                                             let ts =
-                                                gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                                gen_drop_rows_match_pg_transaction_rollback_await_h_ts(
                                                     &op_d1960edc,
                                                     Location::caller(),
                                                 );
@@ -3268,13 +3267,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     CreateOrUpdOrDm::Del => gen_sqlx_row_try_get_pk_ts(
                                         &pk_ft_as_pg_type_read_ucc,
                                         &quote! {Some(v_69ecb6a9)},
-                                        &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                        &gen_drop_rows_match_pg_transaction_rollback_await_h_ts(
                                             &op_d1960edc,
                                             Location::caller(),
                                         ),
                                     ),
                                 },
-                                &gen_drop_rows_match_pg_transaction_rollback_await_handle_ts(
+                                &gen_drop_rows_match_pg_transaction_rollback_await_h_ts(
                                     &op_d1960edc,
                                     Location::caller(),
                                 ),
@@ -3370,7 +3369,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 quote! {
                     #[allow(clippy::single_call_fn)]
-                    async fn #op_handle_sc_ts(
+                    async fn #op_h_sc_ts(
                         #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
                         #ReqSc: axum::extract::Request,
                         #TableSc: &str,
@@ -3400,7 +3399,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #AppStateSc: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_ts>,
                         #ReqSc: axum::extract::Request,
                     ) -> axum::response::Response {
-                        Self::#op_handle_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
+                        Self::#op_h_sc_ts(#AppStateSc, #ReqSc, #self_table_name_call_ts).await
                     }
                 }
             };
@@ -3422,7 +3421,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             };
             quote! {
-                #op_handle_ts
+                #op_h_ts
                 #op_ts
                 #try_op_ts
                 #op_payload_example_ts
@@ -3493,12 +3492,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ),
                     Op::Ro => gen_params_payload_and_dflt_ts(
                         &{
-                            let pub_handle_pk_fi_pk_inner_type_handle_ts =
-                                gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
+                            let pub_h_pk_fi_pk_inner_type_h_ts =
+                                gen_pub_h_pk_fi_pk_inner_type_h_ts(
                                     &SelfReadUcc::from_type_last_segment(pk_ft),
                                 );
                             quote! {{
-                                #pub_handle_pk_fi_pk_inner_type_handle_ts,
+                                #pub_h_pk_fi_pk_inner_type_h_ts,
                                 #pub_select_pg_crud_not_empty_unique_vec_ident_select_ts,
                             }}
                         },
@@ -3663,7 +3662,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ),
                     Op::Dlo => gen_params_payload_and_dflt_ts(
                         &{
-                            let ts = gen_pub_handle_pk_fi_pk_inner_type_handle_ts(
+                            let ts = gen_pub_h_pk_fi_pk_inner_type_h_ts(
                                 &SelfReadUcc::from_type_last_segment(pk_ft),
                             );
                             quote! {{#ts}}
@@ -3728,7 +3727,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 let ident_op_er_ucc = gen_ident_op_er_ucc(op);
                 let impl_ident_op_res_vrts_ts = {
-                    let from_handle_ts = gen_from_handle_ts(&ident_op_er_ucc, &{
+                    let from_h_ts = gen_from_h_ts(&ident_op_er_ucc, &{
                         let vrts_ts = type_vrts_from_req_res_syn_vrts.iter().map(|el| {
                             let vrt_ident = &el.ident;
                             let Fields::Named(fields_named) = &el.fields else {
@@ -3756,7 +3755,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     });
                     quote! {
                         impl #ident_op_res_vrts_ucc {
-                            #from_handle_ts
+                            #from_h_ts
                         }
                     }
                 };
@@ -3842,7 +3841,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     }
     impl_ident_vec_ts.push(quote!{
         pub fn #RoutesSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts) -> axum::Router {
-            Self::#RoutesHandleSc(#AppStateSc, #self_table_name_call_ts)
+            Self::#RoutesHSc(#AppStateSc, #self_table_name_call_ts)
         }
     });
     let (oprtr_or_ts, oprtr_and_ts) = {
@@ -4038,7 +4037,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 },
                 &quote! {
-                    gen_ident_try_ro_handle_pk(
+                    gen_ident_try_ro_h_pk(
                         &#UrlSc,
                         #pk_read_clone_ts,
                         #SelectPkSc.clone(),
@@ -4051,7 +4050,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let assert_eq_ts_947d2096 = gen_assert_eq_ts(
                 &quote! {
-                    gen_try_dlo_handle(
+                    gen_try_dlo_h(
                         &url,
                         #pk_read_clone_ts,
                         &table_init,
@@ -4066,7 +4065,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let pk_read = #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts;
                     #assert_eq_ts_4f6bbe8a
                     #assert_eq_ts_947d2096
-                    gen_check_no_rows_from_ident_try_ro_handle_pk(
+                    gen_check_no_rows_from_ident_try_ro_h_pk(
                         &url,
                         #pk_read_ts,
                         #select_dflt_all_with_max_page_size_clone_ts,
@@ -4231,7 +4230,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         }),
                         |first, second| match (&first.#pk_fi, &second.#pk_fi) {
-                            (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
+                            (Some(first_h), Some(second_h)) => first_h.#VSc.cmp(&second_h.#VSc),
                             _ => panic!("0f1d45ed"),
                         }
                     ).collect::<Vec<#ident_read_ucc>>()
@@ -4255,7 +4254,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .expect("097d5e7d")
                         .into_iter(),
                         |first, second| match (&first.#pk_fi, &second.#pk_fi) {
-                            (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
+                            (Some(first_h), Some(second_h)) => first_h.#VSc.cmp(&second_h.#VSc),
                             _ => panic!("51e477ea"),
                         }
                     )
@@ -4276,7 +4275,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 read_ids_to_2_dims_vec_read_inner_acc
                                 .chunks(25)
                                 .map(Vec::from)
-                                .map(|el_8e425cb1| futures::FutureExt::boxed(async move { #ident::try_cm_handle(
+                                .map(|el_8e425cb1| futures::FutureExt::boxed(async move { #ident::try_cm_h(
                                     url,
                                     #ident_cm_params_ucc {
                                         payload: #ident_cm_payload_ucc(el_8e425cb1)
@@ -4323,9 +4322,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #pk_ft_read_ids_into_read_el_43ab7fb5_pk_fi_ts
             })
         });
-        let gen_try_dm_handle_ts = |ts: &dyn ToTokens, table_ts: &dyn ToTokens| {
+        let gen_try_dm_h_ts = |ts: &dyn ToTokens, table_ts: &dyn ToTokens| {
             quote! {
-                #ident::try_dm_handle(
+                #ident::try_dm_h(
                     &url_cloned,
                     #ident_dm_params_ucc {
                         //todo rewrite it using new\try_new?
@@ -4351,7 +4350,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let gen_read_ids_from_try_dm_sorted_pk_ts =
             |table_ts: &dyn ToTokens, some_ts: &dyn ToTokens| {
                 gen_read_ids_from_try_dm_ts(&gen_vec_pk_sorted_read_ts(&{
-                    let ts = gen_try_dm_handle_ts(
+                    let ts = gen_try_dm_h_ts(
                         &quote! {
                             #pk_fi: Some(#some_ts),
                             #opt_ident_where_ts_dc1232c7
@@ -4458,7 +4457,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                             acc_92d248f7
                         };
-                        let read_ids_from_try_cm = #ident::try_cm_handle(
+                        let read_ids_from_try_cm = #ident::try_cm_h(
                             &url_cloned,
                             #ident_cm_params_ucc {
                                 #PayloadSc: #ident_cm_payload_ucc(ident_vec_create.clone())
@@ -4498,7 +4497,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         }
                     },
                     &quote! {
-                        gen_ident_try_ro_handle_pk(
+                        gen_ident_try_ro_h_pk(
                             &url_cloned,
                             #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                             #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -4511,7 +4510,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 let assert_eq_ts_f5d5140f = gen_assert_eq_ts(
                     &quote! {
-                        gen_try_dlo_handle(
+                        gen_try_dlo_h(
                             &url_cloned,
                             #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                             &table_co_cloned
@@ -4534,7 +4533,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         ).await;
                         #assert_eq_ts_e2916686
                         #assert_eq_ts_f5d5140f
-                        gen_check_no_rows_from_ident_try_ro_handle_pk(
+                        gen_check_no_rows_from_ident_try_ro_h_pk(
                             &url_cloned,
                             #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                             select_dflt_all_with_max_page_size_cloned,
@@ -4558,12 +4557,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &table_7e35b1ce
                     ).await;
                     #ts
-                    let _: #pk_ft_as_pg_type_read_ts = gen_try_dlo_handle(
+                    let _: #pk_ft_as_pg_type_read_ts = gen_try_dlo_h(
                         &url_cloned,
                         #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                         &table_7e35b1ce
                     ).await.expect("93b4bf61");
-                    gen_check_no_rows_from_ident_try_ro_handle_pk(
+                    gen_check_no_rows_from_ident_try_ro_h_pk(
                         &url_cloned,
                         #pk_ft_read_ids_into_read_read_ids_from_try_co_pk_fi_ts,
                         select_dflt_all_with_max_page_size_cloned,
@@ -4668,7 +4667,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     ident_create_dflt_cloned.clone(),//todo mb remove
                                     el_a636d084
                                 ).collect::<Vec<#ident_create_ucc>>();
-                                let read_ids_from_try_cm = #ident::try_cm_handle(
+                                let read_ids_from_try_cm = #ident::try_cm_h(
                                     &url_cloned,
                                     #ident_cm_params_ucc {
                                         payload: #ident_cm_payload_ucc(ident_vec_create.clone())
@@ -5167,7 +5166,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 let url_cloned = url.clone();
                 let select_dflt_all_with_max_page_size_cloned = #select_dflt_all_with_max_page_size_clone_ts;
                 futures::FutureExt::boxed(async move {
-                    gen_check_no_rows_from_ident_try_ro_handle_pk(
+                    gen_check_no_rows_from_ident_try_ro_h_pk(
                         &url_cloned,
                         #pk_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
                         #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -5242,7 +5241,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .into_iter(),
                                 |first, second| {
                                     match (&first.#pk_fi, &second.#pk_fi) {
-                                        (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
+                                        (Some(first_h), Some(second_h)) => first_h.#VSc.cmp(&second_h.#VSc),
                                         _ => panic!("99ba9dc3"),
                                     }
                                 }
@@ -5315,7 +5314,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             }
                         ]},
                         &quote! {
-                            #ident::try_um_handle(
+                            #ident::try_um_h(
                                 &url_cloned,
                                 #ident_um_params_ucc {
                                     payload: #ident_um_payload_ucc::try_new(vec![
@@ -5355,7 +5354,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .expect("25c561e2")
                                     .into_iter(),
                                     |first, second| match (&first.#pk_fi, &second.#pk_fi) {
-                                        (Some(first_handle), Some(second_handle)) => first_handle.#VSc.cmp(&second_handle.#VSc),
+                                        (Some(first_h), Some(second_h)) => first_h.#VSc.cmp(&second_h.#VSc),
                                         _ => panic!("3c827ad6"),
                                     }
                                 ).collect::<Vec<#ident_read_ucc>>()
@@ -5395,7 +5394,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft_ts = gen_as_pg_type_test_cases_path_ts(ft);
                     let mb_previous_read_ts = if fields_without_pk.len() > 1 {
                         quote! {
-                            let previous_read = gen_ident_try_ro_handle_pk(
+                            let previous_read = gen_ident_try_ro_h_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
                                 #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -5458,7 +5457,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             #ident_read_ids_upper_fields_init_without_pk_ts
                         }},
                         &quote! {
-                            #ident::try_uo_handle(
+                            #ident::try_uo_h(
                                 &url_cloned,
                                 #ident_uo_params_ucc {
                                     payload: #ident_upd_ucc::try_new(
@@ -5474,7 +5473,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let assert_eq_ts_35a86616 = gen_assert_eq_ts(
                         &gen_ident_read_init_ts(&ident_read_fields_init_without_pk_after_uo_ts),
                         &quote! {
-                            gen_ident_try_ro_handle_pk(
+                            gen_ident_try_ro_h_pk(
                                 &url_cloned,
                                 #pk_ft_read_only_is_into_read_read_ids_el_pk_fi_ts_937c5af3,
                                 select_dflt_all_with_max_page_size_cloned,
@@ -5516,7 +5515,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     &quote!{table_test_rm_by_equal_to_created_pks},
                     &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &{
-                            let ts = gen_try_dm_handle_ts(
+                            let ts = gen_try_dm_h_ts(
                                 &quote!{
                                     #pk_fi: Some(
                                         gen_pg_type_where_try_new_pk(
@@ -5581,7 +5580,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{"77f038b0"}
                         );
                         let ts_212f8aca = gen_pk_where_equal_ts(&pk_ft_read_ids_into_table_type_el_pk_fi_clone_ts);
-                        let ts_6f76ccd4 = gen_read_ids_from_try_dm_ts(&gen_try_dm_handle_ts(
+                        let ts_6f76ccd4 = gen_read_ids_from_try_dm_ts(&gen_try_dm_h_ts(
                             &quote!{
                                 #pk_fi: Some(
                                     gen_pg_type_where_try_new_pk(
@@ -5594,7 +5593,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &quote!{table_7e35b1ce}
                         ));
                         quote! {
-                            let read_ids_from_try_cm = #ident::try_cm_handle(
+                            let read_ids_from_try_cm = #ident::try_cm_h(
                                 &url_cloned,
                                 #ident_cm_params_ucc {
                                     payload: #ident_cm_payload_ucc(
@@ -5627,7 +5626,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #fi_read_ids_and_create_into_opt_v_read_read_ids_from_co_create_ts
                 }},
                 &quote! {
-                    gen_ident_try_ro_handle_pk(
+                    gen_ident_try_ro_h_pk(
                         &url,
                         #pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                         #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -5639,7 +5638,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             );
             let assert_eq_ts_8812d778 = gen_assert_eq_ts(
                 &quote! {
-                    gen_try_dlo_handle(
+                    gen_try_dlo_h(
                         &url,
                         #pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                         &table_dlo_cloned
@@ -5657,7 +5656,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let table_dlo_cloned = table_dlo.clone();
                     let select_dflt_all_with_max_page_size_cloned = #select_dflt_all_with_max_page_size_clone_ts;
                     futures::FutureExt::boxed(async move {
-                        if let Err(#ErSc) = gen_try_dlo_handle(
+                        if let Err(#ErSc) = gen_try_dlo_h(
                             &url,
                             #pk_ft_as_pg_type_read_ts::new(uuid::Uuid::new_v4()),
                             &table_dlo_cloned
@@ -5683,7 +5682,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let read_ids_from_co = gen_read_ids_from_try_co_dflt(&url, &table_dlo_cloned).await;
                         #assert_eq_ts_6322435c
                         #assert_eq_ts_8812d778
-                        gen_check_no_rows_from_ident_try_ro_handle_pk(
+                        gen_check_no_rows_from_ident_try_ro_h_pk(
                             &url,
                             #pk_ft_read_ids_into_read_read_ids_from_co_pk_fi_ts,
                             #select_dflt_all_with_max_page_size_cloned_clone_ts,
@@ -5746,7 +5745,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
                 table: &str
             ) -> Result<Vec<#ident_read_ucc>, #ident_try_rm_er_ucc> {
-                #ident::try_rm_handle(
+                #ident::try_rm_h(
                     endpoint_location,
                     #ident_rm_params_ucc {
                         payload: #ident_rm_payload_ucc {
@@ -5768,14 +5767,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .await
             }
         };
-        let gen_ident_try_ro_handle_pk_fn_ts = quote! {
-            async fn gen_ident_try_ro_handle_pk(
+        let gen_ident_try_ro_h_pk_fn_ts = quote! {
+            async fn gen_ident_try_ro_h_pk(
                 url: &str,
                 pk_column: #pk_ft_as_pg_type_read_ts,
                 select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
                 table: &str,
             ) -> Result<#ident_read_ucc, #ident_try_ro_er_ucc> {
-                #ident::try_ro_handle(
+                #ident::try_ro_h(
                     url,
                     #ident_ro_params_ucc {
                         payload: #ident_ro_payload_ucc {
@@ -5788,19 +5787,19 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .await
             }
         };
-        let gen_check_no_rows_from_ident_try_ro_handle_pk_fn_ts = {
+        let gen_check_no_rows_from_ident_try_ro_h_pk_fn_ts = {
             let ts = gen_assert_ts(
                 &quote! {pg == no_rows_by_a_query_that_expected_to_return_at_least_one_row()},
                 &quote! {"58b9a6a4"},
             );
             quote! {
-                async fn gen_check_no_rows_from_ident_try_ro_handle_pk(
+                async fn gen_check_no_rows_from_ident_try_ro_h_pk(
                     url: &str,
                     pk_column: #pk_ft_as_pg_type_read_ts,
                     select: #import_ts NotEmptyUniqueVec<#ident_select_ucc>,
                     table: &str,
                 ) {
-                    if let Err(#ErSc) = gen_ident_try_ro_handle_pk(
+                    if let Err(#ErSc) = gen_ident_try_ro_h_pk(
                         url,
                         pk_column,
                         select,
@@ -5837,7 +5836,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #PayloadSc: #ident_create_ucc,
                 table: &str,
             ) -> #ident_read_ids_ucc {
-                #ident::try_co_handle(
+                #ident::try_co_h(
                     #UrlSc,
                     #ident_co_params_ucc {
                         #PayloadSc
@@ -5858,13 +5857,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ).await
             }
         };
-        let gen_try_dlo_handle_fn_ts = quote! {
-            async fn gen_try_dlo_handle(
+        let gen_try_dlo_h_fn_ts = quote! {
+            async fn gen_try_dlo_h(
                 #UrlSc: &str,
                 #pk_fi: #pk_ft_as_pg_type_read_ts,
                 table: &str,
             ) -> Result<#pk_ft_as_pg_type_read_ts, #ident_try_dlo_er_ucc> {
-                #ident::try_dlo_handle(
+                #ident::try_dlo_h(
                     #UrlSc,
                     #ident_dlo_params_ucc {
                         payload: #ident_dlo_payload_ucc {
@@ -5902,8 +5901,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         });
                     }
                     acc_1debe8fb.sort_by(|first, second| {
-                        if let (Some(first_handle), Some(second_handle)) = (&first.#pk_fi, &second.#pk_fi) {
-                            first_handle.#VSc.cmp(&second_handle.#VSc)
+                        if let (Some(first_h), Some(second_h)) = (&first.#pk_fi, &second.#pk_fi) {
+                            first_h.#VSc.cmp(&second_h.#VSc)
                         } else {
                             panic!("d760ffa3");
                         }
@@ -5923,12 +5922,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     #gen_pg_type_where_try_new_pk_fn_ts
                     #gen_pg_type_where_try_new_or_pks_fn_ts
                     #gen_try_rm_order_by_pk_with_big_pgn_fn_ts
-                    #gen_ident_try_ro_handle_pk_fn_ts
-                    #gen_check_no_rows_from_ident_try_ro_handle_pk_fn_ts
+                    #gen_ident_try_ro_h_pk_fn_ts
+                    #gen_check_no_rows_from_ident_try_ro_h_pk_fn_ts
                     #ident_create_dflt_fn_ts
                     #gen_read_ids_from_try_co_fn_ts
                     #gen_read_ids_from_try_co_dflt_fn_ts
-                    #gen_try_dlo_handle_fn_ts
+                    #gen_try_dlo_h_fn_ts
                     #no_rows_by_a_query_that_expected_to_return_at_least_one_row_fn_ts
                     #gen_vec_ident_read_from_vec_ident_read_ids_with_vec_ident_create_fn_ts
                     #gen_read_ids_els_ts_fe29ff70
@@ -6033,7 +6032,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     let mut router = axum::Router::new()
                                         .merge(#ident::routes(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state)));
                                     for el_ef09f2b0 in table_names_cloned {
-                                        router = router.merge(#ident::routes_handle(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state), &el_ef09f2b0));
+                                        router = router.merge(#ident::routes_h(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state), &el_ef09f2b0));
                                     }
                                     router.into_make_service()
                                 },
@@ -6106,7 +6105,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             impl #ident {
                 #(#impl_ident_vec_ts)*
                 #[allow(clippy::single_call_fn)]
-                fn #RoutesHandleSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts, #TableSc: &str) -> axum::Router {
+                fn #RoutesHSc(#AppStateSc: #std_sync_arc_combination_of_app_state_logic_traits_ts, #TableSc: &str) -> axum::Router {
                     axum::Router::new().nest(
                         &format!("/{table}"),
                         axum::Router::new()

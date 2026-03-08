@@ -421,11 +421,11 @@ pub enum EqualOrEqualUsingFields {
     EqualUsingFields,
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum EqualOprtrHandle {
+pub enum EqualOprtrH {
     Equal,
     IsNull,
 }
-impl EqualOprtrHandle {
+impl EqualOprtrH {
     #[must_use]
     pub fn to_tokens_path(&self, import: &Import) -> Ts2 {
         let ts = match &self {
@@ -1312,10 +1312,10 @@ fn gen_read_ids_and_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type
     pg_type_or_pg_json_type: PgTypeOrPgJsonType,
 ) -> Ts2 {
     let return_type_ts = {
-        let return_type_handle_ts = quote! {#import::NotEmptyUniqueVec<#where_ts>};
+        let return_type_h_ts = quote! {#import::NotEmptyUniqueVec<#where_ts>};
         match &pg_type_or_pg_json_type {
-            PgTypeOrPgJsonType::PgType => gen_opt_type_decl_ts(&return_type_handle_ts),
-            PgTypeOrPgJsonType::PgJsonType => return_type_handle_ts,
+            PgTypeOrPgJsonType::PgType => gen_opt_type_decl_ts(&return_type_h_ts),
+            PgTypeOrPgJsonType::PgJsonType => return_type_h_ts,
         }
     };
     let name_ts: &dyn ToTokens = match &pg_type_or_pg_json_type {
@@ -2024,8 +2024,8 @@ pub fn gen_impl_de_for_struct_ts(
             .parse::<Ts2>()
             .expect("ff7433a3")
     }
-    fn gen_undrscr_undrscr_field_i_handle_ts(i: usize) -> Ts2 {
-        format!("{}_handle", gen_undrscr_undrscr_field_i_str(i))
+    fn gen_undrscr_undrscr_field_i_h_ts(i: usize) -> Ts2 {
+        format!("{}_h", gen_undrscr_undrscr_field_i_str(i))
             .parse::<Ts2>()
             .expect("09a0c518")
     }
@@ -2070,11 +2070,11 @@ pub fn gen_impl_de_for_struct_ts(
     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
     let visit_seq_fields_init_ts = {
         let ts = vec_ident_type.iter().enumerate().map(|(i, (el_ident, el_type))| {
-            let field_i_handle_ts = gen_undrscr_undrscr_field_i_handle_ts(i);
+            let field_i_h_ts = gen_undrscr_undrscr_field_i_h_ts(i);
             let type_ts = gen_type_ts(el_ident, el_type);
             let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} els"));
             quote! {
-                let Some(#field_i_handle_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
+                let Some(#field_i_h_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_opts_with_dq_ts));
                 };
             }
@@ -2082,7 +2082,7 @@ pub fn gen_impl_de_for_struct_ts(
         quote! {#(#ts)*}
     };
     let match_try_new_in_de_ts = gen_match_try_new_in_de_ts(&ident, &{
-        let fields_ts = (0..len).map(gen_undrscr_undrscr_field_i_handle_ts);
+        let fields_ts = (0..len).map(gen_undrscr_undrscr_field_i_h_ts);
         quote! {#(#fields_ts),*}
     });
     let visit_map_fields_init_ts = {
@@ -2124,10 +2124,10 @@ pub fn gen_impl_de_for_struct_ts(
     let visit_map_missing_fields_check_ts = {
         let ts = vec_ident.iter().enumerate().map(|(i, el)| {
             let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
-            let field_i_handle_ts = gen_undrscr_undrscr_field_i_handle_ts(i);
+            let field_i_h_ts = gen_undrscr_undrscr_field_i_h_ts(i);
             let fi_dq_ts = dq_ts(&el);
             quote! {
-                let #field_i_handle_ts = match #field_i_ts {
+                let #field_i_h_ts = match #field_i_ts {
                     Some(v) => v,
                     None => {
                         serde::__private228::de::missing_field(#fi_dq_ts)?

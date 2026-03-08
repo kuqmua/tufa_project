@@ -109,7 +109,7 @@ pub fn location(input: Ts) -> Ts {
         SuportedEnumVrt::Named => {
             let loc_sc_str = LocSc.to_string();
             //todo mb impl display was a bad idea. .to_string() casts is dangerous
-            let impl_display_handle_ts = {
+            let impl_display_h_ts = {
                 let vrts_ts = data_enum.variants.iter().map(|el| {
                     let el_ident = &el.ident;
                     let fields = if let Fields::Named(fields) = &el.fields {
@@ -300,7 +300,7 @@ pub fn location(input: Ts) -> Ts {
                 &mb_generic_params_location_lib_to_err_string_anns_ts,
                 &ident,
                 &mb_generic_params_ts,
-                &impl_display_handle_ts,
+                &impl_display_h_ts,
             );
             let impl_ident_into_serde_version_ts = {
                 let vrts_ts = data_enum.variants.iter().map(|el| {
@@ -369,7 +369,7 @@ pub fn location(input: Ts) -> Ts {
                 &mb_generic_params_location_lib_to_err_string_anns_ts,
                 &ident_with_serde_ucc,
                 &mb_generic_params_ts,
-                &impl_display_handle_ts,
+                &impl_display_h_ts,
             );
             let impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(

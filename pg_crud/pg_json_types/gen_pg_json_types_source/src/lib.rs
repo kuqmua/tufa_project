@@ -480,27 +480,27 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
     }.into_iter().fold(Vec::new(), |mut acc, el| {
         for el0 in {
             #[derive(Clone, Optml)]
-            struct RecordHandle {
+            struct RecordH {
                 is_nullable: IsNullable,
                 pattern: Pattern,
             }
-            fn gen_record_handle_vec(record_handle: RecordHandle) -> Vec<RecordHandle> {
-                let gen_vec = |record_handle_1e4b61e4: RecordHandle| gen_record_handle_vec(
-                    record_handle_1e4b61e4
-                ).into_iter().chain(once(record_handle.clone())).collect();
-                match (&record_handle.is_nullable, &record_handle.pattern) {
-                    (IsNullable::False, Pattern::Stdrt) => vec![record_handle],
-                    (IsNullable::True, Pattern::Stdrt) => gen_vec(RecordHandle {
+            fn gen_record_h_vec(record_h: RecordH) -> Vec<RecordH> {
+                let gen_vec = |record_h_1e4b61e4: RecordH| gen_record_h_vec(
+                    record_h_1e4b61e4
+                ).into_iter().chain(once(record_h.clone())).collect();
+                match (&record_h.is_nullable, &record_h.pattern) {
+                    (IsNullable::False, Pattern::Stdrt) => vec![record_h],
+                    (IsNullable::True, Pattern::Stdrt) => gen_vec(RecordH {
                         is_nullable: IsNullable::False,
                         pattern: Pattern::Stdrt,
                     }),
-                    (IsNullable::False, Pattern::ArrDim1 { dim1_is_nullable }) => gen_vec(RecordHandle {
+                    (IsNullable::False, Pattern::ArrDim1 { dim1_is_nullable }) => gen_vec(RecordH {
                         is_nullable: *dim1_is_nullable,
-                        pattern: record_handle.pattern.down_by_1().expect("0e970a4f"),
+                        pattern: record_h.pattern.down_by_1().expect("0e970a4f"),
                     }),
-                    (IsNullable::False, Pattern::ArrDim2 { dim1_is_nullable, .. }) => gen_vec(RecordHandle {
+                    (IsNullable::False, Pattern::ArrDim2 { dim1_is_nullable, .. }) => gen_vec(RecordH {
                         is_nullable: *dim1_is_nullable,
-                        pattern: record_handle.pattern.down_by_1().expect("85f8ed83"),
+                        pattern: record_h.pattern.down_by_1().expect("85f8ed83"),
                     }),
                     (
                         IsNullable::False,
@@ -509,7 +509,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim2_is_nullable,
                             dim3_is_nullable,
                         },
-                    ) => gen_vec(RecordHandle {
+                    ) => gen_vec(RecordH {
                         is_nullable: *dim1_is_nullable,
                         pattern: Pattern::ArrDim2 {
                             dim1_is_nullable: *dim2_is_nullable,
@@ -524,7 +524,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim3_is_nullable,
                             dim4_is_nullable,
                         },
-                    ) => gen_vec(RecordHandle {
+                    ) => gen_vec(RecordH {
                         is_nullable: *dim1_is_nullable,
                         pattern: Pattern::ArrDim3 {
                             dim1_is_nullable: *dim2_is_nullable,
@@ -532,13 +532,13 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             dim3_is_nullable: *dim4_is_nullable,
                         },
                     }),
-                    (IsNullable::True, Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. }) => gen_vec(RecordHandle {
+                    (IsNullable::True, Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. }) => gen_vec(RecordH {
                         is_nullable: IsNullable::False,
-                        pattern: record_handle.pattern.clone(),
+                        pattern: record_h.pattern.clone(),
                     }),
                 }
             }
-            gen_record_handle_vec(RecordHandle {
+            gen_record_h_vec(RecordH {
                 is_nullable: el.is_nullable,
                 pattern: el.pattern,
             })
@@ -1886,10 +1886,10 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                 &IsSelectQpColumnFieldForErMessageUsed::False,
                 &IsSelectQpIsPgTypeUsed::False,
                 &{
-                    let format_handle = {
+                    let format_h = {
                         //last child dim v does not matter - null or type - works both good
                         let column_field_fi = format!("{{{ColumnFieldSc}}}->'{{fi}}'");
-                        let format_handle = ArrDim::try_from(pattern).map_or_else(
+                        let format_h = ArrDim::try_from(pattern).map_or_else(
                             |()| column_field_fi.clone(),
                             |arr_dim| {
                                 enum ArrDimSelectPattern {
@@ -2016,8 +2016,8 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             },
                         );
                         match &is_nullable {
-                            IsNullable::False => format_handle,
-                            IsNullable::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_handle}) end"),
+                            IsNullable::False => format_h,
+                            IsNullable::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_h}) end"),
                         }
                     };
                     let mb_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
@@ -2044,7 +2044,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         })
                     });
                     let dq_ts0 = dq_ts(
-                        &gen_jsonb_build_object(&format!("'{{fi}}',{}", gen_jsonb_build_object_v(&format!("({format_handle})"))))
+                        &gen_jsonb_build_object(&format!("'{{fi}}',{}", gen_jsonb_build_object_v(&format!("({format_h})"))))
                     );
                     quote! {
                         #(#mb_dims_start_end_init)*
@@ -2424,7 +2424,7 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                         }}),
                     )
                 };
-                let gen_acc_content_handle_ts = |ident_ts_416231d8: &dyn ToTokens, has_len_greater_than_one_content_ts: &dyn ToTokens| {
+                let gen_acc_content_h_ts = |ident_ts_416231d8: &dyn ToTokens, has_len_greater_than_one_content_ts: &dyn ToTokens| {
                     let ident_read_ids_ucc_1d31038d = SelfReadIdsUcc::from_tokens(&ident_ts_416231d8);
                     let opt_extra_content_ts = {
                         let el_82c7dc0a_clone_ts = quote! {el_82c7dc0a.clone()};
@@ -2517,16 +2517,16 @@ pub fn gen_pg_json_types(input_ts: &Ts2) -> Ts2 {
                             acc_97242d4d
                         },
                     },
-                    Pattern::ArrDim1 { dim1_is_nullable } => gen_acc_content_handle_ts(
+                    Pattern::ArrDim1 { dim1_is_nullable } => gen_acc_content_h_ts(
                         &gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("d6f89137")),
                         &match &dim1_is_nullable {
                             IsNullable::False => &has_len_greater_than_one_for_for_ts,
                             IsNullable::True => &has_len_greater_than_one_ts,
                         },
                     ),
-                    Pattern::ArrDim2 { dim1_is_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
-                    Pattern::ArrDim3 { dim1_is_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
-                    Pattern::ArrDim4 { dim1_is_nullable, .. } => gen_acc_content_handle_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim2 { dim1_is_nullable, .. } => gen_acc_content_h_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim3 { dim1_is_nullable, .. } => gen_acc_content_h_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("053f4bab")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim4 { dim1_is_nullable, .. } => gen_acc_content_h_ts(&gen_ident_ts(dim1_is_nullable, &pattern.down_by_1().expect("860f8f15")), &has_len_greater_than_one_ts),
                 };
                 match &pg_json_type {
                     PgJsonType::I8AsJsonbNbr

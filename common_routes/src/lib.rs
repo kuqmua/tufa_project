@@ -36,14 +36,14 @@ pub fn common_routes(app_state_b9fc2d94: DynArcCommonRoutesParamsSendSync) -> Ro
         .fallback(
             async |uri: Uri, State(app_state_19103bd5): State<DynArcCommonRoutesParamsSendSync>| {
                 #[derive(Debug, Serialize, Optml)]
-                struct NotFoundHandle {
+                struct NotFoundH {
                     commit: String,
                     message: String,
                     open_api_specification: &'static str,
                 }
                 (
                     StatusCode::NOT_FOUND,
-                    Json(NotFoundHandle {
+                    Json(NotFoundH {
                         message: format!("No route for {uri}"),
                         commit: app_state_19103bd5.get_git_commit_link(),
                         open_api_specification: SLASH_SWAGGER_UI,

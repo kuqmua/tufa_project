@@ -35,7 +35,7 @@ use naming::{
     WithIdUcc,
     param::{
         ElSelfUcc, SelfCreateForQueryUcc, SelfCreateUcc, SelfCurrentSc,
-        SelfGenPgJsonObjectTypeModSc, SelfLastSc, SelfReadIdsHandleUcc, SelfReadIdsUcc,
+        SelfGenPgJsonObjectTypeModSc, SelfLastSc, SelfReadIdsHUcc, SelfReadIdsUcc,
         SelfReadInnerUcc, SelfReadTryFromErUcc, SelfReadUcc, SelfSelectElUcc, SelfSelectSc,
         SelfSelectUcc, SelfTableTypeUcc, SelfUpdElUcc, SelfUpdForQueryElUcc, SelfUpdForQueryUcc,
         SelfUpdTryNewErUcc, SelfUpdUcc, SelfWhereUcc,
@@ -2051,17 +2051,17 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         };
                         let check_if_all_fields_are_none_ts = {
                             let vec_syn_field_19e98ce1_len = vec_syn_field_19e98ce1.len();
-                            let mb_wrap_into_braces_handle_ts = |ts: &dyn ToTokens| mb_wrap_into_braces_ts(
+                            let mb_wrap_into_braces_h_ts = |ts: &dyn ToTokens| mb_wrap_into_braces_ts(
                                 ts,
                                 vec_syn_field_19e98ce1_len > 1
                             );
-                            let left_ts = mb_wrap_into_braces_handle_ts(&fields_reference_ts);
-                            let right_ts = mb_wrap_into_braces_handle_ts(&{
+                            let left_ts = mb_wrap_into_braces_h_ts(&fields_reference_ts);
+                            let right_ts = mb_wrap_into_braces_h_ts(&{
                                 let nones_ts = repeat_with(||quote!{None}).take(vec_syn_field_19e98ce1_len);
                                 quote! {#(#nones_ts),*}
                             });
                             let ts = if vec_syn_field_19e98ce1_len == 1 {
-                                let ts = mb_wrap_into_braces_handle_ts(&fields_ts);
+                                let ts = mb_wrap_into_braces_h_ts(&fields_ts);
                                 quote! {#ts.is_none()}
                             }
                             else {
@@ -2230,10 +2230,10 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 #mb_ident_with_id_read_ts
             }
         };
-        let ident_with_id_stdrt_not_null_read_ids_handle_ucc = SelfReadIdsHandleUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
+        let ident_with_id_stdrt_not_null_read_ids_h_ucc = SelfReadIdsHUcc::from_tokens(&ident_with_id_stdrt_not_null_ucc);
         let ident_stdrt_not_null_read_ids_ucc = SelfReadIdsUcc::from_tokens(&ident_stdrt_not_null_ucc);
         let ident_read_ids_ucc = SelfReadIdsUcc::from_tokens(&ident);
-        let ident_read_ids_handle_ucc = SelfReadIdsHandleUcc::from_tokens(&ident);
+        let ident_read_ids_h_ucc = SelfReadIdsHUcc::from_tokens(&ident);
         let gen_ident_read_ids_or_ident_with_id_read_ids_ts = |is_stdrt_with_id: &IsStdrtWithId| {
             let ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                 let fi = &el0.ident;
@@ -2287,7 +2287,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             quote!{Some(#ts)}
         };
         let ident_read_ids_ts = {
-            let mb_ident_read_ids_handle_ts = if is_stdrt_not_null {
+            let mb_ident_read_ids_h_ts = if is_stdrt_not_null {
                 let ts_1e087f4d = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
@@ -2296,7 +2296,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
-                    &ident_read_ids_handle_ucc,
+                    &ident_read_ids_h_ucc,
                     &Ts2::new(),
                     &gen_ident_read_ids_or_ident_with_id_read_ids_ts(&IsStdrtWithId::False)
                 );
@@ -2321,7 +2321,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                     &{
                         let ts = gen_v_decl_ts0(&match &is_nullable {
                             IsNullable::False => match &pattern {
-                                Pattern::Stdrt => quote!{#ident_read_ids_handle_ucc},
+                                Pattern::Stdrt => quote!{#ident_read_ids_h_ucc},
                                 Pattern::Arr => gen_vec_tokens_decl_ts(
                                     &ident_with_id_stdrt_not_null_read_ids_ucc
                                 ),
@@ -2341,7 +2341,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
             let impl_sqlx_type_for_ident_read_ids_ts = gen_impl_sqlx_type_ts(&ident_read_ids_ucc);
             let mb_ident_with_id_stdrt_not_null_read_ids_ts = if is_stdrt_not_null {
                 let ident_with_id_stdrt_not_null_read_ids_ts = {
-                    let ident_with_id_stdrt_not_null_read_ids_handle_ts = {
+                    let ident_with_id_stdrt_not_null_read_ids_h_ts = {
                         let ts_fe644945 = DTsBuilder::new()
                         .make_pub()
                         .d_debug()
@@ -2350,7 +2350,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         .d_serde_serialize()
                         .d_serde_deserialize()
                         .build_struct(
-                            &ident_with_id_stdrt_not_null_read_ids_handle_ucc,
+                            &ident_with_id_stdrt_not_null_read_ids_h_ucc,
                             &Ts2::new(),
                             &gen_ident_read_ids_or_ident_with_id_read_ids_ts(&IsStdrtWithId::True)
                         );
@@ -2371,13 +2371,13 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                             &Ts2::new(),
                             &{
                                 let ts = gen_v_decl_ts0(
-                                    &ident_with_id_stdrt_not_null_read_ids_handle_ucc
+                                    &ident_with_id_stdrt_not_null_read_ids_h_ucc
                                 );
                                 quote!{(pub #ts);}
                             }
                         );
                     quote! {
-                        #ident_with_id_stdrt_not_null_read_ids_handle_ts
+                        #ident_with_id_stdrt_not_null_read_ids_h_ts
                         #ident_with_id_stdrt_not_null_read_ids_ts
                     }
                 };
@@ -2392,7 +2392,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                 Ts2::new()
             };
             quote! {
-                #mb_ident_read_ids_handle_ts
+                #mb_ident_read_ids_h_ts
                 #ident_read_ids_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_read_ids_ts
                 #impl_sqlx_type_for_ident_read_ids_ts
@@ -3582,7 +3582,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                         } else {
                             let mut acc_2e2ad041 = #StringTs::default();
                             for el in v_58d685d3.#UpdSc.to_vec() {
-                                let ident_with_id_handle = {
+                                let ident_with_id_h = {
                                     let id_incr = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_type_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                         Ok(v_15b44b54) => v_15b44b54,
                                         Err(#ErSc) => {
@@ -3600,7 +3600,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                         Err(#ErSc) => Err(#ErSc)
                                     }
                                 };
-                                match ident_with_id_handle {
+                                match ident_with_id_h {
                                     Ok(v_8333f8f4) => {
                                         #if_write_is_err_ts
                                     }
@@ -5253,7 +5253,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                 quote! {#fi: #fi.expect("106f16f2")}
                             });
                             let ts0 = gen_v_init_ts0(&quote!{
-                                #ident_read_ids_handle_ucc{
+                                #ident_read_ids_h_ucc{
                                     #(#struct_fields_ts),*
                                 }
                             });
@@ -5335,7 +5335,7 @@ pub fn gen_pg_json_object_type(input_ts: Ts2) -> Ts2 {
                                     }
                                 });
                                 quote!{
-                                    #ident_with_id_stdrt_not_null_read_ids_handle_ucc {
+                                    #ident_with_id_stdrt_not_null_read_ids_h_ucc {
                                         #IdSc: #uuid_as_pg_json_type_test_cases_ts::#UpdToReadIdsSc(&el_4634bb8a.#IdSc),
                                         #(#fields_ts),*
                                     }

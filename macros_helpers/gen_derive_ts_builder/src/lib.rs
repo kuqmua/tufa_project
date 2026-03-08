@@ -152,7 +152,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
             }
             #make_pub_derive_and_derive_if_ts
             #derive_and_derive_if_vec_ts
-            fn build_handle(
+            fn build_h(
                 self,
                 struct_or_enum: #struct_or_enum_ucc,
                 ident_d8cbb733: &dyn #quote_to_tokens_ts,
@@ -231,7 +231,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                 generics_c33a0ef2: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
-                self.build_handle(
+                self.build_h(
                     #struct_or_enum_ucc::Struct,
                     ident_d87c6809,
                     generics_c33a0ef2,
@@ -244,7 +244,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                 generics_84bc3f7f: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
-                self.build_handle(
+                self.build_h(
                     #struct_or_enum_ucc::Enum,
                     ident_273dd063,
                     generics_84bc3f7f,

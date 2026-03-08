@@ -679,15 +679,15 @@ impl<'query_lt, T: PgTypeWhereFilter<'query_lt>> PgTypeWhereFilter<'query_lt> fo
     }
     fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         let mut acc = String::default();
-        let mut add_oprtr_inner_handle = false;
+        let mut add_oprtr_inner_h = false;
         for el in &self.v.0 {
-            match PgTypeWhereFilter::qp(el, incr, column, add_oprtr_inner_handle) {
+            match PgTypeWhereFilter::qp(el, incr, column, add_oprtr_inner_h) {
                 Ok(v) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{v} ").is_err() {
                         return Err(QpEr::WriteIntoBuffer { loc: loc!() });
                     }
-                    add_oprtr_inner_handle = true;
+                    add_oprtr_inner_h = true;
                 }
                 Err(er) => {
                     return Err(er);

@@ -443,7 +443,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 };
                 let gen_32abfefc_ts =
                     |pg_type_ptrn: &PgTypePtrn,
-                     gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
+                     gen_format_h_str: &dyn Fn(&PgTypeKind) -> String| {
                         let (
                             mb_dims_decl_ts,
                             mb_dims_dflt_init_ts,
@@ -458,7 +458,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrParamUndrscr::False,
                             {
-                                let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
+                                let format_ts = dq_ts(&gen_format_h_str(&pg_type_kind));
                                 quote! {
                                     #mb_dims_ies_init_ts
                                     #v_match_incr_checked_add_one_init_ts
@@ -1167,8 +1167,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                 gen_pg_type_dims_helpers(pg_type_ptrn, &PgTypeOrPgJsonType::PgJsonType)
             };
             let gen_1763ccf3_ts =
-                |pg_type_ptrn: &PgTypePtrn,
-                 gen_format_handle_str: &dyn Fn(&PgTypeKind) -> String| {
+                |pg_type_ptrn: &PgTypePtrn, gen_format_h_str: &dyn Fn(&PgTypeKind) -> String| {
                     let (
                         mb_dims_decl_ts,
                         mb_dims_dflt_init_ts,
@@ -1188,7 +1187,7 @@ pub fn gen_where_filters(input_ts: Ts) -> Ts {
                             #v_dflt_opt_some_vec_one_el_ts
                         },
                         {
-                            let format_ts = dq_ts(&gen_format_handle_str(&pg_type_kind));
+                            let format_ts = dq_ts(&gen_format_h_str(&pg_type_kind));
                             quote! {
                                 #mb_dims_ies_init_ts
                                 #v_match_incr_checked_add_one_init_ts

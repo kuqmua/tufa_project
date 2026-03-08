@@ -105,7 +105,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["check", "commit"],
     ["check", "commit", "er"],
     ["check", "body", "size"],
-    ["source", "handle"],
+    ["source", "h"],
     ["column", "decode", "index"],
     ["expected", "res"],
     ["pg", "crud"],
@@ -297,7 +297,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["axum"],
     ["check"],
     ["size"],
-    ["handle"],
+    ["h"],
     ["url"],
     ["future"],
     ["field"],
@@ -695,7 +695,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["create", "upd", "del", "are", "empty"],
     ["uo", "params"],
     ["upd", "to", "read", "ids"],
-    ["self", "read", "ids", "handle"],
+    ["self", "read", "ids", "h"],
     ["read", "ids", "from", "cm"],
     ["common", "read", "ids", "from", "co"],
     ["gen", "pg", "table", "pk"],
@@ -790,14 +790,14 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["prep", "pg", "table", "and", "extensions"],
     ["table"],
     ["routes"],
-    ["routes", "handle"],
+    ["routes", "h"],
     [
         "create", "into", "pg", "json", "type", "opt", "vec", "where", "length", "greater", "than"
     ],
     [
         "create", "into", "pg", "json", "type", "opt", "vec", "where", "length", "equal"
     ],
-    ["from", "handle"],
+    ["from", "h"],
     [
         "read", "ids", "and", "create", "into", "pg", "json", "type", "opt", "vec", "where",
         "greater", "than"
