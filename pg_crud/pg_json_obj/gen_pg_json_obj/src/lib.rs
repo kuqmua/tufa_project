@@ -1,6 +1,6 @@
 use proc_macro::TokenStream as Ts;
 #[proc_macro_attribute]
-pub fn pg_json_object_config(_attr: Ts, item: Ts) -> Ts {
+pub fn pg_json_obj_config(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_derive(GenPgJsonObject)]

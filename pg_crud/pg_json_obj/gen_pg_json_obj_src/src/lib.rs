@@ -109,16 +109,16 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
     panic_location();
     let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import = Import::PgCrud;
-    let gen_pg_json_object_config = from_str::<GenPgJsonsConfig>(
+    let gen_pg_json_obj_config = from_str::<GenPgJsonsConfig>(
         &get_macro_attr_meta_list_ts(
             &di.attrs,
-            &format!("{}::pg_json_object_config", import.sc_str()),
+            &format!("{}::pg_json_obj_config", import.sc_str()),
         )
         .to_string(),
     )
     .expect("246de453");
     let (fields_ts, pg_json_object_arr) = {
-        let pg_json_object_record = gen_pg_json_object_config.vrt;
+        let pg_json_object_record = gen_pg_json_obj_config.vrt;
         match (&pg_json_object_record.is_nullable, &pg_json_object_record.pattern) {
             (IsNullable::False, Pattern::Stdrt) => vec![pg_json_object_record],
             (IsNullable::True, Pattern::Stdrt) |
@@ -7016,8 +7016,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
     })
     .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     mb_write_ts_into_file(
-        gen_pg_json_object_config
-            .pg_table_columns_write_into_pg_table_columns_using_pg_json_objects,
+        gen_pg_json_obj_config.pg_table_columns_write_into_pg_table_columns_using_pg_json_objects,
         "pg_table_columns_using_pg_json_objects",
         &quote! {
             pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjects {
@@ -7038,7 +7037,7 @@ pub fn gen_pg_json_object(input_ts: Ts2) -> Ts2 {
         }
     };
     mb_write_ts_into_file(
-        gen_pg_json_object_config.whole_write_into_gen_pg_json_object,
+        gen_pg_json_obj_config.whole_write_into_gen_pg_json_object,
         "gen_pg_json_object",
         &generated,
         &FormatWithCargofmt::True,

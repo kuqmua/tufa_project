@@ -23,7 +23,7 @@ test-utils = []"#,
             &{
                 let object_example_ts = quote!{
                     #[derive(Debug, Clone, Copy, optml::Optml)]
-                    #[pg_crud::pg_json_object_config{
+                    #[pg_crud::pg_json_obj_config{
                         {
                             "pg_table_columns_write_into_pg_table_columns_using_pg_json_objects": "False",
                             "whole_write_into_gen_pg_json_object": "False",
