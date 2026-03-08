@@ -620,13 +620,13 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let pub_async_fn_prep_extensions_ts = quote! {
             pub async fn #PrepExtensionsSc(#PoolSc: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prep_pg_er_ucc> {
-                if let Err(er) = sqlx::query("cr extension if not exists pg_jsonschema").execute(#PoolSc).await {
+                if let Err(er) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
                     return Err(#ident_prep_pg_er_ucc::#CrExtensionIfNotExistsPgJsonschemaUcc {
                         er,
                         loc: location_lib::loc!()
                     });
                 }
-                if let Err(er) = sqlx::query("cr extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
+                if let Err(er) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
                     return Err(#ident_prep_pg_er_ucc::#CrExtensionIfNotExistsUuidOsspUcc {
                         er,
                         loc: location_lib::loc!()
