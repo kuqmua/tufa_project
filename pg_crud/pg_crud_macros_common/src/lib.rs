@@ -683,13 +683,13 @@ pub fn gen_struct_ident_with_nbr_els_dq_ts(ident: &dyn DisplayPlusToTokens, leng
 pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("tuple struct {v}"))
 }
-pub fn gen_sqlx_types_json_type_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_sqlx_types_json_type_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
 }
-pub fn gen_opt_type_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_opt_type_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Option<#type_ts>}
 }
-pub fn gen_vec_tokens_decl_ts(type_ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_vec_tokens_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
 pub fn gen_de_dq_ts(ident: &dyn DisplayPlusToTokens, length: usize) -> (Ts2, Ts2, Ts2) {
@@ -1314,7 +1314,7 @@ fn gen_read_ids_and_create_into_vec_or_opt_vec_where_equal_to_json_field_pg_type
     let return_type_ts = {
         let return_type_h_ts = quote! {#import::NotEmptyUniqueVec<#where_ts>};
         match &pg_type_or_pg_json_type {
-            PgTypeOrPgJsonType::PgType => gen_opt_type_decl_ts(&return_type_h_ts),
+            PgTypeOrPgJsonType::PgType => gen_opt_type_dcl_ts(&return_type_h_ts),
             PgTypeOrPgJsonType::PgJsonType => return_type_h_ts,
         }
     };
@@ -2308,7 +2308,7 @@ pub fn mb_wrap_into_braces_ts(ts: &dyn ToTokens, wrap: bool) -> Ts2 {
         quote! {#ts}
     }
 }
-pub fn gen_v_decl_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_v_dcl_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {
     quote! {#import::V<#ts>}
 }
 pub fn gen_v_init_ts(import: &Import, ts: &dyn ToTokens) -> Ts2 {

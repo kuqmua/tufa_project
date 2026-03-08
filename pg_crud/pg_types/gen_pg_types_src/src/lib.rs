@@ -42,10 +42,10 @@ use pg_crud_macros_common::{
     gen_impl_pg_crud_common_dflt_opt_some_vec_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_type_for_ident_ts, gen_opt_type_decl_ts, gen_pg_type_where_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_where_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
     gen_struct_ident_with_nbr_els_dq_ts, gen_tuple_struct_ident_dq_ts, gen_v_init_ts,
-    gen_vec_tokens_decl_ts, impl_pg_type_equal_oprtr_for_ident_ts,
+    gen_vec_tokens_dcl_ts, impl_pg_type_equal_oprtr_for_ident_ts,
     impl_pg_type_where_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -1174,7 +1174,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             match &pg_type_pattern {
                 PgTypePattern::Stdrt => match &is_nullable {
                     IsNullable::False => &inner_type_stdrt_not_null_ts,
-                    IsNullable::True => &gen_opt_type_decl_ts(&ident_stdrt_not_null_origin_ucc),
+                    IsNullable::True => &gen_opt_type_dcl_ts(&ident_stdrt_not_null_origin_ucc),
                 },
                 PgTypePattern::ArrDim1 { dim1_is_nullable } => &{
                     let (pg_type_pattern_7790d04a, is_nullable_86d888a6): (&PgTypePattern, &IsNullable) = match &is_nullable {
@@ -1183,8 +1183,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let v = gen_ident_origin_non_wrapping_8ad5380a(pg_type_pattern_7790d04a, is_nullable_86d888a6);
                     match &is_nullable {
-                        IsNullable::False => gen_vec_tokens_decl_ts(&v),
-                        IsNullable::True => gen_opt_type_decl_ts(&v),
+                        IsNullable::False => gen_vec_tokens_dcl_ts(&v),
+                        IsNullable::True => gen_opt_type_dcl_ts(&v),
                     }
                 },
             }
@@ -1207,11 +1207,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_inner_type_ts = match &el.pg_type_pattern {
             PgTypePattern::Stdrt => match &is_nullable {
                 IsNullable::False => &inner_type_stdrt_not_null_ts,
-                IsNullable::True => &gen_opt_type_decl_ts(&inner_type_stdrt_not_null_ts),
+                IsNullable::True => &gen_opt_type_dcl_ts(&inner_type_stdrt_not_null_ts),
             },
             PgTypePattern::ArrDim1 { dim1_is_nullable } => &{
                 let dim1_type = dim1_is_nullable.mb_opt_wrap(quote! {#inner_type_stdrt_not_null_ts});
-                is_nullable.mb_opt_wrap(gen_vec_tokens_decl_ts(&dim1_type))
+                is_nullable.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
             },
         };
         let can_be_pk = match &pg_type {

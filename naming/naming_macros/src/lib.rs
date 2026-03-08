@@ -54,7 +54,7 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             let phrase_part_sc_ucc_ts = format!("{phrase_part_ucc_str}Sc")
                 .parse::<Ts2>()
                 .expect("0cc47b2e");
-            let (ucc_struct_decl_ts, sc_struct_decl_ts) = {
+            let (ucc_struct_dcl_ts, sc_struct_dcl_ts) = {
                 let gen_ts = |ts: &dyn ToTokens| {
                     quote! {
                         #[derive(Debug, optml::Optml)]
@@ -100,10 +100,10 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 )
             };
             quote! {
-                #ucc_struct_decl_ts
+                #ucc_struct_dcl_ts
                 #impl_display_ucc_ts
                 #impl_to_tokens_ucc_ts
-                #sc_struct_decl_ts
+                #sc_struct_dcl_ts
                 #impl_display_sc_ts
                 #impl_to_tokens_snake_ts
             }

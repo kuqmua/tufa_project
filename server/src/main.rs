@@ -94,7 +94,7 @@ fn main() {
                     //     //                 // pg_crud::SqlxPgTypesPgRangeI32,
                     //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
                     //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesTimePrimitiveDateTime,
-                    //     //                 // //todo check all types and type decl order
+                    //     //                 // //todo check all types and type dcl order
                     //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
                     //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesTimeOffsetDateTime,
                     //     //                 // pg_crud::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDate,

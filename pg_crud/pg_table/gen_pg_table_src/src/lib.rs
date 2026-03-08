@@ -61,9 +61,9 @@ use panic_location::panic_location;
 use pg_crud_macros_common::{
     AddOprtrUndrscr, ColumnParamUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrParamUndrscr,
     IsQbMut, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_opt_some_vec_one_el_ts,
-    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_decl_ts,
-    gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_decl_ts,
-    gen_v_init_ts, gen_vec_tokens_decl_ts, impl_pg_type_where_filter_for_ident_ts,
+    gen_impl_pg_crud_dflt_opt_some_vec_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
+    gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts,
+    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_where_filter_for_ident_ts,
     mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -106,7 +106,7 @@ use token_patterns::{
 //todo remove useless derives like useless serde::Serialize and Deserialize
 //todo mb gen compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/pg/types/index.html#rust_decimal
 //todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
-//todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
+//todo reexport all crates what logic depends on (from crates.io) (use of undclared crate or module `time`)
 //todo add transaction isolation level (see pg docs)
 //todo check on pg max length value of type
 //todo in few cases rows affected is usefull. (upd del for example). if 0 afftected -mb its er? or mb use select then upd\del?(rewrite query)
@@ -497,8 +497,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_ro_er_with_serde_ucc = SelfRoErWithSerdeUcc::from_tokens(&ident);
     let ident_try_dlo_er_ucc = SelfTryDloErUcc::from_tokens(&ident);
     let ident_dlo_er_with_serde_ucc = SelfDloErWithSerdeUcc::from_tokens(&ident);
-    let vec_pk_ft_read_ts = gen_vec_tokens_decl_ts(&pk_ft_as_pg_type_read_ucc);
-    let vec_ident_read_ids_ts = gen_vec_tokens_decl_ts(&ident_read_ids_ucc);
+    let vec_pk_ft_read_ts = gen_vec_tokens_dcl_ts(&pk_ft_as_pg_type_read_ucc);
+    let vec_ident_read_ids_ts = gen_vec_tokens_dcl_ts(&ident_read_ids_ucc);
     let pk_fi = &pk_field.ident;
     let pk_fi_ucc_ts = ToTokensToUccTs::case_or_panic(&pk_fi);
     let pk_ft_upd_ts = &SelfUpdUcc::from_type_last_segment(pk_ft);
@@ -559,7 +559,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let fields_named_without_pk_with_comma_none_ts =
         gen_fields_named_without_pk_with_comma_ts(&|_: &SynField| -> Ts2 { none_ts.clone() });
     let gen_acc_string_pop_ts = |acc_ts: &dyn ToTokens, ts: &dyn ToTokens| {
-        let opt_char_ts = gen_opt_type_decl_ts(&Char);
+        let opt_char_ts = gen_opt_type_dcl_ts(&Char);
         quote! {
             let mut #acc_ts = #StringTs::new();
             #ts
@@ -925,7 +925,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         )
     };
     let ident_read_ucc = SelfReadUcc::from_tokens(&ident);
-    let gen_v_decl_ts0 = |ts: &dyn ToTokens| gen_v_decl_ts(&import, &ts);
+    let gen_v_dcl_ts0 = |ts: &dyn ToTokens| gen_v_dcl_ts(&import, &ts);
     let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
     let gen_impl_pg_crud_dflt_opt_some_vec_one_el_for_tokens_no_lt_ts =
         |ident_4d69a809: &dyn ToTokens, ts: &dyn ToTokens| {
@@ -1092,10 +1092,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     let ident_where_ucc = SelfWhereManyUcc::from_tokens(&ident);
     let ident_where_try_new_er_ucc = SelfWhereManyTryNewErUcc::from_tokens(&ident);
     let ident_where_ts = {
-        let fields_decl_ts = gen_fields_named_with_comma_ts(&|el: &SynField| -> Ts2 {
+        let fields_dcl_ts = gen_fields_named_with_comma_ts(&|el: &SynField| -> Ts2 {
             let fi = &el.ident;
             let el_syn_field_ty_as_pg_type_where_ts = gen_as_pg_type_where_ts(&el.type0);
-            let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_decl_ts(
+            let opt_pg_type_where_syn_field_ty_as_pg_type_where_ts = gen_opt_type_dcl_ts(
                 &quote! {#import_ts PgTypeWhere<#el_syn_field_ty_as_pg_type_where_ts>},
             );
             quote! {
@@ -1109,7 +1109,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_clone()
                 .d_serde_serialize()
                 .d_utoipa_to_schema()
-                .build_struct(&ident_where_ucc, &Ts2::new(), &quote! {{#fields_decl_ts}});
+                .build_struct(&ident_where_ucc, &Ts2::new(), &quote! {{#fields_dcl_ts}});
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
                 #ts_2ecd6da8
@@ -1133,7 +1133,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_pub_try_new_for_ident_where_ts = gen_impl_pub_try_new_for_ident_ts(
             &Ts2::new(),
             &ident_where_ucc,
-            &fields_decl_ts,
+            &fields_dcl_ts,
             &ident_where_try_new_er_ucc,
             &{
                 let gen_fields_ts = |add_borrow: AddBorrow| {
@@ -1163,9 +1163,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             fields_len,
             &|_: &Ident, syn_type: &Type| {
                 let syn_type_as_pg_type_where_ts = gen_as_pg_type_where_ts(&syn_type);
-                gen_opt_type_decl_ts(
-                    &quote! {#import_ts PgTypeWhere<#syn_type_as_pg_type_where_ts>},
-                )
+                gen_opt_type_dcl_ts(&quote! {#import_ts PgTypeWhere<#syn_type_as_pg_type_where_ts>})
             },
         );
         let impl_pg_crud_dflt_opt_some_vec_one_el_for_ident_where_ts =
@@ -1198,7 +1196,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_serde_deserialize()
             .d_utoipa_to_schema()
             .build_struct(&opt_ident_where_ucc, &Ts2::new(), &{
-                let opt_ident_read_ids_stdrt_not_null_ts = gen_opt_type_decl_ts(&ident_where_ucc);
+                let opt_ident_read_ids_stdrt_not_null_ts = gen_opt_type_dcl_ts(&ident_where_ucc);
                 quote! {(pub #opt_ident_read_ids_stdrt_not_null_ts);}
             });
         let impl_pg_type_where_filter_for_opt_ident_where_ts =
@@ -1436,7 +1434,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .build_struct(&ident_read_ucc, &Ts2::new(), &{
                     let field_opt_pk_ts = {
                         let opt_v_pk_ft_as_pg_type_read_ts =
-                            gen_opt_type_decl_ts(&gen_v_decl_ts0(&gen_as_pg_type_read_ts(&pk_ft)));
+                            gen_opt_type_dcl_ts(&gen_v_dcl_ts0(&gen_as_pg_type_read_ts(&pk_ft)));
                         quote! {
                             #FieldAttrSerdeSkipSerializingIfOptIsNone
                             pub #pk_fi: #opt_v_pk_ft_as_pg_type_read_ts
@@ -1446,9 +1444,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| -> Ts2 {
                             let field_vis = &el.vis;
                             let fi = &el.ident;
-                            let opt_v_ft_as_pg_type_read_ts = gen_opt_type_decl_ts(
-                                &gen_v_decl_ts0(&gen_as_pg_type_read_ts(&el.type0)),
-                            );
+                            let opt_v_ft_as_pg_type_read_ts = gen_opt_type_dcl_ts(&gen_v_dcl_ts0(
+                                &gen_as_pg_type_read_ts(&el.type0),
+                            ));
                             quote! {
                                 #FieldAttrSerdeSkipSerializingIfOptIsNone
                                 #field_vis #fi: #opt_v_ft_as_pg_type_read_ts
@@ -1466,19 +1464,18 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         let impl_ident_read_ts = {
             let fn_try_from_sqlx_pg_pg_row_with_not_empty_unique_vec_ident_select_ts = {
-                let decl_pk_ts = {
+                let dcl_pk_ts = {
                     let opt_v_pk_ft_as_pk_ts =
-                        gen_opt_type_decl_ts(&gen_v_decl_ts0(&pk_ft_as_pg_type_read_ucc));
+                        gen_opt_type_dcl_ts(&gen_v_dcl_ts0(&pk_ft_as_pg_type_read_ucc));
                     quote! {
                         let mut #pk_fi: #opt_v_pk_ft_as_pk_ts = None;
                     }
                 };
-                let decl_without_pk_ts =
+                let dcl_without_pk_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el: &SynField| {
                         let fi = &el.ident;
-                        let opt_v_ft_as_pg_type_read_ts = gen_opt_type_decl_ts(&gen_v_decl_ts0(
-                            &gen_as_pg_type_read_ts(&el.type0),
-                        ));
+                        let opt_v_ft_as_pg_type_read_ts =
+                            gen_opt_type_dcl_ts(&gen_v_dcl_ts0(&gen_as_pg_type_read_ts(&el.type0)));
                         quote! {
                             let mut #fi: #opt_v_ft_as_pg_type_read_ts = None;
                         }
@@ -1534,8 +1531,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         #VSc: &sqlx::postgres::PgRow,
                         #select_borrow_pg_crud_not_empty_unique_vec_ident_select_ts
                     ) -> Result<Self, sqlx::Error> {
-                        #decl_pk_ts
-                        #decl_without_pk_ts
+                        #dcl_pk_ts
+                        #dcl_without_pk_ts
                         for el_dca9f0b7 in #SelectSc.to_vec() {
                             match el_dca9f0b7 {
                                 #assign_vrt_pk_ts,
@@ -1576,7 +1573,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             let ft_ts = match &wrap_into_opt {
                                 WrapIntoOpt::False => gen_as_pg_type_read_ids_ts(&ft),
                                 WrapIntoOpt::True => {
-                                    gen_opt_type_decl_ts(&gen_as_pg_type_read_ids_ts(&ft))
+                                    gen_opt_type_dcl_ts(&gen_as_pg_type_read_ids_ts(&ft))
                                 }
                             };
                             quote! {pub #fi: #ft_ts}
@@ -1680,9 +1677,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .parse::<Ts2>()
                 .expect("dbdbb7f2");
             let syn_type_as_pg_type_upd_ts = gen_as_pg_type_upd_ts(&syn_type);
-            gen_opt_type_decl_ts(&quote! {#path_v_ts<#syn_type_as_pg_type_upd_ts>})
+            gen_opt_type_dcl_ts(&quote! {#path_v_ts<#syn_type_as_pg_type_upd_ts>})
         };
-        let fields_decl_ts = {
+        let fields_dcl_ts = {
             let fields_named_without_pk_ts =
                 gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| -> Ts2 {
                     let fi = &el.ident;
@@ -1702,7 +1699,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_debug()
                 .d_serde_serialize()
                 .d_utoipa_to_schema()
-                .build_struct(&ident_upd_ucc, &Ts2::new(), &quote! {{#fields_decl_ts}});
+                .build_struct(&ident_upd_ucc, &Ts2::new(), &quote! {{#fields_dcl_ts}});
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
                 #ts_a09c0471
@@ -1726,7 +1723,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let impl_pub_try_new_for_ident_upd_ts = gen_impl_pub_try_new_for_ident_ts(
             &quote! {#[allow(clippy::redundant_pattern_matching)]}, //todo check if 1 then different logic
             &ident_upd_ucc,
-            &fields_decl_ts,
+            &fields_dcl_ts,
             &ident_upd_try_new_er_ucc,
             &{
                 let (left_ts, right_ts) = {
@@ -1811,7 +1808,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     .expect("2b09d4ae");
                                 let syn_type_as_pg_type_upd_for_query_ts =
                                     gen_as_pg_type_upd_for_query_ts(&el.type0);
-                                gen_opt_type_decl_ts(
+                                gen_opt_type_dcl_ts(
                                     &quote! {#path_v_ts<#syn_type_as_pg_type_upd_for_query_ts>},
                                 )
                             };
@@ -1997,7 +1994,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let gen_ts = |ts: &dyn ToTokens| quote! {#import_ts PgTypeWhereFilter::#ts};
         (gen_ts(&QpSc), gen_ts(&QbSc))
     };
-    let vec_struct_opts_ident_ts = gen_vec_tokens_decl_ts(&ident_read_ucc);
+    let vec_struct_opts_ident_ts = gen_vec_tokens_dcl_ts(&ident_read_ucc);
     let not_unique_field_syn_vrt = new_syn_vrt(
         &NotUniqueFieldUcc,
         Some(StatusCode::BadReq400),
@@ -3430,7 +3427,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         content_ts.push({
             let payload_ts = {
                 let gen_params_payload_and_dflt_ts =
-                    |decl_ts: &dyn ToTokens, dflt_init_ts: &dyn ToTokens| {
+                    |dcl_ts: &dyn ToTokens, dflt_init_ts: &dyn ToTokens| {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         let ident_op_payload_ts = {
                             let (derive_clone, derive_copy) = op.derive_clone_and_copy();
@@ -3442,7 +3439,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .d_serde_serialize()
                                 .d_serde_deserialize()
                                 .d_utoipa_to_schema()
-                                .build_struct(&ident_op_payload_ucc, &Ts2::new(), &decl_ts);
+                                .build_struct(&ident_op_payload_ucc, &Ts2::new(), &dcl_ts);
                             quote! {
                                 #AllowClippyArbitrarySrcItemOrdering
                                 #ts_ec5b096c
@@ -3461,7 +3458,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 match &op {
                     Op::Cm => gen_params_payload_and_dflt_ts(
                         &{
-                            let vec_ident_create_ts = gen_vec_tokens_decl_ts(&ident_create_ucc);
+                            let vec_ident_create_ts = gen_vec_tokens_dcl_ts(&ident_create_ucc);
                             quote! {(pub #vec_ident_create_ts);}
                         },
                         &quote! {(vec![#PgCrudDfltOptSomeVecOneElCall])},
@@ -3511,7 +3508,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ),
                     Op::Um => {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
-                        let vec_ident_upd_ts = gen_vec_tokens_decl_ts(&ident_upd_ucc);
+                        let vec_ident_upd_ts = gen_vec_tokens_dcl_ts(&ident_upd_ucc);
                         let ident_op_payload_vec_ts = DTsBuilder::new()
                             .make_pub()
                             .d_debug()
