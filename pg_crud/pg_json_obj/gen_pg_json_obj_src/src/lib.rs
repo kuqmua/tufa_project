@@ -102,7 +102,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     }
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonsConfig {
-        pg_table_columns_write_into_pg_table_columns_using_pg_json_objects: ShouldWriteTsIntoFile,
+        pg_table_columns_write_into_pg_table_columns_using_pg_json_objs: ShouldWriteTsIntoFile,
         vrt: PgJsonObjectRecord,
         whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
@@ -7016,7 +7016,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     })
     .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     mb_write_ts_into_file(
-        gen_pg_json_obj_config.pg_table_columns_write_into_pg_table_columns_using_pg_json_objects,
+        gen_pg_json_obj_config.pg_table_columns_write_into_pg_table_columns_using_pg_json_objs,
         "pg_table_columns_using_pg_json_objects",
         &quote! {
             pub struct PgTableColumnsContentWriteIntoPgTableColumnsUsingPgJsonObjects {
