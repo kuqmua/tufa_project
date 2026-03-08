@@ -14,7 +14,7 @@ use utoipa::ToSchema;
 static SRC_PLACE_TYPE: OnceLock<SrcPlaceType> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
-pub struct MacroOccurence {
+pub struct Occr {
     pub file: String,
     pub line: u32,
     pub column: u32,
@@ -26,18 +26,13 @@ pub struct Loc {
     file: String,
     commit: String,
     duration: Duration,
-    macro_occurence: Option<MacroOccurence>,
+    occr: Option<Occr>,
     line: u32,
     column: u32,
 }
 impl Loc {
     #[must_use]
-    pub fn new(
-        file: String,
-        line: u32,
-        column: u32,
-        macro_occurence: Option<MacroOccurence>,
-    ) -> Self {
+    pub fn new(file: String, line: u32, column: u32, occr: Option<Occr>) -> Self {
         Self {
             file,
             line,
@@ -46,7 +41,7 @@ impl Loc {
             duration: SystemTime::now()
                 .duration_since(UNIX_EPOCH)
                 .unwrap_or_default(),
-            macro_occurence,
+            occr,
         }
     }
 }
@@ -62,14 +57,14 @@ impl Display for Loc {
             f,
             "{} {}",
             &match SRC_PLACE_TYPE.get_or_init(SrcPlaceType::from_env_or_dflt) {
-                SrcPlaceType::Src => self.macro_occurence.as_ref().map_or_else(
+                SrcPlaceType::Src => self.occr.as_ref().map_or_else(
                     || format!("{}:{}:{}", self.file, self.line, self.column),
                     |v| format!(
                         "{}:{}:{} ({}:{}:{})",
                         self.file, self.line, self.column, v.file, v.line, v.column
                     )
                 ),
-                SrcPlaceType::Github => self.macro_occurence.as_ref().map_or_else(
+                SrcPlaceType::Github => self.occr.as_ref().map_or_else(
                     || format!(
                         "{}/blob/{}/{}#L{}",
                         GITHUB_URL, self.commit, self.file, self.line

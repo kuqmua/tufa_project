@@ -19,7 +19,7 @@ pub fn gen_field_loc_new_ts(file: &'static str, line: u32, column: u32) -> Ts2 {
                 file!().to_owned(),
                 line!(),
                 column!(),
-                Some(location_lib::loc::MacroOccurence {
+                Some(location_lib::loc::Occr {
                     file: String::from(#file_ts),
                     line: #line_ts,
                     column: #column_ts,
