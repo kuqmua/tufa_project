@@ -328,7 +328,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let uuid_uuid_as_not_null_jsonb_string_as_pg_json_upd_ts = quote!{
             #uuid_uuid_as_not_null_jsonb_string_as_import_pg_json_ts::Upd
         };
-        let uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts = quote!{
+        let uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts = quote!{
             <#uuid_uuid_as_not_null_jsonb_string_ts as #import::PgJsonObjectVecElId>
         };
         let id_syn_field = {
@@ -2693,7 +2693,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                         return Err(#ident_upd_try_new_er_ucc::#NotUniqueIdInJsonDelArrUcc {
                                                             er: format!(
                                                                 #not_unique_id_in_json_del_arr_dq_ts,
-                                                                #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::get_inn(
+                                                                #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::get_inn(
                                                                     &el.clone().into()
                                                                 )
                                                             ),
@@ -2714,7 +2714,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                     return Err(#ident_upd_try_new_er_ucc::#NotUniqueIdInJsonUpdAndDelArrsUcc {
                                                         er: format!(
                                                             #not_unique_id_in_json_upd_and_del_arrs_dq_ts,
-                                                            #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::get_inn(
+                                                            #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::get_inn(
                                                                 &el.clone().into()
                                                             )
                                                         ),
@@ -3577,7 +3577,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             let mut acc_2e2ad041 = #StringTs::default();
                             for el in v_58d685d3.#UpdSc.to_vec() {
                                 let ident_with_id_h = {
-                                    let id_incr = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
+                                    let id_incr = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                         Ok(v_15b44b54) => v_15b44b54,
                                         Err(#ErSc) => {
                                             return Err(#ErSc);
@@ -3610,7 +3610,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     let del_qp_acc = {
                         let mut acc_5b4cd920 = #StringTs::default();
                         for _ in &v_58d685d3.#DelSc {
-                            let incr_cb6ba4a7 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
+                            let incr_cb6ba4a7 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                 Ok(v_110650cc) => v_110650cc,
                                 Err(#ErSc) => {
                                     return Err(#ErSc);
@@ -3624,7 +3624,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     let cr_qp_acc = {
                         let mut acc_8554f572 = #StringTs::default();
                         for _ in &v_58d685d3.#CrSc {
-                            let incr_5bbc4961 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
+                            let incr_5bbc4961 = match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::incr_checked_add_one(#IncrSc) {
                                 Ok(v_27487842) => v_27487842,
                                 Err(#ErSc) => {
                                     return Err(#ErSc);
@@ -4035,7 +4035,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     Pattern::Arr => match &is_nullable {
                         IsNullable::False => quote! {
                             for el in #VSc.#UpdSc.into_vec() {
-                                match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
+                                match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                     el.#IdSc,
                                     #QuerySc
                                 ) {
@@ -4059,7 +4059,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                             for el in #VSc.del {
-                                match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
+                                match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                     el,
                                     #QuerySc
                                 ) {
@@ -4201,7 +4201,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     #(#select_only_crd_ids_qb_ts)*
                                 }
                                 for el in #VSc.#UpdSc.to_vec() {
-                                    match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
+                                    match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                         el.#IdSc.clone(),
                                         #QuerySc
                                     ) {
@@ -4214,7 +4214,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     }
                                 }
                                 for el in &#VSc.#CrSc {
-                                    match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
+                                    match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
                                         el.#IdSc.clone(),
                                         #QuerySc
                                     ) {
@@ -4554,7 +4554,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     #(#ts)*
                                 }
                                 for el in &#VSc.0 {
-                                    match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
+                                    match #uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
                                         el.#IdSc.clone(),
                                         #QuerySc
                                     ) {
@@ -5521,7 +5521,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         for el_377d1bb4 in v_47f5a20b.#UpdSc.into_vec() {
                                             let mut opt_read_el = None;
                                             for el in &#ReadSc.0 {
-                                                if *#uuid_uuid_as_not_null_jsonb_string_as_pg_json_object_vec_el_id_ts::get_inn(&el_377d1bb4.#IdSc.clone().into())
+                                                if *#uuid_uuid_as_not_null_jsonb_string_as_pg_json_obj_vec_el_id_ts::get_inn(&el_377d1bb4.#IdSc.clone().into())
                                                 ==
                                                 #uuid_uuid_as_not_null_jsonb_string_as_import_pg_json_ts::into_inn(
                                                     el.#IdSc.clone().expect("df2413fe").#VSc
