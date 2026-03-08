@@ -2228,7 +2228,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &select_only_crd_or_updd_ids_qb_ts,
             )
         };
-        let mb_impl_pg_json_object_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
+        let mb_impl_pg_json_obj_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_not_null_uuid, IsStdrtNotNullUuid::True) {
             let (qb_string_as_pg_text_cr_for_query_ts, qb_string_as_pg_text_upd_for_query_ts) = {
                 enum CrOrUpdForQuery {
                     CrForQuery,
@@ -3584,7 +3584,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             #ident_upd_ts
             #ident_upd_for_query_ts
             #impl_pg_json_for_ident_ts
-            #mb_impl_pg_json_object_vec_el_id_for_ident_origin_ts
+            #mb_impl_pg_json_obj_vec_el_id_for_ident_origin_ts
             #impl_pg_json_test_cases_for_ident_ts
         };
         (
