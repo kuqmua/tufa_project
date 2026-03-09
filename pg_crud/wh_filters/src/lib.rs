@@ -217,8 +217,20 @@ where
         }
     }
 }
-#[derive(Debug, Clone, Optml)]
+#[derive(Debug, Clone, Serialize, Deserialize, Optml)]
+#[serde(try_from = "String", into = "String")]
 pub struct RegexRegex(pub Regex);
+impl TryFrom<String> for RegexRegex {
+    type Error = regex::Error;
+    fn try_from(v: String) -> Result<Self, Self::Error> {
+        Regex::new(&v).map(RegexRegex)
+    }
+}
+impl From<RegexRegex> for String {
+    fn from(v: RegexRegex) -> Self {
+        v.0.as_str().to_owned()
+    }
+}
 // #[automatically_derived]
 // impl ::core::marker::StructuralPartialEq for RegexRegex {}
 // #[automatically_derived]
@@ -228,99 +240,6 @@ impl PartialEq for RegexRegex {
         self.0.to_string() == other.0.to_string()
     }
 }
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-#[doc(hidden)]
-const _: () = {
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl _serde::Serialize for RegexRegex {
-        fn serialize<__S>(&self, __serializer: __S) -> Result<__S::Ok, __S::Error>
-        where
-            __S: _serde::Serializer,
-        {
-            _serde::Serializer::serialize_newtype_struct(
-                __serializer,
-                "RegexRegex",
-                &self.0.to_string(),
-            )
-        }
-    }
-};
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-#[doc(hidden)]
-const _: () = {
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for RegexRegex {
-        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private228::PhantomData<RegexRegex>,
-                lt: _serde::__private228::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = RegexRegex;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private228::Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
-                        __formatter,
-                        "tuple struct RegexRegex",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let f0: String = <String as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(RegexRegex(match Regex::new(&f0) {
-                        Ok(v) => v,
-                        Err(er) => {
-                            return Err(serde::de::Error::custom(format!("{er:?}")));
-                        }
-                    }))
-                }
-                #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let Some(f0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)?
-                    else {
-                        return Err(_serde::de::Error::invalid_length(
-                            0usize,
-                            &"tuple struct RegexRegex with 1 el",
-                        ));
-                    };
-                    Ok(RegexRegex(match Regex::new(&f0) {
-                        Ok(v) => v,
-                        Err(er) => {
-                            return Err(serde::de::Error::custom(format!("{er:?}")));
-                        }
-                    }))
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "RegexRegex",
-                __Visitor {
-                    marker: _serde::__private228::PhantomData::<Self>,
-                    lt: _serde::__private228::PhantomData,
-                },
-            )
-        }
-    }
-};
 //todo add some logic? for regex validation?
 #[allow(unused_qualifications)]
 #[allow(clippy::absolute_paths)]
