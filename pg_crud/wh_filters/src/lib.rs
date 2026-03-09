@@ -549,7 +549,18 @@ impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTyp
 pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+    #[must_use]
+    pub const fn to_vec(&self) -> &Vec<T> {
+        &self.0
+    }
+    #[must_use]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0
+    }
+}
+impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgTypeNotEmptyUniqueVec<T> {
+    type Error = NotEmptyUniqueVecTryNewEr<T>;
+    fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
         if v.is_empty() {
             return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
         }
@@ -566,14 +577,6 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
             }
         }
         Ok(Self(v))
-    }
-    #[must_use]
-    pub const fn to_vec(&self) -> &Vec<T> {
-        &self.0
-    }
-    #[must_use]
-    pub fn into_vec(self) -> Vec<T> {
-        self.0
     }
 }
 #[allow(unused_qualifications)]
@@ -632,7 +635,7 @@ const _: () = {
                             &"tuple struct PgTypeNotEmptyUniqueVec with 1 el",
                         ));
                     };
-                    match PgTypeNotEmptyUniqueVec::try_new(f0) {
+                    match PgTypeNotEmptyUniqueVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -664,7 +667,10 @@ impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
         v.0
     }
 }
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, Optml)]
+#[derive(
+    Debug, Default, Clone, PartialEq, Eq, PartialOrd, Serialize, Deserialize, JsonSchema, Optml,
+)]
+#[serde(try_from = "Vec<T>")]
 pub struct BoundedVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, Optml,
@@ -818,83 +824,6 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedVec<T, LENGTH> {
         }
     }
 }
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-const _: () = {
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de, T, const LENGTH: usize> _serde::Deserialize<'de> for BoundedVec<T, LENGTH>
-    where
-        T: _serde::Deserialize<'de>,
-    {
-        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de, T, const LENGTH: usize>
-            where
-                T: _serde::Deserialize<'de>,
-            {
-                marker: _serde::__private228::PhantomData<BoundedVec<T, LENGTH>>,
-                lt: _serde::__private228::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de, T, const LENGTH: usize> _serde::de::Visitor<'de> for __Visitor<'de, T, LENGTH>
-            where
-                T: _serde::Deserialize<'de>,
-            {
-                type Value = BoundedVec<T, LENGTH>;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private228::Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
-                        __formatter,
-                        "tuple struct BoundedVec",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    match BoundedVec::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
-                    else {
-                        return Err(_serde::de::Error::invalid_length(
-                            0usize,
-                            &"tuple struct BoundedVec with 1 el",
-                        ));
-                    };
-                    match BoundedVec::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "BoundedVec",
-                __Visitor {
-                    marker: _serde::__private228::PhantomData::<Self>,
-                    lt: _serde::__private228::PhantomData,
-                },
-            )
-        }
-    }
-};
 impl<T: Clone + DfltSomeOneEl, const LENGTH: usize> DfltSomeOneEl for BoundedVec<T, LENGTH> {
     fn dflt_some_one_el() -> Self {
         Self(vec![<T as DfltSomeOneEl>::dflt_some_one_el(); LENGTH])
