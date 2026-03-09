@@ -2077,12 +2077,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::BoolAsBool
                         | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet |
-                        PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Derive,
-                        PgType::StringAsText => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
-                            #struct_visitor_ts
-                            #impl_serde_de_visitor_for_visitor_string_ts
-                            #serde_deserializer_de_newtype_struct_ts
-                        })),
+                        PgType::SqlxPgTypesPgMoneyAsMoney |
+                        PgType::StringAsText => DeriveOrImpl::Derive,
                         PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_four_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_5a4f24ce
@@ -2843,7 +2839,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::I32AsSerialInitByPg |
                             PgType::I64AsBigSerialInitByPg |
                             PgType::BoolAsBool |
-                            PgType::StringAsText |
                             PgType::StdVecVecU8AsBytea |
                             PgType::SqlxTypesChronoNaiveTimeAsTime |
                             PgType::SqlxTypesTimeTimeAsTime |
@@ -2860,6 +2855,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
+                            PgType::StringAsText => quote!{#[serde(try_from = "String")]},
                             PgType::SqlxPgTypesPgMoneyAsMoney => quote!{#[serde(from = "i64")]},
                         }
                     }
@@ -3028,81 +3024,117 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let mb_pub_enum_ident_stdrt_nn_origin_try_new_for_de_er_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
-                && let DeriveOrImpl::Impl(_) = &de_derive_or_impl
-            {
-                match &pg_type_deserialize {
-                    PgTypeDeserialize::Derive => Ts2::new(),
-                    PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDe(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
-                        PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(_) => Ts2::new(),
-                        PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => {
-                            let ts_026f2a24 = DTsBuilder::new()
-                            .make_pub()
-                            .d_debug()
-                            .d_serde_serialize()
-                            .d_serde_deserialize()
-                            .d_thiserror_error()
-                            .d_location_lib_location()
-                            .build_enum(
-                                &Ts2::new(),
-                                &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
-                                &Ts2::new(),
-                                &{
-                                    let ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
-                                        PgTypeImplTryNewForDe::StringAsText => &string_as_text_try_new_er_vrts_ts,
-                                        PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => &{
-                                            let invalid_hour_or_minute_or_second_or_microsecond_var_ts = gen_loc_var_ts(
-                                                &InvalidHourOrMinuteOrSecondOrMicrosecondUcc,
-                                                &quote!{
-                                                    #[eo_to_err_string_serde]
-                                                    #HourSc: #U32,
-                                                    #[eo_to_err_string_serde]
-                                                    #MinSc: #U32,
-                                                    #[eo_to_err_string_serde]
-                                                    #SecSc: #U32,
-                                                    #[eo_to_err_string_serde]
-                                                    #MicroSc: #U32,
-                                                }
-                                            );
-                                            quote! {
-                                                #invalid_hour_or_minute_or_second_or_microsecond_var_ts,
-                                                #nanosecond_precision_is_not_supported_vrt_try_new_ts
-                                            }
-                                        },
-                                        PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => &{
-                                            let invalid_hour_or_minute_or_second_or_microsecond_var_ts = gen_loc_var_ts(
-                                                &InvalidHourOrMinuteOrSecondOrMicrosecondUcc,
-                                                &quote!{
-                                                    #[eo_to_err_string_serde]
-                                                    #ErSc: #StringTs,
-                                                    #[eo_to_err_string_serde]
-                                                    #MicrosecondSc: #U32,
-                                                    #[eo_to_err_string_serde]
-                                                    #HourSc: #U8,
-                                                    #[eo_to_err_string_serde]
-                                                    #MinuteSc: #U8,
-                                                    #[eo_to_err_string_serde]
-                                                    #SecondSc: #U8,
-                                                }
-                                            );
-                                            quote! {
-                                                #invalid_hour_or_minute_or_second_or_microsecond_var_ts,
-                                                #nanosecond_precision_is_not_supported_vrt_try_new_ts
-                                            }
-                                        },
-                                        PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
-                                        PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                        PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                                    };
-                                    quote!{{#ts}}
-                                }
-                            );
-                            quote!{
-                                #AllowClippyArbitrarySrcItemOrdering
-                                #ts_026f2a24
-                            }
+            let mb_pub_enum_ident_stdrt_nn_origin_try_new_for_de_er_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                //todo this is bad design. refactor later
+                let gen_er_ts = |pg_type_impl_try_new_for_deserialize: &PgTypeImplTryNewForDe|{
+                    let ts_026f2a24 = DTsBuilder::new()
+                    .make_pub()
+                    .d_debug()
+                    .d_serde_serialize()
+                    .d_serde_deserialize()
+                    .d_thiserror_error()
+                    .d_location_lib_location()
+                    .build_enum(
+                        &Ts2::new(),
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &Ts2::new(),
+                        &{
+                            let ts: &dyn ToTokens = match &pg_type_impl_try_new_for_deserialize {
+                                PgTypeImplTryNewForDe::StringAsText => &string_as_text_try_new_er_vrts_ts,
+                                PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => &{
+                                    let invalid_hour_or_minute_or_second_or_microsecond_var_ts = gen_loc_var_ts(
+                                        &InvalidHourOrMinuteOrSecondOrMicrosecondUcc,
+                                        &quote!{
+                                            #[eo_to_err_string_serde]
+                                            #HourSc: #U32,
+                                            #[eo_to_err_string_serde]
+                                            #MinSc: #U32,
+                                            #[eo_to_err_string_serde]
+                                            #SecSc: #U32,
+                                            #[eo_to_err_string_serde]
+                                            #MicroSc: #U32,
+                                        }
+                                    );
+                                    quote! {
+                                        #invalid_hour_or_minute_or_second_or_microsecond_var_ts,
+                                        #nanosecond_precision_is_not_supported_vrt_try_new_ts
+                                    }
+                                },
+                                PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => &{
+                                    let invalid_hour_or_minute_or_second_or_microsecond_var_ts = gen_loc_var_ts(
+                                        &InvalidHourOrMinuteOrSecondOrMicrosecondUcc,
+                                        &quote!{
+                                            #[eo_to_err_string_serde]
+                                            #ErSc: #StringTs,
+                                            #[eo_to_err_string_serde]
+                                            #MicrosecondSc: #U32,
+                                            #[eo_to_err_string_serde]
+                                            #HourSc: #U8,
+                                            #[eo_to_err_string_serde]
+                                            #MinuteSc: #U8,
+                                            #[eo_to_err_string_serde]
+                                            #SecondSc: #U8,
+                                        }
+                                    );
+                                    quote! {
+                                        #invalid_hour_or_minute_or_second_or_microsecond_var_ts,
+                                        #nanosecond_precision_is_not_supported_vrt_try_new_ts
+                                    }
+                                },
+                                PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
+                                PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                            };
+                            quote!{{#ts}}
                         }
+                    );
+                    quote!{
+                        #AllowClippyArbitrarySrcItemOrdering
+                        #ts_026f2a24
+                    }
+                };
+                match &de_derive_or_impl {
+                    DeriveOrImpl::Derive => if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                        match &pg_type {
+                            PgType::I16AsInt2 |
+                            PgType::I32AsInt4 |
+                            PgType::I64AsInt8 |
+                            PgType::F32AsFloat4 |
+                            PgType::F64AsFloat8 |
+                            PgType::I16AsSmallSerialInitByPg |
+                            PgType::I32AsSerialInitByPg |
+                            PgType::I64AsBigSerialInitByPg |
+                            PgType::BoolAsBool |
+                            PgType::StdVecVecU8AsBytea |
+                            PgType::SqlxTypesChronoNaiveTimeAsTime |
+                            PgType::SqlxTypesTimeTimeAsTime |
+                            PgType::SqlxPgTypesPgIntervalAsInterval |
+                            PgType::SqlxTypesChronoNaiveDateAsDate |
+                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                            PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                            PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                            PgType::SqlxTypesIpnetworkIpNetworkAsInet |
+                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                            PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                            PgType::SqlxPgTypesPgRangeI64AsInt8Range |
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange |
+                            PgType::SqlxPgTypesPgMoneyAsMoney => Ts2::new(),
+                            PgType::StringAsText => gen_er_ts(&PgTypeImplTryNewForDe::StringAsText)
+                        }
+                    }
+                    else {
+                        Ts2::new()
                     },
+                    DeriveOrImpl::Impl(_) => match &pg_type_deserialize {
+                        PgTypeDeserialize::Derive => Ts2::new(),
+                        PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDe(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
+                            PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(_) => Ts2::new(),
+                            PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => gen_er_ts(pg_type_impl_try_new_for_deserialize)
+                        },
+                    }
                 }
             } else {
                 Ts2::new()
@@ -3821,7 +3853,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(v) => v,
             };
-            let md_de_from_or_try_from_for_ident_stndrt_nn_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+            let md_de_from_for_ident_stndrt_nn_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
                 match &pg_type {
                     PgType::I16AsInt2 |
                     PgType::I32AsInt4 |
@@ -3853,6 +3885,47 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl From<i64> for #ident_origin_ucc {
                             fn from(v: i64) -> Self {
                                 Self::new(#inn_type_stdrt_nn_ts(v))
+                            }
+                        }
+                    },
+                }
+            }
+            else {
+                Ts2::new()
+            };
+            let md_de_try_from_for_ident_stndrt_nn_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                match &pg_type {
+                    PgType::I16AsInt2 |
+                    PgType::I32AsInt4 |
+                    PgType::I64AsInt8 |
+                    PgType::F32AsFloat4 |
+                    PgType::F64AsFloat8 |
+                    PgType::I16AsSmallSerialInitByPg |
+                    PgType::I32AsSerialInitByPg |
+                    PgType::I64AsBigSerialInitByPg |
+                    PgType::SqlxPgTypesPgMoneyAsMoney |
+                    PgType::BoolAsBool |
+                    PgType::StdVecVecU8AsBytea |
+                    PgType::SqlxTypesChronoNaiveTimeAsTime |
+                    PgType::SqlxTypesTimeTimeAsTime |
+                    PgType::SqlxPgTypesPgIntervalAsInterval |
+                    PgType::SqlxTypesChronoNaiveDateAsDate |
+                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                    PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                    PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                    PgType::SqlxTypesIpnetworkIpNetworkAsInet |
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range |
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
+                    PgType::StringAsText => quote!{
+                        impl TryFrom<String> for #ident_origin_ucc {
+                            type Error = #ident_stdrt_nn_origin_try_new_er_ucc;
+                            fn try_from(v: String) -> Result<Self, Self::Error> {
+                                #ident_origin_ucc::try_new(v)//todo use try_from instead of try_new ?
                             }
                         }
                     },
@@ -4005,7 +4078,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_is_string_empty_for_ident_origin_ts
                 #mb_impl_ser_for_ident_stdrt_nn_origin_ts
                 #mb_impl_de_for_ident_stdrt_nn_origin_ts
-                #md_de_from_or_try_from_for_ident_stndrt_nn_origin_ts
+                #md_de_from_for_ident_stndrt_nn_origin_ts
+                #md_de_try_from_for_ident_stndrt_nn_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
                 #impl_dflt_some_one_el_for_ident_origin_ts
