@@ -1442,7 +1442,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         (gen_ts(2), gen_ts(3))
                     };
-                    let (fn_visit_newtype_struct_pg_money_ts, fn_visit_newtype_struct_uuid_ts, fn_visit_newtype_struct_mac_address_ts, fn_visit_newtype_struct_text_ts, fn_visit_newtype_struct_sqlx_types_chrono_naive_date_ts) = {
+                    let (fn_visit_newtype_struct_uuid_ts, fn_visit_newtype_struct_mac_address_ts, fn_visit_newtype_struct_sqlx_types_chrono_naive_date_ts) = {
                         let gen_ts = |type_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
                             quote! {
                                 #[inline]
@@ -1456,10 +1456,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         };
                         (
-                            gen_ts(&I64, &gen_serde_private_ok_pg_type_ts(&quote! {#inn_type_stdrt_nn_ts(#field_0_v_ts)})),
                             gen_ts(&StringTs, &gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_ft_try_parse_ts)),
                             gen_ts(&arr_u8_6_ts, &gen_serde_private_ok_pg_type_ts(&sqlx_types_mac_address_mac_address_ft_new_field_0_v_ts)),
-                            gen_ts(&StringTs, &match_origin_try_new_for_de_one_ts),
                             gen_ts(&inn_type_stdrt_nn_ts, &match_origin_try_new_for_de_one_ts),
                         )
                     };
@@ -1477,11 +1475,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {#(#fields_init_ts)*}
                     };
                     let (
-                        fn_visit_seq_pg_money_ts,
                         fn_visit_seq_sqlx_types_chrono_naive_time_ts,
                         fn_visit_seq_uuid_uuid_ts,
                         fn_visit_seq_sqlx_types_mac_address_mac_address_ts,
-                        fn_visit_seq_string_ts,
                         fn_visit_seq_sqlx_types_time_time_ts,
                         fn_visit_seq_sqlx_types_chrono_naive_date_ts,
                         fn_visit_seq_sqlx_types_chrono_naive_date_time_ts,
@@ -1511,14 +1507,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         });
                         (
                             gen_ts(&{
-                                let fields_init_ts = gen_fields_serde_de_seq_access_next_el_init_ts(&[&I64]);
-                                let serde_private_ok_pg_type_ts = gen_serde_private_ok_pg_type_ts(&quote! {#inn_type_stdrt_nn_ts(#field_0_v_ts)});
-                                quote! {
-                                    #fields_init_ts
-                                    #serde_private_ok_pg_type_ts
-                                }
-                            }),
-                            gen_ts(&{
                                 let fields_init_ts = gen_fields_serde_de_seq_access_next_el_init_ts(&[&U32, &U32, &U32, &U32]);
                                 quote! {
                                     #fields_init_ts
@@ -1538,12 +1526,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote! {
                                     #fields_init_ts
                                     #serde_private_ok_pg_type_ts
-                                }
-                            }),
-                            gen_ts(&{
-                                quote! {
-                                    #fields_serde_de_seq_access_next_el_init_string_ts
-                                    #match_origin_try_new_for_de_one_ts
                                 }
                             }),
                             gen_ts(&{
@@ -1942,10 +1924,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     let (
                         impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_ts,
-                        impl_serde_de_visitor_for_visitor_pg_money_ts,
                         impl_serde_de_visitor_for_visitor_uuid_uuid_ts,
                         impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts,
-                        impl_serde_de_visitor_for_visitor_string_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_types_time_time_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_time_ts,
@@ -1971,10 +1951,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         (
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_naive_time_ts, &fn_visit_map_sqlx_types_chrono_naive_time_ts),
-                            gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_pg_money_ts, &fn_visit_seq_pg_money_ts),
                             gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_uuid_ts, &fn_visit_seq_uuid_uuid_ts),
                             gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_mac_address_ts, &fn_visit_seq_sqlx_types_mac_address_mac_address_ts),
-                            gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_text_ts, &fn_visit_seq_string_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_time_time_ts, &fn_visit_map_sqlx_types_time_time_ts),
                             gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_sqlx_types_chrono_naive_date_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_types_chrono_naive_date_time_ts),
