@@ -2076,12 +2076,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::I64AsBigSerialInitByPg
                         | PgType::BoolAsBool
                         | PgType::StdVecVecU8AsBytea
-                        | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
-                        PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
-                            #struct_visitor_ts
-                            #impl_serde_de_visitor_for_visitor_pg_money_ts
-                            #serde_deserializer_de_newtype_struct_ts
-                        })),
+                        | PgType::SqlxTypesIpnetworkIpNetworkAsInet |
+                        PgType::SqlxPgTypesPgMoneyAsMoney => DeriveOrImpl::Derive,
                         PgType::StringAsText => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_string_ts
@@ -2307,6 +2303,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_copy()
                 .d_partial_eq()
                 .build_struct(
+                    &Ts2::new(),
                     &ident,
                     &Ts2::new(),
                     &quote!{;},
@@ -2835,6 +2832,40 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     DeriveOrImpl::Impl(_) => DSerdeDeserialize::False,
                 })
                 .build_struct(
+                    &if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                        match &pg_type {
+                            PgType::I16AsInt2 |
+                            PgType::I32AsInt4 |
+                            PgType::I64AsInt8 |
+                            PgType::F32AsFloat4 |
+                            PgType::F64AsFloat8 |
+                            PgType::I16AsSmallSerialInitByPg |
+                            PgType::I32AsSerialInitByPg |
+                            PgType::I64AsBigSerialInitByPg |
+                            PgType::BoolAsBool |
+                            PgType::StringAsText |
+                            PgType::StdVecVecU8AsBytea |
+                            PgType::SqlxTypesChronoNaiveTimeAsTime |
+                            PgType::SqlxTypesTimeTimeAsTime |
+                            PgType::SqlxPgTypesPgIntervalAsInterval |
+                            PgType::SqlxTypesChronoNaiveDateAsDate |
+                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                            PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                            PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                            PgType::SqlxTypesIpnetworkIpNetworkAsInet |
+                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                            PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                            PgType::SqlxPgTypesPgRangeI64AsInt8Range |
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
+                            PgType::SqlxPgTypesPgMoneyAsMoney => quote!{#[serde(from = "i64")]},
+                        }
+                    }
+                    else {
+                        Ts2::new()
+                    },
                     &ident_origin_ucc,
                     &Ts2::new(),
                     &quote!{(#ft_h);},
@@ -2918,6 +2949,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .d_thiserror_error()
                     .d_location_lib_location()
                     .build_enum(
+                        &Ts2::new(),
                         &ident_stdrt_nn_origin_try_new_er_ucc,
                         &Ts2::new(),
                         &{
@@ -3012,6 +3044,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             .d_thiserror_error()
                             .d_location_lib_location()
                             .build_enum(
+                                &Ts2::new(),
                                 &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                                 &Ts2::new(),
                                 &{
@@ -3788,6 +3821,46 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 DeriveOrImpl::Derive => &Ts2::new(),
                 DeriveOrImpl::Impl(v) => v,
             };
+            let md_de_from_or_try_from_for_ident_stndrt_nn_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                match &pg_type {
+                    PgType::I16AsInt2 |
+                    PgType::I32AsInt4 |
+                    PgType::I64AsInt8 |
+                    PgType::F32AsFloat4 |
+                    PgType::F64AsFloat8 |
+                    PgType::I16AsSmallSerialInitByPg |
+                    PgType::I32AsSerialInitByPg |
+                    PgType::I64AsBigSerialInitByPg |
+                    PgType::BoolAsBool |
+                    PgType::StringAsText |
+                    PgType::StdVecVecU8AsBytea |
+                    PgType::SqlxTypesChronoNaiveTimeAsTime |
+                    PgType::SqlxTypesTimeTimeAsTime |
+                    PgType::SqlxPgTypesPgIntervalAsInterval |
+                    PgType::SqlxTypesChronoNaiveDateAsDate |
+                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                    PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                    PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                    PgType::SqlxTypesIpnetworkIpNetworkAsInet |
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range |
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
+                    PgType::SqlxPgTypesPgMoneyAsMoney => quote!{
+                        impl From<i64> for #ident_origin_ucc {
+                            fn from(v: i64) -> Self {
+                                Self::new(#inn_type_stdrt_nn_ts(v))
+                            }
+                        }
+                    },
+                }
+            }
+            else {
+                Ts2::new()
+            };
             let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {self.to_string()});
             let impl_dflt_some_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_origin_ucc, &{
@@ -3932,6 +4005,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_is_string_empty_for_ident_origin_ts
                 #mb_impl_ser_for_ident_stdrt_nn_origin_ts
                 #mb_impl_de_for_ident_stdrt_nn_origin_ts
+                #md_de_from_or_try_from_for_ident_stndrt_nn_origin_ts
                 #impl_display_for_ident_origin_ts
                 #impl_location_lib_to_err_string_for_ident_origin_ts
                 #impl_dflt_some_one_el_for_ident_origin_ts
@@ -3953,6 +4027,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_ts_46b769df,
                     &Ts2::new(),
                     &ts
@@ -4002,6 +4077,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_tt_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_ts
@@ -4075,6 +4151,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .d_serde_serialize()
                     .d_serde_deserialize()
                     .build_struct(
+                        &Ts2::new(),
                         &ident_cr_ucc,
                         &Ts2::new(),
                         &ident_origin_struct_ts
@@ -4509,6 +4586,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     .d_serde_serialize()
                     .d_serde_deserialize()
                     .build_struct(
+                        &Ts2::new(),
                         &ident_rd_ucc,
                         &Ts2::new(),
                         &ident_origin_struct_ts
@@ -4568,6 +4646,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_rd_ids_ucc,
                     &Ts2::new(),
                     &quote!{(#ident_rd_ucc);},
@@ -4600,6 +4679,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_upd_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_ts
@@ -4626,6 +4706,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_upd_for_query_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_ts

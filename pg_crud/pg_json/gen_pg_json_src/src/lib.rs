@@ -642,6 +642,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_clone()
                 .d_copy()
                 .build_struct(
+                    &Ts2::new(),
                     &ident,
                     &Ts2::new(),
                     &quote!{;}
@@ -781,6 +782,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 )
                 .build_struct(
+                    &Ts2::new(),
                     &ident_origin_ucc,
                     &Ts2::new(),
                     &{
@@ -1006,6 +1008,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_tt_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_cnt_ts
@@ -1043,6 +1046,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_cr_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_cnt_ts
@@ -1071,6 +1075,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_partial_eq()
                 .d_serde_serialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_cr_for_query_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_cnt_ts
@@ -1112,6 +1117,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_sel_ucc,
                     &Ts2::new(),
                     &ArrDim::try_from(pattern).map_or_else(
@@ -1570,6 +1576,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_rd_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_cnt_ts
@@ -1602,6 +1609,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             .d_serde_serialize()
             .d_serde_deserialize()
             .build_struct(
+                &Ts2::new(),
                 &ident_rd_ids_ucc,
                 &Ts2::new(),
                 &{
@@ -1776,6 +1784,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_upd_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_cnt_ts
@@ -1810,6 +1819,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 .d_partial_eq()
                 .d_serde_serialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_upd_for_query_ucc,
                     &Ts2::new(),
                     &ident_origin_struct_cnt_ts

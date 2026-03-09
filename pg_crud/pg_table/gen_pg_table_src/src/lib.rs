@@ -582,7 +582,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         .d_debug()
         .d_thiserror_error()
         .d_location_lib_location()
-        .build_enum(&ident_prep_pg_er_ucc, &Ts2::new(), &{
+        .build_enum(&Ts2::new(), &ident_prep_pg_er_ucc, &Ts2::new(), &{
             let ts = quote! {
                 #[eo_to_err_string]
                 er: sqlx::Error,
@@ -954,7 +954,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_serde_serialize()
             .d_serde_deserialize()
             .d_utoipa_to_schema()
-            .build_struct(&ident_cr_ucc, &Ts2::new(), &{
+            .build_struct(&Ts2::new(), &ident_cr_ucc, &Ts2::new(), &{
                 let ts = gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| {
                     let fi = &el.ident;
                     let el_syn_field_ty_as_pg_type_cr_ts = gen_as_pg_type_cr_ts(&el.type0);
@@ -1102,7 +1102,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_clone()
                 .d_serde_serialize()
                 .d_utoipa_to_schema()
-                .build_struct(&ident_wh_ucc, &Ts2::new(), &quote! {{#fields_dcl_ts}});
+                .build_struct(
+                    &Ts2::new(),
+                    &ident_wh_ucc,
+                    &Ts2::new(),
+                    &quote! {{#fields_dcl_ts}},
+                );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
                 #ts_2ecd6da8
@@ -1114,6 +1119,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_thiserror_error()
             .d_location_lib_location()
             .build_enum(
+                &Ts2::new(),
                 &ident_wh_try_new_er_ucc,
                 &Ts2::new(),
                 &quote! {{
@@ -1188,7 +1194,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_serde_serialize()
             .d_serde_deserialize()
             .d_utoipa_to_schema()
-            .build_struct(&opt_ident_wh_ucc, &Ts2::new(), &{
+            .build_struct(&Ts2::new(), &opt_ident_wh_ucc, &Ts2::new(), &{
                 let opt_ident_rd_ids_stdrt_nn_ts = gen_opt_type_dcl_ts(&ident_wh_ucc);
                 quote! {(pub #opt_ident_rd_ids_stdrt_nn_ts);}
             });
@@ -1367,6 +1373,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_serde_serialize()
             .d_serde_deserialize()
             .build_enum(
+                &Ts2::new(),
                 &ident_sel_ucc,
                 &Ts2::new(),
                 &{
@@ -1425,7 +1432,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_partial_eq()
                 .d_serde_serialize()
                 .d_serde_deserialize()
-                .build_struct(&ident_rd_ucc, &Ts2::new(), &{
+                .build_struct(&Ts2::new(), &ident_rd_ucc, &Ts2::new(), &{
                     let field_opt_pk_ts = {
                         let opt_v_pk_ft_as_pg_type_rd_ts =
                             gen_opt_type_dcl_ts(&gen_v_dcl_ts0(&gen_as_pg_type_rd_ts(&pk_ft)));
@@ -1557,7 +1564,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_partial_eq()
                 .d_serde_serialize()
                 .d_serde_deserialize()
-                .build_struct(&ident_rd_ids_ucc, &Ts2::new(), &{
+                .build_struct(&Ts2::new(), &ident_rd_ids_ucc, &Ts2::new(), &{
                     enum WrapIntoOpt {
                         False,
                         True,
@@ -1693,7 +1700,12 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_debug()
                 .d_serde_serialize()
                 .d_utoipa_to_schema()
-                .build_struct(&ident_upd_ucc, &Ts2::new(), &quote! {{#fields_dcl_ts}});
+                .build_struct(
+                    &Ts2::new(),
+                    &ident_upd_ucc,
+                    &Ts2::new(),
+                    &quote! {{#fields_dcl_ts}},
+                );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
                 #ts_a09c0471
@@ -1705,6 +1717,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             .d_thiserror_error()
             .d_location_lib_location()
             .build_enum(
+                &Ts2::new(),
                 &ident_upd_try_new_er_ucc,
                 &Ts2::new(),
                 &quote! {{
@@ -1792,7 +1805,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 .d_debug()
                 .d_serde_serialize()
                 .d_utoipa_to_schema()
-                .build_struct(&ident_upd_for_query_ucc, &Ts2::new(), &{
+                .build_struct(&Ts2::new(), &ident_upd_for_query_ucc, &Ts2::new(), &{
                     let fields_named_without_pk_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| -> Ts2 {
                             let fi = &el.ident;
@@ -3422,7 +3435,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                 .d_serde_serialize()
                                 .d_serde_deserialize()
                                 .d_utoipa_to_schema()
-                                .build_struct(&ident_op_payload_ucc, &Ts2::new(), &dcl_ts);
+                                .build_struct(&Ts2::new(),&ident_op_payload_ucc, &Ts2::new(), &dcl_ts);
                             quote! {
                                 #AllowClippyArbitrarySrcItemOrdering
                                 #ts_ec5b096c
@@ -3498,6 +3511,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .d_serde_serialize()
                             .d_utoipa_to_schema()
                             .build_struct(
+                                &Ts2::new(),
                                 &ident_op_payload_ucc,
                                 &Ts2::new(),
                                 &quote! {(#vec_ident_upd_ts);},
@@ -3512,6 +3526,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             .d_thiserror_error()
                             .d_location_lib_location()
                             .build_enum(
+                                &Ts2::new(),
                                 &ident_op_payload_try_new_er_ucc,
                                 &Ts2::new(),
                                 &quote! {{
@@ -3662,7 +3677,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .d_debug()
                     .d_clone_if(derive_clone)
                     .d_copy_if(derive_copy)
-                    .build_struct(&gen_ident_op_params_ucc(op), &Ts2::new(), &{
+                    .build_struct(&Ts2::new(),&gen_ident_op_params_ucc(op), &Ts2::new(), &{
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         quote! {{
                             pub #PayloadSc: #ident_op_payload_ucc,
@@ -3681,7 +3696,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .d_debug()
                         .d_serde_serialize()
                         .d_serde_deserialize()
-                        .build_enum(&ident_op_res_vrts_ucc, &Ts2::new(), &{
+                        .build_enum(&Ts2::new(), &ident_op_res_vrts_ucc, &Ts2::new(), &{
                             let vrts_ts = type_vrts_from_req_res_syn_vrts
                                 .iter()
                                 .map(gen_serde_version_of_named_syn_vrt);
@@ -3745,7 +3760,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .d_debug()
                         .d_thiserror_error()
                         .d_location_lib_location()
-                        .build_enum(&ident_op_er_ucc, &Ts2::new(), &{
+                        .build_enum(&Ts2::new(), &ident_op_er_ucc, &Ts2::new(), &{
                             let vrts_ts = type_vrts_from_req_res_syn_vrts
                                 .iter()
                                 .map(gen_location_vrt_ts);
@@ -3768,7 +3783,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .d_debug()
                     .d_thiserror_error()
                     .d_location_lib_location()
-                    .build_enum(&gen_ident_try_op_er_ucc(op), &Ts2::new(), &{
+                    .build_enum(&Ts2::new(), &gen_ident_try_op_er_ucc(op), &Ts2::new(), &{
                         let syn_vrts: &Vec<Variant> = match &op {
                             Op::Rm | Op::Ro => &{
                                 let mut acc = common_http_req_syn_vrts.clone();

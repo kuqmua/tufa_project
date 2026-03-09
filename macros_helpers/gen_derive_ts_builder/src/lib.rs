@@ -155,6 +155,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
             fn build_h(
                 self,
                 struct_or_enum: #struct_or_enum_ucc,
+                ann: &dyn #quote_to_tokens_ts,
                 ident_d8cbb733: &dyn #quote_to_tokens_ts,
                 generics_7d48c97a: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
@@ -217,6 +218,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                             _s
                         },
                     );
+                    ::#quote_to_tokens_ts::to_tokens(&ann, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&mb_pub_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&struct_or_enum_ts, &mut _s);
                     ::#quote_to_tokens_ts::to_tokens(&ident_d8cbb733, &mut _s);
@@ -227,12 +229,14 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
             }
             pub fn build_struct(
                 self,
+                ann: &dyn #quote_to_tokens_ts,
                 ident_d87c6809: &dyn #quote_to_tokens_ts,
                 generics_c33a0ef2: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 self.build_h(
                     #struct_or_enum_ucc::Struct,
+                    ann,
                     ident_d87c6809,
                     generics_c33a0ef2,
                     ts
@@ -240,12 +244,14 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
             }
             pub fn build_enum(
                 self,
+                ann: &dyn #quote_to_tokens_ts,
                 ident_273dd063: &dyn #quote_to_tokens_ts,
                 generics_84bc3f7f: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
             ) -> Ts2 {
                 self.build_h(
                     #struct_or_enum_ucc::Enum,
+                    ann,
                     ident_273dd063,
                     generics_84bc3f7f,
                     ts

@@ -142,6 +142,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             })
             .d_schemars_json_schema()
             .build_struct(
+                &Ts2::new(),
                 &ident,
                 &match &generic {
                     Generic::False => proc_macro2_ts_new.clone(),

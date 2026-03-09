@@ -389,6 +389,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_clone()
                 .d_copy()
                 .build_struct(
+                    &Ts2::new(),
                     &ts,
                     &Ts2::new(),
                     &quote!{;}
@@ -616,6 +617,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_ts_20954cb5,
                     &Ts2::new(),
                     &ts
@@ -859,6 +861,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_partial_eq()
                 .d_serde_serialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_ts_d8fa00d3,
                     &Ts2::new(),
                     &ts_153ac202
@@ -1096,6 +1099,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_ts_6fce2985,
                     &Ts2::new(),
                     &ts_fc7ad384
@@ -1390,6 +1394,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_enum(
+                        &Ts2::new(),
                         &ident_sel_el_or_ident_with_id_sel_el_ucc,
                         &Ts2::new(),
                         &{
@@ -1533,6 +1538,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_enum(
+                        &Ts2::new(),
                         &ident_ts_90ecb979,
                         &Ts2::new(),
                         &quote!{{#ts_e1af2d89}}
@@ -1950,6 +1956,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_ts_fc625e96,
                     &Ts2::new(),
                     &ts_1c85ea2c
@@ -1989,6 +1996,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_thiserror_error()
                 .d_location_lib_location()
                 .build_enum(
+                    &Ts2::new(),
                     &ts,
                     &Ts2::new(),
                     &quote!{{
@@ -2287,6 +2295,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_rd_ids_h_ucc,
                     &Ts2::new(),
                     &gen_ident_rd_ids_or_ident_with_id_rd_ids_ts(&IsStdrtWithId::False)
@@ -2307,6 +2316,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_rd_ids_ucc,
                     &Ts2::new(),
                     &{
@@ -2341,6 +2351,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         .d_serde_serialize()
                         .d_serde_deserialize()
                         .build_struct(
+                            &Ts2::new(),
                             &ident_with_id_stdrt_nn_rd_ids_h_ucc,
                             &Ts2::new(),
                             &gen_ident_rd_ids_or_ident_with_id_rd_ids_ts(&IsStdrtWithId::True)
@@ -2358,6 +2369,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         .d_serde_serialize()
                         .d_serde_deserialize()
                         .build_struct(
+                            &Ts2::new(),
                             &ident_with_id_stdrt_nn_rd_ids_ucc,
                             &Ts2::new(),
                             &{
@@ -2398,6 +2410,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_clone()
                 .d_partial_eq()
                 .build_struct(
+                    &Ts2::new(),
                     match &is_stdrt_with_id {
                         IsStdrtWithId::False => &ident_rd_inn_ucc,
                         IsStdrtWithId::True => &ident_with_id_stdrt_nn_rd_inn_ucc,
@@ -2544,6 +2557,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
+                    &Ts2::new(),
                     &ident_upd_ucc,
                     &Ts2::new(),
                     &ts_975df5c5
@@ -2565,6 +2579,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         .d_thiserror_error()
                         .d_location_lib_location()
                         .build_enum(
+                            &Ts2::new(),
                             &ident_upd_try_new_er_ucc,
                             &Ts2::new(),
                             &quote!{{
@@ -2939,6 +2954,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_enum(
+                        &Ts2::new(),
                         &ident_stdrt_nn_upd_el_ucc,
                         &Ts2::new(),
                         &{
@@ -3012,6 +3028,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_struct(
+                        &Ts2::new(),
                         &ident_with_id_stdrt_nn_upd_el_ucc,
                         &Ts2::new(),
                         &quote!{{#ident_with_id_stdrt_nn_upd_el_fields_dcl_ts}}
@@ -3433,6 +3450,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     .d_partial_eq()
                     .d_serde_serialize()
                     .build_enum(
+                        &Ts2::new(),
                         &ident_stdrt_nn_upd_for_query_el_ucc,
                         &Ts2::new(),
                         &{
