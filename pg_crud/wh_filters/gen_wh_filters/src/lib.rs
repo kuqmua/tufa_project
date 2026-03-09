@@ -430,8 +430,6 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 let generic_true_type_encode = Generic::True {
                     mb_extra_traits_ts: Some(sqlx_type_pg_encode_ts.clone()),
                 };
-                let pub_v_pg_type_not_empty_unique_vec_t_ts =
-                    quote! {pub #VSc: PgTypeNotEmptyUniqueVec<T>};
                 let gen_pg_type_dims_helpers_pg_type = |pg_type_ptrn: &PgTypePtrn| {
                     gen_pg_type_dims_helpers(pg_type_ptrn, &PgTypeOrPgJson::PgType)
                 };
@@ -537,7 +535,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #mb_dims_dcl_ts
-                            #pub_v_pg_type_not_empty_unique_vec_t_ts
+                            pub #VSc: PgTypeNotEmptyUniqueVec<T>
                         },
                         gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                         IncrParamUndrscr::False,
