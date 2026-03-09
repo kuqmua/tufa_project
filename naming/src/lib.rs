@@ -795,7 +795,8 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["negative", "more", "typical"],
     ["positive", "less", "typical"],
     ["positive", "more", "typical"],
-    ["v"]
+    ["v"],
+    ["not", "uuid"]
 ]);
 #[derive(Debug, Clone, Copy, Optml)]
 pub struct HashMap;
