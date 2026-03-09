@@ -1320,7 +1320,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     let start_end_display_plus_to_tokens_arr: [&dyn DisplayPlusToTokens; 2] = [&StartSc, &EndSc];
-                    let date_time_display_plus_to_tokens_arr: [&dyn DisplayPlusToTokens; 2] = [&DateSc, &TimeSc];
                     let date_naive_time_display_plus_to_tokens_arr: [&dyn DisplayPlusToTokens; 2] = [&DateNaiveSc, &TimeSc];
                     let serde_deserializer_de_struct_visitor_ts = {
                         quote! {
@@ -1459,7 +1458,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let (
                         fn_visit_seq_uuid_uuid_ts,
                         fn_visit_seq_sqlx_types_mac_address_mac_address_ts,
-                        fn_visit_seq_sqlx_types_chrono_naive_date_time_ts,
                         fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                         fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                         fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
@@ -1499,10 +1497,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     #serde_private_ok_pg_type_ts
                                 }
                             }),
-                            gen_new_two_ts(&gen_fields_serde_de_seq_access_next_el_init_ts(
-                                &[&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
-                                &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc]
-                            )),
                             gen_new_two_ts(&gen_fields_serde_de_seq_access_next_el_init_ts(
                                 &[&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
                                 &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc]
@@ -1555,7 +1549,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     };
-                    let (fn_visit_str_v_start_end_ts, fn_visit_str_v_date_time_ts, fn_visit_str_v_date_naive_time_ts) = {
+                    let (fn_visit_str_v_start_end_ts, fn_visit_str_v_date_naive_time_ts) = {
                         let gen_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                             let fields_ts = vec_ts.iter().enumerate().map(|(i_e1c5acfd, el0)| {
                                 let el0_dq_ts = dq_ts(&el0);
@@ -1579,11 +1573,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         (
                             gen_ts(&start_end_display_plus_to_tokens_arr),
-                            gen_ts(&date_time_display_plus_to_tokens_arr),
                             gen_ts(&date_naive_time_display_plus_to_tokens_arr),
                         )
                     };
-                    let (fn_visit_bytes_start_end_ts, fn_visit_bytes_date_time_ts, fn_visit_bytes_date_naive_time_ts) = {
+                    let (fn_visit_bytes_start_end_ts, fn_visit_bytes_date_naive_time_ts) = {
                         let gen_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                             let fields_ts = vec_ts.iter().enumerate().map(|(i_545c3b1e, el0)| {
                                 let b_el0_dq_ts = format!("b{}", dq_str(&el0)).parse::<Ts2>().expect("c76c976b");
@@ -1604,7 +1597,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         (
                             gen_ts(&start_end_display_plus_to_tokens_arr),
-                            gen_ts(&date_time_display_plus_to_tokens_arr),
                             gen_ts(&date_naive_time_display_plus_to_tokens_arr),
                         )
                     };
@@ -1625,7 +1617,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     let (
-                        fn_visit_map_sqlx_types_chrono_naive_date_time_ts,
                         fn_visit_map_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                         fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                         fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
@@ -1648,7 +1639,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         };
                         let (
-                            field_opt_none_init_sqlx_types_chrono_naive_date_time_ts,
                             field_opt_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             field_opt_none_init_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
@@ -1665,7 +1655,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             (
                                 gen_ts(&[&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc, &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc]),
-                                gen_ts(&[&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc, &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc]),
                                 gen_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_as_nn_date_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_as_nn_date_origin_ts]),
                                 gen_ts(&[&std_ops_bound_sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ts, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ts]),
                                 gen_ts(&[&std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_origin_ts, &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_origin_ts]),
@@ -1674,7 +1663,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             )
                         };
                         let (
-                            while_some_next_k_field_sqlx_types_chrono_naive_date_time_ts,
                             while_some_next_k_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                             while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                             while_some_next_k_field_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
@@ -1708,7 +1696,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             (
-                                gen_ts(&[(&DateSc, &sqlx_types_chrono_naive_date_as_nn_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc)]),
                                 gen_ts(&[(&DateNaiveSc, &sqlx_types_chrono_naive_date_as_nn_date_origin_ucc), (&TimeSc, &sqlx_types_chrono_naive_time_as_nn_time_origin_ucc)]),
                                 gen_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_nn_date_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_as_nn_date_origin_ts)]),
                                 gen_ts(&[(&StartSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ts), (&EndSc, &std_ops_bound_sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ts)]),
@@ -1720,7 +1707,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 gen_ts(&[(&StartSc, &std_ops_bound_i64_ts), (&EndSc, &std_ops_bound_i64_ts)]),
                             )
                         };
-                        let (match_field_init_start_end_ts, match_field_init_date_time_ts, match_field_init_date_naive_time_ts) = {
+                        let (match_field_init_start_end_ts, match_field_init_date_naive_time_ts) = {
                             let gen_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                                 let fields_init_ts = vec_ts.iter().enumerate().map(|(i_e1adef1a, el0)| {
                                     let field_name_dq_ts = dq_str(&el0);
@@ -1737,17 +1724,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             (
                                 gen_ts(&start_end_display_plus_to_tokens_arr),
-                                gen_ts(&date_time_display_plus_to_tokens_arr),
                                 gen_ts(&date_naive_time_display_plus_to_tokens_arr),
                             )
                         };
                         (
-                            gen_visit_map_ts(
-                                &field_opt_none_init_sqlx_types_chrono_naive_date_time_ts,
-                                &while_some_next_k_field_sqlx_types_chrono_naive_date_time_ts,
-                                &match_field_init_date_time_ts,
-                                &origin_new_for_de_two_ts,
-                            ),
                             gen_visit_map_ts(
                                 &field_opt_none_init_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                                 &while_some_next_k_field_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
@@ -1786,7 +1766,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ),
                         )
                     };
-                    let (const_fields_start_end_ts, const_fields_sqlx_types_chrono_naive_date_time_ts, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts) = {
+                    let (const_fields_start_end_ts, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts) = {
                         let gen_ts = |vec_ts: &[&dyn DisplayPlusToTokens]| {
                             let field_names_ts = vec_ts.iter().map(|el0| dq_ts(&el0));
                             quote! {
@@ -1796,7 +1776,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         (
                             gen_ts(&start_end_display_plus_to_tokens_arr),
-                            gen_ts(&date_time_display_plus_to_tokens_arr),
                             gen_ts(&date_naive_time_display_plus_to_tokens_arr),
                         )
                     };
@@ -1827,7 +1806,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let (
                         impl_serde_de_visitor_for_visitor_uuid_uuid_ts,
                         impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts,
-                        impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_time_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
@@ -1850,7 +1828,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         (
                             gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_uuid_ts, &fn_visit_seq_uuid_uuid_ts),
                             gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_mac_address_ts, &fn_visit_seq_sqlx_types_mac_address_mac_address_ts),
-                            gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_types_chrono_naive_date_time_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts, &fn_visit_map_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts),
@@ -1867,7 +1844,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let type_v_equal_undrscr_field_semicolon_ts = quote! {type Value = __Field;};
                     let (
                         impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33,
-                        impl_serde_de_visitor_for_field_visitor_ts_dc439ca1,
                         impl_serde_de_visitor_for_field_visitor_ts_8c733fe0,
                     ) = {
                         let gen_ts = |ts: &dyn ToTokens| {
@@ -1889,13 +1865,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 #fn_visit_u64_two_ts
                                 #fn_visit_str_v_start_end_ts
                                 #fn_visit_bytes_start_end_ts
-                            }),
-                            gen_ts(&quote! {
-                                #type_v_equal_undrscr_field_semicolon_ts
-                                #fn_expecting_fi_ts
-                                #fn_visit_u64_two_ts
-                                #fn_visit_str_v_date_time_ts
-                                #fn_visit_bytes_date_time_ts
                             }),
                             gen_ts(&quote! {
                                 #type_v_equal_undrscr_field_semicolon_ts
@@ -1930,16 +1899,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesChronoNaiveTimeAsTime |
                         PgType::SqlxTypesTimeTimeAsTime |
                         PgType::SqlxPgTypesPgIntervalAsInterval |
-                        PgType::SqlxTypesChronoNaiveDateAsDate => DeriveOrImpl::Derive,
-                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
-                            #enum_field_two_ts
-                            #impl_serde_de_visitor_for_field_visitor_ts_dc439ca1
-                            #impl_de_for_field_ts
-                            #struct_visitor_ts
-                            #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_time_ts
-                            #const_fields_sqlx_types_chrono_naive_date_time_ts
-                            #serde_deserializer_de_struct_visitor_ts
-                        })),
+                        PgType::SqlxTypesChronoNaiveDateAsDate |
+                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => DeriveOrImpl::Derive,
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_8c733fe0
@@ -2660,7 +2621,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::I64AsBigSerialInitByPg |
                             PgType::BoolAsBool |
                             PgType::StdVecVecU8AsBytea |
-                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                             PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                             PgType::SqlxTypesUuidUuidAsUuidInitByClient |
@@ -2677,6 +2637,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxTypesTimeTimeAsTime => quote!{#[serde(try_from = "(u8,u8,u8,u32)")]},
                             PgType::SqlxPgTypesPgIntervalAsInterval => quote!{#[serde(from = "(i32,i32,i64)")]},
                             PgType::SqlxTypesChronoNaiveDateAsDate => quote!{#[serde(try_from = "sqlx::types::chrono::NaiveDate")]},
+                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote!{#[serde(from = "(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)")]},//todo reuse name
                         }
                     }
                     else {
@@ -3689,7 +3650,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesChronoNaiveTimeAsTime |
                     PgType::SqlxTypesTimeTimeAsTime |
                     PgType::SqlxTypesChronoNaiveDateAsDate |
-                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                     PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                     PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                     PgType::SqlxTypesUuidUuidAsUuidInitByClient |
@@ -3711,6 +3671,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl From<(i32,i32,i64)> for #ident_origin_ucc {
                             fn from(v: (i32,i32,i64)) -> Self {
                                 Self::new_for_deserialize(v.0, v.1, v.2)
+                            }
+                        }
+                    },
+                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote!{
+                        impl From<(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)> for #ident_origin_ucc {
+                            fn from(v: (SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)) -> Self {
+                                Self::new_for_deserialize(v.0, v.1)
                             }
                         }
                     },
