@@ -56,6 +56,7 @@
 - Refactor or reformat without request.
 - Rename public items casually.
 - Change semantics silently.
+- Insert blank lines between code
 
 ## Run before completion
 
