@@ -469,11 +469,6 @@
             "Write(**/migrations/*.sql)"
         ],
         "deny": [
-            "Bash(rm -rf *)",
-            "Bash(rm -r *)",
-            "Bash(rm -f *)",
-            "Bash(rm /*)",
-            "Bash(rmdir *)",
             "Bash(sudo *)",
             "Bash(su *)",
             "Bash(su)",
