@@ -1,0 +1,48 @@
+{
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "permissions": {
+        "defaultMode": "acceptEdits",
+        "allow": [
+            "Bash(cargo build)",
+            "Bash(cargo build --release)",
+            "Bash(cargo run)",
+            "Bash(cargo run -- *)",
+            "Bash(cargo test)",
+            "Bash(cargo test *)",
+            "Bash(cargo check)",
+            "Bash(cargo clippy)",
+            "Bash(cargo clippy -- *)",
+            "Bash(cargo fmt)",
+            "Bash(cargo fmt --check)",
+            "Bash(cargo doc)",
+            "Bash(cargo doc --open)",
+            "Bash(cargo clean)",
+            "Bash(cargo update)",
+            "Bash(cargo add *)",
+            "Bash(cargo remove *)",
+            "Bash(cargo bench)",
+            "Bash(cargo fix *)",
+            "Bash(rustfmt *)",
+            "Bash(rustup *)",
+            "Bash(git status)",
+            "Bash(git diff *)",
+            "Bash(git log *)",
+            "Bash(git add *)",
+            "Bash(git commit *)",
+            "Bash(git push *)",
+            "Bash(git pull)",
+            "Bash(git checkout *)",
+            "Bash(git branch *)",
+            "Bash(cat *)",
+            "Bash(ls *)",
+            "Bash(find * -name *.rs)",
+            "Bash(grep -r * src/)"
+        ],
+        "deny": [
+            "Bash(rm -rf *)",
+            "Bash(sudo *)",
+            "Bash(curl * | sh)",
+            "Bash(wget * | sh)"
+        ]
+    }
+}
