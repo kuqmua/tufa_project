@@ -3204,7 +3204,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 });
                 let mb_fn_new_or_try_new_for_de_token = {
-                    let sqlx_types_uuid_uuid_as_uuid_v4_params_ts = quote! {#VSc: String};
+                    let sqlx_types_uuid_uuid_as_uuid_v4_params_ts = quote! {#VSc: &str};
                     let sqlx_types_uuid_uuid_as_uuid_v4_ts = quote!{
                         match uuid::Uuid::try_parse(&v) {
                             Ok(v0) => Ok(Self(v0)),
@@ -3744,7 +3744,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<String> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: String) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(v)
+                                Self::try_new_for_de(&v)
                             }
                         }
                     },
