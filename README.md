@@ -48,9 +48,14 @@ This is a Rust workspace project with the following main components:
 
 ## Setup and Installation
 
+## Toolchain
+
+This workspace is intended to be built and linted with the latest Rust nightly toolchain.
+
+
 ### Prerequisites
 
-- Rust (latest stable version)
+- Rust nightly (latest version)
 - PostgreSQL database
 - Docker (for containerized deployments)
 
