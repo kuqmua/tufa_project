@@ -3,6 +3,11 @@
     "permissions": {
         "defaultMode": "acceptEdits",
         "allow": [
+            "Write(**/*.sql)",
+            "Write(**/*.rs)",
+            "Write(**/*.toml)",
+            "Write(**/*.yml)",
+            "Write(**/*.yaml)",
             "Bash(cargo build)",
             "Bash(cargo build --release)",
             "Bash(cargo run)",
