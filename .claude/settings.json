@@ -463,7 +463,10 @@
             "Bash(pug --basedir *)",
             "Bash(npx pug *)",
             "Bash(npx gulp *)",
-            "Bash(gulp *)"
+            "Bash(gulp *)",
+            "Write(*.sql)",
+            "Write(migrations/*.sql)",
+            "Write(**/migrations/*.sql)"
         ],
         "deny": [
             "Bash(rm -rf *)",
