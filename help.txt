@@ -93,9 +93,11 @@ match &pg_type_impl_try_new_for_deserialize {
 
                                     gen_er_ts
                                     #[serde(try_from = "String")]
-                                    let impl_de_for_uuid_uuid_ts = gen_impl_de_for_tokens_ts
-                                    let md_de_from_for_ident_st ndrt_nn_origin_ts
+                                     => DeriveOrImpl::Derive
+                                    let md_de_from_for_ident_stndrt_nn_origin_ts
                                     let md_de_try_from_for_ident_stndrt_nn_origin_ts 
+                                    ident_stdrt_nn_origin_try_new_for_de_er_ucc
+                                    gen_try_new_for_de_ts
 
 
                                     impl<'de> _serde::Deserialize
