@@ -43,9 +43,8 @@ use pg_crud_macros_common::{
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_struct_ident_dq_ts,
-    gen_struct_ident_with_nbr_els_dq_ts, gen_tuple_struct_ident_dq_ts, gen_v_init_ts,
-    gen_vec_tokens_dcl_ts, impl_pg_type_equal_oprtr_for_ident_ts,
-    impl_pg_type_wh_filter_for_ident_ts,
+    gen_struct_ident_with_nbr_els_dq_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
+    impl_pg_type_equal_oprtr_for_ident_ts, impl_pg_type_wh_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -1056,7 +1055,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let (ser_derive_or_impl, de_derive_or_impl) = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
             #[allow(clippy::arbitrary_source_item_ordering)]
             enum ParamNbr {
-                One,
                 Two,
                 Three,
                 Four,
@@ -1064,7 +1062,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             impl ParamNbr {
                 const fn get_i(&self) -> usize {
                     match &self {
-                        Self::One => 0,
                         Self::Two => 1,
                         Self::Three => 2,
                         Self::Four => 3,
@@ -1075,7 +1072,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
             }
             let self_dot_zero_ts = quote! {#SelfSc.0};
-            let param_nbr_one = ParamNbr::One;
             let param_nbr_two = ParamNbr::Two;
             let param_nbr_three = ParamNbr::Three;
             let param_nbr_four = ParamNbr::Four;
@@ -1314,7 +1310,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         True,
                     }
                     let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident_origin_ucc);
-                    let tuple_struct_ident_dq_ts = gen_tuple_struct_ident_dq_ts(&ident_origin_ucc);
                     let struct_visitor_ts = quote! {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
@@ -1335,16 +1330,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             )
                         }
-                    };
-                    let serde_deserializer_de_newtype_struct_ts = quote! {
-                        _serde::Deserializer::deserialize_newtype_struct(
-                            __deserializer,
-                            #ident_stdrt_nn_origin_dq_ts,
-                            __Visitor {
-                                marker: serde::__private228::PhantomData::<Self>,
-                                lt: serde::__private228::PhantomData,
-                            },
-                        )
                     };
                     let gen_impl_de_for_tokens_ts = |ts: &dyn ToTokens| {
                         quote! {
@@ -1384,7 +1369,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     };
-                    let (fn_expecting_struct_ident_dq_ts, fn_expecting_tuple_struct_ident_dq_ts, fn_expecting_fi_ts) = {
+                    let (fn_expecting_struct_ident_dq_ts, fn_expecting_fi_ts) = {
                         let gen_ts = |ts: &dyn ToTokens| {
                             quote! {
                                 fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
@@ -1392,21 +1377,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         };
-                        (gen_ts(&struct_ident_dq_ts), gen_ts(&tuple_struct_ident_dq_ts), gen_ts(&quote! {"field identifier"}))
+                        (gen_ts(&struct_ident_dq_ts), gen_ts(&quote! {"field identifier"}))
                     };
-                    let field_0_v_ts = gen_field_i_v_ts(param_nbr_one.get_i());
-                    let gen_serde_private_ok_ts = |ts: &dyn ToTokens| {
-                        quote! {Ok(#ts)}
-                    };
-                    let gen_serde_private_ok_pg_type_ts = |ts: &dyn ToTokens| gen_serde_private_ok_ts(&quote! {#ident_stdrt_nn_origin_ucc(#ts)});
-                    let match_uuid_uuid_ft_try_parse_ts = quote! {match #inn_type_stdrt_nn_ts::try_parse(&#field_0_v_ts) {
-                        Ok(v_3c0b34fb) => v_3c0b34fb,
-                        Err(er) => {
-                            return Err(serde::de::Error::custom(er));
-                        }
-                    }};
-                    let sqlx_types_mac_address_mac_address_ft_new_field_0_v_ts = quote! {#inn_type_stdrt_nn_ts::#NewSc(#field_0_v_ts)};
-                    let arr_u8_6_ts = quote! {[u8; 6]};
                     let gen_vec_field_i_ts = |length: usize|{
                         let fields_ts = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(i_a8d5119e, _)| gen_field_i_v_ts(i_a8d5119e));
                         quote!{#(#fields_ts),*}
@@ -1426,24 +1398,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             Ok(#ident_stdrt_nn_origin_ucc::new_for_deserialize(#fields_ts))
                         }
                     };
-                    let (fn_visit_newtype_struct_uuid_ts, fn_visit_newtype_struct_mac_address_ts) = {
-                        let gen_ts = |type_ts: &dyn ToTokens, serde_private_ok_ts: &dyn ToTokens| {
-                            quote! {
-                                #[inline]
-                                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
-                                where
-                                    __E: serde::Deserializer<'de>,
-                                {
-                                    let #field_0_v_ts = <#type_ts as serde::Deserialize>::deserialize(__e)?;
-                                    #serde_private_ok_ts
-                                }
-                            }
-                        };
-                        (
-                            gen_ts(&StringTs, &gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_ft_try_parse_ts)),
-                            gen_ts(&arr_u8_6_ts, &gen_serde_private_ok_pg_type_ts(&sqlx_types_mac_address_mac_address_ft_new_field_0_v_ts)),
-                        )
-                    };
                     let gen_fields_serde_de_seq_access_next_el_init_ts = |vec_ts: &[&dyn ToTokens]| {
                         let er_message_ts = gen_struct_ident_with_nbr_els_dq_ts(&ident_stdrt_nn_origin_ucc, vec_ts.len());
                         let fields_init_ts = vec_ts.iter().enumerate().map(|(i_70b4dabd, el0)| {
@@ -1458,8 +1412,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {#(#fields_init_ts)*}
                     };
                     let (
-                        fn_visit_seq_uuid_uuid_ts,
-                        fn_visit_seq_sqlx_types_mac_address_mac_address_ts,
                         fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                         fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                         fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
@@ -1477,27 +1429,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         };
-                        let fields_serde_de_seq_access_next_el_init_string_ts = gen_fields_serde_de_seq_access_next_el_init_ts(&[&StringTs]);
                         let gen_new_two_ts = |ts: &dyn ToTokens|gen_ts(&quote! {
                             #ts
                             #origin_new_for_de_two_ts
                         });
                         (
-                            gen_ts(&{
-                                let serde_private_ok_pg_type_ts = gen_serde_private_ok_pg_type_ts(&match_uuid_uuid_ft_try_parse_ts);
-                                quote! {
-                                    #fields_serde_de_seq_access_next_el_init_string_ts
-                                    #serde_private_ok_pg_type_ts
-                                }
-                            }),
-                            gen_ts(&{
-                                let fields_init_ts = gen_fields_serde_de_seq_access_next_el_init_ts(&[&arr_u8_6_ts]);
-                                let serde_private_ok_pg_type_ts = gen_serde_private_ok_pg_type_ts(&sqlx_types_mac_address_mac_address_ft_new_field_0_v_ts);
-                                quote! {
-                                    #fields_init_ts
-                                    #serde_private_ok_pg_type_ts
-                                }
-                            }),
                             gen_new_two_ts(&gen_fields_serde_de_seq_access_next_el_init_ts(
                                 &[&std_ops_bound_sqlx_types_chrono_naive_date_as_nn_date_origin_ts,
                                 &std_ops_bound_sqlx_types_chrono_naive_date_as_nn_date_origin_ts]
@@ -1766,8 +1702,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     let (
-                        impl_serde_de_visitor_for_visitor_uuid_uuid_ts,
-                        impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts,
                         impl_serde_de_visitor_for_visitor_sqlx_pg_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_ts,
@@ -1787,8 +1721,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             )
                         };
                         (
-                            gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_uuid_ts, &fn_visit_seq_uuid_uuid_ts),
-                            gen_ts(&fn_expecting_tuple_struct_ident_dq_ts, &fn_visit_newtype_struct_mac_address_ts, &fn_visit_seq_sqlx_types_mac_address_mac_address_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts),
                             gen_ts(&fn_expecting_struct_ident_dq_ts, &fn_visit_seq_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts, &fn_visit_map_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_time_ts),
                             gen_ts(
@@ -1821,13 +1753,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             #impl_serde_de_visitor_for_tokens_ts
                         }
                     };
-                    let impl_de_for_uuid_uuid_ts = gen_impl_de_for_tokens_ts(&{
-                        quote! {
-                            #struct_visitor_ts
-                            #impl_serde_de_visitor_for_visitor_uuid_uuid_ts
-                            #serde_deserializer_de_newtype_struct_ts
-                        }
-                    });
                     match &pg_type {
                         PgType::I16AsInt2
                         | PgType::I32AsInt4
@@ -1849,12 +1774,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                         PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
-                        PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Derive,
-                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
-                            #struct_visitor_ts
-                            #impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts
-                            #serde_deserializer_de_newtype_struct_ts
-                        })),
+                        PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Derive,
                         PgType::SqlxPgTypesPgRangeI32AsInt4Range => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #enum_field_two_ts
                             #impl_serde_de_visitor_for_field_visitor_ts_f4d8cc33
@@ -2561,7 +2482,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::BoolAsBool |
                             PgType::StdVecVecU8AsBytea |
                             PgType::SqlxTypesIpnetworkIpNetworkAsInet |
-                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range |
                             PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
@@ -2577,6 +2497,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::StringAsText |
                             PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                             PgType::SqlxTypesUuidUuidAsUuidInitByClient => quote!{#[serde(try_from = "String")]},
+                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr => quote!{#[serde(from = "[u8; 6]")]},
                         }
                     }
                     else {
@@ -3653,7 +3574,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                     PgType::SqlxTypesUuidUuidAsUuidInitByClient |
                     PgType::SqlxTypesIpnetworkIpNetworkAsInet |
-                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
                     PgType::SqlxPgTypesPgRangeI32AsInt4Range |
                     PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
@@ -3677,6 +3597,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl From<(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)> for #ident_origin_ucc {
                             fn from(v: (SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)) -> Self {
                                 Self::new_for_deserialize(v.0, v.1)
+                            }
+                        }
+                    },
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => quote!{
+                        impl From<[u8; 6]> for #ident_origin_ucc {
+                            fn from(v: [u8; 6]) -> Self {
+                                Self(#inn_type_stdrt_nn_ts::new(v))
                             }
                         }
                     },

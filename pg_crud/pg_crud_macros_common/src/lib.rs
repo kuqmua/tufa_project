@@ -670,9 +670,6 @@ pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
 pub fn gen_struct_ident_with_nbr_els_dq_ts(ident: &dyn DisplayPlusToTokens, length: usize) -> Ts2 {
     dq_ts(&format!("struct {ident} with {length} els"))
 }
-pub fn gen_tuple_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
-    dq_ts(&format!("tuple struct {v}"))
-}
 pub fn gen_sqlx_types_json_type_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
 }
