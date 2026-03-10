@@ -428,12 +428,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     impl TryFrom<PgTypeRecordRaw> for PgTypeRecord {
         type Error = String;
         fn try_from(v: PgTypeRecordRaw) -> Result<Self, Self::Error> {
-            let cant_support_nl_vrts_message = "cant support nl vrts: ";
-            let cant_support_arr_version_message = "cant support arr_version: ";
+            let cant_supp_nl_vrts_msg = "cant support nl vrts: ";
+            let cant_supp_arr_ver_msg = "cant support arr_version: ";
             match &v.pg_type.can_be_nl() {
                 CanBeNl::False => {
                     if matches!(&v.is_nl, IsNl::True) {
-                        return Err(format!("{cant_support_nl_vrts_message}{v:#?}"));
+                        return Err(format!("{cant_supp_nl_vrts_msg}{v:#?}"));
                     }
                     match &v.pg_type_pattern {
                         PgTypePattern::Stdrt => Ok(Self {
@@ -444,7 +444,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgTypePattern::ArrDim1 { dim1_is_nl } => {
                             match &v.pg_type.can_be_an_arr_el() {
                                 CanBeAnArrEl::False => {
-                                    Err(format!("{cant_support_arr_version_message}{v:#?}"))
+                                    Err(format!("{cant_supp_arr_ver_msg}{v:#?}"))
                                 }
                                 CanBeAnArrEl::True => match &dim1_is_nl {
                                     IsNl::False => Ok(Self {
@@ -452,9 +452,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         is_nl: v.is_nl,
                                         pg_type_pattern: v.pg_type_pattern,
                                     }),
-                                    IsNl::True => {
-                                        Err(format!("{cant_support_nl_vrts_message}{v:#?}"))
-                                    }
+                                    IsNl::True => Err(format!("{cant_supp_nl_vrts_msg}{v:#?}")),
                                 },
                             }
                         }
@@ -467,9 +465,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         pg_type_pattern: v.pg_type_pattern,
                     }),
                     PgTypePattern::ArrDim1 { .. } => match &v.pg_type.can_be_an_arr_el() {
-                        CanBeAnArrEl::False => {
-                            Err(format!("{cant_support_arr_version_message}{v:#?}"))
-                        }
+                        CanBeAnArrEl::False => Err(format!("{cant_supp_arr_ver_msg}{v:#?}")),
                         CanBeAnArrEl::True => Ok(Self {
                             pg_type: v.pg_type,
                             is_nl: v.is_nl,

@@ -163,8 +163,8 @@ bool_str
 can_be_pk
 canonicalize_pathbuf
 canonicalize_pathbuf_as_string
-cant_support_arr_version_message
-cant_support_nl_vrts_message
+cant_supp_arr_ver_msg
+cant_supp_nl_vrts_msg
 cargo_toml_cnt
 case_null_format_ts
 casing_ts
