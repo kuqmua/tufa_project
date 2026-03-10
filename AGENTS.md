@@ -27,6 +27,8 @@
 - Keep generated functions and closures inside usage scope.
 - `expect()` messages must contain **8 first symbols from random UUID v4**.
 - Use abbreviations when creating names.
+- Use conrete crates types from crates.io in workspace Cargo.toml
+- Use `*CRATE NAME*.workspace = true` for workspace crates depoendencies in Cargo.toml
 
 ## WHAT AGENT MUST NOT DO
 
