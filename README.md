@@ -16,10 +16,16 @@ A comprehensive Rust-based project for building web applications with PostgreSQL
 
 Tufa Project is a Rust workspace containing multiple crates designed to facilitate the development of web applications with PostgreSQL database integration. The project includes various utilities, macros, and libraries to streamline common development tasks.
 
+## What Was Fixed
+
+- Clarified terminology in documentation by replacing inconsistent `er` wording with `error`.
+- Expanded wording around quality checks to make commands and expected outcomes easier to understand.
+- Added this section to explicitly describe what was improved in the project documentation.
+
 ## Key Features
 
 - PostgreSQL CRUD ops with code generation
-- Advanced er handling with detailed context
+- Advanced error handling with detailed context
 - Configuration management
 - Git information integration
 - Type-safe database interactions
@@ -96,7 +102,7 @@ RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 ### Code Quality
 
 ```bash
-# Check for ers
+# Check for errors
 cargo check
 
 # Run clippy lints
@@ -125,13 +131,13 @@ Configuration management with environment variable parsing and type-safe accesso
 Compile-time and runtime Git repository information retrieval.
 
 ### location_lib
-Advanced er handling system with detailed context and src tracking.
+Advanced error handling system with detailed context and src tracking.
 
 ### from_sqlx_postgres_er
-Utilities for converting SQLx PostgreSQL ers to application-specific ers.
+Utilities for converting SQLx PostgreSQL errors to application-specific errors.
 
 ### from_str
-Safe string parsing with detailed er context.
+Safe string parsing with detailed error context.
 
 ### gen_quotes
 Utilities for generating quotes and text content.
