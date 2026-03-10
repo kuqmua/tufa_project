@@ -3201,282 +3201,330 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                 });
-                let mb_fn_new_or_try_new_for_de_token = match &pg_type_pattern {
-                    PgTypePattern::Stdrt => match &is_nl {
-                        IsNl::False => match &pg_type_deserialize {
-                            PgTypeDeserialize::Derive => Ts2::new(),
-                            PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDe(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
-                                PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(pg_type_impl_new_for_deserialize) => {
-                                    let params_ts = {
-                                        let gen_start_end_std_std_ops_bound_ts = |ts: &dyn ToTokens| {
-                                            quote! {
-                                                #StartSc: std::ops::Bound<#ts>,
-                                                #EndSc: std::ops::Bound<#ts>
-                                            }
-                                        };
-                                        match &pg_type_impl_new_for_deserialize {
-                                            PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval => quote! {
-                                                #MonthsSc: #I32,
-                                                #DaysSc: #I32,
-                                                #MicrosecondsSc: #I64,
-                                            },
-                                            PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
-                                                #DateSc: #sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
-                                                #TimeSc: #sqlx_types_chrono_naive_time_as_nn_time_origin_ucc
-                                            },
-                                            PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote! {
-                                                #DateNaiveSc: #sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
-                                                #TimeSc: #sqlx_types_chrono_naive_time_as_nn_time_origin_ucc,
-                                            },
-                                            PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc),
-                                            PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ucc),
-                                            PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_origin_ucc),
-                                        }
-                                    };
-                                    let ts = {
-                                        let self_sqlx_pg_types_pg_range_ts = {
-                                            let (start_ts, end_ts) = {
-                                                let gen_ts = |start_or_end: StartOrEnd|{
-                                                    let name_ts = match start_or_end {
-                                                        StartOrEnd::End => quote!{end},
-                                                        StartOrEnd::Start => quote!{start},
-                                                    };
-                                                    quote!{
-                                                        #name_ts: match #name_ts {
-                                                            std::ops::Bound::Included(v) => std::ops::Bound::Included(v.0),
-                                                            std::ops::Bound::Excluded(v) => std::ops::Bound::Excluded(v.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        },
-                                                    }
-                                                };
-                                                (gen_ts(StartOrEnd::Start), gen_ts(StartOrEnd::End))
-                                            };
-                                            quote!{Self(sqlx::postgres::types::PgRange {
-                                                #start_ts
-                                                #end_ts
-                                            })}
-                                        };
-                                        match &pg_type_impl_new_for_deserialize {
-                                            PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval => quote! {
-                                                Self(sqlx::postgres::types::PgInterval {
-                                                    #MonthsSc,
-                                                    #DaysSc,
-                                                    #MicrosecondsSc,
-                                                })
-                                            },
-                                            PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
-                                                Self(#inn_type_stdrt_nn_ts::#NewSc(#DateSc.0, #TimeSc.0))
-                                            },
-                                            PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                                                    #DateNaiveSc.0,
-                                                    #TimeSc.0
-                                                }));
-                                                quote! {Self(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts)}
-                                            }
-                                            PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange | PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange | PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
-                                                self_sqlx_pg_types_pg_range_ts
-                                            }
-                                        }
-                                    };
-                                    quote! {
-                                        const fn new_for_deserialize(#params_ts) -> Self {
-                                            #ts
-                                        }
+                let mb_fn_new_or_try_new_for_de_token = {
+                    let sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_params_ts = quote! {#VSc: String};
+                    let sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_ts = quote!{
+                        match uuid::Uuid::try_parse(&v) {
+                            Ok(v0) => Ok(Self(v0)),
+                            Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NotUuidUcc {
+                                #VSc: er.to_string(),
+                                loc: location_lib::loc!(),
+                            })
+                        }
+                    };
+                    let gen_try_new_ts = |params_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
+                        fn #TryNewForDeSc(#params_ts) -> Result<Self, #ident_stdrt_nn_origin_try_new_for_de_er_ucc> {
+                            #ts
+                        }
+                    };
+                    match &pg_type_pattern {
+                        PgTypePattern::Stdrt => match &is_nl {
+                            IsNl::False => match &pg_type_deserialize {
+                                PgTypeDeserialize::Derive => if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                                    match &pg_type {
+                                        PgType::I16AsInt2 |
+                                        PgType::I32AsInt4 |
+                                        PgType::I64AsInt8 |
+                                        PgType::F32AsFloat4 |
+                                        PgType::F64AsFloat8 |
+                                        PgType::I16AsSmallSerialInitByPg |
+                                        PgType::I32AsSerialInitByPg |
+                                        PgType::I64AsBigSerialInitByPg |
+                                        PgType::BoolAsBool |
+                                        PgType::StdVecVecU8AsBytea |
+                                        PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                                        PgType::SqlxTypesIpnetworkIpNetworkAsInet |
+                                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                                        PgType::SqlxPgTypesPgRangeI32AsInt4Range |
+                                        PgType::SqlxPgTypesPgRangeI64AsInt8Range |
+                                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                                        PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange |
+                                        PgType::SqlxPgTypesPgMoneyAsMoney |
+                                        PgType::SqlxTypesChronoNaiveTimeAsTime |
+                                        PgType::SqlxTypesTimeTimeAsTime |
+                                        PgType::SqlxPgTypesPgIntervalAsInterval |
+                                        PgType::SqlxTypesChronoNaiveDateAsDate |
+                                        PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                                        PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                                        PgType::StringAsText => Ts2::new(),
+                                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_try_new_ts(
+                                            &sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_params_ts,
+                                            &sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_ts
+                                        ),
                                     }
                                 }
-                                PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => {
-                                    let params_ts = {
-                                        let gen_v_pg_range_int_type_ts = |int_range_type: &IntRangeType| {
-                                            let type_ts = {
-                                                let ts = int_range_type_to_range_inn_type_ts(int_range_type);
-                                                quote! {std::ops::Bound<#ts>}
+                                else {
+                                    Ts2::new()
+                                },
+                                PgTypeDeserialize::ImplNewForDeserializeOrTryNewForDe(pg_type_impl_new_for_de_or_try_new_for_deserialize) => match &pg_type_impl_new_for_de_or_try_new_for_deserialize {
+                                    PgTypeImplNewForDeserializeOrTryNewForDe::NewForDeserialize(pg_type_impl_new_for_deserialize) => {
+                                        let params_ts = {
+                                            let gen_start_end_std_std_ops_bound_ts = |ts: &dyn ToTokens| {
+                                                quote! {
+                                                    #StartSc: std::ops::Bound<#ts>,
+                                                    #EndSc: std::ops::Bound<#ts>
+                                                }
                                             };
-                                            quote! {
-                                                start_9a8ef454: #type_ts,
-                                                end_a14eb2b9: #type_ts
+                                            match &pg_type_impl_new_for_deserialize {
+                                                PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval => quote! {
+                                                    #MonthsSc: #I32,
+                                                    #DaysSc: #I32,
+                                                    #MicrosecondsSc: #I64,
+                                                },
+                                                PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
+                                                    #DateSc: #sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
+                                                    #TimeSc: #sqlx_types_chrono_naive_time_as_nn_time_origin_ucc
+                                                },
+                                                PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote! {
+                                                    #DateNaiveSc: #sqlx_types_chrono_naive_date_as_nn_date_origin_ucc,
+                                                    #TimeSc: #sqlx_types_chrono_naive_time_as_nn_time_origin_ucc,
+                                                },
+                                                PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_as_nn_date_origin_ucc),
+                                                PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_naive_date_time_as_nn_timestamp_origin_ucc),
+                                                PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_start_end_std_std_ops_bound_ts(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_origin_ucc),
                                             }
                                         };
-                                        match &pg_type_impl_try_new_for_deserialize {
-                                            PgTypeImplTryNewForDe::StringAsText | PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => {
-                                                quote! {v_356f2a0b: #ident_inn_type_ts}
-                                            }
-                                            PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => {
-                                                quote! {
-                                                    #HourSc: #U32,
-                                                    #MinSc: #U32,
-                                                    #SecSc: #U32,
-                                                    #MicroSc: #U32
-                                                }
-                                            }
-                                            PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => {
-                                                quote! {
-                                                    #HourSc: #U8,
-                                                    #MinuteSc: #U8,
-                                                    #SecondSc: #U8,
-                                                    #MicrosecondSc: #U32
-                                                }
-                                            }
-                                            PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
-                                            PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                                            PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => todo!(),
-                                        }
-                                    };
-                                    let ts = {
-                                        let gen_self_match_try_new_ts = |params_ts_04a82119: &dyn ToTokens, match_er_vrts_ts: &dyn ToTokens| {
-                                            quote! {
-                                                match Self::#TryNewSc(#params_ts_04a82119) {
-                                                    Ok(v_b318fc86) => Ok(v_b318fc86),
-                                                    Err(er) => match er {
-                                                        #match_er_vrts_ts
-                                                    }
-                                                }
-                                            }
-                                        };
-                                        let try_new_convert_pg_range_int_ts = gen_self_match_try_new_ts(
-                                            &quote! {sqlx::postgres::types::PgRange { #StartSc: start_9a8ef454, #EndSc: end_a14eb2b9 }},
-                                            &{
-                                                let gen_match_ts = |name_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
-                                                    #ident_stdrt_nn_origin_try_new_er_ucc::#name_ts {
-                                                        loc,
-                                                        #ts
-                                                    } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#name_ts {
-                                                        loc,
-                                                        #ts
-                                                    }),
-                                                };
-                                                let (
-                                                    included_start_greater_than_included_end_ts,
-                                                    included_start_greater_than_excluded_end_ts,
-                                                    excluded_start_greater_than_included_end_ts,
-                                                    excluded_start_greater_than_excluded_end_ts,
-                                                ) = {
-                                                    let gen_ts = |ts: &dyn ToTokens|gen_match_ts(
-                                                        &ts,
-                                                        &quote!{
-                                                            #StartSc,
-                                                            #EndSc,
+                                        let ts = {
+                                            let self_sqlx_pg_types_pg_range_ts = {
+                                                let (start_ts, end_ts) = {
+                                                    let gen_ts = |start_or_end: StartOrEnd|{
+                                                        let name_ts = match start_or_end {
+                                                            StartOrEnd::End => quote!{end},
+                                                            StartOrEnd::Start => quote!{start},
+                                                        };
+                                                        quote!{
+                                                            #name_ts: match #name_ts {
+                                                                std::ops::Bound::Included(v) => std::ops::Bound::Included(v.0),
+                                                                std::ops::Bound::Excluded(v) => std::ops::Bound::Excluded(v.0),
+                                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                            },
                                                         }
-                                                    );
-                                                    (
-                                                        gen_ts(&IncludedStartGreaterThanIncludedEndUcc),
-                                                        gen_ts(&IncludedStartGreaterThanExcludedEndUcc),
-                                                        gen_ts(&ExcludedStartGreaterThanIncludedEndUcc),
-                                                        gen_ts(&ExcludedStartGreaterThanExcludedEndUcc),
-                                                    )
+                                                    };
+                                                    (gen_ts(StartOrEnd::Start), gen_ts(StartOrEnd::End))
                                                 };
-                                                let included_end_cannot_be_max_ts = gen_match_ts(
-                                                    &IncludedEndCannotBeMaxUcc,
-                                                    &quote!{#EndSc,}
-                                                );
-                                                quote! {
-                                                    #included_start_greater_than_included_end_ts
-                                                    #included_start_greater_than_excluded_end_ts
-                                                    #excluded_start_greater_than_included_end_ts
-                                                    #excluded_start_greater_than_excluded_end_ts
-                                                    #included_end_cannot_be_max_ts
+                                                quote!{Self(sqlx::postgres::types::PgRange {
+                                                    #start_ts
+                                                    #end_ts
+                                                })}
+                                            };
+                                            match &pg_type_impl_new_for_deserialize {
+                                                PgTypeImplNewForDeserialize::SsqlxPgTypesPgIntervalAsInterval => quote! {
+                                                    Self(sqlx::postgres::types::PgInterval {
+                                                        #MonthsSc,
+                                                        #DaysSc,
+                                                        #MicrosecondsSc,
+                                                    })
+                                                },
+                                                PgTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote! {
+                                                    Self(#inn_type_stdrt_nn_ts::#NewSc(#DateSc.0, #TimeSc.0))
+                                                },
+                                                PgTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                                                    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
+                                                        #DateNaiveSc.0,
+                                                        #TimeSc.0
+                                                    }));
+                                                    quote! {Self(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts)}
                                                 }
-                                            },
-                                        );
-                                        match &pg_type_impl_try_new_for_deserialize {
-                                            PgTypeImplTryNewForDe::StringAsText => {
-                                                let vrt_ts = quote! {
-                                                    #ContainsNullByteUcc {
-                                                        #VSc,
-                                                        loc,
-                                                    }
-                                                };
-                                                gen_self_match_try_new_ts(
-                                                    &quote!{v_356f2a0b},
-                                                    &quote! {
-                                                        #ident_stdrt_nn_origin_try_new_er_ucc::#vrt_ts => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#vrt_ts),
-                                                    },
-                                                )
+                                                PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange | PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange | PgTypeImplNewForDeserialize::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
+                                                    self_sqlx_pg_types_pg_range_ts
+                                                }
                                             }
-                                            PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => {
+                                        };
+                                        quote! {
+                                            const fn new_for_deserialize(#params_ts) -> Self {
+                                                #ts
+                                            }
+                                        }
+                                    }
+                                    PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => gen_try_new_ts(
+                                        &{
+                                            let gen_v_pg_range_int_type_ts = |int_range_type: &IntRangeType| {
+                                                let type_ts = {
+                                                    let ts = int_range_type_to_range_inn_type_ts(int_range_type);
+                                                    quote! {std::ops::Bound<#ts>}
+                                                };
                                                 quote! {
-                                                    match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
-                                                        #HourSc,
-                                                        #MinSc,
-                                                        #SecSc,
-                                                        #MicroSc,
-                                                    ) {
-                                                        Some(v_b143b9e1) => {
-                                                            if <#inn_type_stdrt_nn_ts as chrono::Timelike>::nanosecond(&v_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
-                                                                return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                                    #VSc: v_b143b9e1.to_string(),
-                                                                    loc: location_lib::loc!(),
-                                                                });
+                                                    start_9a8ef454: #type_ts,
+                                                    end_a14eb2b9: #type_ts
+                                                }
+                                            };
+                                            match &pg_type_impl_try_new_for_deserialize {
+                                                PgTypeImplTryNewForDe::StringAsText | PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => {
+                                                    quote! {v_356f2a0b: #ident_inn_type_ts}
+                                                }
+                                                PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => {
+                                                    quote! {
+                                                        #HourSc: #U32,
+                                                        #MinSc: #U32,
+                                                        #SecSc: #U32,
+                                                        #MicroSc: #U32
+                                                    }
+                                                }
+                                                PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => {
+                                                    quote! {
+                                                        #HourSc: #U8,
+                                                        #MinuteSc: #U8,
+                                                        #SecondSc: #U8,
+                                                        #MicrosecondSc: #U32
+                                                    }
+                                                }
+                                                PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
+                                                PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
+                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_params_ts
+                                            }
+                                        },
+                                        &{
+                                            let gen_self_match_try_new_ts = |params_ts_04a82119: &dyn ToTokens, match_er_vrts_ts: &dyn ToTokens| {
+                                                quote! {
+                                                    match Self::#TryNewSc(#params_ts_04a82119) {
+                                                        Ok(v_b318fc86) => Ok(v_b318fc86),
+                                                        Err(er) => match er {
+                                                            #match_er_vrts_ts
+                                                        }
+                                                    }
+                                                }
+                                            };
+                                            let try_new_convert_pg_range_int_ts = gen_self_match_try_new_ts(
+                                                &quote! {sqlx::postgres::types::PgRange { #StartSc: start_9a8ef454, #EndSc: end_a14eb2b9 }},
+                                                &{
+                                                    let gen_match_ts = |name_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
+                                                        #ident_stdrt_nn_origin_try_new_er_ucc::#name_ts {
+                                                            loc,
+                                                            #ts
+                                                        } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#name_ts {
+                                                            loc,
+                                                            #ts
+                                                        }),
+                                                    };
+                                                    let (
+                                                        included_start_greater_than_included_end_ts,
+                                                        included_start_greater_than_excluded_end_ts,
+                                                        excluded_start_greater_than_included_end_ts,
+                                                        excluded_start_greater_than_excluded_end_ts,
+                                                    ) = {
+                                                        let gen_ts = |ts: &dyn ToTokens|gen_match_ts(
+                                                            &ts,
+                                                            &quote!{
+                                                                #StartSc,
+                                                                #EndSc,
                                                             }
-                                                            Ok(Self(v_b143b9e1))
+                                                        );
+                                                        (
+                                                            gen_ts(&IncludedStartGreaterThanIncludedEndUcc),
+                                                            gen_ts(&IncludedStartGreaterThanExcludedEndUcc),
+                                                            gen_ts(&ExcludedStartGreaterThanIncludedEndUcc),
+                                                            gen_ts(&ExcludedStartGreaterThanExcludedEndUcc),
+                                                        )
+                                                    };
+                                                    let included_end_cannot_be_max_ts = gen_match_ts(
+                                                        &IncludedEndCannotBeMaxUcc,
+                                                        &quote!{#EndSc,}
+                                                    );
+                                                    quote! {
+                                                        #included_start_greater_than_included_end_ts
+                                                        #included_start_greater_than_excluded_end_ts
+                                                        #excluded_start_greater_than_included_end_ts
+                                                        #excluded_start_greater_than_excluded_end_ts
+                                                        #included_end_cannot_be_max_ts
+                                                    }
+                                                },
+                                            );
+                                            match &pg_type_impl_try_new_for_deserialize {
+                                                PgTypeImplTryNewForDe::StringAsText => {
+                                                    let vrt_ts = quote! {
+                                                        #ContainsNullByteUcc {
+                                                            #VSc,
+                                                            loc,
+                                                        }
+                                                    };
+                                                    gen_self_match_try_new_ts(
+                                                        &quote!{v_356f2a0b},
+                                                        &quote! {
+                                                            #ident_stdrt_nn_origin_try_new_er_ucc::#vrt_ts => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#vrt_ts),
                                                         },
-                                                        None => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                    )
+                                                }
+                                                PgTypeImplTryNewForDe::SqlxTypesChronoNaiveTimeAsTime => {
+                                                    quote! {
+                                                        match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
                                                             #HourSc,
                                                             #MinSc,
                                                             #SecSc,
                                                             #MicroSc,
-                                                            loc: location_lib::loc!(),
-                                                        })
+                                                        ) {
+                                                            Some(v_b143b9e1) => {
+                                                                if <#inn_type_stdrt_nn_ts as chrono::Timelike>::nanosecond(&v_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
+                                                                    return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                                        #VSc: v_b143b9e1.to_string(),
+                                                                        loc: location_lib::loc!(),
+                                                                    });
+                                                                }
+                                                                Ok(Self(v_b143b9e1))
+                                                            },
+                                                            None => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                                #HourSc,
+                                                                #MinSc,
+                                                                #SecSc,
+                                                                #MicroSc,
+                                                                loc: location_lib::loc!(),
+                                                            })
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => {
-                                                quote! {
-                                                    match #inn_type_stdrt_nn_ts::from_hms_micro(
-                                                        #HourSc,
-                                                        #MinuteSc,
-                                                        #SecondSc,
-                                                        #MicrosecondSc,
-                                                    ) {
-                                                        Ok(v_9932d535) => {
-                                                            if v_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
-                                                                return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                                    #VSc: v_9932d535.to_string(),
-                                                                    loc: location_lib::loc!(),
-                                                                });
-                                                            }
-                                                            Ok(Self(v_9932d535))
-                                                        },
-                                                        Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime => {
+                                                    quote! {
+                                                        match #inn_type_stdrt_nn_ts::from_hms_micro(
                                                             #HourSc,
                                                             #MinuteSc,
                                                             #SecondSc,
                                                             #MicrosecondSc,
-                                                            #ErSc: er.to_string(),
-                                                            loc: location_lib::loc!(),
-                                                        })
+                                                        ) {
+                                                            Ok(v_9932d535) => {
+                                                                if v_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
+                                                                    return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                                        #VSc: v_9932d535.to_string(),
+                                                                        loc: location_lib::loc!(),
+                                                                    });
+                                                                }
+                                                                Ok(Self(v_9932d535))
+                                                            },
+                                                            Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                                                #HourSc,
+                                                                #MinuteSc,
+                                                                #SecondSc,
+                                                                #MicrosecondSc,
+                                                                #ErSc: er.to_string(),
+                                                                loc: location_lib::loc!(),
+                                                            })
+                                                        }
                                                     }
                                                 }
+                                                PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => gen_self_match_try_new_ts(
+                                                    &quote!{v_356f2a0b},
+                                                    &quote! {
+                                                        #ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
+                                                            #VSc,
+                                                            #EarliestSupportedDateSc,
+                                                            loc,
+                                                        } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#EarlierDateNotSupportedUcc {
+                                                            #VSc,
+                                                            #EarliestSupportedDateSc,
+                                                            loc,
+                                                        }),
+                                                    },
+                                                ),
+                                                PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range | PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => try_new_convert_pg_range_int_ts,
+                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_ts
                                             }
-                                            PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => gen_self_match_try_new_ts(
-                                                &quote!{v_356f2a0b},
-                                                &quote! {
-                                                    #ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
-                                                        #VSc,
-                                                        #EarliestSupportedDateSc,
-                                                        loc,
-                                                    } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#EarlierDateNotSupportedUcc {
-                                                        #VSc,
-                                                        #EarliestSupportedDateSc,
-                                                        loc,
-                                                    }),
-                                                },
-                                            ),
-                                            PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range | PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => try_new_convert_pg_range_int_ts,
-                                            PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => todo!()
                                         }
-                                    };
-                                    quote! {
-                                        fn #TryNewForDeSc(#params_ts) -> Result<Self, #ident_stdrt_nn_origin_try_new_for_de_er_ucc> {
-                                            #ts
-                                        }
-                                    }
-                                }
+                                    )
+                                },
                             },
+                            IsNl::True => Ts2::new(),
                         },
-                        IsNl::True => Ts2::new(),
-                    },
-                    PgTypePattern::ArrDim1 { .. } => Ts2::new(),
+                        PgTypePattern::ArrDim1 { .. } => Ts2::new(),
+                    }
                 };
                 quote! {
                     #AllowClippyArbitrarySrcItemOrdering
@@ -3693,10 +3741,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<String> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: String) -> Result<Self, Self::Error> {
-                                match uuid::Uuid::try_parse(&v) {
-                                    Ok(v) => Self(v),
-                                    Err(er) => Err(er)//here todo maybe cast to String
-                                }
+                                Self::try_new_for_de(v)
                             }
                         }
                     },
