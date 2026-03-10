@@ -579,6 +579,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         SqlxPgTypesPgRangeI32AsInt4Range,
         SqlxPgTypesPgRangeI64AsInt8Range,
         SqlxTypesUuidUuidAsUuidV4InitByPg,
+        SqlxTypesUuidUuidAsUuidInitByClient,
     }
     #[derive(Debug, Optml)]
     enum PgTypeImplNewForDeserializeOrTryNewForDe {
@@ -1847,8 +1848,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxTypesChronoNaiveDateAsDate |
                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => DeriveOrImpl::Derive,
-                        PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_de_for_uuid_uuid_ts),
+                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                        PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Derive,
                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr => DeriveOrImpl::Impl(gen_impl_de_for_tokens_ts(&quote! {
                             #struct_visitor_ts
                             #impl_serde_de_visitor_for_visitor_mac_address_mac_address_ts
@@ -2559,7 +2560,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::I64AsBigSerialInitByPg |
                             PgType::BoolAsBool |
                             PgType::StdVecVecU8AsBytea |
-                            PgType::SqlxTypesUuidUuidAsUuidInitByClient |
                             PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range |
@@ -2575,7 +2575,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |//todo reuse name
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote!{#[serde(from = "(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)")]},
                             PgType::StringAsText |
-                            PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => quote!{#[serde(try_from = "String")]},
+                            PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                            PgType::SqlxTypesUuidUuidAsUuidInitByClient => quote!{#[serde(try_from = "String")]},
                         }
                     }
                     else {
@@ -2810,7 +2811,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
                                 PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
                                 PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => &gen_int_range_type_er_vrts_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => &uuid_as_uuid_v4_as_string_try_new_er_vrts_ts,
+                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidInitByClient => &uuid_as_uuid_v4_as_string_try_new_er_vrts_ts,
                             };
                             quote!{{#ts}}
                         }
@@ -2835,7 +2837,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::StdVecVecU8AsBytea |
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                            PgType::SqlxTypesUuidUuidAsUuidInitByClient |
                             PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range |
@@ -2850,6 +2851,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxTypesTimeTimeAsTime => gen_er_ts(&PgTypeImplTryNewForDe::SqlxTypesTimeTimeAsTime),
                             PgType::SqlxTypesChronoNaiveDateAsDate => gen_er_ts(&PgTypeImplTryNewForDe::SqlxTypesChronoNaiveDateAsDate),
                             PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_er_ts(&PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg),
+                            PgType::SqlxTypesUuidUuidAsUuidInitByClient => gen_er_ts(&PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidInitByClient),
                         }
                     }
                     else {
@@ -3202,8 +3204,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 });
                 let mb_fn_new_or_try_new_for_de_token = {
-                    let sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_params_ts = quote! {#VSc: String};
-                    let sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_ts = quote!{
+                    let sqlx_types_uuid_uuid_as_uuid_v4_params_ts = quote! {#VSc: String};
+                    let sqlx_types_uuid_uuid_as_uuid_v4_ts = quote!{
                         match uuid::Uuid::try_parse(&v) {
                             Ok(v0) => Ok(Self(v0)),
                             Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NotUuidUcc {
@@ -3212,7 +3214,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             })
                         }
                     };
-                    let gen_try_new_ts = |params_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
+                    let gen_try_new_for_de_ts = |params_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
                         fn #TryNewForDeSc(#params_ts) -> Result<Self, #ident_stdrt_nn_origin_try_new_for_de_er_ucc> {
                             #ts
                         }
@@ -3232,7 +3234,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgType::I64AsBigSerialInitByPg |
                                         PgType::BoolAsBool |
                                         PgType::StdVecVecU8AsBytea |
-                                        PgType::SqlxTypesUuidUuidAsUuidInitByClient |
                                         PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                                         PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
                                         PgType::SqlxPgTypesPgRangeI32AsInt4Range |
@@ -3248,9 +3249,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                                         PgType::StringAsText => Ts2::new(),
-                                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_try_new_ts(
-                                            &sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_params_ts,
-                                            &sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_ts
+                                        PgType::SqlxTypesUuidUuidAsUuidInitByClient |
+                                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_try_new_for_de_ts(
+                                            &sqlx_types_uuid_uuid_as_uuid_v4_params_ts,
+                                            &sqlx_types_uuid_uuid_as_uuid_v4_ts
                                         ),
                                     }
                                 }
@@ -3337,7 +3339,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => gen_try_new_ts(
+                                    PgTypeImplNewForDeserializeOrTryNewForDe::TryNewForDe(pg_type_impl_try_new_for_deserialize) => gen_try_new_for_de_ts(
                                         &{
                                             let gen_v_pg_range_int_type_ts = |int_range_type: &IntRangeType| {
                                                 let type_ts = {
@@ -3371,7 +3373,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                                 PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
                                                 PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
-                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_params_ts
+                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidInitByClient => sqlx_types_uuid_uuid_as_uuid_v4_params_ts,
                                             }
                                         },
                                         &{
@@ -3515,7 +3518,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                     },
                                                 ),
                                                 PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI32AsInt4Range | PgTypeImplTryNewForDe::SqlxPgTypesPgRangeI64AsInt8Range => try_new_convert_pg_range_int_ts,
-                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg => sqlx_types_uuid_uuid_as_uuid_v4_init_by_pg_ts
+                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidV4InitByPg |
+                                                PgTypeImplTryNewForDe::SqlxTypesUuidUuidAsUuidInitByClient => sqlx_types_uuid_uuid_as_uuid_v4_ts,
                                             }
                                         }
                                     )
@@ -3697,7 +3701,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxPgTypesPgIntervalAsInterval |
                     PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                     PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                    PgType::SqlxTypesUuidUuidAsUuidInitByClient |
                     PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                     PgType::SqlxTypesMacAddressMacAddressAsMacAddr |
                     PgType::SqlxPgTypesPgRangeI32AsInt4Range |
@@ -3737,7 +3740,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     },
-                    PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => quote!{
+                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => quote!{
                         impl TryFrom<String> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: String) -> Result<Self, Self::Error> {
