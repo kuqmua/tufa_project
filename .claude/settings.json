@@ -41,6 +41,11 @@
             "Bash(cat *)",
             "Bash(ls *)",
             "Bash(find * -name *.rs)",
+            "Bash(find * -type d *)",
+            "Bash(find * -type f *)",
+            "Bash(find *)",
+            "Bash(tree *)",
+            "Bash(sort *)",
             "Bash(grep -r * src/)"
         ],
         "deny": [
