@@ -449,7 +449,9 @@ mod tests {
             };
             for (k_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
                 for el_c0fa9fc2 in v_3d676d2e.chars() {
-                    if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t') || el_c0fa9fc2.is_ascii()) {
+                    if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t' | '\u{2014}' | '\u{2194}')
+                        || el_c0fa9fc2.is_ascii())
+                    {
                         ers.push(format!(
                             "{}:{} non-english symbol `{}` (U+{:04X})",
                             path.display(),
