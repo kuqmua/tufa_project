@@ -99,7 +99,7 @@ pub trait PgJson {
         fi: &str,
         column_field: &str,
         //todo remove this coz its used properly now
-        column_field_for_er_message: &str,
+        column_field_for_er_msg: &str,
         is_pg_type: bool,
     ) -> Result<String, QpEr>;
     type Wh: WhAl
@@ -223,16 +223,16 @@ pub trait PgTypeTestCases {
     fn rd_ids_and_cr_into_vec_wh_equal_using_fields(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>;
+    ) -> NotEmptyUnqVec<<Self::PgType as PgType>::Wh>;
     fn rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn cr_into_pg_type_opt_vec_wh_dim_one_equal(
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn pg_type_opt_vec_wh_greater_than_test()
-    -> Option<NotEmptyUniqueVec<PgTypeGreaterThanTest<Self::PgType>>>;
+    -> Option<NotEmptyUnqVec<PgTypeGreaterThanTest<Self::PgType>>>;
     fn rd_ids_and_tt_into_pg_type_opt_wh_greater_than(
         greater_than_vrt: PgTypeGreaterThanVrt,
         rd_ids: <Self::PgType as PgType>::RdIds,
@@ -241,49 +241,49 @@ pub trait PgTypeTestCases {
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn cr_into_pg_json_opt_vec_wh_length_equal(
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn cr_into_pg_json_opt_vec_wh_length_greater_than(
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgType as PgType>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_between(
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_in(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_regex(
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex(
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Optml)]
@@ -351,57 +351,57 @@ pub trait PgJsonTestCases {
     fn rd_ids_and_cr_into_vec_wh_equal_using_fields(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>;
+    ) -> NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>;
     fn rd_ids_and_cr_into_vec_wh_equal_to_json_field(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>;
+    ) -> NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn cr_into_pg_json_opt_vec_wh_length_equal(
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn cr_into_pg_json_opt_vec_wh_length_greater_than(
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<<Self::PgJson as PgJson>::Wh>>;
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_between(
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_in(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_regex(
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_regex(
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUniqueVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
 }
 pub trait PgTypeWhFilter<'query_lt> {
     fn qb(
@@ -414,7 +414,7 @@ pub trait PgTypeWhFilter<'query_lt> {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct NlJsonObjPgTypeWhFilter<
     T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFilter<'lt> + AllEnumVrtsArrDfltSomeOneEl,
->(pub Option<NotEmptyUniqueVec<T>>);
+>(pub Option<NotEmptyUnqVec<T>>);
 impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NlJsonObjPgTypeWhFilter<T>
 where
     T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
@@ -459,7 +459,7 @@ pub enum QpEr {
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgTypeWh<T> {
-    v: NotEmptyUniqueVec<T>,
+    v: NotEmptyUnqVec<T>,
     oprtr: Oprtr,
 }
 impl<T: PartialEq + Clone> PgTypeWh<T> {
@@ -468,11 +468,11 @@ impl<T: PartialEq + Clone> PgTypeWh<T> {
         &self.oprtr
     }
     #[must_use]
-    pub const fn new(oprtr: Oprtr, v: NotEmptyUniqueVec<T>) -> Self {
+    pub const fn new(oprtr: Oprtr, v: NotEmptyUnqVec<T>) -> Self {
         Self { v, oprtr }
     }
-    pub fn try_new(oprtr: Oprtr, v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
-        match NotEmptyUniqueVec::try_new(v) {
+    pub fn try_new(oprtr: Oprtr, v: Vec<T>) -> Result<Self, NotEmptyUnqVecTryNewEr<T>> {
+        match NotEmptyUnqVec::try_new(v) {
             Ok(v0) => Ok(Self { oprtr, v: v0 }),
             Err(er) => Err(er),
         }
@@ -682,7 +682,7 @@ impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltSomeOneEl> DfltSomeOneEl f
     fn dflt_some_one_el() -> Self {
         Self {
             oprtr: DfltSomeOneEl::dflt_some_one_el(),
-            v: NotEmptyUniqueVec::try_new(AllEnumVrtsArrDfltSomeOneEl::all_vrts_dflt_some_one_el())
+            v: NotEmptyUnqVec::try_new(AllEnumVrtsArrDfltSomeOneEl::all_vrts_dflt_some_one_el())
                 .expect("a918b427"),
         }
     }
@@ -1017,19 +1017,19 @@ pub trait IsStringEmpty {
     fn is_string_empty(&self) -> bool;
 }
 #[derive(Debug, Serialize, Deserialize, Error, Location, Optml)]
-pub enum NotEmptyUniqueVecTryNewEr<T> {
+pub enum NotEmptyUnqVecTryNewEr<T> {
     IsEmpty {
         loc: Loc,
     },
-    NotUnique {
+    NotUnq {
         #[eo_to_err_string_serde]
         v: T,
         loc: Loc,
     },
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct NotEmptyUniqueVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
+pub struct NotEmptyUnqVec<T>(Vec<T>);
+impl<T: PartialEq + Clone> NotEmptyUnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
@@ -1038,15 +1038,15 @@ impl<T: PartialEq + Clone> NotEmptyUniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewEr<T>> {
+    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUnqVecTryNewEr<T>> {
         if v.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
+            return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc = Vec::new();
             for el in &v {
                 if acc.contains(&el) {
-                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
+                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
                         v: el.clone(),
                         loc: loc!(),
                     });
@@ -1064,9 +1064,7 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de>
-        for NotEmptyUniqueVec<T>
-    {
+    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de> for NotEmptyUnqVec<T> {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: Deserializer<'de>,
@@ -1076,16 +1074,16 @@ const _: () = {
             where
                 T: Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<NotEmptyUniqueVec<T>>,
+                marker: _serde::__private228::PhantomData<NotEmptyUnqVec<T>>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
                 for __Visitor<'de, T>
             {
-                type Value = NotEmptyUniqueVec<T>;
+                type Value = NotEmptyUnqVec<T>;
                 fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(__f, "tuple struct NotEmptyUniqueVec")
+                    Formatter::write_str(__f, "tuple struct NotEmptyUnqVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -1093,7 +1091,7 @@ const _: () = {
                     __E: Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as Deserialize>::deserialize(__e)?;
-                    Ok(NotEmptyUniqueVec(f0))
+                    Ok(NotEmptyUnqVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -1104,10 +1102,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct NotEmptyUniqueVec with 1 el",
+                            &"tuple struct NotEmptyUnqVec with 1 el",
                         ));
                     };
-                    match NotEmptyUniqueVec::try_new(f0) {
+                    match NotEmptyUnqVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -1115,7 +1113,7 @@ const _: () = {
             }
             Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "NotEmptyUniqueVec",
+                "NotEmptyUnqVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lt: _serde::__private228::PhantomData,
@@ -1124,32 +1122,32 @@ const _: () = {
         }
     }
 };
-impl<T: AllEnumVrtsArrDfltSomeOneEl> DfltSomeOneEl for NotEmptyUniqueVec<T> {
+impl<T: AllEnumVrtsArrDfltSomeOneEl> DfltSomeOneEl for NotEmptyUnqVec<T> {
     fn dflt_some_one_el() -> Self {
         Self(AllEnumVrtsArrDfltSomeOneEl::all_vrts_dflt_some_one_el())
     }
 }
-impl<T: AllEnumVrtsArrDfltSomeOneElMaxPageSize> DfltSomeOneElMaxPageSize for NotEmptyUniqueVec<T> {
+impl<T: AllEnumVrtsArrDfltSomeOneElMaxPageSize> DfltSomeOneElMaxPageSize for NotEmptyUnqVec<T> {
     fn dflt_some_one_el_max_page_size() -> Self {
         Self(AllEnumVrtsArrDfltSomeOneElMaxPageSize::all_vrts_dflt_some_one_el_max_page_size())
     }
 }
-impl<T> Default for NotEmptyUniqueVec<T> {
+impl<T> Default for NotEmptyUnqVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
 }
-impl<T> From<NotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(v: NotEmptyUniqueVec<T>) -> Self {
+impl<T> From<NotEmptyUnqVec<T>> for Vec<T> {
+    fn from(v: NotEmptyUnqVec<T>) -> Self {
         v.0
     }
 }
-impl<T1> NotEmptyUniqueVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> NotEmptyUniqueVec<T2> {
-        NotEmptyUniqueVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+impl<T1> NotEmptyUnqVec<T1> {
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> NotEmptyUnqVec<T2> {
+        NotEmptyUnqVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
-impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NotEmptyUniqueVec<T>
+impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NotEmptyUnqVec<T>
 where
     T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
@@ -1476,7 +1474,7 @@ impl DfltSomeOneEl for NotZeroUnsignedPartOfI32 {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub enum SingleOrMultiple<T: Debug + PartialEq + Clone> {
-    Multiple(NotEmptyUniqueVec<T>),
+    Multiple(NotEmptyUnqVec<T>),
     Single(T),
 }
 pub fn incr_checked_add_one_returning_incr(incr: &mut u64) -> Result<u64, QpEr> {

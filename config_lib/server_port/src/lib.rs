@@ -18,7 +18,7 @@ impl Display for ServerPort {
 }
 #[derive(Debug, Serialize, Deserialize, Optml)]
 pub struct ServerPortEr {
-    message: String,
+    msg: String,
     server_port_max: u16,
     server_port_min: u16,
     v: u16,
@@ -41,7 +41,7 @@ impl TryFrom<u16> for ServerPort {
                 server_port_min: SERVER_PORT_MIN_VALUE,
                 server_port_max: SERVER_PORT_MAX_VALUE,
                 v,
-                message: String::from(SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
+                msg: String::from(SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
         } else if v <= SERVER_PORT_MAX_VALUE {
             Ok(Self(v))
@@ -50,7 +50,7 @@ impl TryFrom<u16> for ServerPort {
                 server_port_min: SERVER_PORT_MIN_VALUE,
                 server_port_max: SERVER_PORT_MAX_VALUE,
                 v,
-                message: String::from(SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
+                msg: String::from(SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
         }
     }

@@ -1,7 +1,7 @@
 use location_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_common::{
-    DfltSomeOneEl, NotEmptyUniqueVecTryNewEr, PgTypeWhFilter, QpEr,
+    DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFilter, QpEr,
     incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
@@ -37,10 +37,10 @@ impl DfltSomeOneEl for EncodeFormat {
         Self::default()
     }
 }
-//difference between NotEmptyUniqueVec and PgJsonNotEmptyUniqueVec only in pg_crud_common::DfltSomeOneEl impl with different generic requirement and PgTypeWhFilter
+//difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_common::DfltSomeOneEl impl with different generic requirement and PgTypeWhFilter
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct PgJsonNotEmptyUniqueVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> PgJsonNotEmptyUniqueVec<T> {
+pub struct PgJsonNotEmptyUnqVec<T>(Vec<T>);
+impl<T: PartialEq + Clone> PgJsonNotEmptyUnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
@@ -50,7 +50,7 @@ impl<T: PartialEq + Clone> PgJsonNotEmptyUniqueVec<T> {
         &self.0
     }
 }
-impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUniqueVec<T> {
+impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
     pub fn qb_one_by_one<'query_lt>(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
@@ -88,17 +88,17 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUniqueVec<T> {
         Ok(acc)
     }
 }
-impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgJsonNotEmptyUniqueVec<T> {
-    type Error = NotEmptyUniqueVecTryNewEr<T>;
+impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgJsonNotEmptyUnqVec<T> {
+    type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
         if v.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
+            return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc = Vec::new();
             for el in &v {
                 if acc.contains(&el) {
-                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
+                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
                         v: el.clone(),
                         loc: loc!(),
                     });
@@ -117,7 +117,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PgJsonNotEmptyUniqueVec<T>
+        _serde::Deserialize<'de> for PgJsonNotEmptyUnqVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -128,21 +128,21 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<PgJsonNotEmptyUniqueVec<T>>,
+                marker: _serde::__private228::PhantomData<PgJsonNotEmptyUnqVec<T>>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
-                type Value = PgJsonNotEmptyUniqueVec<T>;
+                type Value = PgJsonNotEmptyUnqVec<T>;
                 fn expecting(
                     &self,
                     __f: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(
                         __f,
-                        "tuple struct PgJsonNotEmptyUniqueVec",
+                        "tuple struct PgJsonNotEmptyUnqVec",
                     )
                 }
                 #[inline]
@@ -151,7 +151,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(PgJsonNotEmptyUniqueVec(f0))
+                    Ok(PgJsonNotEmptyUnqVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -162,10 +162,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct PgJsonNotEmptyUniqueVec with 1 el",
+                            &"tuple struct PgJsonNotEmptyUnqVec with 1 el",
                         ));
                     };
-                    match PgJsonNotEmptyUniqueVec::try_from(f0) {
+                    match PgJsonNotEmptyUnqVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -173,7 +173,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "PgJsonNotEmptyUniqueVec",
+                "PgJsonNotEmptyUnqVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lt: _serde::__private228::PhantomData,
@@ -182,22 +182,22 @@ const _: () = {
         }
     }
 };
-impl<T: DfltSomeOneEl> DfltSomeOneEl for PgJsonNotEmptyUniqueVec<T> {
+impl<T: DfltSomeOneEl> DfltSomeOneEl for PgJsonNotEmptyUnqVec<T> {
     fn dflt_some_one_el() -> Self {
         Self(vec![DfltSomeOneEl::dflt_some_one_el()])
     }
 }
-impl<T> Default for PgJsonNotEmptyUniqueVec<T> {
+impl<T> Default for PgJsonNotEmptyUnqVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
 }
-impl<T> From<PgJsonNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(v: PgJsonNotEmptyUniqueVec<T>) -> Self {
+impl<T> From<PgJsonNotEmptyUnqVec<T>> for Vec<T> {
+    fn from(v: PgJsonNotEmptyUnqVec<T>) -> Self {
         v.0
     }
 }
-impl<'lt, T> PgTypeWhFilter<'lt> for PgJsonNotEmptyUniqueVec<T>
+impl<'lt, T> PgTypeWhFilter<'lt> for PgJsonNotEmptyUnqVec<T>
 where
     T: Serialize + 'lt,
 {
@@ -219,22 +219,22 @@ where
 }
 #[derive(Debug, Clone, Serialize, Deserialize, Optml)]
 #[serde(try_from = "String", into = "String")]
-pub struct RegexRegex(pub Regex);
-impl TryFrom<String> for RegexRegex {
+pub struct RgxRgx(pub Regex);
+impl TryFrom<String> for RgxRgx {
     type Error = regex::Error;
     fn try_from(v: String) -> Result<Self, Self::Error> {
-        Regex::new(&v).map(RegexRegex)
+        Regex::new(&v).map(RgxRgx)
     }
 }
-impl From<RegexRegex> for String {
-    fn from(v: RegexRegex) -> Self {
+impl From<RgxRgx> for String {
+    fn from(v: RgxRgx) -> Self {
         v.0.as_str().to_owned()
     }
 }
 // #[automatically_derived]
 // impl ::core::marker::StructuralPartialEq for RegexRegex {}
 // #[automatically_derived]
-impl PartialEq for RegexRegex {
+impl PartialEq for RgxRgx {
     #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.0.to_string() == other.0.to_string()
@@ -247,7 +247,7 @@ impl PartialEq for RegexRegex {
 const _: () = {
     #[automatically_derived]
     #[allow(unused_braces)]
-    impl JsonSchema for RegexRegex {
+    impl JsonSchema for RgxRgx {
         fn schema_name() -> borrow::Cow<'static, str> {
             borrow::Cow::Borrowed("RegexRegex")
         }
@@ -262,27 +262,27 @@ const _: () = {
         }
     }
 };
-impl Display for RegexRegex {
+impl Display for RgxRgx {
     fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
         write!(f, "{}", self.0)
     }
 }
-impl DfltSomeOneEl for RegexRegex {
+impl DfltSomeOneEl for RgxRgx {
     fn dflt_some_one_el() -> Self {
         Self(Regex::new("[a-z]+").expect("22a9eda5"))
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema, Optml)]
-pub enum RegexCase {
+pub enum RgxCase {
     Insensitive,
     Sensitive,
 }
-impl DfltSomeOneEl for RegexCase {
+impl DfltSomeOneEl for RgxCase {
     fn dflt_some_one_el() -> Self {
         Self::Sensitive
     }
 }
-impl RegexCase {
+impl RgxCase {
     #[must_use]
     pub const fn postgreql_syntax(&self) -> &'static str {
         match &self {
@@ -293,7 +293,7 @@ impl RegexCase {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema, Optml)]
-pub struct Between<T>
+pub struct Btwn<T>
 where
     T: Type<Postgres> + for<'__> Encode<'__, Postgres>,
 {
@@ -301,7 +301,7 @@ where
     end: T,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, Error, Location, Optml)]
-pub enum BetweenTryNewEr<T> {
+pub enum BtwnTryNewEr<T> {
     StartMoreOrEqualToEnd {
         #[eo_to_err_string_serde]
         start: T,
@@ -310,12 +310,12 @@ pub enum BetweenTryNewEr<T> {
         loc: Loc,
     },
 }
-impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T> {
-    pub fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewEr<T>> {
+impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Btwn<T> {
+    pub fn try_new(start: T, end: T) -> Result<Self, BtwnTryNewEr<T>> {
         if start < end {
             Ok(Self { start, end })
         } else {
-            Err(BetweenTryNewEr::StartMoreOrEqualToEnd {
+            Err(BtwnTryNewEr::StartMoreOrEqualToEnd {
                 start,
                 end,
                 loc: loc!(),
@@ -329,7 +329,7 @@ impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Between<T>
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T> _serde::Deserialize<'de> for Between<T>
+    impl<'de, T> _serde::Deserialize<'de> for Btwn<T>
     where
         T: std::fmt::Debug
             + _serde::Deserialize<'de>
@@ -403,7 +403,7 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de> + Type<Postgres> + for<'__> Encode<'__, Postgres>,
             {
-                marker: _serde::__private228::PhantomData<Between<T>>,
+                marker: _serde::__private228::PhantomData<Btwn<T>>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
@@ -414,7 +414,7 @@ const _: () = {
                     + Type<Postgres>
                     + for<'__> Encode<'__, Postgres>,
             {
-                type Value = Between<T>;
+                type Value = Btwn<T>;
                 fn expecting(
                     &self,
                     __f: &mut _serde::__private228::Formatter<'_>,
@@ -438,7 +438,7 @@ const _: () = {
                             &"struct Between with 2 els",
                         ));
                     };
-                    match Between::try_new(f0, f1) {
+                    match Btwn::try_new(f0, f1) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -484,7 +484,7 @@ const _: () = {
                         Some(v) => v,
                         None => _serde::__private228::de::missing_field("end")?,
                     };
-                    match Between::try_new(f0_v, f1_v) {
+                    match Btwn::try_new(f0_v, f1_v) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -504,9 +504,7 @@ const _: () = {
         }
     }
 };
-impl<T: DfltSomeOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> DfltSomeOneEl
-    for Between<T>
-{
+impl<T: DfltSomeOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> DfltSomeOneEl for Btwn<T> {
     fn dflt_some_one_el() -> Self {
         Self {
             start: DfltSomeOneEl::dflt_some_one_el(),
@@ -515,7 +513,7 @@ impl<T: DfltSomeOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> DfltSom
     }
 }
 impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhFilter<'lt>
-    for Between<T>
+    for Btwn<T>
 {
     fn qb(
         self,
@@ -546,9 +544,9 @@ impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTyp
     }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct PgTypeNotEmptyUniqueVec<T>(Vec<T>);
+pub struct PgTypeNotEmptyUnqVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
-impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
+impl<T: PartialEq + Clone> PgTypeNotEmptyUnqVec<T> {
     #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
@@ -558,17 +556,17 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUniqueVec<T> {
         self.0
     }
 }
-impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgTypeNotEmptyUniqueVec<T> {
-    type Error = NotEmptyUniqueVecTryNewEr<T>;
+impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgTypeNotEmptyUnqVec<T> {
+    type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
         if v.is_empty() {
-            return Err(NotEmptyUniqueVecTryNewEr::IsEmpty { loc: loc!() });
+            return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
         }
         {
             let mut acc = Vec::new();
             for el in &v {
                 if acc.contains(&el) {
-                    return Err(NotEmptyUniqueVecTryNewEr::NotUnique {
+                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
                         v: el.clone(),
                         loc: loc!(),
                     });
@@ -587,7 +585,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PgTypeNotEmptyUniqueVec<T>
+        _serde::Deserialize<'de> for PgTypeNotEmptyUnqVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -598,21 +596,21 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<PgTypeNotEmptyUniqueVec<T>>,
+                marker: _serde::__private228::PhantomData<PgTypeNotEmptyUnqVec<T>>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
-                type Value = PgTypeNotEmptyUniqueVec<T>;
+                type Value = PgTypeNotEmptyUnqVec<T>;
                 fn expecting(
                     &self,
                     __f: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
                     _serde::__private228::Formatter::write_str(
                         __f,
-                        "tuple struct PgTypeNotEmptyUniqueVec",
+                        "tuple struct PgTypeNotEmptyUnqVec",
                     )
                 }
                 #[inline]
@@ -621,7 +619,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(PgTypeNotEmptyUniqueVec(f0))
+                    Ok(PgTypeNotEmptyUnqVec(f0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -632,10 +630,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct PgTypeNotEmptyUniqueVec with 1 el",
+                            &"tuple struct PgTypeNotEmptyUnqVec with 1 el",
                         ));
                     };
-                    match PgTypeNotEmptyUniqueVec::try_from(f0) {
+                    match PgTypeNotEmptyUnqVec::try_from(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -643,7 +641,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "PgTypeNotEmptyUniqueVec",
+                "PgTypeNotEmptyUnqVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lt: _serde::__private228::PhantomData,
@@ -652,18 +650,18 @@ const _: () = {
         }
     }
 };
-impl<T: DfltSomeOneEl> DfltSomeOneEl for PgTypeNotEmptyUniqueVec<T> {
+impl<T: DfltSomeOneEl> DfltSomeOneEl for PgTypeNotEmptyUnqVec<T> {
     fn dflt_some_one_el() -> Self {
         Self(vec![DfltSomeOneEl::dflt_some_one_el()])
     }
 }
-impl<T> Default for PgTypeNotEmptyUniqueVec<T> {
+impl<T> Default for PgTypeNotEmptyUnqVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
 }
-impl<T> From<PgTypeNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(v: PgTypeNotEmptyUniqueVec<T>) -> Self {
+impl<T> From<PgTypeNotEmptyUnqVec<T>> for Vec<T> {
+    fn from(v: PgTypeNotEmptyUnqVec<T>) -> Self {
         v.0
     }
 }

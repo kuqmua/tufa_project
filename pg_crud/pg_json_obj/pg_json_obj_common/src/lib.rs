@@ -6,16 +6,16 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use utoipa::ToSchema;
 #[derive(Debug, Serialize, Deserialize, Error, Location)] //todo , Optml
-pub enum UniqueVecTryNewEr<T> {
-    NotUnique {
+pub enum UnqVecTryNewEr<T> {
+    NotUnq {
         #[eo_to_err_string_serde]
         v: T,
         loc: Loc,
     },
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct UniqueVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> UniqueVec<T> {
+pub struct UnqVec<T>(Vec<T>);
+impl<T: PartialEq + Clone> UnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
@@ -28,11 +28,11 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(v: Vec<T>) -> Result<Self, UniqueVecTryNewEr<T>> {
+    pub fn try_new(v: Vec<T>) -> Result<Self, UnqVecTryNewEr<T>> {
         let mut acc = Vec::new();
         for el in &v {
             if acc.contains(&el) {
-                return Err(UniqueVecTryNewEr::NotUnique {
+                return Err(UnqVecTryNewEr::NotUnq {
                     v: el.clone(),
                     loc: loc!(),
                 });
@@ -49,7 +49,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for UniqueVec<T>
+        _serde::Deserialize<'de> for UnqVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -60,22 +60,19 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private228::PhantomData<UniqueVec<T>>,
+                marker: _serde::__private228::PhantomData<UnqVec<T>>,
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
-                type Value = UniqueVec<T>;
+                type Value = UnqVec<T>;
                 fn expecting(
                     &self,
                     __formatter: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
-                        __formatter,
-                        "tuple struct UniqueVec",
-                    )
+                    _serde::__private228::Formatter::write_str(__formatter, "tuple struct UnqVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -83,7 +80,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    match UniqueVec::try_new(f0) {
+                    match UnqVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -97,10 +94,10 @@ const _: () = {
                     else {
                         return Err(_serde::de::Error::invalid_length(
                             0usize,
-                            &"tuple struct UniqueVec with 1 el",
+                            &"tuple struct UnqVec with 1 el",
                         ));
                     };
-                    match UniqueVec::try_new(f0) {
+                    match UnqVec::try_new(f0) {
                         Ok(v) => Ok(v),
                         Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
                     }
@@ -108,7 +105,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "UniqueVec",
+                "UnqVec",
                 __Visitor {
                     marker: _serde::__private228::PhantomData::<Self>,
                     lt: _serde::__private228::PhantomData,
@@ -117,23 +114,23 @@ const _: () = {
         }
     }
 };
-impl<T: DfltSomeOneEl> DfltSomeOneEl for UniqueVec<T> {
+impl<T: DfltSomeOneEl> DfltSomeOneEl for UnqVec<T> {
     fn dflt_some_one_el() -> Self {
         Self(vec![DfltSomeOneEl::dflt_some_one_el()])
     }
 }
-impl<T> Default for UniqueVec<T> {
+impl<T> Default for UnqVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
 }
-impl<T> From<UniqueVec<T>> for Vec<T> {
-    fn from(v: UniqueVec<T>) -> Self {
+impl<T> From<UnqVec<T>> for Vec<T> {
+    fn from(v: UnqVec<T>) -> Self {
         v.0
     }
 }
-impl<T1> UniqueVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> UniqueVec<T2> {
-        UniqueVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+impl<T1> UnqVec<T1> {
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> UnqVec<T2> {
+        UnqVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }

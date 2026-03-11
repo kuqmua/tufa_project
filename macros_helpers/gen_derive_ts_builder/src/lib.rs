@@ -1,4 +1,4 @@
-use naming::param::{DSelfIfSc, DSelfSc, DSelfUcc};
+use naming::prm::{DSelfIfSc, DSelfSc, DSelfUcc};
 use optml::Optml;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;

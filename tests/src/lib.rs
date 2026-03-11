@@ -84,7 +84,7 @@ mod tests {
         }
         assert!(outdated_lints_in_file.is_empty(), "93787d2d");
     }
-    fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
+    fn check_expect_or_panic_contains_only_unq_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {
             ers: Vec<String>,
             expect_or_panic: ExpectOrPanic,
@@ -378,16 +378,16 @@ mod tests {
         }
     }
     #[test]
-    fn check_expect_contains_only_unique_uuid_v4() {
-        check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Expect);
+    fn check_expect_contains_only_unq_uuid_v4() {
+        check_expect_or_panic_contains_only_unq_uuid_v4(ExpectOrPanic::Expect);
     }
     #[test]
-    fn check_panic_contains_only_unique_uuid_v4() {
-        check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Panic);
+    fn check_panic_contains_only_unq_uuid_v4() {
+        check_expect_or_panic_contains_only_unq_uuid_v4(ExpectOrPanic::Panic);
     }
     #[test]
-    fn check_rs_files_contains_only_unique_uuid_v4() {
-        let regex = Regex::new(
+    fn check_rs_files_contains_only_unq_uuid_v4() {
+        let rgx = Regex::new(
             r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
         ).expect("e098a1ff");
         let mut seen = HashSet::new();
@@ -406,7 +406,7 @@ mod tests {
             let Ok(v) = read_to_string(el_44a8aa56.path()) else {
                 continue;
             };
-            for el_714b3d9c in regex.find_iter(&v) {
+            for el_714b3d9c in rgx.find_iter(&v) {
                 let uuid = Uuid::parse_str(el_714b3d9c.as_str()).expect("c9711efd");
                 assert!(uuid.get_version_num() == 4, "49b49b21");
                 assert!(seen.insert(uuid), "4cf9d239");
@@ -490,7 +490,7 @@ mod tests {
                     .and_then(|v_5e0a4d6a| v_5e0a4d6a.as_table())
                 {
                     for (k_794900d4, v_07583f81) in deps {
-                        let panic_with_message = || {
+                        let panic_with_msg = || {
                             panic!(
                                 "{}: dependency `{}` in [{}] must use `.workspace = true` \
                                  (only `path = ...` is allowed as exception)",
@@ -504,7 +504,7 @@ mod tests {
                                 if !(v_bba39a72.contains_key("path")
                                     || (v_bba39a72.get("workspace") == Some(&Value::Boolean(true))))
                                 {
-                                    panic_with_message();
+                                    panic_with_msg();
                                 }
                             }
                             Value::String(_)
@@ -512,7 +512,7 @@ mod tests {
                             | Value::Float(_)
                             | Value::Boolean(_)
                             | Value::Datetime(_)
-                            | Value::Array(_) => panic_with_message(),
+                            | Value::Array(_) => panic_with_msg(),
                         }
                     }
                 }

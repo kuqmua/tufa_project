@@ -2,7 +2,7 @@
 use proc_macro2::TokenStream as Ts2;
 use quote::ToTokens;
 naming_macros::gen_self_ucc_and_sc_str_and_ts!([
-    ["self", "params"],
+    ["self", "prms"],
     ["self", "payload"],
     ["self", "payload", "with", "serde"],
     [
@@ -151,7 +151,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "json", "arr",
         "change", "try", "new", "er"
     ],
-    ["not", "unique", "field", "self"],
+    ["not", "unq", "field", "self"],
     ["self", "rd", "without", "id"],
     ["self", "rd", "with", "id"],
     ["self", "opt", "to", "upd", "try", "new", "er"],
@@ -202,7 +202,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["try", "from", "std", "env", "var", "ok", "self", "er"],
     ["self", "opts"],
     ["er", "self"],
-    ["not", "unique", "self"],
+    ["not", "unq", "self"],
     ["is", "self", "upd", "exist"],
     ["self", "column", "rd", "permission"],
     ["self", "wh"],
@@ -383,18 +383,18 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "wh", "try", "new", "er"],
     ["pg", "type", "self", "wh", "equal"],
     ["pg", "type", "self", "wh", "greater", "than"],
-    ["pg", "type", "self", "wh", "between"],
-    ["pg", "type", "self", "wh", "between", "try", "new", "er"],
+    ["pg", "type", "self", "wh", "btwn"],
+    ["pg", "type", "self", "wh", "btwn", "try", "new", "er"],
     ["pg", "type", "self", "wh", "in"],
     ["pg", "type", "self", "wh", "in", "try", "new", "er"],
     ["pg", "type", "std", "opt", "opt", "self", "wh", "equal"],
     [
         "pg", "type", "std", "opt", "opt", "self", "wh", "greater", "than"
     ],
-    ["pg", "type", "std", "opt", "opt", "self", "wh", "between"],
+    ["pg", "type", "std", "opt", "opt", "self", "wh", "btwn"],
     ["pg", "type", "std", "opt", "opt", "self", "wh", "in"],
     ["std", "opt", "opt", "self", "wh"],
-    ["pg", "type", "self", "wh", "case", "sensitive", "regex"],
+    ["pg", "type", "self", "wh", "case", "sensitive", "rgx"],
     [
         "pg",
         "type",
@@ -405,7 +405,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "sensitive",
-        "regex"
+        "rgx"
     ],
     [
         "pg",
@@ -417,9 +417,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "insensitive",
-        "regex"
+        "rgx"
     ],
-    ["pg", "type", "self", "wh", "case", "insensitive", "regex"],
+    ["pg", "type", "self", "wh", "case", "insensitive", "rgx"],
     [
         "pg",
         "type",
@@ -529,8 +529,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["pg", "json", "self", "wh"],
     ["pg", "json", "self", "wh", "equal"],
-    ["pg", "json", "self", "wh", "between"],
-    ["pg", "json", "self", "wh", "between", "try", "new", "er"],
+    ["pg", "json", "self", "wh", "btwn"],
+    ["pg", "json", "self", "wh", "btwn", "try", "new", "er"],
     ["pg", "json", "self", "wh", "in"],
     ["pg", "json", "self", "wh", "in", "try", "new", "er"],
     [
@@ -540,7 +540,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "sensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -553,7 +553,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "sensitive",
-        "regex"
+        "rgx"
     ],
     [
         "pg",
@@ -563,7 +563,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "sensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -575,20 +575,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "insensitive",
-        "regex",
-        "try",
-        "new",
-        "er"
-    ],
-    [
-        "pg",
-        "json",
-        "type",
-        "self",
-        "wh",
-        "case",
-        "insensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -601,7 +588,20 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "case",
         "insensitive",
-        "regex"
+        "rgx",
+        "try",
+        "new",
+        "er"
+    ],
+    [
+        "pg",
+        "json",
+        "type",
+        "self",
+        "wh",
+        "case",
+        "insensitive",
+        "rgx"
     ],
     [
         "pg", "json", "std", "opt", "opt", "self", "wh", "is", "null"
@@ -648,7 +648,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regex"
+        "rgx"
     ],
     [
         "pg",
@@ -659,7 +659,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regex"
+        "rgx"
     ],
     [
         "pg",
@@ -669,7 +669,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -683,7 +683,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "sensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -696,7 +696,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regex"
+        "rgx"
     ],
     [
         "pg",
@@ -707,7 +707,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regex"
+        "rgx"
     ],
     [
         "pg",
@@ -717,7 +717,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -731,7 +731,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "position",
         "case",
         "insensitive",
-        "regex",
+        "rgx",
         "try",
         "new",
         "er"
@@ -799,7 +799,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "wh", "many", "try", "new", "er"],
     ["std", "opt", "opt", "self", "wh", "many"],
     [
-        "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unique", "vec", "self",
+        "try", "from", "sqlx", "pg", "pg", "row", "with", "not", "empty", "unq", "vec", "self",
         "sel"
     ],
     ["upd", "qp", "self"],
@@ -817,13 +817,13 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["jsonb", "self"],
     ["self", "cr", "for", "query"],
     ["self", "upd", "for", "query", "el"],
-    ["self", "dm", "params"],
+    ["self", "dm", "prms"],
     ["self", "dm", "payload"],
-    ["self", "dlo", "params"],
+    ["self", "dlo", "prms"],
     ["self", "dlo", "payload"],
     ["self", "try", "ro", "er"],
     ["self", "ro", "er", "with", "serde"],
-    ["self", "um", "params"],
+    ["self", "um", "prms"],
     ["self", "um", "payload"],
     ["self", "try", "dlo", "er"],
     ["self", "dlo", "er", "with", "serde"],

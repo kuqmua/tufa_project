@@ -27,9 +27,9 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
         .into_iter()
         .map(|el| {
             {
-                let regex = Regex::new(REGEX_VALUE).expect("20948d87");
+                let rgx = Regex::new(REGEX_VALUE).expect("20948d87");
                 for el0 in &el {
-                    assert!(regex.is_match(el0), "faadba8a");
+                    assert!(rgx.is_match(el0), "faadba8a");
                 }
             }
             let phrase_part_ucc_str = el.iter().fold(String::new(), |mut acc, el0| {
@@ -117,9 +117,9 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
     panic_location();
     let ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el| {
         {
-            let regex = Regex::new(REGEX_VALUE).expect("cba1b5fb");
+            let rgx = Regex::new(REGEX_VALUE).expect("cba1b5fb");
             for el0 in &el {
-                assert!(regex.is_match(el0), "4a12d90f {el0}");
+                assert!(rgx.is_match(el0), "4a12d90f {el0}");
             }
         }
         let self_match_name = "self";

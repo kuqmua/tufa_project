@@ -13,27 +13,23 @@ fn impl_ident_ts(ident_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
         }
     }
 }
-pub fn gen_new_ts(attr_ts: &dyn ToTokens, params_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+pub fn gen_new_ts(attr_ts: &dyn ToTokens, prms_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
         #attr_ts
-        fn new(#params_ts) -> Self {
+        fn new(#prms_ts) -> Self {
             #ts
         }
     }
 }
-pub fn gen_const_new_ts(
-    attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    let ts_5986cf7b = const_space_ts(&gen_new_ts(&Ts2::new(), params_ts, ts));
+pub fn gen_const_new_ts(attr_ts: &dyn ToTokens, prms_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+    let ts_5986cf7b = const_space_ts(&gen_new_ts(&Ts2::new(), prms_ts, ts));
     quote! {
         #attr_ts
         #ts_5986cf7b
     }
 }
-pub fn gen_pub_new_ts(attr_ts: &dyn ToTokens, params_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
-    let ts_73940779 = pub_space_ts(&gen_new_ts(&Ts2::new(), params_ts, ts));
+pub fn gen_pub_new_ts(attr_ts: &dyn ToTokens, prms_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+    let ts_73940779 = pub_space_ts(&gen_new_ts(&Ts2::new(), prms_ts, ts));
     quote! {
         #attr_ts
         #ts_73940779
@@ -41,10 +37,10 @@ pub fn gen_pub_new_ts(attr_ts: &dyn ToTokens, params_ts: &dyn ToTokens, ts: &dyn
 }
 pub fn gen_pub_const_new_ts(
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let ts_5dc3668f = pub_space_ts(&gen_const_new_ts(&Ts2::new(), params_ts, ts));
+    let ts_5dc3668f = pub_space_ts(&gen_const_new_ts(&Ts2::new(), prms_ts, ts));
     quote! {
         #attr_ts
         #ts_5dc3668f
@@ -53,55 +49,55 @@ pub fn gen_pub_const_new_ts(
 pub fn gen_impl_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_ts(ident_ts, &gen_new_ts(attr_ts, params_ts, ts))
+    impl_ident_ts(ident_ts, &gen_new_ts(attr_ts, prms_ts, ts))
 }
 pub fn gen_impl_const_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_ts(ident_ts, &gen_new_ts(attr_ts, params_ts, ts))
+    impl_ident_ts(ident_ts, &gen_new_ts(attr_ts, prms_ts, ts))
 }
 pub fn gen_impl_pub_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_ts(ident_ts, &gen_pub_new_ts(attr_ts, params_ts, ts))
+    impl_ident_ts(ident_ts, &gen_pub_new_ts(attr_ts, prms_ts, ts))
 }
 pub fn gen_impl_pub_const_new_for_ident_ts(
     ident_ts: &dyn ToTokens,
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_ts(ident_ts, &gen_pub_const_new_ts(attr_ts, params_ts, ts))
+    impl_ident_ts(ident_ts, &gen_pub_const_new_ts(attr_ts, prms_ts, ts))
 }
 pub fn gen_try_new_ts(
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
         #attr_ts
-        fn try_new(#params_ts) -> Result<Self, #err_type_ts> {
+        fn try_new(#prms_ts) -> Result<Self, #err_type_ts> {
             #ts
         }
     }
 }
 pub fn gen_const_try_new_ts(
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let ts0 = const_space_ts(&gen_try_new_ts(&Ts2::new(), params_ts, err_type_ts, ts));
+    let ts0 = const_space_ts(&gen_try_new_ts(&Ts2::new(), prms_ts, err_type_ts, ts));
     quote! {
         #attr_ts
         #ts0
@@ -109,11 +105,11 @@ pub fn gen_const_try_new_ts(
 }
 pub fn gen_pub_try_new_ts(
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let ts0 = pub_space_ts(&gen_try_new_ts(&Ts2::new(), params_ts, err_type_ts, ts));
+    let ts0 = pub_space_ts(&gen_try_new_ts(&Ts2::new(), prms_ts, err_type_ts, ts));
     quote! {
         #attr_ts
         #ts0
@@ -121,16 +117,11 @@ pub fn gen_pub_try_new_ts(
 }
 pub fn gen_pub_const_try_new_ts(
     attr_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    let ts0 = pub_space_ts(&gen_const_try_new_ts(
-        &Ts2::new(),
-        params_ts,
-        err_type_ts,
-        ts,
-    ));
+    let ts0 = pub_space_ts(&gen_const_try_new_ts(&Ts2::new(), prms_ts, err_type_ts, ts));
     quote! {
         #attr_ts
         #ts0
@@ -139,48 +130,45 @@ pub fn gen_pub_const_try_new_ts(
 pub fn gen_impl_try_new_for_ident_ts(
     attr_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
-    impl_ident_ts(
-        ident_ts,
-        &gen_try_new_ts(attr_ts, params_ts, err_type_ts, ts),
-    )
+    impl_ident_ts(ident_ts, &gen_try_new_ts(attr_ts, prms_ts, err_type_ts, ts))
 }
 pub fn gen_impl_const_try_new_for_ident_ts(
     attr_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     impl_ident_ts(
         ident_ts,
-        &gen_const_try_new_ts(attr_ts, params_ts, err_type_ts, ts),
+        &gen_const_try_new_ts(attr_ts, prms_ts, err_type_ts, ts),
     )
 }
 pub fn gen_impl_pub_try_new_for_ident_ts(
     attr_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     impl_ident_ts(
         ident_ts,
-        &gen_pub_try_new_ts(attr_ts, params_ts, err_type_ts, ts),
+        &gen_pub_try_new_ts(attr_ts, prms_ts, err_type_ts, ts),
     )
 }
 pub fn gen_impl_pub_const_try_new_for_ident_ts(
     attr_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
-    params_ts: &dyn ToTokens,
+    prms_ts: &dyn ToTokens,
     err_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     impl_ident_ts(
         ident_ts,
-        &gen_pub_const_try_new_ts(attr_ts, params_ts, err_type_ts, ts),
+        &gen_pub_const_try_new_ts(attr_ts, prms_ts, err_type_ts, ts),
     )
 }

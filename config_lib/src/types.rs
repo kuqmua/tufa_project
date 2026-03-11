@@ -69,13 +69,11 @@ impl FromStr for SrcPlaceType {
 impl SrcPlaceType {
     #[must_use]
     pub fn from_env_or_dflt() -> Self {
-        let fix_message =
+        let fix_msg =
             "You can set environment variable SRC_PLACE_TYPE to be equal \"src\" or \"github\"";
         if let Err(er) = dotenv() {
             let dflt = Self::default();
-            eprintln!(
-                "using dflt SrcPlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_message}"
-            );
+            eprintln!("using dflt SrcPlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_msg}");
             return dflt;
         }
         let name = "SRC_PLACE_TYPE";
@@ -85,7 +83,7 @@ impl SrcPlaceType {
                 Err(er) => {
                     let dflt = Self::default();
                     eprintln!(
-                        "using dflt SrcPlaceType::{dflt:#?} (<SrcPlaceType as FromStr>::from_str(&v): {er}) {fix_message}"
+                        "using dflt SrcPlaceType::{dflt:#?} (<SrcPlaceType as FromStr>::from_str(&v): {er}) {fix_msg}"
                     );
                     dflt
                 }
@@ -93,7 +91,7 @@ impl SrcPlaceType {
             Err(er) => {
                 let dflt = Self::default();
                 eprintln!(
-                    "using dflt SrcPlaceType::{dflt:#?} (env::var(\"{name}\"): {er}) {fix_message}"
+                    "using dflt SrcPlaceType::{dflt:#?} (env::var(\"{name}\"): {er}) {fix_msg}"
                 );
                 dflt
             }

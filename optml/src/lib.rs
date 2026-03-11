@@ -38,7 +38,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             let i_plus_one = i.checked_add(1).expect("941a5489");
             let fi = &field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone);
             let fi_next = &fields.get(i_plus_one).expect("ae113a45").ident.as_ref().map_or_else(|| gen_fi(i_plus_one), Clone::clone);
-            let message_ts = dq_ts(&format!(
+            let msg_ts = dq_ts(&format!(
                 "In {} '{ident}' {}align_of field '{fi}' < align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment",
                 match &struct_or_enum {
                     StructOrEnum::Struct => "struct",
@@ -52,7 +52,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             quote!{
                 assert!(
                     #alignments_ts[#i] >= #alignments_ts[#i_plus_one],
-                    #message_ts,
+                    #msg_ts,
                 );
             }
         });
@@ -144,11 +144,11 @@ pub fn optml(input_ts: Ts) -> Ts {
             };
         }
     };
-    let has_type_params = generics
+    let has_type_prms = generics
         .params
         .iter()
         .any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
-    let generated = if has_type_params {
+    let generated = if has_type_prms {
         quote! {
             #impl_check_ts
             //todo

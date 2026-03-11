@@ -3,7 +3,7 @@ use app_state::{
     GetTimezone,
 };
 use chrono::FixedOffset;
-use common_routes::CommonRoutesParams;
+use common_routes::CommonRoutesPrms;
 use config_lib::types::SrcPlaceType;
 use git_info::{GetGitCommitLink, ProjectGitInfo};
 use optml::Optml;
@@ -16,7 +16,7 @@ pub struct ServerAppState<'lt> {
     pub pg_pool: PgPool,
     pub project_git_info: &'lt ProjectGitInfo<'lt>,
 }
-impl CommonRoutesParams for ServerAppState<'_> {}
+impl CommonRoutesPrms for ServerAppState<'_> {}
 impl CombinationOfAppStateLogicTraits for ServerAppState<'_> {}
 impl GetEnableApiGitCommitCheck for ServerAppState<'_> {
     fn get_enable_api_git_commit_check(&self) -> &bool {
