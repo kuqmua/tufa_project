@@ -1,5 +1,6 @@
 use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
+use macros_helpers::gen_impl_try_from_ts;
 use macros_helpers::{
     DCopy, DDefault, DEq, DOrd, DPartialOrd, DSerdeDeserialize, DSerdeSerialize, DTsBuilder,
     FormatWithCargofmt, ShouldWriteTsIntoFile, gen_const_new_ts, gen_if_write_is_err_ts,
@@ -2937,77 +2938,78 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
-                    PgType::StringAsText => quote!{
-                        impl TryFrom<#inn_type_stdrt_nn_ts> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_er_ucc;
-                            fn try_from(v: #inn_type_stdrt_nn_ts) -> Result<Self, Self::Error> {
-                                Self::try_new(v)//todo use try_from instead of try_new ?
+                    PgType::StringAsText => gen_impl_try_from_ts(
+                        &inn_type_stdrt_nn_ts,
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_er_ucc,
+                        &quote!{Self::try_new(v)}//todo use try_from instead of try_new ?
+                    ),
+                    PgType::SqlxTypesChronoNaiveTimeAsTime => gen_impl_try_from_ts(
+                        &quote!{(u32,u32,u32,u32)},
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &quote!{
+                            match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
+                                v.0,
+                                v.1,
+                                v.2,
+                                v.3,
+                            ) {
+                                Some(v_b143b9e1) => {
+                                    if <#inn_type_stdrt_nn_ts as chrono::Timelike>::nanosecond(&v_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
+                                        return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                            #VSc: v_b143b9e1.to_string(),
+                                            loc: location_lib::loc!(),
+                                        });
+                                    }
+                                    Ok(Self(v_b143b9e1))
+                                },
+                                None => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                    #HourSc: v.0,
+                                    #MinSc: v.1,
+                                    #SecSc: v.2,
+                                    #MicroSc: v.3,
+                                    loc: location_lib::loc!(),
+                                })
                             }
                         }
-                    },
-                    PgType::SqlxTypesChronoNaiveTimeAsTime => quote!{
-                        impl TryFrom<(u32,u32,u32,u32)> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                            fn try_from(v: (u32,u32,u32,u32)) -> Result<Self, Self::Error> {
-                                match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
-                                    v.0,
-                                    v.1,
-                                    v.2,
-                                    v.3,
-                                ) {
-                                    Some(v_b143b9e1) => {
-                                        if <#inn_type_stdrt_nn_ts as chrono::Timelike>::nanosecond(&v_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
-                                            return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                #VSc: v_b143b9e1.to_string(),
-                                                loc: location_lib::loc!(),
-                                            });
-                                        }
-                                        Ok(Self(v_b143b9e1))
-                                    },
-                                    None => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
-                                        #HourSc: v.0,
-                                        #MinSc: v.1,
-                                        #SecSc: v.2,
-                                        #MicroSc: v.3,
-                                        loc: location_lib::loc!(),
-                                    })
-                                }
+                    ),
+                    PgType::SqlxTypesTimeTimeAsTime => gen_impl_try_from_ts(
+                        &quote!{(u8,u8,u8,u32)},
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &quote!{
+                            match #inn_type_stdrt_nn_ts::from_hms_micro(
+                                v.0,
+                                v.1,
+                                v.2,
+                                v.3,
+                            ) {
+                                Ok(v_9932d535) => {
+                                    if v_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
+                                        return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                            #VSc: v_9932d535.to_string(),
+                                            loc: location_lib::loc!(),
+                                        });
+                                    }
+                                    Ok(Self(v_9932d535))
+                                },
+                                Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                    #HourSc: v.0,
+                                    #MinuteSc: v.1,
+                                    #SecondSc: v.2,
+                                    #MicrosecondSc: v.3,
+                                    #ErSc: er.to_string(),
+                                    loc: location_lib::loc!(),
+                                })
                             }
                         }
-                    },
-                    PgType::SqlxTypesTimeTimeAsTime => quote!{
-                        impl TryFrom<(u8,u8,u8,u32)> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                            fn try_from(v: (u8,u8,u8,u32)) -> Result<Self, Self::Error> {
-                                match #inn_type_stdrt_nn_ts::from_hms_micro(
-                                    v.0,
-                                    v.1,
-                                    v.2,
-                                    v.3,
-                                ) {
-                                    Ok(v_9932d535) => {
-                                        if v_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
-                                            return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
-                                                #VSc: v_9932d535.to_string(),
-                                                loc: location_lib::loc!(),
-                                            });
-                                        }
-                                        Ok(Self(v_9932d535))
-                                    },
-                                    Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
-                                        #HourSc: v.0,
-                                        #MinuteSc: v.1,
-                                        #SecondSc: v.2,
-                                        #MicrosecondSc: v.3,
-                                        #ErSc: er.to_string(),
-                                        loc: location_lib::loc!(),
-                                    })
-                                }
-                            }
-                        }
-                    },
-                    PgType::SqlxTypesChronoNaiveDateAsDate => {
-                        let ts = gen_self_match_try_new_ts(
+                    ),
+                    PgType::SqlxTypesChronoNaiveDateAsDate => gen_impl_try_from_ts(
+                        &quote!{sqlx::types::chrono::NaiveDate},
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &gen_self_match_try_new_ts(
                             &VSc,
                             &quote! {
                                 #ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
@@ -3020,46 +3022,34 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     loc,
                                 }),
                             }
-                        );
-                        quote!{
-                            impl TryFrom<sqlx::types::chrono::NaiveDate> for #ident_origin_ucc {
-                                type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                                fn try_from(v: sqlx::types::chrono::NaiveDate) -> Result<Self, Self::Error> {
-                                    #ts
-                                }
+                        )
+                    ),
+                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_impl_try_from_ts(
+                        &quote!{String},
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &quote!{
+                            match uuid::Uuid::try_parse(&v) {
+                                Ok(v0) => Ok(Self(v0)),
+                                Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NotUuidUcc {
+                                    #VSc: er.to_string(),
+                                    loc: location_lib::loc!(),
+                                })
                             }
                         }
-                    },
-                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => quote!{
-                        impl TryFrom<String> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                            fn try_from(v: String) -> Result<Self, Self::Error> {
-                                match uuid::Uuid::try_parse(&v) {
-                                    Ok(v0) => Ok(Self(v0)),
-                                    Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NotUuidUcc {
-                                        #VSc: er.to_string(),
-                                        loc: location_lib::loc!(),
-                                    })
-                                }
-                            }
-                        }
-                    },
-                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => quote!{
-                        impl TryFrom<(std::ops::Bound<i32>,std::ops::Bound<i32>)> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                            fn try_from(v: (std::ops::Bound<i32>,std::ops::Bound<i32>)) -> Result<Self, Self::Error> {
-                                #try_new_convert_pg_range_int_ts
-                            }
-                        }
-                    },
-                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => quote!{
-                        impl TryFrom<(std::ops::Bound<i64>,std::ops::Bound<i64>)> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                            fn try_from(v: (std::ops::Bound<i64>,std::ops::Bound<i64>)) -> Result<Self, Self::Error> {
-                                #try_new_convert_pg_range_int_ts
-                            }
-                        }
-                    },
+                    ),
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_impl_try_from_ts(
+                        &quote!{(std::ops::Bound<i32>,std::ops::Bound<i32>)},
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &try_new_convert_pg_range_int_ts
+                    ),
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_impl_try_from_ts(
+                        &quote!{(std::ops::Bound<i64>,std::ops::Bound<i64>)},
+                        &ident_origin_ucc,
+                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                        &try_new_convert_pg_range_int_ts
+                    ),
                 }
             }
             else {
