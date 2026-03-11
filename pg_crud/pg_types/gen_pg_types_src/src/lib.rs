@@ -2022,7 +2022,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &EarlierDateNotSupportedUcc,
                 &quote!{
                     #[eo_to_err_string_serde]
-                    #VSc: #StringTs,
+                    value: #StringTs,
                     #[eo_to_err_string_serde]
                     #EarliestSupportedDateSc: #StringTs,
                 }
@@ -2501,7 +2501,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             }
                                             else {
                                                 Err(#ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
-                                                    #VSc: #VSc.to_string(),
+                                                    value: #VSc.to_string(),
                                                     #EarliestSupportedDateSc: #EarliestSupportedDateSc.to_string(),
                                                     loc: location_lib::loc!(),
                                                 })
@@ -3020,11 +3020,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             &VSc,
                             &quote! {
                                 #ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
-                                    #VSc,
+                                    value,
                                     #EarliestSupportedDateSc,
                                     loc,
                                 } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#EarlierDateNotSupportedUcc {
-                                    #VSc,
+                                    value,
                                     #EarliestSupportedDateSc,
                                     loc,
                                 }),
