@@ -2635,12 +2635,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         PgType::SqlxTypesChronoNaiveDateAsDate |
                                         PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                                         PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                                        PgType::StringAsText => Ts2::new(),
+                                        PgType::StringAsText |
                                         PgType::SqlxTypesUuidUuidAsUuidInitByClient |
-                                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_try_new_for_de_ts(
-                                            &sqlx_types_uuid_uuid_as_uuid_v4_params_ts,
-                                            &sqlx_types_uuid_uuid_as_uuid_v4_ts
-                                        ),
+                                        PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => Ts2::new(),
                                         PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range),
                                         PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_v_pg_range_int_type_ts(&IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range),
                                     }
@@ -3110,7 +3107,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<String> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: String) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(&v)//todo use try_from instead of try_new_for_de ?
+                                match uuid::Uuid::try_parse(&v) {
+                                    Ok(v0) => Ok(Self(v0)),
+                                    Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NotUuidUcc {
+                                        #VSc: er.to_string(),
+                                        loc: location_lib::loc!(),
+                                    })
+                                }
                             }
                         }
                     },
