@@ -2789,74 +2789,59 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesIpnetworkIpNetworkAsInet |
                     PgType::SqlxPgTypesPgRangeI32AsInt4Range |
                     PgType::SqlxPgTypesPgRangeI64AsInt8Range => Ts2::new(),
-                    //here
-                    PgType::SqlxPgTypesPgMoneyAsMoney => quote!{
-                        impl From<i64> for #ident_origin_ucc {
-                            fn from(v: i64) -> Self {
-                                Self::new(#inn_type_stdrt_nn_ts(v))
-                            }
+                    PgType::SqlxPgTypesPgMoneyAsMoney => gen_impl_from_ts(
+                        &quote!{i64},
+                        &ident_origin_ucc,
+                        &quote!{Self::new(#inn_type_stdrt_nn_ts(v))}
+                    ),
+                    PgType::SqlxPgTypesPgIntervalAsInterval => gen_impl_from_ts(
+                        &quote!{(i32,i32,i64)},
+                        &ident_origin_ucc,
+                        &quote!{
+                            Self(sqlx::postgres::types::PgInterval {
+                                #MonthsSc: v.0,
+                                #DaysSc: v.1,
+                                #MicrosecondsSc: v.2,
+                            })
                         }
-                    },
-                    PgType::SqlxPgTypesPgIntervalAsInterval => quote!{
-                        impl From<(i32,i32,i64)> for #ident_origin_ucc {
-                            fn from(v: (i32,i32,i64)) -> Self {
-                                Self(sqlx::postgres::types::PgInterval {
-                                    #MonthsSc: v.0,
-                                    #DaysSc: v.1,
-                                    #MicrosecondsSc: v.2,
-                                })
-                            }
-                        }
-                    },
+                    ),
                     //todo reuse naming
-                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote!{
-                        impl From<(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)> for #ident_origin_ucc {
-                            fn from(v: (SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)) -> Self {
-                                Self(#inn_type_stdrt_nn_ts::#NewSc(v.0.0, v.1.0))
-                            }
+                    PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => gen_impl_from_ts(
+                        &quote!{(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)},
+                        &ident_origin_ucc,
+                        &quote!{Self(#inn_type_stdrt_nn_ts::#NewSc(v.0.0, v.1.0))}
+                    ),
+                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => gen_impl_from_ts(
+                        &quote!{(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)},
+                        &ident_origin_ucc,
+                        &{
+                            let ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
+                                v.0.0,
+                                v.1.0
+                            }));
+                            quote!{Self(#ts)}
                         }
-                    },
-                    PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                        let ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
-                            v.0.0,
-                            v.1.0
-                        }));
-                        quote!{
-                            impl From<(SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)> for #ident_origin_ucc {
-                                fn from(v: (SqlxTypesChronoNaiveDateAsNnDateOrigin,SqlxTypesChronoNaiveTimeAsNnTimeOrigin)) -> Self {
-                                    Self(#ts)
-                                }
-                            }
-                        }
-                    },
-                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => quote!{
-                        impl From<[u8; 6]> for #ident_origin_ucc {
-                            fn from(v: [u8; 6]) -> Self {
-                                Self(#inn_type_stdrt_nn_ts::new(v))
-                            }
-                        }
-                    },
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote!{
-                        impl From<(std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrigin>,std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrigin>)> for #ident_origin_ucc {
-                            fn from(v: (std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrigin>,std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrigin>)) -> Self {
-                                #self_sqlx_pg_types_pg_range_ts
-                            }
-                        }
-                    },
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote!{
-                        impl From<(std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrigin>,std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrigin>)> for #ident_origin_ucc {
-                            fn from(v: (std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrigin>,std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrigin>)) -> Self {
-                                #self_sqlx_pg_types_pg_range_ts
-                            }
-                        }
-                    },
-                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote!{
-                        impl From<(std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrigin>,std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrigin>)> for #ident_origin_ucc {
-                            fn from(v: (std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrigin>,std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrigin>)) -> Self {
-                                #self_sqlx_pg_types_pg_range_ts
-                            }
-                        }
-                    },
+                    ),
+                    PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_impl_from_ts(
+                        &quote!{[u8; 6]},
+                        &ident_origin_ucc,
+                        &quote!{Self(#inn_type_stdrt_nn_ts::new(v))}
+                    ),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_impl_from_ts(
+                        &quote!{(std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrigin>,std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrigin>)},
+                        &ident_origin_ucc,
+                        &self_sqlx_pg_types_pg_range_ts
+                    ),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_impl_from_ts(
+                        &quote!{(std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrigin>,std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrigin>)},
+                        &ident_origin_ucc,
+                        &self_sqlx_pg_types_pg_range_ts
+                    ),
+                    PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_impl_from_ts(
+                        &quote!{(std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrigin>,std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrigin>)},
+                        &ident_origin_ucc,
+                        &self_sqlx_pg_types_pg_range_ts
+                    ),
                 }
             }
             else {
