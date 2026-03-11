@@ -2873,51 +2873,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                 };
-                let try_new_convert_pg_range_int_ts = gen_self_match_try_new_ts(
-                    &quote! {sqlx::postgres::types::PgRange { #StartSc: v.0, #EndSc: v.1 }},
-                    &{
-                        let gen_match_ts = |name_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
-                            #ident_stdrt_nn_origin_try_new_er_ucc::#name_ts {
-                                loc,
-                                #ts
-                            } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#name_ts {
-                                loc,
-                                #ts
-                            }),
-                        };
-                        let (
-                            included_start_greater_than_included_end_ts,
-                            included_start_greater_than_excluded_end_ts,
-                            excluded_start_greater_than_included_end_ts,
-                            excluded_start_greater_than_excluded_end_ts,
-                        ) = {
-                            let gen_ts = |ts: &dyn ToTokens|gen_match_ts(
-                                &ts,
-                                &quote!{
-                                    #StartSc,
-                                    #EndSc,
-                                }
-                            );
-                            (
-                                gen_ts(&IncludedStartGreaterThanIncludedEndUcc),
-                                gen_ts(&IncludedStartGreaterThanExcludedEndUcc),
-                                gen_ts(&ExcludedStartGreaterThanIncludedEndUcc),
-                                gen_ts(&ExcludedStartGreaterThanExcludedEndUcc),
-                            )
-                        };
-                        let included_end_cannot_be_max_ts = gen_match_ts(
-                            &IncludedEndCannotBeMaxUcc,
-                            &quote!{#EndSc,}
-                        );
-                        quote! {
-                            #included_start_greater_than_included_end_ts
-                            #included_start_greater_than_excluded_end_ts
-                            #excluded_start_greater_than_included_end_ts
-                            #excluded_start_greater_than_excluded_end_ts
-                            #included_end_cannot_be_max_ts
-                        }
-                    },
-                );
                 let gen_impl_try_from_ts_9de9a96b = |
                     from_type_ts: &dyn ToTokens,
                     er_type_ts: &dyn ToTokens,
@@ -2927,6 +2882,70 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_origin_ucc,
                     er_type_ts,
                     ts
+                );
+                let gen_impl_try_from_ts_756a7745 = |
+                    from_type_ts: &dyn ToTokens,
+                    ts: &dyn ToTokens
+                |gen_impl_try_from_ts_9de9a96b(
+                    from_type_ts,
+                    &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
+                    ts
+                );
+                let gen_impl_try_from_ts_ab5ed01e = |
+                    int_range_type: IntRangeType,
+                |gen_impl_try_from_ts_756a7745(
+                    &{
+                        let ts0 = match int_range_type {
+                            IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range => &quote!{i32},
+                            IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range => &quote!{i64},
+                        };
+                        quote!{(std::ops::Bound<#ts0>,std::ops::Bound<#ts0>)}
+                    },
+                    &gen_self_match_try_new_ts(
+                        &quote! {sqlx::postgres::types::PgRange { #StartSc: v.0, #EndSc: v.1 }},
+                        &{
+                            let gen_match_ts = |name_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
+                                #ident_stdrt_nn_origin_try_new_er_ucc::#name_ts {
+                                    loc,
+                                    #ts
+                                } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#name_ts {
+                                    loc,
+                                    #ts
+                                }),
+                            };
+                            let (
+                                included_start_greater_than_included_end_ts,
+                                included_start_greater_than_excluded_end_ts,
+                                excluded_start_greater_than_included_end_ts,
+                                excluded_start_greater_than_excluded_end_ts,
+                            ) = {
+                                let gen_ts = |ts: &dyn ToTokens|gen_match_ts(
+                                    &ts,
+                                    &quote!{
+                                        #StartSc,
+                                        #EndSc,
+                                    }
+                                );
+                                (
+                                    gen_ts(&IncludedStartGreaterThanIncludedEndUcc),
+                                    gen_ts(&IncludedStartGreaterThanExcludedEndUcc),
+                                    gen_ts(&ExcludedStartGreaterThanIncludedEndUcc),
+                                    gen_ts(&ExcludedStartGreaterThanExcludedEndUcc),
+                                )
+                            };
+                            let included_end_cannot_be_max_ts = gen_match_ts(
+                                &IncludedEndCannotBeMaxUcc,
+                                &quote!{#EndSc,}
+                            );
+                            quote! {
+                                #included_start_greater_than_included_end_ts
+                                #included_start_greater_than_excluded_end_ts
+                                #excluded_start_greater_than_included_end_ts
+                                #excluded_start_greater_than_excluded_end_ts
+                                #included_end_cannot_be_max_ts
+                            }
+                        },
+                    )
                 );
                 match &pg_type {
                     PgType::I16AsInt2 |
@@ -2953,9 +2972,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &ident_stdrt_nn_origin_try_new_er_ucc,
                         &quote!{Self::try_new(v)}//todo use try_from instead of try_new ?
                     ),
-                    PgType::SqlxTypesChronoNaiveTimeAsTime => gen_impl_try_from_ts_9de9a96b(
+                    PgType::SqlxTypesChronoNaiveTimeAsTime => gen_impl_try_from_ts_756a7745(
                         &quote!{(u32,u32,u32,u32)},
-                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &quote!{
                             match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
                                 v.0,
@@ -2982,9 +3000,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     ),
-                    PgType::SqlxTypesTimeTimeAsTime => gen_impl_try_from_ts_9de9a96b(
+                    PgType::SqlxTypesTimeTimeAsTime => gen_impl_try_from_ts_756a7745(
                         &quote!{(u8,u8,u8,u32)},
-                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &quote!{
                             match #inn_type_stdrt_nn_ts::from_hms_micro(
                                 v.0,
@@ -3012,9 +3029,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     ),
-                    PgType::SqlxTypesChronoNaiveDateAsDate => gen_impl_try_from_ts_9de9a96b(
+                    PgType::SqlxTypesChronoNaiveDateAsDate => gen_impl_try_from_ts_756a7745(
                         &quote!{sqlx::types::chrono::NaiveDate},
-                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &gen_self_match_try_new_ts(
                             &VSc,
                             &quote! {
@@ -3030,9 +3046,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         )
                     ),
-                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_impl_try_from_ts_9de9a96b(
+                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_impl_try_from_ts_756a7745(
                         &quote!{String},
-                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &quote!{
                             match uuid::Uuid::try_parse(&v) {
                                 Ok(v0) => Ok(Self(v0)),
@@ -3043,15 +3058,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     ),
-                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_impl_try_from_ts_9de9a96b(
-                        &quote!{(std::ops::Bound<i32>,std::ops::Bound<i32>)},
-                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
-                        &try_new_convert_pg_range_int_ts
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_impl_try_from_ts_ab5ed01e(
+                        IntRangeType::SqlxPgTypesPgRangeI32AsInt4Range
                     ),
-                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_impl_try_from_ts_9de9a96b(
-                        &quote!{(std::ops::Bound<i64>,std::ops::Bound<i64>)},
-                        &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
-                        &try_new_convert_pg_range_int_ts
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_impl_try_from_ts_ab5ed01e(
+                        IntRangeType::SqlxPgTypesPgRangeI64AsInt8Range
                     ),
                 }
             }
