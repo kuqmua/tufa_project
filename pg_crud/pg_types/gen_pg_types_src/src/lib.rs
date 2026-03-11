@@ -3051,6 +3051,61 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let md_de_try_from_for_ident_stndrt_nn_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                let gen_self_match_try_new_ts = |params_ts_04a82119: &dyn ToTokens, match_er_vrts_ts: &dyn ToTokens| {
+                    quote! {
+                        match Self::#TryNewSc(#params_ts_04a82119) {
+                            Ok(v_b318fc86) => Ok(v_b318fc86),
+                            Err(er) => match er {
+                                #match_er_vrts_ts
+                            }
+                        }
+                    }
+                };
+                let try_new_convert_pg_range_int_ts = gen_self_match_try_new_ts(
+                    &quote! {sqlx::postgres::types::PgRange { #StartSc: v.0, #EndSc: v.1 }},
+                    &{
+                        let gen_match_ts = |name_ts: &dyn ToTokens, ts: &dyn ToTokens|quote! {
+                            #ident_stdrt_nn_origin_try_new_er_ucc::#name_ts {
+                                loc,
+                                #ts
+                            } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#name_ts {
+                                loc,
+                                #ts
+                            }),
+                        };
+                        let (
+                            included_start_greater_than_included_end_ts,
+                            included_start_greater_than_excluded_end_ts,
+                            excluded_start_greater_than_included_end_ts,
+                            excluded_start_greater_than_excluded_end_ts,
+                        ) = {
+                            let gen_ts = |ts: &dyn ToTokens|gen_match_ts(
+                                &ts,
+                                &quote!{
+                                    #StartSc,
+                                    #EndSc,
+                                }
+                            );
+                            (
+                                gen_ts(&IncludedStartGreaterThanIncludedEndUcc),
+                                gen_ts(&IncludedStartGreaterThanExcludedEndUcc),
+                                gen_ts(&ExcludedStartGreaterThanIncludedEndUcc),
+                                gen_ts(&ExcludedStartGreaterThanExcludedEndUcc),
+                            )
+                        };
+                        let included_end_cannot_be_max_ts = gen_match_ts(
+                            &IncludedEndCannotBeMaxUcc,
+                            &quote!{#EndSc,}
+                        );
+                        quote! {
+                            #included_start_greater_than_included_end_ts
+                            #included_start_greater_than_excluded_end_ts
+                            #excluded_start_greater_than_included_end_ts
+                            #excluded_start_greater_than_excluded_end_ts
+                            #included_end_cannot_be_max_ts
+                        }
+                    },
+                );
                 match &pg_type {
                     PgType::I16AsInt2 |
                     PgType::I32AsInt4 |
@@ -3113,15 +3168,54 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<(u8,u8,u8,u32)> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: (u8,u8,u8,u32)) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(v.0,v.1,v.2,v.3)//todo use try_from instead of try_new_for_de ?
+                                match #inn_type_stdrt_nn_ts::from_hms_micro(
+                                    v.0,
+                                    v.1,
+                                    v.2,
+                                    v.3,
+                                ) {
+                                    Ok(v_9932d535) => {
+                                        if v_9932d535.nanosecond().checked_rem(1000).expect("0def33ce") != 0 {
+                                            return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                #VSc: v_9932d535.to_string(),
+                                                loc: location_lib::loc!(),
+                                            });
+                                        }
+                                        Ok(Self(v_9932d535))
+                                    },
+                                    Err(er) => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                        #HourSc: v.0,
+                                        #MinuteSc: v.1,
+                                        #SecondSc: v.2,
+                                        #MicrosecondSc: v.3,
+                                        #ErSc: er.to_string(),
+                                        loc: location_lib::loc!(),
+                                    })
+                                }
                             }
                         }
                     },
-                    PgType::SqlxTypesChronoNaiveDateAsDate => quote!{
-                        impl TryFrom<sqlx::types::chrono::NaiveDate> for #ident_origin_ucc {
-                            type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
-                            fn try_from(v: sqlx::types::chrono::NaiveDate) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(v)//todo use try_from instead of try_new_for_de ?
+                    PgType::SqlxTypesChronoNaiveDateAsDate => {
+                        let ts = gen_self_match_try_new_ts(
+                            &VSc,
+                            &quote! {
+                                #ident_stdrt_nn_origin_try_new_er_ucc::#EarlierDateNotSupportedUcc {
+                                    #VSc,
+                                    #EarliestSupportedDateSc,
+                                    loc,
+                                } => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#EarlierDateNotSupportedUcc {
+                                    #VSc,
+                                    #EarliestSupportedDateSc,
+                                    loc,
+                                }),
+                            }
+                        );
+                        quote!{
+                            impl TryFrom<sqlx::types::chrono::NaiveDate> for #ident_origin_ucc {
+                                type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
+                                fn try_from(v: sqlx::types::chrono::NaiveDate) -> Result<Self, Self::Error> {
+                                    #ts
+                                }
                             }
                         }
                     },
@@ -3143,7 +3237,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<(std::ops::Bound<i32>,std::ops::Bound<i32>)> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: (std::ops::Bound<i32>,std::ops::Bound<i32>)) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(v.0,v.1)//todo use try_from instead of try_new_for_de ?
+                                #try_new_convert_pg_range_int_ts
                             }
                         }
                     },
@@ -3151,7 +3245,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<(std::ops::Bound<i64>,std::ops::Bound<i64>)> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: (std::ops::Bound<i64>,std::ops::Bound<i64>)) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(v.0,v.1)//todo use try_from instead of try_new_for_de ?
+                                #try_new_convert_pg_range_int_ts
                             }
                         }
                     },
