@@ -3083,7 +3083,29 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         impl TryFrom<(u32,u32,u32,u32)> for #ident_origin_ucc {
                             type Error = #ident_stdrt_nn_origin_try_new_for_de_er_ucc;
                             fn try_from(v: (u32,u32,u32,u32)) -> Result<Self, Self::Error> {
-                                Self::try_new_for_de(v.0,v.1,v.2,v.3)//todo use try_from instead of try_new_for_de ?
+                                match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
+                                    v.0,
+                                    v.1,
+                                    v.2,
+                                    v.3,
+                                ) {
+                                    Some(v_b143b9e1) => {
+                                        if <#inn_type_stdrt_nn_ts as chrono::Timelike>::nanosecond(&v_b143b9e1).checked_rem(1000).expect("c0514180") != 0 {
+                                            return Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#NanosecondPrecisionIsNotSupportedUcc {
+                                                #VSc: v_b143b9e1.to_string(),
+                                                loc: location_lib::loc!(),
+                                            });
+                                        }
+                                        Ok(Self(v_b143b9e1))
+                                    },
+                                    None => Err(#ident_stdrt_nn_origin_try_new_for_de_er_ucc::#InvalidHourOrMinuteOrSecondOrMicrosecondUcc {
+                                        #HourSc: v.0,
+                                        #MinSc: v.1,
+                                        #SecSc: v.2,
+                                        #MicroSc: v.3,
+                                        loc: location_lib::loc!(),
+                                    })
+                                }
                             }
                         }
                     },
