@@ -2918,6 +2918,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         }
                     },
                 );
+                let gen_impl_try_from_ts_9de9a96b = |
+                    from_type_ts: &dyn ToTokens,
+                    er_type_ts: &dyn ToTokens,
+                    ts: &dyn ToTokens
+                |gen_impl_try_from_ts(
+                    from_type_ts,
+                    &ident_origin_ucc,
+                    er_type_ts,
+                    ts
+                );
                 match &pg_type {
                     PgType::I16AsInt2 |
                     PgType::I32AsInt4 |
@@ -2938,15 +2948,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ts2::new(),
-                    PgType::StringAsText => gen_impl_try_from_ts(
+                    PgType::StringAsText => gen_impl_try_from_ts_9de9a96b(
                         &inn_type_stdrt_nn_ts,
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_er_ucc,
                         &quote!{Self::try_new(v)}//todo use try_from instead of try_new ?
                     ),
-                    PgType::SqlxTypesChronoNaiveTimeAsTime => gen_impl_try_from_ts(
+                    PgType::SqlxTypesChronoNaiveTimeAsTime => gen_impl_try_from_ts_9de9a96b(
                         &quote!{(u32,u32,u32,u32)},
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &quote!{
                             match #inn_type_stdrt_nn_ts::from_hms_micro_opt(
@@ -2974,9 +2982,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     ),
-                    PgType::SqlxTypesTimeTimeAsTime => gen_impl_try_from_ts(
+                    PgType::SqlxTypesTimeTimeAsTime => gen_impl_try_from_ts_9de9a96b(
                         &quote!{(u8,u8,u8,u32)},
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &quote!{
                             match #inn_type_stdrt_nn_ts::from_hms_micro(
@@ -3005,9 +3012,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     ),
-                    PgType::SqlxTypesChronoNaiveDateAsDate => gen_impl_try_from_ts(
+                    PgType::SqlxTypesChronoNaiveDateAsDate => gen_impl_try_from_ts_9de9a96b(
                         &quote!{sqlx::types::chrono::NaiveDate},
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &gen_self_match_try_new_ts(
                             &VSc,
@@ -3024,9 +3030,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         )
                     ),
-                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_impl_try_from_ts(
+                    PgType::SqlxTypesUuidUuidAsUuidInitByClient | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => gen_impl_try_from_ts_9de9a96b(
                         &quote!{String},
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &quote!{
                             match uuid::Uuid::try_parse(&v) {
@@ -3038,15 +3043,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     ),
-                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_impl_try_from_ts(
+                    PgType::SqlxPgTypesPgRangeI32AsInt4Range => gen_impl_try_from_ts_9de9a96b(
                         &quote!{(std::ops::Bound<i32>,std::ops::Bound<i32>)},
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &try_new_convert_pg_range_int_ts
                     ),
-                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_impl_try_from_ts(
+                    PgType::SqlxPgTypesPgRangeI64AsInt8Range => gen_impl_try_from_ts_9de9a96b(
                         &quote!{(std::ops::Bound<i64>,std::ops::Bound<i64>)},
-                        &ident_origin_ucc,
                         &ident_stdrt_nn_origin_try_new_for_de_er_ucc,
                         &try_new_convert_pg_range_int_ts
                     ),
