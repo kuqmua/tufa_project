@@ -1,18 +1,17 @@
 use enum_extension_lib::EnumExtension;
 use naming::{
     AdjacentWithRangeUcc, AllElsEqUcc, AllElsGreaterThanUcc, AllElsRgxUcc, BeforeUcc, BtwnUcc,
-    ContainsAllElsOfArrUcc, ContainsElGreaterThanUcc, ContainsElRgxUcc, CurrentDateUcc,
-    CurrentTimeUcc, CurrentTimestampUcc, DimFourAllElsEqUcc, DimFourAllElsGreaterThanUcc,
-    DimFourAllElsRgxUcc, DimFourBtwnUcc, DimFourContainsAllElsOfArrUcc,
-    DimFourContainsElGreaterThanUcc, DimFourContainsElRgxUcc, DimFourEqUcc, DimFourGreaterThanUcc,
-    DimFourInUcc, DimFourLenEqUcc, DimFourLenGreaterThanUcc, DimFourOverlapsWithArrUcc,
-    DimFourRgxUcc, DimOneAdjacentWithRangeUcc, DimOneAllElsEqUcc, DimOneAllElsGreaterThanUcc,
-    DimOneAllElsRgxUcc, DimOneBeforeUcc, DimOneBtwnUcc, DimOneContainsAllElsOfArrUcc,
-    DimOneContainsElGreaterThanUcc, DimOneContainsElRgxUcc, DimOneCurrentDateUcc,
-    DimOneCurrentTimeUcc, DimOneCurrentTimestampUcc, DimOneEqToEncodedStringRepresentationUcc,
-    DimOneEqUcc, DimOneExcludedUpperBoundUcc, DimOneFindRangesThatFullyContainTheGivenRangeUcc,
-    DimOneFindRangesWithinGivenRangeUcc, DimOneGreaterThanCurrentDateUcc,
-    DimOneGreaterThanCurrentTimeUcc, DimOneGreaterThanCurrentTimestampUcc,
+    ContainsAllElsOfArrUcc, ContainsElGreaterThanUcc, ContainsElRgxUcc, CrntDateUcc, CrntTimeUcc,
+    CrntTimestampUcc, DimFourAllElsEqUcc, DimFourAllElsGreaterThanUcc, DimFourAllElsRgxUcc,
+    DimFourBtwnUcc, DimFourContainsAllElsOfArrUcc, DimFourContainsElGreaterThanUcc,
+    DimFourContainsElRgxUcc, DimFourEqUcc, DimFourGreaterThanUcc, DimFourInUcc, DimFourLenEqUcc,
+    DimFourLenGreaterThanUcc, DimFourOverlapsWithArrUcc, DimFourRgxUcc, DimOneAdjacentWithRangeUcc,
+    DimOneAllElsEqUcc, DimOneAllElsGreaterThanUcc, DimOneAllElsRgxUcc, DimOneBeforeUcc,
+    DimOneBtwnUcc, DimOneContainsAllElsOfArrUcc, DimOneContainsElGreaterThanUcc,
+    DimOneContainsElRgxUcc, DimOneCrntDateUcc, DimOneCrntTimeUcc, DimOneCrntTimestampUcc,
+    DimOneEqToEncodedStringRepresentationUcc, DimOneEqUcc, DimOneExcludedUpperBoundUcc,
+    DimOneFindRangesThatFullyContainTheGivenRangeUcc, DimOneFindRangesWithinGivenRangeUcc,
+    DimOneGreaterThanCrntDateUcc, DimOneGreaterThanCrntTimeUcc, DimOneGreaterThanCrntTimestampUcc,
     DimOneGreaterThanExcludedUpperBoundUcc, DimOneGreaterThanIncludedLowerBoundUcc,
     DimOneGreaterThanUcc, DimOneInUcc, DimOneIncludedLowerBoundUcc, DimOneLenEqUcc,
     DimOneLenGreaterThanUcc, DimOneOverlapWithRangeUcc, DimOneOverlapsWithArrUcc,
@@ -27,7 +26,7 @@ use naming::{
     DimTwoInUcc, DimTwoLenEqUcc, DimTwoLenGreaterThanUcc, DimTwoOverlapsWithArrUcc, DimTwoRgxUcc,
     DisplayPlusToTokens, EqToEncodedStringRepresentationUcc, EqUcc, ExcludedUpperBoundUcc,
     FindRangesThatFullyContainTheGivenRangeUcc, FindRangesWithinGivenRangeUcc,
-    GreaterThanCurrentDateUcc, GreaterThanCurrentTimeUcc, GreaterThanCurrentTimestampUcc,
+    GreaterThanCrntDateUcc, GreaterThanCrntTimeUcc, GreaterThanCrntTimestampUcc,
     GreaterThanExcludedUpperBoundUcc, GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc,
     IncludedLowerBoundUcc, LenEqUcc, LenGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc,
     RangeLenUcc, RgxUcc, StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
@@ -52,18 +51,18 @@ pub enum PgTypeFilter {
     DimOneRgx,
     Before { ident: Ts2 },
     DimOneBefore { ident: Ts2 },
-    CurrentDate,
-    DimOneCurrentDate,
-    GreaterThanCurrentDate,
-    DimOneGreaterThanCurrentDate,
-    CurrentTimestamp,
-    DimOneCurrentTimestamp,
-    GreaterThanCurrentTimestamp,
-    DimOneGreaterThanCurrentTimestamp,
-    CurrentTime,
-    DimOneCurrentTime,
-    GreaterThanCurrentTime,
-    DimOneGreaterThanCurrentTime,
+    CrntDate,
+    DimOneCrntDate,
+    GreaterThanCrntDate,
+    DimOneGreaterThanCrntDate,
+    CrntTimestamp,
+    DimOneCrntTimestamp,
+    GreaterThanCrntTimestamp,
+    DimOneGreaterThanCrntTimestamp,
+    CrntTime,
+    DimOneCrntTime,
+    GreaterThanCrntTime,
+    DimOneGreaterThanCrntTime,
     DimOneLenEq,
     DimOneLenGreaterThan,
     EqToEncodedStringRepresentation,
@@ -127,18 +126,18 @@ impl PgFilter for PgTypeFilter {
             | Self::DimOneAdjacentWithRange { ident } => Some(ident.clone()),
             Self::Rgx
             | Self::DimOneRgx
-            | Self::CurrentDate
-            | Self::DimOneCurrentDate
-            | Self::GreaterThanCurrentDate
-            | Self::DimOneGreaterThanCurrentDate
-            | Self::CurrentTimestamp
-            | Self::DimOneCurrentTimestamp
-            | Self::GreaterThanCurrentTimestamp
-            | Self::DimOneGreaterThanCurrentTimestamp
-            | Self::CurrentTime
-            | Self::DimOneCurrentTime
-            | Self::GreaterThanCurrentTime
-            | Self::DimOneGreaterThanCurrentTime
+            | Self::CrntDate
+            | Self::DimOneCrntDate
+            | Self::GreaterThanCrntDate
+            | Self::DimOneGreaterThanCrntDate
+            | Self::CrntTimestamp
+            | Self::DimOneCrntTimestamp
+            | Self::GreaterThanCrntTimestamp
+            | Self::DimOneGreaterThanCrntTimestamp
+            | Self::CrntTime
+            | Self::DimOneCrntTime
+            | Self::GreaterThanCrntTime
+            | Self::DimOneGreaterThanCrntTime
             | Self::DimOneLenEq
             | Self::DimOneLenGreaterThan
             | Self::EqToEncodedStringRepresentation
@@ -165,18 +164,18 @@ impl PgFilter for PgTypeFilter {
             Self::DimOneRgx => &DimOneRgxUcc,
             Self::Before { .. } => &BeforeUcc,
             Self::DimOneBefore { .. } => &DimOneBeforeUcc,
-            Self::CurrentDate => &CurrentDateUcc,
-            Self::DimOneCurrentDate => &DimOneCurrentDateUcc,
-            Self::GreaterThanCurrentDate => &GreaterThanCurrentDateUcc,
-            Self::DimOneGreaterThanCurrentDate => &DimOneGreaterThanCurrentDateUcc,
-            Self::CurrentTimestamp => &CurrentTimestampUcc,
-            Self::DimOneCurrentTimestamp => &DimOneCurrentTimestampUcc,
-            Self::GreaterThanCurrentTimestamp => &GreaterThanCurrentTimestampUcc,
-            Self::DimOneGreaterThanCurrentTimestamp => &DimOneGreaterThanCurrentTimestampUcc,
-            Self::CurrentTime => &CurrentTimeUcc,
-            Self::DimOneCurrentTime => &DimOneCurrentTimeUcc,
-            Self::GreaterThanCurrentTime => &GreaterThanCurrentTimeUcc,
-            Self::DimOneGreaterThanCurrentTime => &DimOneGreaterThanCurrentTimeUcc,
+            Self::CrntDate => &CrntDateUcc,
+            Self::DimOneCrntDate => &DimOneCrntDateUcc,
+            Self::GreaterThanCrntDate => &GreaterThanCrntDateUcc,
+            Self::DimOneGreaterThanCrntDate => &DimOneGreaterThanCrntDateUcc,
+            Self::CrntTimestamp => &CrntTimestampUcc,
+            Self::DimOneCrntTimestamp => &DimOneCrntTimestampUcc,
+            Self::GreaterThanCrntTimestamp => &GreaterThanCrntTimestampUcc,
+            Self::DimOneGreaterThanCrntTimestamp => &DimOneGreaterThanCrntTimestampUcc,
+            Self::CrntTime => &CrntTimeUcc,
+            Self::DimOneCrntTime => &DimOneCrntTimeUcc,
+            Self::GreaterThanCrntTime => &GreaterThanCrntTimeUcc,
+            Self::DimOneGreaterThanCrntTime => &DimOneGreaterThanCrntTimeUcc,
             Self::DimOneLenEq => &DimOneLenEqUcc,
             Self::DimOneLenGreaterThan => &DimOneLenGreaterThanUcc,
             Self::EqToEncodedStringRepresentation => &EqToEncodedStringRepresentationUcc,

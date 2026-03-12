@@ -3444,12 +3444,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let in_h = PgTypeFilter::In { ident: quote! {#ident_tt_ucc} };
                         let rgx = PgTypeFilter::Rgx;
                         let eq_to_encoded_string_representation = PgTypeFilter::EqToEncodedStringRepresentation;
-                        let date_9c6d41ca = PgTypeFilter::CurrentDate;
-                        let greater_than_current_date = PgTypeFilter::GreaterThanCurrentDate;
-                        let time_49c41c1c = PgTypeFilter::CurrentTime;
-                        let greater_than_current_time = PgTypeFilter::GreaterThanCurrentTime;
-                        let timestamp_ad2e556b = PgTypeFilter::CurrentTimestamp;
-                        let greater_than_current_timestamp = PgTypeFilter::GreaterThanCurrentTimestamp;
+                        let date_9c6d41ca = PgTypeFilter::CrntDate;
+                        let greater_than_crnt_date = PgTypeFilter::GreaterThanCrntDate;
+                        let time_49c41c1c = PgTypeFilter::CrntTime;
+                        let greater_than_crnt_time = PgTypeFilter::GreaterThanCrntTime;
+                        let timestamp_ad2e556b = PgTypeFilter::CrntTimestamp;
+                        let greater_than_crnt_timestamp = PgTypeFilter::GreaterThanCrntTimestamp;
                         let before = PgTypeFilter::Before {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
@@ -3521,7 +3521,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(time_49c41c1c);
-                                vec.push(greater_than_current_time);
+                                vec.push(greater_than_crnt_time);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
@@ -3529,7 +3529,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(date_9c6d41ca);
-                                vec.push(greater_than_current_date);
+                                vec.push(greater_than_crnt_date);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
@@ -3537,7 +3537,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(timestamp_ad2e556b);
-                                vec.push(greater_than_current_timestamp);
+                                vec.push(greater_than_crnt_timestamp);
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
@@ -3582,12 +3582,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             },
                         };
                         let dim_one_rgx = PgTypeFilter::DimOneRgx;
-                        let dim_one_current_date = PgTypeFilter::DimOneCurrentDate;
-                        let dim_one_greater_than_current_date = PgTypeFilter::DimOneGreaterThanCurrentDate;
-                        let dim_one_current_time = PgTypeFilter::DimOneCurrentTime;
-                        let dim_one_greater_than_current_time = PgTypeFilter::DimOneGreaterThanCurrentTime;
-                        let dim_one_current_timestamp = PgTypeFilter::DimOneCurrentTimestamp;
-                        let dim_one_greater_than_current_timestamp = PgTypeFilter::DimOneGreaterThanCurrentTimestamp;
+                        let dim_one_crnt_date = PgTypeFilter::DimOneCrntDate;
+                        let dim_one_greater_than_crnt_date = PgTypeFilter::DimOneGreaterThanCrntDate;
+                        let dim_one_crnt_time = PgTypeFilter::DimOneCrntTime;
+                        let dim_one_greater_than_crnt_time = PgTypeFilter::DimOneGreaterThanCrntTime;
+                        let dim_one_crnt_timestamp = PgTypeFilter::DimOneCrntTimestamp;
+                        let dim_one_greater_than_crnt_timestamp = PgTypeFilter::DimOneGreaterThanCrntTimestamp;
                         let dim_one_before = PgTypeFilter::DimOneBefore {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
@@ -3692,24 +3692,24 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
-                                vec.push(dim_one_current_time);
-                                vec.push(dim_one_greater_than_current_time);
+                                vec.push(dim_one_crnt_time);
+                                vec.push(dim_one_greater_than_crnt_time);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
                                 let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
-                                vec.push(dim_one_current_date);
-                                vec.push(dim_one_greater_than_current_date);
+                                vec.push(dim_one_crnt_date);
+                                vec.push(dim_one_greater_than_crnt_date);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                 let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
-                                vec.push(dim_one_current_timestamp);
-                                vec.push(dim_one_greater_than_current_timestamp);
+                                vec.push(dim_one_crnt_timestamp);
+                                vec.push(dim_one_greater_than_crnt_timestamp);
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {

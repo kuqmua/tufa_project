@@ -5981,7 +5981,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         };
                         drop_all_test_tbls().await;
                         #ident::prep_extensions(&#PgPoolSc).await.expect("0633ff48");
-                        //do not make it concurrent. would be pg er: "duplicate k v violates unique constraint \"pg_class_relname_nsp_index\""
+                        //do not make it concrnt. would be pg er: "duplicate k v violates unique constraint \"pg_class_relname_nsp_index\""
                         for el_dac43b91 in tbl_names {
                             #ident::prep_pg_tbl(
                                 &#PgPoolSc,

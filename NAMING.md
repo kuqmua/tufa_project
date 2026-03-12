@@ -75,3 +75,4 @@
 - `cmn` common
 - `len` length
 - `eq` equal
+- `crnt` current

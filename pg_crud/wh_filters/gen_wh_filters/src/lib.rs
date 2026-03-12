@@ -698,19 +698,19 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         },
                     )
                 };
-                let gen_current_date_ts =
+                let gen_crnt_date_ts =
                     |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"= current_date");
-                let gen_greater_than_current_date_ts =
+                let gen_greater_than_crnt_date_ts =
                     |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"> current_date");
-                let gen_current_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
+                let gen_crnt_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
                     gen_1fa0bbf4_ts(pg_type_ptrn, &"= current_timestamp")
                 };
-                let gen_greater_than_current_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
+                let gen_greater_than_crnt_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
                     gen_1fa0bbf4_ts(pg_type_ptrn, &"> current_timestamp")
                 };
-                let gen_current_time_ts =
+                let gen_crnt_time_ts =
                     |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"= current_time");
-                let gen_greater_than_current_time_ts =
+                let gen_greater_than_crnt_time_ts =
                     |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"> current_time");
                 let gen_eq_to_encoded_string_representation_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
@@ -1009,31 +1009,31 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
                     PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_ptrn_stdrt),
                     PgTypeFilter::DimOneBefore { .. } => gen_before_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::CurrentDate => gen_current_date_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneCurrentDate => gen_current_date_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::GreaterThanCurrentDate => {
-                        gen_greater_than_current_date_ts(&pg_type_ptrn_stdrt)
+                    PgTypeFilter::CrntDate => gen_crnt_date_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFilter::DimOneCrntDate => gen_crnt_date_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFilter::GreaterThanCrntDate => {
+                        gen_greater_than_crnt_date_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanCurrentDate => {
-                        gen_greater_than_current_date_ts(&pg_type_ptrn_arr_dim1)
+                    PgTypeFilter::DimOneGreaterThanCrntDate => {
+                        gen_greater_than_crnt_date_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::CurrentTimestamp => gen_current_timestamp_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneCurrentTimestamp => {
-                        gen_current_timestamp_ts(&pg_type_ptrn_arr_dim1)
+                    PgTypeFilter::CrntTimestamp => gen_crnt_timestamp_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFilter::DimOneCrntTimestamp => {
+                        gen_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::GreaterThanCurrentTimestamp => {
-                        gen_greater_than_current_timestamp_ts(&pg_type_ptrn_stdrt)
+                    PgTypeFilter::GreaterThanCrntTimestamp => {
+                        gen_greater_than_crnt_timestamp_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanCurrentTimestamp => {
-                        gen_greater_than_current_timestamp_ts(&pg_type_ptrn_arr_dim1)
+                    PgTypeFilter::DimOneGreaterThanCrntTimestamp => {
+                        gen_greater_than_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::CurrentTime => gen_current_time_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneCurrentTime => gen_current_time_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::GreaterThanCurrentTime => {
-                        gen_greater_than_current_time_ts(&pg_type_ptrn_stdrt)
+                    PgTypeFilter::CrntTime => gen_crnt_time_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFilter::DimOneCrntTime => gen_crnt_time_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFilter::GreaterThanCrntTime => {
+                        gen_greater_than_crnt_time_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanCurrentTime => {
-                        gen_greater_than_current_time_ts(&pg_type_ptrn_arr_dim1)
+                    PgTypeFilter::DimOneGreaterThanCrntTime => {
+                        gen_greater_than_crnt_time_ts(&pg_type_ptrn_arr_dim1)
                     }
                     PgTypeFilter::DimOneLenEq => gen_len_filter_pattern_ts(&"="),
                     PgTypeFilter::DimOneLenGreaterThan => gen_len_filter_pattern_ts(&">"),

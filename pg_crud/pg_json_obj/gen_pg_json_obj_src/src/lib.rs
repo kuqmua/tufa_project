@@ -27,7 +27,7 @@ use naming::{
     SelfUcc, StdOptOptObjAccSc, ToTokensToUccTs, UpdQbSc, UpdQpSc, UpdSc, UpdToRdIdsSc,
     UuidUuidAsNnJsonbStringUcc, VSc, ValueSc, VecOfUcc, WithIdUcc,
     prm::{
-        ElSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfCurrentSc, SelfGenPgJsonObjModSc, SelfLastSc,
+        ElSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfCrntSc, SelfGenPgJsonObjModSc, SelfLastSc,
         SelfRdIdsHUcc, SelfRdIdsUcc, SelfRdInnUcc, SelfRdTryFromErUcc, SelfRdUcc, SelfSelElUcc,
         SelfSelSc, SelfSelUcc, SelfTtUcc, SelfUpdElUcc, SelfUpdForQueryElUcc, SelfUpdForQueryUcc,
         SelfUpdTryNewErUcc, SelfUpdUcc, SelfWhUcc,
@@ -4912,20 +4912,20 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         };
                         let ts = vec_syn_field.iter().map(|el0| {
                             let fi = &el0.ident;
-                            let fi_current_sc = SelfCurrentSc::from_display(&fi);
+                            let fi_crnt_sc = SelfCrntSc::from_display(&fi);
                             let fi_last_sc = SelfLastSc::from_display(&fi);
-                            let mb_fi_last_clone_from_fi_current = if vec_syn_field.len() == 1 {
+                            let mb_fi_last_clone_from_fi_crnt = if vec_syn_field.len() == 1 {
                                 Ts2::new()
                             }
                             else {
-                                quote!{#fi_last_sc.clone_from(&#fi_current_sc);}
+                                quote!{#fi_last_sc.clone_from(&#fi_crnt_sc);}
                             };
                             let fields_ts = vec_syn_field.iter().map(|el1| {//todo rename
                                 let fi0 = &el1.ident;
-                                let fi0_current_sc = SelfCurrentSc::from_display(&fi0);
+                                let fi0_crnt_sc = SelfCrntSc::from_display(&fi0);
                                 let fi0_last_sc = SelfLastSc::from_display(&fi0);
                                 let ts: &dyn ToTokens = if fi == fi0 {
-                                    &fi0_current_sc
+                                    &fi0_crnt_sc
                                 } else {
                                     &fi0_last_sc
                                 };
@@ -4936,8 +4936,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 for el_7bf83754 in #ft_as_pg_json_test_cases_ts::#RdIdsTo2DimsVecRdInnSc(&#RdIdsSc.0.#VSc.#fi) {
                                     for el_2720df8a in el_7bf83754 {
-                                        let #fi_current_sc = Some(#ts0);
-                                        #mb_fi_last_clone_from_fi_current
+                                        let #fi_crnt_sc = Some(#ts0);
+                                        #mb_fi_last_clone_from_fi_crnt
                                         acc_ef081dc3.push(
                                             vec![
                                                 #ident_stdrt_nn_rd_inn_ucc {
