@@ -4736,6 +4736,17 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 })
             };
+            let gen_for_each_assert_eq_ts =
+                |v_ts: &dyn ToTokens, el_ts: &dyn ToTokens, fi: &Ident| {
+                    let vec_el_ts = quote! {vec![#el_ts]};
+                    let assert_eq_ts =
+                        gen_rd_ids_and_cr_into_wh_assert_eq_ts(&gen_ts_ccbfdac5(fi, &vec_el_ts));
+                    quote! {
+                        for #el_ts in #v_ts.into_vec() {
+                            #assert_eq_ts
+                        }
+                    }
+                };
             let (rd_ids_and_cr_into_wh_eq_ts, rd_ids_and_cr_into_vec_wh_eq_using_fields_ts) = {
                 let gen_ts = |test_name: &str, eq_or_eq_using_fields: &EqOrEqUsingFields| {
                     gen_rd_test_ts(
@@ -4813,16 +4824,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 ident_cr.#fi.clone()
                             )}
                         },
-                        &{
-                            let assert_eq_ts = gen_rd_ids_and_cr_into_wh_assert_eq_ts(
-                                &gen_ts_ccbfdac5(fi, &quote! {vec![el_48a3d976]}),
-                            );
-                            quote! {
-                                for el_48a3d976 in v_d5cd3c70.into_vec() {
-                                    #assert_eq_ts
-                                }
-                            }
-                        },
+                        &gen_for_each_assert_eq_ts(&quote! {v_d5cd3c70}, &quote! {el_48a3d976}, fi),
                     )
                 },
             );
@@ -4838,16 +4840,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
                             quote! {#ft_ts #CrIntoPgTypeOptVecWhDimOneEqSc(ident_cr.#fi.clone())}
                         },
-                        &{
-                            let assert_eq_ts = gen_rd_ids_and_cr_into_wh_assert_eq_ts(
-                                &gen_ts_ccbfdac5(fi, &quote! {vec![el_39d1fb5d]}),
-                            );
-                            quote! {
-                                for el_39d1fb5d in v_b02d763d.into_vec() {
-                                    #assert_eq_ts
-                                }
-                            }
-                        },
+                        &gen_for_each_assert_eq_ts(&quote! {v_b02d763d}, &quote! {el_39d1fb5d}, fi),
                     )
                 },
             );
@@ -4902,16 +4895,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     rd_ids_from_co.#fi.clone().expect("2ed000a5"),
                                     ident_cr.#fi.clone()
                                 )},
-                                &{
-                                    let assert_eq_ts = gen_rd_ids_and_cr_into_wh_assert_eq_ts(
-                                        &gen_ts_ccbfdac5(fi, &quote! {vec![el_3efa0bb4]}),
-                                    );
-                                    quote! {
-                                        for el_3efa0bb4 in v_bb67b871.into_vec() {
-                                            #assert_eq_ts
-                                        }
-                                    }
-                                },
+                                &gen_for_each_assert_eq_ts(
+                                    &quote! {v_bb67b871},
+                                    &quote! {el_3efa0bb4},
+                                    fi,
+                                ),
                             )
                         },
                     )
@@ -4949,16 +4937,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 ident_cr.#fi.clone()
                             )}
                         },
-                        &{
-                            let assert_eq_ts = gen_rd_ids_and_cr_into_wh_assert_eq_ts(
-                                &gen_ts_ccbfdac5(fi, &quote! {vec![el_c09ef321]}),
-                            );
-                            quote! {
-                                for el_c09ef321 in v_f825e068.into_vec() {
-                                    #assert_eq_ts
-                                }
-                            }
-                        },
+                        &gen_for_each_assert_eq_ts(&quote! {v_f825e068}, &quote! {el_c09ef321}, fi),
                     )
                 },
             );
@@ -4976,16 +4955,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 ident_cr.#fi.clone()
                             )}
                         },
-                        &{
-                            let assert_eq_ts = gen_rd_ids_and_cr_into_wh_assert_eq_ts(
-                                &gen_ts_ccbfdac5(fi, &quote! {vec![el_527b546b]}),
-                            );
-                            quote! {
-                                for el_527b546b in v_cd4aa374.into_vec() {
-                                    #assert_eq_ts
-                                }
-                            }
-                        },
+                        &gen_for_each_assert_eq_ts(&quote! {v_cd4aa374}, &quote! {el_527b546b}, fi),
                     )
                 },
             );
