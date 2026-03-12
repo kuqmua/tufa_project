@@ -1,7 +1,8 @@
 use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_cmn::{
-    DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFlt, QpEr, incr_checked_add_one_returning_incr,
+    DfltSomeOneEl, NotEmptyUnqVec, NotEmptyUnqVecTryNewEr, PgTypeWhFlt, QpEr,
+    incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
@@ -37,16 +38,16 @@ impl DfltSomeOneEl for EncodeFormat {
     }
 }
 //difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_cmn::DfltSomeOneEl impl with different generic requirement and PgTypeWhFlt
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
-pub struct PgJsonNotEmptyUnqVec<T>(Vec<T>);
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
+pub struct PgJsonNotEmptyUnqVec<T>(NotEmptyUnqVec<T>);
 impl<T: PartialEq + Clone> PgJsonNotEmptyUnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
-        self.0
+        self.0.into_vec()
     }
     #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
-        &self.0
+        self.0.to_vec()
     }
 }
 impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
@@ -57,7 +58,7 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
     where
         T: 'query_lt,
     {
-        for el in self.0 {
+        for el in self.0.into_vec() {
             if let Err(er) = query.try_bind(Json(el)) {
                 return Err(er.to_string());
             }
@@ -90,110 +91,28 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
 impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgJsonNotEmptyUnqVec<T> {
     type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
-        if v.is_empty() {
-            return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
+        match NotEmptyUnqVec::try_new(v) {
+            Ok(v_42c1af65) => Ok(Self(v_42c1af65)),
+            Err(er) => Err(er),
         }
-        {
-            let mut acc = Vec::new();
-            for el in &v {
-                if acc.contains(&el) {
-                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
-                        v: el.clone(),
-                        loc: loc!(),
-                    });
-                }
-                acc.push(el);
-            }
-        }
-        Ok(Self(v))
     }
 }
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-const _: () = {
-    #[expect(clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PgJsonNotEmptyUnqVec<T>
-    {
-        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de, T>
-            where
-                T: _serde::Deserialize<'de>,
-            {
-                marker: _serde::__private228::PhantomData<PgJsonNotEmptyUnqVec<T>>,
-                lt: _serde::__private228::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-                _serde::de::Visitor<'de> for __Visitor<'de, T>
-            {
-                type Value = PgJsonNotEmptyUnqVec<T>;
-                fn expecting(
-                    &self,
-                    __f: &mut _serde::__private228::Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(
-                        __f,
-                        "tuple struct PgJsonNotEmptyUnqVec",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    Ok(PgJsonNotEmptyUnqVec(f0))
-                }
-                #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let Some(f0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
-                    else {
-                        return Err(_serde::de::Error::invalid_length(
-                            0usize,
-                            &"tuple struct PgJsonNotEmptyUnqVec with 1 el",
-                        ));
-                    };
-                    match PgJsonNotEmptyUnqVec::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "PgJsonNotEmptyUnqVec",
-                __Visitor {
-                    marker: _serde::__private228::PhantomData::<Self>,
-                    lt: _serde::__private228::PhantomData,
-                },
-            )
-        }
-    }
-};
 impl<T: DfltSomeOneEl> DfltSomeOneEl for PgJsonNotEmptyUnqVec<T> {
     fn dflt_some_one_el() -> Self {
-        Self(vec![DfltSomeOneEl::dflt_some_one_el()])
+        match NotEmptyUnqVec::try_new(vec![DfltSomeOneEl::dflt_some_one_el()]) {
+            Ok(v_0ce4eb3c) => Self(v_0ce4eb3c),
+            Err(_) => Self::default(),
+        }
     }
 }
 impl<T> Default for PgJsonNotEmptyUnqVec<T> {
     fn default() -> Self {
-        Self(Vec::default())
+        Self(NotEmptyUnqVec::default())
     }
 }
 impl<T> From<PgJsonNotEmptyUnqVec<T>> for Vec<T> {
     fn from(v: PgJsonNotEmptyUnqVec<T>) -> Self {
-        v.0
+        v.0.into_vec()
     }
 }
 impl<'lt, T> PgTypeWhFlt<'lt> for PgJsonNotEmptyUnqVec<T>
@@ -204,7 +123,7 @@ where
         self,
         mut query: Query<'lt, Postgres, PgArguments>,
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
-        if let Err(er) = query.try_bind(Json(self.0)) {
+        if let Err(er) = query.try_bind(Json(self.0.into_vec())) {
             return Err(er.to_string());
         }
         Ok(query)
