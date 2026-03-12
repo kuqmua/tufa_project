@@ -633,7 +633,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         };
         let pub_async_fn_prep_pg_tbl_ts = {
             let prep_pg_dq_ts = dq_ts(&format!(
-                "create tbl if not exists {{tbl}} ({})",
+                "create table if not exists {{tbl}} ({})",
                 fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
             ));
             let serde_json_to_string_schemars_schema_for_generic_unwrap_ts = {
@@ -5972,7 +5972,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 .map(|tbl_name|{
                                     let pg_pool_3b948340 = &pg_pool;
                                     async move {
-                                        sqlx::query(&format!("drop tbl if exists {tbl_name}")).execute(pg_pool_3b948340).await
+                                        sqlx::query(&format!("drop table if exists {tbl_name}")).execute(pg_pool_3b948340).await
                                     }
                                 })
                             )
