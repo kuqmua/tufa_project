@@ -9,7 +9,7 @@ use naming::{
 };
 use optml::Optml;
 use panic_location::panic_location;
-use pg_crud_macros_common::{
+use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColumnPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFilter, PgTypeFilter,
     PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, impl_pg_type_wh_filter_for_ident_ts,
 };
@@ -18,7 +18,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
-use token_patterns::{CoreDefault, PgCrudCommonDfltSomeOneEl, PgCrudCommonDfltSomeOneElCall};
+use token_patterns::{CoreDefault, PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall};
 #[proc_macro]
 pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     #[derive(Clone, Optml)]
@@ -109,7 +109,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     panic_location();
     let gen_wh_filters_config =
         from_str::<GenWhFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
-    let import = Import::PgCrudCommon;
+    let import = Import::PgCrudCmn;
     let t_ts = quote! {T};
     let t_ann_generic_ts = quote! {<#t_ts>};
     let proc_macro2_ts_new = Ts2::new();
@@ -117,7 +117,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let unsigned_part_of_i32_ts = quote! {#import::UnsignedPartOfI32};
     let not_zero_unsigned_part_of_i32_ts = quote! {#import::NotZeroUnsignedPartOfI32};
     let v_dflt_some_one_el_ts = quote! {
-        #VSc: #PgCrudCommonDfltSomeOneElCall
+        #VSc: #PgCrudCmnDfltSomeOneElCall
     };
     let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool,
                          generic: &Generic,
@@ -165,11 +165,11 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             &match &generic {
                 Generic::False => Ts2::new(),
                 Generic::True { mb_extra_traits_ts } => mb_extra_traits_ts.as_ref().map_or_else(
-                    || quote! {<T: #PgCrudCommonDfltSomeOneEl>},
-                    |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCommonDfltSomeOneEl>},
+                    || quote! {<T: #PgCrudCmnDfltSomeOneEl>},
+                    |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCmnDfltSomeOneEl>},
                 ),
             },
-            &Import::PgCrudCommon,
+            &Import::PgCrudCmn,
             &ident,
             match &generic {
                 Generic::False => &proc_macro2_ts_new,
@@ -177,7 +177,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             },
             &quote! {
                 Self {
-                    oprtr: #PgCrudCommonDfltSomeOneElCall,
+                    oprtr: #PgCrudCmnDfltSomeOneElCall,
                     #ts
                 }
             },
@@ -223,7 +223,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 &qp_ts,
                 is_qb_mut,
                 &qb_ts,
-                &Import::PgCrudCommon,
+                &Import::PgCrudCmn,
             )
         };
     let add_rgx_case_and_v_dcl_ts = |ts: &dyn ToTokens| {
@@ -236,7 +236,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let add_rgx_case_and_v_dflt_init_ts = |ts: &dyn ToTokens| {
         quote! {
             #ts
-            rgx_case: #PgCrudCommonDfltSomeOneElCall,
+            rgx_case: #PgCrudCmnDfltSomeOneElCall,
             #v_dflt_some_one_el_ts
         }
     };
@@ -335,7 +335,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let v_match_self_v_qp_init_ts =
         gen_ident_match_field_fn_ok_v_return_err_ts(&VSc, &VSc, &quote! {qp});
     let dims_dflt_init_ts = quote! {
-        #DimsSc: #PgCrudCommonDfltSomeOneElCall
+        #DimsSc: #PgCrudCmnDfltSomeOneElCall
     };
     let dims_dflt_init_comma_ts = quote! {#dims_dflt_init_ts,};
     let query_self_dims_qb_query_ts = quote! {
@@ -730,7 +730,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         },
                         quote! {
                             #mb_dims_dflt_init_ts
-                            encode_format: #PgCrudCommonDfltSomeOneElCall,
+                            encode_format: #PgCrudCmnDfltSomeOneElCall,
                             encoded_string_representation: #CoreDefault
                         },
                         IncrPrmUndrscr::False,

@@ -26,7 +26,7 @@ secrecy.workspace = true
 tracing-subscriber.workspace = true
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
-common_routes = {path = "../common_routes"}
+cmn_routes = {path = "../cmn_routes"}
 server_app_state = {path = "../server_app_state"}
 server_config = {path = "../server_config"}
 server_table_example = {path = "../server_table_example"}

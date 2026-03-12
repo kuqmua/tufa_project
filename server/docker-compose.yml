@@ -1,19 +1,19 @@
 version: '3.3'
 services:
-  server_service:
-    container_name: server-container
-    image: server-image
-    restart: always
-    ports:
-      - 8080:8080
-    environment:
-      DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
-      ENABLE_API_GIT_COMMIT_CHECK: "true"
-      MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
-      SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
-      SRC_PLACE_TYPE: "src"
-      TIMEZONE: "10800"
-      TRACING_LEVEL: "debug"
+  # server_service:
+  #   container_name: server-container
+  #   image: server-image
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
+  #     ENABLE_API_GIT_COMMIT_CHECK: "true"
+  #     MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
+  #     SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
+  #     SRC_PLACE_TYPE: "src"
+  #     TIMEZONE: "10800"
+  #     TRACING_LEVEL: "debug"
   postgresql_16_with_pg_jsonschema_service:
     container_name: postgresql_16_with_pg_jsonschema
     # image build from https://github.com/kuqmua/pg_jsonschema_custom

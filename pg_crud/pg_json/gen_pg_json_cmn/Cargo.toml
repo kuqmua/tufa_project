@@ -1,0 +1,16 @@
+[package]
+name = "gen_pg_json_cmn"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
+
+[lints]
+workspace = true

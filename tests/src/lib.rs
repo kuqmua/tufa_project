@@ -210,6 +210,7 @@ mod tests {
                 String::from("unreachable_cfg_select_predicates"),
                 String::from("default_overrides_default_fields"),
                 String::from("linker_info"),
+                String::from("duplicate_features"),
             ],
         );
     }
@@ -417,7 +418,7 @@ mod tests {
     fn all_files_are_english_only() {
         let mut ers = Vec::new();
         let exceptions = [
-            "../pg_crud/pg_crud_common/src/lib.rs", //contain utf-8 String test
+            "../pg_crud/pg_crud_cmn/src/lib.rs", //contain utf-8 String test
         ];
         for el_d87f0495 in project_dir()
             .into_iter()

@@ -12,10 +12,10 @@ categories = ["category"]
 [dev-dependencies]
 quote.workspace = true
 gen_pg_json_obj_src = {path = "../gen_pg_json_obj_src"}
-macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
+macro_clippy_check_cmn = {path = "../../../macro_clippy_check_cmn"}
 
 [lints]
 workspace = true
 
 [features]
-test-utils = ["macro_clippy_check_common/test-utils"]
+test-utils = ["macro_clippy_check_cmn/test-utils"]

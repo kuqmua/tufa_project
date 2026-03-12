@@ -17,7 +17,7 @@ strum_macros.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 rayon.workspace = true
-pg_crud_macros_common = {path = "../../pg_crud_macros_common"}
+pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
 enum_extension_lib = {path = "../../../enum_extension_lib"}
 gen_quotes = {path = "../../../gen_quotes"}
 panic_location = {path = "../../../panic_location"}

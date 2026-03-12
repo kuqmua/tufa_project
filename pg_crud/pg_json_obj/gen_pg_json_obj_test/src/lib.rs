@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use macro_clippy_check_common::clippy_check;
+    use macro_clippy_check_cmn::clippy_check;
     use quote::quote;
     #[test]
     fn clippy() {

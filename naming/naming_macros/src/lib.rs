@@ -33,14 +33,14 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 }
             }
             let phrase_part_ucc_str = el.iter().fold(String::new(), |mut acc, el0| {
-                acc.push_str(&naming_common::AsRefStrToUccStr::case(el0));
+                acc.push_str(&naming_cmn::AsRefStrToUccStr::case(el0));
                 acc
             });
             let phrase_part_sc_str =
                 el.iter()
                     .enumerate()
                     .fold(String::new(), |mut acc, (i, el0)| {
-                        let el_sc_str = naming_common::AsRefStrToScStr::case(el0);
+                        let el_sc_str = naming_cmn::AsRefStrToScStr::case(el0);
                         if i == 0 {
                             acc.push_str(&el_sc_str);
                         } else {
@@ -137,14 +137,14 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             let ucc_ucc_str = "Ucc";
             let sc_ucc_str = "Sc";
             let els_concat_ucc_str = el.iter().fold(String::new(), |mut acc, el0| {
-                acc.push_str(&naming_common::AsRefStrToUccStr::case(el0));
+                acc.push_str(&naming_cmn::AsRefStrToUccStr::case(el0));
                 acc
             });
             let els_concat_v_ucc_dq_ts = dq_ts(&el.iter().fold(String::new(), |mut acc, el0| {
                 if el0 == "self" {
                     acc.push_str("{v}");
                 } else {
-                    acc.push_str(&naming_common::AsRefStrToUccStr::case(el0));
+                    acc.push_str(&naming_cmn::AsRefStrToUccStr::case(el0));
                 }
                 acc
             }));
@@ -154,7 +154,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     if el0 == "self" {
                         assert!(write!(acc, "{{v}}{symbol}").is_ok(), "6a02a2ff");
                     } else {
-                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToScStr::case(el0)).is_ok(), "d915980a");
+                        assert!(write!(acc, "{}{symbol}", naming_cmn::AsRefStrToScStr::case(el0)).is_ok(), "d915980a");
                     }
                     acc
                 });
@@ -190,7 +190,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                 } else {
                     quote! {AsRefStrToScStr::case}
                 };
-                quote!{naming_common::#ts}
+                quote!{naming_cmn::#ts}
             };
             let impl_to_tokens_ts = gen_impl_to_tokens_ts(
                 &struct_ident_ts,
@@ -285,8 +285,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
             .map(|el| match el.fields {
                 Fields::Unit => {
                     let el_ident = &el.ident;
-                    let el_ident_ucc_dq_ts =
-                        dq_ts(&naming_common::ToTokensToUccStr::case(&el_ident));
+                    let el_ident_ucc_dq_ts = dq_ts(&naming_cmn::ToTokensToUccStr::case(&el_ident));
                     quote! {Self::#el_ident => #StringTs::from(#el_ident_ucc_dq_ts)}
                 }
                 Fields::Named(_) | Fields::Unnamed(_) => {
@@ -315,7 +314,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
             .map(|el| match el.fields {
                 Fields::Unit => {
                     let el_ident = &el.ident;
-                    let el_ident_sc_dq_ts = dq_ts(&naming_common::ToTokensToScStr::case(&el_ident));
+                    let el_ident_sc_dq_ts = dq_ts(&naming_cmn::ToTokensToScStr::case(&el_ident));
                     quote! {Self::#el_ident => #StringTs::from(#el_ident_sc_dq_ts)}
                 }
                 Fields::Named(_) | Fields::Unnamed(_) => {
@@ -345,7 +344,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
                 Fields::Unit => {
                     let el_ident = &el.ident;
                     let el_ident_sc_dq_ts =
-                        dq_ts(&naming_common::ToTokensToUpperScStr::case(&el_ident));
+                        dq_ts(&naming_cmn::ToTokensToUpperScStr::case(&el_ident));
                     quote! {Self::#el_ident => #StringTs::from(#el_ident_sc_dq_ts)}
                 }
                 Fields::Named(_) | Fields::Unnamed(_) => panic!("b6fedcff"),

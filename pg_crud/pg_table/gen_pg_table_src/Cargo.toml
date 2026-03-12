@@ -21,7 +21,7 @@ panic_location = {path = "../../../panic_location"}
 macros_helpers = {path = "../../../macros_helpers"}
 naming = {path = "../../../naming"}
 token_patterns = {path = "../../../token_patterns"}
-pg_crud_macros_common = {path = "../../pg_crud_macros_common"}
+pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
 optml = {path = "../../../optml"}
 
 [lints]

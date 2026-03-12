@@ -19,7 +19,7 @@ proc-macro2.workspace = true
 quote.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-pg_crud_macros_common = {path = "../../pg_crud_macros_common"}
+pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
 gen_quotes = {path = "../../../gen_quotes"}
 panic_location = {path = "../../../panic_location"}
 naming = {path = "../../../naming"}

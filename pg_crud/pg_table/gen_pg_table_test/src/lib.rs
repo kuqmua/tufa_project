@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use macro_clippy_check_common::clippy_check;
+    use macro_clippy_check_cmn::clippy_check;
     use optml::Optml;
     use proc_macro2::TokenStream as Ts2;
     use quote::quote;
@@ -61,7 +61,7 @@ server_config = {path = "../../../server_config"}"#,
                             "dm_write_into_file": "False",
                             "dlo_write_into_file": "False",
                             "tests_write_into_file": "False",
-                            "common_write_into_file": "False",
+                            "cmn_write_into_file": "False",
                             "whole_write_into_file": "False"
                         }}]
                         #[pg_crud::cm_er_vrts{enum CmErVrts{}}]
@@ -72,8 +72,8 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::uo_er_vrts{enum UoErVrts{}}]
                         #[pg_crud::dm_er_vrts{enum DmErVrts{}}]
                         #[pg_crud::dlo_er_vrts{enum DloErVrts{}}]
-                        #[pg_crud::common_er_vrts{
-                            enum CommonErVrts {
+                        #[pg_crud::cmn_er_vrts{
+                            enum CmnErVrts {
                                 CheckCommit {
                                     #[eo_location]
                                     check_commit: pg_crud::check_commit::CommitEr,
@@ -89,7 +89,7 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::uo_logic{}]
                         #[pg_crud::dm_logic{}]
                         #[pg_crud::dlo_logic{}]
-                        #[pg_crud::common_logic{}]
+                        #[pg_crud::cmn_logic{}]
                         pub struct TableExample {
                             #mb_gen_pg_table_pk_ts
                             pub pk_column:

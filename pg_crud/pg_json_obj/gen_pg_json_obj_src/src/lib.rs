@@ -36,7 +36,7 @@ use naming::{
 };
 use optml::Optml;
 use panic_location::panic_location;
-use pg_crud_macros_common::{
+use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColumnPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrPrmUndrscr, IsCrQbMut, IsNl,
     IsPkUndrscr, IsQbMut, IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut,
@@ -597,7 +597,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let scopes_ts = wrap_into_scopes_ts(&ts);
             quote! {#scopes_ts;}
         };
-        let gen_ident_tt_or_ident_cr_common_ts = |pg_json_subtype_tt_or_cr: &PgJsonSubtypeTtOrCr| {
+        let gen_ident_tt_or_ident_cr_cmn_ts = |pg_json_subtype_tt_or_cr: &PgJsonSubtypeTtOrCr| {
             let ident_tt_or_ident_cr_ucc: &dyn DisplayPlusToTokens = match &pg_json_subtype_tt_or_cr {
                 PgJsonSubtypeTtOrCr::Tt => &ident_tt_ucc,
                 PgJsonSubtypeTtOrCr::Cr => &ident_cr_ucc,
@@ -809,15 +809,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             }
         };
         let ident_tt_ts = {
-            let ident_tt_common_ts = gen_ident_tt_or_ident_cr_common_ts(&PgJsonSubtypeTtOrCr::Tt);
+            let ident_tt_cmn_ts = gen_ident_tt_or_ident_cr_cmn_ts(&PgJsonSubtypeTtOrCr::Tt);
             quote! {
-                #ident_tt_common_ts
+                #ident_tt_cmn_ts
             }
         };
         let gen_type_as_pg_json_cr_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_subtype_ts(&ts, &pg_json_subtype_cr);
         let gen_type_as_pg_json_cr_for_query_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_subtype_ts(&ts, &pg_json_subtype_cr_for_query);
         let ident_cr_ts = {
-            let ident_cr_common_ts = gen_ident_tt_or_ident_cr_common_ts(&PgJsonSubtypeTtOrCr::Cr);
+            let ident_cr_cmn_ts = gen_ident_tt_or_ident_cr_cmn_ts(&PgJsonSubtypeTtOrCr::Cr);
             let gen_impl_display_for_ident_cr_ts = |ts: &dyn ToTokens| gen_impl_display_ts(
                 &Ts2::new(),
                 &ts,
@@ -837,7 +837,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 Ts2::new()
             };
             quote! {
-                #ident_cr_common_ts
+                #ident_cr_cmn_ts
                 #impl_display_for_ident_cr_ts
                 #impl_location_lib_to_err_string_for_ident_cr_ts
                 #mb_ident_with_id_cr_stdrt_nn_ts

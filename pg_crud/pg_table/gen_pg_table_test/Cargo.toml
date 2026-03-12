@@ -13,7 +13,7 @@ categories = ["category"]
 proc-macro2.workspace = true
 quote.workspace = true
 gen_pg_table_src = {path = "../gen_pg_table_src"}
-macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
+macro_clippy_check_cmn = {path = "../../../macro_clippy_check_cmn"}
 token_patterns = {path = "../../../token_patterns"}
 optml = {path = "../../../optml"}
 
@@ -21,4 +21,4 @@ optml = {path = "../../../optml"}
 workspace = true
 
 [features]
-test-utils = ["macro_clippy_check_common/test-utils"]
+test-utils = ["macro_clippy_check_cmn/test-utils"]

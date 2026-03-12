@@ -16,7 +16,7 @@ proc-macro = true
 [dependencies]
 proc-macro2.workspace = true
 quote.workspace = true
-server_port_common = {path = "../server_port_common"}
+server_port_cmn = {path = "../server_port_cmn"}
 panic_location = {path = "../../../panic_location"}
 
 [lints]

@@ -6,9 +6,9 @@ pub fn server_port_try_from_u16(v: Ts) -> Ts {
     panic_location::panic_location();
     let valid_port_ts = {
         let possible_port = v.to_string().parse::<u16>().expect("310a948a");
-        if possible_port < server_port_common::SERVER_PORT_MIN_VALUE {
+        if possible_port < server_port_cmn::SERVER_PORT_MIN_VALUE {
             panic!("8d1c94bc");
-        } else if possible_port <= server_port_common::SERVER_PORT_MAX_VALUE {
+        } else if possible_port <= server_port_cmn::SERVER_PORT_MAX_VALUE {
             possible_port
         } else {
             panic!("bfb64c71");

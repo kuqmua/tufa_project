@@ -11,11 +11,11 @@ categories = ["category"]
 
 [dependencies]
 gen_pg_json_obj = {path = "./gen_pg_json_obj"}
-pg_json_obj_common = {path = "./pg_json_obj_common"}
-#pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+pg_json_obj_cmn = {path = "./pg_json_obj_cmn"}
+#pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
 
 [lints]
 workspace = true
 
 #[features]
-#test-utils = ["pg_crud_common/test-utils"]
+#test-utils = ["pg_crud_cmn/test-utils"]

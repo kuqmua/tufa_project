@@ -1,6 +1,6 @@
 use optml::Optml;
 use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeEr};
-use server_port_common::{
+use server_port_cmn::{
     SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
     SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE, SERVER_PORT_MAX_VALUE, SERVER_PORT_MIN_VALUE,
 };

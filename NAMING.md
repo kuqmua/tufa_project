@@ -72,3 +72,4 @@
 - `op` operation
 - `nbr` number
 - `orgn` origin
+- `cmn` common

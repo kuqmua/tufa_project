@@ -18,13 +18,13 @@ schemars.workspace = true
 regex.workspace = true
 gen_pg_json = {path = "./gen_pg_json"}
 location_lib = {path = "../../location_lib"}
-pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
 wh_filters = {path = "../wh_filters"}
-gen_pg_json_common = {path = "./gen_pg_json_common"}
+gen_pg_json_cmn = {path = "./gen_pg_json_cmn"}
 optml = {path = "../../optml"}
 
 [lints]
 workspace = true
 
 [features]
-test-utils = ["pg_crud_common/test-utils"]
+test-utils = ["pg_crud_cmn/test-utils"]

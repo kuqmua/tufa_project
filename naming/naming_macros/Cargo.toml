@@ -21,7 +21,7 @@ syn.workspace = true
 gen_quotes = {path = "../../gen_quotes"}
 panic_location = {path = "../../panic_location"}
 token_patterns = {path = "../../token_patterns"}
-naming_common = {path = "../naming_common"}
+naming_cmn = {path = "../naming_cmn"}
 
 [lints]
 workspace = true

@@ -36,7 +36,7 @@ pub fn dm_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn common_er_vrts(_attr: Ts, item: Ts) -> Ts {
+pub fn cmn_er_vrts(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -72,7 +72,7 @@ pub fn dlo_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
-pub fn common_logic(_attr: Ts, item: Ts) -> Ts {
+pub fn cmn_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_derive(GenPgTable, attributes(gen_pg_table_pk))]

@@ -30,16 +30,16 @@ use naming::{
 };
 use optml::Optml;
 use panic_location::panic_location;
-use pg_crud_common_and_macros_common::PgTypeGreaterThanVrt;
-use pg_crud_macros_common::{
+use pg_crud_cmn_and_macros_cmn::PgTypeGreaterThanVrt;
+use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColumnPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrH, Import,
     IncrPrmUndrscr, IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn,
     IsUpdQbMut, PgFilter, PgTypeFilter, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr,
     UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
-    gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts,
-    gen_impl_pg_crud_common_dflt_some_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
+    gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
+    gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
@@ -58,7 +58,7 @@ use std::{
 use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
-    PgCrudCommonDfltSomeOneElCall, PgCrudCommonDfltSomeOneElMaxPageSizeCall, StringTs, U8, U32,
+    PgCrudCmnDfltSomeOneElCall, PgCrudCmnDfltSomeOneElMaxPageSizeCall, StringTs, U8, U32,
 };
 #[must_use]
 pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
@@ -369,7 +369,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .to_tokens(tokens);
         }
     }
-    // todo reuse it(move to pg_macros_common) if sqlx devs will add nested arr support
+    // todo reuse it(move to pg_macros_cmn) if sqlx devs will add nested arr support
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
         Debug,
@@ -805,7 +805,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let arr_dims_nbr = pg_type_pattern.arr_dims_nbr();
         let range_try_from_pg_type = Range::try_from(pg_type);
         let range_try_from_pg_type_is_ok = range_try_from_pg_type.is_ok();
-        let import = Import::PgCrudCommon;
+        let import = Import::PgCrudCmn;
         let import_non_pk_pg_type_rd_ids_ts = quote! {#import::NonPkPgTypeRdIds};
         let none_ts = quote!{None};
         let dot_clone_ts = quote!{.clone()};
@@ -3056,7 +3056,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {self.to_string()});
-            let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_orgn_ucc, &{
+            let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let ts = match &pg_type_pattern {
                     PgTypePattern::Stdrt => match &is_nl {
                         IsNl::False => {
@@ -3120,11 +3120,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             };
                             quote! {#init_ts}
                         }
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
+                        IsNl::True => quote! {Some(#PgCrudCmnDfltSomeOneElCall)},
                     },
                     PgTypePattern::ArrDim1 { .. } => match &is_nl {
-                        IsNl::False => quote! {vec![#PgCrudCommonDfltSomeOneElCall]},
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
+                        IsNl::False => quote! {vec![#PgCrudCmnDfltSomeOneElCall]},
+                        IsNl::True => quote! {Some(#PgCrudCmnDfltSomeOneElCall)},
                     },
                 };
                 quote! {Self(#ts)}
@@ -3278,7 +3278,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 );
             let impl_ident_tt_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_tt_ucc);
             let impl_dflt_some_one_el_for_ident_tt_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_tt_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_tt_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             let impl_sqlx_type_for_ident_tt_ts = gen_impl_sqlx_type_for_ident_ts(&ident_tt_ucc, &ident_orgn_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &ident_orgn_ucc, &quote! {Ok(Self(v))});
@@ -3356,9 +3356,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 CanBePk::False => gen_pub_const_new_or_pub_try_new_ts(&ident_cr_ucc),
                 CanBePk::True => Ts2::new(),
             };
-            let impl_dflt_some_one_el_for_ident_cr_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_cr_ucc, &{
+            let impl_dflt_some_one_el_for_ident_cr_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_cr_ucc, &{
                 let ts: &dyn ToTokens = match &can_be_pk {
-                    CanBePk::False => &PgCrudCommonDfltSomeOneElCall,
+                    CanBePk::False => &PgCrudCmnDfltSomeOneElCall,
                     CanBePk::True => &quote! {()},
                 };
                 quote! {Self(#ts)}
@@ -3390,7 +3390,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         for el0 in 1..=arr_dims_nbr {
                             let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("af86f2d1");
                             args_ts.push(quote! {
-                                #dim_nbr_pgn_ts: pg_types_common::PgnStartsWithOne
+                                #dim_nbr_pgn_ts: pg_types_cmn::PgnStartsWithOne
                             });
                         }
                         quote! {{#(#args_ts),*}}
@@ -3403,8 +3403,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::Stdrt => quote! {Self},
                     PgTypePattern::ArrDim1 { .. } => {
                         let ts: &dyn ToTokens = match &dflt_some_one_or_dflt_some_one_with_max_page_size {
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltSomeOneElCall,
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltSomeOneElMaxPageSizeCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCmnDfltSomeOneElCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCmnDfltSomeOneElMaxPageSizeCall,
                         };
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dims_nbr {
@@ -3417,8 +3417,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 (
-                    gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
-                    gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
+                    gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)),
+                    gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts(&ident_sel_ucc, &gen_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)),
                 )
             };
             quote! {
@@ -3432,7 +3432,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_wh_ts = gen_pg_type_wh_ts(
             &AllowClippyArbitrarySrcItemOrdering,
             &{
-                let common_pg_type_filters = vec![PgTypeFilter::Equal { ident: quote! {#ident_tt_ucc} }];
+                let cmn_pg_type_filters = vec![PgTypeFilter::Equal { ident: quote! {#ident_tt_ucc} }];
                 match &pg_type_pattern {
                     PgTypePattern::Stdrt => {
                         let greater_than = PgTypeFilter::GreaterThan {
@@ -3454,16 +3454,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
                         // let bit_vec_position_equal = PgTypeFilter::BitVecPositionEqual;
-                        let common_stdrt_pg_type_filters = { common_pg_type_filters };
-                        let common_stdrt_pg_type_nbr_filters = {
-                            let mut vec = common_stdrt_pg_type_filters.clone();
+                        let cmn_stdrt_pg_type_filters = { cmn_pg_type_filters };
+                        let cmn_stdrt_pg_type_nbr_filters = {
+                            let mut vec = cmn_stdrt_pg_type_filters.clone();
                             vec.push(greater_than.clone());
                             vec.push(btwn.clone());
                             vec.push(in_h.clone());
                             vec
                         };
-                        let ranges_common_filter_vec = {
-                            let mut vec = common_stdrt_pg_type_filters.clone();
+                        let ranges_cmn_filter_vec = {
+                            let mut vec = cmn_stdrt_pg_type_filters.clone();
                             vec.push(PgTypeFilter::FindRangesWithinGivenRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
@@ -3505,19 +3505,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::F64AsFloat8
                             | PgType::I16AsSmallSerialInitByPg
                             | PgType::I32AsSerialInitByPg
-                            | PgType::I64AsBigSerialInitByPg => common_stdrt_pg_type_nbr_filters,
+                            | PgType::I64AsBigSerialInitByPg => cmn_stdrt_pg_type_nbr_filters,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(in_h);
                                 vec
                             }
                             PgType::StdVecVecU8AsBytea => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(equal_to_encoded_string_representation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(time_49c41c1c);
@@ -3525,7 +3525,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(date_9c6d41ca);
@@ -3533,7 +3533,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(timestamp_ad2e556b);
@@ -3541,19 +3541,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(before);
                                 vec.push(btwn);
                                 vec
                             }
                             PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(rgx);
                                 vec
                             }
-                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_stdrt_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_stdrt_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = common_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_filters;
                                 vec.push(greater_than);
                                 vec.push(rgx);
                                 vec
@@ -3562,7 +3562,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ranges_common_filter_vec,
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ranges_cmn_filter_vec,
                         }
                     }
                     PgTypePattern::ArrDim1 { dim1_is_nl } => {
@@ -3591,8 +3591,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let dim_one_before = PgTypeFilter::DimOneBefore {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let common_arr_dim1_pg_type_filters = {
-                            let mut vec = common_pg_type_filters;
+                        let cmn_arr_dim1_pg_type_filters = {
+                            let mut vec = cmn_pg_type_filters;
                             vec.push(PgTypeFilter::DimOneEqual {
                                 ident: {
                                     let ts = SelfTtUcc::from_tokens(&match &dim1_is_nl {
@@ -3606,8 +3606,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             vec.push(PgTypeFilter::DimOneLengthGreaterThan);
                             vec
                         };
-                        let common_arr_dim1_pg_type_nbr_filters = {
-                            let mut vec = common_arr_dim1_pg_type_filters.clone();
+                        let cmn_arr_dim1_pg_type_nbr_filters = {
+                            let mut vec = cmn_arr_dim1_pg_type_filters.clone();
                             vec.push(dim_one_greater_than.clone());
                             vec.push(dim_one_btwn.clone());
                             vec.push(dim_one_in_h.clone());
@@ -3623,7 +3623,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let gen_ts = |range: Range| {
                                 let pg_type_from_range = PgType::from(&range);
                                 let range_el_ident_stdrt_nn_ts = gen_ident_stdrt_nn_ts(&pg_type_from_range);
-                                let mut vec = common_arr_dim1_pg_type_filters.clone();
+                                let mut vec = cmn_arr_dim1_pg_type_filters.clone();
                                 let range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts = {
                                     let range_el_ident_stdrt_nn_as_crate_pg_type_ts = gen_as_pg_type_ts(&range_el_ident_stdrt_nn_ts);
                                     quote! {#range_el_ident_stdrt_nn_as_crate_pg_type_ts::Rd}
@@ -3677,19 +3677,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::F64AsFloat8
                             | PgType::I16AsSmallSerialInitByPg
                             | PgType::I32AsSerialInitByPg
-                            | PgType::I64AsBigSerialInitByPg => common_arr_dim1_pg_type_nbr_filters,
+                            | PgType::I64AsBigSerialInitByPg => cmn_arr_dim1_pg_type_nbr_filters,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_in_h);
                                 vec
                             }
                             PgType::StdVecVecU8AsBytea => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(PgTypeFilter::DimOneEqualToEncodedStringRepresentation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
                                 vec.push(dim_one_current_time);
@@ -3697,7 +3697,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
                                 vec.push(dim_one_current_date);
@@ -3705,7 +3705,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
                                 vec.push(dim_one_current_timestamp);
@@ -3713,19 +3713,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_before);
                                 vec.push(dim_one_btwn);
                                 vec
                             }
                             PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_rgx);
                                 vec
                             }
-                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => common_arr_dim1_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_arr_dim1_pg_type_filters,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = common_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_filters;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_rgx);
                                 vec
@@ -3789,7 +3789,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_ident_rd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_rd_ucc);
             let impl_location_lib_to_err_string_for_ident_rd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_rd_ucc, &Ts2::new(), &quote! {self.0.to_string()});
             let impl_crate_dflt_some_one_el_for_ident_rd_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_rd_ucc,
@@ -3880,7 +3880,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 );
             let impl_ident_upd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_upd_ucc);
             let impl_dflt_some_one_el_for_ident_upd_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             let impl_location_lib_to_err_string_for_ident_upd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_upd_ts
@@ -3971,7 +3971,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => (&ok_string_from_uuid_generate_v4_ts, &ok_query_ts),
                 }
             };
-            let sel_only_ids_and_sel_only_updd_ids_query_common_ts = {
+            let sel_only_ids_and_sel_only_updd_ids_query_cmn_ts = {
                 let format_ts = dq_ts(&{
                     let column_comma = "{column},";
                     if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) { column_comma.to_owned() } else { format!("'{{{{\\\"v\\\": null}}}}'::jsonb as {column_comma}") }
@@ -4025,7 +4025,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             IsNl::True => String::new(),
                         },
                     };
-                    let mb_pk_is_pk_ts = quote! {pg_types_common::mb_pk(is_pk)};
+                    let mb_pk_is_pk_ts = quote! {pg_types_cmn::mb_pk(is_pk)};
                     let column_pg_query_type = format!("{{column}} {pg_query_type}{mb_arr_part}{mb_constraint_part}");
                     let column_pg_query_type_nn = format!("{{column}} {pg_query_type}{mb_arr_part} not null{mb_constraint_part}");
                     let space_extra_prm = " {}";
@@ -4344,7 +4344,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 } else {
                     quote! {#import_non_pk_pg_type_rd_ids_ts}
                 },
-                &sel_only_ids_and_sel_only_updd_ids_query_common_ts,
+                &sel_only_ids_and_sel_only_updd_ids_query_cmn_ts,
                 &ident_rd_inn_ucc,
                 &{
                     let gen_ident_stdrt_nn_into_inn_ident_stdrt_nn_rd_ts = |ts: &dyn ToTokens| {
@@ -4433,7 +4433,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &typical_qp_ts,
                 &IsUpdQbMut::True,
                 &typical_qb_ts,
-                &sel_only_ids_and_sel_only_updd_ids_query_common_ts,
+                &sel_only_ids_and_sel_only_updd_ids_query_cmn_ts,
                 &IsSelOnlyUpddIdsQbMut::False,
                 &quote! {Ok(#QuerySc)},
             )
@@ -5207,7 +5207,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let ts: &dyn ToTokens = if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) {
                         &quote! {#VSc.0 #mb_dot_clone_ts}
                     } else {
-                        &PgCrudCommonDfltSomeOneElCall
+                        &PgCrudCmnDfltSomeOneElCall
                     };
                     quote! {#self_pg_type_as_pg_type_ts::normalize(#ts)}
                 });
@@ -5288,7 +5288,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 oprtr: #import::Oprtr::Or,
                                                 dims: wh_filters::BoundedVec::try_from(
                                                     vec![
-                                                        pg_crud_common::NotZeroUnsignedPartOfI32::try_from(
+                                                        pg_crud_cmn::NotZeroUnsignedPartOfI32::try_from(
                                                             i32::try_from(i_7702518c.checked_add(1)?).expect("5954966c")
                                                         ).expect("8d269b8f")
                                                     ]

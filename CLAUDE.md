@@ -45,21 +45,21 @@ Large Cargo workspace (~70 crates). Core domain is PostgreSQL CRUD code generati
 
 Each subdirectory follows a consistent pattern with `gen_*` (proc-macro crate), `gen_*_src` (macro implementation logic), `gen_*_test`, and `gen_*_test_cnt` (test content) crates:
 
-- **`pg_types/`** — PostgreSQL type mappings (Rust ↔ Postgres), with `pg_types_common` for shared types
+- **`pg_types/`** — PostgreSQL type mappings (Rust ↔ Postgres), with `pg_types_cmn` for shared types
 - **`pg_table/`** — Table-level CRUD generation (create/read/update/delete)
-- **`pg_json/`** — JSON column handling, with `gen_pg_json_common` for shared logic
-- **`pg_json_obj/`** — JSON object schema generation, with `pg_json_obj_common`
+- **`pg_json/`** — JSON column handling, with `gen_pg_json_cmn` for shared logic
+- **`pg_json_obj/`** — JSON object schema generation, with `pg_json_obj_cmn`
 - **`wh_filters/`** — WHERE clause filter generation
-- **`pg_crud_common/`** — Shared types across pg_crud crates
-- **`pg_crud_macros_common/`** — Shared proc-macro utilities
-- **`pg_crud_common_and_macros_common/`** — Types shared between runtime and macro code
+- **`pg_crud_cmn/`** — Shared types across pg_crud crates
+- **`pg_crud_macros_cmn/`** — Shared proc-macro utilities
+- **`pg_crud_cmn_and_macros_cmn/`** — Types shared between runtime and macro code
 
 ### Other key crates
 
 - **`server/`** — Axum web server (has `docker-compose.yml` for PostgreSQL)
 - **`config_lib/`** — Config management with sub-crates for env parsing, getter trait generation, server port validation
 - **`location_lib/`** — Error handling with source location tracking
-- **`naming/`** — Naming convention utilities (`naming_common`, `naming_macros`)
+- **`naming/`** — Naming convention utilities (`naming_cmn`, `naming_macros`)
 - **`macros_helpers/`** — General macro helpers including `gen_derive_ts_builder`
 - **`telegram_bot/`** — Teloxide-based Telegram bot
 

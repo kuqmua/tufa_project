@@ -10,8 +10,8 @@ use macros_helpers::{
 use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
-    BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CoErVrtsSc, CoLogicSc,
-    ColumnSc, ColumnsSc, CommitSc, CommonErVrtsSc, CommonLogicSc, CommonRdIdsFromCoSc, ConfigSc,
+    BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CmnErVrtsSc, CmnLogicSc,
+    CmnRdIdsFromCoSc, CoErVrtsSc, CoLogicSc, ColumnSc, ColumnsSc, CommitSc, ConfigSc,
     CrExtensionIfNotExistsPgJsonschemaUcc, CrExtensionIfNotExistsUuidOsspUcc,
     CrIntoPgJsonOptVecWhLengthEqualSc, CrIntoPgJsonOptVecWhLengthGreaterThanSc,
     CrIntoPgTypeOptVecWhDimOneEqualSc, CrQbSc, CrQpSc, CrSc, CrTableColumnQpSc, CrUcc, DeResUcc,
@@ -51,7 +51,7 @@ use naming::{
 };
 use optml::Optml;
 use panic_location::panic_location;
-use pg_crud_macros_common::{
+use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColumnPrmUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrPrmUndrscr,
     IsQbMut, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
@@ -81,9 +81,8 @@ use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, Bool, Char, CoreDefault,
     DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorLocation, Er0, Er1, Er2, Er3,
     F32, F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
-    PgCrudCommonDfltSomeOneEl, PgCrudCommonDfltSomeOneElCall,
-    PgCrudCommonDfltSomeOneElMaxPageSizeCall, PgCrudDfltSomeOneElCall, RefStr, SqlxAcquire,
-    SqlxRow, StringTs, U8, U16, U32, U64,
+    PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall, PgCrudCmnDfltSomeOneElMaxPageSizeCall,
+    PgCrudDfltSomeOneElCall, RefStr, SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
 };
 //todo decide wh to do er log (mb add in some places)
 //todo gen route what will return columns of the table and their rust and postgersql types
@@ -314,7 +313,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         UoErVrts,
         DmErVrts,
         DloErVrts,
-        CommonErVrts,
+        CmnErVrts,
         CmLogic,
         CoLogic,
         RmLogic,
@@ -323,7 +322,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         UoLogic,
         DmLogic,
         DloLogic,
-        CommonLogic,
+        CmnLogic,
     }
     impl GenPgTableAttr {
         fn gen_path_to_attr(self) -> String {
@@ -338,7 +337,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::UoErVrts => UoErVrtsSc.to_string(),
                     Self::DmErVrts => DmErVrtsSc.to_string(),
                     Self::DloErVrts => DloErVrtsSc.to_string(),
-                    Self::CommonErVrts => CommonErVrtsSc.to_string(),
+                    Self::CmnErVrts => CmnErVrtsSc.to_string(),
                     Self::CmLogic => CmLogicSc.to_string(),
                     Self::CoLogic => CoLogicSc.to_string(),
                     Self::RmLogic => RmLogicSc.to_string(),
@@ -347,7 +346,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     Self::UoLogic => UoLogicSc.to_string(),
                     Self::DmLogic => DmLogicSc.to_string(),
                     Self::DloLogic => DloLogicSc.to_string(),
-                    Self::CommonLogic => CommonLogicSc.to_string(),
+                    Self::CmnLogic => CmnLogicSc.to_string(),
                 }
             )
         }
@@ -372,7 +371,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgTableConfig {
         tests_write_into_file: ShouldWriteTsIntoFile,
-        common_write_into_file: ShouldWriteTsIntoFile,
+        cmn_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_location();
@@ -2109,7 +2108,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             Punctuated<PathSegment, PathSep>,
         )>::default(),
     );
-    let common_http_req_syn_vrts = {
+    let cmn_http_req_syn_vrts = {
         vec![
             serde_json_to_string_syn_vrt.get_syn_vrt().clone(),
             failed_to_get_res_text_syn_vrt.get_syn_vrt().clone(),
@@ -2121,9 +2120,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                        gen_pg_table_attr: GenPgTableAttr|
      -> Vec<Variant> {
         let gen_pg_table_attr_str = gen_pg_table_attr.to_string();
-        let common_er_vrts_attr_ts =
+        let cmn_er_vrts_attr_ts =
             get_macro_attr_meta_list_ts(&di_bde7efb1.attrs, &gen_pg_table_attr.gen_path_to_attr());
-        let di_894e3269: DeriveInput = parse2((*common_er_vrts_attr_ts).clone()).expect("1b80783d");
+        let di_894e3269: DeriveInput = parse2((*cmn_er_vrts_attr_ts).clone()).expect("1b80783d");
         assert!(di_894e3269.ident == gen_pg_table_attr_str, "8a66c852");
         let vrts = if let Data::Enum(data_enum) = di_894e3269.data {
             data_enum.variants
@@ -2132,15 +2131,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         };
         vrts.into_iter().collect()
     };
-    let common_er_vrts = gen_er_vrts(&di, GenPgTableAttr::CommonErVrts);
-    let common_route_syn_vrts = {
+    let cmn_er_vrts = gen_er_vrts(&di, GenPgTableAttr::CmnErVrts);
+    let cmn_route_syn_vrts = {
         let mut acc = vec![
             check_body_size_syn_vrt.get_syn_vrt(),
             pg_syn_vrt.get_syn_vrt(),
             serde_json_syn_vrt.get_syn_vrt(),
             header_cnt_type_app_json_not_found_syn_vrt.get_syn_vrt(),
         ];
-        for el in &common_er_vrts {
+        for el in &cmn_er_vrts {
             acc.push(el);
         }
         acc
@@ -2362,7 +2361,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
         let type_vrts_from_req_res_syn_vrts = gen_type_vrts_from_req_res_syn_vrts(
             &{
-                let mut acc = common_route_syn_vrts.clone();
+                let mut acc = cmn_route_syn_vrts.clone();
                 if let Op::Rm | Op::Ro = &op {
                     acc.push(not_unq_field_syn_vrt.get_syn_vrt());
                 }
@@ -2635,15 +2634,15 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 };
                 let extra_validators_ts = {
-                    let (common_logic_ts, op_logic_ts) = {
+                    let (cmn_logic_ts, op_logic_ts) = {
                         let gen_ts = |v: &String| get_macro_attr_meta_list_ts(&di.attrs, v);
                         (
-                            gen_ts(&GenPgTableAttr::CommonLogic.gen_path_to_attr()),
+                            gen_ts(&GenPgTableAttr::CmnLogic.gen_path_to_attr()),
                             gen_ts(&op.gen_pg_table_attr_logic().gen_path_to_attr()),
                         )
                     };
                     quote! {
-                        #common_logic_ts
+                        #cmn_logic_ts
                         #op_logic_ts
                     }
                 };
@@ -3783,7 +3782,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     .build_enum(&Ts2::new(), &gen_ident_try_op_er_ucc(op), &Ts2::new(), &{
                         let syn_vrts: &Vec<Variant> = match &op {
                             Op::Rm | Op::Ro => &{
-                                let mut acc = common_http_req_syn_vrts.clone();
+                                let mut acc = cmn_http_req_syn_vrts.clone();
                                 acc.push(not_unq_field_syn_vrt.get_syn_vrt().clone());
                                 acc
                             },
@@ -3792,7 +3791,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             Op::Um |
                             Op::Uo |
                             Op::Dm |
-                            Op::Dlo => &common_http_req_syn_vrts,
+                            Op::Dlo => &cmn_http_req_syn_vrts,
                         };
                         let vrts_ts = syn_vrts
                             .iter()
@@ -4011,7 +4010,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             });
         let sel_dflt_all_with_max_page_size_clone_ts =
             quote! {sel_dflt_all_with_max_page_size.clone()};
-        let common_rd_ids_from_co_ts = {
+        let cmn_rd_ids_from_co_ts = {
             let pk_rd_ts = quote! {pk_rd};
             let pk_rd_clone_ts = quote! {pk_rd.clone()};
             let ts = gen_v_init_ts0(&pk_rd_clone_ts);
@@ -4046,7 +4045,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {"26e2058b"},
             );
             quote! {
-                let #CommonRdIdsFromCoSc = {
+                let #CmnRdIdsFromCoSc = {
                     let rd_ids_from_try_co = gen_rd_ids_from_try_co_dflt(&#UrlSc, &table_init).await;
                     let pk_rd = #pk_ft_rd_ids_into_rd_rd_ids_from_try_co_pk_fi_ts;
                     #assert_eq_ts_4f6bbe8a
@@ -4160,7 +4159,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         if fi == fi0 {
                             gen_if_let_some_ts(
                                 &quote! {v_a5f7e6cd},
-                                &quote! {&common_rd_ids_from_co.#fi0},
+                                &quote! {&cmn_rd_ids_from_co.#fi0},
                                 &{
                                     let ft_ts = gen_as_pg_type_test_cases_path_ts(&ft0);
                                     quote! {
@@ -6031,7 +6030,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         .expect("0776170e");
                         let #IdentCrDfltSc = ident_cr_dflt();
                         #sel_dflt_all_with_max_page_size_not_empty_unq_vec_ts
-                        #common_rd_ids_from_co_ts
+                        #cmn_rd_ids_from_co_ts
                         #rd_ids_to_2_dims_vec_rd_inn_acc_fields_ts
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
@@ -6062,7 +6061,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         &ident_tests_ts,
         &FormatWithCargofmt::True,
     );
-    let common_ts = quote! {
+    let cmn_ts = quote! {
         #ident_prep_pg_er_ts
         #ident_cr_ts
         #ident_wh_ts
@@ -6075,9 +6074,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         #ident_upd_for_query_ts
     };
     mb_write_ts_into_file(
-        gen_pg_table_config.common_write_into_file,
-        "gen_pg_table_common",
-        &common_ts,
+        gen_pg_table_config.cmn_write_into_file,
+        "gen_pg_table_cmn",
+        &cmn_ts,
         &FormatWithCargofmt::True,
     );
     let gend = {
@@ -6097,7 +6096,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 }
             }
             #(#content_ts)*
-            #common_ts
+            #cmn_ts
             #ident_tests_ts
         };
         quote! {

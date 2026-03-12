@@ -3,7 +3,7 @@ use optml::Optml;
 #[derive(Debug, Clone, Copy, pg_crud::GenPgTable, Optml)]
 #[pg_crud::gen_pg_table_config{{
     "tests_write_into_file": "False",
-    "common_write_into_file": "False",
+    "cmn_write_into_file": "False",
     "whole_write_into_file": "False"
 }}]
 #[pg_crud::cm_er_vrts{enum CmErVrts{}}]
@@ -14,8 +14,8 @@ use optml::Optml;
 #[pg_crud::uo_er_vrts{enum UoErVrts{}}]
 #[pg_crud::dm_er_vrts{enum DmErVrts{}}]
 #[pg_crud::dlo_er_vrts{enum DloErVrts{}}]
-#[pg_crud::common_er_vrts{
-    enum CommonErVrts {
+#[pg_crud::cmn_er_vrts{
+    enum CmnErVrts {
         // CheckCommit {
         //     #[eo_location]
         //     check_commit: pg_crud::check_commit::CommitEr,
@@ -31,7 +31,7 @@ use optml::Optml;
 #[pg_crud::uo_logic{}]
 #[pg_crud::dm_logic{}]
 #[pg_crud::dlo_logic{}]
-#[pg_crud::common_logic{}]
+#[pg_crud::cmn_logic{}]
 pub struct TableExample {
     // #[gen_pg_crud_pk]
     // pub pk: pg_crud::I64AsNnBigSerialInitByPg,

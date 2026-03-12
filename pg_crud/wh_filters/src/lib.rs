@@ -1,6 +1,6 @@
 use location_lib::{Location, loc, loc::Loc};
 use optml::Optml;
-use pg_crud_common::{
+use pg_crud_cmn::{
     DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFilter, QpEr,
     incr_checked_add_one_returning_incr,
 };
@@ -37,7 +37,7 @@ impl DfltSomeOneEl for EncodeFormat {
         Self::default()
     }
 }
-//difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_common::DfltSomeOneEl impl with different generic requirement and PgTypeWhFilter
+//difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_cmn::DfltSomeOneEl impl with different generic requirement and PgTypeWhFilter
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgJsonNotEmptyUnqVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonNotEmptyUnqVec<T> {

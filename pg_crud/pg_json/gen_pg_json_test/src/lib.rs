@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use macro_clippy_check_common::clippy_check;
+    use macro_clippy_check_cmn::clippy_check;
     use quote::quote;
     #[test]
     fn clippy() {
@@ -15,8 +15,8 @@ sqlx.workspace = true
 serde.workspace = true
 utoipa.workspace = true
 location_lib = {path = "../../../location_lib"}
-pg_crud_common = {path = "../../pg_crud_common"}
-gen_pg_json_common = {path = "../gen_pg_json_common"}
+pg_crud_cmn = {path = "../../pg_crud_cmn"}
+gen_pg_json_cmn = {path = "../gen_pg_json_cmn"}
 wh_filters = {path = "../../wh_filters"}
 optml = {path = "../../../optml"}
 [dev-dependencies]

@@ -16,8 +16,8 @@ serde.workspace = true
 chrono.workspace = true
 thiserror.workspace = true
 gen_pg_types = {path = "./gen_pg_types"}
-pg_types_common = {path = "./pg_types_common"}
-pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+pg_types_cmn = {path = "./pg_types_cmn"}
+pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
 location_lib = {path = "../../location_lib"}
 wh_filters = {path = "../wh_filters"}
 optml = {path = "../../optml"}
@@ -26,4 +26,4 @@ optml = {path = "../../optml"}
 workspace = true
 
 [features]
-test-utils = ["pg_crud_common/test-utils"]
+test-utils = ["pg_crud_cmn/test-utils"]

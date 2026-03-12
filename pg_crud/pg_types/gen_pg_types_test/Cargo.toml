@@ -11,11 +11,11 @@ categories = ["category"]
 
 [dev-dependencies]
 quote.workspace = true
-macro_clippy_check_common = {path = "../../../macro_clippy_check_common"}
+macro_clippy_check_cmn = {path = "../../../macro_clippy_check_cmn"}
 gen_pg_types_src = {path = "../gen_pg_types_src"}
 
 [lints]
 workspace = true
 
 [features]
-test-utils = ["macro_clippy_check_common/test-utils"]
+test-utils = ["macro_clippy_check_cmn/test-utils"]

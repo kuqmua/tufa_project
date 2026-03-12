@@ -18,19 +18,19 @@ use naming::{
 };
 use optml::Optml;
 use panic_location::panic_location;
-use pg_crud_macros_common::{
+use pg_crud_macros_cmn::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNl, IsQbMut,
     IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColumnFieldForErMsgUsed,
     IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
     IsUpdQpSelfUpdUsed, PgFilter, PgJsonFilter, RdOrUpd, ShouldDSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
-    gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts,
-    gen_impl_pg_crud_common_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
+    gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
+    gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_json_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
 };
-use pg_crud_macros_common::{gen_jsonb_build_obj, gen_jsonb_build_obj_v};
+use pg_crud_macros_cmn::{gen_jsonb_build_obj, gen_jsonb_build_obj_v};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
@@ -44,8 +44,8 @@ use std::{
 use strum_macros::{Display, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse, NoneTs,
-    PgCrudCommonDfltSomeOneEl, PgCrudCommonDfltSomeOneElCall,
-    PgCrudCommonDfltSomeOneElMaxPageSizeCall, StringTs, U8, U16, U32, U64, UuidUuid,
+    PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall, PgCrudCmnDfltSomeOneElMaxPageSizeCall,
+    StringTs, U8, U16, U32, U64, UuidUuid,
 };
 #[must_use]
 pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
@@ -570,7 +570,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         } else {
             IsStdrtNnUuid::False
         };
-        let import = Import::PgCrudCommon;
+        let import = Import::PgCrudCmn;
         let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
         let gen_ident_ts = |is_nl_ddf79d44: &IsNl, pattern_2c09ee59: &Pattern| {
             let is_nl_rust = is_nl_ddf79d44.rust();
@@ -951,7 +951,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_location_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
-            let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_orgn_ucc, &{
+            let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => match &pg_json {
@@ -969,11 +969,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             PgJson::StringAsJsonbString => quote! {String::default()},
                             PgJson::UuidUuidAsJsonbString => quote! {uuid::Uuid::new_v4()},
                         },
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
+                        IsNl::True => quote! {Some(#PgCrudCmnDfltSomeOneElCall)},
                     },
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => match &is_nl {
-                        IsNl::False => quote! {vec![#PgCrudCommonDfltSomeOneElCall]},
-                        IsNl::True => quote! {Some(#PgCrudCommonDfltSomeOneElCall)},
+                        IsNl::False => quote! {vec![#PgCrudCmnDfltSomeOneElCall]},
+                        IsNl::True => quote! {Some(#PgCrudCmnDfltSomeOneElCall)},
                     },
                 };
                 quote! {Self(#content_ts)}
@@ -1021,7 +1021,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let impl_dflt_some_one_el_for_ident_tt_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_tt_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_tt_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             //todo mb add to trait?
             let impl_sqlx_encode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &quote! {&#SelfSc.0});
             //todo mb add to trait?
@@ -1059,7 +1059,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let impl_dflt_some_one_el_for_ident_cr_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_cr_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_cr_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             quote! {
                 #ident_cr_ts
                 #impl_ident_cr_ts
@@ -1140,8 +1140,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     |()| Ts2::new(),
                     |arr_dim| {
                         let content_ts: &dyn ToTokens = match &dflt_some_one_or_dflt_some_one_with_max_page_size {
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCommonDfltSomeOneElCall,
-                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCommonDfltSomeOneElMaxPageSizeCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCmnDfltSomeOneElCall,
+                            DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCmnDfltSomeOneElMaxPageSizeCall,
                         };
                         let mut args_ts = Vec::new();
                         for el0 in 1..=arr_dim.to_usize() {
@@ -1156,9 +1156,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote! {Self{#content_ts}}
             };
             let impl_dflt_some_one_el_for_pg_json_ident_sel_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
             let impl_dflt_some_one_el_max_page_size_for_pg_json_ident_sel_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_max_page_size_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
+                gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts(&ident_sel_ucc, &gen_dflt_some_one_cnt_ts(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
             quote! {
                 #ident_sel_ts
                 #impl_dflt_some_one_el_for_pg_json_ident_sel_ts
@@ -1195,12 +1195,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         }
                     }
                     let pg_json_specific = PgJsonSpecific::from(pg_json);
-                    let common_pg_json_filters = vec![PgJsonFilter::Equal { ident: quote! {#ident_tt_ucc} }];
+                    let cmn_pg_json_filters = vec![PgJsonFilter::Equal { ident: quote! {#ident_tt_ucc} }];
                     let ident_tt_ucc_ts = quote! {#ident_tt_ucc};
                     match &pattern {
                         Pattern::Stdrt => {
-                            let common_stdrt_pg_json_filters = {
-                                let mut vec = common_pg_json_filters;
+                            let cmn_stdrt_pg_json_filters = {
+                                let mut vec = cmn_pg_json_filters;
                                 vec.push(PgJsonFilter::In {
                                     ident: ident_tt_ucc_ts.clone(),
                                 });
@@ -1208,16 +1208,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             };
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
-                                    let mut vec = common_stdrt_pg_json_filters;
+                                    let mut vec = cmn_stdrt_pg_json_filters;
                                     vec.push(PgJsonFilter::GreaterThan {
                                         ident: ident_tt_ucc_ts.clone(),
                                     });
                                     vec.push(PgJsonFilter::Btwn { ident: ident_tt_ucc_ts });
                                     vec
                                 }
-                                PgJsonSpecific::Bool => common_stdrt_pg_json_filters,
+                                PgJsonSpecific::Bool => cmn_stdrt_pg_json_filters,
                                 PgJsonSpecific::String => {
-                                    let mut vec = common_stdrt_pg_json_filters;
+                                    let mut vec = cmn_stdrt_pg_json_filters;
                                     vec.push(PgJsonFilter::Rgx);
                                     vec
                                 }
@@ -1228,8 +1228,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 let v = SelfTtUcc::from_tokens(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("21eaebaf")));
                                 quote! {#v}
                             };
-                            let common_arr_dim1_pg_json_filters = {
-                                let mut vec = common_pg_json_filters;
+                            let cmn_arr_dim1_pg_json_filters = {
+                                let mut vec = cmn_pg_json_filters;
                                 vec.push(PgJsonFilter::DimOneEqual {
                                     ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
                                 });
@@ -1253,7 +1253,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             };
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
-                                    let mut filters = common_arr_dim1_pg_json_filters;
+                                    let mut filters = cmn_arr_dim1_pg_json_filters;
                                     filters.push(PgJsonFilter::DimOneGreaterThan {
                                         ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
                                     });
@@ -1268,9 +1268,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     });
                                     filters
                                 }
-                                PgJsonSpecific::Bool => common_arr_dim1_pg_json_filters,
+                                PgJsonSpecific::Bool => cmn_arr_dim1_pg_json_filters,
                                 PgJsonSpecific::String => {
-                                    let mut filters = common_arr_dim1_pg_json_filters;
+                                    let mut filters = cmn_arr_dim1_pg_json_filters;
                                     filters.push(PgJsonFilter::DimOneRgx);
                                     filters.push(PgJsonFilter::ContainsElRgx);
                                     filters.push(PgJsonFilter::AllElsRgx);
@@ -1287,8 +1287,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 let v = SelfTtUcc::from_tokens(&gen_ident_ts(dim2_is_nl, &pattern.down_by_2().expect("2d4ee5d4")));
                                 quote! {#v}
                             };
-                            let common_arr_dim2_pg_json_filters = {
-                                let mut vec = common_pg_json_filters;
+                            let cmn_arr_dim2_pg_json_filters = {
+                                let mut vec = cmn_pg_json_filters;
                                 vec.push(PgJsonFilter::DimOneEqual {
                                     ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
                                 });
@@ -1323,7 +1323,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             };
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
-                                    let mut filters = common_arr_dim2_pg_json_filters;
+                                    let mut filters = cmn_arr_dim2_pg_json_filters;
                                     filters.push(PgJsonFilter::DimTwoGreaterThan {
                                         ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
                                     });
@@ -1338,9 +1338,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     });
                                     filters
                                 }
-                                PgJsonSpecific::Bool => common_arr_dim2_pg_json_filters,
+                                PgJsonSpecific::Bool => cmn_arr_dim2_pg_json_filters,
                                 PgJsonSpecific::String => {
-                                    let mut filters = common_arr_dim2_pg_json_filters;
+                                    let mut filters = cmn_arr_dim2_pg_json_filters;
                                     filters.push(PgJsonFilter::DimTwoRgx);
                                     filters.push(PgJsonFilter::DimOneContainsElRgx);
                                     filters.push(PgJsonFilter::DimOneAllElsRgx);
@@ -1365,8 +1365,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 let v = SelfTtUcc::from_tokens(&gen_ident_ts(dim3_is_nl, &pattern.down_by_3().expect("9aaf9e82")));
                                 quote! {#v}
                             };
-                            let common_arr_dim3_pg_json_filters = {
-                                let mut vec = common_pg_json_filters;
+                            let cmn_arr_dim3_pg_json_filters = {
+                                let mut vec = cmn_pg_json_filters;
                                 vec.push(PgJsonFilter::DimOneEqual {
                                     ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
                                 });
@@ -1412,7 +1412,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             };
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
-                                    let mut filters = common_arr_dim3_pg_json_filters;
+                                    let mut filters = cmn_arr_dim3_pg_json_filters;
                                     filters.push(PgJsonFilter::DimThreeGreaterThan {
                                         ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
                                     });
@@ -1427,9 +1427,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     });
                                     filters
                                 }
-                                PgJsonSpecific::Bool => common_arr_dim3_pg_json_filters,
+                                PgJsonSpecific::Bool => cmn_arr_dim3_pg_json_filters,
                                 PgJsonSpecific::String => {
-                                    let mut filters = common_arr_dim3_pg_json_filters;
+                                    let mut filters = cmn_arr_dim3_pg_json_filters;
                                     filters.push(PgJsonFilter::DimThreeRgx);
                                     filters.push(PgJsonFilter::DimTwoContainsElRgx);
                                     filters.push(PgJsonFilter::DimTwoAllElsRgx);
@@ -1459,8 +1459,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 let v = SelfTtUcc::from_tokens(&gen_ident_ts(dim4_is_nl, &pattern.down_by_4().expect("a246885a")));
                                 quote! {#v}
                             };
-                            let common_arr_dim4_pg_json_filters = {
-                                let mut vec = common_pg_json_filters;
+                            let cmn_arr_dim4_pg_json_filters = {
+                                let mut vec = cmn_pg_json_filters;
                                 vec.push(PgJsonFilter::DimOneEqual {
                                     ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
                                 });
@@ -1517,7 +1517,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             };
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
-                                    let mut filters = common_arr_dim4_pg_json_filters;
+                                    let mut filters = cmn_arr_dim4_pg_json_filters;
                                     filters.push(PgJsonFilter::DimFourGreaterThan {
                                         ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
                                     });
@@ -1532,9 +1532,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     });
                                     filters
                                 }
-                                PgJsonSpecific::Bool => common_arr_dim4_pg_json_filters,
+                                PgJsonSpecific::Bool => cmn_arr_dim4_pg_json_filters,
                                 PgJsonSpecific::String => {
-                                    let mut filters = common_arr_dim4_pg_json_filters;
+                                    let mut filters = cmn_arr_dim4_pg_json_filters;
                                     filters.push(PgJsonFilter::DimFourRgx);
                                     filters.push(PgJsonFilter::DimThreeContainsElRgx);
                                     filters.push(PgJsonFilter::DimThreeAllElsRgx);
@@ -1589,7 +1589,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 }
             };
             let impl_dflt_some_one_el_for_ident_rd_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             let impl_sqlx_encode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &quote! {&#SelfSc.0});
             let impl_sqlx_type_for_ident_rd_ts = gen_impl_sqlx_type_for_ident_ts(&ident_rd_ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
             quote! {
@@ -1802,7 +1802,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_dflt_some_one_el_for_ident_upd_ts =
-                gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCommonDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             quote! {
                 #ident_upd_ts
                 #impl_ident_upd_ts
@@ -1843,7 +1843,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_type_for_ident_upd_for_query_ts
             }
         };
-        let pg_crud_macros_common_import_pg_crud_common = Import::PgCrudCommon;
+        let pg_crud_macros_cmn_import_pg_crud_cmn = Import::PgCrudCmn;
         let impl_pg_json_for_ident_ts = {
             let gen_dim_nbr_str = |dims_nbr: usize| format!("dim{dims_nbr}");
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
@@ -1857,7 +1857,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             } else {
-                quote! {Ok(gen_pg_json_common::fi_jsonb_build_obj_v(fi))}
+                quote! {Ok(gen_pg_json_cmn::fi_jsonb_build_obj_v(fi))}
             };
             let sel_only_crd_or_updd_ids_qb_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                 quote! {
@@ -1870,7 +1870,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote! {Ok(#QuerySc)}
             };
             gen_impl_pg_json_ts(
-                &pg_crud_macros_common_import_pg_crud_common,
+                &pg_crud_macros_cmn_import_pg_crud_cmn,
                 &ident,
                 &ident_tt_ucc,
                 &ident_cr_ucc,
@@ -2295,7 +2295,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 let rd_or_upd_ucc = rd_or_upd.ucc();
                 quote! {<#SelfUcc::#PgJsonUcc
                     as
-                    #pg_crud_macros_common_import_pg_crud_common::#PgJsonUcc
+                    #pg_crud_macros_cmn_import_pg_crud_cmn::#PgJsonUcc
                 >::#rd_or_upd_ucc::#NewSc(#VSc)}
             };
             let stdrt_nn_test_cases_vec_name_ts = match &pg_json {
@@ -2552,7 +2552,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             <
                                 <Self as #import::PgJson>::Rd
                                 as
-                                #PgCrudCommonDfltSomeOneEl
+                                #PgCrudCmnDfltSomeOneEl
                             >::dflt_some_one_el()
                         )
                     }
@@ -2668,7 +2668,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 let ts = gen_v_init_ts0(&if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                     quote! {#ident_rd_ucc::new(#VSc.0.#VSc.clone())}
                 } else {
-                    quote! {#PgCrudCommonDfltSomeOneElCall}
+                    quote! {#PgCrudCmnDfltSomeOneElCall}
                 });
                 quote! {Some(#ts)}
             };
@@ -2720,7 +2720,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         let equal_ts = gen_equal_ts(&quote! {#ident_tt_ucc_db49334a::new(v_18544acf.into())});
                         quote! {
                             #import::NlJsonObjPgTypeWhFilter(
-                                #CrSc.0.0.map(|v_18544acf| pg_crud_common::NotEmptyUnqVec::try_new(
+                                #CrSc.0.0.map(|v_18544acf| pg_crud_cmn::NotEmptyUnqVec::try_new(
                                     vec![#ident_wh_ucc_029b3848::#EqualUcc(#equal_ts)]
                                 ).expect("88bfa095"))
                             )
@@ -2849,7 +2849,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                 .parse::<Ts2>()
                                                 .expect("f0ce7e73");
                                             quote! {
-                                                pg_crud_common::UnsignedPartOfI32::try_from(
+                                                pg_crud_cmn::UnsignedPartOfI32::try_from(
                                                     i32::try_from(#i_nbr_ts)
                                                         .expect("5a1818e7")
                                                 ).expect("ad1ab73f")
@@ -3046,7 +3046,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     ::LengthEqual(
                                         wh_filters::PgJsonWhLengthEqual {
                                             oprtr: #import::Oprtr::Or,
-                                            #VSc: pg_crud_common::UnsignedPartOfI32::try_from(
+                                            #VSc: pg_crud_cmn::UnsignedPartOfI32::try_from(
                                                 i32::try_from(#content_ts.len()).expect("64d3424f")
                                             ).expect("081f4463"),
                                         }
@@ -3101,7 +3101,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     ::LengthGreaterThan(
                                         wh_filters::PgJsonWhLengthGreaterThan {
                                             oprtr: #import::Oprtr::Or,
-                                            #VSc: if let Ok(v_762dae1f) = pg_crud_common::UnsignedPartOfI32::try_from(
+                                            #VSc: if let Ok(v_762dae1f) = pg_crud_cmn::UnsignedPartOfI32::try_from(
                                                 if let Ok(v_9dca0200) = i32::try_from(
                                                     //todo temp code. make it better checking all cases
                                                     match #content_ts.len().checked_sub(1) {
@@ -3259,11 +3259,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 #ident_tt_ucc::new(start),
                                 #ident_tt_ucc::new(end)
                             ) {
-                                Ok(v_cdde02cc) => match pg_crud_common::NotEmptyUnqVec::try_new(vec![
+                                Ok(v_cdde02cc) => match pg_crud_cmn::NotEmptyUnqVec::try_new(vec![
                                     #import::SingleOrMultiple::Single(
                                         #ident_wh_ucc::Btwn(
                                             wh_filters::PgJsonWhBtwn {
-                                                oprtr: pg_crud_common::Oprtr::Or,
+                                                oprtr: pg_crud_cmn::Oprtr::Or,
                                                 #VSc: v_cdde02cc,
                                             }
                                         )
@@ -3540,7 +3540,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             gen_impl_pg_json_test_cases_for_ident_ts(
                 &quote! {#[cfg(feature = "test-utils")]},
-                &pg_crud_macros_common_import_pg_crud_common,
+                &pg_crud_macros_cmn_import_pg_crud_cmn,
                 &ident_rd_inn_ucc,
                 &ident,
                 &opt_vec_cr_ts,

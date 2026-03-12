@@ -18,7 +18,7 @@ regex.workspace = true
 thiserror.workspace = true
 gen_wh_filters = {path = "./gen_wh_filters"}
 location_lib = {path = "../../location_lib"}
-pg_crud_common = {path = "../pg_crud_common", features = ["test-utils"]}
+pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
 optml = {path = "../../optml"}
 
 
@@ -26,4 +26,4 @@ optml = {path = "../../optml"}
 workspace = true
 
 [features]
-test-utils = ["pg_crud_common/test-utils"]
+test-utils = ["pg_crud_cmn/test-utils"]

@@ -15,7 +15,7 @@ quote.workspace = true
 syn.workspace = true
 gen_quotes = {path = "../gen_quotes"}
 naming_macros = {path = "./naming_macros"}
-naming_common = {path = "./naming_common"}
+naming_cmn = {path = "./naming_cmn"}
 optml = {path = "../optml"}
 
 [lints]

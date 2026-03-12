@@ -1,6 +1,6 @@
 pub mod prm;
 use gen_quotes::dq_str;
-pub use naming_common::{
+pub use naming_cmn::{
     AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
     AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs, DisplayToUccStr, DisplayToUccTs,
     DisplayToUpperScStr, DisplayToUpperScTs, ToTokensToScStr, ToTokensToScTs, ToTokensToUccStr,
@@ -117,7 +117,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["uo", "er", "vrts"],
     ["dm", "er", "vrts"],
     ["dlo", "er", "vrts"],
-    ["common", "er", "vrts"],
+    ["cmn", "er", "vrts"],
     ["cm", "logic"],
     ["co", "logic"],
     ["rm", "logic"],
@@ -126,7 +126,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["uo", "logic"],
     ["dm", "logic"],
     ["dlo", "logic"],
-    ["common", "logic"],
+    ["cmn", "logic"],
     ["not", "unq", "field", "vec"],
     ["rollback", "er"],
     ["not", "unq", "pk", "with", "serde"],
@@ -673,7 +673,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["upd", "to", "rd", "ids"],
     ["self", "rd", "ids", "h"],
     ["rd", "ids", "from", "cm"],
-    ["common", "rd", "ids", "from", "co"],
+    ["cmn", "rd", "ids", "from", "co"],
     ["gen", "pg", "table", "pk"],
     ["rd", "new", "or", "try", "new", "unwraped", "for", "test"],
     ["rd", "ids", "to", "opt", "v", "rd", "inn"],

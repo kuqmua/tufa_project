@@ -1,0 +1,21 @@
+[package]
+name = "pg_crud_cmn_and_macros_cmn"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+
+[dependencies]
+proc-macro2.workspace = true
+quote.workspace = true
+serde.workspace = true
+schemars.workspace = true
+naming = {path = "../../naming"}
+optml = {path = "../../optml"}
+
+[lints]
+workspace = true
