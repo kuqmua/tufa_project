@@ -13,8 +13,8 @@ use naming::{
     BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CmnErVrtsSc, CmnLogicSc,
     CmnRdIdsFromCoSc, CoErVrtsSc, CoLogicSc, ColumnSc, ColumnsSc, CommitSc, ConfigSc,
     CrExtensionIfNotExistsPgJsonschemaUcc, CrExtensionIfNotExistsUuidOsspUcc,
-    CrIntoPgJsonOptVecWhLengthEqualSc, CrIntoPgJsonOptVecWhLengthGreaterThanSc,
-    CrIntoPgTypeOptVecWhDimOneEqualSc, CrQbSc, CrQpSc, CrSc, CrTableColumnQpSc, CrUcc, DeResUcc,
+    CrIntoPgJsonOptVecWhLengthEqSc, CrIntoPgJsonOptVecWhLengthGreaterThanSc,
+    CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc, CrTableColumnQpSc, CrUcc, DeResUcc,
     DesirableUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElMaxPageSizeUcc, DfltSomeOneElSc,
     DfltSomeOneElUcc, DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloLogicSc, DmErVrtsSc,
     DmLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
@@ -25,11 +25,11 @@ use naming::{
     OrderSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
     PgTypeOptVecWhGreaterThanTestSc, PgTypeUcc, PgUcc, PgnSc, PkQpSc, PkSc, PoolConnectionSc,
     PoolSc, PrefixSc, PrepExtensionsSc, PrepPgSc, PrepPgTableSc, PrepPgUcc, PrmsSc, QbSc, QpErUcc,
-    QpSc, QpUcc, QuerySc, QueryStringSc, RdIdsAndCrIntoOptVecWhEqualToJsonFieldSc,
+    QpSc, QpUcc, QuerySc, QueryStringSc, RdIdsAndCrIntoOptVecWhEqToJsonFieldSc,
     RdIdsAndCrIntoPgJsonOptVecWhBtwnSc, RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc, RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhInSc, RdIdsAndCrIntoPgJsonOptVecWhRgxSc,
-    RdIdsAndCrIntoVecWhEqualUsingFieldsSc, RdIdsAndCrIntoWhEqualSc,
+    RdIdsAndCrIntoVecWhEqUsingFieldsSc, RdIdsAndCrIntoWhEqSc,
     RdIdsAndTtIntoPgTypeOptWhGreaterThanSc, RdIdsIntoRdSc, RdIdsIntoTtSc, RdIdsIntoUpdSc, RdIdsSc,
     RdIdsUcc, RdIntoTtSc, RdUcc, ReqSc, ReqwestSc, ReqwestUcc, ResSc, ResTextSc, RmErVrtsSc,
     RmLogicSc, RoErVrtsSc, RoLogicSc, RollbackSc, RoutesHSc, RoutesSc, RowAndRollbackUcc, RowSc,
@@ -52,8 +52,8 @@ use naming::{
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_cmn::{
-    AddOprtrUndrscr, ColumnPrmUndrscr, Dim, EqualOrEqualUsingFields, Import, IncrPrmUndrscr,
-    IsQbMut, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
+    AddOprtrUndrscr, ColumnPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
+    gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
     gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts,
     gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_filter_for_ident_ts,
@@ -2914,7 +2914,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                             #ts_ee27d6ff
                                             if #is_fi_upd_exists_sc {
                                                 acc_b86a253a.push_str(&
-                                                    #import_ts gen_column_equals_case_acc_else_column_end_comma_um_qp(
+                                                    #import_ts gen_column_eqs_case_acc_else_column_end_comma_um_qp(
                                                         #fi_dq_ts,
                                                         &{
                                                             let mut acc_8ad06c8c = #StringTs::default();
@@ -3846,22 +3846,21 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         fn gen_assert_eq_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens, ts2: &dyn ToTokens) -> Ts2 {
             quote! {assert_eq!(#ts0,#ts1,#ts2);}
         }
-        let gen_pk_wh_equal_ts = |ts0: &dyn ToTokens| {
+        let gen_pk_wh_eq_ts = |ts0: &dyn ToTokens| {
             quote! {
-                #pk_ft_as_pg_type_wh_ts::Equal(
-                    #import_ts PgTypeWhEqual {
+                #pk_ft_as_pg_type_wh_ts::Eq(
+                    #import_ts PgTypeWhEq {
                         oprtr: #oprtr_or_ts,
                         #VSc: #ts0,
                     },
                 )
             }
         };
-        let gen_pk_wh_equal_new_ts =
-            |ts0: &dyn ToTokens| gen_pk_wh_equal_ts(&quote! {#pk_ft_tt_ts::new(#ts0)});
-        let pk_wh_equal_uuid_new_v_ts = gen_pk_wh_equal_new_ts(&quote! {uuid::Uuid::new_v4()});
-        let gen_pk_wh_equal_into_inn_ts = |ts0: &dyn ToTokens| {
-            gen_pk_wh_equal_new_ts(&quote! {#pk_as_pg_type_ts::into_inn(#ts0)})
-        };
+        let gen_pk_wh_eq_new_ts =
+            |ts0: &dyn ToTokens| gen_pk_wh_eq_ts(&quote! {#pk_ft_tt_ts::new(#ts0)});
+        let pk_wh_eq_uuid_new_v_ts = gen_pk_wh_eq_new_ts(&quote! {uuid::Uuid::new_v4()});
+        let gen_pk_wh_eq_into_inn_ts =
+            |ts0: &dyn ToTokens| gen_pk_wh_eq_new_ts(&quote! {#pk_as_pg_type_ts::into_inn(#ts0)});
         let ident_tests_sc = SelfTestsSc::from_display(&ident);
         let ident_dq_ts = dq_ts(&DisplayToScStr::case(&ident));
         let ident_cm_prms_ucc = gen_ident_op_prms_ucc(&Op::Cm);
@@ -3947,7 +3946,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             )
         };
         let ts_ffb964de = {
-            let ts = gen_pk_wh_equal_into_inn_ts(&pk_ft_rd_ids_into_rd_el_43ab7fb5_pk_fi_ts);
+            let ts = gen_pk_wh_eq_into_inn_ts(&pk_ft_rd_ids_into_rd_el_43ab7fb5_pk_fi_ts);
             quote! {.iter().map(|el_43ab7fb5| #ts).collect()}
         };
         let pk_ft_as_pg_type_upd_as_pg_type_pk_rd_ids_into_upd_ts = {
@@ -4109,16 +4108,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 ));
             }
         };
-        let table_rd_ids_and_cr_into_wh_equal_name = "8e427ad7";
-        let table_rd_ids_and_cr_into_vec_wh_equal_using_fields_name = "eb24448c";
-        let table_rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_name = "9ac6d79a";
-        let table_cr_into_pg_type_opt_vec_wh_dim_one_equal_name = "72940b0e";
+        let table_rd_ids_and_cr_into_wh_eq_name = "8e427ad7";
+        let table_rd_ids_and_cr_into_vec_wh_eq_using_fields_name = "eb24448c";
+        let table_rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_name = "9ac6d79a";
+        let table_cr_into_pg_type_opt_vec_wh_dim_one_eq_name = "72940b0e";
         let table_rd_ids_and_tt_into_pg_type_opt_wh_greater_than_name = "5a52af33";
-        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_name = "1f388ef8";
-        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_name = "581c947f";
-        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_name = "de556c26";
-        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_name = "35b26a97";
-        let table_cr_into_pg_json_opt_vec_wh_length_equal_name = "1ce53b67";
+        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_name = "1f388ef8";
+        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_name = "581c947f";
+        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_name = "de556c26";
+        let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_name = "35b26a97";
+        let table_cr_into_pg_json_opt_vec_wh_length_eq_name = "1ce53b67";
         let table_cr_into_pg_json_opt_vec_wh_length_greater_than_name = "6b6bdfe0";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_name = "35a01678";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_name = "33a3706a";
@@ -4127,16 +4126,16 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_name = "fe3267a0";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_name = "b4504737";
         fill_table_fis_vec_ts(vec![
-            &table_rd_ids_and_cr_into_wh_equal_name,
-            &table_rd_ids_and_cr_into_vec_wh_equal_using_fields_name,
-            &table_rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_name,
-            &table_cr_into_pg_type_opt_vec_wh_dim_one_equal_name,
+            &table_rd_ids_and_cr_into_wh_eq_name,
+            &table_rd_ids_and_cr_into_vec_wh_eq_using_fields_name,
+            &table_rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_name,
+            &table_cr_into_pg_type_opt_vec_wh_dim_one_eq_name,
             &table_rd_ids_and_tt_into_pg_type_opt_wh_greater_than_name,
-            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_name,
-            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_name,
-            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_name,
-            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_name,
-            &table_cr_into_pg_json_opt_vec_wh_length_equal_name,
+            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_name,
+            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_name,
+            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_name,
+            &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_name,
+            &table_cr_into_pg_json_opt_vec_wh_length_eq_name,
             &table_cr_into_pg_json_opt_vec_wh_length_greater_than_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_name,
@@ -4388,7 +4387,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 );
                 let assert_ts_56d830a6 = gen_assert_ts(
                     &{
-                        let ts = gen_pk_wh_equal_into_inn_ts(&quote! {el_a37bca54.clone()});
+                        let ts = gen_pk_wh_eq_into_inn_ts(&quote! {el_a37bca54.clone()});
                         quote! {
                             gen_try_rm_order_by_pk_with_big_pgn(
                                 &url_cloned,
@@ -4561,7 +4560,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     Some(
                                         gen_pg_type_wh_try_new_pk(
                                             #oprtr_or_ts,
-                                            std::iter::repeat_with(|| #pk_wh_equal_uuid_new_v_ts)
+                                            std::iter::repeat_with(|| #pk_wh_eq_uuid_new_v_ts)
                                             .take(el_30614c66)
                                             .collect::<Vec<_>>()
                                         )
@@ -4577,10 +4576,10 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ))
                 )
             );
-            let test_rm_by_equal_to_crd_pks_ts = gen_for_in_1_2_ts(&quote! {el_a636d084}, &{
+            let test_rm_by_eq_to_crd_pks_ts = gen_for_in_1_2_ts(&quote! {el_a636d084}, &{
                 let ts = gen_acc_push_future_ts(
                         &quote!{table_7e35b1ce},
-                        &quote!{table_test_rm_by_equal_to_crd_pks},
+                        &quote!{table_test_rm_by_eq_to_crd_pks},
                         &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                             let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
                                 &ts_611ddc2e,
@@ -4608,7 +4607,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             );
                             let assert_ts_a5027b61 = gen_assert_ts(
                                 &{
-                                    let ts = gen_pk_wh_equal_into_inn_ts(&quote!{el_1e9c87ce.clone()});
+                                    let ts = gen_pk_wh_eq_into_inn_ts(&quote!{el_1e9c87ce.clone()});
                                     quote!{
                                         gen_try_rm_order_by_pk_with_big_pgn(
                                             &url_cloned,
@@ -4711,7 +4710,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let assert_ts_87ec2ac1 = gen_assert_ts(
                             &{
-                                let ts_75998fa9 = gen_pk_wh_equal_into_inn_ts(
+                                let ts_75998fa9 = gen_pk_wh_eq_into_inn_ts(
                                     &pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts,
                                 );
                                 quote! {
@@ -4734,9 +4733,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &quote! {"38187925"},
                         );
-                        let ts_490b2aa3 = gen_pk_wh_equal_into_inn_ts(
-                            &pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts,
-                        );
+                        let ts_490b2aa3 =
+                            gen_pk_wh_eq_into_inn_ts(&pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts);
                         let ts_7a8c2dcc = gen_rd_ids_from_try_dm_sorted_pk_ts(
                             &quote! {table_7e35b1ce},
                             &quote! {
@@ -4776,7 +4774,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     gen_pg_type_wh_try_new_pk(
                         #oprtr_and_ts,
                         vec![
-                            #pk_as_pg_type_test_cases_path_ts rd_ids_and_cr_into_wh_equal(
+                            #pk_as_pg_type_test_cases_path_ts rd_ids_and_cr_into_wh_eq(
                                 rd_ids_from_co.#pk_fi,
                                 #PgCrudDfltSomeOneElCall
                             )
@@ -4796,71 +4794,70 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     }
                 })
             };
-            let (rd_ids_and_cr_into_wh_equal_ts, rd_ids_and_cr_into_vec_wh_equal_using_fields_ts) = {
-                let gen_ts =
-                    |test_name: &str, equal_or_equal_using_fields: &EqualOrEqualUsingFields| {
-                        gen_rd_test_ts(
-                            test_name,
-                            &gen_ident_ft_opt_vec_cr_or_vec_ts,
-                            &gen_ident_cr_cnt_el_ts,
-                            &|el: &SynField| {
-                                let fi = &el.ident;
-                                gen_rd_ids_and_cr_into_wh_assert_eq_ts(
-                                    &gen_fields_named_with_comma_ts(&|el0: &SynField| {
-                                        let fi0 = &el0.ident;
-                                        let ft0 = &el0.type0;
-                                        if fi0 == pk_fi {
-                                            some_pk_wh_init_ts.clone()
-                                        } else if fi0 == fi {
-                                            let method_ts = {
-                                                let method_ts: &dyn ToTokens = match &equal_or_equal_using_fields {
-                                                    EqualOrEqualUsingFields::Equal => &RdIdsAndCrIntoWhEqualSc,
-                                                    EqualOrEqualUsingFields::EqualUsingFields => &RdIdsAndCrIntoVecWhEqualUsingFieldsSc
-                                                };
-                                                let ts0 = gen_as_pg_type_test_cases_path_ts(&ft0);
-                                                quote! {
-                                                    #ts0 #method_ts(
-                                                        rd_ids_from_co.#fi0.clone().expect("11c3740b"),
-                                                        ident_cr.#fi0.clone()
-                                                    )
-                                                }
-                                            };
-                                            match &equal_or_equal_using_fields {
-                                                EqualOrEqualUsingFields::Equal => {
-                                                    gen_some_pg_type_wh_try_new_and_ts(&quote! {
-                                                        vec![#method_ts]
-                                                    })
-                                                }
-                                                EqualOrEqualUsingFields::EqualUsingFields => {
-                                                    quote! {
-                                                        Some(#import_ts PgTypeWh::new(
-                                                            #oprtr_and_ts,
-                                                            #method_ts
-                                                        ))
+            let (rd_ids_and_cr_into_wh_eq_ts, rd_ids_and_cr_into_vec_wh_eq_using_fields_ts) = {
+                let gen_ts = |test_name: &str, eq_or_eq_using_fields: &EqOrEqUsingFields| {
+                    gen_rd_test_ts(
+                        test_name,
+                        &gen_ident_ft_opt_vec_cr_or_vec_ts,
+                        &gen_ident_cr_cnt_el_ts,
+                        &|el: &SynField| {
+                            let fi = &el.ident;
+                            gen_rd_ids_and_cr_into_wh_assert_eq_ts(&gen_fields_named_with_comma_ts(
+                                &|el0: &SynField| {
+                                    let fi0 = &el0.ident;
+                                    let ft0 = &el0.type0;
+                                    if fi0 == pk_fi {
+                                        some_pk_wh_init_ts.clone()
+                                    } else if fi0 == fi {
+                                        let method_ts = {
+                                            let method_ts: &dyn ToTokens =
+                                                match &eq_or_eq_using_fields {
+                                                    EqOrEqUsingFields::Eq => &RdIdsAndCrIntoWhEqSc,
+                                                    EqOrEqUsingFields::EqUsingFields => {
+                                                        &RdIdsAndCrIntoVecWhEqUsingFieldsSc
                                                     }
+                                                };
+                                            let ts0 = gen_as_pg_type_test_cases_path_ts(&ft0);
+                                            quote! {
+                                                #ts0 #method_ts(
+                                                    rd_ids_from_co.#fi0.clone().expect("11c3740b"),
+                                                    ident_cr.#fi0.clone()
+                                                )
+                                            }
+                                        };
+                                        match &eq_or_eq_using_fields {
+                                            EqOrEqUsingFields::Eq => {
+                                                gen_some_pg_type_wh_try_new_and_ts(&quote! {
+                                                    vec![#method_ts]
+                                                })
+                                            }
+                                            EqOrEqUsingFields::EqUsingFields => {
+                                                quote! {
+                                                    Some(#import_ts PgTypeWh::new(
+                                                        #oprtr_and_ts,
+                                                        #method_ts
+                                                    ))
                                                 }
                                             }
-                                        } else {
-                                            none_ts.clone()
                                         }
-                                    }),
-                                )
-                            },
-                        )
-                    };
+                                    } else {
+                                        none_ts.clone()
+                                    }
+                                },
+                            ))
+                        },
+                    )
+                };
                 (
+                    gen_ts(table_rd_ids_and_cr_into_wh_eq_name, &EqOrEqUsingFields::Eq),
                     gen_ts(
-                        table_rd_ids_and_cr_into_wh_equal_name,
-                        &EqualOrEqualUsingFields::Equal,
-                    ),
-                    gen_ts(
-                        table_rd_ids_and_cr_into_vec_wh_equal_using_fields_name,
-                        &EqualOrEqualUsingFields::EqualUsingFields,
+                        table_rd_ids_and_cr_into_vec_wh_eq_using_fields_name,
+                        &EqOrEqUsingFields::EqUsingFields,
                     ),
                 )
             };
-            let rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_ts = gen_rd_test_ts(
-                table_rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_name,
+            let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts = gen_rd_test_ts(
+                table_rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_name,
                 &gen_ident_ft_opt_vec_cr_or_vec_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
@@ -4869,7 +4866,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {v_d5cd3c70},
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                            quote! {#ft_ts #RdIdsAndCrIntoOptVecWhEqualToJsonFieldSc(
+                            quote! {#ft_ts #RdIdsAndCrIntoOptVecWhEqToJsonFieldSc(
                                 rd_ids_from_co.#fi.clone().expect("65cef584"),
                                 ident_cr.#fi.clone()
                             )}
@@ -4887,8 +4884,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 },
             );
-            let cr_into_pg_type_opt_vec_wh_dim_one_equal_ts = gen_rd_test_ts(
-                table_cr_into_pg_type_opt_vec_wh_dim_one_equal_name,
+            let cr_into_pg_type_opt_vec_wh_dim_one_eq_ts = gen_rd_test_ts(
+                table_cr_into_pg_type_opt_vec_wh_dim_one_eq_name,
                 &gen_ident_ft_opt_vec_cr_or_vec_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
@@ -4897,7 +4894,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {v_b02d763d},
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                            quote! {#ft_ts #CrIntoPgTypeOptVecWhDimOneEqualSc(ident_cr.#fi.clone())}
+                            quote! {#ft_ts #CrIntoPgTypeOptVecWhDimOneEqSc(ident_cr.#fi.clone())}
                         },
                         &{
                             let assert_eq_ts = gen_rd_ids_and_cr_into_wh_assert_eq_ts(
@@ -4941,14 +4938,14 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 },
             );
             let (
-                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts,
-                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts,
-                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts,
-                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
+                rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
             ) = {
                 //todo if vec_cr is empty then do different logic (for uuid). now uuid Tested using one dflt case
                 let gen_ts = |test_name: &str, dim: &Dim| {
-                    let fn_ts = dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_equal_sc();
+                    let fn_ts = dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_sc();
                     gen_rd_test_ts(
                         test_name,
                         &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
@@ -4979,25 +4976,25 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 };
                 (
                     gen_ts(
-                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_name,
+                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_name,
                         &Dim::One,
                     ),
                     gen_ts(
-                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_name,
+                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_name,
                         &Dim::Two,
                     ),
                     gen_ts(
-                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_name,
+                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_name,
                         &Dim::Three,
                     ),
                     gen_ts(
-                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_name,
+                        table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_name,
                         &Dim::Four,
                     ),
                 )
             };
-            let cr_into_pg_json_opt_vec_wh_length_equal_ts = gen_rd_test_ts(
-                table_cr_into_pg_json_opt_vec_wh_length_equal_name,
+            let cr_into_pg_json_opt_vec_wh_length_eq_ts = gen_rd_test_ts(
+                table_cr_into_pg_json_opt_vec_wh_length_eq_name,
                 &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
@@ -5006,7 +5003,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {v_f825e068},
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                            quote! {#ft_ts #CrIntoPgJsonOptVecWhLengthEqualSc(
+                            quote! {#ft_ts #CrIntoPgJsonOptVecWhLengthEqSc(
                                 ident_cr.#fi.clone()
                             )}
                         },
@@ -5123,17 +5120,17 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             };
             quote! {
                 #test_rm_by_non_existent_pks_ts
-                #test_rm_by_equal_to_crd_pks_ts
-                #rd_ids_and_cr_into_wh_equal_ts
-                #rd_ids_and_cr_into_vec_wh_equal_using_fields_ts
-                #rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_ts
-                #cr_into_pg_type_opt_vec_wh_dim_one_equal_ts
+                #test_rm_by_eq_to_crd_pks_ts
+                #rd_ids_and_cr_into_wh_eq_ts
+                #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts
+                #rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts
+                #cr_into_pg_type_opt_vec_wh_dim_one_eq_ts
                 #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts
-                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts
-                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts
-                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts
-                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_ts
-                #cr_into_pg_json_opt_vec_wh_length_equal_ts
+                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts
+                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts
+                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts
+                #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts
+                #cr_into_pg_json_opt_vec_wh_length_eq_ts
                 #cr_into_pg_json_opt_vec_wh_length_greater_than_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts
@@ -5201,7 +5198,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let ft_ts = gen_as_pg_type_test_cases_path_ts(ft);
                     let is_fields_without_pk_len_greater_than_one = fields_without_pk.len() > 1;
                     let mb_previous_rd_ts = if is_fields_without_pk_len_greater_than_one {
-                        let ts = gen_pk_wh_equal_into_inn_ts(
+                        let ts = gen_pk_wh_eq_into_inn_ts(
                             &pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
                         );
                         quote! {
@@ -5314,7 +5311,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     let assert_eq_ts_10783673 = gen_assert_eq_ts(
                         &quote! {{#expected_rm_ts}},
                         &{
-                            let ts = gen_pk_wh_equal_into_inn_ts(
+                            let ts = gen_pk_wh_eq_into_inn_ts(
                                 &pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
                             );
                             quote! {
@@ -5493,7 +5490,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 &quote! {el_39819198},
                 &gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
-                    &quote!{table_test_rm_by_equal_to_crd_pks},
+                    &quote!{table_test_rm_by_eq_to_crd_pks},
                     &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&gen_assert_ts(
                         &{
                             let ts = gen_try_dm_h_ts(
@@ -5501,7 +5498,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                                     #pk_fi: Some(
                                         gen_pg_type_wh_try_new_pk(
                                             #oprtr_or_ts,
-                                            std::iter::repeat_with(|| #pk_wh_equal_uuid_new_v_ts)
+                                            std::iter::repeat_with(|| #pk_wh_eq_uuid_new_v_ts)
                                             .take(el_39819198)
                                             .collect()
                                         )
@@ -5519,7 +5516,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             let test_dm_by_pks_ts = gen_for_in_1_2_ts(&quote! {el_56409d32}, &{
                 let ts_3240261f = gen_acc_push_future_ts(
                     &quote!{table_7e35b1ce},
-                    &quote!{table_test_rm_by_equal_to_crd_pks},//todo is table name correct?
+                    &quote!{table_test_rm_by_eq_to_crd_pks},//todo is table name correct?
                     &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
                         let pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts =
                             gen_pk_ft_as_pg_type_pk_method_call_ts(
@@ -5539,7 +5536,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         );
                         let assert_ts_d6ec39a3 = gen_assert_ts(
                             &{
-                                let ts = gen_pk_wh_equal_ts(&pk_ft_rd_into_tt_el_pk_fi_clone_ts);
+                                let ts = gen_pk_wh_eq_ts(&pk_ft_rd_into_tt_el_pk_fi_clone_ts);
                                 quote!{
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
@@ -5560,7 +5557,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             },
                             &quote!{"77f038b0"}
                         );
-                        let ts_212f8aca = gen_pk_wh_equal_ts(&pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts);
+                        let ts_212f8aca = gen_pk_wh_eq_ts(&pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts);
                         let ts_6f76ccd4 = gen_rd_ids_from_try_dm_ts(&gen_try_dm_h_ts(
                             &quote!{
                                 #pk_fi: Some(
@@ -5674,7 +5671,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             }
         };
         let assert_ts_48ca54b1 = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
-        let ts_e698d734 = gen_pk_wh_equal_into_inn_ts(&quote! {
+        let ts_e698d734 = gen_pk_wh_eq_into_inn_ts(&quote! {
             #pk_ft_as_pg_type_pk_ts rd_ids_into_rd(el_9530b728.#pk_fi)
         });
         let size_of_ts = {
@@ -5953,7 +5950,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         let table_cm = add_table_postfix("cm");
                         let table_co = add_table_postfix("co");
                         let table_test_rm_by_non_existent_pks = add_table_postfix("Test_rm_by_non_existent_pks");
-                        let table_test_rm_by_equal_to_crd_pks = add_table_postfix("Test_rm_by_equal_to_crd_pks");
+                        let table_test_rm_by_eq_to_crd_pks = add_table_postfix("Test_rm_by_eq_to_crd_pks");
                         #(#table_fis_init_vec_ts)*
                         let table_ro = add_table_postfix("ro");
                         let table_um = add_table_postfix("um");
@@ -5965,7 +5962,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                             &table_cm,
                             &table_co,
                             &table_test_rm_by_non_existent_pks,
-                            &table_test_rm_by_equal_to_crd_pks,
+                            &table_test_rm_by_eq_to_crd_pks,
                             #(#table_test_name_fis_vec_ts)*
                             &table_ro,
                             &table_um,

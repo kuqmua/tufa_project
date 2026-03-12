@@ -15,15 +15,15 @@ fn main() {
         .into_os_string()
         .into_string()
         .expect("9ce61c06");
-    let path_space_equal_space = "path = ";
+    let path_space_eq_space = "path = ";
     let paths_vec: Vec<String> =
         fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules"))
             .expect("c6dd3528")
             .lines()
             .filter_map(|el| {
-                el.find(path_space_equal_space).map(|el0| {
+                el.find(path_space_eq_space).map(|el0| {
                     el.get(
-                        el0.checked_add(path_space_equal_space.len())
+                        el0.checked_add(path_space_eq_space.len())
                             .expect("62d029a8")..,
                     )
                     .expect("dde185ef")

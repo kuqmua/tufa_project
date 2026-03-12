@@ -10,9 +10,9 @@ use optml::Optml;
 use thiserror::Error;
 #[derive(Debug, Error, Location, Optml)]
 pub enum CommitEr {
-    CommitNotEqual {
+    CommitNotEq {
         #[eo_to_err_string_serde]
-        commit_not_equal: String,
+        commit_not_eq: String,
         #[eo_to_err_string_serde]
         commit_to_use: String,
         loc: Loc,
@@ -31,7 +31,7 @@ pub enum CommitEr {
 impl GetAxumHttpStatusCode for CommitEr {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
-            Self::CommitNotEqual { .. }
+            Self::CommitNotEq { .. }
             | Self::CommitToStrConversion { .. }
             | Self::NoCommitHeader { .. } => StatusCode::BAD_REQUEST,
         }
@@ -57,8 +57,8 @@ pub fn check_commit(
                     if v_16408fd2 == PROJECT_GIT_INFO.commit {
                         Ok(())
                     } else {
-                        Err(CommitEr::CommitNotEqual {
-                            commit_not_equal: String::from("different project commit provided, services must work only with equal project commits"),
+                        Err(CommitEr::CommitNotEq {
+                            commit_not_eq: String::from("different project commit provided, services must work only with eq project commits"),
                             commit_to_use: GetGitCommitLink::get_git_commit_link(&PROJECT_GIT_INFO),
                             loc: loc!(),
                         })

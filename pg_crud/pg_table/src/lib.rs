@@ -48,7 +48,7 @@ pub fn gen_when_column_id_then_v_um_qp(column: &str, id: &str, value: &str) -> S
     format!("when {column} = {id} then {value} ")
 }
 #[must_use]
-pub fn gen_column_equals_case_acc_else_column_end_comma_um_qp(column: &str, acc: &str) -> String {
+pub fn gen_column_eqs_case_acc_else_column_end_comma_um_qp(column: &str, acc: &str) -> String {
     format!("{column} = case {acc}else {column} end,")
 }
 //todo extra param for columns_to_return instead of pk_field_name in "returning {pk_field_name}""

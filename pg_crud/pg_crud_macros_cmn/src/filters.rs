@@ -1,35 +1,35 @@
 use enum_extension_lib::EnumExtension;
 use naming::{
-    AdjacentWithRangeUcc, AllElsEqualUcc, AllElsGreaterThanUcc, AllElsRgxUcc, BeforeUcc, BtwnUcc,
+    AdjacentWithRangeUcc, AllElsEqUcc, AllElsGreaterThanUcc, AllElsRgxUcc, BeforeUcc, BtwnUcc,
     ContainsAllElsOfArrUcc, ContainsElGreaterThanUcc, ContainsElRgxUcc, CurrentDateUcc,
-    CurrentTimeUcc, CurrentTimestampUcc, DimFourAllElsEqualUcc, DimFourAllElsGreaterThanUcc,
+    CurrentTimeUcc, CurrentTimestampUcc, DimFourAllElsEqUcc, DimFourAllElsGreaterThanUcc,
     DimFourAllElsRgxUcc, DimFourBtwnUcc, DimFourContainsAllElsOfArrUcc,
-    DimFourContainsElGreaterThanUcc, DimFourContainsElRgxUcc, DimFourEqualUcc,
-    DimFourGreaterThanUcc, DimFourInUcc, DimFourLengthEqualUcc, DimFourLengthGreaterThanUcc,
-    DimFourOverlapsWithArrUcc, DimFourRgxUcc, DimOneAdjacentWithRangeUcc, DimOneAllElsEqualUcc,
-    DimOneAllElsGreaterThanUcc, DimOneAllElsRgxUcc, DimOneBeforeUcc, DimOneBtwnUcc,
-    DimOneContainsAllElsOfArrUcc, DimOneContainsElGreaterThanUcc, DimOneContainsElRgxUcc,
-    DimOneCurrentDateUcc, DimOneCurrentTimeUcc, DimOneCurrentTimestampUcc,
-    DimOneEqualToEncodedStringRepresentationUcc, DimOneEqualUcc, DimOneExcludedUpperBoundUcc,
-    DimOneFindRangesThatFullyContainTheGivenRangeUcc, DimOneFindRangesWithinGivenRangeUcc,
-    DimOneGreaterThanCurrentDateUcc, DimOneGreaterThanCurrentTimeUcc,
-    DimOneGreaterThanCurrentTimestampUcc, DimOneGreaterThanExcludedUpperBoundUcc,
-    DimOneGreaterThanIncludedLowerBoundUcc, DimOneGreaterThanUcc, DimOneInUcc,
-    DimOneIncludedLowerBoundUcc, DimOneLengthEqualUcc, DimOneLengthGreaterThanUcc,
-    DimOneOverlapWithRangeUcc, DimOneOverlapsWithArrUcc, DimOneRangeLengthUcc, DimOneRgxUcc,
-    DimOneStrictlyToLeftOfRangeUcc, DimOneStrictlyToRightOfRangeUcc, DimThreeAllElsEqualUcc,
-    DimThreeAllElsGreaterThanUcc, DimThreeAllElsRgxUcc, DimThreeBtwnUcc,
-    DimThreeContainsAllElsOfArrUcc, DimThreeContainsElGreaterThanUcc, DimThreeContainsElRgxUcc,
-    DimThreeEqualUcc, DimThreeGreaterThanUcc, DimThreeInUcc, DimThreeLengthEqualUcc,
-    DimThreeLengthGreaterThanUcc, DimThreeOverlapsWithArrUcc, DimThreeRgxUcc, DimTwoAllElsEqualUcc,
-    DimTwoAllElsGreaterThanUcc, DimTwoAllElsRgxUcc, DimTwoBtwnUcc, DimTwoContainsAllElsOfArrUcc,
-    DimTwoContainsElGreaterThanUcc, DimTwoContainsElRgxUcc, DimTwoEqualUcc, DimTwoGreaterThanUcc,
-    DimTwoInUcc, DimTwoLengthEqualUcc, DimTwoLengthGreaterThanUcc, DimTwoOverlapsWithArrUcc,
-    DimTwoRgxUcc, DisplayPlusToTokens, EqualToEncodedStringRepresentationUcc, EqualUcc,
+    DimFourContainsElGreaterThanUcc, DimFourContainsElRgxUcc, DimFourEqUcc, DimFourGreaterThanUcc,
+    DimFourInUcc, DimFourLengthEqUcc, DimFourLengthGreaterThanUcc, DimFourOverlapsWithArrUcc,
+    DimFourRgxUcc, DimOneAdjacentWithRangeUcc, DimOneAllElsEqUcc, DimOneAllElsGreaterThanUcc,
+    DimOneAllElsRgxUcc, DimOneBeforeUcc, DimOneBtwnUcc, DimOneContainsAllElsOfArrUcc,
+    DimOneContainsElGreaterThanUcc, DimOneContainsElRgxUcc, DimOneCurrentDateUcc,
+    DimOneCurrentTimeUcc, DimOneCurrentTimestampUcc, DimOneEqToEncodedStringRepresentationUcc,
+    DimOneEqUcc, DimOneExcludedUpperBoundUcc, DimOneFindRangesThatFullyContainTheGivenRangeUcc,
+    DimOneFindRangesWithinGivenRangeUcc, DimOneGreaterThanCurrentDateUcc,
+    DimOneGreaterThanCurrentTimeUcc, DimOneGreaterThanCurrentTimestampUcc,
+    DimOneGreaterThanExcludedUpperBoundUcc, DimOneGreaterThanIncludedLowerBoundUcc,
+    DimOneGreaterThanUcc, DimOneInUcc, DimOneIncludedLowerBoundUcc, DimOneLengthEqUcc,
+    DimOneLengthGreaterThanUcc, DimOneOverlapWithRangeUcc, DimOneOverlapsWithArrUcc,
+    DimOneRangeLengthUcc, DimOneRgxUcc, DimOneStrictlyToLeftOfRangeUcc,
+    DimOneStrictlyToRightOfRangeUcc, DimThreeAllElsEqUcc, DimThreeAllElsGreaterThanUcc,
+    DimThreeAllElsRgxUcc, DimThreeBtwnUcc, DimThreeContainsAllElsOfArrUcc,
+    DimThreeContainsElGreaterThanUcc, DimThreeContainsElRgxUcc, DimThreeEqUcc,
+    DimThreeGreaterThanUcc, DimThreeInUcc, DimThreeLengthEqUcc, DimThreeLengthGreaterThanUcc,
+    DimThreeOverlapsWithArrUcc, DimThreeRgxUcc, DimTwoAllElsEqUcc, DimTwoAllElsGreaterThanUcc,
+    DimTwoAllElsRgxUcc, DimTwoBtwnUcc, DimTwoContainsAllElsOfArrUcc,
+    DimTwoContainsElGreaterThanUcc, DimTwoContainsElRgxUcc, DimTwoEqUcc, DimTwoGreaterThanUcc,
+    DimTwoInUcc, DimTwoLengthEqUcc, DimTwoLengthGreaterThanUcc, DimTwoOverlapsWithArrUcc,
+    DimTwoRgxUcc, DisplayPlusToTokens, EqToEncodedStringRepresentationUcc, EqUcc,
     ExcludedUpperBoundUcc, FindRangesThatFullyContainTheGivenRangeUcc,
     FindRangesWithinGivenRangeUcc, GreaterThanCurrentDateUcc, GreaterThanCurrentTimeUcc,
     GreaterThanCurrentTimestampUcc, GreaterThanExcludedUpperBoundUcc,
-    GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqualUcc,
+    GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc, IncludedLowerBoundUcc, LengthEqUcc,
     LengthGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc, RangeLengthUcc, RgxUcc,
     StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
     prm::{PgJsonWhSelfUcc, PgTypeWhSelfUcc},
@@ -41,8 +41,8 @@ use strum_macros::{Display, EnumIter};
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
 pub enum PgTypeFilter {
-    Equal { ident: Ts2 },
-    DimOneEqual { ident: Ts2 },
+    Eq { ident: Ts2 },
+    DimOneEq { ident: Ts2 },
     GreaterThan { ident: Ts2 },
     DimOneGreaterThan { ident: Ts2 },
     Btwn { ident: Ts2 },
@@ -65,10 +65,10 @@ pub enum PgTypeFilter {
     DimOneCurrentTime,
     GreaterThanCurrentTime,
     DimOneGreaterThanCurrentTime,
-    DimOneLengthEqual,
+    DimOneLengthEq,
     DimOneLengthGreaterThan,
-    EqualToEncodedStringRepresentation,
-    DimOneEqualToEncodedStringRepresentation,
+    EqToEncodedStringRepresentation,
+    DimOneEqToEncodedStringRepresentation,
     FindRangesWithinGivenRange { ident: Ts2 },
     DimOneFindRangesWithinGivenRange { ident: Ts2 },
     FindRangesThatFullyContainTheGivenRange { ident: Ts2 },
@@ -91,13 +91,13 @@ pub enum PgTypeFilter {
     DimOneAdjacentWithRange { ident: Ts2 },
     RangeLength,
     DimOneRangeLength,
-    //BitVecPositionEqual,//currently deactivated
+    //BitVecPositionEq,//currently deactivated
 }
 impl PgFilter for PgTypeFilter {
     fn mb_generic(&self) -> Option<Ts2> {
         match &self {
-            Self::Equal { ident }
-            | Self::DimOneEqual { ident }
+            Self::Eq { ident }
+            | Self::DimOneEq { ident }
             | Self::GreaterThan { ident }
             | Self::DimOneGreaterThan { ident }
             | Self::Btwn { ident }
@@ -140,10 +140,10 @@ impl PgFilter for PgTypeFilter {
             | Self::DimOneCurrentTime
             | Self::GreaterThanCurrentTime
             | Self::DimOneGreaterThanCurrentTime
-            | Self::DimOneLengthEqual
+            | Self::DimOneLengthEq
             | Self::DimOneLengthGreaterThan
-            | Self::EqualToEncodedStringRepresentation
-            | Self::DimOneEqualToEncodedStringRepresentation
+            | Self::EqToEncodedStringRepresentation
+            | Self::DimOneEqToEncodedStringRepresentation
             | Self::RangeLength
             | Self::DimOneRangeLength => None,
         }
@@ -154,8 +154,8 @@ impl PgFilter for PgTypeFilter {
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
         match &self {
-            Self::Equal { .. } => &EqualUcc,
-            Self::DimOneEqual { .. } => &DimOneEqualUcc,
+            Self::Eq { .. } => &EqUcc,
+            Self::DimOneEq { .. } => &DimOneEqUcc,
             Self::GreaterThan { .. } => &GreaterThanUcc,
             Self::DimOneGreaterThan { .. } => &DimOneGreaterThanUcc,
             Self::Btwn { .. } => &BtwnUcc,
@@ -178,11 +178,11 @@ impl PgFilter for PgTypeFilter {
             Self::DimOneCurrentTime => &DimOneCurrentTimeUcc,
             Self::GreaterThanCurrentTime => &GreaterThanCurrentTimeUcc,
             Self::DimOneGreaterThanCurrentTime => &DimOneGreaterThanCurrentTimeUcc,
-            Self::DimOneLengthEqual => &DimOneLengthEqualUcc,
+            Self::DimOneLengthEq => &DimOneLengthEqUcc,
             Self::DimOneLengthGreaterThan => &DimOneLengthGreaterThanUcc,
-            Self::EqualToEncodedStringRepresentation => &EqualToEncodedStringRepresentationUcc,
-            Self::DimOneEqualToEncodedStringRepresentation => {
-                &DimOneEqualToEncodedStringRepresentationUcc
+            Self::EqToEncodedStringRepresentation => &EqToEncodedStringRepresentationUcc,
+            Self::DimOneEqToEncodedStringRepresentation => {
+                &DimOneEqToEncodedStringRepresentationUcc
             }
             Self::FindRangesWithinGivenRange { .. } => &FindRangesWithinGivenRangeUcc,
             Self::DimOneFindRangesWithinGivenRange { .. } => &DimOneFindRangesWithinGivenRangeUcc,
@@ -220,21 +220,21 @@ impl PgFilter for PgTypeFilter {
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
 pub enum PgJsonFilter {
-    Equal { ident: Ts2 },
-    DimOneEqual { ident: Ts2 },
-    DimTwoEqual { ident: Ts2 },
-    DimThreeEqual { ident: Ts2 },
-    DimFourEqual { ident: Ts2 },
-    AllElsEqual { ident: Ts2 },
-    DimOneAllElsEqual { ident: Ts2 },
-    DimTwoAllElsEqual { ident: Ts2 },
-    DimThreeAllElsEqual { ident: Ts2 },
-    DimFourAllElsEqual { ident: Ts2 },
-    LengthEqual,
-    DimOneLengthEqual,
-    DimTwoLengthEqual,
-    DimThreeLengthEqual,
-    DimFourLengthEqual,
+    Eq { ident: Ts2 },
+    DimOneEq { ident: Ts2 },
+    DimTwoEq { ident: Ts2 },
+    DimThreeEq { ident: Ts2 },
+    DimFourEq { ident: Ts2 },
+    AllElsEq { ident: Ts2 },
+    DimOneAllElsEq { ident: Ts2 },
+    DimTwoAllElsEq { ident: Ts2 },
+    DimThreeAllElsEq { ident: Ts2 },
+    DimFourAllElsEq { ident: Ts2 },
+    LengthEq,
+    DimOneLengthEq,
+    DimTwoLengthEq,
+    DimThreeLengthEq,
+    DimFourLengthEq,
     LengthGreaterThan,
     DimOneLengthGreaterThan,
     DimTwoLengthGreaterThan,
@@ -295,16 +295,16 @@ pub enum PgJsonFilter {
 impl PgFilter for PgJsonFilter {
     fn mb_generic(&self) -> Option<Ts2> {
         match &self {
-            Self::Equal { ident }
-            | Self::DimOneEqual { ident }
-            | Self::DimTwoEqual { ident }
-            | Self::DimThreeEqual { ident }
-            | Self::DimFourEqual { ident }
-            | Self::AllElsEqual { ident }
-            | Self::DimOneAllElsEqual { ident }
-            | Self::DimTwoAllElsEqual { ident }
-            | Self::DimThreeAllElsEqual { ident }
-            | Self::DimFourAllElsEqual { ident }
+            Self::Eq { ident }
+            | Self::DimOneEq { ident }
+            | Self::DimTwoEq { ident }
+            | Self::DimThreeEq { ident }
+            | Self::DimFourEq { ident }
+            | Self::AllElsEq { ident }
+            | Self::DimOneAllElsEq { ident }
+            | Self::DimTwoAllElsEq { ident }
+            | Self::DimThreeAllElsEq { ident }
+            | Self::DimFourAllElsEq { ident }
             | Self::GreaterThan { ident }
             | Self::DimOneGreaterThan { ident }
             | Self::DimTwoGreaterThan { ident }
@@ -340,11 +340,11 @@ impl PgFilter for PgJsonFilter {
             | Self::DimTwoOverlapsWithArr { ident }
             | Self::DimThreeOverlapsWithArr { ident }
             | Self::DimFourOverlapsWithArr { ident } => Some(ident.clone()),
-            Self::LengthEqual
-            | Self::DimOneLengthEqual
-            | Self::DimTwoLengthEqual
-            | Self::DimThreeLengthEqual
-            | Self::DimFourLengthEqual
+            Self::LengthEq
+            | Self::DimOneLengthEq
+            | Self::DimTwoLengthEq
+            | Self::DimThreeLengthEq
+            | Self::DimFourLengthEq
             | Self::Rgx
             | Self::DimOneRgx
             | Self::DimTwoRgx
@@ -373,21 +373,21 @@ impl PgFilter for PgJsonFilter {
     }
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens {
         match &self {
-            Self::Equal { .. } => &EqualUcc,
-            Self::DimOneEqual { .. } => &DimOneEqualUcc,
-            Self::DimTwoEqual { .. } => &DimTwoEqualUcc,
-            Self::DimThreeEqual { .. } => &DimThreeEqualUcc,
-            Self::DimFourEqual { .. } => &DimFourEqualUcc,
-            Self::AllElsEqual { .. } => &AllElsEqualUcc,
-            Self::DimOneAllElsEqual { .. } => &DimOneAllElsEqualUcc,
-            Self::DimTwoAllElsEqual { .. } => &DimTwoAllElsEqualUcc,
-            Self::DimThreeAllElsEqual { .. } => &DimThreeAllElsEqualUcc,
-            Self::DimFourAllElsEqual { .. } => &DimFourAllElsEqualUcc,
-            Self::LengthEqual => &LengthEqualUcc,
-            Self::DimOneLengthEqual => &DimOneLengthEqualUcc,
-            Self::DimTwoLengthEqual => &DimTwoLengthEqualUcc,
-            Self::DimThreeLengthEqual => &DimThreeLengthEqualUcc,
-            Self::DimFourLengthEqual => &DimFourLengthEqualUcc,
+            Self::Eq { .. } => &EqUcc,
+            Self::DimOneEq { .. } => &DimOneEqUcc,
+            Self::DimTwoEq { .. } => &DimTwoEqUcc,
+            Self::DimThreeEq { .. } => &DimThreeEqUcc,
+            Self::DimFourEq { .. } => &DimFourEqUcc,
+            Self::AllElsEq { .. } => &AllElsEqUcc,
+            Self::DimOneAllElsEq { .. } => &DimOneAllElsEqUcc,
+            Self::DimTwoAllElsEq { .. } => &DimTwoAllElsEqUcc,
+            Self::DimThreeAllElsEq { .. } => &DimThreeAllElsEqUcc,
+            Self::DimFourAllElsEq { .. } => &DimFourAllElsEqUcc,
+            Self::LengthEq => &LengthEqUcc,
+            Self::DimOneLengthEq => &DimOneLengthEqUcc,
+            Self::DimTwoLengthEq => &DimTwoLengthEqUcc,
+            Self::DimThreeLengthEq => &DimThreeLengthEqUcc,
+            Self::DimFourLengthEq => &DimFourLengthEqUcc,
             Self::GreaterThan { .. } => &GreaterThanUcc,
             Self::DimOneGreaterThan { .. } => &DimOneGreaterThanUcc,
             Self::DimTwoGreaterThan { .. } => &DimTwoGreaterThanUcc,

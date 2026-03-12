@@ -381,13 +381,13 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg", "type", "self", "as", "json", "nn", "to", "upd", "qp", "er"
     ],
     ["self", "wh", "try", "new", "er"],
-    ["pg", "type", "self", "wh", "equal"],
+    ["pg", "type", "self", "wh", "eq"],
     ["pg", "type", "self", "wh", "greater", "than"],
     ["pg", "type", "self", "wh", "btwn"],
     ["pg", "type", "self", "wh", "btwn", "try", "new", "er"],
     ["pg", "type", "self", "wh", "in"],
     ["pg", "type", "self", "wh", "in", "try", "new", "er"],
-    ["pg", "type", "std", "opt", "opt", "self", "wh", "equal"],
+    ["pg", "type", "std", "opt", "opt", "self", "wh", "eq"],
     [
         "pg", "type", "std", "opt", "opt", "self", "wh", "greater", "than"
     ],
@@ -430,17 +430,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "wh",
         "hexadecimal",
         "notation",
-        "equal"
+        "eq"
     ],
-    [
-        "pg",
-        "type",
-        "self",
-        "wh",
-        "hexadecimal",
-        "notation",
-        "equal"
-    ],
+    ["pg", "type", "self", "wh", "hexadecimal", "notation", "eq"],
     ["pg", "type", "self", "wh", "length", "greater", "than"],
     [
         "pg", "type", "std", "opt", "opt", "self", "wh", "length", "greater", "than"
@@ -453,7 +445,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "type",
         "self",
         "wh",
-        "equal",
+        "eq",
         "to",
         "encoded",
         "string",
@@ -467,7 +459,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "opt",
         "self",
         "wh",
-        "equal",
+        "eq",
         "to",
         "encoded",
         "string",
@@ -516,9 +508,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "type", "self", "nn", "to", "del"],
     ["self", "nn", "to", "del"],
     [
-        "pg", "type", "self", "wh", "position", "equals", "try", "new", "er"
+        "pg", "type", "self", "wh", "position", "eqs", "try", "new", "er"
     ],
-    ["pg", "type", "self", "wh", "position", "equals"],
+    ["pg", "type", "self", "wh", "position", "eqs"],
     ["self", "as", "json", "nl"],
     ["self", "as", "jsonb", "nl"],
     ["obj", "self", "wh"],
@@ -528,7 +520,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "wh"
     ],
     ["pg", "json", "self", "wh"],
-    ["pg", "json", "self", "wh", "equal"],
+    ["pg", "json", "self", "wh", "eq"],
     ["pg", "json", "self", "wh", "btwn"],
     ["pg", "json", "self", "wh", "btwn", "try", "new", "er"],
     ["pg", "json", "self", "wh", "in"],
@@ -616,21 +608,17 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["pg", "json", "self", "wh", "length", "greater", "than"],
     [
-        "pg", "json", "self", "wh", "position", "equals", "try", "new", "er"
+        "pg", "json", "self", "wh", "position", "eqs", "try", "new", "er"
     ],
-    ["pg", "json", "self", "wh", "position", "equals"],
+    ["pg", "json", "self", "wh", "position", "eqs"],
     [
-        "pg", "type", "self", "wh", "bit", "vec", "position", "equals", "try", "new", "er"
+        "pg", "type", "self", "wh", "bit", "vec", "position", "eqs", "try", "new", "er"
     ],
+    ["pg", "json", "self", "wh", "bit", "vec", "position", "eqs"],
     [
-        "pg", "json", "self", "wh", "bit", "vec", "position", "equals"
+        "pg", "json", "self", "wh", "bit", "vec", "position", "eqs", "try", "new", "er"
     ],
-    [
-        "pg", "json", "self", "wh", "bit", "vec", "position", "equals", "try", "new", "er"
-    ],
-    [
-        "pg", "type", "self", "wh", "bit", "vec", "position", "equals"
-    ],
+    ["pg", "type", "self", "wh", "bit", "vec", "position", "eqs"],
     [
         "pg", "type", "self", "wh", "position", "greater", "than", "try", "new", "er"
     ],
@@ -749,7 +737,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg", "json", "self", "wh", "contains", "all", "els", "of", "arr"
     ],
     [
-        "self", "wh", "bit", "vec", "position", "equals", "try", "new", "er"
+        "self", "wh", "bit", "vec", "position", "eqs", "try", "new", "er"
     ],
     ["self", "wh", "second", "dim"],
     ["self", "visitor"],

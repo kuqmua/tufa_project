@@ -49,28 +49,28 @@ pub fn location(input: Ts) -> Ts {
         panic!("d98214f7");
     };
     let supported_enum_vrt = {
-        let mut all_equal: Option<SuportedEnumVrt> = None;
+        let mut all_eq: Option<SuportedEnumVrt> = None;
         assert!(!data_enum.variants.is_empty(), "27275ae6");
         data_enum.variants.iter().for_each(|vrt| match &vrt.fields {
-            Fields::Named(_) => match &all_equal {
+            Fields::Named(_) => match &all_eq {
                 Some(supported_vrt) => {
                     assert!(!(*supported_vrt == SuportedEnumVrt::Unnamed), "bf6be520");
                 }
                 None => {
-                    all_equal = Some(SuportedEnumVrt::Named);
+                    all_eq = Some(SuportedEnumVrt::Named);
                 }
             },
-            Fields::Unnamed(_) => match &all_equal {
+            Fields::Unnamed(_) => match &all_eq {
                 Some(supported_vrt) => {
                     assert!(!(*supported_vrt == SuportedEnumVrt::Named), "02090d85");
                 }
                 None => {
-                    all_equal = Some(SuportedEnumVrt::Unnamed);
+                    all_eq = Some(SuportedEnumVrt::Unnamed);
                 }
             },
             Fields::Unit => panic!("2f2e9385"),
         });
-        all_equal.expect("b9da972a")
+        all_eq.expect("b9da972a")
     };
     let mb_generic_prms_ts = if generic_prms.is_empty() {
         Ts2::new()

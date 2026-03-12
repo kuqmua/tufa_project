@@ -16,7 +16,7 @@ use utoipa::ToSchema;
 pub struct PgnStartsWithOne(PgnBase);
 #[derive(Debug, Serialize, Deserialize, Error, Location, Optml)]
 pub enum PgnStartsWithOneTryNewEr {
-    LimitIsLessThanOrEqualToZero {
+    LimitIsLessThanOrEqToZero {
         #[eo_to_err_string_serde]
         limit: i64,
         loc: Loc,
@@ -46,7 +46,7 @@ impl PgnStartsWithOne {
     pub fn try_new(limit: i64, offset: i64) -> Result<Self, PgnStartsWithOneTryNewEr> {
         if limit <= 0 || offset < 1 {
             if limit <= 0 {
-                Err(PgnStartsWithOneTryNewEr::LimitIsLessThanOrEqualToZero { limit, loc: loc!() })
+                Err(PgnStartsWithOneTryNewEr::LimitIsLessThanOrEqToZero { limit, loc: loc!() })
             } else {
                 Err(PgnStartsWithOneTryNewEr::OffsetIsLessThanOne {
                     offset,

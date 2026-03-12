@@ -302,7 +302,7 @@ where
 }
 #[derive(Debug, Clone, Serialize, Deserialize, Error, Location, Optml)]
 pub enum BtwnTryNewEr<T> {
-    StartMoreOrEqualToEnd {
+    StartMoreOrEqToEnd {
         #[eo_to_err_string_serde]
         start: T,
         #[eo_to_err_string_serde]
@@ -315,7 +315,7 @@ impl<T: Type<Postgres> + for<'__> Encode<'__, Postgres> + PartialOrd> Btwn<T> {
         if start < end {
             Ok(Self { start, end })
         } else {
-            Err(BtwnTryNewEr::StartMoreOrEqualToEnd {
+            Err(BtwnTryNewEr::StartMoreOrEqToEnd {
                 start,
                 end,
                 loc: loc!(),

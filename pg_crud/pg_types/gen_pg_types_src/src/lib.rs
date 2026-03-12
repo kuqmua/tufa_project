@@ -10,7 +10,7 @@ use macros_helpers::{
 use naming::{
     ArrOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CrSc, DateNaiveSc, DateNaiveUcc, DateSc,
     DateUcc, DaysSc, DisplayPlusToTokens, EarlierDateNotSupportedUcc, EarliestSupportedDateSc,
-    EndSc, EndUcc, EqualUcc, ErSc, ExcludedStartGreaterThanExcludedEndUcc,
+    EndSc, EndUcc, EqUcc, ErSc, ExcludedStartGreaterThanExcludedEndUcc,
     ExcludedStartGreaterThanIncludedEndUcc, ExcludedUcc, GenPgTypesModSc, HourSc,
     IncludedEndCannotBeMaxUcc, IncludedStartGreaterThanExcludedEndUcc,
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrSc,
@@ -33,9 +33,9 @@ use panic_location::panic_location;
 use pg_crud_cmn_and_macros_cmn::PgTypeGreaterThanVrt;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColumnPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
-    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqualOprtrH, Import,
-    IncrPrmUndrscr, IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn,
-    IsUpdQbMut, PgFilter, PgTypeFilter, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema,
+    DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqOprtrH, Import, IncrPrmUndrscr,
+    IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn, IsUpdQbMut, PgFilter,
+    PgTypeFilter, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema,
     ShouldDeriveUtoipaToSchema, UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr,
     UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
@@ -44,7 +44,7 @@ use pg_crud_macros_cmn::{
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
-    impl_pg_type_equal_oprtr_for_ident_ts, impl_pg_type_wh_filter_for_ident_ts,
+    impl_pg_type_eq_oprtr_for_ident_ts, impl_pg_type_wh_filter_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -3283,19 +3283,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_sqlx_encode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &quote! {#SelfSc.0});
             let impl_sqlx_decode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &ident_orgn_ucc, &quote! {Ok(Self(v))});
             //todo rewrite as dependency of PgType trait?
-            let impl_pg_type_equal_oprtr_for_ident_tt_ts = impl_pg_type_equal_oprtr_for_ident_ts(
+            let impl_pg_type_eq_oprtr_for_ident_tt_ts = impl_pg_type_eq_oprtr_for_ident_ts(
                 &import,
                 &ident_tt_ucc,
                 //todo
                 &{
-                    let equal_ts = EqualOprtrH::Equal.to_tokens_path(&import);
-                    let is_null_ts = EqualOprtrH::IsNull.to_tokens_path(&import);
+                    let eq_ts = EqOprtrH::Eq.to_tokens_path(&import);
+                    let is_null_ts = EqOprtrH::IsNull.to_tokens_path(&import);
                     match &pg_type_pattern {
                         PgTypePattern::Stdrt => match &is_nl {
-                            IsNl::False => equal_ts,
+                            IsNl::False => eq_ts,
                             IsNl::True => quote! {
                                 if self.0.0.is_some() {
-                                    #equal_ts
+                                    #eq_ts
                                 }
                                 else {
                                     #is_null_ts
@@ -3304,15 +3304,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         },
                         PgTypePattern::ArrDim1 { dim1_is_nl } => match &is_nl {
                             IsNl::False => match &dim1_is_nl {
-                                IsNl::False => equal_ts,
+                                IsNl::False => eq_ts,
                                 IsNl::True => {
-                                    //todo thats not actually usefull coz nl arr comparison has different logic. need to refactor EqualOprtrH enum
-                                    equal_ts
+                                    //todo thats not actually usefull coz nl arr comparison has different logic. need to refactor EqOprtrH enum
+                                    eq_ts
                                 }
                             },
                             IsNl::True => quote! {
                                 if self.0.0.is_some() {
-                                    #equal_ts
+                                    #eq_ts
                                 }
                                 else {
                                     #is_null_ts
@@ -3329,7 +3329,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_type_for_ident_tt_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_tt_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_tt_ts
-                #impl_pg_type_equal_oprtr_for_ident_tt_ts
+                #impl_pg_type_eq_oprtr_for_ident_tt_ts
             }
         };
         let ident_stdrt_nn_tt_ucc = SelfTtUcc::from_tokens(&ident_stdrt_nn_ucc);
@@ -3432,7 +3432,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_wh_ts = gen_pg_type_wh_ts(
             &AllowClippyArbitrarySrcItemOrdering,
             &{
-                let cmn_pg_type_filters = vec![PgTypeFilter::Equal { ident: quote! {#ident_tt_ucc} }];
+                let cmn_pg_type_filters = vec![PgTypeFilter::Eq { ident: quote! {#ident_tt_ucc} }];
                 match &pg_type_pattern {
                     PgTypePattern::Stdrt => {
                         let greater_than = PgTypeFilter::GreaterThan {
@@ -3443,7 +3443,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let in_h = PgTypeFilter::In { ident: quote! {#ident_tt_ucc} };
                         let rgx = PgTypeFilter::Rgx;
-                        let equal_to_encoded_string_representation = PgTypeFilter::EqualToEncodedStringRepresentation;
+                        let eq_to_encoded_string_representation = PgTypeFilter::EqToEncodedStringRepresentation;
                         let date_9c6d41ca = PgTypeFilter::CurrentDate;
                         let greater_than_current_date = PgTypeFilter::GreaterThanCurrentDate;
                         let time_49c41c1c = PgTypeFilter::CurrentTime;
@@ -3453,7 +3453,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let before = PgTypeFilter::Before {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        // let bit_vec_position_equal = PgTypeFilter::BitVecPositionEqual;
+                        // let bit_vec_position_eq = PgTypeFilter::BitVecPositionEq;
                         let cmn_stdrt_pg_type_filters = { cmn_pg_type_filters };
                         let cmn_stdrt_pg_type_nbr_filters = {
                             let mut vec = cmn_stdrt_pg_type_filters.clone();
@@ -3513,7 +3513,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                             PgType::StdVecVecU8AsBytea => {
                                 let mut vec = cmn_stdrt_pg_type_filters;
-                                vec.push(equal_to_encoded_string_representation);
+                                vec.push(eq_to_encoded_string_representation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
@@ -3593,7 +3593,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let cmn_arr_dim1_pg_type_filters = {
                             let mut vec = cmn_pg_type_filters;
-                            vec.push(PgTypeFilter::DimOneEqual {
+                            vec.push(PgTypeFilter::DimOneEq {
                                 ident: {
                                     let ts = SelfTtUcc::from_tokens(&match &dim1_is_nl {
                                         IsNl::False => &ident_stdrt_nn_ucc,
@@ -3602,7 +3602,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {#ts}
                                 },
                             });
-                            vec.push(PgTypeFilter::DimOneLengthEqual);
+                            vec.push(PgTypeFilter::DimOneLengthEq);
                             vec.push(PgTypeFilter::DimOneLengthGreaterThan);
                             vec
                         };
@@ -3685,7 +3685,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                             PgType::StdVecVecU8AsBytea => {
                                 let mut vec = cmn_arr_dim1_pg_type_filters;
-                                vec.push(PgTypeFilter::DimOneEqualToEncodedStringRepresentation);
+                                vec.push(PgTypeFilter::DimOneEqToEncodedStringRepresentation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
@@ -4176,7 +4176,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }))
                                             }
                                         };
-                                        let gen_if_start_end_equal_ts = |true_ts: &dyn ToTokens, false_ts: &dyn ToTokens| {
+                                        let gen_if_start_end_eq_ts = |true_ts: &dyn ToTokens, false_ts: &dyn ToTokens| {
                                             quote! {
                                                 if #StartSc == #EndSc {
                                                     #true_ts
@@ -4185,7 +4185,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 }
                                             }
                                         };
-                                        let if_equal_unbounded_unbounded_or_included_excluded_ts = gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_included_excluded_ts);
+                                        let if_eq_unbounded_unbounded_or_included_excluded_ts = gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_included_excluded_ts);
                                         let int_range_normalize_ts = {
                                             let (
                                                 included_start_checked_add_ts,
@@ -4208,10 +4208,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             let unbounded_excluded_ts = gen_sqlx_pg_types_pg_range_ts(&UnboundedUcc, &excluded_end_ts);
                                             gen_range_match_ts(
                                                 &included_excluded_checked_add_ts,
-                                                &gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_included_excluded_ts),
+                                                &gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_included_excluded_ts),
                                                 &included_unbounded_ts,
-                                                &gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &included_checked_add_excluded_checked_add_ts),
-                                                &gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &included_checked_add_excluded_ts),
+                                                &gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &included_checked_add_excluded_checked_add_ts),
+                                                &gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &included_checked_add_excluded_ts),
                                                 &included_checked_add_unbounded_ts,
                                                 &unbounded_excluded_checked_add_ts,
                                                 &unbounded_excluded_ts,
@@ -4219,10 +4219,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         };
                                         let range_match_timestamp_and_timestamp_tz_ts = gen_range_match_ts(
                                             &gen_sqlx_pg_types_pg_range_ts(&included_start_ts, &included_end_ts),
-                                            &if_equal_unbounded_unbounded_or_included_excluded_ts,
+                                            &if_eq_unbounded_unbounded_or_included_excluded_ts,
                                             &sqlx_pg_types_pg_range_included_unbounded_ts,
-                                            &gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_excluded_included_ts),
-                                            &gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_excluded_excluded_ts),
+                                            &gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_excluded_included_ts),
+                                            &gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &sqlx_pg_types_pg_range_excluded_excluded_ts),
                                             &gen_sqlx_pg_types_pg_range_ts(&excluded_start_ts, &UnboundedUcc),
                                             &gen_sqlx_pg_types_pg_range_ts(&UnboundedUcc, &included_end_ts),
                                             &sqlx_pg_types_pg_range_unbounded_excluded_ts,
@@ -4244,13 +4244,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                                 };
                                                 gen_range_match_ts(
                                                     &gen_sqlx_pg_types_pg_range_ts(&included_start_ts, &quote! {#ExcludedUcc(#EndSc.succ_opt().expect("9ebce3b4"))}),
-                                                    &if_equal_unbounded_unbounded_or_included_excluded_ts,
+                                                    &if_eq_unbounded_unbounded_or_included_excluded_ts,
                                                     &sqlx_pg_types_pg_range_included_unbounded_ts,
-                                                    &gen_if_start_end_equal_ts(
+                                                    &gen_if_start_end_eq_ts(
                                                         &sqlx_pg_types_pg_range_unbounded_unbounded_ts,
                                                         &gen_sqlx_pg_types_pg_range_ts(&gen_included_start_succ_opt_ts(&"98a0357b-d21a-4949-a101-c641528d2376"), &gen_excluded_end_succ_opt_ts(&"fe53a6b9-2d7e-4605-9f5a-7f5c21cc01e6")),
                                                     ),
-                                                    &gen_if_start_end_equal_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &gen_sqlx_pg_types_pg_range_ts(&gen_included_start_succ_opt_ts(&"d8a26635-c478-4a2a-acf4-bf1765702889"), &excluded_end_ts)),
+                                                    &gen_if_start_end_eq_ts(&sqlx_pg_types_pg_range_unbounded_unbounded_ts, &gen_sqlx_pg_types_pg_range_ts(&gen_included_start_succ_opt_ts(&"d8a26635-c478-4a2a-acf4-bf1765702889"), &excluded_end_ts)),
                                                     &gen_sqlx_pg_types_pg_range_ts(&gen_included_start_succ_opt_ts(&"9811c7c7-d7f5-4fb7-9d25-affb0bd4f5fb"), &UnboundedUcc),
                                                     &gen_sqlx_pg_types_pg_range_ts(&UnboundedUcc, &gen_excluded_end_succ_opt_ts(&"d6288f19-0a24-42ad-9e69-36036d9f2c1d")),
                                                     &sqlx_pg_types_pg_range_unbounded_excluded_ts,
@@ -5244,7 +5244,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {#ident_tt_ucc(#ts)}
             };
             //todo mb it into fn (not in proc macro)
-            let rd_ids_and_cr_into_wh_equal_ts = {
+            let rd_ids_and_cr_into_wh_eq_ts = {
                 let ts = if matches!(&pg_type_pattern, PgTypePattern::Stdrt)
                     && matches!(&is_nl, IsNl::False)
                     && matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True)
@@ -5254,19 +5254,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     quote! {#CrSc.0}
                 };
                 quote! {
-                    #ident_wh_ucc::#EqualUcc(wh_filters::PgTypeWhEqual {
+                    #ident_wh_ucc::#EqUcc(wh_filters::PgTypeWhEq {
                         oprtr: #import::Oprtr::Or,
                         #VSc: #ident_tt_ucc(#ts),
                     })
                 }
             };
-            let rd_ids_and_cr_into_vec_wh_equal_using_fields_ts = quote! {
+            let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts = quote! {
                 #import::NotEmptyUnqVec::try_new(vec![
-                    #rd_ids_and_cr_into_wh_equal_ts
+                    #rd_ids_and_cr_into_wh_eq_ts
                 ]).expect("4c08b551")
             };
-            let rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_ts = none_ts.clone();
-            let cr_into_pg_type_opt_vec_wh_dim_one_equal_ts = match &pg_type_pattern {
+            let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts = none_ts.clone();
+            let cr_into_pg_type_opt_vec_wh_dim_one_eq_ts = match &pg_type_pattern {
                 PgTypePattern::Stdrt => none_ts.clone(),
                 PgTypePattern::ArrDim1 { dim1_is_nl } => {
                     let ident_stdrt_is_nl_tt_ucc: &dyn ToTokens = match &dim1_is_nl {
@@ -5283,8 +5283,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 let mut acc_74c71d5d = Vec::new();
                                 for (i_7702518c, el_081d735b) in #ts.into_iter().enumerate() {
                                     acc_74c71d5d.push(
-                                        #ident_wh_ucc::DimOneEqual(
-                                            wh_filters::PgTypeWhDimOneEqual {
+                                        #ident_wh_ucc::DimOneEq(
+                                            wh_filters::PgTypeWhDimOneEq {
                                                 oprtr: #import::Oprtr::Or,
                                                 dims: wh_filters::BoundedVec::try_from(
                                                     vec![
@@ -5322,7 +5322,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let pg_type_opt_vec_wh_greater_than_test_ts = {
                 let greater_than = PgTypeGreaterThanVrt::GreaterThan;
                 let not_greater_than = PgTypeGreaterThanVrt::NotGreaterThan;
-                let equal_not_greater_than = PgTypeGreaterThanVrt::EqualNotGreaterThan;
+                let eq_not_greater_than = PgTypeGreaterThanVrt::EqNotGreaterThan;
                 let gen_greater_than_test_ts = |greater_than_vrt_ts: &PgTypeGreaterThanVrt, cr_ts: &dyn ToTokens, tt_ts: &dyn ToTokens| {
                     quote! {
                         #import::PgTypeGreaterThanTest {
@@ -5352,9 +5352,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let not_greater_than_less_ts = gen_greater_than_test_new_new_ts(&not_greater_than, &less_ts, &less_with_more_ts);
                     let not_greater_than_zero_ts = gen_greater_than_test_new_new_ts(&not_greater_than, &zero_ts, &one_ts);
                     let not_greater_than_more_ts = gen_greater_than_test_new_new_ts(&not_greater_than, &more_with_less_ts, &more_ts);
-                    let equal_not_greater_than_less_ts = gen_greater_than_test_new_new_ts(&equal_not_greater_than, &less_ts, &less_ts);
-                    let equal_not_greater_than_zero_ts = gen_greater_than_test_new_new_ts(&equal_not_greater_than, &zero_ts, &zero_ts);
-                    let equal_not_greater_than_more_ts = gen_greater_than_test_new_new_ts(&equal_not_greater_than, &more_ts, &more_ts);
+                    let eq_not_greater_than_less_ts = gen_greater_than_test_new_new_ts(&eq_not_greater_than, &less_ts, &less_ts);
+                    let eq_not_greater_than_zero_ts = gen_greater_than_test_new_new_ts(&eq_not_greater_than, &zero_ts, &zero_ts);
+                    let eq_not_greater_than_more_ts = gen_greater_than_test_new_new_ts(&eq_not_greater_than, &more_ts, &more_ts);
                     quote! {
                         #greater_than_less_ts,
                         #greater_than_zero_ts,
@@ -5362,9 +5362,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #not_greater_than_less_ts,
                         #not_greater_than_zero_ts,
                         #not_greater_than_more_ts,
-                        #equal_not_greater_than_less_ts,
-                        #equal_not_greater_than_zero_ts,
-                        #equal_not_greater_than_more_ts
+                        #eq_not_greater_than_less_ts,
+                        #eq_not_greater_than_zero_ts,
+                        #eq_not_greater_than_more_ts
                     }
                 };
                 let gen_greater_than_test_try_new_try_new_vec_ts = |
@@ -5381,9 +5381,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let not_greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&not_greater_than, &less_ts, &less_with_more_ts);
                     let not_greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&not_greater_than, &zero_ts, &one_ts);
                     let not_greater_than_more_ts = gen_greater_than_test_try_new_try_new_ts(&not_greater_than, &more_with_less_ts, &more_ts);
-                    let equal_not_greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&equal_not_greater_than, &less_ts, &less_ts);
-                    let equal_not_greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&equal_not_greater_than, &zero_ts, &zero_ts);
-                    let equal_not_greater_than_more_ts = gen_greater_than_test_try_new_try_new_ts(&equal_not_greater_than, &more_ts, &more_ts);
+                    let eq_not_greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&eq_not_greater_than, &less_ts, &less_ts);
+                    let eq_not_greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&eq_not_greater_than, &zero_ts, &zero_ts);
+                    let eq_not_greater_than_more_ts = gen_greater_than_test_try_new_try_new_ts(&eq_not_greater_than, &more_ts, &more_ts);
                     quote! {
                         #greater_than_less_ts,
                         #greater_than_zero_ts,
@@ -5391,9 +5391,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #not_greater_than_less_ts,
                         #not_greater_than_zero_ts,
                         #not_greater_than_more_ts,
-                        #equal_not_greater_than_less_ts,
-                        #equal_not_greater_than_zero_ts,
-                        #equal_not_greater_than_more_ts
+                        #eq_not_greater_than_less_ts,
+                        #eq_not_greater_than_zero_ts,
+                        #eq_not_greater_than_more_ts
                     }
                 };
                 match &pg_type_pattern {
@@ -5618,11 +5618,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 }
                 PgTypePattern::ArrDim1 { .. } => none_ts.clone(),
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts = none_ts.clone();
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts = none_ts.clone();
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts = none_ts.clone();
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_ts = none_ts.clone();
-            let cr_into_pg_json_opt_vec_wh_length_equal_ts = none_ts.clone();
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts = none_ts.clone();
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts = none_ts.clone();
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts = none_ts.clone();
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts = none_ts.clone();
+            let cr_into_pg_json_opt_vec_wh_length_eq_ts = none_ts.clone();
             let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts = none_ts.clone();
@@ -5645,17 +5645,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_rd_ts,
                 &rd_ids_and_cr_into_opt_v_rd_ts,
                 &rd_ids_and_cr_into_tt_ts,
-                &rd_ids_and_cr_into_wh_equal_ts,
-                &rd_ids_and_cr_into_vec_wh_equal_using_fields_ts,
-                &rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field_ts,
-                &cr_into_pg_type_opt_vec_wh_dim_one_equal_ts,
+                &rd_ids_and_cr_into_wh_eq_ts,
+                &rd_ids_and_cr_into_vec_wh_eq_using_fields_ts,
+                &rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts,
+                &cr_into_pg_type_opt_vec_wh_dim_one_eq_ts,
                 &pg_type_opt_vec_wh_greater_than_test_ts,
                 &rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal_ts,
-                &cr_into_pg_json_opt_vec_wh_length_equal_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
+                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
+                &cr_into_pg_json_opt_vec_wh_length_eq_ts,
                 &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,

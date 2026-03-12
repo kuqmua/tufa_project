@@ -403,20 +403,20 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["add", "oprtr"],
     ["case", "sensitive", "rgx"],
     ["case", "insensitive", "rgx"],
-    ["equal"],
+    ["eq"],
     ["greater", "than"],
-    ["hexadecimal", "notation", "equal"],
-    ["equal", "to", "encoded", "string", "representation"],
+    ["hexadecimal", "notation", "eq"],
+    ["eq", "to", "encoded", "string", "representation"],
     ["find", "ranges", "within", "given", "range"],
     [
         "find", "ranges", "that", "fully", "contain", "the", "given", "range"
     ],
     ["is", "null"],
     ["try", "new", "er"],
-    ["start", "more", "or", "equal", "to", "end"],
+    ["start", "more", "or", "eq", "to", "end"],
     ["is", "empty"],
     ["length", "is", "negative"],
-    ["start", "is", "equal", "to", "end"],
+    ["start", "is", "eq", "to", "end"],
     ["start"],
     ["strictly", "to", "left", "of", "range"],
     ["strictly", "to", "right", "of", "range"],
@@ -435,11 +435,11 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["greater", "than", "current", "time"],
     ["current", "timestamp"],
     ["greater", "than", "current", "timestamp"],
-    ["position", "equal"],
-    ["position", "is", "less", "or", "equal", "zero"],
+    ["position", "eq"],
+    ["position", "is", "less", "or", "eq", "zero"],
     ["self", "wh"],
     ["position"],
-    ["bit", "vec", "position", "equal"],
+    ["bit", "vec", "position", "eq"],
     ["position", "is", "less", "than", "zero"],
     ["position", "case", "sensitive", "rgx"],
     ["position", "case", "insensitive", "rgx"],
@@ -452,18 +452,18 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["dim", "two", "overlaps", "with", "arr"],
     ["dim", "three", "overlaps", "with", "arr"],
     ["dim", "four", "overlaps", "with", "arr"],
-    ["dim", "one", "length", "equal"],
-    ["dim", "two", "length", "equal"],
-    ["dim", "three", "length", "equal"],
-    ["dim", "four", "length", "equal"],
+    ["dim", "one", "length", "eq"],
+    ["dim", "two", "length", "eq"],
+    ["dim", "three", "length", "eq"],
+    ["dim", "four", "length", "eq"],
     ["dim", "one", "length", "greater", "than"],
     ["dim", "two", "length", "greater", "than"],
     ["dim", "three", "length", "greater", "than"],
     ["dim", "four", "length", "greater", "than"],
-    ["dim", "one", "all", "els", "equal"],
-    ["dim", "two", "all", "els", "equal"],
-    ["dim", "three", "all", "els", "equal"],
-    ["dim", "four", "all", "els", "equal"],
+    ["dim", "one", "all", "els", "eq"],
+    ["dim", "two", "all", "els", "eq"],
+    ["dim", "three", "all", "els", "eq"],
+    ["dim", "four", "all", "els", "eq"],
     ["dim", "one", "contains", "el", "greater", "than"],
     ["dim", "two", "contains", "el", "greater", "than"],
     ["dim", "three", "contains", "el", "greater", "than"],
@@ -477,7 +477,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["all", "els", "case", "sensitive", "rgx"],
     ["all", "els", "case", "insensitive", "rgx"],
     ["contains", "el"],
-    ["equal", "second", "dim"],
+    ["eq", "second", "dim"],
     ["from", "calendar", "date"],
     ["less", "than", "minimum", "pg", "v"],
     ["year"],
@@ -525,10 +525,10 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["dim", "two", "all", "els", "rgx"],
     ["dim", "three", "all", "els", "rgx"],
     ["dim", "four", "all", "els", "rgx"],
-    ["dim", "one", "equal"],
-    ["dim", "two", "equal"],
-    ["dim", "three", "equal"],
-    ["dim", "four", "equal"],
+    ["dim", "one", "eq"],
+    ["dim", "two", "eq"],
+    ["dim", "three", "eq"],
+    ["dim", "four", "eq"],
     ["dim", "position"],
     ["dim", "one", "greater", "than"],
     ["dim", "two", "greater", "than"],
@@ -556,7 +556,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     [
         "dim",
         "one",
-        "equal",
+        "eq",
         "to",
         "encoded",
         "string",
@@ -581,14 +581,14 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["dim", "one", "range", "length"],
     ["dims"],
     ["dims", "ies"],
-    ["obj", "uuid", "equal"],
-    ["length", "equal"],
+    ["obj", "uuid", "eq"],
+    ["length", "eq"],
     ["length", "greater", "than"],
     ["contains", "all", "els", "of", "arr"],
     ["overlaps", "with", "arr"],
     ["contains", "el", "rgx"],
     ["all", "els", "rgx"],
-    ["all", "els", "equal"],
+    ["all", "els", "eq"],
     ["contains", "el", "greater", "than"],
     ["all", "els", "greater", "than"],
     ["cr", "extension", "if", "not", "exists", "pg", "jsonschema"],
@@ -701,7 +701,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["pg", "type", "pk"],
     ["pg", "type", "rd"],
     ["pg", "type", "not", "pk"],
-    ["rd", "ids", "and", "cr", "into", "wh", "equal"],
+    ["rd", "ids", "and", "cr", "into", "wh", "eq"],
     ["rd", "ids", "and", "cr", "into", "rd"],
     ["rd", "ids", "and", "cr", "into", "tt"],
     [
@@ -714,43 +714,43 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
     ["rd", "ids", "into", "opt", "v", "rd", "inn"],
     ["previous", "rd", "and", "opt", "upd", "into", "rd"],
     [
-        "rd", "ids", "and", "cr", "into", "vec", "wh", "equal", "using", "fields"
+        "rd", "ids", "and", "cr", "into", "vec", "wh", "eq", "using", "fields"
     ],
-    ["equal", "oprtr"],
-    ["pg", "type", "equal", "oprtr"],
+    ["eq", "oprtr"],
+    ["pg", "type", "eq", "oprtr"],
     ["rd", "ids", "into", "tt"],
     ["rd", "ids", "into", "rd"],
     ["rd", "ids", "into", "upd"],
     ["rd", "into", "tt"],
     [
-        "rd", "ids", "and", "cr", "into", "wh", "equal", "to", "json", "field"
+        "rd", "ids", "and", "cr", "into", "wh", "eq", "to", "json", "field"
     ],
     ["opt", "vec", "cr"],
     ["rd", "ids", "to2", "dims", "vec", "rd", "inn"],
     [
-        "rd", "ids", "and", "cr", "into", "opt", "vec", "wh", "equal", "to", "json", "field"
+        "rd", "ids", "and", "cr", "into", "opt", "vec", "wh", "eq", "to", "json", "field"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "vec", "wh", "equal", "to", "json", "field"
+        "rd", "ids", "and", "cr", "into", "vec", "wh", "eq", "to", "json", "field"
     ],
     [
-        "cr", "into", "pg", "type", "opt", "vec", "wh", "dim", "one", "equal"
+        "cr", "into", "pg", "type", "opt", "vec", "wh", "dim", "one", "eq"
     ],
     [
         "rd", "ids", "and", "tt", "into", "pg", "type", "opt", "wh", "greater", "than"
     ],
     ["pg", "type", "opt", "vec", "wh", "greater", "than", "test"],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "one", "equal"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "one", "eq"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "two", "equal"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "two", "eq"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "three", "equal"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "three", "eq"
     ],
     [
-        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "four", "equal"
+        "rd", "ids", "and", "cr", "into", "pg", "json", "opt", "vec", "wh", "dim", "four", "eq"
     ],
     ["prep", "extensions"],
     ["prep", "pg", "table", "and", "extensions"],
@@ -761,7 +761,7 @@ naming_macros::gen_ucc_and_sc_str_and_ts!([
         "cr", "into", "pg", "json", "opt", "vec", "wh", "length", "greater", "than"
     ],
     [
-        "cr", "into", "pg", "json", "opt", "vec", "wh", "length", "equal"
+        "cr", "into", "pg", "json", "opt", "vec", "wh", "length", "eq"
     ],
     ["from", "h"],
     [

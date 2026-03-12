@@ -216,19 +216,19 @@ pub trait PgTypeTestCases {
         cr: <Self::PgType as PgType>::Cr,
     ) -> <Self::PgType as PgType>::Tt;
     //todo add prefix pg_type or pg_json ?
-    fn rd_ids_and_cr_into_wh_equal(
+    fn rd_ids_and_cr_into_wh_eq(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> <Self::PgType as PgType>::Wh;
-    fn rd_ids_and_cr_into_vec_wh_equal_using_fields(
+    fn rd_ids_and_cr_into_vec_wh_eq_using_fields(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> NotEmptyUnqVec<<Self::PgType as PgType>::Wh>;
-    fn rd_ids_and_cr_into_opt_vec_wh_equal_to_json_field(
+    fn rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn cr_into_pg_type_opt_vec_wh_dim_one_equal(
+    fn cr_into_pg_type_opt_vec_wh_dim_one_eq(
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn pg_type_opt_vec_wh_greater_than_test()
@@ -238,23 +238,23 @@ pub trait PgTypeTestCases {
         rd_ids: <Self::PgType as PgType>::RdIds,
         tt: <Self::PgType as PgType>::Tt,
     ) -> Option<<Self::PgType as PgType>::Wh>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn cr_into_pg_json_opt_vec_wh_length_equal(
+    fn cr_into_pg_json_opt_vec_wh_length_eq(
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn cr_into_pg_json_opt_vec_wh_length_greater_than(
@@ -344,35 +344,35 @@ pub trait PgJsonTestCases {
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> <Self::PgJson as PgJson>::Tt;
-    fn rd_ids_and_cr_into_wh_equal(
+    fn rd_ids_and_cr_into_wh_eq(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> <Self::PgJson as PgJson>::Wh;
-    fn rd_ids_and_cr_into_vec_wh_equal_using_fields(
+    fn rd_ids_and_cr_into_vec_wh_eq_using_fields(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>;
-    fn rd_ids_and_cr_into_vec_wh_equal_to_json_field(
+    fn rd_ids_and_cr_into_vec_wh_eq_to_json_field(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
-    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_equal(
+    fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
-    fn cr_into_pg_json_opt_vec_wh_length_equal(
+    fn cr_into_pg_json_opt_vec_wh_length_eq(
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn cr_into_pg_json_opt_vec_wh_length_greater_than(
@@ -782,7 +782,7 @@ impl Default for PgnBase {
 pub struct PgnStartsWithZero(PgnBase);
 #[derive(Debug, Serialize, Deserialize, Error, Location, Optml)]
 pub enum PgnStartsWithZeroTryNewEr {
-    LimitIsLessThanOrEqualToZero {
+    LimitIsLessThanOrEqToZero {
         #[eo_to_err_string_serde]
         limit: i64,
         loc: Loc,
@@ -812,7 +812,7 @@ impl PgnStartsWithZero {
     pub fn try_new(limit: i64, offset: i64) -> Result<Self, PgnStartsWithZeroTryNewEr> {
         if limit <= 0 || offset < 0 {
             if limit <= 0 {
-                Err(PgnStartsWithZeroTryNewEr::LimitIsLessThanOrEqualToZero { limit, loc: loc!() })
+                Err(PgnStartsWithZeroTryNewEr::LimitIsLessThanOrEqToZero { limit, loc: loc!() })
             } else {
                 Err(PgnStartsWithZeroTryNewEr::OffsetIsLessThanZero {
                     offset,
@@ -1212,21 +1212,21 @@ impl Default for NonPkPgTypeRdIds {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum EqualOprtr {
-    Equal,
+pub enum EqOprtr {
+    Eq,
     IsNull,
 }
-impl EqualOprtr {
+impl EqOprtr {
     #[must_use]
     pub const fn to_query_str(&self) -> &'static str {
         match &self {
-            Self::Equal => "=",
+            Self::Eq => "=",
             Self::IsNull => "is null",
         }
     }
 }
-pub trait PgTypeEqualOprtr {
-    fn oprtr(&self) -> EqualOprtr;
+pub trait PgTypeEqOprtr {
+    fn oprtr(&self) -> EqOprtr;
 }
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, Optml)]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? mb different types for pg type and pg json type

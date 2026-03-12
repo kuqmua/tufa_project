@@ -46,7 +46,7 @@ impl Loc {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, ToSchema, Optml)] //todo check somehow what its equal to std::time::Duration
+#[derive(Debug, Clone, Copy, ToSchema, Optml)] //todo check somehow what its eq to std::time::Duration
 pub struct StdTimeDuration {
     pub secs: u64,
     pub nanos: u32,

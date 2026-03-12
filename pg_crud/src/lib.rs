@@ -5,7 +5,7 @@ pub use pg_json_obj::{GenPgJsonObj, UnqVec, UnqVecTryNewEr, pg_json_obj_config};
 pub use pg_table::{
     CombinationOfAppStateLogicTraits, GenPgTable, cm_er_vrts, cm_logic, cmn_er_vrts, cmn_logic,
     co_er_vrts, co_logic, dlo_er_vrts, dlo_logic, dm_er_vrts, dm_logic, gen_cm_query_string,
-    gen_co_query_string, gen_column_equals_case_acc_else_column_end_comma_um_qp,
+    gen_co_query_string, gen_column_eqs_case_acc_else_column_end_comma_um_qp,
     gen_column_queals_v_comma_uo_qp, gen_dlo_query_string, gen_dm_query_string,
     gen_pg_table_config, gen_rm_query_string, gen_ro_query_string, gen_um_query_string,
     gen_uo_query_string, gen_when_column_id_then_v_um_qp, rm_er_vrts, rm_logic, ro_er_vrts,

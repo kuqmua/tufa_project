@@ -70,7 +70,7 @@ impl SrcPlaceType {
     #[must_use]
     pub fn from_env_or_dflt() -> Self {
         let fix_msg =
-            "You can set environment variable SRC_PLACE_TYPE to be equal \"src\" or \"github\"";
+            "You can set environment variable SRC_PLACE_TYPE to be eq \"src\" or \"github\"";
         if let Err(er) = dotenv() {
             let dflt = Self::default();
             eprintln!("using dflt SrcPlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_msg}");
