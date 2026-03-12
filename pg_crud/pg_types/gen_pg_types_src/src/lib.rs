@@ -1930,6 +1930,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 })
                 .build_struct(
                     &if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+                        let gen_serde_from_ts = |ts: &dyn ToTokens|quote!{#[serde(from = #ts)]};
+                        let gen_serde_try_from_ts = |ts: &dyn ToTokens|quote!{#[serde(try_from = #ts)]};
                         match &pg_type {
                             PgType::I16AsInt2 |
                             PgType::I32AsInt4 |
@@ -1942,16 +1944,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::BoolAsBool |
                             PgType::StdVecVecU8AsBytea |
                             PgType::SqlxTypesIpnetworkIpNetworkAsInet => Ts2::new(),
-                            PgType::SqlxPgTypesPgMoneyAsMoney => quote!{#[serde(from = "i64")]},
-                            PgType::SqlxTypesChronoNaiveTimeAsTime => quote!{#[serde(try_from = "(u32,u32,u32,u32)")]},
-                            PgType::SqlxTypesTimeTimeAsTime => quote!{#[serde(try_from = "(u8,u8,u8,u32)")]},
-                            PgType::SqlxPgTypesPgIntervalAsInterval => quote!{#[serde(from = "(i32,i32,i64)")]},
-                            PgType::SqlxTypesChronoNaiveDateAsDate => quote!{#[serde(try_from = "sqlx::types::chrono::NaiveDate")]},
+                            PgType::SqlxPgTypesPgMoneyAsMoney => gen_serde_from_ts(&quote!{"i64"}),
+                            PgType::SqlxTypesChronoNaiveTimeAsTime => gen_serde_try_from_ts(&quote!{"(u32,u32,u32,u32)"}),
+                            PgType::SqlxTypesTimeTimeAsTime => gen_serde_try_from_ts(&quote!{"(u8,u8,u8,u32)"}),
+                            PgType::SqlxPgTypesPgIntervalAsInterval => gen_serde_from_ts(&quote!{"(i32,i32,i64)"}),
+                            PgType::SqlxTypesChronoNaiveDateAsDate => gen_serde_try_from_ts(&quote!{"sqlx::types::chrono::NaiveDate"}),
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let ts = dq_ts(&format!("({sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts},SqlxTypesChronoNaiveTimeAsNnTimeOrgn)"));
-                                quote!{#[serde(from = #ts)]}
-                            },
+                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => gen_serde_from_ts(&dq_ts(&format!("({sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts},SqlxTypesChronoNaiveTimeAsNnTimeOrgn)"))),
                             PgType::StringAsText |
                             PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                             PgType::SqlxTypesUuidUuidAsUuidInitByClient => quote!{#[serde(try_from = "String")]},
@@ -2846,11 +2845,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &self_sqlx_pg_types_pg_range_ts
                     ),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_impl_try_from_ts_e9596027(
-                        &quote!{(std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrgn>,std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrgn>)},
+                        &{
+                            let bound_ts = quote!{std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrgn>};
+                            quote!{(#bound_ts,#bound_ts)}
+                        },
                         &self_sqlx_pg_types_pg_range_ts
                     ),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => gen_impl_try_from_ts_e9596027(
-                        &quote!{(std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrgn>,std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrgn>)},
+                        &{
+                            let bound_ts = quote!{std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrgn>};
+                            quote!{(#bound_ts,#bound_ts)}
+                        },
                         &self_sqlx_pg_types_pg_range_ts
                     ),
                 }
