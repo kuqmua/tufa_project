@@ -8,9 +8,9 @@ use macros_helpers::{
     gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, mb_write_ts_into_file,
 };
 use naming::{
-    ArrOfUcc, AsUcc, ColumnSc, ContainsNullByteUcc, CrSc, DateNaiveSc, DateNaiveUcc, DateSc,
-    DateUcc, DaysSc, DisplayPlusToTokens, EarlierDateNotSupportedUcc, EarliestSupportedDateSc,
-    EndSc, EndUcc, EqUcc, ErSc, ExcludedStartGreaterThanExcludedEndUcc,
+    ArrOfUcc, AsUcc, ColSc, ContainsNullByteUcc, CrSc, DateNaiveSc, DateNaiveUcc, DateSc, DateUcc,
+    DaysSc, DisplayPlusToTokens, EarlierDateNotSupportedUcc, EarliestSupportedDateSc, EndSc,
+    EndUcc, EqUcc, ErSc, ExcludedStartGreaterThanExcludedEndUcc,
     ExcludedStartGreaterThanIncludedEndUcc, ExcludedUcc, GenPgTypesModSc, HourSc,
     IncludedEndCannotBeMaxUcc, IncludedStartGreaterThanExcludedEndUcc,
     IncludedStartGreaterThanIncludedEndUcc, IncludedUcc, IncrSc,
@@ -32,7 +32,7 @@ use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_cmn_and_macros_cmn::PgTypeGreaterThanVrt;
 use pg_crud_macros_cmn::{
-    AddOprtrUndrscr, ColumnPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
+    AddOprtrUndrscr, ColPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqOprtrH, Import, IncrPrmUndrscr,
     IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn, IsUpdQbMut, PgFlt,
     PgTypeFlt, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
@@ -485,7 +485,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, serde::Deserialize, Optml)]
     struct GenPgJsonsConfig {
         vrt: GenPgTypesConfigVrt,
-        pg_tbl_columns_write_into_file: ShouldWriteTsIntoFile,
+        pg_tbl_cols_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -611,7 +611,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     panic_location();
     let gen_pg_json_config = from_str::<GenPgJsonsConfig>(&input_ts.to_string()).expect("80485f71");
-    let (columns_ts, pg_type_arr) = {
+    let (cols_ts, pg_type_arr) = {
         let acc = match gen_pg_json_config.vrt {
             GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
                 for el0 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el1| {
@@ -3803,11 +3803,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_stdrt_nn_rd_ucc,
                     &Ts2::new(),
                     &IncrPrmUndrscr::False,
-                    &ColumnPrmUndrscr::False,
+                    &ColPrmUndrscr::False,
                     &AddOprtrUndrscr::True,
                     &quote! {
                         match #import::incr_checked_add_one_returning_incr(#IncrSc) {
-                            Ok(v_8da76391) => Ok(format!("({column} = ${v_8da76391})")),
+                            Ok(v_8da76391) => Ok(format!("({col} = ${v_8da76391})")),
                             Err(er) => Err(er)
                         }
                     },
@@ -3973,8 +3973,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             };
             let sel_only_ids_and_sel_only_updd_ids_query_cmn_ts = {
                 let format_ts = dq_ts(&{
-                    let column_comma = "{column},";
-                    if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) { column_comma.to_owned() } else { format!("'{{{{\\\"v\\\": null}}}}'::jsonb as {column_comma}") }
+                    let col_comma = "{col},";
+                    if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) { col_comma.to_owned() } else { format!("'{{{{\\\"v\\\": null}}}}'::jsonb as {col_comma}") }
                 });
                 quote! {Ok(format!(#format_ts))}
             };
@@ -4021,35 +4021,35 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     let mb_constraint_part = match &pg_type_pattern {
                         PgTypePattern::Stdrt => String::new(),
                         PgTypePattern::ArrDim1 { dim1_is_nl } => match &dim1_is_nl {
-                            IsNl::False => ",check (array_position({column},null) is null)".to_owned(),
+                            IsNl::False => ",check (array_position({col},null) is null)".to_owned(),
                             IsNl::True => String::new(),
                         },
                     };
                     let mb_pk_is_pk_ts = quote! {pg_types_cmn::mb_pk(is_pk)};
-                    let column_pg_query_type = format!("{{column}} {pg_query_type}{mb_arr_part}{mb_constraint_part}");
-                    let column_pg_query_type_nn = format!("{{column}} {pg_query_type}{mb_arr_part} not null{mb_constraint_part}");
+                    let col_pg_query_type = format!("{{col}} {pg_query_type}{mb_arr_part}{mb_constraint_part}");
+                    let col_pg_query_type_nn = format!("{{col}} {pg_query_type}{mb_arr_part} not null{mb_constraint_part}");
                     let space_extra_prm = " {}";
                     match (&is_nl, &can_be_pk) {
                         (IsNl::False, CanBePk::False) => {
-                            let format_ts = dq_ts(&column_pg_query_type_nn);
+                            let format_ts = dq_ts(&col_pg_query_type_nn);
                             quote! {
                                 format!(#format_ts)
                             }
                         }
                         (IsNl::False, CanBePk::True) => {
-                            let format_ts = dq_ts(&format!("{column_pg_query_type_nn}{space_extra_prm}"));
+                            let format_ts = dq_ts(&format!("{col_pg_query_type_nn}{space_extra_prm}"));
                             quote! {
                                 format!(#format_ts, #mb_pk_is_pk_ts)
                             }
                         }
                         (IsNl::True, CanBePk::False) => {
-                            let format_ts = dq_ts(&column_pg_query_type);
+                            let format_ts = dq_ts(&col_pg_query_type);
                             quote! {
                                 format!(#format_ts)
                             }
                         }
                         (IsNl::True, CanBePk::True) => {
-                            let format_ts = dq_ts(&format!("{column_pg_query_type}{space_extra_prm}"));
+                            let format_ts = dq_ts(&format!("{col_pg_query_type}{space_extra_prm}"));
                             quote! {
                                 format!(#format_ts, #mb_pk_is_pk_ts)
                             }
@@ -4079,11 +4079,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 },
                 &{
                     let ts = match &pg_type_pattern {
-                        PgTypePattern::Stdrt => quote! {#ColumnSc.to_owned()},
+                        PgTypePattern::Stdrt => quote! {#ColSc.to_owned()},
                         PgTypePattern::ArrDim1 { .. } => {
                             let format_ts = dq_ts(&{
                                 let acc = repeat_n("[{}:{}]", arr_dims_nbr).collect::<String>();
-                                format!("{{column}}{acc}")
+                                format!("{{col}}{acc}")
                             });
                             let args_ts = (1..=arr_dims_nbr)
                             .map(|el0| {
@@ -5715,7 +5715,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         (
             {
-                let fi = format!("column_{i}").parse::<Ts2>().expect("2e15af68");
+                let fi = format!("col_{i}").parse::<Ts2>().expect("2e15af68");
                 quote! {
                     pub #fi: pg_crud::pg_type:: #ident,
                 }
@@ -5726,15 +5726,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     })
     .collect::<(Vec<String>, Vec<String>)>();
     mb_write_ts_into_file(
-        gen_pg_json_config.pg_tbl_columns_write_into_file,
-        "pg_tbl_columns_using_pg_types",
+        gen_pg_json_config.pg_tbl_cols_write_into_file,
+        "pg_tbl_cols_using_pg_types",
         &{
-            let ts = columns_ts
+            let ts = cols_ts
                 .into_iter()
                 .map(|el_2e3fc869| el_2e3fc869.parse::<Ts2>().expect("79ee6381"))
                 .collect::<Vec<Ts2>>();
             quote! {
-                struct PgTblColumnsUsingPgTypes {
+                struct PgTblColsUsingPgTypes {
                     #(#ts)*
                 }
             }

@@ -25,7 +25,7 @@ test-utils = []"#,
                     #[derive(Debug, Clone, Copy, optml::Optml)]
                     #[pg_crud::pg_json_obj_config{
                         {
-                            "pg_tbl_columns_write_into_pg_tbl_columns_using_pg_json_objs": "False",
+                            "pg_tbl_cols_write_into_pg_tbl_cols_using_pg_json_objs": "False",
                             "whole_write_into_gen_pg_json_obj": "False",
                             "vrt": {
                                 "is_nl": "True",

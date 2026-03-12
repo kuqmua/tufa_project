@@ -8,7 +8,7 @@ use macros_helpers::{
     gen_pub_type_al_ts, gen_simple_syn_punct, get_macro_attr_meta_list_ts, mb_write_ts_into_file,
 };
 use naming::{
-    AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
+    AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColFieldSc, ColSc,
     ContainsAllElsOfArrUcc, CrIntoPgJsonOptVecWhLenEqSc, CrIntoPgJsonOptVecWhLenGreaterThanSc,
     CrSc, CrUpdDelAreEmptyUcc, DelSc, DfltSomeOneElSc, DfltSomeOneElUcc, DimOneEqUcc, DimOneInUcc,
     DisplayPlusToTokens, EqUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUnqUcc, InUcc,
@@ -36,14 +36,13 @@ use naming::{
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_cmn::{
-    AddOprtrUndrscr, ColumnPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
+    AddOprtrUndrscr, ColPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrPrmUndrscr, IsCrQbMut, IsNl,
-    IsPkUndrscr, IsQbMut, IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut,
-    IsSelQpColumnFieldForErMsgUsed, IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsUpdQbMut,
-    IsUpdQpJsonbSetTargetUsed, IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr,
-    UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
-    UpdQpValueUndrscr, gen_impl_de_for_struct_ts,
-    gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
+    IsPkUndrscr, IsQbMut, IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed,
+    IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
+    IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr, UpdQpJsonbSetAccumulatorUndrscr,
+    UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
+    gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_max_page_size_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
     gen_impl_pg_json_test_cases_for_ident_ts, gen_impl_pg_json_ts,
@@ -98,7 +97,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     }
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonsConfig {
-        pg_tbl_columns_write_into_pg_tbl_columns_using_pg_json_objs: ShouldWriteTsIntoFile,
+        pg_tbl_cols_write_into_pg_tbl_cols_using_pg_json_objs: ShouldWriteTsIntoFile,
         vrt: PgJsonObjRecord,
         whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
@@ -1039,8 +1038,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             acc_ts: &dyn ToTokens,
             is_stdrt_with_id: &IsStdrtWithId,
             in_ts: &dyn ToTokens,
-            column_field_fi_ts: &dyn ToTokens,
-            column_field_for_er_msg_fi_ts: &dyn ToTokens,
+            col_field_fi_ts: &dyn ToTokens,
+            col_field_for_er_msg_fi_ts: &dyn ToTokens,
         |{
             let ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                 let fi_str = el0.ident.to_string();
@@ -1055,8 +1054,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #ident_or_ident_with_id_stdrt_nn_sel_el_ucc::#vrt_name_ts(v_3c8acf6a) => match #ft_as_crud_pg_json_from_field_ts::#SelQpSc(
                         v_3c8acf6a,
                         #fi_dq_ts,
-                        #column_field_fi_ts,
-                        #column_field_for_er_msg_fi_ts,
+                        #col_field_fi_ts,
+                        #col_field_for_er_msg_fi_ts,
                         false,
                     ) {
                         Ok(v_d54cf786) => v_d54cf786,
@@ -1201,14 +1200,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         &acc_ac57d097_ts,
                         &is_stdrt_with_id_false,
                         &SelfSc,
-                        &quote!{column_field},
-                        &quote!{column_field_for_er_msg},
+                        &quote!{col_field},
+                        &quote!{col_field_for_er_msg},
                     );
                     quote! {
                         fn #SelQpSc(
                             &self,
-                            column_field: &str,
-                            column_field_for_er_msg: &str,
+                            col_field: &str,
+                            col_field_for_er_msg: &str,
                         ) -> Result<#StringTs, #import_qp_er_ts> {
                             let mut #acc_ac57d097_ts = #StringTs::default();
                             #sel_qp_for_loop_ts
@@ -1226,8 +1225,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         Pattern::Stdrt => match &is_nl {
                             IsNl::False => quote! {
                                 #SelfSc.#SelQpSc(
-                                    #ColumnSc,
-                                    #ColumnSc,
+                                    #ColSc,
+                                    #ColSc,
                                 )
                             },
                             IsNl::True => {
@@ -1240,8 +1239,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         <#ident_740c9034 as pg_crud::DfltSomeOneEl>::dflt_some_one_el,
                                         Clone::clone
                                     );
-                                    match #VSc.#SelQpPgTypeSc(#ColumnSc) {
-                                        Ok(v_c69f1ffe) => Ok(format!("case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({v_c69f1ffe}) end")),
+                                    match #VSc.#SelQpPgTypeSc(#ColSc) {
+                                        Ok(v_c69f1ffe) => Ok(format!("case when jsonb_typeof({col}) = 'null' then 'null'::jsonb else ({v_c69f1ffe}) end")),
                                         Err(#ErSc) => Err(#ErSc)
                                     }
                                 }
@@ -1255,10 +1254,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     &is_stdrt_with_id_true,
                                     &quote!{#SelfSc.#ident_with_id_stdrt_nn_sel_sc},
                                     &dq_ts(&ValueSc),
-                                    &ColumnSc
+                                    &ColSc
                                 );
                                 let format_ts = dq_ts(&format!(
-                                    "(case when (jsonb_array_length({{column}}) = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_nn_sel_sc}}})) from jsonb_array_elements((select {{column}})) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end)"
+                                    "(case when (jsonb_array_length({{col}}) = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_nn_sel_sc}}})) from jsonb_array_elements((select {{col}})) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end)"
                                 ));
                                 quote! {
                                     let #ident_with_id_stdrt_nn_sel_sc = {
@@ -1274,7 +1273,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                             IsNl::True => {
-                                let format_ts = dq_ts(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
+                                let format_ts = dq_ts(&"case when jsonb_typeof({col}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
                                 let ident_with_id_arr_nn_as_pg_json_sel_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                     &ident_with_id_arr_nn_as_pg_json_sel_ts
                                 );
@@ -1283,7 +1282,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         #ident_with_id_arr_nn_as_pg_json_sel_as_dflt_but_opt_is_some_ts,
                                         Clone::clone
                                     );
-                                    match #VSc.#SelQpPgTypeSc(column) {
+                                    match #VSc.#SelQpPgTypeSc(col) {
                                         Ok(v_c2ca032e) => Ok(format!(#format_ts)),
                                         Err(#ErSc) => Err(#ErSc)
                                     }
@@ -1294,7 +1293,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     quote! {
                         fn #SelQpPgTypeSc(
                             &self,
-                            #ColumnSc: &str,
+                            #ColSc: &str,
                         ) -> Result<#StringTs, #import_qp_er_ts> {
                             #ts
                         }
@@ -1552,7 +1551,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #SelfUcc::#EqUcc(v_6781c7e3) => #import::PgTypeWhFlt::qp(
                         v_6781c7e3,
                         #IncrSc,
-                        &#ColumnSc,
+                        &#ColSc,
                         add_oprtr
                     )
                 };
@@ -1629,7 +1628,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     let qp_vrts_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                         let fi_str = el0.ident.to_string();
                         let fi_ucc_ts = AsRefStrToUccTs::case_or_panic(&fi_str);
-                        let ts = dq_ts(&format!("{{column}}->'{fi_str}'"));
+                        let ts = dq_ts(&format!("{{col}}->'{fi_str}'"));
                         quote! {
                             Self::#fi_ucc_ts(v_b93ffc1d) => #import::PgTypeWhFlt::#QpSc(
                                 v_b93ffc1d,
@@ -1659,7 +1658,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         &ident_ts_e0f20014,
                         &Ts2::new(),
                         &IncrPrmUndrscr::False,
-                        &ColumnPrmUndrscr::False,
+                        &ColPrmUndrscr::False,
                         &AddOprtrUndrscr::False,
                         &qp_ts,
                         &is_qb_mut,
@@ -1721,7 +1720,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     Self::#el_ts(v_df049001) => #import::PgTypeWhFlt::#QpSc(
                                         v_df049001,
                                         #IncrSc,
-                                        #ColumnSc,
+                                        #ColSc,
                                         #AddOprtrSc
                                     ),
                                 });
@@ -1744,7 +1743,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 return Err(#ErSc);
                                             }
                                         };
-                                        Ok(format!("{oprtr_qp}(exists (select 1 from jsonb_array_elements({column}) as {elem} where {v_9696ee60}))"))
+                                        Ok(format!("{oprtr_qp}(exists (select 1 from jsonb_array_elements({col}) as {elem} where {v_9696ee60}))"))
                                     };
                                     match &self {
                                         #(#concrete_flts_ts)*
@@ -1842,7 +1841,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     Self::#EqUcc(v_31e7fe47) => pg_crud::PgTypeWhFlt::qp(
                                         v_31e7fe47,
                                         #IncrSc,
-                                        &#ColumnSc,
+                                        &#ColSc,
                                         add_oprtr
                                     ),//todo mb reuse? vrt generation
                                 }
@@ -3153,7 +3152,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             match #ft_as_pg_json_ts::#SelOnlyUpddIdsQpSc(
                                                 &v_939e13d6.#VSc,
                                                 #fi_dq_ts,
-                                                column_field,
+                                                col_field,
                                                 #IncrSc
                                             ) {
                                                 Ok(mut v_c3ae3be4) => {
@@ -3198,7 +3197,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         ) => match #ft_as_pg_json_ts::#SelOnlyUpddIdsQpSc(
                                             &v_92d002a5.#VSc,
                                             #fi_dq_ts,
-                                            column_field,
+                                            col_field,
                                             #IncrSc
                                         ) {
                                             Ok(mut v_a9da8905) => {
@@ -3347,7 +3346,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             let _: Option<char> = acc_57cd0744.pop();
                                             format!(#dq_ts0)
                                         },
-                                        column_field,
+                                        col_field,
                                         {
                                             let mut acc_d497e8a5 = #StringTs::new();
                                             for _ in self.#UpdSc.to_vec() {
@@ -3384,7 +3383,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             #dq_ts0,
                                             match #ident_arr_nn_upd_for_query_ucc::#SelOnlyUpddIdsQpSc(
                                                 v_bc509c9a,
-                                                column_field,
+                                                col_field,
                                                 #IncrSc
                                             ) {
                                                 Ok(v_1e016751) => v_1e016751,
@@ -3403,7 +3402,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         #[allow(clippy::single_call_fn)]//for some reason lint ignoring this fn call in other struct trait methonds(arr not null)
                         fn #SelOnlyUpddIdsQpSc(
                             &self,
-                            column_field: &str,
+                            col_field: &str,
                             #IncrSc: &mut u64
                         ) -> Result<#StringTs, #import_qp_er_ts> {
                             #ts
@@ -3680,7 +3679,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &ident_cr_for_query_ucc,
                 &ident_sel_ucc,
                 &IsSelQpSelfSelUsed::True,
-                &IsSelQpColumnFieldForErMsgUsed::True,
+                &IsSelQpColFieldForErMsgUsed::True,
                 &IsSelQpIsPgTypeUsed::True,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nl {
@@ -3689,11 +3688,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 match #VSc.#SelQpSc(
                                     &if is_pg_type {
-                                        column_field.to_owned()
+                                        col_field.to_owned()
                                     } else {
-                                        format!("{column_field}->'{fi}'")
+                                        format!("{col_field}->'{fi}'")
                                     },
-                                    &format!("{column_field_for_er_msg}.{fi}"),
+                                    &format!("{col_field_for_er_msg}.{fi}"),
                                 ) {
                                     Ok(v_156121ad) => Ok(
                                         if is_pg_type {
@@ -3712,11 +3711,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             );
                             let dq_ts0 = dq_ts(
                                 &gen_jsonb_build_obj(
-                                    &format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&"case when jsonb_typeof({column_field_fi}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end"))
+                                    &format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&"case when jsonb_typeof({col_field_fi}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end"))
                                 )
                             );
                             quote! {
-                                let column_field_fi = format!("{column_field}->'{fi}'");
+                                let col_field_fi = format!("{col_field}->'{fi}'");
                                 let v_46039f0e = #VSc.0.as_ref().map_or_else(
                                     #ident_stdrt_nn_as_pg_json_sel_as_dflt_but_opt_is_some_ts,
                                     Clone::clone
@@ -3724,8 +3723,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 match #ident_stdrt_nn_as_pg_json_ts::#SelQpSc(
                                     &v_46039f0e,
                                     fi,
-                                    &column_field_fi,
-                                    column_field_for_er_msg,
+                                    &col_field_fi,
+                                    col_field_for_er_msg,
                                     true
                                 ) {
                                     Ok(v_1f8de96a) => Ok(
@@ -3752,7 +3751,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             let format_ts = dq_ts(
                                 &gen_jsonb_build_obj(
                                     &format!("'{{fi}}',{}", gen_jsonb_build_obj_v(
-                                        &format!("case when (jsonb_array_length({{column_field}}->'{{fi}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_nn_sel_sc}}})) from jsonb_array_elements((select {{column_field}}->'{{fi}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end "
+                                        &format!("case when (jsonb_array_length({{col_field}}->'{{fi}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_nn_sel_sc}}})) from jsonb_array_elements((select {{col_field}}->'{{fi}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end "
                                     )))
                                 )
                             );
@@ -3772,7 +3771,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         IsNl::True => {
                             let format_ts = dq_ts(
                                 &format!(
-                                    "case when jsonb_typeof({{column_field}}->'{{fi}}') = 'null' then {} else ({{v_d7bbd03c}}) end",
+                                    "case when jsonb_typeof({{col_field}}->'{{fi}}') = 'null' then {} else ({{v_d7bbd03c}}) end",
                                     gen_jsonb_build_obj(&format!(
                                         "'{{fi}}',{}",
                                         gen_jsonb_build_obj_v(&"'null'::jsonb")
@@ -3790,8 +3789,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 match #ident_with_id_arr_nn_as_pg_json_ts::#SelQpSc(
                                     &v_174d33cd,
                                     fi,
-                                    column_field,
-                                    column_field_for_er_msg,
+                                    col_field,
+                                    col_field_for_er_msg,
                                     true
                                 ) {
                                     Ok(v_d7bbd03c) => Ok(format!(#format_ts)),
@@ -3817,7 +3816,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
                                     let ts = match &pattern {
                                         Pattern::Stdrt => {
-                                            let format_ts_14808143 = dq_ts(&format!("{{column_field}}->'{fi}'"));
+                                            let format_ts_14808143 = dq_ts(&format!("{{col_field}}->'{fi}'"));
                                             quote! {&format!(#format_ts_14808143)}
                                         },
                                         Pattern::Arr => dq_ts(&format!("elem->'{fi}'"))
@@ -3849,7 +3848,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Pattern::Stdrt => ts,
                                 Pattern::Arr => {
                                     let format_ts = dq_ts(
-                                        &gen_jsonb_build_obj_v(&format!("(select jsonb_agg({{}}) from jsonb_array_elements({{{ColumnFieldSc}}}) as elem)"))
+                                        &gen_jsonb_build_obj_v(&format!("(select jsonb_agg({{}}) from jsonb_array_elements({{{ColFieldSc}}}) as elem)"))
                                     );
                                     quote! {format!(#format_ts, #ts)}
                                 },
@@ -3863,10 +3862,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             Pattern::Arr => &ident_with_id_arr_nn_as_pg_json_ts,
                         };
                         let case_null_format_ts = dq_ts(
-                            &gen_jsonb_build_obj_v(&format!("case when jsonb_typeof({{{ColumnFieldSc}}})='null' then 'null'::jsonb else {{v_21000130}} end"))
+                            &gen_jsonb_build_obj_v(&format!("case when jsonb_typeof({{{ColFieldSc}}})='null' then 'null'::jsonb else {{v_21000130}} end"))
                         );
                         quote! {
-                            match #ts::#SelOnlyIdsQpSc(#ColumnFieldSc) {
+                            match #ts::#SelOnlyIdsQpSc(#ColFieldSc) {
                                 Ok(v_21000130) => Ok(format!(#case_null_format_ts)),
                                 Err(#ErSc) => Err(#ErSc)
                             }
@@ -4112,7 +4111,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"{v_e137951b}")));
                     quote!{
                         match #VSc.#SelOnlyUpddIdsQpSc(
-                            &format!("{column_field}->'{fi}'"),
+                            &format!("{col_field}->'{fi}'"),
                             #IncrSc
                         ) {
                             Ok(v_e137951b) => Ok(format!(#dq_ts0)),
@@ -4265,8 +4264,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
                                 let fi_dq_ts = &dq_ts(&fi);
-                                let column_field_fi_dq_ts = &dq_ts(
-                                    &format!("{{{ColumnFieldSc}}}->'{fi}'")
+                                let col_field_fi_dq_ts = &dq_ts(
+                                    &format!("{{{ColFieldSc}}}->'{fi}'")
                                 );
                                 let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                     &{
@@ -4279,7 +4278,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
                                         &#VSc.#fi,
                                         #fi_dq_ts,
-                                        &format!(#column_field_fi_dq_ts),
+                                        &format!(#col_field_fi_dq_ts),
                                         #IncrSc
                                     ) {
                                         Ok(mut v_cddc8a0a) => {
@@ -4311,8 +4310,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
                                 let fi_dq_ts = &dq_ts(&fi);
-                                let column_field_fi_dq_ts = &dq_ts(
-                                    &format!("{{{ColumnFieldSc}}}->'{fi}'")
+                                let col_field_fi_dq_ts = &dq_ts(
+                                    &format!("{{{ColFieldSc}}}->'{fi}'")
                                 );
                                 let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
                                     &{
@@ -4325,7 +4324,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
                                         &v_90219286.#fi,
                                         #fi_dq_ts,
-                                        &format!(#column_field_fi_dq_ts),
+                                        &format!(#col_field_fi_dq_ts),
                                         #IncrSc
                                     ) {
                                         Ok(mut v_93015133) => {
@@ -4408,7 +4407,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         let _: Option<char> = acc_0f2b92d0.pop();
                                         format!(#dq_ts1)
                                     },
-                                    &format!("{column_field}->'{fi}'"),
+                                    &format!("{col_field}->'{fi}'"),
                                     {
                                         let mut acc_44b1f772 = #StringTs::new();
                                         for _ in &#VSc.0 {
@@ -4478,7 +4477,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 let _: Option<char> = acc_1a91bdc7.pop();
                                                 format!(#dq_ts2)
                                             },
-                                            &format!("{column_field}->'{fi}'"),
+                                            &format!("{col_field}->'{fi}'"),
                                             {
                                                 let mut acc_857ce631 = #StringTs::new();
                                                 for _ in &v_3c415c92.0 {
@@ -4607,7 +4606,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &ident_tt_ucc,
                 &IsPkUndrscr::True,
                 &{
-                    let format_ts = dq_ts(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
+                    let format_ts = dq_ts(&"{col} jsonb not null check (jsonb_matches_schema('{}', {col}))".to_owned());
                     quote! {
                         format!(#format_ts, serde_json::to_string(&schemars::schema_for!(#ident_tt_ucc)).expect("59a1654b"))
                     }
@@ -4634,8 +4633,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &ident_sel_ucc,
                 &SelQpValueUndrscr::False,
                 &quote! {
-                    match #VSc.#SelQpPgTypeSc(#ColumnSc) {
-                        Ok(v_d91c19a6) => Ok(format!("{v_d91c19a6} as {column}")),
+                    match #VSc.#SelQpPgTypeSc(#ColSc) {
+                        Ok(v_d91c19a6) => Ok(format!("{v_d91c19a6} as {col}")),
                         Err(#ErSc) => Err(#ErSc)
                     }
                 },
@@ -4644,8 +4643,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &VSc,
                 &ident_rd_ids_ucc,
                 &quote! {
-                    match #self_as_pg_json_ts::#SelOnlyIdsQpSc(#ColumnSc) {
-                        Ok(v_e776e9fa) => Ok(format!("{v_e776e9fa} as {column},")),
+                    match #self_as_pg_json_ts::#SelOnlyIdsQpSc(#ColSc) {
+                        Ok(v_e776e9fa) => Ok(format!("{v_e776e9fa} as {col},")),
                         Err(#ErSc) => Err(#ErSc)
                     }
                 },
@@ -4698,10 +4697,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #QuerySc
                 )},
                 &{
-                    let dq_ts0 = dq_ts(&format!("{} as {{column}},", gen_jsonb_build_obj_v(&"{v_f0787243}")));
+                    let dq_ts0 = dq_ts(&format!("{} as {{col}},", gen_jsonb_build_obj_v(&"{v_f0787243}")));
                     quote!{
                         match #VSc.#SelOnlyUpddIdsQpSc(
-                            #ColumnSc,
+                            #ColSc,
                             #IncrSc
                         ) {
                             Ok(v_f0787243) => Ok(format!(#dq_ts0)),
@@ -7030,10 +7029,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     })
     .collect::<(Vec<Ts2>, Vec<Ts2>)>();
     mb_write_ts_into_file(
-        gen_pg_json_obj_config.pg_tbl_columns_write_into_pg_tbl_columns_using_pg_json_objs,
-        "pg_tbl_columns_using_pg_json_objs",
+        gen_pg_json_obj_config.pg_tbl_cols_write_into_pg_tbl_cols_using_pg_json_objs,
+        "pg_tbl_cols_using_pg_json_objs",
         &quote! {
-            pub struct PgTblColumnsContentWriteIntoPgTblColumnsUsingPgJsonObjs {
+            pub struct PgTblColsContentWriteIntoPgTblColsUsingPgJsonObjs {
                 #(#fields_ts)*
             }
         },

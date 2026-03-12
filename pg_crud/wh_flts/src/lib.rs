@@ -699,26 +699,20 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
     pub fn pg_json_qp(
         &self,
         incr: &mut u64,
-        column: &dyn Display,
+        col: &dyn Display,
         add_oprtr: bool,
     ) -> Result<String, QpEr> {
-        self.qp(
-            incr,
-            column,
-            add_oprtr,
-            &PgTypeOrPgJson::PgJson,
-            &Vrt::Normal,
-        )
+        self.qp(incr, col, add_oprtr, &PgTypeOrPgJson::PgJson, &Vrt::Normal)
     }
     pub fn pg_json_qp_minus_one(
         &self,
         incr: &mut u64,
-        column: &dyn Display,
+        col: &dyn Display,
         add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.qp(
             incr,
-            column,
+            col,
             add_oprtr,
             &PgTypeOrPgJson::PgJson,
             &Vrt::MinusOne,
@@ -727,26 +721,20 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
     pub fn pg_type_qp(
         &self,
         incr: &mut u64,
-        column: &dyn Display,
+        col: &dyn Display,
         add_oprtr: bool,
     ) -> Result<String, QpEr> {
-        self.qp(
-            incr,
-            column,
-            add_oprtr,
-            &PgTypeOrPgJson::PgType,
-            &Vrt::Normal,
-        )
+        self.qp(incr, col, add_oprtr, &PgTypeOrPgJson::PgType, &Vrt::Normal)
     }
     pub fn pg_type_qp_minus_one(
         &self,
         incr: &mut u64,
-        column: &dyn Display,
+        col: &dyn Display,
         add_oprtr: bool,
     ) -> Result<String, QpEr> {
         self.qp(
             incr,
-            column,
+            col,
             add_oprtr,
             &PgTypeOrPgJson::PgType,
             &Vrt::MinusOne,

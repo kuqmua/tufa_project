@@ -204,7 +204,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["er", "self"],
     ["not", "unq", "self"],
     ["is", "self", "upd", "exist"],
-    ["self", "column", "rd", "permission"],
+    ["self", "col", "rd", "permission"],
     ["self", "wh"],
     ["std", "opt", "opt", "self"],
     ["wh", "std", "opt", "opt", "self"],
@@ -229,11 +229,11 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "std", "opt", "opt", "sqlx", "types", "json", "std", "opt", "opt", "std", "vec", "vec",
         "obj", "with", "id", "self"
     ],
-    ["obj", "self", "column"],
-    ["std", "opt", "opt", "obj", "self", "column"],
-    ["std", "vec", "vec", "obj", "with", "id", "self", "column"],
+    ["obj", "self", "col"],
+    ["std", "opt", "opt", "obj", "self", "col"],
+    ["std", "vec", "vec", "obj", "with", "id", "self", "col"],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "column"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "col"
     ],
     ["pg", "json", "self", "to", "cr"],
     ["obj", "self", "cr"],
@@ -338,7 +338,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     [
         "pg", "type", "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "wh"
     ],
-    ["pg", "type", "self", "column"],
+    ["pg", "type", "self", "col"],
     ["pg", "type", "self", "to", "cr"],
     ["pg", "type", "self", "to", "rd"],
     ["pg", "type", "self", "to", "upd"],

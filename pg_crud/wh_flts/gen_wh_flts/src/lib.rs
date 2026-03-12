@@ -4,13 +4,13 @@ use macros_helpers::{
     FormatWithCargofmt, ShouldWriteTsIntoFile, gen_if_write_is_err_ts, mb_write_ts_into_file,
 };
 use naming::{
-    ColumnSc, DimsIesSc, DimsSc, ErSc, IncrSc, PubSc, QuerySc, SelfSc, VSc,
+    ColSc, DimsIesSc, DimsSc, ErSc, IncrSc, PubSc, QuerySc, SelfSc, VSc,
     prm::{PgJsonWhSelfUcc, PgTypeWhSelfUcc},
 };
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_cmn::{
-    AddOprtrUndrscr, ColumnPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFlt, PgTypeFlt,
+    AddOprtrUndrscr, ColPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFlt, PgTypeFlt,
     PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, impl_pg_type_wh_flt_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
@@ -214,7 +214,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                 Generic::True { .. } => &t_ann_generic_ts,
             },
             incr_prm_undrscr,
-            &ColumnPrmUndrscr::False,
+            &ColPrmUndrscr::False,
             add_oprtr_undrscr,
             &qp_ts,
             is_qb_mut,
@@ -257,7 +257,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                 Ok(format!(
                     #format_ts,
                     #self_oprtr_to_qp_ts
-                    #ColumnSc,
+                    #ColSc,
                     #mb_extra_prms_ts
                     #SelfSc.rgx_case.postgreql_syntax(),
                     #VSc
@@ -320,7 +320,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
     let gen_ident_match_field_fn_ok_v_return_err_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, fn_ts: &dyn ToTokens| {
             quote! {
-                let #ident_ts = match self.#field_ts.#fn_ts(#IncrSc, #ColumnSc, add_oprtr) {
+                let #ident_ts = match self.#field_ts.#fn_ts(#IncrSc, #ColSc, add_oprtr) {
                     Ok(v_0a22ee9a) => v_0a22ee9a,
                     Err(#ErSc) => {
                         return Err(#ErSc);
@@ -453,7 +453,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                     Ok(format!(
                                         #format_ts,
                                         #self_oprtr_to_qp_ts
-                                        #ColumnSc,
+                                        #ColSc,
                                         #mb_extra_prms_ts
                                         #VSc
                                     ))
@@ -501,7 +501,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                     #VSc
                                 ))
@@ -564,7 +564,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                     #VSc
                                 ))
@@ -633,7 +633,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                     #VSc
                                 ))
@@ -676,7 +676,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                 ))
                             }
@@ -741,7 +741,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                     &#SelfSc.encode_format,
                                     #VSc
@@ -782,7 +782,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                             let format_ts = dq_ts(&format!("{{}}(arr_len({{}}, 1) {oprtr} ${{}})"));
                             quote! {
                                 match #import::incr_checked_add_one_returning_incr(#IncrSc) {
-                                    Ok(v_f7988de8) => Ok(format!(#format_ts, &self.oprtr.to_qp(add_oprtr), #ColumnSc, v_f7988de8)),
+                                    Ok(v_f7988de8) => Ok(format!(#format_ts, &self.oprtr.to_qp(add_oprtr), #ColSc, v_f7988de8)),
                                     Err(#ErSc) => Err(#ErSc),
                                 }
                             }
@@ -838,7 +838,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ts2::new(),
                                 Ts2::new(),
                                 PgTypeKind::Stdrt,
-                                quote! {#ColumnSc,},
+                                quote! {#ColSc,},
                                 Ts2::new(),
                             )
                         },
@@ -867,7 +867,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 PgTypeKind::ArrDim,
                                 quote! {
                                     dims_ies1,
-                                    column,
+                                    col,
                                     dims_ies2,
                                 },
                                 quote! {
@@ -904,7 +904,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                     #VSc
                                 ))
@@ -926,7 +926,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                             Ok(format!(
                                 #format_ts,
                                 #self_oprtr_to_qp_ts
-                                #ColumnSc,
+                                #ColSc,
                                 match oprtr {
                                     #import::EqOprtr::Eq => {
                                         #v_match_incr_checked_add_one_init_ts
@@ -1179,7 +1179,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 Ok(format!(
                                     #format_ts,
                                     #self_oprtr_to_qp_ts
-                                    #ColumnSc,
+                                    #ColSc,
                                     #mb_extra_prms_ts
                                     #VSc
                                 ))
@@ -1211,7 +1211,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                     Ok(format!(
                         #format_ts,
                         #self_oprtr_to_qp_ts
-                        #ColumnSc,
+                        #ColSc,
                         #mb_extra_prms_ts
                         #VSc
                     ))
@@ -1297,7 +1297,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                             PgTypePtrn::Stdrt => &quote! {
                                 let #VSc = match self.#VSc.qp(
                                     incr,
-                                    column,
+                                    col,
                                     add_oprtr
                                 ) {
                                     Ok(v_cc8dda2f) => v_cc8dda2f,

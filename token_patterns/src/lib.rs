@@ -158,8 +158,8 @@ impl ToTokens for DeriveDebugCloneCopy {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub struct StrSqlxColumnIndex;
-impl ToTokens for StrSqlxColumnIndex {
+pub struct StrSqlxColIndex;
+impl ToTokens for StrSqlxColIndex {
     fn to_tokens(&self, tokens: &mut Ts2) {
         quote! {&'lt str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
     }

@@ -92,11 +92,11 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::cmn_logic{}]
                         pub struct TblExample {
                             #mb_gen_pg_tbl_pk_ts
-                            pub pk_column:
+                            pub pk_col:
                                 pg_crud::SqlxTypesUuidUuidAsNnUuidV4InitByPg,
-                            pub column_0: pg_crud::I16AsNnInt2,
-                            pub column_1: pg_crud::OptI16AsNlInt2,
-                            pub column_2: pg_crud::VecOfI16AsNnArrOfNnInt2,
+                            pub col_0: pg_crud::I16AsNnInt2,
+                            pub col_1: pg_crud::OptI16AsNlInt2,
+                            pub col_2: pg_crud::VecOfI16AsNnArrOfNnInt2,
                         }
                     }
                 };

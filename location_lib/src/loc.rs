@@ -17,7 +17,7 @@ static SRC_PLACE_TYPE: OnceLock<SrcPlaceType> = OnceLock::new();
 pub struct Occr {
     pub file: String,
     pub line: u32,
-    pub column: u32,
+    pub col: u32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
@@ -28,15 +28,15 @@ pub struct Loc {
     duration: Duration,
     occr: Option<Occr>,
     line: u32,
-    column: u32,
+    col: u32,
 }
 impl Loc {
     #[must_use]
-    pub fn new(file: String, line: u32, column: u32, occr: Option<Occr>) -> Self {
+    pub fn new(file: String, line: u32, col: u32, occr: Option<Occr>) -> Self {
         Self {
             file,
             line,
-            column,
+            col,
             commit: PROJECT_GIT_INFO.commit.to_owned(),
             duration: SystemTime::now()
                 .duration_since(UNIX_EPOCH)
@@ -58,10 +58,10 @@ impl Display for Loc {
             "{} {}",
             &match SRC_PLACE_TYPE.get_or_init(SrcPlaceType::from_env_or_dflt) {
                 SrcPlaceType::Src => self.occr.as_ref().map_or_else(
-                    || format!("{}:{}:{}", self.file, self.line, self.column),
+                    || format!("{}:{}:{}", self.file, self.line, self.col),
                     |v| format!(
                         "{}:{}:{} ({}:{}:{})",
-                        self.file, self.line, self.column, v.file, v.line, v.column
+                        self.file, self.line, self.col, v.file, v.line, v.col
                     )
                 ),
                 SrcPlaceType::Github => self.occr.as_ref().map_or_else(

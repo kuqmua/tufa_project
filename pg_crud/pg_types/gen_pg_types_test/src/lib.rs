@@ -22,7 +22,7 @@ optml = {path = "../../../optml"}
 test-utils = []"#,
             &gen_pg_types_src::gen_pg_types(&quote! {
                 {
-                    "pg_tbl_columns_write_into_file": "False",
+                    "pg_tbl_cols_write_into_file": "False",
                     "whole_write_into_file": "False",
                     "vrt": "All"
                 }

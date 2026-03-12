@@ -222,8 +222,8 @@ impl<'lt> PgTypeWhFlt<'lt> for PgnStartsWithOne {
     ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
         self.0.qb(query)
     }
-    fn qp(&self, incr: &mut u64, column: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
-        self.0.qp(incr, column, add_oprtr)
+    fn qp(&self, incr: &mut u64, col: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
+        self.0.qp(incr, col, add_oprtr)
     }
 }
 impl DfltSomeOneEl for PgnStartsWithOne {

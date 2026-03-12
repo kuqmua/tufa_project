@@ -11,15 +11,15 @@ use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
     AsRefStrToScStr, AsRefStrToScTs, BeginSc, BindedQuerySc, BodyBytesSc, BodySc, BodySizeErUcc,
     BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CmnErVrtsSc, CmnLogicSc,
-    CmnRdIdsFromCoSc, CoErVrtsSc, CoLogicSc, ColumnSc, ColumnsSc, CommitSc, ConfigSc,
+    CmnRdIdsFromCoSc, CoErVrtsSc, CoLogicSc, ColSc, ColsSc, CommitSc, ConfigSc,
     CrExtensionIfNotExistsPgJsonschemaUcc, CrExtensionIfNotExistsUuidOsspUcc,
     CrIntoPgJsonOptVecWhLenEqSc, CrIntoPgJsonOptVecWhLenGreaterThanSc,
-    CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc, CrTblColumnQpSc, CrUcc, DeResUcc,
+    CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc, CrTblColQpSc, CrUcc, DeResUcc,
     DesirableUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElMaxPageSizeUcc, DfltSomeOneElSc,
     DfltSomeOneElUcc, DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloLogicSc, DmErVrtsSc,
     DmLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
-    ExtraPrmsSc, FailedToGetResTextUcc, FalseSc, FromHSc, FutureSc, GenColumnQuealsVCommaUoQpSc,
-    GenPgTblPkSc, GenSelQpSc, GenWhenColumnIdThenVUmQpSc, HeaderContentTypeAppJsonNotFoundUcc,
+    ExtraPrmsSc, FailedToGetResTextUcc, FalseSc, FromHSc, FutureSc, GenColQuealsVCommaUoQpSc,
+    GenPgTblPkSc, GenSelQpSc, GenWhenColIdThenVUmQpSc, HeaderContentTypeAppJsonNotFoundUcc,
     HeadersSc, IdentCrDfltSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc,
     NotUnqFieldSc, NotUnqFieldUcc, NotUnqPkSc, NotUnqPkUcc, OptVecCrSc, OrderBySc, OrderByUcc,
     OrderSc, PayloadSc, PayloadUcc, PgCrudSc, PgPoolForTokioSpawnSyncMoveSc, PgPoolSc, PgSc,
@@ -52,7 +52,7 @@ use naming::{
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_cmn::{
-    AddOprtrUndrscr, ColumnPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
+    AddOprtrUndrscr, ColPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
     gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
     gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts,
@@ -84,7 +84,7 @@ use token_patterns::{
     PgCrudDfltSomeOneElCall, RefStr, SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
 };
 //todo decide wh to do er log (mb add in some places)
-//todo gen route what will return columns of the tbl and their rust and postgersql types
+//todo gen route what will return cols of the tbl and their rust and postgersql types
 //todo crd at and updd at fields + crd by + updd by
 //todo attrs for activation generation crud methods(like gen cr, uo, dlo)
 //todo authorization for returning concrete er or just minimal info(user role)
@@ -398,9 +398,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             for el in &fields_named.named {
                 let fi = el.ident.clone().expect("915ef2ce");
                 let fi_len = fi.to_string().len();
-                let max_pg_column_len = 63;
+                let max_pg_col_len = 63;
                 //todo write runtime check
-                assert!(fi_len <= max_pg_column_len, "1266ae5a");
+                assert!(fi_len <= max_pg_col_len, "1266ae5a");
                 fields.push(SynField {
                     vis: el.vis.clone(),
                     type0: el.ty.clone(),
@@ -436,7 +436,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     });
                 }
             }
-            // explicitly not supporting nbr of columns more than 100 so its less possibility to cause stack overflow or build process exit
+            // explicitly not supporting nbr of cols more than 100 so its less possibility to cause stack overflow or build process exit
             // assert!((fields.len() <= 100), "d9963f32");
             (opt_pk_field.expect("6a529a99"), fields, fields_without_pk)
         } else {
@@ -636,24 +636,24 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
             ));
             let serde_json_to_string_schemars_schema_for_generic_unwrap_ts = {
-                let gen_ft_as_pg_crud_cr_tbl_column_qp_cr_tbl_qp_ts =
+                let gen_ft_as_pg_crud_cr_tbl_col_qp_cr_tbl_qp_ts =
                     |ft: &Type, fi: &Ident, is_pk: bool| {
                         let is_pk_ts: &dyn ToTokens = if is_pk { &TrueSc } else { &FalseSc };
                         let fi_dq_ts = dq_ts(&fi);
                         let ft_pg_type_ts = gen_as_pg_type_path_ts(&ft);
                         quote! {
-                            #ft_pg_type_ts #CrTblColumnQpSc(&#fi_dq_ts, #is_pk_ts)
+                            #ft_pg_type_ts #CrTblColQpSc(&#fi_dq_ts, #is_pk_ts)
                         }
                     };
                 once(
-                    gen_ft_as_pg_crud_cr_tbl_column_qp_cr_tbl_qp_ts(
+                    gen_ft_as_pg_crud_cr_tbl_col_qp_cr_tbl_qp_ts(
                         pk_ft,
                         &pk_field.ident,
                         true,
                     ),
                 )
                 .chain(fields_without_pk.iter().map(|el| {
-                    gen_ft_as_pg_crud_cr_tbl_column_qp_cr_tbl_qp_ts(
+                    gen_ft_as_pg_crud_cr_tbl_col_qp_cr_tbl_qp_ts(
                         &el.type0, &el.ident, false,
                     )
                 }))
@@ -701,7 +701,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     let as_pg_crud_pg_type_pg_type_ts = gen_as_pg_type_path_ts(&el.type0);
                     let ts0 = gen_match_ok_err_ts_c35d87fd(
                         &quote! {#as_pg_crud_pg_type_pg_type_ts #SelQpSc(
-                            #ColumnSc,
+                            #ColSc,
                             #fi_string_dq_ts
                         )},
                         &quote! {v_820e1163},
@@ -711,7 +711,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     );
                     quote! {=> #ts0}
                 };
-                quote! {#ident_sel_ucc::#fi_ucc_ts(#ColumnSc) #init_ts}
+                quote! {#ident_sel_ucc::#fi_ucc_ts(#ColSc) #init_ts}
             });
             let ts0 = gen_acc_string_pop_ok_acc_ts(
                 &quote! {acc},
@@ -1002,7 +1002,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     pk_ft,
                     &pk_ft_as_dflt_some_one_el_call_ts,
                 );
-                let column_incrs_ts =
+                let col_incrs_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el: &SynField| {
                         gen_match_as_pg_crud_pg_type_pg_type_cr_qp_ts(&el.type0, &{
                             let el_fi = &el.ident;
@@ -1013,7 +1013,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     &quote! {acc},
                     &quote! {
                         #pk_ts
-                        #column_incrs_ts
+                        #col_incrs_ts
                     },
                 );
                 quote! {
@@ -1201,7 +1201,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             &opt_ident_wh_ucc,
             &Ts2::new(),
             &IncrPrmUndrscr::False,
-            &ColumnPrmUndrscr::True,
+            &ColPrmUndrscr::True,
             &AddOprtrUndrscr::True,
             &{
                 let extra_prms_modification_ts = fields.iter().enumerate().map(|(i, el)| {
@@ -2702,7 +2702,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         }
                     };
                     let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
-                    let column_names_dq_ts = dq_ts(&{
+                    let col_names_dq_ts = dq_ts(&{
                         let mut acc = fields.iter().fold(String::default(), |mut acc0, el| {
                             assert!(write!(acc0, "{}", &el.ident).is_ok(), "b9fe50dc");
                             acc0.push(',');
@@ -2761,7 +2761,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             });
                             quote! {#import_ts gen_cm_query_string(
                                 #TblSc,
-                                #column_names_dq_ts,
+                                #col_names_dq_ts,
                                 &{
                                     #incr_init_ts
                                     #ts0
@@ -2777,7 +2777,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             quote! {
                                 #import_ts gen_co_query_string(
                                     #TblSc,
-                                    #column_names_dq_ts,
+                                    #col_names_dq_ts,
                                     &#ts,
                                     &#sel_only_ids_qp_ts
                                 )
@@ -2791,7 +2791,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             );
                             let extra_prms_order_by_h_ts =
                                 dq_ts(&format!("{{}}{OrderSc} {BySc} {{}} {{}}"));
-                            let order_by_column_match_ts =
+                            let order_by_col_match_ts =
                                 gen_fields_named_with_comma_ts(&|el: &SynField| {
                                     let fi_ucc = ToTokensToUccTs::case_or_panic(&el.ident);
                                     let fi_dq_ts = dq_ts(&el.ident);
@@ -2811,8 +2811,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                         #ExtraPrmsSc,
                                         #extra_prms_order_by_h_ts,
                                         #PrefixSc,
-                                        &match &#PrmsSc.#PayloadSc.#OrderBySc.#ColumnSc {
-                                            #order_by_column_match_ts
+                                        &match &#PrmsSc.#PayloadSc.#OrderBySc.#ColSc {
+                                            #order_by_col_match_ts
                                         },
                                         #PrmsSc.#PayloadSc.#OrderBySc.#OrderSc.as_ref().map_or_else(
                                             || #import_ts Order::default().to_sc_str(),
@@ -2897,7 +2897,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                                 &quote! {v_8797585c},
                                             );
                                             quote! {
-                                                acc_8ad06c8c.push_str(&#import_ts #GenWhenColumnIdThenVUmQpSc(
+                                                acc_8ad06c8c.push_str(&#import_ts #GenWhenColIdThenVUmQpSc(
                                                     Self::#PkSc(),
                                                     &#ts0,
                                                     &#ts1
@@ -2911,7 +2911,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                             #ts_ee27d6ff
                                             if #is_fi_upd_exists_sc {
                                                 acc_b86a253a.push_str(&
-                                                    #import_ts gen_column_eqs_case_acc_else_column_end_comma_um_qp(
+                                                    #import_ts gen_col_eqs_case_acc_else_col_end_comma_um_qp(
                                                         #fi_dq_ts,
                                                         &{
                                                             let mut acc_8ad06c8c = #StringTs::default();
@@ -2959,7 +2959,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     let pks = {
                                         #ts1
                                     };
-                                    let return_columns = {
+                                    let return_cols = {
                                         let mut acc_fd44b0aa = String::new();
                                         #ts_5abb9ece
                                         acc_fd44b0aa
@@ -2969,7 +2969,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                         &els,
                                         Self::#PkSc(),
                                         &pks,
-                                        &return_columns
+                                        &return_cols
                                     )
                                 }
                             }
@@ -2979,8 +2979,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 &|el: &SynField| {
                                     let fi = &el.ident;
                                     let fi_dq_ts = dq_ts(&fi);
-                                    let gen_column_queals_v_comma_uo_qp_sc =
-                                        GenColumnQuealsVCommaUoQpSc;
+                                    let gen_col_queals_v_comma_uo_qp_sc =
+                                        GenColQuealsVCommaUoQpSc;
                                     let upd_qp_fi_sc = UpdQpSelfSc::from_tokens(&fi);
                                     gen_if_let_some_ts(
                                         &quote! {v_2d144436},
@@ -2991,7 +2991,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                                 &quote! {v_1ec12051},
                                             );
                                             quote! {
-                                                acc_683e37b8.push_str(&#import_ts #gen_column_queals_v_comma_uo_qp_sc(
+                                                acc_683e37b8.push_str(&#import_ts #gen_col_queals_v_comma_uo_qp_sc(
                                                     #fi_dq_ts,
                                                     &#ts
                                                 ));
@@ -3013,17 +3013,17 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             quote! {
                                 {
                                     #incr_init_ts
-                                    let #ColumnsSc = {
+                                    let #ColsSc = {
                                         #ts_a6ae3308
                                     };
                                     let #PkQpSc = #extra_prms_pk_modification_ts;
-                                    let return_columns = #ts;
+                                    let return_cols = #ts;
                                     #import_ts gen_uo_query_string(
                                         #TblSc,
-                                        &#ColumnsSc,
+                                        &#ColsSc,
                                         Self::#PkSc(),
                                         &#PkQpSc,
-                                        &return_columns
+                                        &return_cols
                                     )
                                 }
                             }
@@ -3465,7 +3465,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 #wh_many_pg_crud_dflt_some_one_el_call_ts,
                                 #sel_pg_crud_dflt_some_one_el_call_ts,
                                 #OrderBySc: #import_ts OrderBy {
-                                    #ColumnSc: #ident_sel_ucc::#pk_fi_ucc_ts(
+                                    #ColSc: #ident_sel_ucc::#pk_fi_ucc_ts(
                                         #PgCrudDfltSomeOneElCall
                                     ),
                                     #OrderSc: Some(
@@ -4145,7 +4145,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 let fi = &el.ident;
                 let fi_rd_ids_to_2_dims_vec_rd_inn_acc_sc =
                     SelfRdIdsTo2DimsVecRdInnAccSc::from_tokens(&fi);
-                let ident_cr_dflts_for_column_rd_ids_to_2_dims_vec_rd_inn_ts =
+                let ident_cr_dflts_for_col_rd_ids_to_2_dims_vec_rd_inn_ts =
                     gen_fields_named_without_pk_without_comma_ts(&|el0: &SynField| {
                         let fi0 = &el0.ident;
                         let ft0 = &el0.type0;
@@ -4171,7 +4171,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 quote! {
                     let #fi_rd_ids_to_2_dims_vec_rd_inn_acc_sc = {
                         let mut acc_458cda9e = Vec::new();
-                        #ident_cr_dflts_for_column_rd_ids_to_2_dims_vec_rd_inn_ts
+                        #ident_cr_dflts_for_col_rd_ids_to_2_dims_vec_rd_inn_ts
                         acc_458cda9e
                     };
                 }
@@ -5184,7 +5184,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             };
         let um_tests_ts = {
             //todo add Test for trying to upd empty vec
-            let um_only_one_column_tests_ts = gen_fields_named_without_pk_without_comma_ts(
+            let um_only_one_col_tests_ts = gen_fields_named_without_pk_without_comma_ts(
                 &|el: &SynField| {
                     let fi = &el.ident;
                     let ft = &el.type0;
@@ -5356,10 +5356,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 },
             );
-            quote! {#um_only_one_column_tests_ts}
+            quote! {#um_only_one_col_tests_ts}
         };
         let uo_tests_ts = {
-            let uo_only_one_column_tests_ts =
+            let uo_only_one_col_tests_ts =
                 gen_fields_named_without_pk_without_comma_ts(&|el: &SynField| {
                     let fi = &el.ident;
                     let ft = &el.type0;
@@ -5435,7 +5435,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     payload: #ident_upd_ucc::try_new(
                                         #pk_ft_as_pg_type_upd_as_pg_type_pk_rd_ids_into_upd_ts,
                                         #ident_upd_prms_init_without_pk_ts
-                                    ).expect("0e5d65a5")//todo add column ident
+                                    ).expect("0e5d65a5")//todo add col ident
                                 },
                                 &tbl_uo_cloned
                             ).await.expect("4d755542")
@@ -5476,7 +5476,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         }
                     }
                 });
-            quote! {#uo_only_one_column_tests_ts}
+            quote! {#uo_only_one_col_tests_ts}
         };
         let dm_tests_ts = {
             let test_dm_by_non_existent_pks_ts = gen_for_in_1_2_ts(
@@ -5725,7 +5725,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             )),
                             sel,
                             order_by: #import_ts OrderBy {
-                                column: #ident_sel_ucc::#pk_fi_ucc_ts(
+                                col: #ident_sel_ucc::#pk_fi_ucc_ts(
                                     #pk_ft_as_pg_type_sel_ts::default()
                                 ),
                                 order: Some(#import_ts Order::Asc)
@@ -5741,7 +5741,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         let gen_ident_try_ro_h_pk_fn_ts = quote! {
             async fn gen_ident_try_ro_h_pk(
                 url: &str,
-                pk_column: #pk_ft_as_pg_type_rd_ts,
+                pk_col: #pk_ft_as_pg_type_rd_ts,
                 sel: #import_ts NotEmptyUnqVec<#ident_sel_ucc>,
                 tbl: &str,
             ) -> Result<#ident_rd_ucc, #ident_try_ro_er_ucc> {
@@ -5749,7 +5749,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     url,
                     #ident_ro_prms_ucc {
                         payload: #ident_ro_payload_ucc {
-                            pk_column,
+                            pk_col,
                             sel,
                         },
                     },
@@ -5766,13 +5766,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             quote! {
                 async fn gen_check_no_rows_from_ident_try_ro_h_pk(
                     url: &str,
-                    pk_column: #pk_ft_as_pg_type_rd_ts,
+                    pk_col: #pk_ft_as_pg_type_rd_ts,
                     sel: #import_ts NotEmptyUnqVec<#ident_sel_ucc>,
                     tbl: &str,
                 ) {
                     if let Err(#ErSc) = gen_ident_try_ro_h_pk(
                         url,
-                        pk_column,
+                        pk_col,
                         sel,
                         tbl
                     ).await {
@@ -6059,7 +6059,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         #sel_ts
         #ident_rd_ts
         #ident_rd_ids_ts
-        // #ident_column_rd_permission_ts
+        // #ident_col_rd_permission_ts
         #ident_upd_ts
         #ident_upd_for_query_ts
     };

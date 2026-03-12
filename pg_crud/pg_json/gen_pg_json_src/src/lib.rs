@@ -6,7 +6,7 @@ use macros_helpers::{
     gen_pub_new_ts, mb_write_ts_into_file,
 };
 use naming::{
-    ArrOfUcc, AsUcc, BooleanUcc, ColumnFieldSc, CrForQueryUcc, CrSc, EqUcc, ErSc, GenPgJsonModSc,
+    ArrOfUcc, AsUcc, BooleanUcc, ColFieldSc, CrForQueryUcc, CrSc, EqUcc, ErSc, GenPgJsonModSc,
     IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdSc, OptVecCrSc, PgJsonUcc, QuerySc,
     RdIdsAndCrIntoRdSc, RdIdsAndCrIntoVecWhEqUsingFieldsSc, RdIdsAndCrIntoWhEqSc, RdIdsSc,
     RdIdsTo2DimsVecRdInnSc, RdInnUcc, RdSc, SelfSc, SelfUcc, StringUcc, UpdForQueryUcc, UpdUcc,
@@ -20,10 +20,10 @@ use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_cmn::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNl, IsQbMut,
-    IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColumnFieldForErMsgUsed,
-    IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
-    IsUpdQpSelfUpdUsed, PgFlt, PgJsonFlt, RdOrUpd, ShouldDSchemarsJsonSchema,
-    ShouldDeriveUtoipaToSchema, gen_impl_crate_is_string_empty_for_ident_ts,
+    IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed, IsSelQpIsPgTypeUsed,
+    IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed, IsUpdQpSelfUpdUsed,
+    PgFlt, PgJsonFlt, RdOrUpd, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_json_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
@@ -335,7 +335,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonsConfig {
         vrt: ConfigVrt,
-        pg_tbl_columns_cnt_write_into_pg_tbl_columns_using_pg_json: ShouldWriteTsIntoFile,
+        pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json: ShouldWriteTsIntoFile,
         whole_cnt_write_into_gen_pg_json: ShouldWriteTsIntoFile,
     }
     panic_location();
@@ -1880,14 +1880,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     Pattern::Stdrt => IsSelQpSelfSelUsed::False,
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => IsSelQpSelfSelUsed::True,
                 },
-                &IsSelQpColumnFieldForErMsgUsed::False,
+                &IsSelQpColFieldForErMsgUsed::False,
                 &IsSelQpIsPgTypeUsed::False,
                 &{
                     let format_h = {
                         //last child dim v does not matter - null or type - works both good
-                        let column_field_fi = format!("{{{ColumnFieldSc}}}->'{{fi}}'");
+                        let col_field_fi = format!("{{{ColFieldSc}}}->'{{fi}}'");
                         let format_h = ArrDim::try_from(pattern).map_or_else(
-                            |()| column_field_fi.clone(),
+                            |()| col_field_fi.clone(),
                             |arr_dim| {
                                 enum ArrDimSelPattern {
                                     ArrDim2 {
@@ -1942,7 +1942,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 ArrDimSelPattern::try_from(&arr_dim).map_or_else(
                                     |()| gen_jsonb_agg(
                                         "value",
-                                        &format!("select {column_field_fi}"),
+                                        &format!("select {col_field_fi}"),
                                         "where ordinality",
                                         1,
                                     ),
@@ -2004,7 +2004,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                     acc
                                                 })
                                             },
-                                            &column_field_fi,
+                                            &col_field_fi,
                                             &gen_as_v_wh(&gen_d_nbr_elem(one), &gen_d_nbr_ord(one)),
                                             one,
                                         )
@@ -2014,7 +2014,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         );
                         match &is_nl {
                             IsNl::False => format_h,
-                            IsNl::True => format!("case when jsonb_typeof({column_field_fi})='null' then 'null'::jsonb else ({format_h}) end"),
+                            IsNl::True => format!("case when jsonb_typeof({col_field_fi})='null' then 'null'::jsonb else ({format_h}) end"),
                         }
                     };
                     let mb_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
@@ -2053,7 +2053,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ident_rd_ids_ucc,
                 &{
                     let content_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{column_field}"));
+                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{col_field}"));
                         quote! {format!(#dq_ts0)}
                     } else {
                         let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"'null'::jsonb"));
@@ -3598,15 +3598,15 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     })
     .collect::<(Vec<String>, Vec<String>)>();
     mb_write_ts_into_file(
-        config.pg_tbl_columns_cnt_write_into_pg_tbl_columns_using_pg_json,
-        "pg_tbl_columns_using_pg_json",
+        config.pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json,
+        "pg_tbl_cols_using_pg_json",
         &{
             let fields_cnt_ts = fields_ts
                 .into_iter()
                 .map(|el| el.parse::<Ts2>().expect("1d8cd8e4"))
                 .collect::<Vec<Ts2>>();
             quote! {
-                pub struct PgTblColumnsUsingPgJsons {
+                pub struct PgTblColsUsingPgJsons {
                     #(#fields_cnt_ts)*
                 }
             }

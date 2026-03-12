@@ -4,10 +4,10 @@ pub use flts::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
-    AddOprtrSc, AllVrtsDfltSomeOneElMaxPageSizeSc, AllVrtsDfltSomeOneElSc, ColumnFieldForErMsgSc,
-    ColumnFieldSc, ColumnSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLenEqSc,
+    AddOprtrSc, AllVrtsDfltSomeOneElMaxPageSizeSc, AllVrtsDfltSomeOneElSc, ColFieldForErMsgSc,
+    ColFieldSc, ColSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLenEqSc,
     CrIntoPgJsonOptVecWhLenGreaterThanSc, CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc,
-    CrTblColumnQpSc, CrUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElSc, DisplayPlusToTokens,
+    CrTblColQpSc, CrUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElSc, DisplayPlusToTokens,
     EqOprtrUcc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
     MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc, PgJsonUcc,
     PgTypeEqOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhGreaterThanTestSc, PgTypeTestCasesUcc,
@@ -222,16 +222,16 @@ impl ToTokens for IsSelQpSelfSelUsed {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelQpColumnFieldForErMsgUsed {
+pub enum IsSelQpColFieldForErMsgUsed {
     False,
     True,
 }
-impl ToTokens for IsSelQpColumnFieldForErMsgUsed {
+impl ToTokens for IsSelQpColFieldForErMsgUsed {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
             Self::False => quote! {_}.to_tokens(tokens),
             Self::True => {
-                ColumnFieldForErMsgSc.to_tokens(tokens);
+                ColFieldForErMsgSc.to_tokens(tokens);
             }
         }
     }
@@ -341,14 +341,14 @@ impl ToTokens for IncrPrmUndrscr {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum ColumnPrmUndrscr {
+pub enum ColPrmUndrscr {
     False,
     True,
 }
-impl ToTokens for ColumnPrmUndrscr {
+impl ToTokens for ColPrmUndrscr {
     fn to_tokens(&self, tokens: &mut Ts2) {
         match &self {
-            Self::False => ColumnSc.to_tokens(tokens),
+            Self::False => ColSc.to_tokens(tokens),
             Self::True => quote! {_}.to_tokens(tokens),
         }
     }
@@ -597,7 +597,7 @@ pub fn gen_pg_type_wh_ts(
         &ident,
         &Ts2::new(),
         &IncrPrmUndrscr::False,
-        &ColumnPrmUndrscr::False,
+        &ColPrmUndrscr::False,
         &AddOprtrUndrscr::False,
         &{
             let vrts_ts = vrts.iter().map(|el| {
@@ -606,7 +606,7 @@ pub fn gen_pg_type_wh_ts(
                     Self::#el_ucc(#VSc) => pg_crud_cmn::PgTypeWhFlt::qp(
                         #VSc,
                         #IncrSc,
-                        #ColumnSc,
+                        #ColSc,
                         #AddOprtrSc,
                     )
                 }
@@ -695,7 +695,7 @@ pub fn gen_impl_pg_json_ts(
     cr_for_query_type_ts: &dyn ToTokens,
     sel_type_ts: &dyn ToTokens,
     is_sel_qp_self_sel_used: &IsSelQpSelfSelUsed,
-    is_sel_qp_column_field_for_er_msg_used: &IsSelQpColumnFieldForErMsgUsed,
+    is_sel_qp_col_field_for_er_msg_used: &IsSelQpColFieldForErMsgUsed,
     is_sel_qp_is_pg_type_used: &IsSelQpIsPgTypeUsed,
     sel_qp_ts: &dyn ToTokens,
     wh_type_ts: &dyn ToTokens,
@@ -735,8 +735,8 @@ pub fn gen_impl_pg_json_ts(
             fn #SelQpSc(
                 #is_sel_qp_self_sel_used: &Self::#SelUcc,
                 #FiSc: #RefStr,
-                #ColumnFieldSc: #RefStr,
-                #is_sel_qp_column_field_for_er_msg_used: #RefStr,
+                #ColFieldSc: #RefStr,
+                #is_sel_qp_col_field_for_er_msg_used: #RefStr,
                 #is_sel_qp_is_pg_type_used: #Bool,
             ) -> Result<#StringTs, #path_ts #QpErUcc> {
                 #sel_qp_ts
@@ -745,7 +745,7 @@ pub fn gen_impl_pg_json_ts(
             type #RdUcc = #rd_type_ts;
             type #RdIdsUcc = #rd_ids_type_ts;
             fn #SelOnlyIdsQpSc(
-                #ColumnFieldSc: #RefStr,
+                #ColFieldSc: #RefStr,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #sel_only_ids_qp_ts
             }
@@ -773,7 +773,7 @@ pub fn gen_impl_pg_json_ts(
             fn #SelOnlyUpddIdsQpSc(
                 #VSc: &Self::#UpdForQueryUcc,
                 #FiSc: #RefStr,
-                #ColumnFieldSc: #RefStr,
+                #ColFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #sel_only_updd_ids_qp_ts
@@ -787,7 +787,7 @@ pub fn gen_impl_pg_json_ts(
             fn #SelOnlyCrdIdsQpSc(
                 #VSc: &Self::#CrForQueryUcc,
                 #FiSc: #RefStr,
-                #ColumnFieldSc: #RefStr,
+                #ColFieldSc: #RefStr,
                 #IncrSc: &mut #U64
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #sel_only_crd_ids_qp_ts
@@ -914,7 +914,7 @@ pub fn impl_pg_type_wh_flt_for_ident_ts(
     ident_ts: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
     incr_prm_undrscr: &IncrPrmUndrscr,
-    column_prm_undrscr: &ColumnPrmUndrscr,
+    col_prm_undrscr: &ColPrmUndrscr,
     add_oprtr_undrscr: &AddOprtrUndrscr,
     qp_ts: &dyn ToTokens,
     is_qb_mut: &IsQbMut,
@@ -927,7 +927,7 @@ pub fn impl_pg_type_wh_flt_for_ident_ts(
             fn #QpSc(
                 &self,
                 #incr_prm_undrscr: &mut #U64,
-                #column_prm_undrscr: &dyn #StdFmtDisplay,
+                #col_prm_undrscr: &dyn #StdFmtDisplay,
                 #add_oprtr_undrscr: #Bool
             ) -> Result<#StringTs, #import::#QpErUcc> {
                 #qp_ts
@@ -986,7 +986,7 @@ pub fn gen_impl_pg_type_ts(
     ident: &dyn ToTokens,
     ident_tt_ucc: &dyn ToTokens,
     is_pk_undrscr: &IsPkUndrscr,
-    cr_tbl_column_qp_ts: &dyn ToTokens,
+    cr_tbl_col_qp_ts: &dyn ToTokens,
     ident_cr_ucc: &dyn ToTokens,
     cr_qp_v_undrscr: &CrQpValueUndrscr,
     cr_qp_incr_undrscr: &CrQpIncrUndrscr,
@@ -1023,8 +1023,8 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySrcItemOrdering
         impl #import :: #PgTypeUcc for #ident {
             type #TtUcc = #ident_tt_ucc;
-            fn #CrTblColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
-                #cr_tbl_column_qp_ts
+            fn #CrTblColQpSc(#ColSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
+                #cr_tbl_col_qp_ts
             }
             type #CrUcc = #ident_cr_ucc;
             fn #CrQpSc(
@@ -1045,7 +1045,7 @@ pub fn gen_impl_pg_type_ts(
             type #SelUcc = #ident_sel_ucc;
             fn #SelQpSc(
                 #sel_qp_v_undrscr: &Self::#SelUcc,
-                #ColumnSc: #RefStr,
+                #ColSc: #RefStr,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #sel_qp_ts
             }
@@ -1056,7 +1056,7 @@ pub fn gen_impl_pg_type_ts(
             }
             type #RdIdsUcc = #rd_ids_ts;
             fn #SelOnlyIdsQpSc(
-                #ColumnSc: #RefStr
+                #ColSc: #RefStr
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #sel_only_ids_qp_ts
             }
@@ -1086,7 +1086,7 @@ pub fn gen_impl_pg_type_ts(
             }
             fn #SelOnlyUpddIdsQpSc(
                 #VSc: &Self::#UpdForQueryUcc,
-                #ColumnSc: #RefStr,
+                #ColSc: #RefStr,
                 #IncrSc: &mut #U64,
             ) -> Result<#StringTs, #import ::#QpErUcc> {
                 #sel_only_updd_ids_qp_ts

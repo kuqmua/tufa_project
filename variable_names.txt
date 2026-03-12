@@ -184,15 +184,15 @@ check_version
 clippy_lints_from_docs
 cm_tests_ts
 co_tests_ts
-column_comma
-column_field_fi
-column_field_fi_dq_ts
-column_incrs_ts
-column_names_dq_ts
-column_pg_query_type
-column_pg_query_type_nn
-column_str
-column_ts
+col_comma
+col_field_fi
+col_field_fi_dq_ts
+col_incrs_ts
+col_names_dq_ts
+col_pg_query_type
+col_pg_query_type_nn
+col_str
+col_ts
 commit_header_addition_ts
 commit_id_ts
 cmn_arr_dim1_pg_json_flts
@@ -569,7 +569,7 @@ gen_btwn_ts
 gen_binded_query_ts
 gen_bound_ts
 gen_check_no_rows_from_ident_try_ro_h_pk_fn_ts
-gen_column_queals_v_comma_uo_qp_sc
+gen_col_queals_v_comma_uo_qp_sc
 gen_contains_all_els_of_arr_ts
 gen_contains_el_greater_than_ts
 gen_contains_el_rgx_ts
@@ -630,7 +630,7 @@ gen_for_in_ts
 gen_for_v_i_dot_zero_into_iter_enumerate_ts
 gen_from_h_ts
 gen_ft_as_crud_pg_json_from_field_ts
-gen_ft_as_pg_crud_cr_tbl_column_qp_cr_tbl_qp_ts
+gen_ft_as_pg_crud_cr_tbl_col_qp_cr_tbl_qp_ts
 gen_ft_opt_vec_cr_or_vec_ts
 gen_ft_opt_vec_cr_ts
 gen_gen_impl_location_lib_to_err_string_w_ts
@@ -1000,7 +1000,7 @@ ident_cr_cmn_ts
 ident_cr_dflt_cloned
 ident_cr_dflt_fields_init_without_pk_ts
 ident_cr_dflt_fn_ts
-ident_cr_dflts_for_column_rd_ids_to_2_dims_vec_rd_inn_ts
+ident_cr_dflts_for_col_rd_ids_to_2_dims_vec_rd_inn_ts
 ident_cr_for_query_ts
 ident_cr_for_query_ucc
 ident_cr_name_ts
@@ -1427,7 +1427,7 @@ match_upd_qp_pk_op_ts
 match_uuid_uuid_ft_try_parse_ts
 match_vrts_ts
 max
-max_pg_column_len
+max_pg_col_len
 max_ts
 max_ts_dea6df94
 max_v_ts
@@ -1592,7 +1592,7 @@ opt_vec_cr_ts
 opt_vec_cr_ts_2d58042f
 opt_vec_cr_ts_a442630a
 or_space
-order_by_column_match_ts
+order_by_col_match_ts
 outdated_lints_in_file
 output
 overlaps_with_arr_ts
@@ -1861,7 +1861,7 @@ rest
 rest_ts
 result
 result_ok_type_ts
-return_columns
+return_cols
 return_er_ts
 return_err_qp_er_write_into_buffer_ts
 return_to_previous
@@ -2219,7 +2219,7 @@ typical
 typical_qb_ts
 typical_qp_ts
 ucc_ucc_str
-um_only_one_column_tests_ts
+um_only_one_col_tests_ts
 um_tests_ts
 unbounded_excluded_checked_add_ts
 unbounded_excluded_ts
@@ -2228,7 +2228,7 @@ undrscr_unused_ts
 undrscrs
 unq_vec_ident_sel_el_stdrt_nn_ts
 unsigned_part_of_i32_ts
-uo_only_one_column_tests_ts
+uo_only_one_col_tests_ts
 uo_tests_ts
 upd
 upd_acc

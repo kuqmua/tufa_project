@@ -25,7 +25,7 @@ uuid.workspace = true
 test-utils = []"#,
             &gen_pg_json_src::gen_pg_json(&quote! {
                 {
-                    "pg_tbl_columns_cnt_write_into_pg_tbl_columns_using_pg_json": "False",
+                    "pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json": "False",
                     "whole_cnt_write_into_gen_pg_json": "False",
                     "vrt": "WithDimOne"
                 }
