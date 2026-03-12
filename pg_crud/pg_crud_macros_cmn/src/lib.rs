@@ -7,7 +7,7 @@ use naming::{
     AddOprtrSc, AllVrtsDfltSomeOneElMaxPageSizeSc, AllVrtsDfltSomeOneElSc, ColumnFieldForErMsgSc,
     ColumnFieldSc, ColumnSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLenEqSc,
     CrIntoPgJsonOptVecWhLenGreaterThanSc, CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc,
-    CrTableColumnQpSc, CrUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElSc, DisplayPlusToTokens,
+    CrTblColumnQpSc, CrUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElSc, DisplayPlusToTokens,
     EqOprtrUcc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
     MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc, PgJsonUcc,
     PgTypeEqOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhGreaterThanTestSc, PgTypeTestCasesUcc,
@@ -987,7 +987,7 @@ pub fn gen_impl_pg_type_ts(
     ident: &dyn ToTokens,
     ident_tt_ucc: &dyn ToTokens,
     is_pk_undrscr: &IsPkUndrscr,
-    cr_table_column_qp_ts: &dyn ToTokens,
+    cr_tbl_column_qp_ts: &dyn ToTokens,
     ident_cr_ucc: &dyn ToTokens,
     cr_qp_v_undrscr: &CrQpValueUndrscr,
     cr_qp_incr_undrscr: &CrQpIncrUndrscr,
@@ -1024,8 +1024,8 @@ pub fn gen_impl_pg_type_ts(
         #AllowClippyArbitrarySrcItemOrdering
         impl #import :: #PgTypeUcc for #ident {
             type #TtUcc = #ident_tt_ucc;
-            fn #CrTableColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
-                #cr_table_column_qp_ts
+            fn #CrTblColumnQpSc(#ColumnSc: &dyn #StdFmtDisplay, #is_pk_undrscr: #Bool) -> impl #StdFmtDisplay {
+                #cr_tbl_column_qp_ts
             }
             type #CrUcc = #ident_cr_ucc;
             fn #CrQpSc(

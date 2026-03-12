@@ -1,6 +1,6 @@
 [package]
 edition = "2024"
-name = "gen_pg_table"
+name = "gen_pg_tbl"
 version = "0.1.0"
 description = "description"
 repository = "repository"
@@ -14,7 +14,7 @@ categories = ["category"]
 proc-macro = true
 
 [dependencies]
-gen_pg_table_src = {path = "../gen_pg_table_src"}
+gen_pg_tbl_src = {path = "../gen_pg_tbl_src"}
 
 [lints]
 workspace = true

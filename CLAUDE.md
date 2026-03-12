@@ -46,7 +46,7 @@ Large Cargo workspace (~70 crates). Core domain is PostgreSQL CRUD code generati
 Each subdirectory follows a consistent pattern with `gen_*` (proc-macro crate), `gen_*_src` (macro implementation logic), `gen_*_test`, and `gen_*_test_cnt` (test content) crates:
 
 - **`pg_types/`** — PostgreSQL type mappings (Rust ↔ Postgres), with `pg_types_cmn` for shared types
-- **`pg_table/`** — Table-level CRUD generation (create/read/update/delete)
+- **`pg_tbl/`** — Table-level CRUD generation (create/read/update/delete)
 - **`pg_json/`** — JSON column handling, with `gen_pg_json_cmn` for shared logic
 - **`pg_json_obj/`** — JSON object schema generation, with `pg_json_obj_cmn`
 - **`wh_filters/`** — WHERE clause filter generation

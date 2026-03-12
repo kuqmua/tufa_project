@@ -485,7 +485,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, serde::Deserialize, Optml)]
     struct GenPgJsonsConfig {
         vrt: GenPgTypesConfigVrt,
-        pg_table_columns_write_into_file: ShouldWriteTsIntoFile,
+        pg_tbl_columns_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
@@ -5726,15 +5726,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     })
     .collect::<(Vec<String>, Vec<String>)>();
     mb_write_ts_into_file(
-        gen_pg_json_config.pg_table_columns_write_into_file,
-        "pg_table_columns_using_pg_types",
+        gen_pg_json_config.pg_tbl_columns_write_into_file,
+        "pg_tbl_columns_using_pg_types",
         &{
             let ts = columns_ts
                 .into_iter()
                 .map(|el_2e3fc869| el_2e3fc869.parse::<Ts2>().expect("79ee6381"))
                 .collect::<Vec<Ts2>>();
             quote! {
-                struct PgTableColumnsUsingPgTypes {
+                struct PgTblColumnsUsingPgTypes {
                     #(#ts)*
                 }
             }

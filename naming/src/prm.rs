@@ -823,5 +823,5 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "self", "rd", "ids", "to2", "dims", "vec", "rd", "inn", "acc"
     ],
     ["self", "gen", "pg", "json", "obj", "mod"],
-    ["self", "gen", "pg", "table", "mod"]
+    ["self", "gen", "pg", "tbl", "mod"]
 ]);

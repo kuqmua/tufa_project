@@ -16,7 +16,7 @@ strum_macros.workspace = true
 futures.workspace = true
 uuid.workspace = true
 pg_crud_cmn = {path = "./pg_crud_cmn", features = ["test-utils"]}
-pg_table = {path = "./pg_table"}
+pg_tbl = {path = "./pg_tbl"}
 pg_json_obj = {path = "./pg_json_obj"}
 pg_json = {path = "./pg_json"}
 pg_types = {path = "./pg_types"}
@@ -29,7 +29,7 @@ workspace = true
 [features]
 test-utils = [
     "pg_crud_cmn/test-utils",
-    "pg_table/test-utils",
+    "pg_tbl/test-utils",
     "pg_json/test-utils",
     "pg_types/test-utils",
     "wh_filters/test-utils"

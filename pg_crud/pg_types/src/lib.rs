@@ -1,7 +1,7 @@
 //todo
 pub use pg_types_cmn::{PgnStartsWithOne, PgnStartsWithOneTryNewEr};
 gen_pg_types::gen_pg_types!({
-    "pg_table_columns_write_into_file": "False",
+    "pg_tbl_columns_write_into_file": "False",
     "whole_write_into_file": "False",
     "vrt":
     "All"

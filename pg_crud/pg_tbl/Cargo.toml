@@ -1,5 +1,5 @@
 [package]
-name = "pg_table"
+name = "pg_tbl"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -10,7 +10,7 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
-gen_pg_table = {path = "./gen_pg_table"}
+gen_pg_tbl = {path = "./gen_pg_tbl"}
 app_state = {path = "../../app_state"}
 
 [lints]

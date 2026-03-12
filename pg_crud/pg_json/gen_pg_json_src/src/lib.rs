@@ -335,7 +335,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonsConfig {
         vrt: ConfigVrt,
-        pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json: ShouldWriteTsIntoFile,
+        pg_tbl_columns_cnt_write_into_pg_tbl_columns_using_pg_json: ShouldWriteTsIntoFile,
         whole_cnt_write_into_gen_pg_json: ShouldWriteTsIntoFile,
     }
     panic_location();
@@ -3598,15 +3598,15 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     })
     .collect::<(Vec<String>, Vec<String>)>();
     mb_write_ts_into_file(
-        config.pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json,
-        "pg_table_columns_using_pg_json",
+        config.pg_tbl_columns_cnt_write_into_pg_tbl_columns_using_pg_json,
+        "pg_tbl_columns_using_pg_json",
         &{
             let fields_cnt_ts = fields_ts
                 .into_iter()
                 .map(|el| el.parse::<Ts2>().expect("1d8cd8e4"))
                 .collect::<Vec<Ts2>>();
             quote! {
-                pub struct PgTableColumnsUsingPgJsons {
+                pub struct PgTblColumnsUsingPgJsons {
                     #(#fields_cnt_ts)*
                 }
             }

@@ -6,7 +6,7 @@ use num_cpus::get;
 use secrecy::ExposeSecret;
 use server_app_state::ServerAppState;
 use server_config::Config;
-use server_table_example::TableExample;
+use server_tbl_example::TblExample;
 use sqlx::postgres::PgPoolOptions;
 use std::sync::Arc;
 use tokio::{net::TcpListener, runtime::Builder};
@@ -28,7 +28,7 @@ fn main() {
                 ))
                 .await
                 .expect("8b72f688");
-            TableExample::prep_pg(&pg_pool).await.expect("647fa499");
+            TblExample::prep_pg(&pg_pool).await.expect("647fa499");
             let tcp_listener =
                 TcpListener::bind(GetServiceSocketAddress::get_service_socket_address(&config))
                     .await
@@ -42,7 +42,7 @@ fn main() {
                 tcp_listener,
                 Router::new()
                     .merge(cmn_routes(Arc::<ServerAppState<'_>>::clone(&app_state)))
-                    .merge(TableExample::routes(Arc::<ServerAppState<'_>>::clone(
+                    .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
                         &app_state,
                     )))
                     .layer(
@@ -61,19 +61,19 @@ fn main() {
                     //         // #[derive(utoipa::OpenApi, Optml)]
                     //     //     #[openapi(
                     //     //     paths(
-                    //     //         server_table_example::server::routes::git_info::git_info,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::cm,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::co,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::rm,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::ro,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::um,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::uo,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::dm,
-                    //     //         // server_table_example::repositories_types::server::routes::api::cats::dlo
+                    //     //         server_tbl_example::server::routes::git_info::git_info,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::cm,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::co,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::rm,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::ro,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::um,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::uo,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::dm,
+                    //     //         // server_tbl_example::repositories_types::server::routes::api::cats::dlo
                     //     //     ),
                     //     //     components(
                     //     //             schemas(
-                    //     //                 server_table_example::server::routes::git_info::GitInfo,
+                    //     //                 server_tbl_example::server::routes::git_info::GitInfo,
                     //     //                 location_lib::loc::StdTimeDuration,
                     //     //                 location_lib::loc::Loc,
                     //     //                 //
@@ -127,7 +127,7 @@ fn main() {
                     //     //     ),
                     //     //     modifiers(&SecurityAddon),
                     //     //     tags((name = "server", description = "server api"))
-                    //     // )] //todo - this thing actually using builder pattern. mb gen builder in GenPgTable then merge it together?
+                    //     // )] //todo - this thing actually using builder pattern. mb gen builder in GenPgTbl then merge it together?
                     //     struct ApiDoc;
                     //     struct SecurityAddon;
                     //     impl utoipa::Modify for SecurityAddon {

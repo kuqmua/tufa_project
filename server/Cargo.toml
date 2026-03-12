@@ -29,7 +29,7 @@ app_state = {path = "../app_state"}
 cmn_routes = {path = "../cmn_routes"}
 server_app_state = {path = "../server_app_state"}
 server_config = {path = "../server_config"}
-server_table_example = {path = "../server_table_example"}
+server_tbl_example = {path = "../server_tbl_example"}
 
 [dev-dependencies]
 tokio.workspace = true

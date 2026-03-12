@@ -1,7 +1,7 @@
 use optml::Optml;
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Copy, pg_crud::GenPgTable, Optml)]
-#[pg_crud::gen_pg_table_config{{
+#[derive(Debug, Clone, Copy, pg_crud::GenPgTbl, Optml)]
+#[pg_crud::gen_pg_tbl_config{{
     "tests_write_into_file": "False",
     "cmn_write_into_file": "False",
     "whole_write_into_file": "False"
@@ -32,10 +32,10 @@ use optml::Optml;
 #[pg_crud::dm_logic{}]
 #[pg_crud::dlo_logic{}]
 #[pg_crud::cmn_logic{}]
-pub struct TableExample {
+pub struct TblExample {
     // #[gen_pg_crud_pk]
     // pub pk: pg_crud::I64AsNnBigSerialInitByPg,
-    #[gen_pg_table_pk]
+    #[gen_pg_tbl_pk]
     pub pk_column: pg_crud::SqlxTypesUuidUuidAsNnUuidV4InitByPg,
     // pub column_0: pg_crud::I16AsNnInt2,
     // pub column_1: pg_crud::OptI16AsNlInt2,

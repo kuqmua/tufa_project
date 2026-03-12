@@ -1,5 +1,5 @@
 [package]
-name = "server_table_example"
+name = "server_tbl_example"
 version = "0.1.0"
 edition = "2024"
 description = "description"

@@ -39,13 +39,13 @@ mod tests {
         let mut file = File::open("../Cargo.toml").expect("39a0d238");
         let mut acc = String::new();
         let _: usize = Read::read_to_string(&mut file, &mut acc).expect("2f5914f2");
-        let table = acc.parse::<TomlTable>().expect("beb11586");
-        table.get("workspace").expect("f728192d").clone()
+        let tbl = acc.parse::<TomlTable>().expect("beb11586");
+        tbl.get("workspace").expect("f728192d").clone()
     }
     fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
         let workspace = toml_v_from_from_cargo_toml_workspace();
         let lints = workspace.get("lints").expect("82eaea37");
-        let toml_v_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
+        let toml_v_tbl = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
             Value::Table(v) => v,
             Value::String(_)
             | Value::Integer(_)
@@ -54,7 +54,7 @@ mod tests {
             | Value::Datetime(_)
             | Value::Array(_) => panic!("cae226cd"),
         };
-        toml_v_table.keys().cloned().collect::<Vec<String>>()
+        toml_v_tbl.keys().cloned().collect::<Vec<String>>()
     }
     fn compare_lints_vecs(
         rust_or_clippy: RustOrClippy,
@@ -311,7 +311,7 @@ mod tests {
             | Value::Datetime(_)
             | Value::Array(_) => panic!("e117fa5a"),
         } {
-            let v_table = match v_5c36cb98 {
+            let v_tbl = match v_5c36cb98 {
                 Value::Table(v_31495eb6) => v_31495eb6,
                 Value::String(_)
                 | Value::Integer(_)
@@ -320,7 +320,7 @@ mod tests {
                 | Value::Datetime(_)
                 | Value::Array(_) => panic!("cb693a3f"),
             };
-            let v_table_len = v_table.len();
+            let v_tbl_len = v_tbl.len();
             let check_version =
                 |v_df993c3d: &Table| match v_df993c3d.get("version").expect("d5b2b269").clone() {
                     Value::String(version_string) => {
@@ -356,15 +356,15 @@ mod tests {
                         panic!("38ba32e9")
                     }
                 };
-            if v_table_len == 1 {
-                check_version(&v_table);
-            } else if v_table_len == 2 {
-                check_version(&v_table);
-                check_features(&v_table);
-            } else if v_table_len == 3 {
-                check_version(&v_table);
-                check_features(&v_table);
-                match v_table.get("default-features").expect("847a138f") {
+            if v_tbl_len == 1 {
+                check_version(&v_tbl);
+            } else if v_tbl_len == 2 {
+                check_version(&v_tbl);
+                check_features(&v_tbl);
+            } else if v_tbl_len == 3 {
+                check_version(&v_tbl);
+                check_features(&v_tbl);
+                match v_tbl.get("default-features").expect("847a138f") {
                     &Value::Boolean(_) => (),
                     &Value::String(_)
                     | &Value::Table(_)
@@ -374,7 +374,7 @@ mod tests {
                     | &Value::Array(_) => panic!("b320164b"),
                 }
             } else {
-                panic!("f1139378 {v_table:#?}")
+                panic!("f1139378 {v_tbl:#?}")
             }
         }
     }

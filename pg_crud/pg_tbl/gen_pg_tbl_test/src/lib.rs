@@ -8,8 +8,8 @@ mod tests {
     #[test]
     fn clippy() {
         clippy_check(
-            "gen_pg_table_test_cnt",
-            "../pg_crud/pg_table/",
+            "gen_pg_tbl_test_cnt",
+            "../pg_crud/pg_tbl/",
             r#"[dependencies]
 axum.workspace = true
 http.workspace = true
@@ -37,21 +37,21 @@ server_app_state = {path = "../../../server_app_state"}
 server_config = {path = "../../../server_config"}"#,
             &{
                 #[derive(Optml)]
-                enum AddGenPgTablePk {
+                enum AddGenPgTblPk {
                     False,
                     True,
                 }
-                let gen_table_example_ts = |add_gen_pg_table_pk: AddGenPgTablePk| {
-                    let mb_gen_pg_table_pk_ts = match add_gen_pg_table_pk {
-                        AddGenPgTablePk::False => Ts2::new(),
-                        AddGenPgTablePk::True => {
-                            quote! {#[gen_pg_table_pk]}
+                let gen_tbl_example_ts = |add_gen_pg_tbl_pk: AddGenPgTblPk| {
+                    let mb_gen_pg_tbl_pk_ts = match add_gen_pg_tbl_pk {
+                        AddGenPgTblPk::False => Ts2::new(),
+                        AddGenPgTblPk::True => {
+                            quote! {#[gen_pg_tbl_pk]}
                         }
                     };
                     quote! {
                         #AllowClippyArbitrarySrcItemOrdering
                         #[derive(Debug, Clone, Copy, optml::Optml)]
-                        #[pg_crud::gen_pg_table_config{{
+                        #[pg_crud::gen_pg_tbl_config{{
                             "cm_write_into_file": "False",
                             "co_write_into_file": "False",
                             "rm_write_into_file": "False",
@@ -90,8 +90,8 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::dm_logic{}]
                         #[pg_crud::dlo_logic{}]
                         #[pg_crud::cmn_logic{}]
-                        pub struct TableExample {
-                            #mb_gen_pg_table_pk_ts
+                        pub struct TblExample {
+                            #mb_gen_pg_tbl_pk_ts
                             pub pk_column:
                                 pg_crud::SqlxTypesUuidUuidAsNnUuidV4InitByPg,
                             pub column_0: pg_crud::I16AsNnInt2,
@@ -100,12 +100,11 @@ server_config = {path = "../../../server_config"}"#,
                         }
                     }
                 };
-                let ts =
-                    gen_pg_table_src::gen_pg_table(gen_table_example_ts(AddGenPgTablePk::True));
-                let table_struct_ts = gen_table_example_ts(AddGenPgTablePk::False);
+                let ts = gen_pg_tbl_src::gen_pg_tbl(gen_tbl_example_ts(AddGenPgTblPk::True));
+                let tbl_struct_ts = gen_tbl_example_ts(AddGenPgTblPk::False);
                 quote! {
                     #ts
-                    #table_struct_ts
+                    #tbl_struct_ts
                 }
             }
             .to_string(),

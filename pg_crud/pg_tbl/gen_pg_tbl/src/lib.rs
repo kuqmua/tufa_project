@@ -1,6 +1,6 @@
 use proc_macro::TokenStream as Ts;
 #[proc_macro_attribute]
-pub fn gen_pg_table_config(_attr: Ts, item: Ts) -> Ts {
+pub fn gen_pg_tbl_config(_attr: Ts, item: Ts) -> Ts {
     item
 }
 #[proc_macro_attribute]
@@ -75,7 +75,7 @@ pub fn dlo_logic(_attr: Ts, item: Ts) -> Ts {
 pub fn cmn_logic(_attr: Ts, item: Ts) -> Ts {
     item
 }
-#[proc_macro_derive(GenPgTable, attributes(gen_pg_table_pk))]
-pub fn gen_pg_table(input: Ts) -> Ts {
-    gen_pg_table_src::gen_pg_table(input.into()).into()
+#[proc_macro_derive(GenPgTbl, attributes(gen_pg_tbl_pk))]
+pub fn gen_pg_tbl(input: Ts) -> Ts {
+    gen_pg_tbl_src::gen_pg_tbl(input.into()).into()
 }

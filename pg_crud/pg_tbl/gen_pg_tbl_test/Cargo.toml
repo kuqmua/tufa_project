@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_table_test"
+name = "gen_pg_tbl_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -12,7 +12,7 @@ categories = ["category"]
 [dev-dependencies]
 proc-macro2.workspace = true
 quote.workspace = true
-gen_pg_table_src = {path = "../gen_pg_table_src"}
+gen_pg_tbl_src = {path = "../gen_pg_tbl_src"}
 macro_clippy_check_cmn = {path = "../../../macro_clippy_check_cmn"}
 token_patterns = {path = "../../../token_patterns"}
 optml = {path = "../../../optml"}

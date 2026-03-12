@@ -1,5 +1,5 @@
 gen_pg_json::gen_pg_json!({
-    "pg_table_columns_cnt_write_into_pg_table_columns_using_pg_json": "False",
+    "pg_tbl_columns_cnt_write_into_pg_tbl_columns_using_pg_json": "False",
     "whole_cnt_write_into_gen_pg_json": "False",
     "vrt":
     // "WithoutDims"

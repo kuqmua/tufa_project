@@ -1,5 +1,5 @@
 [package]
-name = "gen_pg_table_test_cnt"
+name = "gen_pg_tbl_test_cnt"
 version = "0.1.0"
 edition = "2024"
 description = "description"
