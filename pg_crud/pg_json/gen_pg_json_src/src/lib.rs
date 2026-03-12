@@ -12,7 +12,7 @@ use naming::{
     RdIdsSc, RdIdsTo2DimsVecRdInnSc, RdInnUcc, RdSc, SelfSc, SelfUcc, StringUcc, UpdForQueryUcc,
     UpdUcc, VSc, VecOfUcc,
     prm::{
-        JsonbSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfOriginUcc, SelfRdIdsUcc, SelfRdInnUcc,
+        JsonbSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfOrgnUcc, SelfRdIdsUcc, SelfRdInnUcc,
         SelfRdUcc, SelfSelUcc, SelfTtUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhUcc,
     },
 };
@@ -651,8 +651,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #ident_ts
             }
         };
-        let ident_stdrt_nn_origin_ucc = SelfOriginUcc::from_tokens(&ident_stdrt_nn_ucc);
-        let ident_origin_ucc = SelfOriginUcc::from_tokens(&ident);
+        let ident_stdrt_nn_orgn_ucc = SelfOrgnUcc::from_tokens(&ident_stdrt_nn_ucc);
+        let ident_orgn_ucc = SelfOrgnUcc::from_tokens(&ident);
         let ident_rd_inn_stdrt_nn_al_ts = {
             let content_ts: &dyn ToTokens = match &pg_json {
                 PgJson::I8AsJsonbNbr => &I8,
@@ -683,7 +683,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             &v_ident_rd_inn_ts,
             &ts
         );
-        let self_ident_origin_new_v_ts = quote! {Self(#ident_origin_ucc::new(#VSc))};
+        let self_ident_orgn_new_v_ts = quote! {Self(#ident_orgn_ucc::new(#VSc))};
         let mb_const_fn = match &pattern {
             Pattern::Stdrt => match &is_nl {
                 IsNl::False => ConstFn::True,
@@ -702,9 +702,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &const_new_ts
             ),
         };
-        let pub_new_or_const_new_self_ident_origin_new_v_ts = gen_pub_new_or_fn_new_ts(
-            &self_ident_origin_new_v_ts,
-            &self_ident_origin_new_v_ts
+        let pub_new_or_const_new_self_ident_orgn_new_v_ts = gen_pub_new_or_fn_new_ts(
+            &self_ident_orgn_new_v_ts,
+            &self_ident_orgn_new_v_ts
         );
         let gen_not_empty_unq_vec_try_new_match_ts = |
             prm_ts: &dyn ToTokens,
@@ -745,12 +745,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             Pattern::ArrDim3 {..} |
             Pattern::ArrDim4 {..} => DCopy::False,
         };
-        let ident_origin_ts = {
-            let gen_ident_origin_non_wrapping_6c0934a6 = |
+        let ident_orgn_ts = {
+            let gen_ident_orgn_non_wrapping_6c0934a6 = |
                 is_nl_e7d1d83c: &IsNl,
                 pattern_1ca83c6c: &Pattern
-            | SelfOriginUcc::from_tokens(&gen_ident_ts(is_nl_e7d1d83c, pattern_1ca83c6c));
-            let ident_origin_ts = DTsBuilder::new()
+            | SelfOrgnUcc::from_tokens(&gen_ident_ts(is_nl_e7d1d83c, pattern_1ca83c6c));
+            let ident_orgn_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_clone()
@@ -783,12 +783,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 )
                 .build_struct(
                     &Ts2::new(),
-                    &ident_origin_ucc,
+                    &ident_orgn_ucc,
                     &Ts2::new(),
                     &{
                         let content_ts: &dyn ToTokens = {
-                            let gen_ident_origin_6f054930 = |is_nl_70fb22e6: &IsNl, pattern_042c1c1d: &Pattern| {
-                                let v = gen_ident_origin_non_wrapping_6c0934a6(is_nl_70fb22e6, pattern_042c1c1d);
+                            let gen_ident_orgn_6f054930 = |is_nl_70fb22e6: &IsNl, pattern_042c1c1d: &Pattern| {
+                                let v = gen_ident_orgn_non_wrapping_6c0934a6(is_nl_70fb22e6, pattern_042c1c1d);
                                 match &is_nl {
                                     IsNl::False => gen_vec_tokens_dcl_ts(&v),
                                     IsNl::True => gen_opt_type_dcl_ts(&v),
@@ -799,12 +799,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     IsNl::False => (dim1_is_nl_a5c667cd, &pattern.down_by_1().expect("e994797d")),
                                     IsNl::True => (&IsNl::False, pattern),
                                 };
-                                gen_ident_origin_6f054930(is_nl_79be16e9, pattern_3437adad)
+                                gen_ident_orgn_6f054930(is_nl_79be16e9, pattern_3437adad)
                             };
                             match &pattern {
                                 Pattern::Stdrt => match &is_nl {
                                     IsNl::False => &ident_rd_inn_stdrt_nn_al_ts,
-                                    IsNl::True => &gen_opt_type_dcl_ts(&ident_stdrt_nn_origin_ucc),
+                                    IsNl::True => &gen_opt_type_dcl_ts(&ident_stdrt_nn_orgn_ucc),
                                 },
                                 Pattern::ArrDim1 { dim1_is_nl } |
                                 Pattern::ArrDim2 { dim1_is_nl, .. } |
@@ -815,7 +815,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         quote!{(#content_ts);}
                     }
                 );
-            let ident_origin_impl_new_self_cnt_ts = {
+            let ident_orgn_impl_new_self_cnt_ts = {
                 let gen_v_map_type_new_ts = |ts: &dyn ToTokens| quote! {#VSc.map(#ts::#NewSc)};
                 let gen_arr_dims_init_ts = |ts: &dyn ToTokens| match &is_nl {
                     IsNl::False => quote! {#VSc.into_iter().map(#ts::#NewSc).collect()},
@@ -824,65 +824,65 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => quote! {#VSc},
-                        IsNl::True => gen_v_map_type_new_ts(&ident_stdrt_nn_origin_ucc),
+                        IsNl::True => gen_v_map_type_new_ts(&ident_stdrt_nn_orgn_ucc),
                     },
                     Pattern::ArrDim1 { dim1_is_nl } => gen_arr_dims_init_ts(&{
                         let (pattern_38178717, is_nl_b0d116f8): (&Pattern, &IsNl) = match &is_nl {
                             IsNl::False => (&pattern.down_by_1().expect("1160d3df"), dim1_is_nl),
                             IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_b0d116f8, pattern_38178717)
+                        gen_ident_orgn_non_wrapping_6c0934a6(is_nl_b0d116f8, pattern_38178717)
                     }),
                     Pattern::ArrDim2 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
                         let (pattern_8e2a682a, is_nl_c378003c): (&Pattern, &IsNl) = match &is_nl {
                             IsNl::False => (&pattern.down_by_1().expect("8ab62f4e"), dim1_is_nl),
                             IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_c378003c, pattern_8e2a682a)
+                        gen_ident_orgn_non_wrapping_6c0934a6(is_nl_c378003c, pattern_8e2a682a)
                     }),
                     Pattern::ArrDim3 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
                         let (pattern_305989a9, is_nl_4a8825a3): (&Pattern, &IsNl) = match &is_nl {
                             IsNl::False => (&pattern.down_by_1().expect("ed64919d"), dim1_is_nl),
                             IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_4a8825a3, pattern_305989a9)
+                        gen_ident_orgn_non_wrapping_6c0934a6(is_nl_4a8825a3, pattern_305989a9)
                     }),
                     Pattern::ArrDim4 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
                         let (pattern_ea606504, is_nl_63d0fe05): (&Pattern, &IsNl) = match &is_nl {
                             IsNl::False => (&pattern.down_by_1().expect("25646d29"), dim1_is_nl),
                             IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_origin_non_wrapping_6c0934a6(is_nl_63d0fe05, pattern_ea606504)
+                        gen_ident_orgn_non_wrapping_6c0934a6(is_nl_63d0fe05, pattern_ea606504)
                     }),
                 }
             };
-            let impl_ident_origin_ts = {
+            let impl_ident_orgn_ts = {
                 let pub_fn_new_ts = {
-                    let self_ident_origin_impl_new_self_cnt_ts = quote!{
-                        Self(#ident_origin_impl_new_self_cnt_ts)
+                    let self_ident_orgn_impl_new_self_cnt_ts = quote!{
+                        Self(#ident_orgn_impl_new_self_cnt_ts)
                     };
                     gen_pub_new_or_fn_new_ts(
-                        &self_ident_origin_impl_new_self_cnt_ts,
-                        &self_ident_origin_impl_new_self_cnt_ts
+                        &self_ident_orgn_impl_new_self_cnt_ts,
+                        &self_ident_orgn_impl_new_self_cnt_ts
                     )
                 };
                 quote! {
-                    impl #ident_origin_ucc {
+                    impl #ident_orgn_ucc {
                         #pub_fn_new_ts
                     }
                 }
             };
-            let impl_from_ident_cr_for_ident_origin_ts = gen_impl_from_ts(&ident_cr_ucc, &ident_origin_ucc, &quote! {#VSc.0});
-            let impl_from_ident_upd_for_ident_origin_ts = gen_impl_from_ts(&ident_upd_ucc, &ident_origin_ucc, &quote! {#VSc.0});
+            let impl_from_ident_cr_for_ident_orgn_ts = gen_impl_from_ts(&ident_cr_ucc, &ident_orgn_ucc, &quote! {#VSc.0});
+            let impl_from_ident_upd_for_ident_orgn_ts = gen_impl_from_ts(&ident_upd_ucc, &ident_orgn_ucc, &quote! {#VSc.0});
             //todo
-            let mb_impl_schemars_json_schema_for_ident_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+            let mb_impl_schemars_json_schema_for_ident_orgn_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
                 match &pg_json {
                     PgJson::UuidUuidAsJsonbString => {
-                        let ident_stdrt_nn_origin_dq_ts = dq_ts(
-                            &ident_stdrt_nn_origin_ucc
+                        let ident_stdrt_nn_orgn_dq_ts = dq_ts(
+                            &ident_stdrt_nn_orgn_ucc
                         );
-                        let text_ident_stdrt_nn_origin_dq_ts = dq_ts(
-                            &format!("tests::{ident_stdrt_nn_origin_ucc}")
+                        let text_ident_stdrt_nn_orgn_dq_ts = dq_ts(
+                            &format!("tests::{ident_stdrt_nn_orgn_ucc}")
                         );
                         quote!{
                             #[allow(unused_qualifications)]
@@ -891,12 +891,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             const _: () = {
                                 #[automatically_derived]
                                 #[allow(unused_braces)]
-                                impl schemars::JsonSchema for #ident_stdrt_nn_origin_ucc {
+                                impl schemars::JsonSchema for #ident_stdrt_nn_orgn_ucc {
                                     fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                        schemars::_private::alloc::borrow::Cow::Borrowed(#ident_stdrt_nn_origin_dq_ts)
+                                        schemars::_private::alloc::borrow::Cow::Borrowed(#ident_stdrt_nn_orgn_dq_ts)
                                     }
                                     fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                        schemars::_private::alloc::borrow::Cow::Borrowed(#text_ident_stdrt_nn_origin_dq_ts)
+                                        schemars::_private::alloc::borrow::Cow::Borrowed(#text_ident_stdrt_nn_orgn_dq_ts)
                                     }
                                     fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
                                         { generator.subschema_for::<String>() }
@@ -924,7 +924,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let mb_impl_is_string_empty_for_ident_origin_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
+            let mb_impl_is_string_empty_for_ident_orgn_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
                 match &pg_json {
                     PgJson::I8AsJsonbNbr
                     | PgJson::I16AsJsonbNbr
@@ -938,20 +938,20 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     | PgJson::F64AsJsonbNbr
                     | PgJson::BoolAsJsonbBoolean => Ts2::new(),
                     PgJson::StringAsJsonbString => gen_impl_crate_is_string_empty_for_ident_ts(
-                        &ident_origin_ucc,
+                        &ident_orgn_ucc,
                         &quote!{self.0.clone().is_empty()}
                     ),
                     PgJson::UuidUuidAsJsonbString => gen_impl_crate_is_string_empty_for_ident_ts(
-                        &ident_origin_ucc,
+                        &ident_orgn_ucc,
                         &quote!{self.0.to_string().is_empty()}
                     ),
                 }
             } else {
                 Ts2::new()
             };
-            let impl_display_for_ident_origin_ts = gen_impl_display_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_location_lib_to_err_string_for_ident_origin_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_origin_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
-            let impl_dflt_some_one_el_for_ident_origin_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_origin_ucc, &{
+            let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
+            let impl_location_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_common_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => match &pg_json {
@@ -978,23 +978,23 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {Self(#content_ts)}
             });
-            let impl_sqlx_type_for_ident_origin_ts = gen_impl_sqlx_type_for_ident_ts(&ident_origin_ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
-            let impl_sqlx_encode_sqlx_pg_for_ident_origin_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_origin_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
+            let impl_sqlx_type_for_ident_orgn_ts = gen_impl_sqlx_type_for_ident_ts(&ident_orgn_ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
+            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
             quote! {
-                #ident_origin_ts
-                #impl_ident_origin_ts
-                #impl_from_ident_cr_for_ident_origin_ts
-                #impl_from_ident_upd_for_ident_origin_ts
-                #mb_impl_schemars_json_schema_for_ident_origin_ts
-                #mb_impl_is_string_empty_for_ident_origin_ts
-                #impl_display_for_ident_origin_ts
-                #impl_location_lib_to_err_string_for_ident_origin_ts
-                #impl_dflt_some_one_el_for_ident_origin_ts
-                #impl_sqlx_type_for_ident_origin_ts
-                #impl_sqlx_encode_sqlx_pg_for_ident_origin_ts
+                #ident_orgn_ts
+                #impl_ident_orgn_ts
+                #impl_from_ident_cr_for_ident_orgn_ts
+                #impl_from_ident_upd_for_ident_orgn_ts
+                #mb_impl_schemars_json_schema_for_ident_orgn_ts
+                #mb_impl_is_string_empty_for_ident_orgn_ts
+                #impl_display_for_ident_orgn_ts
+                #impl_location_lib_to_err_string_for_ident_orgn_ts
+                #impl_dflt_some_one_el_for_ident_orgn_ts
+                #impl_sqlx_type_for_ident_orgn_ts
+                #impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts
             }
         };
-        let ident_origin_struct_cnt_ts = quote!{(#ident_origin_ucc);};
+        let ident_orgn_struct_cnt_ts = quote!{(#ident_orgn_ucc);};
         let ident_tt_ts = {
             let ident_tt_ts = DTsBuilder::new()
                 .make_pub()
@@ -1011,12 +1011,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_tt_ucc,
                     &Ts2::new(),
-                    &ident_origin_struct_cnt_ts
+                    &ident_orgn_struct_cnt_ts
                 );
             let impl_ident_tt_ts = {
                 quote!{
                     impl #ident_tt_ucc {
-                        #pub_new_or_const_new_self_ident_origin_new_v_ts
+                        #pub_new_or_const_new_self_ident_orgn_new_v_ts
                     }
                 }
             };
@@ -1049,12 +1049,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_cr_ucc,
                     &Ts2::new(),
-                    &ident_origin_struct_cnt_ts
+                    &ident_orgn_struct_cnt_ts
                 );
             let impl_ident_cr_ts = {
                 quote!{
                     impl #ident_cr_ucc {
-                        #pub_new_or_const_new_self_ident_origin_new_v_ts
+                        #pub_new_or_const_new_self_ident_orgn_new_v_ts
                     }
                 }
             };
@@ -1078,17 +1078,17 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_cr_for_query_ucc,
                     &Ts2::new(),
-                    &ident_origin_struct_cnt_ts
+                    &ident_orgn_struct_cnt_ts
                 );
             let impl_ident_cr_for_query_ts = {
                 quote! {
                     impl #ident_cr_for_query_ucc {
-                        #pub_new_or_const_new_self_ident_origin_new_v_ts
+                        #pub_new_or_const_new_self_ident_orgn_new_v_ts
                     }
                 }
             };
             let impl_sqlx_encode_sqlx_pg_for_ident_cr_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_cr_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
-            let impl_sqlx_type_for_ident_cr_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_cr_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_cr_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_cr_for_query_ucc, &ident_orgn_ucc);
             let impl_from_ident_cr_for_ident_cr_for_query_ts = gen_impl_from_ts(&ident_cr_ucc, &ident_cr_for_query_ucc, &quote! {Self(#VSc.0)});
             let mb_impl_from_ident_upd_for_ident_cr_for_query_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
                 gen_impl_from_ts(&ident_upd_ucc, &ident_cr_for_query_ucc, &quote! {Self(#VSc.0)})
@@ -1579,12 +1579,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_rd_ucc,
                     &Ts2::new(),
-                    &ident_origin_struct_cnt_ts
+                    &ident_orgn_struct_cnt_ts
                 );
             let impl_ident_rd_ts = {
                 quote!{
                     impl #ident_rd_ucc {
-                        #pub_new_or_const_new_self_ident_origin_new_v_ts
+                        #pub_new_or_const_new_self_ident_orgn_new_v_ts
                     }
                 }
             };
@@ -1746,8 +1746,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
                 },
             };
-            let impl_from_ident_origin_for_ident_rd_inn_ts = gen_impl_from_ts(
-                &ident_origin_ucc,
+            let impl_from_ident_orgn_for_ident_rd_inn_ts = gen_impl_from_ts(
+                &ident_orgn_ucc,
                 &ident_rd_inn_ucc,
                 &{
                     let v_dot_zero_ts = quote!{#VSc.0};
@@ -1769,7 +1769,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             );
             quote! {
                 pub type #ident_rd_inn_ucc = #type_ts;
-                #impl_from_ident_origin_for_ident_rd_inn_ts
+                #impl_from_ident_orgn_for_ident_rd_inn_ts
             }
         };
         let ident_upd_ts = {
@@ -1787,12 +1787,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_upd_ucc,
                     &Ts2::new(),
-                    &ident_origin_struct_cnt_ts
+                    &ident_orgn_struct_cnt_ts
                 );
             let impl_ident_upd_ts = {
                 quote!{
                     impl #ident_upd_ucc {
-                        #pub_new_or_const_new_self_ident_origin_new_v_ts
+                        #pub_new_or_const_new_self_ident_orgn_new_v_ts
                     }
                 }
             };
@@ -1822,19 +1822,19 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &ident_upd_for_query_ucc,
                     &Ts2::new(),
-                    &ident_origin_struct_cnt_ts
+                    &ident_orgn_struct_cnt_ts
                 );
             let impl_ident_upd_for_query_ts = {
                 quote! {
                     impl #ident_upd_for_query_ucc {
-                        #pub_new_or_const_new_self_ident_origin_new_v_ts
+                        #pub_new_or_const_new_self_ident_orgn_new_v_ts
                     }
                 }
             };
             let impl_from_ident_upd_for_ident_upd_for_query_ts = gen_impl_from_ts(&ident_upd_ucc, &ident_upd_for_query_ucc, &quote! {Self(#VSc.0)});
             //its only for primitive json types
             let impl_sqlx_encode_sqlx_pg_for_ident_upd_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_upd_for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
-            let impl_sqlx_type_for_ident_upd_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_upd_for_query_ucc, &ident_origin_ucc);
+            let impl_sqlx_type_for_ident_upd_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_upd_for_query_ucc, &ident_orgn_ucc);
             quote! {
                 #ident_upd_for_query_ts
                 #impl_ident_upd_for_query_ts
@@ -2229,7 +2229,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &sel_only_crd_or_updd_ids_qb_ts,
             )
         };
-        let mb_impl_pg_json_obj_vec_el_id_for_ident_origin_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
+        let mb_impl_pg_json_obj_vec_el_id_for_ident_orgn_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
             let (qb_string_as_pg_text_cr_for_query_ts, qb_string_as_pg_text_upd_for_query_ts) = {
                 enum CrOrUpdForQuery {
                     CrForQuery,
@@ -2677,7 +2677,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             let rd_ids_and_cr_into_rd_ts = {
                 let content_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
-                    quote! {#ident_origin_ucc::new(#RdIdsSc.0.#VSc)}
+                    quote! {#ident_orgn_ucc::new(#RdIdsSc.0.#VSc)}
                 } else {
                     quote! {#CrSc.into()}
                 };
@@ -2694,7 +2694,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             let rd_ids_and_cr_into_tt_ts = {
                 let ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
-                    quote! {#ident_origin_ucc::new(#RdIdsSc.0.#VSc)}
+                    quote! {#ident_orgn_ucc::new(#RdIdsSc.0.#VSc)}
                 } else {
                     quote! {#CrSc.into()}
                 };
@@ -3194,7 +3194,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     wh_filters::PgJsonWhGreaterThan {
                                         oprtr: #import::Oprtr::Or,
                                         #VSc: #ident_tt_ucc(
-                                            #ident_origin_ucc(v_7aa498e8)
+                                            #ident_orgn_ucc(v_7aa498e8)
                                         ),
                                     }
                                 ))
@@ -3423,7 +3423,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                             wh_filters::PgJsonWhContainsElGreaterThan {
                                                                 oprtr: #import::Oprtr::Or,
                                                                 #VSc: #ident_stdrt_nn_tt_ucc(
-                                                                    #ident_stdrt_nn_origin_ucc(v_0cd93c25)
+                                                                    #ident_stdrt_nn_orgn_ucc(v_0cd93c25)
                                                                 )
                                                             }
                                                         )
@@ -3573,7 +3573,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         };
         let generated = quote! {
             #ident_ts
-            #ident_origin_ts
+            #ident_orgn_ts
             #ident_tt_ts
             #ident_cr_ts
             #ident_cr_for_query_ts
@@ -3585,7 +3585,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             #ident_upd_ts
             #ident_upd_for_query_ts
             #impl_pg_json_for_ident_ts
-            #mb_impl_pg_json_obj_vec_el_id_for_ident_origin_ts
+            #mb_impl_pg_json_obj_vec_el_id_for_ident_orgn_ts
             #impl_pg_json_test_cases_for_ident_ts
         };
         (

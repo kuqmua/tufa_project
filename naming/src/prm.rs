@@ -85,37 +85,37 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "rder"
     ],
     ["self", "rder"],
-    ["std", "opt", "opt", "obj", "self", "to", "cr", "origin"],
+    ["std", "opt", "opt", "obj", "self", "to", "cr", "orgn"],
     [
-        "std", "vec", "vec", "obj", "with", "id", "self", "to", "cr", "origin"
+        "std", "vec", "vec", "obj", "with", "id", "self", "to", "cr", "orgn"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to", "cr", "origin"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "to", "cr", "orgn"
     ],
-    ["std", "opt", "opt", "obj", "self", "rd", "origin"],
+    ["std", "opt", "opt", "obj", "self", "rd", "orgn"],
     [
-        "std", "vec", "vec", "obj", "with", "id", "self", "rd", "origin"
+        "std", "vec", "vec", "obj", "with", "id", "self", "rd", "orgn"
     ],
     [
-        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "rd", "origin"
+        "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "rd", "orgn"
     ],
     ["self", "opt", "to", "upd"],
-    ["self", "opt", "to", "upd", "origin"],
+    ["self", "opt", "to", "upd", "orgn"],
     ["obj", "self", "opt", "to", "upd"],
-    ["obj", "self", "opt", "to", "upd", "origin"],
+    ["obj", "self", "opt", "to", "upd", "orgn"],
     [
-        "std", "opt", "opt", "obj", "self", "opt", "to", "upd", "origin"
+        "std", "opt", "opt", "obj", "self", "opt", "to", "upd", "orgn"
     ],
     ["std", "opt", "opt", "obj", "self", "opt", "to", "upd"],
     [
-        "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd", "origin"
+        "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd", "orgn"
     ],
     [
         "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd"
     ],
     [
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd",
-        "origin"
+        "orgn"
     ],
     [
         "std", "opt", "opt", "std", "vec", "vec", "obj", "with", "id", "self", "opt", "to", "upd"
@@ -134,7 +134,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "self", "opt", "to", "upd", "try", "gen", "pg", "json", "er", "with", "serde"
     ],
     ["self", "json", "arr", "change"],
-    ["self", "to", "cr", "origin"],
+    ["self", "to", "cr", "orgn"],
     ["self", "to", "cr", "with", "generated", "id"],
     ["self", "to", "cr", "without", "generated", "id"],
     ["self", "json", "arr", "change", "try", "gen", "er"],
@@ -782,9 +782,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "without", "id", "rd", "try", "from", "er"],
     ["self", "with", "id", "rd", "try", "from", "er"],
     ["self", "tt"],
-    ["self", "nn", "origin"],
-    ["self", "nl", "origin"],
-    ["self", "origin"],
+    ["self", "nn", "orgn"],
+    ["self", "nl", "orgn"],
+    ["self", "orgn"],
     ["self", "vec"],
     ["self", "pg", "type"],
     ["self", "with", "id"],
@@ -804,8 +804,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ],
     ["upd", "qp", "self"],
     ["self", "tests"],
-    ["self", "origin", "try", "new", "er"],
-    ["self", "origin", "try", "new", "for", "de", "er"],
+    ["self", "orgn", "try", "new", "er"],
+    ["self", "orgn", "try", "new", "for", "de", "er"],
     ["self", "test", "cases"],
     ["self", "some", "v", "upd"],
     ["self", "some", "v", "rd"],

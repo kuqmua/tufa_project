@@ -71,3 +71,4 @@
 - `er` error
 - `op` operation
 - `nbr` number
+- `orgn` origin
