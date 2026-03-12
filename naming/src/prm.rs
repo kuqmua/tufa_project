@@ -433,12 +433,12 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "eq"
     ],
     ["pg", "type", "self", "wh", "hexadecimal", "notation", "eq"],
-    ["pg", "type", "self", "wh", "length", "greater", "than"],
+    ["pg", "type", "self", "wh", "len", "greater", "than"],
     [
-        "pg", "type", "std", "opt", "opt", "self", "wh", "length", "greater", "than"
+        "pg", "type", "std", "opt", "opt", "self", "wh", "len", "greater", "than"
     ],
     [
-        "pg", "type", "self", "wh", "length", "greater", "than", "try", "new", "er"
+        "pg", "type", "self", "wh", "len", "greater", "than", "try", "new", "er"
     ],
     [
         "pg",
@@ -498,8 +498,8 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
         "pg", "type", "std", "opt", "opt", "self", "wh", "is", "null"
     ],
     ["pg", "type", "self", "wh", "named"],
-    ["self", "wh", "range", "length", "try", "new", "er"],
-    ["self", "wh", "range", "length"],
+    ["self", "wh", "range", "len", "try", "new", "er"],
+    ["self", "wh", "range", "len"],
     ["self", "nl"],
     ["self", "nn"],
     ["pg", "type", "self", "nn", "to", "cr"],
@@ -604,9 +604,9 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["pg", "json", "std", "opt", "opt", "self", "rd"],
     ["pg", "json", "std", "opt", "opt", "self", "wh"],
     [
-        "pg", "json", "self", "wh", "length", "greater", "than", "try", "new", "er"
+        "pg", "json", "self", "wh", "len", "greater", "than", "try", "new", "er"
     ],
-    ["pg", "json", "self", "wh", "length", "greater", "than"],
+    ["pg", "json", "self", "wh", "len", "greater", "than"],
     [
         "pg", "json", "self", "wh", "position", "eqs", "try", "new", "er"
     ],
@@ -743,7 +743,7 @@ naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "visitor"],
     ["self", "nn", "try", "new", "er"],
     ["self", "to", "upd", "qp", "er"],
-    ["self", "length"],
+    ["self", "len"],
     ["vec", "self", "arr", "nn"],
     ["vec", "self", "arr", "nl"],
     ["self", "opt", "to", "upd", "try", "gen", "er"],

@@ -318,8 +318,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let pg_type_ptrn_arr_dim3 = PgTypePtrn::ArrDim3;
     let pg_type_ptrn_arr_dim4 = PgTypePtrn::ArrDim4;
     let gen_pub_dims_bounded_vec_ts =
-        |vec_length_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
-            quote! {pub #DimsSc: BoundedVec<#import::#kind_of_unsigned_part_of_i32, #vec_length_ts>}
+        |vec_len_ts: &dyn ToTokens, kind_of_unsigned_part_of_i32: &KindOfUnsignedPartOfI32| {
+            quote! {pub #DimsSc: BoundedVec<#import::#kind_of_unsigned_part_of_i32, #vec_len_ts>}
         };
     let gen_ident_match_field_fn_ok_v_return_err_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, fn_ts: &dyn ToTokens| {
@@ -776,15 +776,14 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"-|-");
                 let pub_v_not_zero_unsigned_part_of_i32_dcl_ts =
                     quote! {pub #VSc: #not_zero_unsigned_part_of_i32_ts};
-                let gen_length_filter_pattern_ts = |oprtr: &dyn Display| {
+                let gen_len_filter_pattern_ts = |oprtr: &dyn Display| {
                     (
                         generic_false.clone(),
                         pub_v_not_zero_unsigned_part_of_i32_dcl_ts.clone(),
                         v_dflt_some_one_el_ts.clone(),
                         IncrPrmUndrscr::False,
                         {
-                            let format_ts =
-                                dq_ts(&format!("{{}}(arr_length({{}}, 1) {oprtr} ${{}})"));
+                            let format_ts = dq_ts(&format!("{{}}(arr_len({{}}, 1) {oprtr} ${{}})"));
                             quote! {
                                 match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                                     Ok(v_f7988de8) => Ok(format!(#format_ts, &self.oprtr.to_qp(add_oprtr), #ColumnSc, v_f7988de8)),
@@ -828,7 +827,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         )
                     })
                 };
-                let gen_range_length_ts = |pg_type_ptrn: &PgTypePtrn| {
+                let gen_range_len_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_dcl_ts,
                         mb_dims_dflt_init_ts,
@@ -1036,8 +1035,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::DimOneGreaterThanCurrentTime => {
                         gen_greater_than_current_time_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::DimOneLengthEq => gen_length_filter_pattern_ts(&"="),
-                    PgTypeFilter::DimOneLengthGreaterThan => gen_length_filter_pattern_ts(&">"),
+                    PgTypeFilter::DimOneLenEq => gen_len_filter_pattern_ts(&"="),
+                    PgTypeFilter::DimOneLenGreaterThan => gen_len_filter_pattern_ts(&">"),
                     PgTypeFilter::EqToEncodedStringRepresentation => {
                         gen_eq_to_encoded_string_representation_ts(&pg_type_ptrn_stdrt)
                     }
@@ -1106,8 +1105,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     PgTypeFilter::DimOneAdjacentWithRange { .. } => {
                         gen_adjacent_with_range_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::RangeLength => gen_range_length_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneRangeLength => gen_range_length_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFilter::RangeLen => gen_range_len_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFilter::DimOneRangeLen => gen_range_len_ts(&pg_type_ptrn_arr_dim1),
                 }
             };
             let struct_ts = gen_struct_ts(false, &generic, &ident, &struct_extra_fields_ts);
@@ -1262,8 +1261,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     },
                 )
             };
-            let gen_length_eq_ts = |pg_type_ptrn: &PgTypePtrn| gen_ts_ae2fa44d(pg_type_ptrn, &"=");
-            let gen_length_greater_than_ts =
+            let gen_len_eq_ts = |pg_type_ptrn: &PgTypePtrn| gen_ts_ae2fa44d(pg_type_ptrn, &"=");
+            let gen_len_greater_than_ts =
                 |pg_type_ptrn: &PgTypePtrn| gen_ts_ae2fa44d(pg_type_ptrn, &">");
             let gen_greater_than_ts =
                 |pg_type_ptrn: &PgTypePtrn| gen_7cc8e29b_ts(pg_type_ptrn, &">");
@@ -1491,7 +1490,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         &format!(
                             //todo test it properly using all strange string vrts
                             "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
-                            // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
+                            // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for len(el::text) - 2) {{}} ${{}}))",
                             pg_type_kind.format_argument()
                         ),
                         &mb_dims_ies_init_ts,
@@ -1522,7 +1521,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                             //todo reuse select it
                             //todo test it properly using all strange string vrts
                             "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
-                            // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
+                            // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for len(el::text) - 2) !{{}} ${{}}))",
                             pg_type_kind.format_argument()
                         ),
                         &mb_dims_ies_init_ts,
@@ -1633,23 +1632,23 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 PgJsonFilter::DimTwoAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim2),
                 PgJsonFilter::DimThreeAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim3),
                 PgJsonFilter::DimFourAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::LengthEq => gen_length_eq_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneLengthEq => gen_length_eq_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoLengthEq => gen_length_eq_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeLengthEq => gen_length_eq_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourLengthEq => gen_length_eq_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::LengthGreaterThan => gen_length_greater_than_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_ptrn_arr_dim1)
+                PgJsonFilter::LenEq => gen_len_eq_ts(&pg_type_ptrn_stdrt),
+                PgJsonFilter::DimOneLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFilter::DimTwoLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFilter::DimThreeLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFilter::DimFourLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFilter::LenGreaterThan => gen_len_greater_than_ts(&pg_type_ptrn_stdrt),
+                PgJsonFilter::DimOneLenGreaterThan => {
+                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim1)
                 }
-                PgJsonFilter::DimTwoLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_ptrn_arr_dim2)
+                PgJsonFilter::DimTwoLenGreaterThan => {
+                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim2)
                 }
-                PgJsonFilter::DimThreeLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_ptrn_arr_dim3)
+                PgJsonFilter::DimThreeLenGreaterThan => {
+                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourLengthGreaterThan => {
-                    gen_length_greater_than_ts(&pg_type_ptrn_arr_dim4)
+                PgJsonFilter::DimFourLenGreaterThan => {
+                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim4)
                 }
                 PgJsonFilter::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
                 PgJsonFilter::DimOneGreaterThan { .. } => {

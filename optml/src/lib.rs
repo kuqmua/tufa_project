@@ -156,7 +156,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             // pub struct MyStruct<T> {
             //     cr: T,
             //     vrt: u32,
-            //     length_greater_than: u8,
+            //     len_greater_than: u8,
             // }
             // impl<T> MyStruct<T> {
             //     const #const_name_ts: () = {
@@ -171,7 +171,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             //     let my_struct_u8: MyStruct<u8> = MyStruct {
             //         cr: 0,
             //         vrt: 0,
-            //         length_greater_than: 0,
+            //         len_greater_than: 0,
             //     };
             //     println!("{my_struct_u8:#?}");
             // }

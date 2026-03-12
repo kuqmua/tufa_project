@@ -254,10 +254,10 @@ pub trait PgTypeTestCases {
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn cr_into_pg_json_opt_vec_wh_length_eq(
+    fn cr_into_pg_json_opt_vec_wh_len_eq(
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
-    fn cr_into_pg_json_opt_vec_wh_length_greater_than(
+    fn cr_into_pg_json_opt_vec_wh_len_greater_than(
         cr: <Self::PgType as PgType>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
@@ -294,17 +294,17 @@ pub struct PgTypeGreaterThanTest<T: PgType> {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Optml)]
-pub struct PgTypeLengthGreaterThanTest<T: PgType> {
+pub struct PgTypeLenGreaterThanTest<T: PgType> {
     pub cr: <T as PgType>::Cr,
-    pub vrt: PgJsonLengthGreaterThanVrt,
-    pub length_greater_than: UnsignedPartOfI32,
+    pub vrt: PgJsonLenGreaterThanVrt,
+    pub len_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Optml)]
-pub struct PgJsonLengthGreaterThanTest<T: PgJson> {
+pub struct PgJsonLenGreaterThanTest<T: PgJson> {
     pub cr: <T as PgJson>::Cr,
-    pub vrt: PgJsonLengthGreaterThanVrt,
-    pub length_greater_than: UnsignedPartOfI32,
+    pub vrt: PgJsonLenGreaterThanVrt,
+    pub len_greater_than: UnsignedPartOfI32,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[cfg(feature = "test-utils")]
@@ -372,10 +372,10 @@ pub trait PgJsonTestCases {
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
-    fn cr_into_pg_json_opt_vec_wh_length_eq(
+    fn cr_into_pg_json_opt_vec_wh_len_eq(
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
-    fn cr_into_pg_json_opt_vec_wh_length_greater_than(
+    fn cr_into_pg_json_opt_vec_wh_len_greater_than(
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(

@@ -73,3 +73,5 @@
 - `nbr` number
 - `orgn` origin
 - `cmn` common
+- `len` length
+- `eq` equal

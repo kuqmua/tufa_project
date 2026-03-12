@@ -189,7 +189,7 @@ impl StatusCode {
             Self::ReqTimeout408 => quote! {"req timeout"},
             Self::Conflict409 => quote! {"conflict"},
             Self::Gone410 => quote! {"gone"},
-            Self::LengthRequired411 => quote! {"length required"},
+            Self::LengthRequired411 => quote! {"len required"},
             Self::PreconditionFailed412 => quote! {"precondition failed"},
             Self::PayloadTooLarge413 => quote! {"payload too large"},
             Self::UriTooLong414 => quote! {"uri too long"},

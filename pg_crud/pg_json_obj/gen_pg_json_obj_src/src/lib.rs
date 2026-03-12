@@ -9,15 +9,14 @@ use macros_helpers::{
 };
 use naming::{
     AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColumnFieldSc, ColumnSc,
-    ContainsAllElsOfArrUcc, CrIntoPgJsonOptVecWhLengthEqSc,
-    CrIntoPgJsonOptVecWhLengthGreaterThanSc, CrSc, CrUpdDelAreEmptyUcc, DelSc, DfltSomeOneElSc,
-    DfltSomeOneElUcc, DimOneEqUcc, DimOneInUcc, DisplayPlusToTokens, EqUcc, ErSc, FieldsSc,
-    GenJsonbSetTargetSc, IdSc, IdsAreNotUnqUcc, InUcc, IncrSc, JsonbObjUcc, JsonbSetAccumulatorSc,
-    JsonbSetPathSc, JsonbSetTargetSc, LengthEqUcc, LengthGreaterThanUcc, NotUnqIdInJsonDelArrUcc,
-    NotUnqIdInJsonUpdAndDelArrsUcc, OptUpdSc, OptVecCrSc, OverlapsWithArrUcc, PgJsonTestCasesUcc,
-    PgJsonUcc, PgTypeTestCasesUcc, PgTypeUcc, PreviousRdAndOptUpdIntoRdSc, QpErUcc, QpSc, QuerySc,
-    RdIdsAndCrIntoOptVRdSc, RdIdsAndCrIntoPgJsonOptVecWhBtwnSc,
-    RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
+    ContainsAllElsOfArrUcc, CrIntoPgJsonOptVecWhLenEqSc, CrIntoPgJsonOptVecWhLenGreaterThanSc,
+    CrSc, CrUpdDelAreEmptyUcc, DelSc, DfltSomeOneElSc, DfltSomeOneElUcc, DimOneEqUcc, DimOneInUcc,
+    DisplayPlusToTokens, EqUcc, ErSc, FieldsSc, GenJsonbSetTargetSc, IdSc, IdsAreNotUnqUcc, InUcc,
+    IncrSc, JsonbObjUcc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc, LenEqUcc,
+    LenGreaterThanUcc, NotUnqIdInJsonDelArrUcc, NotUnqIdInJsonUpdAndDelArrsUcc, OptUpdSc,
+    OptVecCrSc, OverlapsWithArrUcc, PgJsonTestCasesUcc, PgJsonUcc, PgTypeTestCasesUcc, PgTypeUcc,
+    PreviousRdAndOptUpdIntoRdSc, QpErUcc, QpSc, QuerySc, RdIdsAndCrIntoOptVRdSc,
+    RdIdsAndCrIntoPgJsonOptVecWhBtwnSc, RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc, RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhInSc, RdIdsAndCrIntoPgJsonOptVecWhRgxSc, RdIdsAndCrIntoRdSc,
     RdIdsAndCrIntoTtSc, RdIdsAndCrIntoVecWhEqToJsonFieldSc, RdIdsAndCrIntoVecWhEqUsingFieldsSc,
@@ -1579,11 +1578,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let dim_one_eq_ts = quote! {
                                     DimOneEq(#import::PgJsonWhDimOneEq<#ident_with_id_stdrt_nn_tt_ucc>),
                                 };
-                                let length_eq_ts = quote! {
-                                    LengthEq(#import::PgJsonWhLengthEq),
+                                let len_eq_ts = quote! {
+                                    LenEq(#import::PgJsonWhLenEq),
                                 };
-                                let length_greater_than_ts = quote! {
-                                    LengthGreaterThan(#import::PgJsonWhLengthGreaterThan),
+                                let len_greater_than_ts = quote! {
+                                    LenGreaterThan(#import::PgJsonWhLenGreaterThan),
                                 };
                                 let in_ts = quote! {
                                     In(#import::PgJsonWhIn<#ident_as_pg_json_tt_ts>),
@@ -1613,8 +1612,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 quote! {
                                     #eq_vrt_ident_ts,
                                     #dim_one_eq_ts
-                                    #length_eq_ts
-                                    #length_greater_than_ts
+                                    #len_eq_ts
+                                    #len_greater_than_ts
                                     #in_ts
                                     #dim_one_in_ts
                                     #contains_all_els_of_arr_ts
@@ -1712,8 +1711,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let concrete_filters_ts = [
                                     quote!{#EqUcc},
                                     quote!{#DimOneEqUcc},
-                                    quote!{#LengthEqUcc},
-                                    quote!{#LengthGreaterThanUcc},
+                                    quote!{#LenEqUcc},
+                                    quote!{#LenGreaterThanUcc},
                                     quote!{#InUcc},
                                     quote!{#DimOneInUcc},
                                     quote!{#ContainsAllElsOfArrUcc},
@@ -1764,8 +1763,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     match self {
                                         Self::Eq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
                                         Self::DimOneEq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::LengthEq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::LengthGreaterThan(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
+                                        Self::LenEq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
+                                        Self::LenGreaterThan(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
                                         Self::In(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
                                         Self::DimOneIn(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
                                         Self::ContainsAllElsOfArr(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
@@ -1810,8 +1809,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             vec![
                                 Self::Eq(#dflt_but_opt_is_some_call_ts),
                                 Self::DimOneEq(#dflt_but_opt_is_some_call_ts),
-                                Self::LengthEq(#dflt_but_opt_is_some_call_ts),
-                                Self::LengthGreaterThan(#dflt_but_opt_is_some_call_ts),
+                                Self::LenEq(#dflt_but_opt_is_some_call_ts),
+                                Self::LenGreaterThan(#dflt_but_opt_is_some_call_ts),
                                 Self::In(#dflt_but_opt_is_some_call_ts),
                                 Self::DimOneIn(#dflt_but_opt_is_some_call_ts),
                                 Self::ContainsAllElsOfArr(#dflt_but_opt_is_some_call_ts),
@@ -6255,7 +6254,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     gen_ts(&Dim::Four)
                 )
             };
-            let cr_into_pg_json_opt_vec_wh_length_eq_ts = {
+            let cr_into_pg_json_opt_vec_wh_len_eq_ts = {
                 let gen_nl_ts = |ts: &dyn ToTokens|quote! {
                     match #import::NotEmptyUnqVec::try_new(
                         match #CrSc.0 {
@@ -6263,7 +6262,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 #ts
                                 as
                                 #import::PgJsonTestCases
-                            >::#CrIntoPgJsonOptVecWhLengthEqSc(cr_09a81dae) {
+                            >::#CrIntoPgJsonOptVecWhLenEqSc(cr_09a81dae) {
                                 Some(v_3680a4c9) => {
                                     let mut acc_5c441d3a = Vec::new();
                                     for el_a8b181a0 in v_3680a4c9.clone().into_vec() {
@@ -6309,7 +6308,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
                                 quote! {
-                                    if let Some(v_927601a4) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLengthEqSc(
+                                    if let Some(v_927601a4) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenEqSc(
                                         #CrSc.#fi
                                     ) {
                                         for el_194a660a in v_927601a4.clone().into_vec() {
@@ -6358,7 +6357,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
                                 quote! {
                                     for cr_e06a9fe2 in #CrSc.0.clone() {
-                                        if let Some(v_ee015fcc) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLengthEqSc(
+                                        if let Some(v_ee015fcc) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenEqSc(
                                             cr_e06a9fe2.#fi
                                         ) {
                                             for el in v_ee015fcc.clone().into_vec() {
@@ -6390,8 +6389,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 match #import::NotEmptyUnqVec::try_new({
                                     let mut acc_480d72e5 = Vec::new();
                                     #(#ts)*
-                                    acc_480d72e5.push(#ident_wh_ucc::LengthEq(
-                                        #import::PgJsonWhLengthEq {
+                                    acc_480d72e5.push(#ident_wh_ucc::LenEq(
+                                        #import::PgJsonWhLenEq {
                                             oprtr: #import::Oprtr::And,
                                             #VSc: #import::UnsignedPartOfI32::try_from(
                                                 i32::try_from(#CrSc.0.len()).expect("1811faf7")
@@ -6412,13 +6411,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     },
                 }
             };
-            let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = {
+            let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = {
                 let gen_nl_ts = |ts: &dyn ToTokens|quote! {
                     #CrSc.0.map_or_else(|| None, |cr_612f2a61| <
                         #ts
                         as
                         #import::PgJsonTestCases
-                    >::cr_into_pg_json_opt_vec_wh_length_greater_than(cr_612f2a61).map_or_else(
+                    >::cr_into_pg_json_opt_vec_wh_len_greater_than(cr_612f2a61).map_or_else(
                         || None,
                         |v_1ea95b5d| match #import::NotEmptyUnqVec::try_new({
                             let mut acc_87f84b5c = Vec::new();
@@ -6455,7 +6454,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi_ucc = &ToTokensToUccTs::case_or_panic(&fi);
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
                                 quote! {
-                                    if let Some(v_3432b965) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLengthGreaterThanSc(
+                                    if let Some(v_3432b965) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenGreaterThanSc(
                                         #CrSc.#fi
                                     ) {
                                         for el_9bbf8527 in v_3432b965.clone().into_vec() {
@@ -6504,7 +6503,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
                                 quote! {
                                     for cr_34a1e540 in #CrSc.0.clone() {
-                                        if let Some(v_51fe384b) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLengthGreaterThanSc(
+                                        if let Some(v_51fe384b) = #ft_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenGreaterThanSc(
                                             cr_34a1e540.#fi
                                         ) {
                                             for el_4a00ab02 in v_51fe384b.clone().into_vec() {
@@ -6536,8 +6535,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 match #import::NotEmptyUnqVec::try_new({
                                     let mut acc_acceb7eb = Vec::new();
                                     #(#ts)*
-                                    acc_acceb7eb.push(#ident_wh_ucc::LengthGreaterThan(
-                                        #import::PgJsonWhLengthGreaterThan {
+                                    acc_acceb7eb.push(#ident_wh_ucc::LenGreaterThan(
+                                        #import::PgJsonWhLenGreaterThan {
                                             oprtr: #import::Oprtr::And,
                                             #VSc: #import::UnsignedPartOfI32::try_from(
                                                 i32::try_from(
@@ -6870,8 +6869,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_length_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
+                &cr_into_pg_json_opt_vec_wh_len_eq_ts,
+                &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
@@ -6935,10 +6934,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     gen_ts(&Dim::Four)
                 )
             };
-            let cr_into_pg_json_opt_vec_wh_length_eq_ts = quote!{#self_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLengthEqSc(
+            let cr_into_pg_json_opt_vec_wh_len_eq_ts = quote!{#self_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenEqSc(
                 #CrSc
             )};
-            let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = quote!{#self_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLengthGreaterThanSc(
+            let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = quote!{#self_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenGreaterThanSc(
                 #CrSc
             )};
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc(
@@ -6990,8 +6989,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_length_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
+                &cr_into_pg_json_opt_vec_wh_len_eq_ts,
+                &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,

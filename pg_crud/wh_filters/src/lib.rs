@@ -674,9 +674,9 @@ pub struct BoundedVec<T, const LENGTH: usize>(Vec<T>);
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, Optml,
 )]
 pub enum BoundedVecTryNewEr {
-    LengthIsNotCorrect {
+    LenIsNotCorrect {
         #[eo_to_err_string_serde]
-        wrong_length: usize,
+        wrong_len: usize,
         #[eo_to_err_string_serde]
         expected: usize,
         loc: Loc,
@@ -814,8 +814,8 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedVec<T, LENGTH> {
         if len == LENGTH {
             Ok(Self(v))
         } else {
-            Err(BoundedVecTryNewEr::LengthIsNotCorrect {
-                wrong_length: len,
+            Err(BoundedVecTryNewEr::LenIsNotCorrect {
+                wrong_len: len,
                 expected: LENGTH,
                 loc: loc!(),
             })

@@ -13,7 +13,7 @@ use naming::{
     BySc, CheckBodySizeSc, CheckBodySizeUcc, CmErVrtsSc, CmLogicSc, CmnErVrtsSc, CmnLogicSc,
     CmnRdIdsFromCoSc, CoErVrtsSc, CoLogicSc, ColumnSc, ColumnsSc, CommitSc, ConfigSc,
     CrExtensionIfNotExistsPgJsonschemaUcc, CrExtensionIfNotExistsUuidOsspUcc,
-    CrIntoPgJsonOptVecWhLengthEqSc, CrIntoPgJsonOptVecWhLengthGreaterThanSc,
+    CrIntoPgJsonOptVecWhLenEqSc, CrIntoPgJsonOptVecWhLenGreaterThanSc,
     CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc, CrTableColumnQpSc, CrUcc, DeResUcc,
     DesirableUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElMaxPageSizeUcc, DfltSomeOneElSc,
     DfltSomeOneElUcc, DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloLogicSc, DmErVrtsSc,
@@ -100,11 +100,11 @@ use token_patterns::{
 //todo rd again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
 //todo reexport all crates what logic depends on (from crates.io) (use of undclared crate or module `time`)
 //todo add transaction isolation level (see pg docs)
-//todo check on pg max length value of type
+//todo check on pg max len value of type
 //todo in few cases rows affected is usefull. (upd del for example). if 0 afftected -mb its er? or mb use sel then upd\del?(rewrite query)
 //todo pg json schema validation https://youtu.be/F6X60ln2VNc
 //todo gen json schema from rust type https://docs.rs/schemars/laTest/schemars/
-//todo support rd table length
+//todo support rd table len
 //todo what is pub what is private
 //todo header Retry-After logic
 //todo pg json:
@@ -399,9 +399,9 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             for el in &fields_named.named {
                 let fi = el.ident.clone().expect("915ef2ce");
                 let fi_len = fi.to_string().len();
-                let max_pg_column_length = 63;
+                let max_pg_column_len = 63;
                 //todo write runtime check
-                assert!(fi_len <= max_pg_column_length, "1266ae5a");
+                assert!(fi_len <= max_pg_column_len, "1266ae5a");
                 fields.push(SynField {
                     vis: el.vis.clone(),
                     type0: el.ty.clone(),
@@ -4117,8 +4117,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_name = "581c947f";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_name = "de556c26";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_name = "35b26a97";
-        let table_cr_into_pg_json_opt_vec_wh_length_eq_name = "1ce53b67";
-        let table_cr_into_pg_json_opt_vec_wh_length_greater_than_name = "6b6bdfe0";
+        let table_cr_into_pg_json_opt_vec_wh_len_eq_name = "1ce53b67";
+        let table_cr_into_pg_json_opt_vec_wh_len_greater_than_name = "6b6bdfe0";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_name = "35a01678";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_name = "33a3706a";
         let table_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_name = "a3e2165c";
@@ -4135,8 +4135,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_name,
-            &table_cr_into_pg_json_opt_vec_wh_length_eq_name,
-            &table_cr_into_pg_json_opt_vec_wh_length_greater_than_name,
+            &table_cr_into_pg_json_opt_vec_wh_len_eq_name,
+            &table_cr_into_pg_json_opt_vec_wh_len_greater_than_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_name,
             &table_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_name,
@@ -4993,8 +4993,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     ),
                 )
             };
-            let cr_into_pg_json_opt_vec_wh_length_eq_ts = gen_rd_test_ts(
-                table_cr_into_pg_json_opt_vec_wh_length_eq_name,
+            let cr_into_pg_json_opt_vec_wh_len_eq_ts = gen_rd_test_ts(
+                table_cr_into_pg_json_opt_vec_wh_len_eq_name,
                 &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
@@ -5003,7 +5003,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {v_f825e068},
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                            quote! {#ft_ts #CrIntoPgJsonOptVecWhLengthEqSc(
+                            quote! {#ft_ts #CrIntoPgJsonOptVecWhLenEqSc(
                                 ident_cr.#fi.clone()
                             )}
                         },
@@ -5020,8 +5020,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                     )
                 },
             );
-            let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = gen_rd_test_ts(
-                table_cr_into_pg_json_opt_vec_wh_length_greater_than_name,
+            let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = gen_rd_test_ts(
+                table_cr_into_pg_json_opt_vec_wh_len_greater_than_name,
                 &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
@@ -5030,7 +5030,7 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                         &quote! {v_cd4aa374},
                         &{
                             let ft_ts = gen_as_pg_type_test_cases_path_ts(&el.type0);
-                            quote! {#ft_ts #CrIntoPgJsonOptVecWhLengthGreaterThanSc(
+                            quote! {#ft_ts #CrIntoPgJsonOptVecWhLenGreaterThanSc(
                                 ident_cr.#fi.clone()
                             )}
                         },
@@ -5130,8 +5130,8 @@ pub fn gen_pg_table(input: Ts2) -> Ts2 {
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts
-                #cr_into_pg_json_opt_vec_wh_length_eq_ts
-                #cr_into_pg_json_opt_vec_wh_length_greater_than_ts
+                #cr_into_pg_json_opt_vec_wh_len_eq_ts
+                #cr_into_pg_json_opt_vec_wh_len_greater_than_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts
                 #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts

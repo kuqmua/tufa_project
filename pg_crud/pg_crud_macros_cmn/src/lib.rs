@@ -5,8 +5,8 @@ use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AddOprtrSc, AllVrtsDfltSomeOneElMaxPageSizeSc, AllVrtsDfltSomeOneElSc, ColumnFieldForErMsgSc,
-    ColumnFieldSc, ColumnSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLengthEqSc,
-    CrIntoPgJsonOptVecWhLengthGreaterThanSc, CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc,
+    ColumnFieldSc, ColumnSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLenEqSc,
+    CrIntoPgJsonOptVecWhLenGreaterThanSc, CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc,
     CrTableColumnQpSc, CrUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElSc, DisplayPlusToTokens,
     EqOprtrUcc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
     MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc, PgJsonUcc,
@@ -665,8 +665,8 @@ pub fn pg_crud_cmn_qp_er_ts() -> Ts2 {
 pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("struct {v}"))
 }
-pub fn gen_struct_ident_with_nbr_els_dq_ts(ident: &dyn DisplayPlusToTokens, length: usize) -> Ts2 {
-    dq_ts(&format!("struct {ident} with {length} els"))
+pub fn gen_struct_ident_with_nbr_els_dq_ts(ident: &dyn DisplayPlusToTokens, len: usize) -> Ts2 {
+    dq_ts(&format!("struct {ident} with {len} els"))
 }
 pub fn gen_sqlx_types_json_type_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {sqlx::types::Json<#type_ts>}
@@ -677,10 +677,10 @@ pub fn gen_opt_type_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
 pub fn gen_vec_tokens_dcl_ts(type_ts: &dyn ToTokens) -> Ts2 {
     quote! {Vec<#type_ts>}
 }
-pub fn gen_de_dq_ts(ident: &dyn DisplayPlusToTokens, length: usize) -> (Ts2, Ts2, Ts2) {
+pub fn gen_de_dq_ts(ident: &dyn DisplayPlusToTokens, len: usize) -> (Ts2, Ts2, Ts2) {
     let struct_pg_type_ident_wh_tokens_dq_ts = gen_struct_ident_dq_ts(ident);
     let struct_pg_type_ident_wh_tokens_with_nbr_els_dq_ts =
-        gen_struct_ident_with_nbr_els_dq_ts(ident, length);
+        gen_struct_ident_with_nbr_els_dq_ts(ident, len);
     let pg_type_ident_wh_tokens_dq_ts = dq_ts(&ident);
     (
         struct_pg_type_ident_wh_tokens_dq_ts,
@@ -1385,26 +1385,26 @@ fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
         &ts,
     )
 }
-fn gen_cr_into_pg_json_opt_vec_wh_length_eq_ts(
+fn gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CrIntoPgJsonOptVecWhLengthEqSc(
+        fn #CrIntoPgJsonOptVecWhLenEqSc(
             #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUnqVec<#path_ts::#WhUcc>> {
             #ts
         }
     }
 }
-fn gen_cr_into_pg_json_opt_vec_wh_length_greater_than_ts(
+fn gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CrIntoPgJsonOptVecWhLengthGreaterThanSc(
+        fn #CrIntoPgJsonOptVecWhLenGreaterThanSc(
             #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUnqVec<#path_ts::#WhUcc>> {
             #ts
@@ -1523,8 +1523,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     cr_into_pg_json_opt_vec_wh_dim_two_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_dim_three_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_dim_four_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_length_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_length_greater_than_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_wh_len_eq_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_wh_len_greater_than_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts: &dyn ToTokens,
@@ -1624,17 +1624,16 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_ts,
             &cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
         );
-    let cr_into_pg_json_opt_vec_wh_length_eq_ts_34b74d66 =
-        gen_cr_into_pg_json_opt_vec_wh_length_eq_ts(
+    let cr_into_pg_json_opt_vec_wh_len_eq_ts_34b74d66 = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
+        *import,
+        &self_pg_type_as_pg_type_ts,
+        &cr_into_pg_json_opt_vec_wh_len_eq_ts,
+    );
+    let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_b196c70f =
+        gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_length_eq_ts,
-        );
-    let cr_into_pg_json_opt_vec_wh_length_greater_than_ts_b196c70f =
-        gen_cr_into_pg_json_opt_vec_wh_length_greater_than_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
+            &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_498680a8 =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
@@ -1719,8 +1718,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_9522c7a5
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_81696b49
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_2631549b
-            #cr_into_pg_json_opt_vec_wh_length_eq_ts_34b74d66
-            #cr_into_pg_json_opt_vec_wh_length_greater_than_ts_b196c70f
+            #cr_into_pg_json_opt_vec_wh_len_eq_ts_34b74d66
+            #cr_into_pg_json_opt_vec_wh_len_greater_than_ts_b196c70f
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_498680a8
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_b685b98f
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_ac82295e
@@ -1753,8 +1752,8 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     cr_into_pg_json_opt_vec_wh_dim_two_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_dim_three_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_dim_four_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_length_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_length_greater_than_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_wh_len_eq_ts: &dyn ToTokens,
+    cr_into_pg_json_opt_vec_wh_len_greater_than_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts: &dyn ToTokens,
@@ -1851,17 +1850,16 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
         );
-    let cr_into_pg_json_opt_vec_wh_length_eq_ts_5266addf =
-        gen_cr_into_pg_json_opt_vec_wh_length_eq_ts(
+    let cr_into_pg_json_opt_vec_wh_len_eq_ts_5266addf = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
+        *import,
+        &self_pg_json_as_pg_json_ts,
+        &cr_into_pg_json_opt_vec_wh_len_eq_ts,
+    );
+    let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_93196cce =
+        gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
-            &cr_into_pg_json_opt_vec_wh_length_eq_ts,
-        );
-    let cr_into_pg_json_opt_vec_wh_length_greater_than_ts_93196cce =
-        gen_cr_into_pg_json_opt_vec_wh_length_greater_than_ts(
-            *import,
-            &self_pg_json_as_pg_json_ts,
-            &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
+            &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_e0be3ff7 =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
@@ -1930,8 +1928,8 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_6da8ece7
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_6b473c12
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_b427508f
-            #cr_into_pg_json_opt_vec_wh_length_eq_ts_5266addf
-            #cr_into_pg_json_opt_vec_wh_length_greater_than_ts_93196cce
+            #cr_into_pg_json_opt_vec_wh_len_eq_ts_5266addf
+            #cr_into_pg_json_opt_vec_wh_len_greater_than_ts_93196cce
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_e0be3ff7
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_9bdb444a
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_09ea1f4b

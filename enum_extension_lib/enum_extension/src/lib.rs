@@ -31,14 +31,14 @@ pub fn enum_extension(v: Ts) -> Ts {
     let ident = &di.ident;
     let generated = quote! {
         impl #ident {
-            pub fn get_length() -> usize {
+            pub fn get_len() -> usize {
                 #len
             }
             pub fn into_arr() -> [#ident; #len] {
                 [ #(#ident::#vrts),* ]
             }
             pub fn into_vec() -> Vec<Self> {
-                let mut self_vec = Vec::with_capacity(Self::get_length());
+                let mut self_vec = Vec::with_capacity(Self::get_len());
                 for el in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
@@ -49,7 +49,7 @@ pub fn enum_extension(v: Ts) -> Ts {
             }
             pub fn into_string_name_and_vrt_hashmap() -> std::collections::HashMap<String, Self> {
                 let mut vrts_hashmap: std::collections::HashMap<String, Self> =
-                    std::collections::HashMap::with_capacity(Self::get_length());
+                    std::collections::HashMap::with_capacity(Self::get_len());
                 for el in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
@@ -59,7 +59,7 @@ pub fn enum_extension(v: Ts) -> Ts {
                 vrts_hashmap
             }
             pub fn into_string_name_and_vrt_tuple_vec() -> Vec<(String, Self)> {
-                let mut vrts_vec = Vec::with_capacity(Self::get_length());
+                let mut vrts_vec = Vec::with_capacity(Self::get_len());
                 for el in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()

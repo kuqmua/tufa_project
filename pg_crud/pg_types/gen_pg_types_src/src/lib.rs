@@ -3494,7 +3494,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             vec.push(PgTypeFilter::AdjacentWithRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::RangeLength);
+                            vec.push(PgTypeFilter::RangeLen);
                             vec
                         };
                         match &pg_type {
@@ -3602,8 +3602,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {#ts}
                                 },
                             });
-                            vec.push(PgTypeFilter::DimOneLengthEq);
-                            vec.push(PgTypeFilter::DimOneLengthGreaterThan);
+                            vec.push(PgTypeFilter::DimOneLenEq);
+                            vec.push(PgTypeFilter::DimOneLenGreaterThan);
                             vec
                         };
                         let cmn_arr_dim1_pg_type_nbr_filters = {
@@ -3658,7 +3658,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec.push(PgTypeFilter::DimOneAdjacentWithRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneRangeLength);
+                                vec.push(PgTypeFilter::DimOneRangeLen);
                                 vec
                             };
                             (
@@ -5622,8 +5622,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts = none_ts.clone();
-            let cr_into_pg_json_opt_vec_wh_length_eq_ts = none_ts.clone();
-            let cr_into_pg_json_opt_vec_wh_length_greater_than_ts = none_ts.clone();
+            let cr_into_pg_json_opt_vec_wh_len_eq_ts = none_ts.clone();
+            let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts = none_ts.clone();
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = none_ts.clone();
@@ -5655,8 +5655,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_length_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_length_greater_than_ts,
+                &cr_into_pg_json_opt_vec_wh_len_eq_ts,
+                &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
