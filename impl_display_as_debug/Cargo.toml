@@ -16,7 +16,7 @@ proc-macro = true
 proc-macro2.workspace = true
 quote.workspace = true
 syn.workspace = true
-panic_location = {path = "../panic_location"}
+panic_loc = {path = "../panic_loc"}
 macros_helpers = {path = "../macros_helpers"}
 
 [lints]

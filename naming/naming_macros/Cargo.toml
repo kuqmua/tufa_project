@@ -19,7 +19,7 @@ proc-macro2.workspace = true
 quote.workspace = true
 syn.workspace = true
 gen_quotes = {path = "../../gen_quotes"}
-panic_location = {path = "../../panic_location"}
+panic_loc = {path = "../../panic_loc"}
 token_patterns = {path = "../../token_patterns"}
 naming_cmn = {path = "../naming_cmn"}
 

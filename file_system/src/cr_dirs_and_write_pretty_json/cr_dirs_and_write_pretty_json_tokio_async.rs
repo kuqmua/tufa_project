@@ -1,4 +1,4 @@
-use location_lib::{Location, loc, loc::Loc};
+use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use serde_json::{Error as SerdeJsonEr, Value as SerdeJsonV, to_string_pretty};
 use std::path::Path;
@@ -11,7 +11,7 @@ pub enum CrDirsAndWritePrettyJsonTokioAsyncEr {
         loc: Loc,
     },
     WriteBytesIntoFile {
-        #[eo_location]
+        #[eo_loc]
         er: crate::CrDirsAndWriteFileTokioAsyncEr,
         loc: Loc,
     },

@@ -17,9 +17,9 @@ use optml::Optml;
 #[pg_crud::cmn_er_vrts{
     enum CmnErVrts {
         // CheckCommit {
-        //     #[eo_location]
+        //     #[eo_loc]
         //     check_commit: pg_crud::check_commit::CommitEr,
-        //     loc: location_lib::loc::Loc,
+        //     loc: loc_lib::loc::Loc,
         // },
     }
 }]

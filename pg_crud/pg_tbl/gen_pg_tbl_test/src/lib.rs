@@ -20,7 +20,7 @@ serde_json.workspace = true
 thiserror.workspace = true
 utoipa.workspace = true
 git_info = {path = "../../../git_info"}
-location_lib = {path = "../../../location_lib"}
+loc_lib = {path = "../../../loc_lib"}
 pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
 optml = {path = "../../../optml"}
 [dev-dependencies]
@@ -75,9 +75,9 @@ server_config = {path = "../../../server_config"}"#,
                         #[pg_crud::cmn_er_vrts{
                             enum CmnErVrts {
                                 CheckCommit {
-                                    #[eo_location]
+                                    #[eo_loc]
                                     check_commit: pg_crud::check_commit::CommitEr,
-                                    loc: location_lib::loc::Loc,
+                                    loc: loc_lib::loc::Loc,
                                 },
                             }
                         }]

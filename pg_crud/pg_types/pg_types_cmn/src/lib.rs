@@ -1,5 +1,5 @@
-use location_lib::loc::Loc;
-use location_lib::{Location, loc};
+use loc_lib::loc::Loc;
+use loc_lib::{Location, loc};
 use optml::Optml;
 use pg_crud_cmn::{
     DEFAULT_PAGINATION_LIMIT, DfltSomeOneEl, DfltSomeOneElMaxPageSize, PgTypeWhFlt, PgnBase, QpEr,

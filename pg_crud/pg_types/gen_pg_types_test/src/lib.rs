@@ -13,7 +13,7 @@ uuid.workspace = true
 sqlx.workspace = true
 serde.workspace = true
 thiserror.workspace = true
-location_lib = {path = "../../../location_lib"}
+loc_lib = {path = "../../../loc_lib"}
 pg_crud_cmn = {path = "../../pg_crud_cmn"}
 pg_types_cmn = {path = "../pg_types_cmn"}
 wh_flts = {path = "../../wh_flts"}

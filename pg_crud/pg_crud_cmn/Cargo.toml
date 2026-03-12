@@ -16,7 +16,7 @@ sqlx.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 schemars.workspace = true
-location_lib = {path = "../../location_lib"}
+loc_lib = {path = "../../loc_lib"}
 from_str = {path = "../../from_str"}
 naming = {path = "../../naming"}
 pg_crud_cmn_and_macros_cmn = {path = "../pg_crud_cmn_and_macros_cmn"}

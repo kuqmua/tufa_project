@@ -19,7 +19,7 @@ quote.workspace = true
 syn.workspace = true
 macros_helpers = {path = "../../macros_helpers"}
 gen_quotes = {path = "../../gen_quotes"}
-panic_location = {path = "../../panic_location"}
+panic_loc = {path = "../../panic_loc"}
 token_patterns = {path = "../../token_patterns"}
 naming = {path = "../../naming"}
 optml = {path = "../../optml"}

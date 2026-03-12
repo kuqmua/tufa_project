@@ -8,7 +8,7 @@ use naming::{
     prm::{PgJsonWhSelfUcc, PgTypeWhSelfUcc},
 };
 use optml::Optml;
-use panic_location::panic_location;
+use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFlt, PgTypeFlt,
     PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, impl_pg_type_wh_flt_for_ident_ts,
@@ -106,7 +106,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
         pg_json_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
-    panic_location();
+    panic_loc();
     let gen_wh_flts_config = from_str::<GenWhFltsConfig>(&input_ts.to_string()).expect("1217b73b");
     let import = Import::PgCrudCmn;
     let t_ts = quote! {T};

@@ -17,7 +17,7 @@ utoipa.workspace = true
 regex.workspace = true
 thiserror.workspace = true
 gen_wh_flts = {path = "./gen_wh_flts"}
-location_lib = {path = "../../location_lib"}
+loc_lib = {path = "../../loc_lib"}
 pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
 optml = {path = "../../optml"}
 

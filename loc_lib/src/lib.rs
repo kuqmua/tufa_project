@@ -4,5 +4,5 @@ pub use location::Location;
 pub use optml::Optml;
 #[macro_export]
 macro_rules! loc {
-    ( $( $x:expr ),* ) => {{ location_lib::loc::Loc::new(file!().to_owned(), line!(), column!(), None) }};
+    ( $( $x:expr ),* ) => {{ loc_lib::loc::Loc::new(file!().to_owned(), line!(), column!(), None) }};
 }

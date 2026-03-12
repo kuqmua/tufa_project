@@ -17,7 +17,7 @@ strum_macros.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 gen_quotes = {path = "../../../gen_quotes"}
-panic_location = {path = "../../../panic_location"}
+panic_loc = {path = "../../../panic_loc"}
 macros_helpers = {path = "../../../macros_helpers"}
 naming = {path = "../../../naming"}
 token_patterns = {path = "../../../token_patterns"}

@@ -17,7 +17,7 @@ use naming::{
     },
 };
 use optml::Optml;
-use panic_location::panic_location;
+use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNl, IsQbMut,
     IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed, IsSelQpIsPgTypeUsed,
@@ -338,7 +338,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json: ShouldWriteTsIntoFile,
         whole_cnt_write_into_gen_pg_json: ShouldWriteTsIntoFile,
     }
-    panic_location();
+    panic_loc();
     let config = from_str::<GenPgJsonsConfig>(&input_ts.to_string()).expect("1123f78f");
     let (fields_ts, pg_json_arr) = {
         let acc = {
@@ -950,7 +950,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_location_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_loc_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
             let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Stdrt => match &is_nl {
@@ -988,7 +988,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_schemars_json_schema_for_ident_orgn_ts
                 #mb_impl_is_string_empty_for_ident_orgn_ts
                 #impl_display_for_ident_orgn_ts
-                #impl_location_lib_to_err_string_for_ident_orgn_ts
+                #impl_loc_lib_to_err_string_for_ident_orgn_ts
                 #impl_dflt_some_one_el_for_ident_orgn_ts
                 #impl_sqlx_type_for_ident_orgn_ts
                 #impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts
@@ -1796,7 +1796,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
-            let impl_location_lib_to_err_string_for_ident_upd_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
+            let impl_loc_lib_to_err_string_for_ident_upd_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
                 gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
@@ -1806,7 +1806,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             quote! {
                 #ident_upd_ts
                 #impl_ident_upd_ts
-                #impl_location_lib_to_err_string_for_ident_upd_ts
+                #impl_loc_lib_to_err_string_for_ident_upd_ts
                 #impl_dflt_some_one_el_for_ident_upd_ts
             }
         };

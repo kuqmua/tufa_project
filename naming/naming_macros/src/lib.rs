@@ -1,5 +1,5 @@
 use gen_quotes::dq_ts;
-use panic_location::panic_location;
+use panic_loc::panic_loc;
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -21,7 +21,7 @@ fn gen_impl_to_tokens_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens) -> Ts2 {
 }
 #[proc_macro]
 pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
-    panic_location();
+    panic_loc();
     let ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string())
         .expect("90e5793b")
         .into_iter()
@@ -114,7 +114,7 @@ pub fn gen_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
 }
 #[proc_macro]
 pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
-    panic_location();
+    panic_loc();
     let ts = from_str::<Vec<Vec<String>>>(&input_ts.to_string()).expect("9d6a20af").into_iter().map(|el| {
         {
             let rgx = Regex::new(REGEX_VALUE).expect("cba1b5fb");
@@ -270,7 +270,7 @@ fn gen_impl_trait_for_ident_ts(
 }
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUccStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
-    panic_location();
+    panic_loc();
     let di: DeriveInput = parse(input_ts).expect("a8f22481");
     let ident = &di.ident;
     let Data::Enum(data_enum) = di.data else {
@@ -299,7 +299,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_ucc_str(input_ts: Ts) -> Ts {
 }
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
-    panic_location();
+    panic_loc();
     let di: DeriveInput = parse(input_ts).expect("dea5cbcf");
     let ident = &di.ident;
     let Data::Enum(data_enum) = di.data else {
@@ -328,7 +328,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_sc_str(input_ts: Ts) -> Ts {
 }
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperScStr)]
 pub fn as_ref_str_enum_with_unit_fields_to_upper_sc_str(input_ts: Ts) -> Ts {
-    panic_location();
+    panic_loc();
     let di: DeriveInput = parse(input_ts).expect("edabbc24");
     let ident = &di.ident;
     let Data::Enum(data_enum) = di.data else {

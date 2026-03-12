@@ -14,5 +14,5 @@ gen_derive_ts_builder::gen_derive_ts_builder!([
     "utoipa::ToSchema",
     "schemars::JsonSchema",
     "thiserror::Error",
-    "location_lib::Location"
+    "loc_lib::Location"
 ]);

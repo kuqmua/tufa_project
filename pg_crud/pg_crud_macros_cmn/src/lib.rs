@@ -636,7 +636,7 @@ pub fn gen_pg_type_wh_ts(
         },
         &Import::PgCrudCmn,
     );
-    let impl_location_lib_to_err_string_for_pg_type_tokens_wh_ts = gen_impl_to_err_string_ts(
+    let impl_loc_lib_to_err_string_for_pg_type_tokens_wh_ts = gen_impl_to_err_string_ts(
         &Ts2::new(),
         &ident,
         &Ts2::new(),
@@ -653,7 +653,7 @@ pub fn gen_pg_type_wh_ts(
     quote! {
         #pg_type_tokens_wh_ts
         #impl_pg_type_pg_type_wh_flt_for_pg_type_tokens_wh_ts
-        #impl_location_lib_to_err_string_for_pg_type_tokens_wh_ts
+        #impl_loc_lib_to_err_string_for_pg_type_tokens_wh_ts
         #impl_all_vrts_dflt_some_one_el_for_pg_type_tokens_wh_ts
     }
 }
@@ -1940,7 +1940,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
 }
 #[must_use]
 pub fn pg_crud_cmn_qp_er_checked_add_init_ts() -> Ts2 {
-    quote! {pg_crud_cmn::QpEr::CheckedAdd { loc: location_lib::loc!() }}
+    quote! {pg_crud_cmn::QpEr::CheckedAdd { loc: loc_lib::loc!() }}
 }
 pub fn gen_impl_crate_is_string_empty_for_ident_ts(ident: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
     quote! {
@@ -2280,7 +2280,7 @@ pub fn impl_pg_type_eq_oprtr_for_ident_ts(
 pub fn gen_qp_er_write_into_buffer_ts(import: Import) -> Ts2 {
     quote! {
         #import::QpEr::WriteIntoBuffer {
-            loc: location_lib::loc!()
+            loc: loc_lib::loc!()
         }
     }
 }

@@ -4,7 +4,7 @@ use axum::http::{
 };
 use git_info::{GetGitCommitLink, PROJECT_GIT_INFO};
 use http_logic::GetAxumHttpStatusCode;
-use location_lib::{Location, loc, loc::Loc};
+use loc_lib::{Location, loc, loc::Loc};
 use naming::CommitSc;
 use optml::Optml;
 use thiserror::Error;

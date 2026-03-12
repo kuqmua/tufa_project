@@ -14,7 +14,7 @@ uuid.workspace = true
 sqlx.workspace = true
 serde.workspace = true
 utoipa.workspace = true
-location_lib = {path = "../../../location_lib"}
+loc_lib = {path = "../../../loc_lib"}
 pg_crud_cmn = {path = "../../pg_crud_cmn"}
 gen_pg_json_cmn = {path = "../gen_pg_json_cmn"}
 wh_flts = {path = "../../wh_flts"}

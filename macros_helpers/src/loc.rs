@@ -10,44 +10,44 @@ use syn::{
 use token_patterns::StringTs;
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Copy, Optml)]
-pub enum LocationFieldAttr {
+pub enum LocFieldAttr {
     EoToErrString,
     EoToErrStringSerde,
-    EoLocation,
+    EoLoc,
     EoVecToErrString,
     EoVecToErrStringSerde,
-    EoVecLocation,
+    EoVecLoc,
     EoHashMapKStringVToErrString,
     EoHashMapKStringVToErrStringSerde,
-    EoHashMapKStringVLocation,
+    EoHashMapKStringVLoc,
 }
-impl FromStr for LocationFieldAttr {
+impl FromStr for LocFieldAttr {
     type Err = ();
     fn from_str(v: &str) -> Result<Self, Self::Err> {
         if v == "eo_to_err_string" {
             Ok(Self::EoToErrString)
         } else if v == "eo_to_err_string_serde" {
             Ok(Self::EoToErrStringSerde)
-        } else if v == "eo_location" {
-            Ok(Self::EoLocation)
+        } else if v == "eo_loc" {
+            Ok(Self::EoLoc)
         } else if v == "eo_vec_to_err_string" {
             Ok(Self::EoVecToErrString)
         } else if v == "eo_vec_to_err_string_serde" {
             Ok(Self::EoVecToErrStringSerde)
-        } else if v == "eo_vec_location" {
-            Ok(Self::EoVecLocation)
+        } else if v == "eo_vec_loc" {
+            Ok(Self::EoVecLoc)
         } else if v == "eo_hashmap_k_string_v_to_err_string" {
             Ok(Self::EoHashMapKStringVToErrString)
         } else if v == "eo_hashmap_k_string_v_to_err_string_serde" {
             Ok(Self::EoHashMapKStringVToErrStringSerde)
-        } else if v == "eo_hashmap_k_string_v_location" {
-            Ok(Self::EoHashMapKStringVLocation)
+        } else if v == "eo_hashmap_k_string_v_loc" {
+            Ok(Self::EoHashMapKStringVLoc)
         } else {
             Err(())
         }
     }
 }
-impl TryFrom<&Field> for LocationFieldAttr {
+impl TryFrom<&Field> for LocFieldAttr {
     type Error = String;
     fn try_from(syn_field: &Field) -> Result<Self, Self::Error> {
         let mut opt_attr = None;
@@ -70,22 +70,22 @@ impl TryFrom<&Field> for LocationFieldAttr {
         opt_attr.map_or_else(|| Err("opt attr is None".to_owned()), Ok)
     }
 }
-impl AttrIdentStr for LocationFieldAttr {
+impl AttrIdentStr for LocFieldAttr {
     fn attr_ident_str(&self) -> &str {
         match *self {
             Self::EoToErrString => "eo_to_err_string",
             Self::EoToErrStringSerde => "eo_to_err_string_serde",
-            Self::EoLocation => "eo_location",
+            Self::EoLoc => "eo_loc",
             Self::EoVecToErrString => "eo_vec_to_err_string",
             Self::EoVecToErrStringSerde => "eo_vec_to_err_string_serde",
-            Self::EoVecLocation => "eo_vec_location",
+            Self::EoVecLoc => "eo_vec_loc",
             Self::EoHashMapKStringVToErrString => "eo_hashmap_k_string_v_to_err_string",
             Self::EoHashMapKStringVToErrStringSerde => "eo_hashmap_k_string_v_to_err_string_serde",
-            Self::EoHashMapKStringVLocation => "eo_hashmap_k_string_v_location",
+            Self::EoHashMapKStringVLoc => "eo_hashmap_k_string_v_loc",
         }
     }
 }
-impl LocationFieldAttr {
+impl LocFieldAttr {
     #[must_use]
     pub fn to_attr_view_ts(&self) -> Ts2 {
         format!("#[{}]", AttrIdentStr::attr_ident_str(self))
@@ -104,7 +104,7 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
     let fields_with_serde_ts = fields.iter().map(|el| {
         let el_c25b655e_ident = el.ident.as_ref().expect("438aa90e");
         let ts = if *el_c25b655e_ident == *LocSc.to_string() {
-            quote! {#LocSc: location_lib::loc::Loc}
+            quote! {#LocSc: loc_lib::loc::Loc}
         } else {
             let get_1_hashmap_arg = || {
                 let segments = if let Type::Path(syn_type_path) = &el.ty {
@@ -136,19 +136,20 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                 let el_type = &el.ty;
                 quote! {#el_type}
             };
-            let el_type_with_serde_ts = match LocationFieldAttr::try_from(el).expect("2db209a8") {
-                LocationFieldAttr::EoToErrString => quote! {#StringTs},
-                LocationFieldAttr::EoToErrStringSerde
-                | LocationFieldAttr::EoVecToErrStringSerde => el_type_ts,
-                LocationFieldAttr::EoLocation => format!("{el_type_ts}{WithSerdeUcc}")
+            let el_type_with_serde_ts = match LocFieldAttr::try_from(el).expect("2db209a8") {
+                LocFieldAttr::EoToErrString => quote! {#StringTs},
+                LocFieldAttr::EoToErrStringSerde | LocFieldAttr::EoVecToErrStringSerde => {
+                    el_type_ts
+                }
+                LocFieldAttr::EoLoc => format!("{el_type_ts}{WithSerdeUcc}")
                     .parse::<Ts2>()
                     .expect("201dc0a4"),
-                LocationFieldAttr::EoVecToErrString => {
+                LocFieldAttr::EoVecToErrString => {
                     quote! {
                         Vec<#StringTs>
                     }
                 }
-                LocationFieldAttr::EoVecLocation => {
+                LocFieldAttr::EoVecLoc => {
                     let segments = if let Type::Path(v0) = &el.ty {
                         &v0.path.segments
                     } else {
@@ -180,17 +181,17 @@ pub fn gen_serde_version_of_named_syn_vrt(v: &Variant) -> Ts2 {
                         Vec<#el_vec_type_with_serde_ts>
                     }
                 }
-                LocationFieldAttr::EoHashMapKStringVToErrString => {
+                LocFieldAttr::EoHashMapKStringVToErrString => {
                     let _: &GenericArgument = get_1_hashmap_arg();
                     quote! {
                         std::collections::HashMap<#StringTs, #StringTs>
                     }
                 }
-                LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
+                LocFieldAttr::EoHashMapKStringVToErrStringSerde => {
                     let _: &GenericArgument = get_1_hashmap_arg();
                     el_type_ts
                 }
-                LocationFieldAttr::EoHashMapKStringVLocation => {
+                LocFieldAttr::EoHashMapKStringVLoc => {
                     let second_argument = get_1_hashmap_arg();
                     let el_hashmap_v_type_with_serde_ts =
                         format!("{}{}", quote! {#second_argument}, WithSerdeUcc)

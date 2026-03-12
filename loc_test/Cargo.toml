@@ -1,5 +1,5 @@
 [package]
-name = "panic_location"
+name = "loc_test"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -10,6 +10,10 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
+thiserror.workspace = true
+serde.workspace = true
+loc_lib = {path = "../loc_lib"}
+optml = {path = "../optml"}
 
 [lints]
 workspace = true

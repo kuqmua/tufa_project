@@ -16,7 +16,7 @@ proc-macro = true
 [dependencies]
 quote.workspace = true
 syn.workspace = true
-panic_location = {path = "../../panic_location"}
+panic_loc = {path = "../../panic_loc"}
 
 [lints]
 workspace = true

@@ -58,7 +58,7 @@ Each subdirectory follows a consistent pattern with `gen_*` (proc-macro crate), 
 
 - **`server/`** — Axum web server (has `docker-compose.yml` for PostgreSQL)
 - **`config_lib/`** — Config management with sub-crates for env parsing, getter trait generation, server port validation
-- **`location_lib/`** — Error handling with source location tracking
+- **`loc_lib/`** — Error handling with source location tracking
 - **`naming/`** — Naming convention utilities (`naming_cmn`, `naming_macros`)
 - **`macros_helpers/`** — General macro helpers including `gen_derive_ts_builder`
 - **`telegram_bot/`** — Teloxide-based Telegram bot

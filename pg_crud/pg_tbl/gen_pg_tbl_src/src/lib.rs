@@ -1,6 +1,6 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    AttrIdentStr, DClone, DCopy, DTsBuilder, FormatWithCargofmt, LocationFieldAttr,
+    AttrIdentStr, DClone, DCopy, DTsBuilder, FormatWithCargofmt, LocFieldAttr,
     ShouldWriteTsIntoFile, StatusCode, SynField, gen_field_loc_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
     gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
@@ -17,7 +17,7 @@ use naming::{
     CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc, CrTblColQpSc, CrUcc, DeResUcc,
     DesirableUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElMaxPageSizeUcc, DfltSomeOneElSc,
     DfltSomeOneElUcc, DisplayPlusToTokens, DisplayToScStr, DloErVrtsSc, DloLogicSc, DmErVrtsSc,
-    DmLogicSc, ElSc, EndpointLocationSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
+    DmLogicSc, ElSc, EndpointLocSc, ErSc, ExecutorAcquireSc, ExecutorSc, ExpectedResSc,
     ExtraPrmsSc, FailedToGetResTextUcc, FalseSc, FromHSc, FutureSc, GenColQuealsVCommaUoQpSc,
     GenPgTblPkSc, GenSelQpSc, GenWhenColIdThenVUmQpSc, HeaderContentTypeAppJsonNotFoundUcc,
     HeadersSc, IdentCrDfltSc, IncrSc, IntoSerdeVersionSc, LocSc, NoFieldsProvidedUcc,
@@ -50,7 +50,7 @@ use naming::{
     },
 };
 use optml::Optml;
-use panic_location::panic_location;
+use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
     gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
@@ -78,8 +78,8 @@ use syn::{
 #[allow(unused_imports)]
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, Bool, Char, CoreDefault,
-    DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorLocation, Er0, Er1, Er2, Er3,
-    F32, F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
+    DeriveDebugSerdeSerializeSerdeDeserialize, DeriveDebugThiserrorLoc, Er0, Er1, Er2, Er3, F32,
+    F64, FieldAttrSerdeSkipSerializingIfOptIsNone, I8, I16, I32, I64, MustUse,
     PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall, PgCrudCmnDfltSomeOneElMaxPageSizeCall,
     PgCrudDfltSomeOneElCall, RefStr, SqlxAcquire, SqlxRow, StringTs, U8, U16, U32, U64,
 };
@@ -373,7 +373,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         cmn_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
-    panic_location();
+    panic_loc();
     let import = Import::PgCrud;
     let import_ts = quote! {#import::};
     let return_err_qp_er_write_into_buffer_ts = gen_return_err_qp_er_write_into_buffer_ts(import);
@@ -579,12 +579,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         .make_pub()
         .d_debug()
         .d_thiserror_error()
-        .d_location_lib_location()
+        .d_loc_lib_location()
         .build_enum(&Ts2::new(), &ident_prep_pg_er_ucc, &Ts2::new(), &{
             let ts = quote! {
                 #[eo_to_err_string]
                 er: sqlx::Error,
-                loc: location_lib::loc::Loc,
+                loc: loc_lib::loc::Loc,
             };
             quote! {{
                 #CrExtensionIfNotExistsPgJsonschemaUcc {
@@ -618,13 +618,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 if let Err(er) = sqlx::query("create extension if not exists pg_jsonschema").execute(#PoolSc).await {
                     return Err(#ident_prep_pg_er_ucc::#CrExtensionIfNotExistsPgJsonschemaUcc {
                         er,
-                        loc: location_lib::loc!()
+                        loc: loc_lib::loc!()
                     });
                 }
                 if let Err(er) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#PoolSc).await {
                     return Err(#ident_prep_pg_er_ucc::#CrExtensionIfNotExistsUuidOsspUcc {
                         er,
-                        loc: location_lib::loc!()
+                        loc: loc_lib::loc!()
                     });
                 }
                 Ok(())
@@ -667,7 +667,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     )).execute(#PoolSc).await {
                         return Err(#ident_prep_pg_er_ucc::#PrepPgUcc {
                             er,
-                            loc: location_lib::loc!()
+                            loc: loc_lib::loc!()
                         });
                     }
                     Ok(())
@@ -760,13 +760,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             .parse::<Ts2>()
             .expect("f386c0d4")
     };
-    let gen_init_ts = |syn_vrt: &SynVrt, location: &'static Location<'_>| -> Ts2 {
+    let gen_init_ts = |syn_vrt: &SynVrt, loc: &'static Location<'_>| -> Ts2 {
         let vrt_ident = &syn_vrt.vrt.ident;
         let fields_ts = if let Fields::Named(v) = &syn_vrt.vrt.fields {
             v.named.iter().enumerate().map(|(i, el)| {
                 let fi = &el.ident;
                 if *fi.as_ref().expect("edbbd08a") == LocSc.to_string() {
-                    gen_field_loc_new_ts(location.file(), location.line(), location.column())
+                    gen_field_loc_new_ts(loc.file(), loc.line(), loc.column())
                 } else {
                     let er_incr_sc = ErSelfSc::from_display(&i);
                     quote! {#fi: #er_incr_sc}
@@ -781,68 +781,63 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             }
         }
     };
-    let gen_op_er_init_eprintln_res_ts =
-        |op: &Op, syn_vrt: &SynVrt, location: &'static Location<'_>| {
-            let ident_op_er_ucc = gen_ident_op_er_ucc(op);
-            let ident_op_res_vrts_ucc = gen_ident_op_res_vrts_ucc(op);
-            let syn_vrt_init_ts = gen_init_ts(syn_vrt, location);
-            let ts = wrap_into_axum_res_ts(
-                &quote! {#ident_op_res_vrts_ucc::#FromHSc(#ErSc)},
-                &syn_vrt
-                    .get_opt_status_code()
-                    .expect("81efa954")
-                    .to_http_status_code_ts(),
-                &AddReturn::True,
-            );
-            quote! {
-                let #ErSc = #ident_op_er_ucc::#syn_vrt_init_ts;
-                // eprintln!("{er}");
-                #ts
-            }
-        };
-    let new_syn_vrt = |vrt_name: &dyn Display,
-                       status_code: Option<StatusCode>,
-                       fields_cd1fd715: Vec<(
-        LocationFieldAttr,
-        &dyn Display,
-        Punctuated<PathSegment, PathSep>,
-    )>|
-     -> SynVrt {
-        SynVrt {
-            vrt: Variant {
-                attrs: {
-                    let mut attrs = Vec::new();
-                    if let Some(v) = status_code.as_ref() {
-                        let mut segments = Punctuated::new();
-                        segments.push(PathSegment {
-                            ident: Ident::new(
-                                &AsRefStrToScStr::case(v),
-                                proc_macro2::Span::call_site(),
-                            ),
-                            arguments: PathArguments::None,
-                        });
-                        attrs.push(Attribute {
-                            pound_token: Pound {
-                                spans: [proc_macro2::Span::call_site()],
-                            },
-                            style: AttrStyle::Outer,
-                            bracket_token: Bracket::default(),
-                            meta: Meta::Path(Path {
-                                leading_colon: None,
-                                segments,
-                            }),
-                        });
-                    }
-                    attrs
-                },
-                ident: Ident::new(&vrt_name.to_string(), proc_macro2::Span::call_site()),
-                fields: Fields::Named(FieldsNamed {
-                    brace_token: Brace::default(),
-                    named: {
-                        let mut acc =
-                            fields_cd1fd715
-                                .into_iter()
-                                .fold(Punctuated::new(), |mut acc, el| {
+    let gen_op_er_init_eprintln_res_ts = |op: &Op, syn_vrt: &SynVrt, loc: &'static Location<'_>| {
+        let ident_op_er_ucc = gen_ident_op_er_ucc(op);
+        let ident_op_res_vrts_ucc = gen_ident_op_res_vrts_ucc(op);
+        let syn_vrt_init_ts = gen_init_ts(syn_vrt, loc);
+        let ts = wrap_into_axum_res_ts(
+            &quote! {#ident_op_res_vrts_ucc::#FromHSc(#ErSc)},
+            &syn_vrt
+                .get_opt_status_code()
+                .expect("81efa954")
+                .to_http_status_code_ts(),
+            &AddReturn::True,
+        );
+        quote! {
+            let #ErSc = #ident_op_er_ucc::#syn_vrt_init_ts;
+            // eprintln!("{er}");
+            #ts
+        }
+    };
+    let new_syn_vrt =
+        |vrt_name: &dyn Display,
+         status_code: Option<StatusCode>,
+         fields_cd1fd715: Vec<(LocFieldAttr, &dyn Display, Punctuated<PathSegment, PathSep>)>|
+         -> SynVrt {
+            SynVrt {
+                vrt: Variant {
+                    attrs: {
+                        let mut attrs = Vec::new();
+                        if let Some(v) = status_code.as_ref() {
+                            let mut segments = Punctuated::new();
+                            segments.push(PathSegment {
+                                ident: Ident::new(
+                                    &AsRefStrToScStr::case(v),
+                                    proc_macro2::Span::call_site(),
+                                ),
+                                arguments: PathArguments::None,
+                            });
+                            attrs.push(Attribute {
+                                pound_token: Pound {
+                                    spans: [proc_macro2::Span::call_site()],
+                                },
+                                style: AttrStyle::Outer,
+                                bracket_token: Bracket::default(),
+                                meta: Meta::Path(Path {
+                                    leading_colon: None,
+                                    segments,
+                                }),
+                            });
+                        }
+                        attrs
+                    },
+                    ident: Ident::new(&vrt_name.to_string(), proc_macro2::Span::call_site()),
+                    fields: Fields::Named(FieldsNamed {
+                        brace_token: Brace::default(),
+                        named: {
+                            let mut acc = fields_cd1fd715.into_iter().fold(
+                                Punctuated::new(),
+                                |mut acc, el| {
                                     acc.push_value(Field {
                                         attrs: vec![Attribute {
                                             pound_token: Pound {
@@ -886,21 +881,22 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                         spans: [proc_macro2::Span::call_site()],
                                     });
                                     acc
-                                });
-                        acc.push_value(loc_syn_field());
-                        acc
-                    },
-                }),
-                discriminant: None,
-            },
-            status_code,
-        }
-    };
+                                },
+                            );
+                            acc.push_value(loc_syn_field());
+                            acc
+                        },
+                    }),
+                    discriminant: None,
+                },
+                status_code,
+            }
+        };
     let qp_syn_vrt = new_syn_vrt(
         &QpUcc,
         Some(StatusCode::BadReq400),
         vec![(
-            LocationFieldAttr::EoLocation,
+            LocFieldAttr::EoLoc,
             &ErSc,
             gen_simple_syn_punct(&[&PgCrudSc.to_string(), &QpErUcc.to_string()]),
         )],
@@ -1115,7 +1111,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             .make_pub()
             .d_debug()
             .d_thiserror_error()
-            .d_location_lib_location()
+            .d_loc_lib_location()
             .build_enum(
                 &Ts2::new(),
                 &ident_wh_try_new_er_ucc,
@@ -1123,7 +1119,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
-                        loc: location_lib::loc::Loc,
+                        loc: loc_lib::loc::Loc,
                     }
                 }},
             );
@@ -1144,7 +1140,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 quote! {
                     if matches!((#fields_ts), (#fields_named_with_comma_none_ts)) {
                         return Err(#ident_wh_try_new_er_ucc::#NoFieldsProvidedUcc {
-                            loc: location_lib::loc!(),
+                            loc: loc_lib::loc!(),
                         });
                     }
                     Ok(Self {#fields_inialization_ts})
@@ -1309,14 +1305,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             },
         )
     };
-    let macros_helpers_location_field_attr_eo_to_err_string_serde =
-        LocationFieldAttr::EoToErrStringSerde;
+    let macros_helpers_loc_field_attr_eo_to_err_string_serde = LocFieldAttr::EoToErrStringSerde;
     let string_syn_punct = gen_simple_syn_punct(&["String"]);
     let try_bind_syn_vrt = new_syn_vrt(
         &TryBindUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
-            macros_helpers_location_field_attr_eo_to_err_string_serde,
+            macros_helpers_loc_field_attr_eo_to_err_string_serde,
             &TryBindSc,
             string_syn_punct.clone(),
         )],
@@ -1331,12 +1326,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let try_from_sqlx_pg_pg_row_with_not_empty_unq_vec_ident_sel_sc =
         TryFromSqlxPgPgRowWithNotEmptyUnqVecSelfSelSc::from_display(&ident);
     let simple_syn_punct_sqlx_error = gen_simple_syn_punct(&["sqlx", "Error"]);
-    let macros_helpers_location_field_attr_eo_to_err_string = LocationFieldAttr::EoToErrString;
+    let macros_helpers_loc_field_attr_eo_to_err_string = LocFieldAttr::EoToErrString;
     let pg_syn_vrt = new_syn_vrt(
         &PgUcc,
         Some(StatusCode::InternalServerEr500),
         vec![(
-            macros_helpers_location_field_attr_eo_to_err_string,
+            macros_helpers_loc_field_attr_eo_to_err_string,
             &PgSc,
             simple_syn_punct_sqlx_error.clone(),
         )],
@@ -1398,7 +1393,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             &Ts2::new(),
             &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
         );
-        let impl_location_lib_to_err_string_for_ident_sel_ts = gen_impl_to_err_string_ts(
+        let impl_loc_lib_to_err_string_for_ident_sel_ts = gen_impl_to_err_string_ts(
             &Ts2::new(),
             &ident_sel_ucc,
             &Ts2::new(),
@@ -1417,7 +1412,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         quote! {
             #ident_sel_ts
             #impl_display_for_ident_sel_ts
-            #impl_location_lib_to_err_string_for_ident_sel_ts
+            #impl_loc_lib_to_err_string_for_ident_sel_ts
             #impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_sel_ts
         }
     };
@@ -1713,7 +1708,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             .make_pub()
             .d_debug()
             .d_thiserror_error()
-            .d_location_lib_location()
+            .d_loc_lib_location()
             .build_enum(
                 &Ts2::new(),
                 &ident_upd_try_new_er_ucc,
@@ -1721,7 +1716,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 &quote! {{
                     #NoFieldsProvidedUcc {
                         #[eo_to_err_string]
-                        loc: location_lib::loc::Loc,
+                        loc: loc_lib::loc::Loc,
                     }
                 }},
             );
@@ -1752,7 +1747,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 quote! {
                     if matches!(#left_ts, #right_ts) {
                         return Err(#ident_upd_try_new_er_ucc::#NoFieldsProvidedUcc {
-                            loc: location_lib::loc!(),
+                            loc: loc_lib::loc!(),
                         });
                     }
                     Ok(Self {#fields_inialization_ts})
@@ -1983,12 +1978,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         Some(StatusCode::InternalServerEr500),
         vec![
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &RowSc,
                 simple_syn_punct_sqlx_error.clone(),
             ),
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &RollbackSc,
                 simple_syn_punct_sqlx_error,
             ),
@@ -2004,7 +1999,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         &NotUnqFieldUcc,
         Some(StatusCode::BadReq400),
         vec![(
-            macros_helpers_location_field_attr_eo_to_err_string_serde,
+            macros_helpers_loc_field_attr_eo_to_err_string_serde,
             &NotUnqFieldSc,
             gen_simple_syn_punct(&[&ident_sel_ucc.to_string()]),
         )],
@@ -2014,7 +2009,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         &SerdeJsonToStringUcc,
         None,
         vec![(
-            macros_helpers_location_field_attr_eo_to_err_string,
+            macros_helpers_loc_field_attr_eo_to_err_string,
             &SerdeJsonToStringSc,
             simple_syn_punct_serde_error.clone(),
         )],
@@ -2025,17 +2020,17 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         Some(StatusCode::BadReq400),
         vec![
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &ReqwestSc,
                 simple_syn_punct_reqwest_error.clone(),
             ),
@@ -2046,22 +2041,22 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         None,
         vec![
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &StatusCodeSc,
                 gen_simple_syn_punct(&["reqwest", "StatusCode"]),
             ),
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &HeadersSc,
                 gen_simple_syn_punct(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers_location_field_attr_eo_to_err_string_serde,
+                macros_helpers_loc_field_attr_eo_to_err_string_serde,
                 &ResTextSc,
                 string_syn_punct,
             ),
             (
-                macros_helpers_location_field_attr_eo_to_err_string,
+                macros_helpers_loc_field_attr_eo_to_err_string,
                 &SerdeSc,
                 simple_syn_punct_serde_error.clone(),
             ),
@@ -2071,7 +2066,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         &ReqwestUcc,
         None,
         vec![(
-            macros_helpers_location_field_attr_eo_to_err_string,
+            macros_helpers_loc_field_attr_eo_to_err_string,
             &ReqwestSc,
             simple_syn_punct_reqwest_error,
         )],
@@ -2080,7 +2075,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         &CheckBodySizeUcc,
         Some(StatusCode::BadReq400),
         vec![(
-            LocationFieldAttr::EoLocation,
+            LocFieldAttr::EoLoc,
             &CheckBodySizeSc,
             gen_simple_syn_punct(&[
                 &PgCrudSc.to_string(),
@@ -2093,7 +2088,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         &SerdeJsonUcc,
         Some(StatusCode::BadReq400),
         vec![(
-            macros_helpers_location_field_attr_eo_to_err_string,
+            macros_helpers_loc_field_attr_eo_to_err_string,
             &SerdeJsonSc,
             simple_syn_punct_serde_error,
         )],
@@ -2102,7 +2097,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         &HeaderContentTypeAppJsonNotFoundUcc,
         Some(StatusCode::BadReq400),
         Vec::<(
-            LocationFieldAttr,
+            LocFieldAttr,
             &'static dyn Display,
             Punctuated<PathSegment, PathSep>,
         )>::default(),
@@ -2153,10 +2148,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         let pub_h_ts = gen_pub_h_ts(is_pub);
         quote! {#pub_h_ts #pk_fi: #ts}
     };
-    let gen_match_pg_transaction_rollback_await_ts = |op: &Op, location: &'static Location<'_>| {
-        let ts_91f19090 = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, location);
+    let gen_match_pg_transaction_rollback_await_ts = |op: &Op, loc: &'static Location<'_>| {
+        let ts_91f19090 = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, loc);
         let row_and_rollback_syn_vrt_er_init_eprintln_res_creation_ts =
-            gen_op_er_init_eprintln_res_ts(op, &row_and_rollback_syn_vrt, location);
+            gen_op_er_init_eprintln_res_ts(op, &row_and_rollback_syn_vrt, loc);
         quote! {{
             if let Err(#Er1) = #ExecutorSc.#RollbackSc().await {
                 #row_and_rollback_syn_vrt_er_init_eprintln_res_creation_ts
@@ -2165,9 +2160,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         }}
     };
     let gen_drop_rows_match_pg_transaction_rollback_await_h_ts =
-        |op: &Op, location: &'static Location<'_>| {
+        |op: &Op, loc: &'static Location<'_>| {
             let match_pg_transaction_rollback_await_ts =
-                gen_match_pg_transaction_rollback_await_ts(op, location);
+                gen_match_pg_transaction_rollback_await_ts(op, loc);
             quote! {
                 drop(#RowsSc);
                 #match_pg_transaction_rollback_await_ts
@@ -2265,36 +2260,36 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             #VSc
         }
     };
-    let gen_location_vrt_ts = |er_vrt: &Variant| -> Ts2 {
+    let gen_loc_vrt_ts = |er_vrt: &Variant| -> Ts2 {
         let vrt_ident = &er_vrt.ident;
         let Fields::Named(fields_named) = &er_vrt.fields else {
             panic!("2acd4725");
         };
         let fields_mapped_into_ts = fields_named.named.iter().map(|field| {
             let fi = field.ident.as_ref().expect("a21dc807");
-            let location_attr = if *fi == *LocSc.to_string() {
+            let loc_attr = if *fi == *LocSc.to_string() {
                 Ts2::new()
             } else {
-                let mut location_attr: Option<LocationFieldAttr> = None;
+                let mut loc_attr: Option<LocFieldAttr> = None;
                 for el in &field.attrs {
                     if el.path().segments.len() == 1 {
                         let segment = el.path().segments.first().expect("5bd7ed8d");
                         if let Ok(v) =
-                            { <LocationFieldAttr as FromStr>::from_str(&segment.ident.to_string()) }
+                            { <LocFieldAttr as FromStr>::from_str(&segment.ident.to_string()) }
                         {
-                            if location_attr.is_some() {
+                            if loc_attr.is_some() {
                                 panic!("9a469d36")
                             } else {
-                                location_attr = Some(v);
+                                loc_attr = Some(v);
                             }
                         }
                     }
                 }
-                location_attr.expect("d1003b2e").to_attr_view_ts()
+                loc_attr.expect("d1003b2e").to_attr_view_ts()
             };
             let ft = &field.ty;
             quote! {
-                #location_attr
+                #loc_attr
                 #fi: #ft
             }
         });
@@ -2442,7 +2437,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 };
                 let url_ts = {
                     let format_ts = dq_ts(&format!(
-                        "{{endpoint_location}}/{{tbl}}/{}",
+                        "{{endpoint_loc}}/{{tbl}}/{}",
                         op.self_sc_str()
                     ));
                     quote! {let #UrlSc = format!(#format_ts);}
@@ -2555,7 +2550,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 quote! {
                     #[allow(clippy::single_call_fn)]
                     async fn #try_op_h_sc_ts(
-                        #EndpointLocationSc: #RefStr,
+                        #EndpointLocSc: #RefStr,
                         #PrmsSc: #ident_op_prms_ucc,
                         #TblSc: &str,
                     ) -> Result<#result_ok_type_ts, #ident_try_op_er_ucc> {
@@ -2571,11 +2566,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         #return_er_ts
                     }
                     pub async fn #try_op_sc_ts(
-                        #EndpointLocationSc: #RefStr,
+                        #EndpointLocSc: #RefStr,
                         #PrmsSc: #ident_op_prms_ucc
                     ) -> Result<#result_ok_type_ts, #ident_try_op_er_ucc> {
                         Self::#try_op_h_sc_ts(
-                            #EndpointLocationSc,
+                            #EndpointLocSc,
                             #PrmsSc,
                             #self_tbl_name_call_ts
                         ).await
@@ -3517,7 +3512,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             .make_pub()
                             .d_debug()
                             .d_thiserror_error()
-                            .d_location_lib_location()
+                            .d_loc_lib_location()
                             .build_enum(
                                 &Ts2::new(),
                                 &ident_op_payload_try_new_er_ucc,
@@ -3527,7 +3522,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                         #[eo_to_err_string]
                                         #NotUnqPkSc: #pk_ft_upd_ts,
                                         #[eo_to_err_string]
-                                        loc: location_lib::loc::Loc,
+                                        loc: loc_lib::loc::Loc,
                                     }
                                 }},
                             );
@@ -3542,7 +3537,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     if acc_6bf275fc.contains(&&el_35facc3a.#pk_fi) {
                                         return Err(#ident_op_payload_try_new_er_ucc::#NotUnqPkUcc {
                                             #NotUnqPkSc: el_35facc3a.#pk_fi,
-                                            loc: location_lib::loc!(),
+                                            loc: loc_lib::loc!(),
                                         });
                                     }
                                     acc_6bf275fc.push(&el_35facc3a.#pk_fi);
@@ -3752,11 +3747,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         .make_pub()
                         .d_debug()
                         .d_thiserror_error()
-                        .d_location_lib_location()
+                        .d_loc_lib_location()
                         .build_enum(&Ts2::new(), &ident_op_er_ucc, &Ts2::new(), &{
                             let vrts_ts = type_vrts_from_req_res_syn_vrts
                                 .iter()
-                                .map(gen_location_vrt_ts);
+                                .map(gen_loc_vrt_ts);
                             quote! {{#(#vrts_ts),*}}
                         });
                     quote! {
@@ -3775,7 +3770,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     .make_pub()
                     .d_debug()
                     .d_thiserror_error()
-                    .d_location_lib_location()
+                    .d_loc_lib_location()
                     .build_enum(&Ts2::new(), &gen_ident_try_op_er_ucc(op), &Ts2::new(), &{
                         let syn_vrts: &Vec<Variant> = match &op {
                             Op::Rm | Op::Ro => &{
@@ -3800,7 +3795,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     &ident_op_er_with_serde_ucc,
                                     None,
                                     vec![(
-                                        macros_helpers_location_field_attr_eo_to_err_string,
+                                        macros_helpers_loc_field_attr_eo_to_err_string,
                                         &op.op_er_with_serde_sc(),
                                         gen_simple_syn_punct(&[
                                             &ident_op_er_with_serde_ucc.to_string()
@@ -3811,7 +3806,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 .clone()
                             }))
                             .collect::<Vec<Variant>>()
-                            .into_iter().map(|arg0: Variant| gen_location_vrt_ts(&arg0));
+                            .into_iter().map(|arg0: Variant| gen_loc_vrt_ts(&arg0));
                         quote! {{#(#vrts_ts),*}}
                     });
                 quote! {
@@ -5711,13 +5706,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         };
         let gen_try_rm_order_by_pk_with_big_pgn_fn_ts = quote! {
             async fn gen_try_rm_order_by_pk_with_big_pgn(
-                endpoint_location: &str,
+                endpoint_loc: &str,
                 ident_wh_6b1fab92: #ident_wh_ucc,
                 sel: #import_ts NotEmptyUnqVec<#ident_sel_ucc>,
                 tbl: &str
             ) -> Result<Vec<#ident_rd_ucc>, #ident_try_rm_er_ucc> {
                 #ident::try_rm_h(
-                    endpoint_location,
+                    endpoint_loc,
                     #ident_rm_prms_ucc {
                         payload: #ident_rm_payload_ucc {
                             wh_many: #opt_ident_wh_ucc(Some(

@@ -1,4 +1,4 @@
-use location_lib::{Location, loc, loc::Loc};
+use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_cmn::{
     DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFlt, QpEr, incr_checked_add_one_returning_incr,

@@ -3,7 +3,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::quote;
 #[proc_macro]
 pub fn server_port_try_from_u16(v: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let valid_port_ts = {
         let possible_port = v.to_string().parse::<u16>().expect("310a948a");
         if possible_port < server_port_cmn::SERVER_PORT_MIN_VALUE {

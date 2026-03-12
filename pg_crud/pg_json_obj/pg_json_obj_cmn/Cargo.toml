@@ -14,7 +14,7 @@ utoipa.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 schemars.workspace = true
-location_lib = {path = "../../../location_lib"}
+loc_lib = {path = "../../../loc_lib"}
 pg_crud_cmn = {path = "../../pg_crud_cmn", features = ["test-utils"]}
 optml = {path = "../../../optml"}
 

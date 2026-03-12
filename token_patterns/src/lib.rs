@@ -79,10 +79,10 @@ impl ToTokens for SchemarsJsonSchema {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub struct LocationLibLocation;
-impl ToTokens for LocationLibLocation {
+pub struct LocLibLoc;
+impl ToTokens for LocLibLoc {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {location_lib::Location}.to_tokens(tokens);
+        quote! {loc_lib::Location}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
@@ -121,11 +121,10 @@ impl ToTokens for DeriveDebug {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub struct DeriveDebugThiserrorLocation;
-impl ToTokens for DeriveDebugThiserrorLocation {
+pub struct DeriveDebugThiserrorLoc;
+impl ToTokens for DeriveDebugThiserrorLoc {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {#[derive(Debug, thiserror::Error, location_lib::Location, Optml)]}
-            .to_tokens(tokens);
+        quote! {#[derive(Debug, thiserror::Error, loc_lib::Location, Optml)]}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
@@ -179,17 +178,17 @@ impl ToTokens for SqlxTypesTypeDatabase {
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub struct LocationLibLocLoc;
-impl ToTokens for LocationLibLocLoc {
+pub struct LocLibLocLoc;
+impl ToTokens for LocLibLocLoc {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {location_lib::loc::Loc}.to_tokens(tokens);
+        quote! {loc_lib::loc::Loc}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]
-pub struct LocScDoubleDotSpaceLocationLibLocLoc;
-impl ToTokens for LocScDoubleDotSpaceLocationLibLocLoc {
+pub struct LocScDoubleDotSpaceLocLibLocLoc;
+impl ToTokens for LocScDoubleDotSpaceLocLibLocLoc {
     fn to_tokens(&self, tokens: &mut Ts2) {
-        quote! {loc: location_lib::loc::Loc}.to_tokens(tokens);
+        quote! {loc: loc_lib::loc::Loc}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy, Optml)]

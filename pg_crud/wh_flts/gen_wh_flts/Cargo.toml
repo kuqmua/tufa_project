@@ -21,7 +21,7 @@ serde.workspace = true
 serde_json.workspace = true
 pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
 gen_quotes = {path = "../../../gen_quotes"}
-panic_location = {path = "../../../panic_location"}
+panic_loc = {path = "../../../panic_loc"}
 naming = {path = "../../../naming"}
 token_patterns = {path = "../../../token_patterns"}
 macros_helpers = {path = "../../../macros_helpers"}

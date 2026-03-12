@@ -6,7 +6,7 @@ use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
 #[proc_macro_derive(GenGetterTraitsForStructFields)]
 pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let di: DeriveInput = parse(input).expect("49780295");
     let ident = &di.ident;
     let datastruct = match di.data {
@@ -41,7 +41,7 @@ pub fn gen_getter_traits_for_struct_fields(input: Ts) -> Ts {
 }
 #[proc_macro_derive(GenGetterTrait)]
 pub fn gen_getter_trait(input: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let di: DeriveInput = parse(input).expect("195b48f5");
     let ident = &di.ident;
     let data_struct = match di.data {

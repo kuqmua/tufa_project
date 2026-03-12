@@ -10,7 +10,7 @@ use quote::quote;
 use syn::{Data, DeriveInput, Fields, LitStr, parse};
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(v: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let di: DeriveInput = parse(v).expect("e45f75c2");
     let ident = &di.ident;
     let ident_try_from_env_er_ucc = SelfTryFromEnvErUcc::from_tokens(&ident);

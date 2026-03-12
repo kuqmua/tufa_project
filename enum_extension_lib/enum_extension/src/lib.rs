@@ -3,7 +3,7 @@ use quote::quote;
 use syn::{Data, DeriveInput, Fields, parse};
 #[proc_macro_derive(EnumExtension)]
 pub fn enum_extension(v: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     //it only supported for enums without values
     let di: DeriveInput = parse(v).expect("c6b8e80e");
     //todo to implement into_arr() and into_vec - must implement Default for all inn vrt types

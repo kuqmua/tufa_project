@@ -5,7 +5,7 @@ use quote::quote;
 use syn::{Data, DeriveInput, Fields, Ident, parse};
 #[proc_macro_derive(FromStr)]
 pub fn from_str(v: Ts) -> Ts {
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let di: DeriveInput = parse(v).expect("f83fcd2d");
     let ident = &di.ident;
     let Data::Enum(data_enum) = di.data else {

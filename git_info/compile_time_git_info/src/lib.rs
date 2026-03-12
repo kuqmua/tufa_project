@@ -4,7 +4,7 @@ use quote::quote;
 #[proc_macro]
 pub fn compile_time_project_git_info(_v: Ts) -> Ts {
     use std::process::Command;
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let output = Command::new("git")
         .args(["rev-parse", "HEAD"])
         .output()

@@ -1,12 +1,12 @@
 // todo is there is no point to add extra info to enum like this
-// eo_location_field: {
+// eo_loc_field: {
 //     eo_display_with_serde_field: v
 // }
-// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/loc_test/src/main.rs#L85 2024-05-06 09:17:23
 // impl display like this this
-// eo_location_field
-// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/location_test/src/main.rs#L85 2024-05-06 09:17:23
-use location_lib::{Location, ToErrString, loc, loc::Loc};
+// eo_loc_field
+// https://github.com/kuqmua/tufa_project/blob/ebb9f680ea508fb5df5ee5d2791e96ca34610bc2/loc_test/src/main.rs#L85 2024-05-06 09:17:23
+use loc_lib::{Location, ToErrString, loc, loc::Loc};
 use optml::Optml;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -21,20 +21,20 @@ pub enum ErOne {
         eo_display_field: DisplayStruct, //IN SERIALIZE DESERIALIZE String
         #[eo_to_err_string_serde]
         eo_serde: SerdeStruct,
-        #[eo_location]
-        eo_location_field: ErTwo, //IN SERIALIZE DESERIALIZE nested
+        #[eo_loc]
+        eo_loc_field: ErTwo, //IN SERIALIZE DESERIALIZE nested
         #[eo_vec_to_err_string] //todo remove w under Vec
         eo_vec_display_field: Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE Vec<String>
         #[eo_vec_to_err_string_serde]
         eo_vec_serde: Vec<SerdeStruct>,
-        #[eo_vec_location]
-        eo_vec_location_field: Vec<ErUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
+        #[eo_vec_loc]
+        eo_vec_loc_field: Vec<ErUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
         #[eo_hashmap_k_string_v_to_err_string]
         hashmap_string_string: HashMap<String, DisplayStruct>,
         #[eo_hashmap_k_string_v_to_err_string_serde]
         hashmap_string_serde: HashMap<String, SerdeStruct>,
-        #[eo_hashmap_k_string_v_location]
-        hashmap_string_location: HashMap<String, ErUnnamedOne>,
+        #[eo_hashmap_k_string_v_loc]
+        hashmap_string_loc: HashMap<String, ErUnnamedOne>,
         loc: Loc,
     },
 }
@@ -90,7 +90,7 @@ fn main() {
             two: true,
             three: 42,
         },
-        eo_location_field: ErTwo::Vrt {
+        eo_loc_field: ErTwo::Vrt {
             eo_display_with_serde_field: String::from("v"),
             loc: loc!(),
         },
@@ -116,7 +116,7 @@ fn main() {
                 three: 422,
             },
         ],
-        eo_vec_location_field: vec![
+        eo_vec_loc_field: vec![
             ErUnnamedOne::Something(ErTwo::Vrt {
                 eo_display_with_serde_field: String::from("v"),
                 loc: loc!(),
@@ -160,7 +160,7 @@ fn main() {
                 },
             ),
         ]),
-        hashmap_string_location: HashMap::from([
+        hashmap_string_loc: HashMap::from([
             (
                 String::from("ksdfgadsfgsdfgdfgey"),
                 ErUnnamedOne::Something(ErTwo::Vrt {

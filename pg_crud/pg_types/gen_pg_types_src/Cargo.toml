@@ -21,7 +21,7 @@ pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
 pg_crud_cmn_and_macros_cmn = {path = "../../pg_crud_cmn_and_macros_cmn"}
 enum_extension_lib = {path = "../../../enum_extension_lib"}
 gen_quotes = {path = "../../../gen_quotes"}
-panic_location = {path = "../../../panic_location"}
+panic_loc = {path = "../../../panic_loc"}
 macros_helpers = {path = "../../../macros_helpers"}
 naming = {path = "../../../naming"}
 token_patterns = {path = "../../../token_patterns"}

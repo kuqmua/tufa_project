@@ -14,7 +14,7 @@ pub fn loc_syn_field() -> Field {
             qself: None,
             path: Path {
                 leading_colon: None,
-                segments: gen_simple_syn_punct(&["location_lib", "loc", "Loc"]),
+                segments: gen_simple_syn_punct(&["loc_lib", "loc", "Loc"]),
             },
         }),
     }

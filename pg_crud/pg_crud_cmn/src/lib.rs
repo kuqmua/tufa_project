@@ -1,5 +1,5 @@
 use from_str::FromStr;
-use location_lib::{Location, ToErrString, loc, loc::Loc};
+use loc_lib::{Location, ToErrString, loc, loc::Loc};
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use optml::Optml;
 pub use pg_crud_cmn_and_macros_cmn::*;
@@ -1356,7 +1356,7 @@ pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
         loc: Loc,
     },
     UnsignedPartOfI32TryFromI32Er {
-        #[eo_location]
+        #[eo_loc]
         v: UnsignedPartOfI32TryFromI32Er,
         loc: Loc,
     },

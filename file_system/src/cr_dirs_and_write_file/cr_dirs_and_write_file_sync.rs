@@ -1,4 +1,4 @@
-use location_lib::{Location, loc, loc::Loc};
+use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use std::{
     fs::{self, File},

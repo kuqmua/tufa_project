@@ -34,7 +34,7 @@ use naming::{
     },
 };
 use optml::Optml;
-use panic_location::panic_location;
+use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrPrmUndrscr, IsCrQbMut, IsNl,
@@ -101,7 +101,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         vrt: PgJsonObjRecord,
         whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
-    panic_location();
+    panic_loc();
     let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
     let import = Import::PgCrud;
     let gen_pg_json_obj_config = from_str::<GenPgJsonsConfig>(
@@ -577,7 +577,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         | gen_type_as_pg_json_ts(
             &syn_field.type0
         );
-        let gen_gen_impl_location_lib_to_err_string_w_ts = |ts: &dyn ToTokens| gen_impl_to_err_string_ts(
+        let gen_gen_impl_loc_lib_to_err_string_w_ts = |ts: &dyn ToTokens| gen_impl_to_err_string_ts(
             &Ts2::new(),
             &ts,
             &Ts2::new(),
@@ -823,13 +823,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &quote! {write!(f, "{self:?}")}
             );
             let impl_display_for_ident_cr_ts = gen_impl_display_for_ident_cr_ts(&ident_cr_ucc);
-            let impl_location_lib_to_err_string_for_ident_cr_ts = gen_gen_impl_location_lib_to_err_string_w_ts(&ident_cr_ucc);
+            let impl_loc_lib_to_err_string_for_ident_cr_ts = gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_cr_ucc);
             let mb_ident_with_id_cr_stdrt_nn_ts = if is_stdrt_nn {
                 let impl_display_for_ident_with_id_cr_stdrt_nn_ts = gen_impl_display_for_ident_cr_ts(&ident_with_id_stdrt_nn_cr_ucc);
-                let impl_location_lib_to_err_string_for_ident_with_id_cr_stdrt_nn_ts = gen_gen_impl_location_lib_to_err_string_w_ts(&ident_with_id_stdrt_nn_cr_ucc);
+                let impl_loc_lib_to_err_string_for_ident_with_id_cr_stdrt_nn_ts = gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_with_id_stdrt_nn_cr_ucc);
                 quote! {
                     #impl_display_for_ident_with_id_cr_stdrt_nn_ts
-                    #impl_location_lib_to_err_string_for_ident_with_id_cr_stdrt_nn_ts
+                    #impl_loc_lib_to_err_string_for_ident_with_id_cr_stdrt_nn_ts
                 }
             } else {
                 Ts2::new()
@@ -837,7 +837,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             quote! {
                 #ident_cr_cmn_ts
                 #impl_display_for_ident_cr_ts
-                #impl_location_lib_to_err_string_for_ident_cr_ts
+                #impl_loc_lib_to_err_string_for_ident_cr_ts
                 #mb_ident_with_id_cr_stdrt_nn_ts
             }
         };
@@ -1414,7 +1414,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         #ts_bf3bd19e
                     }
                 };
-                let impl_location_lib_to_err_string_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts = gen_gen_impl_location_lib_to_err_string_w_ts(&ident_sel_el_or_ident_with_id_sel_el_ucc);
+                let impl_loc_lib_to_err_string_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts = gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_sel_el_or_ident_with_id_sel_el_ucc);
                 let (
                     impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts,
                     impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_with_max_page_size_ts
@@ -1447,7 +1447,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 quote! {
                     #ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts
-                    #impl_location_lib_to_err_string_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts
+                    #impl_loc_lib_to_err_string_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts
                     #impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts
                     #impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_with_max_page_size_ts
                 }
@@ -1775,10 +1775,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         ),
                     }
                 };
-                let mb_impl_location_lib_to_err_string_for_ident_wh_ts = if matches!((&pattern, &is_nl), (Pattern::Stdrt, IsNl::True)) {
+                let mb_impl_loc_lib_to_err_string_for_ident_wh_ts = if matches!((&pattern, &is_nl), (Pattern::Stdrt, IsNl::True)) {
                     Ts2::new()
                 } else {
-                    gen_gen_impl_location_lib_to_err_string_w_ts(&ident_wh_ucc)
+                    gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_wh_ucc)
                 };
                 let gen_impl_pg_crud_all_vrts_dflt_some_one_el_cnt_stdrt_nn_wh = |is_stdrt_with_id: &IsStdrtWithId| {
                     let gen_self_vrt_dflt_some_one_ts = |ts: &dyn ToTokens|quote!{
@@ -1858,7 +1858,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         },
                     );
-                    let impl_location_lib_to_err_string_for_ident_with_id_stdrt_nn_wh_ts = gen_gen_impl_location_lib_to_err_string_w_ts(&ident_with_id_stdrt_nn_wh_ucc);
+                    let impl_loc_lib_to_err_string_for_ident_with_id_stdrt_nn_wh_ts = gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_with_id_stdrt_nn_wh_ucc);
                     let impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_with_id_stdrt_nn_wh_ts = gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts(
                         &ident_with_id_stdrt_nn_wh_ucc,
                         &gen_impl_pg_crud_all_vrts_dflt_some_one_el_cnt_stdrt_nn_wh(&is_stdrt_with_id_true)
@@ -1866,7 +1866,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     quote! {
                         #ident_with_id_stdrt_nn_wh_ts
                         #impl_pg_crud_pg_type_pg_type_wh_flt_for_ident_with_id_stdrt_nn_wh_ts
-                        #impl_location_lib_to_err_string_for_ident_with_id_stdrt_nn_wh_ts
+                        #impl_loc_lib_to_err_string_for_ident_with_id_stdrt_nn_wh_ts
                         #impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_with_id_stdrt_nn_wh_ts
                     }
                 } else {
@@ -1875,7 +1875,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 quote! {
                     #mb_ident_wh_ts
                     #mb_impl_pg_crud_pg_type_pg_type_wh_flt_for_ident_wh_ts
-                    #mb_impl_location_lib_to_err_string_for_ident_wh_ts
+                    #mb_impl_loc_lib_to_err_string_for_ident_wh_ts
                     #mb_impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_wh_ts
                     #mb_ident_with_id_stdrt_nn_wh_ts
                 }
@@ -1992,14 +1992,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .d_thiserror_error()
-                .d_location_lib_location()
+                .d_loc_lib_location()
                 .build_enum(
                     &Ts2::new(),
                     &ts,
                     &Ts2::new(),
                     &quote!{{
                         #AllFieldsAreNoneUcc {
-                            loc: location_lib::loc::Loc,
+                            loc: loc_lib::loc::Loc,
                         },
                     }}
                 );
@@ -2067,7 +2067,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             quote! {
                                 if #ts {
                                     return Err(#ident_rd_try_from_er_or_ident_with_id_stdrt_nn_rd_try_from_er_ucc::#AllFieldsAreNoneUcc {
-                                        loc: location_lib::loc!()
+                                        loc: loc_lib::loc!()
                                     });
                                 }
                             }
@@ -2575,29 +2575,29 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         .d_serde_serialize()
                         .d_serde_deserialize()
                         .d_thiserror_error()
-                        .d_location_lib_location()
+                        .d_loc_lib_location()
                         .build_enum(
                             &Ts2::new(),
                             &ident_upd_try_new_er_ucc,
                             &Ts2::new(),
                             &quote!{{
                                 #CrUpdDelAreEmptyUcc {
-                                    loc: location_lib::loc::Loc,
+                                    loc: loc_lib::loc::Loc,
                                 },
                                 #IdsAreNotUnqUcc {
                                     #[eo_to_err_string_serde]
                                     duplicate: #StringTs,
-                                    loc: location_lib::loc::Loc,
+                                    loc: loc_lib::loc::Loc,
                                 },
                                 #NotUnqIdInJsonDelArrUcc {
                                     #[eo_to_err_string_serde]
                                     er: #StringTs,
-                                    loc: location_lib::loc::Loc,
+                                    loc: loc_lib::loc::Loc,
                                 },
                                 #NotUnqIdInJsonUpdAndDelArrsUcc {
                                     #[eo_to_err_string_serde]
                                     er: #StringTs,
-                                    loc: location_lib::loc::Loc,
+                                    loc: loc_lib::loc::Loc,
                                 },
                             }}
                         ),
@@ -2625,7 +2625,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     quote! {
                                         if cr.is_empty() && upd.is_empty() && del.is_empty() {
                                             return Err(#ident_upd_try_new_er_ucc::#CrUpdDelAreEmptyUcc {
-                                                loc: location_lib::loc!()
+                                                loc: loc_lib::loc!()
                                             });
                                         }
                                     }
@@ -2649,7 +2649,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 UpdOrDel::Del => &el_ts
                                             };
                                             quote!{
-                                                <#uuid_uuid_as_nn_jsonb_string_as_pg_json_upd_ts as location_lib::ToErrString>::to_err_string(
+                                                <#uuid_uuid_as_nn_jsonb_string_as_pg_json_upd_ts as loc_lib::ToErrString>::to_err_string(
                                                     #ts
                                                 )
                                             }
@@ -2671,7 +2671,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             if acc_2bf4e098.contains(&&el.#IdSc) {
                                                 return Err(#ident_upd_try_new_er_ucc::#IdsAreNotUnqUcc {
                                                     duplicate: #uuid_as_pg_json_upd_to_err_string_el_id_ts,
-                                                    loc: location_lib::loc!()
+                                                    loc: loc_lib::loc!()
                                                 });
                                             }
                                             acc_2bf4e098.push(&el.#IdSc);
@@ -2680,7 +2680,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             if acc_2bf4e098.contains(&el) {
                                                 return Err(#ident_upd_try_new_er_ucc::#IdsAreNotUnqUcc {
                                                     duplicate: #uuid_as_pg_json_upd_to_err_string_el_ts,
-                                                    loc: location_lib::loc!()
+                                                    loc: loc_lib::loc!()
                                                 });
                                             }
                                             acc_2bf4e098.push(el);
@@ -2707,7 +2707,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                                     &el.clone().into()
                                                                 )
                                                             ),
-                                                            loc: location_lib::loc!()
+                                                            loc: loc_lib::loc!()
                                                         });
                                                     }
                                                     del_acc.push(el);
@@ -2728,7 +2728,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                                 &el.clone().into()
                                                             )
                                                         ),
-                                                        loc: location_lib::loc!()
+                                                        loc: loc_lib::loc!()
                                                     });
                                                 }
                                             }

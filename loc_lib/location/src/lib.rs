@@ -1,6 +1,6 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    LocationFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
+    LocFieldAttr, gen_if_write_is_err_ts, gen_impl_display_ts, gen_impl_to_err_string_ts,
     gen_serde_version_of_named_syn_vrt,
 };
 use naming::{IntoSerdeVersionSc, LocSc, VSc, WithSerdeUcc, prm::SelfWithSerdeUcc};
@@ -15,22 +15,22 @@ use token_patterns::StringTs;
     attributes(
         eo_to_err_string,
         eo_to_err_string_serde,
-        eo_location,
+        eo_loc,
         eo_vec_to_err_string,
         eo_vec_to_err_string_serde,
-        eo_vec_location,
+        eo_vec_loc,
         eo_hashmap_k_string_v_to_err_string,
         eo_hashmap_k_string_v_to_err_string_serde,
-        eo_hashmap_k_string_v_location,
+        eo_hashmap_k_string_v_loc,
     )
 )]
-pub fn location(input: Ts) -> Ts {
+pub fn loc(input: Ts) -> Ts {
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Optml)]
     enum SuportedEnumVrt {
         Named,
         Unnamed,
     }
-    panic_location::panic_location();
+    panic_loc::panic_loc();
     let di: DeriveInput = parse(input).expect("d94f091a");
     let ident = &di.ident;
     let generic_prms = &di
@@ -77,17 +77,17 @@ pub fn location(input: Ts) -> Ts {
     } else {
         quote! {<#(#generic_prms),*>}
     };
-    let mb_generic_prms_location_lib_to_err_string_anns_ts = if generic_prms.is_empty() {
+    let mb_generic_prms_loc_lib_to_err_string_anns_ts = if generic_prms.is_empty() {
         Ts2::new()
     } else {
         let v = generic_prms
             .iter()
-            .map(|el| quote! {#el: location_lib::ToErrString});
+            .map(|el| quote! {#el: loc_lib::ToErrString});
         quote! {<#(#v),*>}
     };
     let gen_enum_ident_with_serde_ts = |ts: &dyn ToTokens| {
         quote! {
-            #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize, location_lib::Optml)]
+            #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize, loc_lib::Optml)]
             pub enum #ident_with_serde_ucc #mb_generic_prms_ts {
                 #ts
             }
@@ -152,13 +152,13 @@ pub fn location(input: Ts) -> Ts {
                     .filter(|el0| *el0.ident.as_ref().expect("f6f6fb24") != *loc_sc_str)
                     .map(|el0| {
                         let el0_ident = &el0.ident.as_ref().expect("e97b25b9");
-                        match LocationFieldAttr::try_from(el0).expect("8ff56aeb") {
-                            LocationFieldAttr::EoToErrString | LocationFieldAttr::EoToErrStringSerde => {
+                        match LocFieldAttr::try_from(el0).expect("8ff56aeb") {
+                            LocFieldAttr::EoToErrString | LocFieldAttr::EoToErrStringSerde => {
                                 quote! {
-                                    location_lib::ToErrString::to_err_string(#el0_ident)
+                                    loc_lib::ToErrString::to_err_string(#el0_ident)
                                 }
                             }
-                            LocationFieldAttr::EoLocation => {
+                            LocFieldAttr::EoLoc => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_52e70d22, "\n {el}"}, &quote! {panic!("c751d54a");});
                                 quote! {
                                     #el0_ident.to_string().lines().fold(
@@ -170,14 +170,14 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoVecToErrString | LocationFieldAttr::EoVecToErrStringSerde => {
+                            LocFieldAttr::EoVecToErrString | LocFieldAttr::EoVecToErrStringSerde => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_a9ba7521, "\n {el_6e4f53ad}"}, &quote! {panic!("b35ed9f5");});
                                 quote! {
                                     #el0_ident.iter().fold(
                                         #StringTs::new(),
                                         |mut acc_ac447c4b, el| {
                                             acc_ac447c4b.push_str(
-                                                &location_lib::ToErrString::to_err_string(el)
+                                                &loc_lib::ToErrString::to_err_string(el)
                                                 .lines()
                                                 .fold(
                                                     #StringTs::new(),
@@ -192,7 +192,7 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoVecLocation => {
+                            LocFieldAttr::EoVecLoc => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_1bbd5ef3, "\n {el_3f2fe01d}"}, &quote! {panic!("4dfdd18d");});
                                 quote! {
                                     #el0_ident.iter().fold(
@@ -210,8 +210,8 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoHashMapKStringVToErrString | LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
-                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {k}: {}", &location_lib::ToErrString::to_err_string(#VSc)}, &quote! {panic!("d030580a");});
+                            LocFieldAttr::EoHashMapKStringVToErrString | LocFieldAttr::EoHashMapKStringVToErrStringSerde => {
+                                let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_06473093, "\n {k}: {}", &loc_lib::ToErrString::to_err_string(#VSc)}, &quote! {panic!("d030580a");});
                                 quote! {
                                     #el0_ident.iter().fold(
                                         #StringTs::new(),
@@ -222,7 +222,7 @@ pub fn location(input: Ts) -> Ts {
                                     )
                                 }
                             }
-                            LocationFieldAttr::EoHashMapKStringVLocation => {
+                            LocFieldAttr::EoHashMapKStringVLoc => {
                                 let if_write_is_err_ts = gen_if_write_is_err_ts(
                                     &{
                                         let if_write_is_err_ts = gen_if_write_is_err_ts(&quote! {acc_addfc699, "\n  {el_8b8f577e}"}, &quote! {panic!("d0492fbf");});
@@ -297,7 +297,7 @@ pub fn location(input: Ts) -> Ts {
                 }
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &mb_generic_prms_location_lib_to_err_string_anns_ts,
+                &mb_generic_prms_loc_lib_to_err_string_anns_ts,
                 &ident,
                 &mb_generic_prms_ts,
                 &impl_display_h_ts,
@@ -319,28 +319,28 @@ pub fn location(input: Ts) -> Ts {
                         }
                         else {
                             let gen_field_ts = |ts: &dyn ToTokens|quote!{#el0_ident: {#ts}};
-                            match LocationFieldAttr::try_from(el0).expect("449c3781") {
-                                LocationFieldAttr::EoToErrString => gen_field_ts(&quote!{
-                                    location_lib::ToErrString::to_err_string(&#el0_ident)
+                            match LocFieldAttr::try_from(el0).expect("449c3781") {
+                                LocFieldAttr::EoToErrString => gen_field_ts(&quote!{
+                                    loc_lib::ToErrString::to_err_string(&#el0_ident)
                                 }),
-                                LocationFieldAttr::EoToErrStringSerde | LocationFieldAttr::EoVecToErrStringSerde | LocationFieldAttr::EoHashMapKStringVToErrStringSerde => {
+                                LocFieldAttr::EoToErrStringSerde | LocFieldAttr::EoVecToErrStringSerde | LocFieldAttr::EoHashMapKStringVToErrStringSerde => {
                                     quote! {#el0_ident}
                                 }
-                                LocationFieldAttr::EoLocation => gen_field_ts(&quote!{
+                                LocFieldAttr::EoLoc => gen_field_ts(&quote!{
                                     #el0_ident.into_serde_version()
                                 }),
-                                LocationFieldAttr::EoVecToErrString => gen_field_ts(&quote!{
-                                    #el0_ident.into_iter().map(|el|location_lib::ToErrString::to_err_string(&el)).collect()
+                                LocFieldAttr::EoVecToErrString => gen_field_ts(&quote!{
+                                    #el0_ident.into_iter().map(|el|loc_lib::ToErrString::to_err_string(&el)).collect()
                                 }),
-                                LocationFieldAttr::EoVecLocation => gen_field_ts(&quote!{
+                                LocFieldAttr::EoVecLoc => gen_field_ts(&quote!{
                                     #el0_ident.into_iter().map(|el|el.into_serde_version()).collect()
                                 }),
-                                LocationFieldAttr::EoHashMapKStringVToErrString => gen_field_ts(&quote!{
+                                LocFieldAttr::EoHashMapKStringVToErrString => gen_field_ts(&quote!{
                                     #el0_ident.into_iter().map(
-                                        |(k, v)|(k, location_lib::ToErrString::to_err_string(&v))
+                                        |(k, v)|(k, loc_lib::ToErrString::to_err_string(&v))
                                     ).collect()
                                 }),
-                                LocationFieldAttr::EoHashMapKStringVLocation => gen_field_ts(&quote!{
+                                LocFieldAttr::EoHashMapKStringVLoc => gen_field_ts(&quote!{
                                     #el0_ident.into_iter().map(
                                         |(k, v)|(k, v.into_serde_version())
                                     ).collect()
@@ -366,14 +366,14 @@ pub fn location(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &mb_generic_prms_location_lib_to_err_string_anns_ts,
+                &mb_generic_prms_loc_lib_to_err_string_anns_ts,
                 &ident_with_serde_ucc,
                 &mb_generic_prms_ts,
                 &impl_display_h_ts,
             );
-            let impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
+            let impl_loc_lib_to_err_string_to_err_string_for_ident_with_serde_ts =
                 gen_impl_to_err_string_ts(
-                    &mb_generic_prms_location_lib_to_err_string_anns_ts,
+                    &mb_generic_prms_loc_lib_to_err_string_anns_ts,
                     &ident_with_serde_ucc,
                     &mb_generic_prms_ts,
                     &quote! {format!("{self}")},
@@ -383,7 +383,7 @@ pub fn location(input: Ts) -> Ts {
                 #impl_ident_into_serde_version_ts
                 #enum_ident_with_serde_ts
                 #impl_display_for_ident_with_serde_ts
-                #impl_location_lib_to_err_string_to_err_string_for_ident_with_serde_ts
+                #impl_loc_lib_to_err_string_to_err_string_for_ident_with_serde_ts
             }
         }
         SuportedEnumVrt::Unnamed => {
@@ -395,7 +395,7 @@ pub fn location(input: Ts) -> Ts {
                 quote! {match self { #(#vrts_ts),* }}
             };
             let impl_display_for_ident_ts = gen_impl_display_ts(
-                &mb_generic_prms_location_lib_to_err_string_anns_ts,
+                &mb_generic_prms_loc_lib_to_err_string_anns_ts,
                 &ident,
                 &mb_generic_prms_ts,
                 &quote! {
@@ -443,7 +443,7 @@ pub fn location(input: Ts) -> Ts {
                 gen_enum_ident_with_serde_ts(&quote! {#(#vrts_ts),*})
             };
             let impl_display_for_ident_with_serde_ts = gen_impl_display_ts(
-                &mb_generic_prms_location_lib_to_err_string_anns_ts,
+                &mb_generic_prms_loc_lib_to_err_string_anns_ts,
                 &ident_with_serde_ucc,
                 &mb_generic_prms_ts,
                 &quote! {
@@ -468,7 +468,7 @@ pub fn location(input: Ts) -> Ts {
     // if ident == "" {
     //     macros_helpers::mb_write_ts_into_file(
     //         macros_helpers::ShouldWriteTsIntoFile::True,
-    //         "location",
+    //         "loc",
     //         &generated,
     //         &macros_helpers::FormatWithCargofmt::True,
     //     );
