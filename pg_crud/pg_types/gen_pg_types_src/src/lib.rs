@@ -849,7 +849,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             pg_type_pattern_b0eedab6
         ).parse::<Ts2>().expect("ff3eb7a6");
         let ident = &gen_ident_ts(pg_type, is_nl, pg_type_pattern);
-        let gen_ident_stdrt_nn_ts = |pg_type_60cf140e: &PgType| gen_ident_ts(pg_type_60cf140e, &IsNl::False, &PgTypePattern::Stdrt);
+        let gen_ident_stdrt_nn_ts = |v: &PgType| gen_ident_ts(v, &IsNl::False, &PgTypePattern::Stdrt);
         let ident_stdrt_nn_ucc = gen_ident_stdrt_nn_ts(pg_type);
         let ident_stdrt_nl_ucc = gen_ident_ts(pg_type, &IsNl::True, &PgTypePattern::Stdrt);
         let ident_arr_nn_ucc = gen_ident_ts(
@@ -1871,6 +1871,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #mb_impl_ident_ts
             }
         };
+        let sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts = SelfOrgnUcc::from_tokens(&gen_ident_stdrt_nn_ts(&PgType::SqlxTypesChronoNaiveDateAsDate));
         let ident_upd_ucc = SelfUpdUcc::from_tokens(&ident);
         let ident_orgn_ts = {
             let ident_orgn_ts = DTsBuilder::new()
@@ -1946,15 +1947,22 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxTypesTimeTimeAsTime => quote!{#[serde(try_from = "(u8,u8,u8,u32)")]},
                             PgType::SqlxPgTypesPgIntervalAsInterval => quote!{#[serde(from = "(i32,i32,i64)")]},
                             PgType::SqlxTypesChronoNaiveDateAsDate => quote!{#[serde(try_from = "sqlx::types::chrono::NaiveDate")]},
-                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |//todo reuse name
-                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote!{#[serde(from = "(SqlxTypesChronoNaiveDateAsNnDateOrgn,SqlxTypesChronoNaiveTimeAsNnTimeOrgn)")]},
+                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                                let ts = dq_ts(&format!("({sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts},SqlxTypesChronoNaiveTimeAsNnTimeOrgn)"));
+                                quote!{#[serde(from = #ts)]}
+                            },
                             PgType::StringAsText |
                             PgType::SqlxTypesUuidUuidAsUuidV4InitByPg |
                             PgType::SqlxTypesUuidUuidAsUuidInitByClient => quote!{#[serde(try_from = "String")]},
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => quote!{#[serde(from = "[u8; 6]")]},
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range => quote!{#[serde(try_from = "(std::ops::Bound<i32>,std::ops::Bound<i32>)")]},
                             PgType::SqlxPgTypesPgRangeI64AsInt8Range => quote!{#[serde(try_from = "(std::ops::Bound<i64>,std::ops::Bound<i64>)")]},
-                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote!{#[serde(from = "(std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrgn>,std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrgn>)")]},//todo reuse name
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => {
+                                let bound = format!("std::ops::Bound<{sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts}>");
+                                let ts = dq_ts(&format!("({bound},{bound})"));
+                                quote!{#[serde(from = #ts)]}
+                            },
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote!{#[serde(from = "(std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrgn>,std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNnTimestampOrgn>)")]},//todo reuse name
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote!{#[serde(from = "(std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrgn>,std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNnTimestampTzOrgn>)")]},//todo reuse name
                         }
@@ -2813,11 +2821,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     ),
                     //todo reuse naming
                     PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => gen_impl_try_from_ts_e9596027(
-                        &quote!{(SqlxTypesChronoNaiveDateAsNnDateOrgn,SqlxTypesChronoNaiveTimeAsNnTimeOrgn)},
+                        &quote!{(#sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts,SqlxTypesChronoNaiveTimeAsNnTimeOrgn)},
                         &quote!{Self(#inn_type_stdrt_nn_ts::#NewSc(v.0.0, v.1.0))}
                     ),
                     PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => gen_impl_try_from_ts_e9596027(
-                        &quote!{(SqlxTypesChronoNaiveDateAsNnDateOrgn,SqlxTypesChronoNaiveTimeAsNnTimeOrgn)},
+                        &quote!{(#sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts,SqlxTypesChronoNaiveTimeAsNnTimeOrgn)},
                         &{
                             let ts = gen_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_ts(&gen_sqlx_types_chrono_naive_date_time_new_ts(&quote! {
                                 v.0.0,
@@ -2831,7 +2839,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &quote!{Self(#inn_type_stdrt_nn_ts::new(v))}
                     ),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => gen_impl_try_from_ts_e9596027(
-                        &quote!{(std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrgn>,std::ops::Bound<SqlxTypesChronoNaiveDateAsNnDateOrgn>)},
+                        &{
+                            let bound_ts = quote!{std::ops::Bound<#sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts>};
+                            quote!{(#bound_ts,#bound_ts)}
+                        },
                         &self_sqlx_pg_types_pg_range_ts
                     ),
                     PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => gen_impl_try_from_ts_e9596027(
