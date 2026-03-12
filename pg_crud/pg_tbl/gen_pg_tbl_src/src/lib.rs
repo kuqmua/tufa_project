@@ -387,8 +387,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     )
     .expect("1b6adf7e");
     let ident = &di.ident;
-    let ident_sc_str = ToTokensToScStr::case(&ident);
-    let ident_sc_dq_ts = dq_ts(&ident_sc_str);
+    let ident_sc_dq_ts = dq_ts(&ToTokensToScStr::case(&ident));
     let self_tbl_name_call_ts = quote! {Self::#TblNameSc()};
     let (pk_field, fields, fields_without_pk) = if let Data::Struct(data_struct) = &di.data {
         if let Fields::Named(fields_named) = &data_struct.fields {
@@ -3895,8 +3894,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             |method_ts: &dyn ToTokens, ts0: &dyn ToTokens| {
                 quote! {#pk_ft_as_pg_type_pk_ts #method_ts(#ts0)}
             };
-        let pk_ft_rd_into_tt_el_pk_fi_clone_ts =
-            gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIntoTtSc, &quote! {el_adcc8db3});
         let rd_ids_el_937c5af3_pk_fi = quote! {rd_ids_el_937c5af3.#pk_fi};
         let (
             pk_ft_rd_ids_into_rd_el_43ab7fb5_pk_fi_ts,
@@ -5394,11 +5391,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     &quote!{tbl_7e35b1ce},
                     &quote!{tbl_test_rm_by_eq_to_crd_pks},//todo is tbl name correct?
                     &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                        let pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts =
-                            gen_pk_ft_as_pg_type_pk_method_call_ts(
-                                &RdIdsIntoTtSc,
-                                &quote! {el_3bb88958.#pk_fi},
-                            );
                         let assert_eq_ts_ea7edbc4 = gen_assert_eq_ts(
                             &quote!{rd_ids_from_try_dm},
                             &quote!{{
@@ -5412,7 +5404,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         );
                         let assert_ts_d6ec39a3 = gen_assert_ts(
                             &{
-                                let ts = gen_pk_wh_eq_ts(&pk_ft_rd_into_tt_el_pk_fi_clone_ts);
+                                let ts = gen_pk_wh_eq_ts(&gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIntoTtSc, &quote! {el_adcc8db3}));
                                 let wh_pk_or_dm_ts = gen_wh_pk_or_ts(&quote!{
                                     rd_ids_from_try_dm.into_iter().map(|el_adcc8db3| #ts).collect()
                                 });
@@ -5429,7 +5421,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             },
                             &quote!{"77f038b0"}
                         );
-                        let ts_212f8aca = gen_pk_wh_eq_ts(&pk_ft_rd_ids_into_tt_el_pk_fi_clone_ts);
+                        let ts_212f8aca = gen_pk_wh_eq_ts(&gen_pk_ft_as_pg_type_pk_method_call_ts(
+                            &RdIdsIntoTtSc,
+                            &quote! {el_3bb88958.#pk_fi},
+                        ));
                         let ts_6f76ccd4 = gen_rd_ids_from_try_dm_ts(&gen_try_dm_h_ts(
                             &quote!{
                                 #pk_fi: Some(
