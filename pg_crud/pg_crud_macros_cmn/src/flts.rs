@@ -38,7 +38,7 @@ use quote::quote;
 use strum_macros::{Display, EnumIter};
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
-pub enum PgTypeFilter {
+pub enum PgTypeFlt {
     Eq { ident: Ts2 },
     DimOneEq { ident: Ts2 },
     GreaterThan { ident: Ts2 },
@@ -91,7 +91,7 @@ pub enum PgTypeFilter {
     DimOneRangeLen,
     //BitVecPositionEq,//currently deactivated
 }
-impl PgFilter for PgTypeFilter {
+impl PgFlt for PgTypeFlt {
     fn mb_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Eq { ident }
@@ -217,7 +217,7 @@ impl PgFilter for PgTypeFilter {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
-pub enum PgJsonFilter {
+pub enum PgJsonFlt {
     Eq { ident: Ts2 },
     DimOneEq { ident: Ts2 },
     DimTwoEq { ident: Ts2 },
@@ -290,7 +290,7 @@ pub enum PgJsonFilter {
     DimThreeOverlapsWithArr { ident: Ts2 },
     DimFourOverlapsWithArr { ident: Ts2 },
 }
-impl PgFilter for PgJsonFilter {
+impl PgFlt for PgJsonFlt {
     fn mb_generic(&self) -> Option<Ts2> {
         match &self {
             Self::Eq { ident }
@@ -444,7 +444,7 @@ impl PgFilter for PgJsonFilter {
         }
     }
 }
-pub trait PgFilter {
+pub trait PgFlt {
     fn mb_generic(&self) -> Option<Ts2>;
     fn prefix_wh_self_ucc(&self) -> Ts2;
     fn ucc(&self) -> &'static dyn DisplayPlusToTokens;

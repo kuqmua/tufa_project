@@ -49,7 +49,7 @@ Each subdirectory follows a consistent pattern with `gen_*` (proc-macro crate), 
 - **`pg_tbl/`** — Table-level CRUD generation (create/read/update/delete)
 - **`pg_json/`** — JSON column handling, with `gen_pg_json_cmn` for shared logic
 - **`pg_json_obj/`** — JSON object schema generation, with `pg_json_obj_cmn`
-- **`wh_filters/`** — WHERE clause filter generation
+- **`wh_flts/`** — WHERE clause filter generation
 - **`pg_crud_cmn/`** — Shared types across pg_crud crates
 - **`pg_crud_macros_cmn/`** — Shared proc-macro utilities
 - **`pg_crud_cmn_and_macros_cmn/`** — Types shared between runtime and macro code

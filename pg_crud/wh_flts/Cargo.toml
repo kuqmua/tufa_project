@@ -1,5 +1,5 @@
 [package]
-name = "wh_filters"
+name = "wh_flts"
 version = "0.1.0"
 edition = "2024"
 description = "description"
@@ -16,7 +16,7 @@ schemars.workspace = true
 utoipa.workspace = true
 regex.workspace = true
 thiserror.workspace = true
-gen_wh_filters = {path = "./gen_wh_filters"}
+gen_wh_flts = {path = "./gen_wh_flts"}
 location_lib = {path = "../../location_lib"}
 pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
 optml = {path = "../../optml"}

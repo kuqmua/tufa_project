@@ -10,8 +10,8 @@ use naming::{
 use optml::Optml;
 use panic_location::panic_location;
 use pg_crud_macros_cmn::{
-    AddOprtrUndrscr, ColumnPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFilter, PgTypeFilter,
-    PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, impl_pg_type_wh_filter_for_ident_ts,
+    AddOprtrUndrscr, ColumnPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFlt, PgTypeFlt,
+    PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, impl_pg_type_wh_flt_for_ident_ts,
 };
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
@@ -20,13 +20,13 @@ use serde_json::from_str;
 use std::fmt::Display;
 use token_patterns::{CoreDefault, PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall};
 #[proc_macro]
-pub fn gen_wh_filters(input_ts: Ts) -> Ts {
+pub fn gen_wh_flts(input_ts: Ts) -> Ts {
     #[derive(Clone, Optml)]
     enum Generic {
         False,
         True { mb_extra_traits_ts: Option<Ts2> },
     }
-    enum FilterType {
+    enum FltType {
         PgJson,
         PgType,
     }
@@ -101,14 +101,13 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize, Optml)]
-    struct GenWhFiltersConfig {
+    struct GenWhFltsConfig {
         pg_types_write_into_file: ShouldWriteTsIntoFile,
         pg_json_write_into_file: ShouldWriteTsIntoFile,
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_location();
-    let gen_wh_filters_config =
-        from_str::<GenWhFiltersConfig>(&input_ts.to_string()).expect("1217b73b");
+    let gen_wh_flts_config = from_str::<GenWhFltsConfig>(&input_ts.to_string()).expect("1217b73b");
     let import = Import::PgCrudCmn;
     let t_ts = quote! {T};
     let t_ann_generic_ts = quote! {<#t_ts>};
@@ -119,11 +118,11 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
     let v_dflt_some_one_el_ts = quote! {
         #VSc: #PgCrudCmnDfltSomeOneElCall
     };
-    let gen_struct_ts = |filter_init_with_try_new_result_is_ok: bool,
+    let gen_struct_ts = |flt_init_with_try_new_result_is_ok: bool,
                          generic: &Generic,
                          ident: &dyn ToTokens,
                          struct_extra_fields_ts: &dyn ToTokens| {
-        let mb_pub_ts: &dyn ToTokens = if filter_init_with_try_new_result_is_ok {
+        let mb_pub_ts: &dyn ToTokens = if flt_init_with_try_new_result_is_ok {
             &proc_macro2_ts_new
         } else {
             &PubSc
@@ -134,7 +133,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             .d_clone()
             .d_partial_eq()
             .d_serde_serialize()
-            .d_serde_deserialize_if(if filter_init_with_try_new_result_is_ok {
+            .d_serde_deserialize_if(if flt_init_with_try_new_result_is_ok {
                 DSerdeDeserialize::False
             } else {
                 DSerdeDeserialize::True
@@ -183,49 +182,46 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             },
         )
     };
-    let gen_impl_pg_type_wh_filter_ts =
-        |filter_type: &FilterType,
-         generic: &Generic,
-         ident: &dyn ToTokens,
-         incr_prm_undrscr: &IncrPrmUndrscr,
-         add_oprtr_undrscr: &AddOprtrUndrscr,
-         qp_ts: &dyn ToTokens,
-         is_qb_mut: &IsQbMut,
-         qb_ts: &dyn ToTokens| {
-            impl_pg_type_wh_filter_for_ident_ts(
-                &{
-                    let mb_t_extra_traits_for_pg_type_wh_filter_ts: &dyn ToTokens = match &generic {
-                        Generic::False => &proc_macro2_ts_new,
-                        Generic::True { mb_extra_traits_ts } => {
-                            let send_and_lt_ts = quote! {Send + 'lt};
-                            let ser_ts = quote! {serde::Serialize};
-                            let ts = match (&filter_type, &mb_extra_traits_ts) {
-                                (FilterType::PgType, Some(v)) => &quote! {#v + #send_and_lt_ts},
-                                (FilterType::PgType, None) => &send_and_lt_ts,
-                                (FilterType::PgJson, Some(v)) => {
-                                    &quote! {#v + #ser_ts + #send_and_lt_ts}
-                                }
-                                (FilterType::PgJson, None) => &quote! {#ser_ts + #send_and_lt_ts},
-                            };
-                            &quote! {, T: #ts}
-                        }
-                    };
-                    quote! {<'lt #mb_t_extra_traits_for_pg_type_wh_filter_ts>}
-                },
-                &ident,
-                &match &generic {
+    let gen_impl_pg_type_wh_flt_ts = |flt_type: &FltType,
+                                      generic: &Generic,
+                                      ident: &dyn ToTokens,
+                                      incr_prm_undrscr: &IncrPrmUndrscr,
+                                      add_oprtr_undrscr: &AddOprtrUndrscr,
+                                      qp_ts: &dyn ToTokens,
+                                      is_qb_mut: &IsQbMut,
+                                      qb_ts: &dyn ToTokens| {
+        impl_pg_type_wh_flt_for_ident_ts(
+            &{
+                let mb_t_extra_traits_for_pg_type_wh_flt_ts: &dyn ToTokens = match &generic {
                     Generic::False => &proc_macro2_ts_new,
-                    Generic::True { .. } => &t_ann_generic_ts,
-                },
-                incr_prm_undrscr,
-                &ColumnPrmUndrscr::False,
-                add_oprtr_undrscr,
-                &qp_ts,
-                is_qb_mut,
-                &qb_ts,
-                &Import::PgCrudCmn,
-            )
-        };
+                    Generic::True { mb_extra_traits_ts } => {
+                        let send_and_lt_ts = quote! {Send + 'lt};
+                        let ser_ts = quote! {serde::Serialize};
+                        let ts = match (&flt_type, &mb_extra_traits_ts) {
+                            (FltType::PgType, Some(v)) => &quote! {#v + #send_and_lt_ts},
+                            (FltType::PgType, None) => &send_and_lt_ts,
+                            (FltType::PgJson, Some(v)) => &quote! {#v + #ser_ts + #send_and_lt_ts},
+                            (FltType::PgJson, None) => &quote! {#ser_ts + #send_and_lt_ts},
+                        };
+                        &quote! {, T: #ts}
+                    }
+                };
+                quote! {<'lt #mb_t_extra_traits_for_pg_type_wh_flt_ts>}
+            },
+            &ident,
+            &match &generic {
+                Generic::False => &proc_macro2_ts_new,
+                Generic::True { .. } => &t_ann_generic_ts,
+            },
+            incr_prm_undrscr,
+            &ColumnPrmUndrscr::False,
+            add_oprtr_undrscr,
+            &qp_ts,
+            is_qb_mut,
+            &qb_ts,
+            &Import::PgCrudCmn,
+        )
+    };
     let add_rgx_case_and_v_dcl_ts = |ts: &dyn ToTokens| {
         quote! {
             #ts
@@ -415,8 +411,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             )
         };
     let pg_type_ts = {
-        let gen_filters_ts = |filter: &PgTypeFilter| {
-            let ident = PgTypeWhSelfUcc::from_display(&filter);
+        let gen_flts_ts = |flt: &PgTypeFlt| {
+            let ident = PgTypeWhSelfUcc::from_display(&flt);
             let (
                 generic,
                 struct_extra_fields_ts,
@@ -776,7 +772,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                     |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"-|-");
                 let pub_v_not_zero_unsigned_part_of_i32_dcl_ts =
                     quote! {pub #VSc: #not_zero_unsigned_part_of_i32_ts};
-                let gen_len_filter_pattern_ts = |oprtr: &dyn Display| {
+                let gen_len_flt_pattern_ts = |oprtr: &dyn Display| {
                     (
                         generic_false.clone(),
                         pub_v_not_zero_unsigned_part_of_i32_dcl_ts.clone(),
@@ -950,8 +946,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                         Ok(#QuerySc)
                     }
                 };
-                match &filter {
-                    PgTypeFilter::Eq { .. } => {
+                match &flt {
+                    PgTypeFlt::Eq { .. } => {
                         let (
                             mb_dims_dcl_ts,
                             mb_dims_dflt_init_ts,
@@ -974,7 +970,7 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                             gen_ts_eeee6e79(&mb_dims_qb_ts),
                         )
                     }
-                    PgTypeFilter::DimOneEq { .. } => {
+                    PgTypeFlt::DimOneEq { .. } => {
                         let (
                             mb_dims_dcl_ts,
                             mb_dims_dflt_init_ts,
@@ -997,116 +993,114 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                             gen_ts_eeee6e79(&mb_dims_qb_ts),
                         )
                     }
-                    PgTypeFilter::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneGreaterThan { .. } => {
+                    PgTypeFlt::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneGreaterThan { .. } => {
                         gen_greater_than_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::Btwn { .. } => gen_btwn_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::In { .. } => gen_in_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::Rgx => gen_rgx_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::Before { .. } => gen_before_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneBefore { .. } => gen_before_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::CrntDate => gen_crnt_date_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneCrntDate => gen_crnt_date_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::GreaterThanCrntDate => {
+                    PgTypeFlt::Btwn { .. } => gen_btwn_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::In { .. } => gen_in_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::Rgx => gen_rgx_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::Before { .. } => gen_before_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneBefore { .. } => gen_before_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::CrntDate => gen_crnt_date_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneCrntDate => gen_crnt_date_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::GreaterThanCrntDate => {
                         gen_greater_than_crnt_date_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanCrntDate => {
+                    PgTypeFlt::DimOneGreaterThanCrntDate => {
                         gen_greater_than_crnt_date_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::CrntTimestamp => gen_crnt_timestamp_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneCrntTimestamp => {
-                        gen_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1)
-                    }
-                    PgTypeFilter::GreaterThanCrntTimestamp => {
+                    PgTypeFlt::CrntTimestamp => gen_crnt_timestamp_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneCrntTimestamp => gen_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::GreaterThanCrntTimestamp => {
                         gen_greater_than_crnt_timestamp_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanCrntTimestamp => {
+                    PgTypeFlt::DimOneGreaterThanCrntTimestamp => {
                         gen_greater_than_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::CrntTime => gen_crnt_time_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneCrntTime => gen_crnt_time_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFilter::GreaterThanCrntTime => {
+                    PgTypeFlt::CrntTime => gen_crnt_time_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneCrntTime => gen_crnt_time_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::GreaterThanCrntTime => {
                         gen_greater_than_crnt_time_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanCrntTime => {
+                    PgTypeFlt::DimOneGreaterThanCrntTime => {
                         gen_greater_than_crnt_time_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::DimOneLenEq => gen_len_filter_pattern_ts(&"="),
-                    PgTypeFilter::DimOneLenGreaterThan => gen_len_filter_pattern_ts(&">"),
-                    PgTypeFilter::EqToEncodedStringRepresentation => {
+                    PgTypeFlt::DimOneLenEq => gen_len_flt_pattern_ts(&"="),
+                    PgTypeFlt::DimOneLenGreaterThan => gen_len_flt_pattern_ts(&">"),
+                    PgTypeFlt::EqToEncodedStringRepresentation => {
                         gen_eq_to_encoded_string_representation_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneEqToEncodedStringRepresentation => {
+                    PgTypeFlt::DimOneEqToEncodedStringRepresentation => {
                         gen_eq_to_encoded_string_representation_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::FindRangesWithinGivenRange { .. } => {
+                    PgTypeFlt::FindRangesWithinGivenRange { .. } => {
                         gen_find_ranges_within_given_range_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneFindRangesWithinGivenRange { .. } => {
+                    PgTypeFlt::DimOneFindRangesWithinGivenRange { .. } => {
                         gen_find_ranges_within_given_range_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::FindRangesThatFullyContainTheGivenRange { .. } => {
+                    PgTypeFlt::FindRangesThatFullyContainTheGivenRange { .. } => {
                         gen_find_ranges_that_fully_contain_the_given_range_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneFindRangesThatFullyContainTheGivenRange { .. } => {
+                    PgTypeFlt::DimOneFindRangesThatFullyContainTheGivenRange { .. } => {
                         gen_find_ranges_that_fully_contain_the_given_range_ts(
                             &pg_type_ptrn_arr_dim1,
                         )
                     }
-                    PgTypeFilter::StrictlyToLeftOfRange { .. } => {
+                    PgTypeFlt::StrictlyToLeftOfRange { .. } => {
                         gen_strictly_to_left_of_range_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneStrictlyToLeftOfRange { .. } => {
+                    PgTypeFlt::DimOneStrictlyToLeftOfRange { .. } => {
                         gen_strictly_to_left_of_range_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::StrictlyToRightOfRange { .. } => {
+                    PgTypeFlt::StrictlyToRightOfRange { .. } => {
                         gen_strictly_to_right_of_range_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneStrictlyToRightOfRange { .. } => {
+                    PgTypeFlt::DimOneStrictlyToRightOfRange { .. } => {
                         gen_strictly_to_right_of_range_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::IncludedLowerBound { .. } => {
+                    PgTypeFlt::IncludedLowerBound { .. } => {
                         gen_included_lower_bound_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneIncludedLowerBound { .. } => {
+                    PgTypeFlt::DimOneIncludedLowerBound { .. } => {
                         gen_included_lower_bound_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::ExcludedUpperBound { .. } => {
+                    PgTypeFlt::ExcludedUpperBound { .. } => {
                         gen_excluded_upper_bound_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneExcludedUpperBound { .. } => {
+                    PgTypeFlt::DimOneExcludedUpperBound { .. } => {
                         gen_excluded_upper_bound_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::GreaterThanIncludedLowerBound { .. } => {
+                    PgTypeFlt::GreaterThanIncludedLowerBound { .. } => {
                         gen_greater_than_included_lower_bound_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanIncludedLowerBound { .. } => {
+                    PgTypeFlt::DimOneGreaterThanIncludedLowerBound { .. } => {
                         gen_greater_than_included_lower_bound_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::GreaterThanExcludedUpperBound { .. } => {
+                    PgTypeFlt::GreaterThanExcludedUpperBound { .. } => {
                         gen_greater_than_excluded_upper_bound_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneGreaterThanExcludedUpperBound { .. } => {
+                    PgTypeFlt::DimOneGreaterThanExcludedUpperBound { .. } => {
                         gen_greater_than_excluded_upper_bound_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::OverlapWithRange { .. } => {
+                    PgTypeFlt::OverlapWithRange { .. } => {
                         gen_overlap_with_range_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneOverlapWithRange { .. } => {
+                    PgTypeFlt::DimOneOverlapWithRange { .. } => {
                         gen_overlap_with_range_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::AdjacentWithRange { .. } => {
+                    PgTypeFlt::AdjacentWithRange { .. } => {
                         gen_adjacent_with_range_ts(&pg_type_ptrn_stdrt)
                     }
-                    PgTypeFilter::DimOneAdjacentWithRange { .. } => {
+                    PgTypeFlt::DimOneAdjacentWithRange { .. } => {
                         gen_adjacent_with_range_ts(&pg_type_ptrn_arr_dim1)
                     }
-                    PgTypeFilter::RangeLen => gen_range_len_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFilter::DimOneRangeLen => gen_range_len_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::RangeLen => gen_range_len_ts(&pg_type_ptrn_stdrt),
+                    PgTypeFlt::DimOneRangeLen => gen_range_len_ts(&pg_type_ptrn_arr_dim1),
                 }
             };
             let struct_ts = gen_struct_ts(false, &generic, &ident, &struct_extra_fields_ts);
@@ -1115,8 +1109,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &impl_dflt_some_one_el_extra_fields_ts,
             );
-            let impl_pg_type_wh_filter_ts = gen_impl_pg_type_wh_filter_ts(
-                &FilterType::PgType,
+            let impl_pg_type_wh_flt_ts = gen_impl_pg_type_wh_flt_ts(
+                &FltType::PgType,
                 &generic,
                 &ident,
                 &incr_prm_undrscr,
@@ -1128,23 +1122,23 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             let gend = quote! {
                 #struct_ts
                 #impl_dflt_some_one_el_ts
-                #impl_pg_type_wh_filter_ts
+                #impl_pg_type_wh_flt_ts
             };
             gend
         };
-        let filter_arr_ts = PgTypeFilter::into_arr().map(|el| gen_filters_ts(&el));
-        let gend = quote! {#(#filter_arr_ts)*};
+        let flt_arr_ts = PgTypeFlt::into_arr().map(|el| gen_flts_ts(&el));
+        let gend = quote! {#(#flt_arr_ts)*};
         mb_write_ts_into_file(
-            gen_wh_filters_config.pg_types_write_into_file,
-            "gen_wh_filters_pg_types",
+            gen_wh_flts_config.pg_types_write_into_file,
+            "gen_wh_flts_pg_types",
             &gend,
             &FormatWithCargofmt::True,
         );
         gend
     };
     let pg_json_ts = {
-        let gen_filters_ts = |filter: &PgJsonFilter| {
-            let ident = PgJsonWhSelfUcc::from_display(&filter);
+        let gen_flts_ts = |flt: &PgJsonFlt| {
+            let ident = PgJsonWhSelfUcc::from_display(&flt);
             let pub_v_pg_json_not_empty_unq_vec_t_ts = quote! {
                 pub #VSc: PgJsonNotEmptyUnqVec<T>
             };
@@ -1621,136 +1615,118 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 qp_ts,
                 is_qb_mut,
                 qb_ts,
-            ) = match &filter {
-                PgJsonFilter::Eq { .. } => gen_eq_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::AllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::LenEq => gen_len_eq_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::LenGreaterThan => gen_len_greater_than_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneLenGreaterThan => {
-                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim1)
-                }
-                PgJsonFilter::DimTwoLenGreaterThan => {
-                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim2)
-                }
-                PgJsonFilter::DimThreeLenGreaterThan => {
+            ) = match &flt {
+                PgJsonFlt::Eq { .. } => gen_eq_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourEq { .. } => gen_eq_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::AllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourAllElsEq { .. } => gen_all_els_eq_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::LenEq => gen_len_eq_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourLenEq => gen_len_eq_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::LenGreaterThan => gen_len_greater_than_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneLenGreaterThan => gen_len_greater_than_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoLenGreaterThan => gen_len_greater_than_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeLenGreaterThan => {
                     gen_len_greater_than_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourLenGreaterThan => {
-                    gen_len_greater_than_ts(&pg_type_ptrn_arr_dim4)
-                }
-                PgJsonFilter::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_ptrn_arr_dim1)
-                }
-                PgJsonFilter::DimTwoGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_ptrn_arr_dim2)
-                }
-                PgJsonFilter::DimThreeGreaterThan { .. } => {
+                PgJsonFlt::DimFourLenGreaterThan => gen_len_greater_than_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneGreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoGreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeGreaterThan { .. } => {
                     gen_greater_than_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourGreaterThan { .. } => {
-                    gen_greater_than_ts(&pg_type_ptrn_arr_dim4)
-                }
-                PgJsonFilter::ContainsElGreaterThan { .. } => {
+                PgJsonFlt::DimFourGreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::ContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_ptrn_stdrt)
                 }
-                PgJsonFilter::DimOneContainsElGreaterThan { .. } => {
+                PgJsonFlt::DimOneContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_ptrn_arr_dim1)
                 }
-                PgJsonFilter::DimTwoContainsElGreaterThan { .. } => {
+                PgJsonFlt::DimTwoContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_ptrn_arr_dim2)
                 }
-                PgJsonFilter::DimThreeContainsElGreaterThan { .. } => {
+                PgJsonFlt::DimThreeContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourContainsElGreaterThan { .. } => {
+                PgJsonFlt::DimFourContainsElGreaterThan { .. } => {
                     gen_contains_el_greater_than_ts(&pg_type_ptrn_arr_dim4)
                 }
-                PgJsonFilter::AllElsGreaterThan { .. } => {
+                PgJsonFlt::AllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_ptrn_stdrt)
                 }
-                PgJsonFilter::DimOneAllElsGreaterThan { .. } => {
+                PgJsonFlt::DimOneAllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_ptrn_arr_dim1)
                 }
-                PgJsonFilter::DimTwoAllElsGreaterThan { .. } => {
+                PgJsonFlt::DimTwoAllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_ptrn_arr_dim2)
                 }
-                PgJsonFilter::DimThreeAllElsGreaterThan { .. } => {
+                PgJsonFlt::DimThreeAllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourAllElsGreaterThan { .. } => {
+                PgJsonFlt::DimFourAllElsGreaterThan { .. } => {
                     gen_all_els_greater_than_ts(&pg_type_ptrn_arr_dim4)
                 }
-                PgJsonFilter::Btwn { .. } => gen_btwn_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::In { .. } => gen_in_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::Rgx => gen_rgx_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::ContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeContainsElRgx => {
-                    gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim3)
-                }
-                PgJsonFilter::DimFourContainsElRgx => {
-                    gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim4)
-                }
-                PgJsonFilter::AllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_stdrt),
-                PgJsonFilter::DimOneAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim1),
-                PgJsonFilter::DimTwoAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim2),
-                PgJsonFilter::DimThreeAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim3),
-                PgJsonFilter::DimFourAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim4),
-                PgJsonFilter::ContainsAllElsOfArr { .. } => {
+                PgJsonFlt::Btwn { .. } => gen_btwn_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourBtwn { .. } => gen_btwn_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::In { .. } => gen_in_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::Rgx => gen_rgx_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::ContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourContainsElRgx => gen_contains_el_rgx_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::AllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim1),
+                PgJsonFlt::DimTwoAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim2),
+                PgJsonFlt::DimThreeAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim3),
+                PgJsonFlt::DimFourAllElsRgx => gen_all_els_rgx_ts(&pg_type_ptrn_arr_dim4),
+                PgJsonFlt::ContainsAllElsOfArr { .. } => {
                     gen_contains_all_els_of_arr_ts(&pg_type_ptrn_stdrt)
                 }
-                PgJsonFilter::DimOneContainsAllElsOfArr { .. } => {
+                PgJsonFlt::DimOneContainsAllElsOfArr { .. } => {
                     gen_contains_all_els_of_arr_ts(&pg_type_ptrn_arr_dim1)
                 }
-                PgJsonFilter::DimTwoContainsAllElsOfArr { .. } => {
+                PgJsonFlt::DimTwoContainsAllElsOfArr { .. } => {
                     gen_contains_all_els_of_arr_ts(&pg_type_ptrn_arr_dim2)
                 }
-                PgJsonFilter::DimThreeContainsAllElsOfArr { .. } => {
+                PgJsonFlt::DimThreeContainsAllElsOfArr { .. } => {
                     gen_contains_all_els_of_arr_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourContainsAllElsOfArr { .. } => {
+                PgJsonFlt::DimFourContainsAllElsOfArr { .. } => {
                     gen_contains_all_els_of_arr_ts(&pg_type_ptrn_arr_dim4)
                 }
-                // PgJsonFilter::ContainedInArr => todo!(),
-                PgJsonFilter::OverlapsWithArr { .. } => {
-                    gen_overlaps_with_arr_ts(&pg_type_ptrn_stdrt)
-                }
-                PgJsonFilter::DimOneOverlapsWithArr { .. } => {
+                // PgJsonFlt::ContainedInArr => todo!(),
+                PgJsonFlt::OverlapsWithArr { .. } => gen_overlaps_with_arr_ts(&pg_type_ptrn_stdrt),
+                PgJsonFlt::DimOneOverlapsWithArr { .. } => {
                     gen_overlaps_with_arr_ts(&pg_type_ptrn_arr_dim1)
                 }
-                PgJsonFilter::DimTwoOverlapsWithArr { .. } => {
+                PgJsonFlt::DimTwoOverlapsWithArr { .. } => {
                     gen_overlaps_with_arr_ts(&pg_type_ptrn_arr_dim2)
                 }
-                PgJsonFilter::DimThreeOverlapsWithArr { .. } => {
+                PgJsonFlt::DimThreeOverlapsWithArr { .. } => {
                     gen_overlaps_with_arr_ts(&pg_type_ptrn_arr_dim3)
                 }
-                PgJsonFilter::DimFourOverlapsWithArr { .. } => {
+                PgJsonFlt::DimFourOverlapsWithArr { .. } => {
                     gen_overlaps_with_arr_ts(&pg_type_ptrn_arr_dim4)
                 }
             };
@@ -1760,8 +1736,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
                 &ident,
                 &impl_dflt_some_one_el_extra_fields_ts,
             );
-            let impl_pg_type_wh_filter_ts = gen_impl_pg_type_wh_filter_ts(
-                &FilterType::PgJson,
+            let impl_pg_type_wh_flt_ts = gen_impl_pg_type_wh_flt_ts(
+                &FltType::PgJson,
                 &generic,
                 &ident,
                 &IncrPrmUndrscr::False,
@@ -1773,15 +1749,15 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
             let gend = quote! {
                 #struct_ts
                 #impl_dflt_some_one_el_ts
-                #impl_pg_type_wh_filter_ts
+                #impl_pg_type_wh_flt_ts
             };
             gend
         };
-        let filter_arr_ts = PgJsonFilter::into_arr().map(|el| gen_filters_ts(&el));
-        let gend = quote! {#(#filter_arr_ts)*};
+        let flt_arr_ts = PgJsonFlt::into_arr().map(|el| gen_flts_ts(&el));
+        let gend = quote! {#(#flt_arr_ts)*};
         mb_write_ts_into_file(
-            gen_wh_filters_config.pg_json_write_into_file,
-            "gen_wh_filters_pg_json",
+            gen_wh_flts_config.pg_json_write_into_file,
+            "gen_wh_flts_pg_json",
             &gend,
             &FormatWithCargofmt::True,
         );
@@ -1792,8 +1768,8 @@ pub fn gen_wh_filters(input_ts: Ts) -> Ts {
         #pg_json_ts
     };
     mb_write_ts_into_file(
-        gen_wh_filters_config.whole_write_into_file,
-        "gen_wh_filters",
+        gen_wh_flts_config.whole_write_into_file,
+        "gen_wh_flts",
         &gend,
         &FormatWithCargofmt::True,
     );

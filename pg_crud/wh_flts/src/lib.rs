@@ -1,8 +1,7 @@
 use location_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_cmn::{
-    DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFilter, QpEr,
-    incr_checked_add_one_returning_incr,
+    DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFlt, QpEr, incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
@@ -11,7 +10,7 @@ use sqlx::{Encode, Postgres, Type, postgres::PgArguments, query::Query, types::J
 use std::fmt::{Display, Formatter, Result as StdFmtResult, Write as _};
 use thiserror::Error;
 use utoipa::ToSchema;
-gen_wh_filters::gen_wh_filters!({
+gen_wh_flts::gen_wh_flts!({
     "pg_types_write_into_file": "False",
     "pg_json_write_into_file": "False",
     "whole_write_into_file": "False"
@@ -37,7 +36,7 @@ impl DfltSomeOneEl for EncodeFormat {
         Self::default()
     }
 }
-//difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_cmn::DfltSomeOneEl impl with different generic requirement and PgTypeWhFilter
+//difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_cmn::DfltSomeOneEl impl with different generic requirement and PgTypeWhFlt
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgJsonNotEmptyUnqVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PgJsonNotEmptyUnqVec<T> {
@@ -197,7 +196,7 @@ impl<T> From<PgJsonNotEmptyUnqVec<T>> for Vec<T> {
         v.0
     }
 }
-impl<'lt, T> PgTypeWhFilter<'lt> for PgJsonNotEmptyUnqVec<T>
+impl<'lt, T> PgTypeWhFlt<'lt> for PgJsonNotEmptyUnqVec<T>
 where
     T: Serialize + 'lt,
 {
@@ -512,7 +511,7 @@ impl<T: DfltSomeOneEl + Type<Postgres> + for<'__> Encode<'__, Postgres>> DfltSom
         }
     }
 }
-impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhFilter<'lt>
+impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTypeWhFlt<'lt>
     for Btwn<T>
 {
     fn qb(

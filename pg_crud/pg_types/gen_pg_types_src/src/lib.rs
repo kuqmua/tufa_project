@@ -34,17 +34,17 @@ use pg_crud_cmn_and_macros_cmn::PgTypeGreaterThanVrt;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColumnPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqOprtrH, Import, IncrPrmUndrscr,
-    IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn, IsUpdQbMut, PgFilter,
-    PgTypeFilter, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema,
-    ShouldDeriveUtoipaToSchema, UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr,
-    UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
+    IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn, IsUpdQbMut, PgFlt,
+    PgTypeFlt, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
+    UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
-    impl_pg_type_eq_oprtr_for_ident_ts, impl_pg_type_wh_filter_for_ident_ts,
+    impl_pg_type_eq_oprtr_for_ident_ts, impl_pg_type_wh_flt_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -3432,69 +3432,69 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let ident_wh_ts = gen_pg_type_wh_ts(
             &AllowClippyArbitrarySrcItemOrdering,
             &{
-                let cmn_pg_type_filters = vec![PgTypeFilter::Eq { ident: quote! {#ident_tt_ucc} }];
+                let cmn_pg_type_flts = vec![PgTypeFlt::Eq { ident: quote! {#ident_tt_ucc} }];
                 match &pg_type_pattern {
                     PgTypePattern::Stdrt => {
-                        let greater_than = PgTypeFilter::GreaterThan {
+                        let greater_than = PgTypeFlt::GreaterThan {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let btwn = PgTypeFilter::Btwn {
+                        let btwn = PgTypeFlt::Btwn {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let in_h = PgTypeFilter::In { ident: quote! {#ident_tt_ucc} };
-                        let rgx = PgTypeFilter::Rgx;
-                        let eq_to_encoded_string_representation = PgTypeFilter::EqToEncodedStringRepresentation;
-                        let date_9c6d41ca = PgTypeFilter::CrntDate;
-                        let greater_than_crnt_date = PgTypeFilter::GreaterThanCrntDate;
-                        let time_49c41c1c = PgTypeFilter::CrntTime;
-                        let greater_than_crnt_time = PgTypeFilter::GreaterThanCrntTime;
-                        let timestamp_ad2e556b = PgTypeFilter::CrntTimestamp;
-                        let greater_than_crnt_timestamp = PgTypeFilter::GreaterThanCrntTimestamp;
-                        let before = PgTypeFilter::Before {
+                        let in_h = PgTypeFlt::In { ident: quote! {#ident_tt_ucc} };
+                        let rgx = PgTypeFlt::Rgx;
+                        let eq_to_encoded_string_representation = PgTypeFlt::EqToEncodedStringRepresentation;
+                        let date_9c6d41ca = PgTypeFlt::CrntDate;
+                        let greater_than_crnt_date = PgTypeFlt::GreaterThanCrntDate;
+                        let time_49c41c1c = PgTypeFlt::CrntTime;
+                        let greater_than_crnt_time = PgTypeFlt::GreaterThanCrntTime;
+                        let timestamp_ad2e556b = PgTypeFlt::CrntTimestamp;
+                        let greater_than_crnt_timestamp = PgTypeFlt::GreaterThanCrntTimestamp;
+                        let before = PgTypeFlt::Before {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        // let bit_vec_position_eq = PgTypeFilter::BitVecPositionEq;
-                        let cmn_stdrt_pg_type_filters = { cmn_pg_type_filters };
-                        let cmn_stdrt_pg_type_nbr_filters = {
-                            let mut vec = cmn_stdrt_pg_type_filters.clone();
+                        // let bit_vec_position_eq = PgTypeFlt::BitVecPositionEq;
+                        let cmn_stdrt_pg_type_flts = { cmn_pg_type_flts };
+                        let cmn_stdrt_pg_type_nbr_flts = {
+                            let mut vec = cmn_stdrt_pg_type_flts.clone();
                             vec.push(greater_than.clone());
                             vec.push(btwn.clone());
                             vec.push(in_h.clone());
                             vec
                         };
-                        let ranges_cmn_filter_vec = {
-                            let mut vec = cmn_stdrt_pg_type_filters.clone();
-                            vec.push(PgTypeFilter::FindRangesWithinGivenRange {
+                        let ranges_cmn_flt_vec = {
+                            let mut vec = cmn_stdrt_pg_type_flts.clone();
+                            vec.push(PgTypeFlt::FindRangesWithinGivenRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::FindRangesThatFullyContainTheGivenRange {
+                            vec.push(PgTypeFlt::FindRangesThatFullyContainTheGivenRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::StrictlyToLeftOfRange {
+                            vec.push(PgTypeFlt::StrictlyToLeftOfRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::StrictlyToRightOfRange {
+                            vec.push(PgTypeFlt::StrictlyToRightOfRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::IncludedLowerBound {
+                            vec.push(PgTypeFlt::IncludedLowerBound {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::ExcludedUpperBound {
+                            vec.push(PgTypeFlt::ExcludedUpperBound {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::GreaterThanIncludedLowerBound {
+                            vec.push(PgTypeFlt::GreaterThanIncludedLowerBound {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::GreaterThanExcludedUpperBound {
+                            vec.push(PgTypeFlt::GreaterThanExcludedUpperBound {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::OverlapWithRange {
+                            vec.push(PgTypeFlt::OverlapWithRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::AdjacentWithRange {
+                            vec.push(PgTypeFlt::AdjacentWithRange {
                                 ident: quote! {#ident_stdrt_nn_tt_ucc},
                             });
-                            vec.push(PgTypeFilter::RangeLen);
+                            vec.push(PgTypeFlt::RangeLen);
                             vec
                         };
                         match &pg_type {
@@ -3505,19 +3505,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::F64AsFloat8
                             | PgType::I16AsSmallSerialInitByPg
                             | PgType::I32AsSerialInitByPg
-                            | PgType::I64AsBigSerialInitByPg => cmn_stdrt_pg_type_nbr_filters,
+                            | PgType::I64AsBigSerialInitByPg => cmn_stdrt_pg_type_nbr_flts,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(in_h);
                                 vec
                             }
                             PgType::StdVecVecU8AsBytea => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(eq_to_encoded_string_representation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(time_49c41c1c);
@@ -3525,7 +3525,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(date_9c6d41ca);
@@ -3533,7 +3533,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(greater_than);
                                 vec.push(btwn);
                                 vec.push(timestamp_ad2e556b);
@@ -3541,19 +3541,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(before);
                                 vec.push(btwn);
                                 vec
                             }
                             PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(rgx);
                                 vec
                             }
-                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_stdrt_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_stdrt_pg_type_flts,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = cmn_stdrt_pg_type_filters;
+                                let mut vec = cmn_stdrt_pg_type_flts;
                                 vec.push(greater_than);
                                 vec.push(rgx);
                                 vec
@@ -3562,17 +3562,17 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ranges_cmn_filter_vec,
+                            PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ranges_cmn_flt_vec,
                         }
                     }
                     PgTypePattern::ArrDim1 { dim1_is_nl } => {
-                        let dim_one_greater_than = PgTypeFilter::DimOneGreaterThan {
+                        let dim_one_greater_than = PgTypeFlt::DimOneGreaterThan {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let dim_one_btwn = PgTypeFilter::DimOneBtwn {
+                        let dim_one_btwn = PgTypeFlt::DimOneBtwn {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let dim_one_in_h = PgTypeFilter::DimOneIn {
+                        let dim_one_in_h = PgTypeFlt::DimOneIn {
                             ident: {
                                 let ts = SelfTtUcc::from_tokens(&match &pg_type.can_be_nl() {
                                     CanBeNl::False => quote! {#ident_stdrt_nn_ucc},
@@ -3581,19 +3581,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 quote!{#ts}
                             },
                         };
-                        let dim_one_rgx = PgTypeFilter::DimOneRgx;
-                        let dim_one_crnt_date = PgTypeFilter::DimOneCrntDate;
-                        let dim_one_greater_than_crnt_date = PgTypeFilter::DimOneGreaterThanCrntDate;
-                        let dim_one_crnt_time = PgTypeFilter::DimOneCrntTime;
-                        let dim_one_greater_than_crnt_time = PgTypeFilter::DimOneGreaterThanCrntTime;
-                        let dim_one_crnt_timestamp = PgTypeFilter::DimOneCrntTimestamp;
-                        let dim_one_greater_than_crnt_timestamp = PgTypeFilter::DimOneGreaterThanCrntTimestamp;
-                        let dim_one_before = PgTypeFilter::DimOneBefore {
+                        let dim_one_rgx = PgTypeFlt::DimOneRgx;
+                        let dim_one_crnt_date = PgTypeFlt::DimOneCrntDate;
+                        let dim_one_greater_than_crnt_date = PgTypeFlt::DimOneGreaterThanCrntDate;
+                        let dim_one_crnt_time = PgTypeFlt::DimOneCrntTime;
+                        let dim_one_greater_than_crnt_time = PgTypeFlt::DimOneGreaterThanCrntTime;
+                        let dim_one_crnt_timestamp = PgTypeFlt::DimOneCrntTimestamp;
+                        let dim_one_greater_than_crnt_timestamp = PgTypeFlt::DimOneGreaterThanCrntTimestamp;
+                        let dim_one_before = PgTypeFlt::DimOneBefore {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let cmn_arr_dim1_pg_type_filters = {
-                            let mut vec = cmn_pg_type_filters;
-                            vec.push(PgTypeFilter::DimOneEq {
+                        let cmn_arr_dim1_pg_type_flts = {
+                            let mut vec = cmn_pg_type_flts;
+                            vec.push(PgTypeFlt::DimOneEq {
                                 ident: {
                                     let ts = SelfTtUcc::from_tokens(&match &dim1_is_nl {
                                         IsNl::False => &ident_stdrt_nn_ucc,
@@ -3602,12 +3602,12 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     quote! {#ts}
                                 },
                             });
-                            vec.push(PgTypeFilter::DimOneLenEq);
-                            vec.push(PgTypeFilter::DimOneLenGreaterThan);
+                            vec.push(PgTypeFlt::DimOneLenEq);
+                            vec.push(PgTypeFlt::DimOneLenGreaterThan);
                             vec
                         };
-                        let cmn_arr_dim1_pg_type_nbr_filters = {
-                            let mut vec = cmn_arr_dim1_pg_type_filters.clone();
+                        let cmn_arr_dim1_pg_type_nbr_flts = {
+                            let mut vec = cmn_arr_dim1_pg_type_flts.clone();
                             vec.push(dim_one_greater_than.clone());
                             vec.push(dim_one_btwn.clone());
                             vec.push(dim_one_in_h.clone());
@@ -3623,42 +3623,42 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let gen_ts = |range: Range| {
                                 let pg_type_from_range = PgType::from(&range);
                                 let range_el_ident_stdrt_nn_ts = gen_ident_stdrt_nn_ts(&pg_type_from_range);
-                                let mut vec = cmn_arr_dim1_pg_type_filters.clone();
+                                let mut vec = cmn_arr_dim1_pg_type_flts.clone();
                                 let range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts = {
                                     let range_el_ident_stdrt_nn_as_crate_pg_type_ts = gen_as_pg_type_ts(&range_el_ident_stdrt_nn_ts);
                                     quote! {#range_el_ident_stdrt_nn_as_crate_pg_type_ts::Rd}
                                 };
-                                vec.push(PgTypeFilter::DimOneFindRangesWithinGivenRange {
+                                vec.push(PgTypeFlt::DimOneFindRangesWithinGivenRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneFindRangesThatFullyContainTheGivenRange {
+                                vec.push(PgTypeFlt::DimOneFindRangesThatFullyContainTheGivenRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneStrictlyToLeftOfRange {
+                                vec.push(PgTypeFlt::DimOneStrictlyToLeftOfRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneStrictlyToRightOfRange {
+                                vec.push(PgTypeFlt::DimOneStrictlyToRightOfRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneIncludedLowerBound {
+                                vec.push(PgTypeFlt::DimOneIncludedLowerBound {
                                     ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone(),
                                 });
-                                vec.push(PgTypeFilter::DimOneExcludedUpperBound {
+                                vec.push(PgTypeFlt::DimOneExcludedUpperBound {
                                     ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone(),
                                 });
-                                vec.push(PgTypeFilter::DimOneGreaterThanIncludedLowerBound {
+                                vec.push(PgTypeFlt::DimOneGreaterThanIncludedLowerBound {
                                     ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone(),
                                 });
-                                vec.push(PgTypeFilter::DimOneGreaterThanExcludedUpperBound {
+                                vec.push(PgTypeFlt::DimOneGreaterThanExcludedUpperBound {
                                     ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts,
                                 });
-                                vec.push(PgTypeFilter::DimOneOverlapWithRange {
+                                vec.push(PgTypeFlt::DimOneOverlapWithRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneAdjacentWithRange {
+                                vec.push(PgTypeFlt::DimOneAdjacentWithRange {
                                     ident: quote! {#ident_stdrt_nn_tt_ucc},
                                 });
-                                vec.push(PgTypeFilter::DimOneRangeLen);
+                                vec.push(PgTypeFlt::DimOneRangeLen);
                                 vec
                             };
                             (
@@ -3677,19 +3677,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::F64AsFloat8
                             | PgType::I16AsSmallSerialInitByPg
                             | PgType::I32AsSerialInitByPg
-                            | PgType::I64AsBigSerialInitByPg => cmn_arr_dim1_pg_type_nbr_filters,
+                            | PgType::I64AsBigSerialInitByPg => cmn_arr_dim1_pg_type_nbr_flts,
                             PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_in_h);
                                 vec
                             }
                             PgType::StdVecVecU8AsBytea => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
-                                vec.push(PgTypeFilter::DimOneEqToEncodedStringRepresentation);
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
+                                vec.push(PgTypeFlt::DimOneEqToEncodedStringRepresentation);
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
                                 vec.push(dim_one_crnt_time);
@@ -3697,7 +3697,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
                                 vec.push(dim_one_crnt_date);
@@ -3705,7 +3705,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_btwn);
                                 vec.push(dim_one_crnt_timestamp);
@@ -3713,19 +3713,19 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 vec
                             }
                             PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_before);
                                 vec.push(dim_one_btwn);
                                 vec
                             }
                             PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_rgx);
                                 vec
                             }
-                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_arr_dim1_pg_type_filters,
+                            PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_arr_dim1_pg_type_flts,
                             PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = cmn_arr_dim1_pg_type_filters;
+                                let mut vec = cmn_arr_dim1_pg_type_flts;
                                 vec.push(dim_one_greater_than);
                                 vec.push(dim_one_rgx);
                                 vec
@@ -3741,7 +3741,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
             .iter()
             .map(|el0| {
-                let el1: &dyn PgFilter = el0;
+                let el1: &dyn PgFlt = el0;
                 el1
             })
             .collect(),
@@ -3797,8 +3797,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &quote! {Ok(Self(v))}
             );
             let impl_sqlx_type_for_ident_rd_ts = gen_impl_sqlx_type_for_ident_ts(&ident_rd_ucc, &ident_orgn_ucc);
-            let mb_impl_pg_type_wh_filter_for_ident_rd_if_can_be_pk_ts = if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) {
-                impl_pg_type_wh_filter_for_ident_ts(
+            let mb_impl_pg_type_wh_flt_for_ident_rd_if_can_be_pk_ts = if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) {
+                impl_pg_type_wh_flt_for_ident_ts(
                     &quote! {<'lt>},
                     &ident_stdrt_nn_rd_ucc,
                     &Ts2::new(),
@@ -3826,7 +3826,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 #impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts
                 #impl_sqlx_decode_sqlx_pg_for_ident_rd_ts
                 #impl_sqlx_type_for_ident_rd_ts
-                #mb_impl_pg_type_wh_filter_for_ident_rd_if_can_be_pk_ts
+                #mb_impl_pg_type_wh_flt_for_ident_rd_if_can_be_pk_ts
             }
         };
         let ident_rd_ids_ucc = SelfRdIdsUcc::from_tokens(&ident);
@@ -5254,7 +5254,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     quote! {#CrSc.0}
                 };
                 quote! {
-                    #ident_wh_ucc::#EqUcc(wh_filters::PgTypeWhEq {
+                    #ident_wh_ucc::#EqUcc(wh_flts::PgTypeWhEq {
                         oprtr: #import::Oprtr::Or,
                         #VSc: #ident_tt_ucc(#ts),
                     })
@@ -5284,9 +5284,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 for (i_7702518c, el_081d735b) in #ts.into_iter().enumerate() {
                                     acc_74c71d5d.push(
                                         #ident_wh_ucc::DimOneEq(
-                                            wh_filters::PgTypeWhDimOneEq {
+                                            wh_flts::PgTypeWhDimOneEq {
                                                 oprtr: #import::Oprtr::Or,
-                                                dims: wh_filters::BoundedVec::try_from(
+                                                dims: wh_flts::BoundedVec::try_from(
                                                     vec![
                                                         pg_crud_cmn::NotZeroUnsignedPartOfI32::try_from(
                                                             i32::try_from(i_7702518c.checked_add(1)?).expect("5954966c")
@@ -5591,7 +5591,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 CrRdIds::Cr => quote! {tt},
                             };
                             quote! {Some(#ident_wh_ucc::GreaterThan(
-                                wh_filters::PgTypeWhGreaterThan {
+                                wh_flts::PgTypeWhGreaterThan {
                                     oprtr: greater_than_vrt.oprtr(),
                                     #VSc: #ts,
                                 }
@@ -5603,7 +5603,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 CrRdIds::Cr => quote! {#TtSc.0.0},
                             };
                             quote! {
-                                #ts.map(|el_886032ca| #ident_wh_ucc::GreaterThan(wh_filters::PgTypeWhGreaterThan {
+                                #ts.map(|el_886032ca| #ident_wh_ucc::GreaterThan(wh_flts::PgTypeWhGreaterThan {
                                     oprtr: greater_than_vrt.oprtr(),
                                     #VSc: #ident_stdrt_nn_tt_ucc(el_886032ca),
                                 }))

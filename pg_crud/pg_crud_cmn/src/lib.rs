@@ -39,7 +39,7 @@ trait_al!(TtAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
 trait_al!(CrForQueryAl = DebugClonePartialEqSerializeAl + SqlxEncodePgSqlxTypePgAl);
 trait_al!(SelAl = DebugClonePartialEqSerdeDefaultSomeOneAl);
-trait_al!(WhAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhFilter<'__>);
+trait_al!(WhAl = DebugClonePartialEqSerdeAl + for<'__> PgTypeWhFlt<'__>);
 trait_al!(RdAl = DebugClonePartialEqSerdeAl);
 trait_al!(RdIdsAl = DebugClonePartialEqSerdeAl);
 trait_al!(RdInnAl = DebugClonePartialEqAl);
@@ -403,7 +403,7 @@ pub trait PgJsonTestCases {
         cr: <Self::PgJson as PgJson>::Cr,
     ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
 }
-pub trait PgTypeWhFilter<'query_lt> {
+pub trait PgTypeWhFlt<'query_lt> {
     fn qb(
         self,
         query: Query<'query_lt, Postgres, PgArguments>,
@@ -412,12 +412,12 @@ pub trait PgTypeWhFilter<'query_lt> {
 }
 //todo custom deserialization - must not contain more than one el
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
-pub struct NlJsonObjPgTypeWhFilter<
-    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFilter<'lt> + AllEnumVrtsArrDfltSomeOneEl,
+pub struct NlJsonObjPgTypeWhFlt<
+    T: Debug + PartialEq + Clone + for<'lt> PgTypeWhFlt<'lt> + AllEnumVrtsArrDfltSomeOneEl,
 >(pub Option<NotEmptyUnqVec<T>>);
-impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NlJsonObjPgTypeWhFilter<T>
+impl<'query_lt, T> PgTypeWhFlt<'query_lt> for NlJsonObjPgTypeWhFlt<T>
 where
-    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFlt<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn qb(
         self,
@@ -435,17 +435,17 @@ where
         )
     }
 }
-impl<T> ToErrString for NlJsonObjPgTypeWhFilter<T>
+impl<T> ToErrString for NlJsonObjPgTypeWhFlt<T>
 where
-    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFlt<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn to_err_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVrtsArrDfltSomeOneEl for NlJsonObjPgTypeWhFilter<T>
+impl<T> AllEnumVrtsArrDfltSomeOneEl for NlJsonObjPgTypeWhFlt<T>
 where
-    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFlt<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn all_vrts_dflt_some_one_el() -> Vec<Self> {
         vec![Self(Some(DfltSomeOneEl::dflt_some_one_el()))]
@@ -640,13 +640,13 @@ const _: () = {
         }
     }
 };
-impl<'query_lt, T: PgTypeWhFilter<'query_lt>> PgTypeWhFilter<'query_lt> for PgTypeWh<T> {
+impl<'query_lt, T: PgTypeWhFlt<'query_lt>> PgTypeWhFlt<'query_lt> for PgTypeWh<T> {
     fn qb(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
     ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         for el in self.v.0 {
-            match PgTypeWhFilter::qb(el, query) {
+            match PgTypeWhFlt::qb(el, query) {
                 Ok(v) => {
                     query = v;
                 }
@@ -661,7 +661,7 @@ impl<'query_lt, T: PgTypeWhFilter<'query_lt>> PgTypeWhFilter<'query_lt> for PgTy
         let mut acc = String::default();
         let mut add_oprtr_inn_h = false;
         for el in &self.v.0 {
-            match PgTypeWhFilter::qp(el, incr, column, add_oprtr_inn_h) {
+            match PgTypeWhFlt::qp(el, incr, column, add_oprtr_inn_h) {
                 Ok(v) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{v} ").is_err() {
@@ -744,7 +744,7 @@ impl PgnBase {
         self.offset
     }
 }
-impl<'query_lt> PgTypeWhFilter<'query_lt> for PgnBase {
+impl<'query_lt> PgTypeWhFlt<'query_lt> for PgnBase {
     fn qb(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
@@ -984,7 +984,7 @@ impl<'de> Deserialize<'de> for PgnStartsWithZero {
         )
     }
 }
-impl<'query_lt> PgTypeWhFilter<'query_lt> for PgnStartsWithZero {
+impl<'query_lt> PgTypeWhFlt<'query_lt> for PgnStartsWithZero {
     fn qb(
         self,
         query: Query<'query_lt, Postgres, PgArguments>,
@@ -1147,9 +1147,9 @@ impl<T1> NotEmptyUnqVec<T1> {
         NotEmptyUnqVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
-impl<'query_lt, T> PgTypeWhFilter<'query_lt> for NotEmptyUnqVec<T>
+impl<'query_lt, T> PgTypeWhFlt<'query_lt> for NotEmptyUnqVec<T>
 where
-    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFilter<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
+    T: Debug + PartialEq + Clone + for<'t_lt> PgTypeWhFlt<'t_lt> + AllEnumVrtsArrDfltSomeOneEl,
 {
     fn qb(
         self,

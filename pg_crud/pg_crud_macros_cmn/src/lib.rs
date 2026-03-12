@@ -1,6 +1,6 @@
-mod filters;
+mod flts;
 use enum_extension_lib::EnumExtension;
-pub use filters::*;
+pub use flts::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
@@ -11,7 +11,7 @@ use naming::{
     EqOprtrUcc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
     MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc, PgJsonUcc,
     PgTypeEqOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhGreaterThanTestSc, PgTypeTestCasesUcc,
-    PgTypeUcc, PgTypeWhFilterUcc, PreviousRdAndOptUpdIntoRdSc, QbSc, QpErUcc, QpSc, QuerySc,
+    PgTypeUcc, PgTypeWhFltUcc, PreviousRdAndOptUpdIntoRdSc, QbSc, QpErUcc, QpSc, QuerySc,
     RdIdsAndCrIntoOptVRdSc, RdIdsAndCrIntoOptVecWhEqToJsonFieldSc,
     RdIdsAndCrIntoPgJsonOptVecWhBtwnSc, RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc, RdIdsAndCrIntoPgJsonOptVecWhDimFourEqSc,
@@ -569,7 +569,7 @@ impl ToTokens for UpdQpJsonbSetPathUndrscr {
 }
 pub fn gen_pg_type_wh_ts(
     attrs_ts: &dyn ToTokens,
-    vrts: &Vec<&dyn PgFilter>,
+    vrts: &Vec<&dyn PgFlt>,
     prefix: &dyn ToTokens,
     should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
     should_derive_schemars_json_schema: &ShouldDSchemarsJsonSchema,
@@ -582,7 +582,7 @@ pub fn gen_pg_type_wh_ts(
             let prefix_wh_self_ucc = el.prefix_wh_self_ucc();
             let opt_type_ts: Option<Ts2> = el.mb_generic();
             let type_ts = opt_type_ts.map_or_else(Ts2::new, |v| quote! {<#v>});
-            quote! {#el_ucc(wh_filters::#prefix_wh_self_ucc #type_ts)}
+            quote! {#el_ucc(wh_flts::#prefix_wh_self_ucc #type_ts)}
         });
         quote! {
             #attrs_ts
@@ -592,51 +592,50 @@ pub fn gen_pg_type_wh_ts(
             }
         }
     };
-    let impl_pg_type_pg_type_wh_filter_for_pg_type_tokens_wh_ts =
-        impl_pg_type_wh_filter_for_ident_ts(
-            &quote! {<'lt>},
-            &ident,
-            &Ts2::new(),
-            &IncrPrmUndrscr::False,
-            &ColumnPrmUndrscr::False,
-            &AddOprtrUndrscr::False,
-            &{
-                let vrts_ts = vrts.iter().map(|el| {
-                    let el_ucc = el.ucc();
-                    quote! {
-                        Self::#el_ucc(#VSc) => pg_crud_cmn::PgTypeWhFilter::qp(
-                            #VSc,
-                            #IncrSc,
-                            #ColumnSc,
-                            #AddOprtrSc,
-                        )
-                    }
-                });
+    let impl_pg_type_pg_type_wh_flt_for_pg_type_tokens_wh_ts = impl_pg_type_wh_flt_for_ident_ts(
+        &quote! {<'lt>},
+        &ident,
+        &Ts2::new(),
+        &IncrPrmUndrscr::False,
+        &ColumnPrmUndrscr::False,
+        &AddOprtrUndrscr::False,
+        &{
+            let vrts_ts = vrts.iter().map(|el| {
+                let el_ucc = el.ucc();
                 quote! {
-                    match &self {
-                        #(#vrts_ts),*
-                    }
+                    Self::#el_ucc(#VSc) => pg_crud_cmn::PgTypeWhFlt::qp(
+                        #VSc,
+                        #IncrSc,
+                        #ColumnSc,
+                        #AddOprtrSc,
+                    )
                 }
-            },
-            is_qb_mut,
-            &{
-                let vrts_ts = vrts.iter().map(|el| {
-                    let el_ucc = el.ucc();
-                    quote! {
-                        Self::#el_ucc(#VSc) => pg_crud_cmn::PgTypeWhFilter::qb(
-                            #VSc,
-                            #QuerySc
-                        )
-                    }
-                });
+            });
+            quote! {
+                match &self {
+                    #(#vrts_ts),*
+                }
+            }
+        },
+        is_qb_mut,
+        &{
+            let vrts_ts = vrts.iter().map(|el| {
+                let el_ucc = el.ucc();
                 quote! {
-                    match self {
-                        #(#vrts_ts),*
-                    }
+                    Self::#el_ucc(#VSc) => pg_crud_cmn::PgTypeWhFlt::qb(
+                        #VSc,
+                        #QuerySc
+                    )
                 }
-            },
-            &Import::PgCrudCmn,
-        );
+            });
+            quote! {
+                match self {
+                    #(#vrts_ts),*
+                }
+            }
+        },
+        &Import::PgCrudCmn,
+    );
     let impl_location_lib_to_err_string_for_pg_type_tokens_wh_ts = gen_impl_to_err_string_ts(
         &Ts2::new(),
         &ident,
@@ -653,7 +652,7 @@ pub fn gen_pg_type_wh_ts(
         });
     quote! {
         #pg_type_tokens_wh_ts
-        #impl_pg_type_pg_type_wh_filter_for_pg_type_tokens_wh_ts
+        #impl_pg_type_pg_type_wh_flt_for_pg_type_tokens_wh_ts
         #impl_location_lib_to_err_string_for_pg_type_tokens_wh_ts
         #impl_all_vrts_dflt_some_one_el_for_pg_type_tokens_wh_ts
     }
@@ -910,7 +909,7 @@ pub fn gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts(
 ) -> Ts2 {
     gen_impl_all_vrts_dflt_some_one_el_max_page_size_ts(&Import::PgCrud, ident, ts)
 }
-pub fn impl_pg_type_wh_filter_for_ident_ts(
+pub fn impl_pg_type_wh_flt_for_ident_ts(
     impl_generic_ts: &dyn ToTokens,
     ident_ts: &dyn ToTokens,
     ident_generic_ts: &dyn ToTokens,
@@ -924,7 +923,7 @@ pub fn impl_pg_type_wh_filter_for_ident_ts(
 ) -> Ts2 {
     quote! {
         #AllowClippyArbitrarySrcItemOrdering
-        impl #impl_generic_ts #import ::#PgTypeWhFilterUcc<'lt> for #ident_ts #ident_generic_ts {
+        impl #impl_generic_ts #import ::#PgTypeWhFltUcc<'lt> for #ident_ts #ident_generic_ts {
             fn #QpSc(
                 &self,
                 #incr_prm_undrscr: &mut #U64,

@@ -56,8 +56,7 @@ use pg_crud_macros_cmn::{
     gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
     gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts,
-    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_filter_for_ident_ts,
-    mb_wrap_into_braces_ts,
+    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -91,7 +90,7 @@ use token_patterns::{
 //todo authorization for returning concrete er or just minimal info(user role)
 //todo gen rules and roles
 //todo mb add unnest sql types?
-//todo mb add unnest to filter params if its arr ?
+//todo mb add unnest to flt params if its arr ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
 //todo derive utoipa::ToSchema for what? original structs or with serialize deserialize?
 //todo need to add utoipa::ToSchema ann #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
@@ -1197,7 +1196,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 let opt_ident_rd_ids_stdrt_nn_ts = gen_opt_type_dcl_ts(&ident_wh_ucc);
                 quote! {(pub #opt_ident_rd_ids_stdrt_nn_ts);}
             });
-        let impl_pg_type_wh_filter_for_opt_ident_wh_ts = impl_pg_type_wh_filter_for_ident_ts(
+        let impl_pg_type_wh_flt_for_opt_ident_wh_ts = impl_pg_type_wh_flt_for_ident_ts(
             &quote! {<'lt>},
             &opt_ident_wh_ucc,
             &Ts2::new(),
@@ -1213,7 +1212,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         &gen_match_ok_err_ts(
                             &{
                                 let fi_dq_ts = dq_ts(&fi);
-                                quote! {#import_ts PgTypeWhFilter::qp(
+                                quote! {#import_ts PgTypeWhFlt::qp(
                                     v_da0f0616,
                                     incr,
                                     &#fi_dq_ts,
@@ -1262,7 +1261,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             &quote! {v_b12d6fe0},
                             &quote! {v_27176ffb.#fi},
                             &gen_match_qb_or_err_ts(
-                                &quote! {#import_ts PgTypeWhFilter::qb(v_b12d6fe0, #QuerySc)},
+                                &quote! {#import_ts PgTypeWhFlt::qb(v_b12d6fe0, #QuerySc)},
                                 &quote! {v_edaee3b2},
                                 &quote! {return Err(#Er0);},
                             ),
@@ -1283,7 +1282,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             );
         quote! {
             #opt_ident_wh_ts
-            #impl_pg_type_wh_filter_for_opt_ident_wh_ts
+            #impl_pg_type_wh_flt_for_opt_ident_wh_ts
             #impl_pg_crud_dflt_some_one_el_for_opt_ident_wh_ts
         }
     };
@@ -1291,7 +1290,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let wh_many_pg_crud_dflt_some_one_el_call_ts = gen_fi_dflt_some_one_el_call_ts(&WhManySc);
     let gen_rd_or_dm_extra_prms_init_ts = |rm_or_dm: &RmOrDm| {
         gen_match_ok_err_ts_c35d87fd(
-            &quote! {#import_ts PgTypeWhFilter::qp(
+            &quote! {#import_ts PgTypeWhFlt::qp(
                 &#PrmsSc.#PayloadSc.#WhManySc,
                 &mut #IncrSc,
                 &"",//useless //todo check if can be optimized
@@ -1322,9 +1321,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             string_syn_punct.clone(),
         )],
     );
-    let gen_query_pg_type_wh_filter_qb_prms_payload_wh_query_ts = |op: &Op| {
+    let gen_query_pg_type_wh_flt_qb_prms_payload_wh_query_ts = |op: &Op| {
         gen_match_qb_or_err_ts(
-            &quote! {#import_ts PgTypeWhFilter::qb(#PrmsSc.#PayloadSc.#WhManySc, #QuerySc)},
+            &quote! {#import_ts PgTypeWhFlt::qb(#PrmsSc.#PayloadSc.#WhManySc, #QuerySc)},
             &quote! {v_03a58371},
             &gen_op_er_init_eprintln_res_ts(op, &try_bind_syn_vrt, Location::caller()),
         )
@@ -1996,8 +1995,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         ],
     );
     let sqlx_query_sqlx_pg_ts = quote! {sqlx::query::<sqlx::Postgres>};
-    let (pg_crud_pg_type_wh_filter_qp_ts, pg_crud_pg_type_wh_filter_qb_ts) = {
-        let gen_ts = |ts: &dyn ToTokens| quote! {#import_ts PgTypeWhFilter::#ts};
+    let (pg_crud_pg_type_wh_flt_qp_ts, pg_crud_pg_type_wh_flt_qb_ts) = {
+        let gen_ts = |ts: &dyn ToTokens| quote! {#import_ts PgTypeWhFlt::#ts};
         (gen_ts(&QpSc), gen_ts(&QbSc))
     };
     let vec_struct_opts_ident_ts = gen_vec_tokens_dcl_ts(&ident_rd_ucc);
@@ -2822,7 +2821,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     }),
                                     gen_if_write_is_err_curly_braces_ts_f9cf9cf2(&{
                                         let ts = gen_match_ok_err_ts_85a5eace(
-                                            &quote! {#pg_crud_pg_type_wh_filter_qp_ts(
+                                            &quote! {#pg_crud_pg_type_wh_flt_qp_ts(
                                                 &#PrmsSc.#PayloadSc.pgn,
                                                 &mut #IncrSc,
                                                 &"",
@@ -2855,7 +2854,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             let sel_qp_prms_payload_sel_ts =
                                 gen_sel_qp_prms_payload_sel_ts(op);
                             let ts = gen_match_ok_err_ts_85a5eace(
-                                &quote! {#pg_crud_pg_type_wh_filter_qp_ts(
+                                &quote! {#pg_crud_pg_type_wh_flt_qp_ts(
                                     &#PrmsSc.#PayloadSc.#pk_fi,
                                     &mut 0,
                                     &Self::#PkSc(),
@@ -3075,21 +3074,21 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             &quote! {v_06f852cd},
                         ),
                         Op::Rm => {
-                            let query_pg_type_wh_filter_qb_prms_payload_wh_query_ts = gen_query_pg_type_wh_filter_qb_prms_payload_wh_query_ts(op);
+                            let query_pg_type_wh_flt_qb_prms_payload_wh_query_ts = gen_query_pg_type_wh_flt_qb_prms_payload_wh_query_ts(op);
                             let ts = gen_match_qb_or_err_ts_519a3119(
-                                &quote! {#pg_crud_pg_type_wh_filter_qb_ts(
+                                &quote! {#pg_crud_pg_type_wh_flt_qb_ts(
                                     #PrmsSc.#PayloadSc.pgn,
                                     #QuerySc,
                                 )},
                                 &quote! {v_9f7e487b},
                             );
                             quote! {
-                                #query_pg_type_wh_filter_qb_prms_payload_wh_query_ts
+                                #query_pg_type_wh_flt_qb_prms_payload_wh_query_ts
                                 #ts
                             }
                         }
                         Op::Ro => gen_match_qb_or_err_ts_519a3119(
-                            &quote! {#pg_crud_pg_type_wh_filter_qb_ts(#PrmsSc.#PayloadSc.#pk_fi, #QuerySc)},
+                            &quote! {#pg_crud_pg_type_wh_flt_qb_ts(#PrmsSc.#PayloadSc.#pk_fi, #QuerySc)},
                             &quote! {v_80ee6983},
                         ),
                         Op::Um => {
@@ -3197,12 +3196,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             }
                         }
                         Op::Dm => {
-                            gen_query_pg_type_wh_filter_qb_prms_payload_wh_query_ts(
+                            gen_query_pg_type_wh_flt_qb_prms_payload_wh_query_ts(
                                 op,
                             )
                         }
                         Op::Dlo => gen_match_qb_or_err_ts_519a3119(
-                            &quote! {#import_ts PgTypeWhFilter::qb(
+                            &quote! {#import_ts PgTypeWhFlt::qb(
                                 #PrmsSc.#PayloadSc.#pk_fi,
                                 #QuerySc
                             )},
@@ -4677,15 +4676,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     &quote! {"ee8d232d"},
                 )
             };
-            let gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts =
-                |fi: &Ident, ft: &Type| {
-                    let ts = gen_ft_opt_vec_cr_ts(ft);
-                    quote! {
-                        #ts
-                        .filter(|el_bba28182| !el_bba28182.is_empty())
-                        .unwrap_or_else(|| vec![ident_cr_dflt.#fi.clone()])
-                    }
-                };
+            let gen_fi_ft_opt_vec_cr_flt_not_empty_or_vec_fi_dflt_ts = |fi: &Ident, ft: &Type| {
+                let ts = gen_ft_opt_vec_cr_ts(ft);
+                quote! {
+                    #ts
+                    .filter(|el_bba28182| !el_bba28182.is_empty())
+                    .unwrap_or_else(|| vec![ident_cr_dflt.#fi.clone()])
+                }
+            };
             let gen_rd_test_ts =
                 |test_name: &str,
                  gen_method_call_ts: &dyn Fn(&Ident, &Type) -> Ts2,
@@ -4943,7 +4941,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     let fn_ts = dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_sc();
                     gen_rd_test_ts(
                         test_name,
-                        &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
+                        &gen_fi_ft_opt_vec_cr_flt_not_empty_or_vec_fi_dflt_ts,
                         &gen_ident_cr_cnt_el_ts,
                         &|el: &SynField| {
                             let fi = &el.ident;
@@ -4990,7 +4988,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             };
             let cr_into_pg_json_opt_vec_wh_len_eq_ts = gen_rd_test_ts(
                 tbl_cr_into_pg_json_opt_vec_wh_len_eq_name,
-                &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
+                &gen_fi_ft_opt_vec_cr_flt_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
                     let fi = &el.ident;
@@ -5017,7 +5015,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             );
             let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = gen_rd_test_ts(
                 tbl_cr_into_pg_json_opt_vec_wh_len_greater_than_name,
-                &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
+                &gen_fi_ft_opt_vec_cr_flt_not_empty_or_vec_fi_dflt_ts,
                 &gen_ident_cr_cnt_el_ts,
                 &|el: &SynField| {
                     let fi = &el.ident;
@@ -5053,7 +5051,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 let gen_ts = |tbl_name: &str, method_ts: &dyn ToTokens| {
                     gen_rd_test_ts(
                         tbl_name,
-                        &gen_fi_ft_opt_vec_cr_filter_not_empty_or_vec_fi_dflt_ts,
+                        &gen_fi_ft_opt_vec_cr_flt_not_empty_or_vec_fi_dflt_ts,
                         &gen_ident_cr_cnt_el_ts,
                         &|el: &SynField| {
                             let fi = &el.ident;

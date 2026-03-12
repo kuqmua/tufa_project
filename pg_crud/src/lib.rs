@@ -15,4 +15,4 @@ pub use pg_types::*;
 pub use route_validators::{check_body_size, check_commit};
 pub use strum_macros::EnumIter;
 pub use uuid::Uuid;
-pub use wh_filters::*;
+pub use wh_flts::*;

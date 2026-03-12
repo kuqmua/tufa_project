@@ -54,8 +54,8 @@ use pg_crud_macros_cmn::{
     gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts,
-    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_filter_for_ident_ts,
-    mb_wrap_into_braces_ts, wrap_into_scopes_ts,
+    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
+    wrap_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -586,7 +586,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         );
         let ident_as_pg_json_tt_ts = gen_type_as_pg_json_subtype_ts(&ident, &pg_json_subtype_tt);
         let self_v_ts = quote! {Self(#VSc)};
-        let pg_type_wh_filter_qb_v_query_ts = quote!{#import::PgTypeWhFilter::qb(#VSc, #QuerySc)};
+        let pg_type_wh_flt_qb_v_query_ts = quote!{#import::PgTypeWhFlt::qb(#VSc, #QuerySc)};
         let ident_tt_ucc = SelfTtUcc::from_tokens(&ident);
         let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
         let ident_arr_nn_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident_arr_nn_ucc);
@@ -1549,7 +1549,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 let eq_vrt_ident_ts = quote! {#EqUcc(#import::PgJsonWhEq<#ident_as_pg_json_tt_ts>)};
                 let eq_vrt_qp_ts = quote!{
-                    #SelfUcc::#EqUcc(v_6781c7e3) => #import::PgTypeWhFilter::qp(
+                    #SelfUcc::#EqUcc(v_6781c7e3) => #import::PgTypeWhFlt::qp(
                         v_6781c7e3,
                         #IncrSc,
                         &#ColumnSc,
@@ -1557,7 +1557,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     )
                 };
                 let eq_vrt_qb_ts = quote!{
-                    #SelfUcc::#EqUcc(#VSc) => #pg_type_wh_filter_qb_v_query_ts
+                    #SelfUcc::#EqUcc(#VSc) => #pg_type_wh_flt_qb_v_query_ts
                 };
                 let mb_ident_wh_ts = {
                     let gen_ident_wh_w_ts = |ts: &dyn ToTokens| gen_ident_wh_ts(
@@ -1596,7 +1596,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let overlaps_with_arr_ts = quote! {
                                     OverlapsWithArr(#import::PgJsonWhOverlapsWithArr<#ident_with_id_stdrt_nn_tt_ucc>),
                                 };
-                                let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
+                                let el_flts_ts = vec_syn_field_with_id.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
                                     let el_type_as_pg_json_wh_ts = gen_type_as_pg_json_subtype_ts(
@@ -1618,20 +1618,20 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     #dim_one_in_ts
                                     #contains_all_els_of_arr_ts
                                     #overlaps_with_arr_ts
-                                    #(#el_filters_ts),*
+                                    #(#el_flts_ts),*
                                 }
                             }),
                         },
                         IsNl::True => Ts2::new(),
                     }
                 };
-                let gen_wh_filter_qp_fields_cnt_stdrt_nn_ts = |is_stdrt_with_id: &IsStdrtWithId| {
+                let gen_wh_flt_qp_fields_cnt_stdrt_nn_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                     let qp_vrts_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                         let fi_str = el0.ident.to_string();
                         let fi_ucc_ts = AsRefStrToUccTs::case_or_panic(&fi_str);
                         let ts = dq_ts(&format!("{{column}}->'{fi_str}'"));
                         quote! {
-                            Self::#fi_ucc_ts(v_b93ffc1d) => #import::PgTypeWhFilter::#QpSc(
+                            Self::#fi_ucc_ts(v_b93ffc1d) => #import::PgTypeWhFlt::#QpSc(
                                 v_b93ffc1d,
                                 incr,
                                 &format!(#ts),
@@ -1641,20 +1641,20 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     });
                     quote! {#(#qp_vrts_ts),*}
                 };
-                let gen_wh_filter_qb_fields_cnt_stdrt_nn_ts = |is_stdrt_with_id: &IsStdrtWithId| {
+                let gen_wh_flt_qb_fields_cnt_stdrt_nn_ts = |is_stdrt_with_id: &IsStdrtWithId| {
                     let qb_vrts_ts = get_vec_syn_field(is_stdrt_with_id).iter().map(|el0| {
                         let fi_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
-                        quote! {Self::#fi_ucc_ts(#VSc) => #pg_type_wh_filter_qb_v_query_ts}
+                        quote! {Self::#fi_ucc_ts(#VSc) => #pg_type_wh_flt_qb_v_query_ts}
                     });
                     quote! {#(#qb_vrts_ts),*}
                 };
-                let gen_impl_pg_type_wh_filter_ts = |
+                let gen_impl_pg_type_wh_flt_ts = |
                     ident_ts_e0f20014: &dyn ToTokens,
                     qp_ts: &dyn ToTokens,
                     is_qb_mut: IsQbMut,
                     qb_ts: &dyn ToTokens
                 | {
-                    impl_pg_type_wh_filter_for_ident_ts(
+                    impl_pg_type_wh_flt_for_ident_ts(
                         &quote! {<'lt>},
                         &ident_ts_e0f20014,
                         &Ts2::new(),
@@ -1667,13 +1667,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         &Import::PgCrud,
                     )
                 };
-                let mb_impl_pg_crud_pg_type_pg_type_wh_filter_for_ident_wh_ts = {
-                    let gen_impl_pg_type_wh_filter_for_ident_ts = |qp_ts: &dyn ToTokens, is_qb_mut: IsQbMut, qb_ts: &dyn ToTokens| gen_impl_pg_type_wh_filter_ts(&ident_wh_ucc, &qp_ts, is_qb_mut, &qb_ts);
+                let mb_impl_pg_crud_pg_type_pg_type_wh_flt_for_ident_wh_ts = {
+                    let gen_impl_pg_type_wh_flt_for_ident_ts = |qp_ts: &dyn ToTokens, is_qb_mut: IsQbMut, qb_ts: &dyn ToTokens| gen_impl_pg_type_wh_flt_ts(&ident_wh_ucc, &qp_ts, is_qb_mut, &qb_ts);
                     match &pattern {
                         Pattern::Stdrt => match &is_nl {
-                            IsNl::False => gen_impl_pg_type_wh_filter_for_ident_ts(
+                            IsNl::False => gen_impl_pg_type_wh_flt_for_ident_ts(
                                 &{
-                                    let fields_ts = gen_wh_filter_qp_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_false);
+                                    let fields_ts = gen_wh_flt_qp_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_false);
                                     quote!{
                                         match &self {
                                             #fields_ts,
@@ -1683,7 +1683,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 },
                                 IsQbMut::False,
                                 &{
-                                    let fields_ts = gen_wh_filter_qb_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_false);
+                                    let fields_ts = gen_wh_flt_qb_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_false);
                                     quote!{
                                         match self {
                                             #fields_ts,
@@ -1694,9 +1694,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             ),
                             IsNl::True => Ts2::new(),
                         },
-                        Pattern::Arr => gen_impl_pg_type_wh_filter_for_ident_ts(
+                        Pattern::Arr => gen_impl_pg_type_wh_flt_for_ident_ts(
                             &{
-                                let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
+                                let el_flts_ts = vec_syn_field_with_id.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
                                     let fi_dq_ts = dq_ts(&fi);
@@ -1708,7 +1708,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         )
                                     }
                                 });
-                                let concrete_filters_ts = [
+                                let concrete_flts_ts = [
                                     quote!{#EqUcc},
                                     quote!{#DimOneEqUcc},
                                     quote!{#LenEqUcc},
@@ -1718,7 +1718,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     quote!{#ContainsAllElsOfArrUcc},
                                     quote!{#OverlapsWithArrUcc}
                                 ].into_iter().map(|el_ts|quote!{
-                                    Self::#el_ts(v_df049001) => #import::PgTypeWhFilter::#QpSc(
+                                    Self::#el_ts(v_df049001) => #import::PgTypeWhFlt::#QpSc(
                                         v_df049001,
                                         #IncrSc,
                                         #ColumnSc,
@@ -1728,12 +1728,12 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 quote! {
                                     let mut gen_el_query = |
                                         oprtr: &#import::Oprtr,
-                                        v_637adcbd: &dyn #import::PgTypeWhFilter<'_>,
+                                        v_637adcbd: &dyn #import::PgTypeWhFlt<'_>,
                                         field: &str
                                     | -> Result<#StringTs, #import_qp_er_ts> {
                                         let oprtr_qp = oprtr.to_qp(add_oprtr);
                                         let elem = "elem";
-                                        let v_9696ee60 = match #import::PgTypeWhFilter::#QpSc(
+                                        let v_9696ee60 = match #import::PgTypeWhFlt::#QpSc(
                                             v_637adcbd,
                                             #IncrSc,
                                             &format!("{elem}->'{field}'"),
@@ -1747,29 +1747,29 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         Ok(format!("{oprtr_qp}(exists (select 1 from jsonb_array_elements({column}) as {elem} where {v_9696ee60}))"))
                                     };
                                     match &self {
-                                        #(#concrete_filters_ts)*
-                                        #(#el_filters_ts),*
+                                        #(#concrete_flts_ts)*
+                                        #(#el_flts_ts),*
                                     }
                                 }
                             },
                             IsQbMut::False,
                             &{
-                                let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
+                                let el_flts_ts = vec_syn_field_with_id.iter().map(|el0| {
                                     let fi = &el0.ident;
                                     let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
-                                    quote! {Self::#el_fi_ucc(#VSc) => #pg_type_wh_filter_qb_v_query_ts}
+                                    quote! {Self::#el_fi_ucc(#VSc) => #pg_type_wh_flt_qb_v_query_ts}
                                 });
                                 quote! {
                                     match self {
-                                        Self::Eq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::DimOneEq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::LenEq(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::LenGreaterThan(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::In(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::DimOneIn(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::ContainsAllElsOfArr(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        Self::OverlapsWithArr(#VSc) => #pg_type_wh_filter_qb_v_query_ts,
-                                        #(#el_filters_ts),*
+                                        Self::Eq(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::DimOneEq(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::LenEq(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::LenGreaterThan(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::In(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::DimOneIn(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::ContainsAllElsOfArr(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        Self::OverlapsWithArr(#VSc) => #pg_type_wh_flt_qb_v_query_ts,
+                                        #(#el_flts_ts),*
                                     }
                                 }
                             },
@@ -1800,7 +1800,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         IsNl::True => Ts2::new(),
                     },
                     Pattern::Arr => gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts(&ident_wh_ucc, &{
-                        let el_filters_ts = vec_syn_field_with_id.iter().map(|el0| {
+                        let el_flts_ts = vec_syn_field_with_id.iter().map(|el0| {
                             let fi = &el0.ident;
                             let el_fi_ucc = ElSelfUcc::from_tokens(&fi);
                             quote! {Self::#el_fi_ucc(#dflt_but_opt_is_some_call_ts)}
@@ -1815,7 +1815,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Self::DimOneIn(#dflt_but_opt_is_some_call_ts),
                                 Self::ContainsAllElsOfArr(#dflt_but_opt_is_some_call_ts),
                                 Self::OverlapsWithArr(#dflt_but_opt_is_some_call_ts),
-                                #(#el_filters_ts),*
+                                #(#el_flts_ts),*
                             ]
                         }
                     }),
@@ -1832,14 +1832,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         }
                     );
-                    let impl_pg_crud_pg_type_pg_type_wh_filter_for_ident_with_id_stdrt_nn_wh_ts = gen_impl_pg_type_wh_filter_ts(
+                    let impl_pg_crud_pg_type_pg_type_wh_flt_for_ident_with_id_stdrt_nn_wh_ts = gen_impl_pg_type_wh_flt_ts(
                         &ident_with_id_stdrt_nn_wh_ucc,
                         &{
-                            let fields_ts = gen_wh_filter_qp_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_true);
+                            let fields_ts = gen_wh_flt_qp_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_true);
                             quote!{
                                 match &self {
                                     #fields_ts,
-                                    Self::#EqUcc(v_31e7fe47) => pg_crud::PgTypeWhFilter::qp(
+                                    Self::#EqUcc(v_31e7fe47) => pg_crud::PgTypeWhFlt::qp(
                                         v_31e7fe47,
                                         #IncrSc,
                                         &#ColumnSc,
@@ -1850,11 +1850,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         },
                         IsQbMut::False,
                         &{
-                            let fields_ts = gen_wh_filter_qb_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_true);
+                            let fields_ts = gen_wh_flt_qb_fields_cnt_stdrt_nn_ts(&is_stdrt_with_id_true);
                             quote!{
                                 match self {
                                     #fields_ts,
-                                    Self::#EqUcc(v_45b5a7f0) => pg_crud::PgTypeWhFilter::qb(v_45b5a7f0, #QuerySc),//todo mb reuse? vrt generation
+                                    Self::#EqUcc(v_45b5a7f0) => pg_crud::PgTypeWhFlt::qb(v_45b5a7f0, #QuerySc),//todo mb reuse? vrt generation
                                 }
                             }
                         },
@@ -1866,7 +1866,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     );
                     quote! {
                         #ident_with_id_stdrt_nn_wh_ts
-                        #impl_pg_crud_pg_type_pg_type_wh_filter_for_ident_with_id_stdrt_nn_wh_ts
+                        #impl_pg_crud_pg_type_pg_type_wh_flt_for_ident_with_id_stdrt_nn_wh_ts
                         #impl_location_lib_to_err_string_for_ident_with_id_stdrt_nn_wh_ts
                         #impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_with_id_stdrt_nn_wh_ts
                     }
@@ -1875,7 +1875,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 quote! {
                     #mb_ident_wh_ts
-                    #mb_impl_pg_crud_pg_type_pg_type_wh_filter_for_ident_wh_ts
+                    #mb_impl_pg_crud_pg_type_pg_type_wh_flt_for_ident_wh_ts
                     #mb_impl_location_lib_to_err_string_for_ident_wh_ts
                     #mb_impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_wh_ts
                     #mb_ident_with_id_stdrt_nn_wh_ts
@@ -1890,7 +1890,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &pg_json_subtype_wh
                 );
                 quote! {
-                    pub type #ident_wh_ucc = #import::NlJsonObjPgTypeWhFilter<
+                    pub type #ident_wh_ucc = #import::NlJsonObjPgTypeWhFlt<
                         #ident_stdrt_or_ident_with_id_arr_as_pg_json_wh_ts
                     >;
                 }
@@ -5844,7 +5844,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     };
                     quote! {
-                        #import::NlJsonObjPgTypeWhFilter(
+                        #import::NlJsonObjPgTypeWhFlt(
                             match (#RdIdsSc.0.#VSc, #CrSc.0) {
                                 (Some(rd_ids_ce30c0fe), Some(cr_8fd81ed8)) => match #import::NotEmptyUnqVec::try_new(#ts) {
                                     Ok(v_7a9cd49b) => Some(v_7a9cd49b),
@@ -5945,7 +5945,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         };
                         quote! {
-                            #import::NlJsonObjPgTypeWhFilter(
+                            #import::NlJsonObjPgTypeWhFlt(
                                 match (#RdIdsSc.0.#VSc, #CrSc.0) {
                                     (Some(rd_ids_2898c440), Some(cr_f1c4667c)) => Some(#ts),
                                     (Some(_), None) => panic!("49e4c289"),
@@ -6005,7 +6005,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     ).into_vec() {
                                         match #import::NotEmptyUnqVec::try_new(vec![el_a8b181a0]) {
                                             Ok(v_8e72cfd7) => {
-                                                acc_12b6f16d.push(#import::NlJsonObjPgTypeWhFilter(Some(v_8e72cfd7)));
+                                                acc_12b6f16d.push(#import::NlJsonObjPgTypeWhFlt(Some(v_8e72cfd7)));
                                             },
                                             Err(er) => match er {
                                                 #import::NotEmptyUnqVecTryNewEr::IsEmpty {..} => (),
@@ -6017,7 +6017,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 (Some(_), None) => panic!("b4507b4c"),
                                 (None, Some(_)) => panic!("8f458c1d"),
                                 (None, None) => {
-                                    acc_12b6f16d.push(#import::NlJsonObjPgTypeWhFilter(None));
+                                    acc_12b6f16d.push(#import::NlJsonObjPgTypeWhFlt(None));
                                 },
                             }
                             acc_12b6f16d
@@ -6058,7 +6058,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             ) {
                                                 Ok(v_7ed84f3b) => {
                                                     acc_bd78dc08.push(
-                                                        #import::NlJsonObjPgTypeWhFilter(Some(v_7ed84f3b))
+                                                        #import::NlJsonObjPgTypeWhFlt(Some(v_7ed84f3b))
                                                     );
                                                 },
                                                 Err(er) => match er {
@@ -6067,7 +6067,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 }
                                             }
                                         }
-                                        let v_e48110ec = #import::NlJsonObjPgTypeWhFilter(Some(v_d6124e21));
+                                        let v_e48110ec = #import::NlJsonObjPgTypeWhFlt(Some(v_d6124e21));
                                         if !acc_bd78dc08.contains(&v_e48110ec) {
                                             acc_bd78dc08.push(v_e48110ec);
                                         }
@@ -6079,7 +6079,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 },
                                 (Some(_), None) => panic!("6abeac7b"),
                                 (None, Some(_)) => panic!("a2761cd2"),
-                                (None, None) => vec![#import::NlJsonObjPgTypeWhFilter(None)]
+                                (None, None) => vec![#import::NlJsonObjPgTypeWhFlt(None)]
                             }
                         ) {
                             Ok(v_55f2dc3d) => Some(v_55f2dc3d),
@@ -6269,7 +6269,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         match #import::NotEmptyUnqVec::try_new(vec![el_a8b181a0]) {
                                             Ok(v_15097b27) => {
                                                 acc_5c441d3a.push(
-                                                    #import::NlJsonObjPgTypeWhFilter(
+                                                    #import::NlJsonObjPgTypeWhFlt(
                                                         Some(v_15097b27)
                                                     )
                                                 );
@@ -6280,7 +6280,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             }
                                         }
                                     }
-                                    let v_84ea8e4c = #import::NlJsonObjPgTypeWhFilter(Some(v_3680a4c9));
+                                    let v_84ea8e4c = #import::NlJsonObjPgTypeWhFlt(Some(v_3680a4c9));
                                     if !acc_5c441d3a.contains(&v_84ea8e4c) {
                                         acc_5c441d3a.push(v_84ea8e4c);
                                     }
@@ -6290,7 +6290,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     return None;
                                 }
                             },
-                            None => vec![#import::NlJsonObjPgTypeWhFilter(None)],
+                            None => vec![#import::NlJsonObjPgTypeWhFlt(None)],
                         }
                     ) {
                         Ok(v_72dbefbc) => Some(v_72dbefbc),
@@ -6424,7 +6424,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             for el_9bbf8527 in v_1ea95b5d.clone().into_vec() {
                                 match #import::NotEmptyUnqVec::try_new(vec![el_9bbf8527]) {
                                     Ok(v_1d0202fc) => {
-                                        acc_87f84b5c.push(#import::NlJsonObjPgTypeWhFilter(Some(v_1d0202fc)));
+                                        acc_87f84b5c.push(#import::NlJsonObjPgTypeWhFlt(Some(v_1d0202fc)));
                                     }
                                     Err(er) => match er {
                                         #import::NotEmptyUnqVecTryNewEr::IsEmpty { .. } => (),
@@ -6432,7 +6432,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     },
                                 }
                             }
-                            let v_4e4cfda3 = #import::NlJsonObjPgTypeWhFilter(Some(v_1ea95b5d));
+                            let v_4e4cfda3 = #import::NlJsonObjPgTypeWhFlt(Some(v_1ea95b5d));
                             if !acc_87f84b5c.contains(&v_4e4cfda3) {
                                 acc_87f84b5c.push(v_4e4cfda3);
                             }
@@ -6797,11 +6797,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     for el in v_35662b3a.into_vec() {
                                         match el {
                                             #import::SingleOrMultiple::Multiple(multiple) => {
-                                                acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NlJsonObjPgTypeWhFilter(Some(multiple))));
+                                                acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NlJsonObjPgTypeWhFlt(Some(multiple))));
                                             },
                                             #import::SingleOrMultiple::Single(single) => match #import::NotEmptyUnqVec::try_new(vec![single]) {
                                                 Ok(v_4ce6ecd3) => {
-                                                    acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NlJsonObjPgTypeWhFilter(Some(v_4ce6ecd3))));
+                                                    acc_e0d72451.push(#import::SingleOrMultiple::Single(#import::NlJsonObjPgTypeWhFlt(Some(v_4ce6ecd3))));
                                                 }
                                                 Err(er) => match er {
                                                     #import::NotEmptyUnqVecTryNewEr::IsEmpty { .. } => (),

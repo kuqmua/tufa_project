@@ -17,7 +17,7 @@ utoipa.workspace = true
 location_lib = {path = "../../../location_lib"}
 pg_crud_cmn = {path = "../../pg_crud_cmn"}
 gen_pg_json_cmn = {path = "../gen_pg_json_cmn"}
-wh_filters = {path = "../../wh_filters"}
+wh_flts = {path = "../../wh_flts"}
 optml = {path = "../../../optml"}
 [dev-dependencies]
 uuid.workspace = true
