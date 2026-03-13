@@ -6886,30 +6886,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let upd_to_rd_ids_ts = quote! {#self_as_pg_json_test_cases_ts::#UpdToRdIdsSc(#VSc)};
             let rd_ids_to_opt_v_rd_dflt_some_one_el_ts = quote! {#self_as_pg_json_test_cases_ts::#RdIdsToOptVRdDfltSomeOneElSc(#VSc)};
             let previous_rd_and_opt_upd_into_rd_ts = quote! {#self_as_pg_json_test_cases_ts::#PreviousRdAndOptUpdIntoRdSc(#RdSc, #OptUpdSc)};
-            let rd_ids_and_cr_into_rd_ts = quote! {#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoRdSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_opt_v_rd_ts = quote! {#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoOptVRdSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_tt_ts = quote! {#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoTtSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_wh_eq_ts = quote! {#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoWhEqSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts = quote! {#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoVecWhEqUsingFieldsSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts = quote!{Some(#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoVecWhEqToJsonFieldSc(
-                #RdIdsSc,
-                #CrSc
-            ))};
+            let gen_rd_ids_cr_ts = |method_ts: &dyn ToTokens| quote! {#self_as_pg_json_test_cases_ts::#method_ts(#RdIdsSc, #CrSc)};
+            let gen_cr_ts = |method_ts: &dyn ToTokens| quote! {#self_as_pg_json_test_cases_ts::#method_ts(#CrSc)};
+            let rd_ids_and_cr_into_rd_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoRdSc);
+            let rd_ids_and_cr_into_opt_v_rd_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoOptVRdSc);
+            let rd_ids_and_cr_into_tt_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoTtSc);
+            let rd_ids_and_cr_into_wh_eq_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoWhEqSc);
+            let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoVecWhEqUsingFieldsSc);
+            let inner_eq_to_json_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoVecWhEqToJsonFieldSc);
+            let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts = quote!{Some(#inner_eq_to_json_ts)};
             let cr_into_pg_type_opt_vec_wh_dim_one_eq_ts = &none_ts;
             let pg_type_opt_vec_wh_greater_than_test_ts = &none_ts;
             let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts = &none_ts;
@@ -6919,13 +6904,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
                 rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts
             ) = {
-                let gen_ts = |dim: &Dim|{
-                    let fn_ts = dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_sc();
-                    quote!{#self_as_pg_json_test_cases_ts::#fn_ts(
-                        #RdIdsSc,
-                        #CrSc
-                    )}
-                };
+                let gen_ts = |dim: &Dim| gen_rd_ids_cr_ts(&dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_sc());
                 (
                     gen_ts(&Dim::One),
                     gen_ts(&Dim::Two),
@@ -6933,36 +6912,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     gen_ts(&Dim::Four)
                 )
             };
-            let cr_into_pg_json_opt_vec_wh_len_eq_ts = quote!{#self_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenEqSc(
-                #CrSc
-            )};
-            let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = quote!{#self_as_pg_json_test_cases_ts::#CrIntoPgJsonOptVecWhLenGreaterThanSc(
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhBtwnSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhInSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhRgxSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc(
-                #RdIdsSc,
-                #CrSc
-            )};
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts = quote!{#self_as_pg_json_test_cases_ts::#RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc(
-                #RdIdsSc,
-                #CrSc
-            )};
+            let cr_into_pg_json_opt_vec_wh_len_eq_ts = gen_cr_ts(&CrIntoPgJsonOptVecWhLenEqSc);
+            let cr_into_pg_json_opt_vec_wh_len_greater_than_ts = gen_cr_ts(&CrIntoPgJsonOptVecWhLenGreaterThanSc);
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc);
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoPgJsonOptVecWhBtwnSc);
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoPgJsonOptVecWhInSc);
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoPgJsonOptVecWhRgxSc);
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc);
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc);
             gen_impl_pg_type_test_cases_for_ident_ts(
                 &cfg_feature_test_utils,
                 &import,
