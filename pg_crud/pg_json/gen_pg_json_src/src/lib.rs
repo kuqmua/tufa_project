@@ -2836,7 +2836,26 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     gen_ts(&Dim::Four)
                 )
             };
-            //todo mb reuse LenEq and LenGreaterThan
+            let cr_dot_zero_dot_zero = quote! {#CrSc.0.0};
+            let gen_wh_nl_cnt_ts = |content_ts: &dyn ToTokens, panic_uuid_ts: &Ts2| match &is_nl {
+                IsNl::False => quote! {#ident_wh_ucc #content_ts},
+                IsNl::True => {
+                    let ident_wh_ucc_nn = SelfWhUcc::from_tokens(&ident_nn_ts);
+                    let not_empty_unq_vec_try_new_match_ts = gen_not_empty_unq_vec_try_new_match_ts(
+                        &quote!{vec![#ident_wh_ucc_nn #content_ts]},
+                        &quote!{v_wh_nl_ok},
+                        &quote!{Some(v_wh_nl_ok)},
+                        &quote!{{return None;}},
+                        &quote!{panic!(#panic_uuid_ts)},
+                    );
+                    quote! {
+                        #import::NlJsonObjPgTypeWhFlt(match #cr_dot_zero_dot_zero {
+                            Some(v_wh_nl_some) => #not_empty_unq_vec_try_new_match_ts,
+                            None => None,
+                        })
+                    }
+                }
+            };
             let cr_into_pg_json_opt_vec_wh_len_eq_ts = match &pattern {
                 Pattern::Stdrt => quote!{#NoneTs},
                 Pattern::ArrDim1 { .. } |
@@ -2844,46 +2863,21 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim3 { .. } |
                 Pattern::ArrDim4 { .. } => gen_not_empty_unq_vec_try_new_match_ts(
                     &{
-                        let content_ts = {
-                            let cr_dot_zero_dot_zero = quote! {#CrSc.0.0};
-                            let content_ts = {
-                                let content_ts: &dyn ToTokens = match &is_nl {
-                                    IsNl::False => &cr_dot_zero_dot_zero,
-                                    IsNl::True => &quote! {v_1bbf74bc.0},
-                                };
-                                quote! {
-                                    ::LenEq(
-                                        wh_flts::PgJsonWhLenEq {
-                                            oprtr: #import::Oprtr::Or,
-                                            #VSc: pg_crud_cmn::UnsignedPartOfI32::try_from(
-                                                i32::try_from(#content_ts.len()).expect("64d3424f")
-                                            ).expect("081f4463"),
-                                        }
-                                    )
-                                }
-                            };
-                            match &is_nl {
-                                IsNl::False => quote! {#ident_wh_ucc #content_ts},
-                                IsNl::True => {
-                                    let ident_wh_ucc_db49334a = SelfWhUcc::from_tokens(&ident_nn_ts);
-                                    let not_empty_unq_vec_try_new_match_ts = gen_not_empty_unq_vec_try_new_match_ts(
-                                        &quote!{vec![#ident_wh_ucc_db49334a #content_ts]},
-                                        &quote!{v_d82bbdbe},
-                                        &quote!{Some(v_d82bbdbe)},
-                                        &quote!{{return None;}},
-                                        &quote!{panic!("3d7ce854")},
-                                    );
-                                    quote! {
-                                        #import::NlJsonObjPgTypeWhFlt(
-                                            match #cr_dot_zero_dot_zero {
-                                                Some(v_1bbf74bc) => #not_empty_unq_vec_try_new_match_ts,
-                                                None => None,
-                                            }
-                                        )
-                                    }
-                                }
-                            }
+                        let ref_ts: &dyn ToTokens = match &is_nl {
+                            IsNl::False => &cr_dot_zero_dot_zero,
+                            IsNl::True => &quote! {v_wh_nl_some.0},
                         };
+                        let len_eq_ts = quote! {
+                            ::LenEq(
+                                wh_flts::PgJsonWhLenEq {
+                                    oprtr: #import::Oprtr::Or,
+                                    #VSc: pg_crud_cmn::UnsignedPartOfI32::try_from(
+                                        i32::try_from(#ref_ts.len()).expect("64d3424f")
+                                    ).expect("081f4463"),
+                                }
+                            )
+                        };
+                        let content_ts = gen_wh_nl_cnt_ts(&len_eq_ts, &quote!{"3d7ce854"});
                         quote!{vec![#content_ts]}
                     },
                     &quote!{v_e196e86d},
@@ -2899,62 +2893,39 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim3 { .. } |
                 Pattern::ArrDim4 { .. } => gen_not_empty_unq_vec_try_new_match_ts(
                     &{
-                        let content_ts = {
-                            let cr_dot_zero_dot_zero = quote! {#CrSc.0.0};
-                            let content_ts = {
-                                let content_ts: &dyn ToTokens = match &is_nl {
-                                    IsNl::False => &cr_dot_zero_dot_zero,
-                                    IsNl::True => &quote! {v_68880991.0},
-                                };
-                                quote! {
-                                    ::LenGreaterThan(
-                                        wh_flts::PgJsonWhLenGreaterThan {
-                                            oprtr: #import::Oprtr::Or,
-                                            #VSc: if let Ok(v_762dae1f) = pg_crud_cmn::UnsignedPartOfI32::try_from(
-                                                if let Ok(v_9dca0200) = i32::try_from(
-                                                    //todo temp code. make it better checking all cases
-                                                    match #content_ts.len().checked_sub(1) {
-                                                        Some(v_92860143) => v_92860143,
-                                                        None => {
-                                                            return None;
-                                                        }
-                                                    }
-                                                ) {
-                                                    v_9dca0200
-                                                }
-                                                else {
+                        let ref_ts: &dyn ToTokens = match &is_nl {
+                            IsNl::False => &cr_dot_zero_dot_zero,
+                            IsNl::True => &quote! {v_wh_nl_some.0},
+                        };
+                        let len_gt_ts = quote! {
+                            ::LenGreaterThan(
+                                wh_flts::PgJsonWhLenGreaterThan {
+                                    oprtr: #import::Oprtr::Or,
+                                    #VSc: if let Ok(v_762dae1f) = pg_crud_cmn::UnsignedPartOfI32::try_from(
+                                        if let Ok(v_9dca0200) = i32::try_from(
+                                            //todo temp code. make it better checking all cases
+                                            match #ref_ts.len().checked_sub(1) {
+                                                Some(v_92860143) => v_92860143,
+                                                None => {
                                                     return None;
                                                 }
-                                            ) {
-                                                v_762dae1f
                                             }
-                                            else {
-                                                return None;
-                                            }
+                                        ) {
+                                            v_9dca0200
                                         }
-                                    )
-                                }
-                            };
-                            match &is_nl {
-                                IsNl::False => quote! {#ident_wh_ucc #content_ts},
-                                IsNl::True => {
-                                    let ident_wh_ucc_8a412c1a = SelfWhUcc::from_tokens(&ident_nn_ts);
-                                    let not_empty_unq_vec_try_new_match_ts = gen_not_empty_unq_vec_try_new_match_ts(
-                                        &quote!{vec![#ident_wh_ucc_8a412c1a #content_ts]},
-                                        &quote!{v_cdc120a8},
-                                        &quote!{Some(v_cdc120a8)},
-                                        &quote!{{return None;}},
-                                        &quote!{panic!("584f801e")},
-                                     );
-                                    quote! {
-                                        #import::NlJsonObjPgTypeWhFlt(match #cr_dot_zero_dot_zero {
-                                            Some(v_68880991) => #not_empty_unq_vec_try_new_match_ts,
-                                            None => None,
-                                        })
+                                        else {
+                                            return None;
+                                        }
+                                    ) {
+                                        v_762dae1f
+                                    }
+                                    else {
+                                        return None;
                                     }
                                 }
-                            }
+                            )
                         };
+                        let content_ts = gen_wh_nl_cnt_ts(&len_gt_ts, &quote!{"584f801e"});
                         quote!{vec![#content_ts]}
                     },
                     &quote!{v_cee8d0ab},
