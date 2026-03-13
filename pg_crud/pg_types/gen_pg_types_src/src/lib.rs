@@ -1147,6 +1147,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             &gen_ser_cnt_b5af560e(&ts)
                         ))
                     };
+                    let gen_four_field_time_ser_ts = |f1: &dyn ToTokens, f2: &dyn ToTokens, f3: &dyn ToTokens, f4: &dyn ToTokens| quote! {
+                        #serde_state_init_four_fields_ts
+                        #f1
+                        #f2
+                        #f3
+                        #f4
+                        #serde_ser_ser_struct_end_ts
+                    };
                     match &pg_type {
                         PgType::I16AsInt2
                         | PgType::I32AsInt4
@@ -1176,14 +1184,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     #NanosecondSc(&self.0).checked_div(1000).expect("aea037b7")
                                 }),
                             );
-                            quote! {
-                                #serde_state_init_four_fields_ts
-                                #hour_ser_field_ts
-                                #min_ser_field_ts
-                                #sec_ser_field_ts
-                                #micro_ser_field_ts
-                                #serde_ser_ser_struct_end_ts
-                            }
+                            gen_four_field_time_ser_ts(&hour_ser_field_ts, &min_ser_field_ts, &sec_ser_field_ts, &micro_ser_field_ts)
                         })),
                         PgType::SqlxTypesTimeTimeAsTime => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(&{
                             let gen_ser_field_self_zero_ts = |v: &dyn DisplayPlusToTokens| gen_ser_field_ts(&v, &quote! {&self.0.#v()});
@@ -1191,14 +1192,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let minute_ser_field_ts = gen_ser_field_self_zero_ts(&MinuteSc);
                             let second_ser_field_ts = gen_ser_field_self_zero_ts(&SecondSc);
                             let microsecond_ser_field_ts = gen_ser_field_self_zero_ts(&MicrosecondSc);
-                            quote! {
-                                #serde_state_init_four_fields_ts
-                                #hour_ser_field_ts
-                                #minute_ser_field_ts
-                                #second_ser_field_ts
-                                #microsecond_ser_field_ts
-                                #serde_ser_ser_struct_end_ts
-                            }
+                            gen_four_field_time_ser_ts(&hour_ser_field_ts, &minute_ser_field_ts, &second_ser_field_ts, &microsecond_ser_field_ts)
                         })),
                         PgType::SqlxPgTypesPgIntervalAsInterval => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(&{
                             let gen_ser_field_h_ts = |v: &dyn DisplayPlusToTokens| gen_ser_field_ts(&v, &quote! {&#self_dot_zero_ts.#v});
