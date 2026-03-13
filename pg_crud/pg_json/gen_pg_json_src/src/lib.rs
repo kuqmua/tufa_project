@@ -345,7 +345,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let gen_vrts = |max_dim: Option<i32>|{
                 PgJson::into_arr().into_iter().fold(Vec::new(), |mut acc, pg_json| {
                     for pattern in Pattern::into_arr() {
-                        let include = match max_dim {
+                        if match max_dim {
                             None => true,
                             Some(0i32) => matches!(pattern, Pattern::Stdrt),
                             Some(v_b6fece15) => {
@@ -358,8 +358,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 };
                                 dim <= v_b6fece15
                             }
-                        };
-                        if include {
+                        } {
                             match pattern {
                                 Pattern::Stdrt => {
                                     for is_nl in IsNl::into_arr() {
@@ -573,7 +572,6 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         let import = Import::PgCrudCmn;
         let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
         let gen_ident_ts = |is_nl_ddf79d44: &IsNl, pattern_2c09ee59: &Pattern| {
-            let is_nl_rust = is_nl_ddf79d44.rust();
             let (rust_part, pg_part) = match &pattern_2c09ee59 {
                 Pattern::Stdrt => (rust_type_name.to_string(), pg_json_name.to_string()),
                 Pattern::ArrDim1 { dim1_is_nl } => {
@@ -616,16 +614,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let d2_rust = dim2_is_nl.rust();
                     let d3 = dim3_is_nl.nn_or_nl_str();
                     let d3_rust = dim3_is_nl.rust();
-                    let d4 = dim4_is_nl.nn_or_nl_str();
-                    let d4_rust = dim4_is_nl.rust();
                     (
-                        format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{VecOfUcc}{d3_rust}{VecOfUcc}{d4_rust}{rust_type_name}"),
-                        format!("{ArrOfUcc}{d1}{ArrOfUcc}{d2}{ArrOfUcc}{d3}{ArrOfUcc}{d4}{pg_json_name}"),
+                        format!("{VecOfUcc}{d1_rust}{VecOfUcc}{d2_rust}{VecOfUcc}{d3_rust}{VecOfUcc}{}{rust_type_name}", dim4_is_nl.rust()),
+                        format!("{ArrOfUcc}{d1}{ArrOfUcc}{d2}{ArrOfUcc}{d3}{ArrOfUcc}{}{pg_json_name}", dim4_is_nl.nn_or_nl_str()),
                     )
                 }
             };
             let nn_or_nl_str = is_nl_ddf79d44.nn_or_nl_str();
-            format!("{is_nl_rust}{rust_part}{AsUcc}{nn_or_nl_str}{pg_part}").parse::<Ts2>().expect("998d1471")
+            format!("{}{rust_part}{AsUcc}{nn_or_nl_str}{pg_part}", is_nl_ddf79d44.rust()).parse::<Ts2>().expect("998d1471")
         };
         let ident = &gen_ident_ts(is_nl, pattern);
         let ident_stdrt_nn_ucc = &gen_ident_ts(&IsNl::False, &Pattern::Stdrt);
@@ -1858,10 +1854,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     }
                                 }
                                 let gen_jsonb_agg = |jsonb_agg_cnt: &str, jsonb_arr_els_cnt: &str, ordinality_cnt: &str, dims_nbr: usize| {
-                                    let dim_nbr_start = gen_dim_nbr_start_str(dims_nbr);
-                                    let dim_nbr_end = gen_dim_nbr_end_str(dims_nbr);
                                     format!(
-                                        "select jsonb_agg(({jsonb_agg_cnt})) from jsonb_array_elements(({jsonb_arr_els_cnt})) with ordinality {ordinality_cnt} between {{{dim_nbr_start}}} and {{{dim_nbr_end}}}"
+                                        "select jsonb_agg(({jsonb_agg_cnt})) from jsonb_array_elements(({jsonb_arr_els_cnt})) with ordinality {ordinality_cnt} between {{{}}} and {{{}}}",
+                                        gen_dim_nbr_start_str(dims_nbr),
+                                        gen_dim_nbr_end_str(dims_nbr),
                                     )
                                 };
                                 ArrDimSelPattern::try_from(&arr_dim).map_or_else(
