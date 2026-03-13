@@ -68,6 +68,10 @@ cargo fmt
 cargo clippy --all-targets --all-features -- -D warnings
 ```
 
+```bash
+cargo test --features test-utils
+```
+
 ## Toolchain note
 
 - This repository is intended for the latest Rust nightly toolchain.
