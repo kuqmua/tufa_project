@@ -7,6 +7,7 @@ mod tests {
     use std::{
         collections::HashSet,
         fs::read_to_string,
+        path::Path,
         process::{Command, Stdio},
     };
     use syn::{
@@ -40,6 +41,12 @@ mod tests {
             .parse::<TomlTable>()
             .expect("beb11586");
         tbl.get("workspace").expect("f728192d").clone()
+    }
+    fn sel(s: &str, uuid: &str) -> Selector {
+        Selector::parse(s).unwrap_or_else(|_| panic!("{uuid}"))
+    }
+    fn is_exception(path: &Path, exceptions: &[&str]) -> bool {
+        exceptions.contains(&path.display().to_string().as_str())
     }
     fn toml_val_as_tbl(v: Value, uuid: &str) -> Table {
         match v {
@@ -232,45 +239,37 @@ mod tests {
                     .expect("012e3328"),
             );
             let mut ids = Vec::new();
-            for el_c17d8a0b in document.select(&Selector::parse("html").expect("80427609")) {
-                for el_e19e3742 in el_c17d8a0b.select(&Selector::parse("body").expect("620c597c")) {
-                    for el_3cd4b8b2 in el_e19e3742
-                        .select(&Selector::parse(r#"div[class="container"]"#).expect("eb483b13"))
+            for el_fda975ef in
+                document.select(&sel(r#"div[class="container"] article"#, "eb483b13"))
+            {
+                let mut is_deprecated = false;
+                for el_ae33b117 in el_fda975ef.select(&sel("label", "fe3d9f11")) {
+                    if is_deprecated {
+                        break;
+                    }
+                    for el_87a06075 in
+                        el_ae33b117.select(&sel(r#"h2[class="lint-title"]"#, "f1473d4e"))
                     {
-                        for el_fda975ef in
-                            el_3cd4b8b2.select(&Selector::parse("article").expect("d21dbe55"))
+                        if is_deprecated {
+                            break;
+                        }
+                        if el_87a06075
+                            .select(&sel(
+                                r#"span[class="label label-dflt lint-group group-deprecated"]"#,
+                                "e86d5496",
+                            ))
+                            .next()
+                            .is_some()
                         {
-                            let mut is_deprecated = false;
-                            for el_ae33b117 in
-                                el_fda975ef.select(&Selector::parse("label").expect("fe3d9f11"))
-                            {
-                                if is_deprecated {
-                                    break;
-                                }
-                                for el_87a06075 in el_ae33b117.select(
-                                    &Selector::parse(r#"h2[class="lint-title"]"#)
-                                        .expect("f1473d4e"),
-                                ) {
-                                    if is_deprecated {
-                                        break;
-                                    }
-                                    if el_87a06075.select(
-                                        &Selector::parse(
-                                            r#"span[class="label label-dflt lint-group group-deprecated"]"#,
-                                        ).expect("e86d5496")
-                                    ).next().is_some() {
-                                        is_deprecated = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if let Some(id) = el_fda975ef.value().attr("id")
-                                && !is_deprecated
-                            {
-                                ids.push(id.to_owned());
-                            }
+                            is_deprecated = true;
+                            break;
                         }
                     }
+                }
+                if let Some(id) = el_fda975ef.value().attr("id")
+                    && !is_deprecated
+                {
+                    ids.push(id.to_owned());
                 }
             }
             ids
@@ -423,7 +422,7 @@ mod tests {
             {
                 continue;
             }
-            if exceptions.contains(&path.display().to_string().as_str()) {
+            if is_exception(path, &exceptions) {
                 continue;
             }
             let Ok(v) = read_to_string(path) else {
@@ -458,7 +457,7 @@ mod tests {
             .filter(|el_6870bc3d| el_6870bc3d.file_name() == "Cargo.toml")
         {
             let path = el_bebb7b9d.path();
-            if exceptions.contains(&path.display().to_string().as_str()) {
+            if is_exception(path, &exceptions) {
                 continue;
             }
             let parsed: Table = read_to_string(path)
