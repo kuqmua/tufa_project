@@ -123,7 +123,16 @@ mod tests {
         let mut all_ers = Vec::new();
         for el_fcc35079 in project_dir()
             .into_iter()
-            .filter_entry(|el_7e9cb4cf| el_7e9cb4cf.file_name() != "target")
+            .filter_entry(|el_7e9cb4cf| {
+                el_7e9cb4cf.file_name() != "target"
+                    && el_7e9cb4cf.file_name() != ".git"
+                    && (el_7e9cb4cf.file_type().is_dir()
+                        || el_7e9cb4cf
+                            .path()
+                            .extension()
+                            .and_then(|el_bdd39cb5| el_bdd39cb5.to_str())
+                            == Some("rs"))
+            })
             .filter_map(Result::ok)
             .filter(|el_2b9891bd| {
                 el_2b9891bd
@@ -394,7 +403,16 @@ mod tests {
         let mut seen = HashSet::new();
         for el_44a8aa56 in project_dir()
             .into_iter()
-            .filter_entry(|el_e4adf4c5| el_e4adf4c5.file_name() != "target")
+            .filter_entry(|el_e4adf4c5| {
+                el_e4adf4c5.file_name() != "target"
+                    && el_e4adf4c5.file_name() != ".git"
+                    && (el_e4adf4c5.file_type().is_dir()
+                        || el_e4adf4c5
+                            .path()
+                            .extension()
+                            .and_then(|el_7ac9041a| el_7ac9041a.to_str())
+                            == Some("rs"))
+            })
             .filter_map(Result::ok)
             .filter(|el_714b3d9c| {
                 el_714b3d9c
@@ -525,7 +543,12 @@ mod tests {
         let mut ers = Vec::new();
         for entry in project_dir()
             .into_iter()
-            .filter_entry(|el| el.file_name() != "target")
+            .filter_entry(|el| {
+                el.file_name() != "target"
+                    && el.file_name() != ".git"
+                    && (el.file_type().is_dir()
+                        || el.path().extension().and_then(|el1| el1.to_str()) == Some("rs"))
+            })
             .filter_map(Result::ok)
             .filter(|el0| el0.path().extension().and_then(|el1| el1.to_str()) == Some("rs"))
         {

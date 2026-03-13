@@ -1549,62 +1549,24 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let opt_unit_ts = gen_opt_type_dcl_ts(&quote! {()});
                     let vec_ts = |ts: &dyn ToTokens| gen_vec_tokens_dcl_ts(&ts);
                     let content_ts = gen_v_dcl_ts(&import, &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
+                        let base_ts = quote! {#ident_rd_inn_stdrt_nn_al_ts};
                         match &pattern {
-                            Pattern::Stdrt => {
-                                let ts1 = match &is_nl {
-                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
-                                };
-                                quote! {#ts1}
-                            }
+                            Pattern::Stdrt => is_nl.mb_opt_wrap(base_ts),
                             Pattern::ArrDim1 { dim1_is_nl } => {
-                                let ts1 = vec_ts(&match &dim1_is_nl {
-                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
-                                });
-                                let ts2 = match &is_nl {
-                                    IsNl::False => ts1,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
-                                };
-                                quote! {#ts2}
+                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(base_ts)))
                             }
                             Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
-                                let ts1 = vec_ts(&match &dim2_is_nl {
-                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
-                                });
-                                let ts2 = vec_ts(&match &dim1_is_nl {
-                                    IsNl::False => ts1,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
-                                });
-                                let ts3 = match &is_nl {
-                                    IsNl::False => ts2,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts2),
-                                };
-                                quote! {#ts3}
+                                let ts1 = vec_ts(&dim2_is_nl.mb_opt_wrap(base_ts));
+                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(ts1)))
                             }
                             Pattern::ArrDim3 {
                                 dim1_is_nl,
                                 dim2_is_nl,
                                 dim3_is_nl,
                             } => {
-                                let ts1 = vec_ts(&match &dim3_is_nl {
-                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
-                                });
-                                let ts2 = vec_ts(&match &dim2_is_nl {
-                                    IsNl::False => ts1,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
-                                });
-                                let ts3 = vec_ts(&match &dim1_is_nl {
-                                    IsNl::False => ts2,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts2),
-                                });
-                                let ts4 = match &is_nl {
-                                    IsNl::False => ts3,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts3),
-                                };
-                                quote! {#ts4}
+                                let ts1 = vec_ts(&dim3_is_nl.mb_opt_wrap(base_ts));
+                                let ts2 = vec_ts(&dim2_is_nl.mb_opt_wrap(ts1));
+                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(ts2)))
                             }
                             Pattern::ArrDim4 {
                                 dim1_is_nl,
@@ -1612,27 +1574,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 dim3_is_nl,
                                 dim4_is_nl,
                             } => {
-                                let ts1 = vec_ts(&match &dim4_is_nl {
-                                    IsNl::False => quote! {#ident_rd_inn_stdrt_nn_al_ts},
-                                    IsNl::True => gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
-                                });
-                                let ts2 = vec_ts(&match &dim3_is_nl {
-                                    IsNl::False => ts1,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts1),
-                                });
-                                let ts3 = vec_ts(&match &dim2_is_nl {
-                                    IsNl::False => ts2,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts2),
-                                });
-                                let ts4 = vec_ts(&match &dim1_is_nl {
-                                    IsNl::False => ts3,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts3),
-                                });
-                                let ts5 = match &is_nl {
-                                    IsNl::False => ts4,
-                                    IsNl::True => gen_opt_type_dcl_ts(&ts4),
-                                };
-                                quote! {#ts5}
+                                let ts1 = vec_ts(&dim4_is_nl.mb_opt_wrap(base_ts));
+                                let ts2 = vec_ts(&dim3_is_nl.mb_opt_wrap(ts1));
+                                let ts3 = vec_ts(&dim2_is_nl.mb_opt_wrap(ts2));
+                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(ts3)))
                             }
                         }
                     } else {
@@ -3042,6 +2987,21 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }}
             };
+            let select_nbr_pg_json_ts = |int_ts: Ts2, float32_ts: Ts2, float64_ts: Ts2| match &pg_json {
+                PgJson::I8AsJsonbNbr
+                | PgJson::I16AsJsonbNbr
+                | PgJson::I32AsJsonbNbr
+                | PgJson::I64AsJsonbNbr
+                | PgJson::U8AsJsonbNbr
+                | PgJson::U16AsJsonbNbr
+                | PgJson::U32AsJsonbNbr
+                | PgJson::U64AsJsonbNbr => int_ts,
+                PgJson::F32AsJsonbNbr => float32_ts,
+                PgJson::F64AsJsonbNbr => float64_ts,
+                PgJson::BoolAsJsonbBoolean
+                | PgJson::StringAsJsonbString
+                | PgJson::UuidUuidAsJsonbString => quote! {#NoneTs},
+            };
             //todo additonal logic for Option<v> and el of arr? optal el of arr?
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nl, IsNl::False)
@@ -3088,21 +3048,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         )),
                     )
                 };
-                match &pg_json {
-                    PgJson::I8AsJsonbNbr |
-                    PgJson::I16AsJsonbNbr |
-                    PgJson::I32AsJsonbNbr |
-                    PgJson::I64AsJsonbNbr |
-                    PgJson::U8AsJsonbNbr |
-                    PgJson::U16AsJsonbNbr |
-                    PgJson::U32AsJsonbNbr |
-                    PgJson::U64AsJsonbNbr => int_greater_than_one_less_ts,
-                    PgJson::F32AsJsonbNbr => float_32_greater_than_one_less_ts,
-                    PgJson::F64AsJsonbNbr => float_64_greater_than_one_less_ts,
-                    PgJson::BoolAsJsonbBoolean |
-                    PgJson::StringAsJsonbString |
-                    PgJson::UuidUuidAsJsonbString => quote!{#NoneTs},
-                }
+                select_nbr_pg_json_ts(int_greater_than_one_less_ts, float_32_greater_than_one_less_ts, float_64_greater_than_one_less_ts)
             }
             else {
                 quote!{#NoneTs}
@@ -3321,21 +3267,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 )),
                             )
                         };
-                        match &pg_json {
-                            PgJson::I8AsJsonbNbr |
-                            PgJson::I16AsJsonbNbr |
-                            PgJson::I32AsJsonbNbr |
-                            PgJson::I64AsJsonbNbr |
-                            PgJson::U8AsJsonbNbr |
-                            PgJson::U16AsJsonbNbr |
-                            PgJson::U32AsJsonbNbr |
-                            PgJson::U64AsJsonbNbr => int_greater_than_one_less_ts,
-                            PgJson::F32AsJsonbNbr => float_32_greater_than_one_less_ts,
-                            PgJson::F64AsJsonbNbr => float_64_greater_than_one_less_ts,
-                            PgJson::BoolAsJsonbBoolean |
-                            PgJson::StringAsJsonbString |
-                            PgJson::UuidUuidAsJsonbString => quote!{#NoneTs},
-                        }
+                        select_nbr_pg_json_ts(int_greater_than_one_less_ts, float_32_greater_than_one_less_ts, float_64_greater_than_one_less_ts)
                     }
                     else {
                         quote!{#NoneTs}
