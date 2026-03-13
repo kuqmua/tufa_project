@@ -1467,66 +1467,48 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                     },
                 )
             };
+            let gen_jsonb_arr_el_rgx_ts =
+                |pg_type_ptrn: &PgTypePtrn, fmt_fn: &dyn Fn(&'static str) -> String| {
+                    let (
+                        mb_dims_dcl_ts,
+                        mb_dims_dflt_init_ts,
+                        mb_dims_ies_init_ts,
+                        pg_type_kind,
+                        mb_extra_prms_ts,
+                        mb_dims_qb_ts,
+                    ) = gen_pg_json_dims_helpers(pg_type_ptrn);
+                    (
+                        generic_false.clone(),
+                        add_rgx_case_and_v_dcl_ts(&mb_dims_dcl_ts),
+                        add_rgx_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
+                        gen_ts_dbf9de6b(
+                            &fmt_fn(pg_type_kind.format_argument()),
+                            &mb_dims_ies_init_ts,
+                            &mb_extra_prms_ts,
+                        ),
+                        is_qb_mut_true,
+                        quote! {
+                            #mb_dims_qb_ts
+                            #if_let_err_query_try_bind_self_v_to_string_ts
+                        },
+                    )
+                };
+            //todo test it properly using all strange string vrts
             let gen_contains_el_rgx_ts = |pg_type_ptrn: &PgTypePtrn| {
-                let (
-                    mb_dims_dcl_ts,
-                    mb_dims_dflt_init_ts,
-                    mb_dims_ies_init_ts,
-                    pg_type_kind,
-                    mb_extra_prms_ts,
-                    mb_dims_qb_ts,
-                ) = gen_pg_json_dims_helpers(pg_type_ptrn);
-                (
-                    generic_false.clone(),
-                    add_rgx_case_and_v_dcl_ts(&mb_dims_dcl_ts),
-                    add_rgx_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
-                    gen_ts_dbf9de6b(
-                        &format!(
-                            //todo test it properly using all strange string vrts
-                            "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
-                            // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for len(el::text) - 2) {{}} ${{}}))",
-                            pg_type_kind.format_argument()
-                        ),
-                        &mb_dims_ies_init_ts,
-                        &mb_extra_prms_ts,
-                    ),
-                    is_qb_mut_true,
-                    quote! {
-                        #mb_dims_qb_ts
-                        #if_let_err_query_try_bind_self_v_to_string_ts
-                    },
-                )
+                gen_jsonb_arr_el_rgx_ts(pg_type_ptrn, &|fa| {
+                    format!(
+                        "{{}}(exists(select 1 from jsonb_array_elements({{}}{fa}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))"
+                    )
+                })
             };
+            //todo reuse select it
+            //todo test it properly using all strange string vrts
             let gen_all_els_rgx_ts = |pg_type_ptrn: &PgTypePtrn| {
-                let (
-                    mb_dims_dcl_ts,
-                    mb_dims_dflt_init_ts,
-                    mb_dims_ies_init_ts,
-                    pg_type_kind,
-                    mb_extra_prms_ts,
-                    mb_dims_qb_ts,
-                ) = gen_pg_json_dims_helpers(pg_type_ptrn);
-                (
-                    generic_false.clone(),
-                    add_rgx_case_and_v_dcl_ts(&mb_dims_dcl_ts),
-                    add_rgx_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
-                    gen_ts_dbf9de6b(
-                        &format!(
-                            //todo reuse select it
-                            //todo test it properly using all strange string vrts
-                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
-                            // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for len(el::text) - 2) !{{}} ${{}}))",
-                            pg_type_kind.format_argument()
-                        ),
-                        &mb_dims_ies_init_ts,
-                        &mb_extra_prms_ts,
-                    ),
-                    is_qb_mut_true,
-                    quote! {
-                        #mb_dims_qb_ts
-                        #if_let_err_query_try_bind_self_v_to_string_ts
-                    },
-                )
+                gen_jsonb_arr_el_rgx_ts(pg_type_ptrn, &|fa| {
+                    format!(
+                        "{{}}(not exists(select 1 from jsonb_array_elements({{}}{fa}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))"
+                    )
+                })
             };
             let gen_contains_all_els_of_arr_ts = |pg_type_ptrn: &PgTypePtrn| {
                 let (
