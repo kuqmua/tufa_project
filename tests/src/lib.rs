@@ -42,18 +42,24 @@ mod tests {
         let tbl = acc.parse::<TomlTable>().expect("beb11586");
         tbl.get("workspace").expect("f728192d").clone()
     }
-    fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
-        let workspace = toml_v_from_from_cargo_toml_workspace();
-        let lints = workspace.get("lints").expect("82eaea37");
-        let toml_v_tbl = match lints.get(rust_or_clippy.name()).expect("dbd02f72").clone() {
-            Value::Table(v) => v,
+    fn toml_val_as_tbl(v: Value, uuid: &str) -> Table {
+        match v {
+            Value::Table(t) => t,
             Value::String(_)
             | Value::Integer(_)
             | Value::Float(_)
             | Value::Boolean(_)
             | Value::Datetime(_)
-            | Value::Array(_) => panic!("cae226cd"),
-        };
+            | Value::Array(_) => panic!("{uuid}"),
+        }
+    }
+    fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
+        let workspace = toml_v_from_from_cargo_toml_workspace();
+        let lints = workspace.get("lints").expect("82eaea37");
+        let toml_v_tbl = toml_val_as_tbl(
+            lints.get(rust_or_clippy.name()).expect("dbd02f72").clone(),
+            "cae226cd",
+        );
         toml_v_tbl.keys().cloned().collect::<Vec<String>>()
     }
     fn compare_lints_vecs(
@@ -299,28 +305,14 @@ mod tests {
     }
     #[test]
     fn check_workspace_dependencies_having_exact_version() {
-        for (_, v_5c36cb98) in match toml_v_from_from_cargo_toml_workspace()
-            .get("dependencies")
-            .expect("2376f58e")
-            .clone()
-        {
-            Value::Table(v_270f9bd5) => v_270f9bd5,
-            Value::String(_)
-            | Value::Integer(_)
-            | Value::Float(_)
-            | Value::Boolean(_)
-            | Value::Datetime(_)
-            | Value::Array(_) => panic!("e117fa5a"),
-        } {
-            let v_tbl = match v_5c36cb98 {
-                Value::Table(v_31495eb6) => v_31495eb6,
-                Value::String(_)
-                | Value::Integer(_)
-                | Value::Float(_)
-                | Value::Boolean(_)
-                | Value::Datetime(_)
-                | Value::Array(_) => panic!("cb693a3f"),
-            };
+        for (_, v_5c36cb98) in toml_val_as_tbl(
+            toml_v_from_from_cargo_toml_workspace()
+                .get("dependencies")
+                .expect("2376f58e")
+                .clone(),
+            "e117fa5a",
+        ) {
+            let v_tbl = toml_val_as_tbl(v_5c36cb98, "cb693a3f");
             let v_tbl_len = v_tbl.len();
             let check_version =
                 |v_df993c3d: &Table| match v_df993c3d.get("version").expect("d5b2b269").clone() {
