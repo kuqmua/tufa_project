@@ -4652,6 +4652,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     };
                     quote! {#import::#ts()#ts0}
                 };
+                let gen_ts = |ts: &dyn ToTokens| gen_ident_stdrt_nn_fn_ts(&SelfUcc, &ts);
                 match &pg_type {
                     PgType::I16AsInt2 => gen_typical_test_cases_vec_ts(&quote! {i16_test_cases_vec}),
                     PgType::I32AsInt4 => gen_typical_test_cases_vec_ts(&quote! {i32_test_cases_vec}),
@@ -4673,23 +4674,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         vec![0; 1024 * 1024 * 2],
                     ]},
                     PgType::SqlxTypesChronoNaiveTimeAsTime => {
-                        let (
-                            self_sqlx_types_chrono_naive_time_min_ts,
-                            self_sqlx_types_chrono_naive_time_ten_ts,
-                            self_sqlx_types_chrono_naive_time_twenty_ts,
-                            self_sqlx_types_chrono_naive_time_max_ts,
-                        ) = {
-                            let gen_ts = |ts: &dyn ToTokens|gen_ident_stdrt_nn_fn_ts(
-                                &SelfUcc,
-                                &ts
-                            );
-                            (
-                                gen_ts(&sqlx_types_chrono_naive_time_min_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_time_ten_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_time_twenty_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_time_max_fn_ts),
-                            )
-                        };
+                        let self_sqlx_types_chrono_naive_time_min_ts = gen_ts(&sqlx_types_chrono_naive_time_min_fn_ts);
+                        let self_sqlx_types_chrono_naive_time_ten_ts = gen_ts(&sqlx_types_chrono_naive_time_ten_fn_ts);
+                        let self_sqlx_types_chrono_naive_time_twenty_ts = gen_ts(&sqlx_types_chrono_naive_time_twenty_fn_ts);
+                        let self_sqlx_types_chrono_naive_time_max_ts = gen_ts(&sqlx_types_chrono_naive_time_max_fn_ts);
                         quote! {vec![
                             #self_sqlx_types_chrono_naive_time_min_ts,
                             #self_sqlx_types_chrono_naive_time_ten_ts,
@@ -4729,29 +4717,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         ]}
                     }
                     PgType::SqlxTypesChronoNaiveDateAsDate => {
-                        let (
-                            sqlx_types_chrono_naive_date_min_ts,
-                            sqlx_types_chrono_naive_date_negative_less_typical_ts,
-                            sqlx_types_chrono_naive_date_negative_more_typical_ts,
-                            sqlx_types_chrono_naive_date_near_zero_ts,
-                            sqlx_types_chrono_naive_date_positive_less_typical_ts,
-                            sqlx_types_chrono_naive_date_positive_more_typical_ts,
-                            sqlx_types_chrono_naive_date_max_ts
-                        ) = {
-                            let gen_ts = |ts: &dyn ToTokens|gen_ident_stdrt_nn_fn_ts(
-                                &SelfUcc,
-                                &ts
-                            );
-                            (
-                                gen_ts(&sqlx_types_chrono_naive_date_min_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_date_negative_less_typical_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_date_negative_more_typical_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_date_near_zero_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_date_positive_less_typical_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_date_positive_more_typical_fn_ts),
-                                gen_ts(&sqlx_types_chrono_naive_date_max_fn_ts)
-                            )
-                        };
+                        let sqlx_types_chrono_naive_date_min_ts = gen_ts(&sqlx_types_chrono_naive_date_min_fn_ts);
+                        let sqlx_types_chrono_naive_date_negative_less_typical_ts = gen_ts(&sqlx_types_chrono_naive_date_negative_less_typical_fn_ts);
+                        let sqlx_types_chrono_naive_date_negative_more_typical_ts = gen_ts(&sqlx_types_chrono_naive_date_negative_more_typical_fn_ts);
+                        let sqlx_types_chrono_naive_date_near_zero_ts = gen_ts(&sqlx_types_chrono_naive_date_near_zero_fn_ts);
+                        let sqlx_types_chrono_naive_date_positive_less_typical_ts = gen_ts(&sqlx_types_chrono_naive_date_positive_less_typical_fn_ts);
+                        let sqlx_types_chrono_naive_date_positive_more_typical_ts = gen_ts(&sqlx_types_chrono_naive_date_positive_more_typical_fn_ts);
+                        let sqlx_types_chrono_naive_date_max_ts = gen_ts(&sqlx_types_chrono_naive_date_max_fn_ts);
                         quote! {vec![
                             #sqlx_types_chrono_naive_date_min_ts,
                             #sqlx_types_chrono_naive_date_negative_less_typical_ts,
