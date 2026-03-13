@@ -946,6 +946,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         }.parse::<Ts2>().expect("2555843f");
         let gen_ident_orgn_non_wrapping_8ad5380a = |pg_type_pattern_94bed782: &PgTypePattern, is_nl_28c189b3: &IsNl| SelfOrgnUcc::from_tokens(&gen_ident_ts(pg_type, is_nl_28c189b3, pg_type_pattern_94bed782));
+        let dim1_ident_orgn_ts = |dim1_is_nl: &IsNl| {
+            let (pat, inl): (&PgTypePattern, &IsNl) = match &is_nl {
+                IsNl::False => (&PgTypePattern::Stdrt, dim1_is_nl),
+                IsNl::True => (pg_type_pattern, &IsNl::False),
+            };
+            gen_ident_orgn_non_wrapping_8ad5380a(pat, inl)
+        };
         let ft_h: &dyn ToTokens = {
             match &pg_type_pattern {
                 PgTypePattern::Stdrt => match &is_nl {
@@ -953,11 +960,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     IsNl::True => &gen_opt_type_dcl_ts(&ident_stdrt_nn_orgn_ucc),
                 },
                 PgTypePattern::ArrDim1 { dim1_is_nl } => &{
-                    let (pg_type_pattern_7790d04a, is_nl_86d888a6): (&PgTypePattern, &IsNl) = match &is_nl {
-                        IsNl::False => (&PgTypePattern::Stdrt, dim1_is_nl),
-                        IsNl::True => (pg_type_pattern, &IsNl::False),
-                    };
-                    let v = gen_ident_orgn_non_wrapping_8ad5380a(pg_type_pattern_7790d04a, is_nl_86d888a6);
+                    let v = dim1_ident_orgn_ts(dim1_is_nl);
                     match &is_nl {
                         IsNl::False => gen_vec_tokens_dcl_ts(&v),
                         IsNl::True => gen_opt_type_dcl_ts(&v),
@@ -2283,13 +2286,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     }
                                     IsNl::True => gen_match_opt_ts(&ident_stdrt_nn_orgn_ucc),
                                 },
-                                PgTypePattern::ArrDim1 { dim1_is_nl } => gen_arr_dims_init_ts(&{
-                                    let (pg_type_pattern_ce191343, is_nl_b772ed8a): (&PgTypePattern, &IsNl) = match &is_nl {
-                                        IsNl::False => (&PgTypePattern::Stdrt, dim1_is_nl),
-                                        IsNl::True => (pg_type_pattern, &IsNl::False),
-                                    };
-                                    gen_ident_orgn_non_wrapping_8ad5380a(pg_type_pattern_ce191343, is_nl_b772ed8a)
-                                }),
+                                PgTypePattern::ArrDim1 { dim1_is_nl } => gen_arr_dims_init_ts(&dim1_ident_orgn_ts(dim1_is_nl)),
                             }
                         };
                         quote! {Self(#ts)}
@@ -2575,13 +2572,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                                 IsNl::True => gen_match_opt_ts(&ident_stdrt_nn_orgn_ucc),
                             },
-                            PgTypePattern::ArrDim1 { dim1_is_nl } => gen_arr_dims_init_ts(&{
-                                let (pg_type_pattern_fb8e939d, is_nl_104968f1): (&PgTypePattern, &IsNl) = match &is_nl {
-                                    IsNl::False => (&PgTypePattern::Stdrt, dim1_is_nl),
-                                    IsNl::True => (pg_type_pattern, &IsNl::False),
-                                };
-                                gen_ident_orgn_non_wrapping_8ad5380a(pg_type_pattern_fb8e939d, is_nl_104968f1)
-                            }),
+                            PgTypePattern::ArrDim1 { dim1_is_nl } => gen_arr_dims_init_ts(&dim1_ident_orgn_ts(dim1_is_nl)),
                         }
                     };
                     quote! {
