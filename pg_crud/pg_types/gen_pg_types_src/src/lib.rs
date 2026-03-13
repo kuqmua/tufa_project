@@ -1428,14 +1428,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let mb_min_inn_type_ts = {
-                    let gen_inn_type_ts_67fc7980 = |
-                        is_const: IsConst,
-                        ts_1ca2df79: &dyn ToTokens
-                    |gen_inn_type_ts(
-                        is_const,
-                        &quote!{min_inn_type},
-                        &ts_1ca2df79
-                    );
+                    let gen_inn_type_ts_67fc7980 = |is_const: IsConst, ts: &dyn ToTokens| gen_inn_type_ts(is_const, &quote!{min_inn_type}, ts);
                     match &pg_type {
                         PgType::SqlxTypesChronoNaiveTimeAsTime => Some(
                             gen_inn_type_ts_67fc7980(
@@ -1481,14 +1474,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let mb_slightly_more_than_min_inn_type_ts = {
-                    let gen_inn_type_ts_6d89728a = |
-                        is_const: IsConst,
-                        ts_dcc22544: &dyn ToTokens
-                    |gen_inn_type_ts(
-                        is_const,
-                        &quote!{slightly_more_than_min_inn_type},
-                        &ts_dcc22544
-                    );
+                    let gen_inn_type_ts_6d89728a = |is_const: IsConst, ts: &dyn ToTokens| gen_inn_type_ts(is_const, &quote!{slightly_more_than_min_inn_type}, ts);
                     match &pg_type {
                         PgType::SqlxTypesChronoNaiveTimeAsTime => Some(
                             gen_inn_type_ts_6d89728a(
@@ -1534,14 +1520,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let mb_middle_inn_type_ts = {
-                    let gen_inn_type_ts_23368199 = |
-                        is_const: IsConst,
-                        ts_645cff79: &dyn ToTokens
-                    |gen_inn_type_ts(
-                        is_const,
-                        &quote!{middle_inn_type},
-                        &ts_645cff79
-                    );
+                    let gen_inn_type_ts_23368199 = |is_const: IsConst, ts: &dyn ToTokens| gen_inn_type_ts(is_const, &quote!{middle_inn_type}, ts);
                     match &pg_type {
                         PgType::SqlxTypesChronoNaiveTimeAsTime => Some(
                             gen_inn_type_ts_23368199(
@@ -1594,14 +1573,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let mb_slightly_more_than_middle_inn_type_ts = {
-                    let gen_inn_type_ts_3a61c0b0 = |
-                        is_const: IsConst,
-                        ts_e09b85a8: &dyn ToTokens
-                    |gen_inn_type_ts(
-                        is_const,
-                        &quote!{slightly_more_than_middle_inn_type},
-                        &ts_e09b85a8
-                    );
+                    let gen_inn_type_ts_3a61c0b0 = |is_const: IsConst, ts: &dyn ToTokens| gen_inn_type_ts(is_const, &quote!{slightly_more_than_middle_inn_type}, ts);
                     match &pg_type {
                         PgType::SqlxTypesChronoNaiveTimeAsTime => Some(
                             gen_inn_type_ts_3a61c0b0(
@@ -1647,14 +1619,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let mb_max_inn_type_ts = {
-                    let gen_inn_type_ts_32acb388 = |
-                        is_const: IsConst,
-                        ts_385694da: &dyn ToTokens
-                    |gen_inn_type_ts(
-                        is_const,
-                        &quote!{max_inn_type},
-                        &ts_385694da
-                    );
+                    let gen_inn_type_ts_32acb388 = |is_const: IsConst, ts: &dyn ToTokens| gen_inn_type_ts(is_const, &quote!{max_inn_type}, ts);
                     match &pg_type {
                         PgType::SqlxTypesChronoNaiveTimeAsTime => Some(
                             gen_inn_type_ts_32acb388(
@@ -1700,14 +1665,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 };
                 let mb_slightly_less_than_max_inn_type_ts = {
-                    let gen_inn_type_ts_ddf0f630 = |
-                        is_const: IsConst,
-                        ts_5ca08aea: &dyn ToTokens
-                    |gen_inn_type_ts(
-                        is_const,
-                        &quote!{slightly_less_than_max_inn_type},
-                        &ts_5ca08aea
-                    );
+                    let gen_inn_type_ts_ddf0f630 = |is_const: IsConst, ts: &dyn ToTokens| gen_inn_type_ts(is_const, &quote!{slightly_less_than_max_inn_type}, ts);
                     match &pg_type {
                         PgType::SqlxTypesChronoNaiveTimeAsTime => Some(
                             gen_inn_type_ts_ddf0f630(
