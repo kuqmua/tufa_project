@@ -6,8 +6,7 @@ mod tests {
     use scraper::{Html, Selector};
     use std::{
         collections::HashSet,
-        fs::{File, read_to_string},
-        io::Read,
+        fs::read_to_string,
         process::{Command, Stdio},
     };
     use syn::{
@@ -36,10 +35,10 @@ mod tests {
         Panic,
     }
     fn toml_v_from_from_cargo_toml_workspace() -> Value {
-        let mut file = File::open("../Cargo.toml").expect("39a0d238");
-        let mut acc = String::new();
-        let _: usize = Read::read_to_string(&mut file, &mut acc).expect("2f5914f2");
-        let tbl = acc.parse::<TomlTable>().expect("beb11586");
+        let tbl = read_to_string("../Cargo.toml")
+            .expect("39a0d238")
+            .parse::<TomlTable>()
+            .expect("beb11586");
         tbl.get("workspace").expect("f728192d").clone()
     }
     fn toml_val_as_tbl(v: Value, uuid: &str) -> Table {
@@ -462,10 +461,10 @@ mod tests {
             if exceptions.contains(&path.display().to_string().as_str()) {
                 continue;
             }
-            let mut file = File::open(path).expect("bbb0d1fe");
-            let mut acc = String::new();
-            let _: usize = Read::read_to_string(&mut file, &mut acc).expect("8952ff62");
-            let parsed: Table = acc.parse().expect("49012f1f");
+            let parsed: Table = read_to_string(path)
+                .expect("bbb0d1fe")
+                .parse()
+                .expect("49012f1f");
             for el_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
                 if let Some(deps) = parsed
                     .get(el_3c618c8f)
