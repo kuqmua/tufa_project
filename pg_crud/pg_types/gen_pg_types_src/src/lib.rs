@@ -782,18 +782,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
         type H<'lt> = (&'lt dyn ToTokens, &'lt dyn ToTokens);
         fn gen_pg_range_conversion_ts(match_ts: &dyn ToTokens, input_ts: &dyn ToTokens) -> Ts2 {
+            let arms_ts = quote! {
+                std::ops::Bound::Included(v_af65ccce) => std::ops::Bound::Included(#input_ts),
+                std::ops::Bound::Excluded(v_af65ccce) => std::ops::Bound::Excluded(#input_ts),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+            };
             quote! {
                 sqlx::postgres::types::PgRange {
-                    start: match #match_ts.start {
-                        std::ops::Bound::Included(v_af65ccce) => std::ops::Bound::Included(#input_ts),
-                        std::ops::Bound::Excluded(v_af65ccce) => std::ops::Bound::Excluded(#input_ts),
-                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                    },
-                    end: match #match_ts.end {
-                        std::ops::Bound::Included(v_af65ccce) => std::ops::Bound::Included(#input_ts),
-                        std::ops::Bound::Excluded(v_af65ccce) => std::ops::Bound::Excluded(#input_ts),
-                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                    },
+                    start: match #match_ts.start { #arms_ts },
+                    end: match #match_ts.end { #arms_ts },
                 }
             }
         }
@@ -2423,51 +2420,36 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             Ok(Self(sqlx::postgres::types::PgRange { #StartSc, #EndSc }))
                                         }
                                     };
-                                    let gen_ok_self_sqlx_pg_types_pg_range_ts = |ts: &dyn ToTokens| quote! {
-                                        Ok(Self(sqlx::postgres::types::PgRange {
-                                            #StartSc: match #VSc.#StartSc {
-                                                std::ops::Bound::Included(v_fa01ee95) => match #ts::#TryNewSc(v_fa01ee95) {
-                                                    Ok(v_a9c1f658) => std::ops::Bound::Included(v_a9c1f658.0),
-                                                    Err(er) => {
-                                                        return Err(#ident_stdrt_nn_orgn_try_new_er_ucc::#StartUcc {
-                                                            #ErSc,
-                                                            loc: loc_lib::loc!(),
-                                                        });
-                                                    }
-                                                },
-                                                std::ops::Bound::Excluded(v_0cd476c2) => match #ts::#TryNewSc(v_0cd476c2) {
-                                                    Ok(v_f0ff8036) => std::ops::Bound::Excluded(v_f0ff8036.0),
-                                                    Err(er) => {
-                                                        return Err(#ident_stdrt_nn_orgn_try_new_er_ucc::#StartUcc {
-                                                            #ErSc,
-                                                            loc: loc_lib::loc!(),
-                                                        });
-                                                    }
-                                                },
-                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                    let gen_ok_self_sqlx_pg_types_pg_range_ts = |ts: &dyn ToTokens| {
+                                        let gen_bound_arms_ts = |variant_ts: &dyn ToTokens| quote! {
+                                            std::ops::Bound::Included(v_bound_incl) => match #ts::#TryNewSc(v_bound_incl) {
+                                                Ok(v_bound_ok) => std::ops::Bound::Included(v_bound_ok.0),
+                                                Err(er) => {
+                                                    return Err(#ident_stdrt_nn_orgn_try_new_er_ucc::#variant_ts {
+                                                        #ErSc,
+                                                        loc: loc_lib::loc!(),
+                                                    });
+                                                }
                                             },
-                                            #EndSc: match #VSc.#EndSc {
-                                                std::ops::Bound::Included(v_892f5875) => match #ts::#TryNewSc(v_892f5875) {
-                                                    Ok(v_80168e2b) => std::ops::Bound::Included(v_80168e2b.0),
-                                                    Err(er) => {
-                                                        return Err(#ident_stdrt_nn_orgn_try_new_er_ucc::#EndUcc {
-                                                            #ErSc,
-                                                            loc: loc_lib::loc!(),
-                                                        });
-                                                    }
-                                                },
-                                                std::ops::Bound::Excluded(v_78cb4fa9) => match #ts::#TryNewSc(v_78cb4fa9) {
-                                                    Ok(v_05f87b70) => std::ops::Bound::Excluded(v_05f87b70.0),
-                                                    Err(er) => {
-                                                        return Err(#ident_stdrt_nn_orgn_try_new_er_ucc::#EndUcc {
-                                                            #ErSc,
-                                                            loc: loc_lib::loc!(),
-                                                        });
-                                                    }
-                                                },
-                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                            std::ops::Bound::Excluded(v_bound_excl) => match #ts::#TryNewSc(v_bound_excl) {
+                                                Ok(v_bound_ok) => std::ops::Bound::Excluded(v_bound_ok.0),
+                                                Err(er) => {
+                                                    return Err(#ident_stdrt_nn_orgn_try_new_er_ucc::#variant_ts {
+                                                        #ErSc,
+                                                        loc: loc_lib::loc!(),
+                                                    });
+                                                }
                                             },
-                                        }))
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                        };
+                                        let start_arms_ts = gen_bound_arms_ts(&quote! {#StartUcc});
+                                        let end_arms_ts = gen_bound_arms_ts(&quote! {#EndUcc});
+                                        quote! {
+                                            Ok(Self(sqlx::postgres::types::PgRange {
+                                                #StartSc: match #VSc.#StartSc { #start_arms_ts },
+                                                #EndSc: match #VSc.#EndSc { #end_arms_ts },
+                                            }))
+                                        }
                                     };
                                     match &pg_type_init_try_new {
                                         PgTypeInitTryNew::StringAsText => quote! {
