@@ -5633,14 +5633,16 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
+    let parse_strs_to_ts2_vec = |v: Vec<String>, uuid: &str| -> Vec<Ts2> {
+        v.into_iter()
+            .map(|el| el.parse::<Ts2>().unwrap_or_else(|_| panic!("{uuid}")))
+            .collect::<Vec<Ts2>>()
+    };
     mb_write_ts_into_file(
         gen_pg_json_config.pg_tbl_cols_write_into_file,
         "pg_tbl_cols_using_pg_types",
         &{
-            let ts = cols_ts
-                .into_iter()
-                .map(|el_2e3fc869| el_2e3fc869.parse::<Ts2>().expect("79ee6381"))
-                .collect::<Vec<Ts2>>();
+            let ts = parse_strs_to_ts2_vec(cols_ts, "79ee6381");
             quote! {
                 struct PgTblColsUsingPgTypes {
                     #(#ts)*
@@ -5650,10 +5652,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let generated = {
-        let ts = pg_type_arr
-            .into_iter()
-            .map(|el_f9569807| el_f9569807.parse::<Ts2>().expect("e0c9257d"))
-            .collect::<Vec<Ts2>>();
+        let ts = parse_strs_to_ts2_vec(pg_type_arr, "e0c9257d");
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]

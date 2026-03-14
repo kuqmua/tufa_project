@@ -175,9 +175,12 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             Upd,
             UpdForQuery,
         }
+        fn display_to_tokens(v: &dyn Display, tokens: &mut Ts2) {
+            v.to_string().parse::<Ts2>().expect("43ac0b62").to_tokens(tokens);
+        }
         impl ToTokens for PgJsonSubtype {
             fn to_tokens(&self, tokens: &mut Ts2) {
-                self.to_string().parse::<Ts2>().expect("43ac0b62").to_tokens(tokens);
+                display_to_tokens(self, tokens);
             }
         }
         #[derive(Debug, Clone, Display, Optml)]
@@ -193,7 +196,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         }
         impl ToTokens for PgTypeSubtype {
             fn to_tokens(&self, tokens: &mut Ts2) {
-                self.to_string().parse::<Ts2>().expect("5825d4b7").to_tokens(tokens);
+                display_to_tokens(self, tokens);
             }
         }
         #[allow(clippy::arbitrary_source_item_ordering)]

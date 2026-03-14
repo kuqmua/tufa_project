@@ -3365,14 +3365,16 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
+    let parse_strs_to_ts2_vec = |v: Vec<String>, uuid: &str| -> Vec<Ts2> {
+        v.into_iter()
+            .map(|el| el.parse::<Ts2>().unwrap_or_else(|_| panic!("{uuid}")))
+            .collect::<Vec<Ts2>>()
+    };
     mb_write_ts_into_file(
         config.pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json,
         "pg_tbl_cols_using_pg_json",
         &{
-            let fields_cnt_ts = fields_ts
-                .into_iter()
-                .map(|el| el.parse::<Ts2>().expect("1d8cd8e4"))
-                .collect::<Vec<Ts2>>();
+            let fields_cnt_ts = parse_strs_to_ts2_vec(fields_ts, "1d8cd8e4");
             quote! {
                 pub struct PgTblColsUsingPgJsons {
                     #(#fields_cnt_ts)*
@@ -3382,10 +3384,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         &FormatWithCargofmt::True,
     );
     let generated = {
-        let content_ts = pg_json_arr
-            .into_iter()
-            .map(|el| el.parse::<Ts2>().expect("84e21b40"))
-            .collect::<Vec<Ts2>>();
+        let content_ts = parse_strs_to_ts2_vec(pg_json_arr, "84e21b40");
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
