@@ -2042,9 +2042,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 PgTypeInitTryNew::StringAsText => &string_as_text_try_new_er_vrts_ts,
                                 PgTypeInitTryNew::SqlxTypesChronoNaiveTimeAsTime | PgTypeInitTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_vrt_try_new_ts,
                                 PgTypeInitTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_er_vrts_ts,
-                                PgTypeInitTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &{
+                                PgTypeInitTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp | PgTypeInitTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &{
+                                    let date_name_ucc: &dyn DisplayPlusToTokens = if matches!(&pg_type_init_try_new, PgTypeInitTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz) {
+                                        &DateNaiveUcc
+                                    } else {
+                                        &DateUcc
+                                    };
                                     let date_var_ts = gen_loc_var_ts(
-                                        &DateUcc,
+                                        date_name_ucc,
                                         &quote!{
                                             #[eo_loc]
                                             #ErSc: #sqlx_types_chrono_naive_date_as_nn_date_orgn_try_new_er_ucc,
@@ -2052,19 +2057,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     );
                                     quote! {
                                         #date_var_ts,
-                                        #time_var_ts,
-                                    }
-                                },
-                                PgTypeInitTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &{
-                                    let date_naive_var_ts = gen_loc_var_ts(
-                                        &DateNaiveUcc,
-                                        &quote!{
-                                            #[eo_loc]
-                                            #ErSc: #sqlx_types_chrono_naive_date_as_nn_date_orgn_try_new_er_ucc,
-                                        }
-                                    );
-                                    quote! {
-                                        #date_naive_var_ts,
                                         #time_var_ts,
                                     }
                                 },

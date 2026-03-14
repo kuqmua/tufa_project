@@ -362,9 +362,6 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 IsStdrtWithId::True => &vec_syn_field_with_id,
             }
         };
-        let gen_type_as_pg_type_ts = |ts: &dyn ToTokens| {
-            gen_type_as_import_ts(&ts, &PgTypeUcc)
-        };
         let gen_type_as_pg_json_test_cases_ts = |ts: &dyn ToTokens| {
             gen_type_as_import_ts(&ts, &PgJsonTestCasesUcc)
         };
@@ -567,13 +564,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let pg_json_subtype_rd_inn = PgJsonSubtype::RdInn;
         let pg_json_subtype_upd = PgJsonSubtype::Upd;
         let pg_json_subtype_upd_for_query = PgJsonSubtype::UpdForQuery;
+        let gen_type_as_import_subtype_ts = |type_ts: &dyn ToTokens, import_trait_ts: &dyn ToTokens, subtype_ts: &dyn ToTokens| {
+            let type_as_import_trait_ts = gen_type_as_import_ts(&type_ts, &import_trait_ts);
+            quote! {#type_as_import_trait_ts::#subtype_ts}
+        };
         let gen_type_as_pg_json_subtype_ts = |type_ts: &dyn ToTokens, pg_json_subtype: &PgJsonSubtype| {
-            let type_as_pg_json_ts = gen_type_as_pg_json_ts(&type_ts);
-            quote! {#type_as_pg_json_ts::#pg_json_subtype}
+            gen_type_as_import_subtype_ts(&type_ts, &PgJsonUcc, pg_json_subtype)
         };
         let gen_type_as_pg_type_subtype_ts = |type_ts: &dyn ToTokens, pg_type_subtype: &PgTypeSubtype| {
-            let type_as_pg_type_ts = gen_type_as_pg_type_ts(&type_ts);
-            quote! {#type_as_pg_type_ts::#pg_type_subtype}
+            gen_type_as_import_subtype_ts(&type_ts, &PgTypeUcc, pg_type_subtype)
         };
         let gen_ft_as_crud_pg_json_from_field_ts = |
             syn_field: &SynField
