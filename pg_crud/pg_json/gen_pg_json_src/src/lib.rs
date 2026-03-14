@@ -544,7 +544,6 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     .enumerate()
     .collect::<Vec<(usize, Record)>>()
     .par_iter()
-    // .into_iter() //just for console prints ordering
     .map(|(i, el)| {
         enum IsStdrtNnUuid {
             False,

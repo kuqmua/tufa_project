@@ -435,8 +435,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     });
                 }
             }
-            // explicitly not supporting nbr of cols more than 100 so its less possibility to cause stack overflow or build process exit
-            // assert!((fields.len() <= 100), "d9963f32");
             (opt_pk_field.expect("6a529a99"), fields, fields_without_pk)
         } else {
             panic!("7f31872d");
@@ -801,7 +799,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         );
         quote! {
             let #ErSc = #ident_op_er_ucc::#syn_vrt_init_ts;
-            // eprintln!("{er}");
             #ts
         }
     };
@@ -1651,7 +1648,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             #impl_sqlx_row_for_ident_rd_ids_ts
         }
     };
-    // println!("{ident_rd_ids_ts}");
     let gen_ident_try_op_er_ucc = |op: &Op| {
         format!("{ident}Try{op}Er")
             .parse::<Ts2>()
@@ -2584,23 +2580,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         ) {
                             #ts0
                         }
-                        //todo
-                        // match axum::body::HttpBody::size_hint(&#BodySc).exact() {
-                        //     Some(v) => {
-                        //         println!(
-                        //             "HttpBody::size_hint {v} byte or {} kilobyte or {} megabyte",
-                        //             v
-                        //                 .checked_div(1024)
-                        //                 .expect("111fd01a"),
-                        //             v
-                        //                 .checked_div(1_048_576)
-                        //                 .expect("efbe0db4"), //(1024*1024)
-                        //         );
-                        //     }
-                        //     None => {
-                        //         println!("HttpBody::size_hint is None");
-                        //     }
-                        // }
                         let body_bytes = #ts1;
                     }
                 };
@@ -5904,7 +5883,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         #sel_ts
         #ident_rd_ts
         #ident_rd_ids_ts
-        // #ident_col_rd_permission_ts
         #ident_upd_ts
         #ident_upd_for_query_ts
     };

@@ -1408,7 +1408,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &quote!{;},
                 );
-            // println!("@@@{}", ident_inn_type_ts);
             let mb_impl_ident_ts = if matches!(&pg_type_pattern, PgTypePattern::Stdrt) &&
                 matches!(&is_nl, IsNl::False)
             {
@@ -3327,7 +3326,6 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let before = PgTypeFlt::Before {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        // let bit_vec_position_eq = PgTypeFlt::BitVecPositionEq;
                         let cmn_stdrt_pg_type_flts = { cmn_pg_type_flts };
                         let cmn_stdrt_pg_type_nbr_flts = {
                             let mut vec = cmn_stdrt_pg_type_flts.clone();

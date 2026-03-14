@@ -16,3 +16,4 @@ Cargo.lock
 src/**/*.rs.bk
 
 /server/.env
+/telegram_bot/.env

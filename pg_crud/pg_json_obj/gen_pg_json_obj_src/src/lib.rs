@@ -185,13 +185,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         }
         #[derive(Debug, Clone, Display, Optml)]
         enum PgTypeSubtype {
-            // Tt,
-            // Cr,
-            // Sel,
-            // Wh,
             Rd,
-            // RdIds,
-            // RdInn,
             Upd,
         }
         impl ToTokens for PgTypeSubtype {
@@ -2922,22 +2916,6 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 Ts2::new()
             };
             let mb_ident_with_id_stdrt_nn_upd_el_ts = if is_stdrt_nn {
-                //thought it can be reused as struct with generic param, but turns out its too painfull
-                // pub trait MyTrait {
-                //     type ExtraType: PartialEq;
-                // }
-                // pub struct MyStruct;
-                // #[derive(PartialEq, Optml)]
-                // pub struct MyStructExtraType(String);
-                // impl MyTrait for MyStruct {
-                //     type ExtraType = MyStructExtraType;
-                // }
-                // #[derive(PartialEq, Optml)]
-                // pub struct WOfMyTrait<T: MyTrait>(<T as MyTrait>::ExtraType);
-                // pub type WOfMyTraitAl = WOfMyTrait<MyStruct>;
-                // #[derive(PartialEq, Optml)]
-                // pub struct WOfWOfMyTraitAl(WOfMyTraitAl);
-                // // er[E0369]: binary op `==` cannot be applied to type `WOfMyTrait<MyStruct>`
                 let ident_with_id_stdrt_nn_upd_el_fields_dcl_ts = quote! {
                     #IdSc: #pg_crud_path_pg_json_uuid_uuid_upd_ts,
                     #FieldsSc: #ident_stdrt_nn_as_pg_json_upd_ts
@@ -5000,12 +4978,6 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         let ts = vec_syn_field_with_id.iter().map(|el0| {
                             let fi = &el0.ident;
                             let ft_as_pg_json_test_cases_ts = gen_type_as_pg_json_test_cases_ts(&el0.type0);
-                            // let mb_dot_clone_ts = if vec_syn_field.len() == 1 {
-                            //     Ts2::new()
-                            // }
-                            // else {
-                            //     quote!{.clone()}
-                            // };
                             let ts0 = gen_v_init_ts0(&quote!{
                                 #ft_as_pg_json_test_cases_ts::#RdInnIntoRdWithNewOrTryNewUnwrapedSc(
                                     el_5c1f7f63.#VSc
