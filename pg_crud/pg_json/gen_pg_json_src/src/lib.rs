@@ -2788,6 +2788,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             };
+            let wh_len_ref_ts: &dyn ToTokens = match &is_nl {
+                IsNl::False => &cr_dot_zero_dot_zero,
+                IsNl::True => &quote! {v_wh_nl_some.0},
+            };
             let cr_into_pg_json_opt_vec_wh_len_eq_ts = match &pattern {
                 Pattern::Stdrt => quote!{#NoneTs},
                 Pattern::ArrDim1 { .. } |
@@ -2795,16 +2799,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim3 { .. } |
                 Pattern::ArrDim4 { .. } => gen_not_empty_unq_vec_try_new_match_ts(
                     &{
-                        let ref_ts: &dyn ToTokens = match &is_nl {
-                            IsNl::False => &cr_dot_zero_dot_zero,
-                            IsNl::True => &quote! {v_wh_nl_some.0},
-                        };
                         let len_eq_ts = quote! {
                             ::LenEq(
                                 wh_flts::PgJsonWhLenEq {
                                     oprtr: #import::Oprtr::Or,
                                     #VSc: pg_crud_cmn::UnsignedPartOfI32::try_from(
-                                        i32::try_from(#ref_ts.len()).expect("64d3424f")
+                                        i32::try_from(#wh_len_ref_ts.len()).expect("64d3424f")
                                     ).expect("081f4463"),
                                 }
                             )
@@ -2825,10 +2825,6 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim3 { .. } |
                 Pattern::ArrDim4 { .. } => gen_not_empty_unq_vec_try_new_match_ts(
                     &{
-                        let ref_ts: &dyn ToTokens = match &is_nl {
-                            IsNl::False => &cr_dot_zero_dot_zero,
-                            IsNl::True => &quote! {v_wh_nl_some.0},
-                        };
                         let len_gt_ts = quote! {
                             ::LenGreaterThan(
                                 wh_flts::PgJsonWhLenGreaterThan {
@@ -2836,7 +2832,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     #VSc: if let Ok(v_762dae1f) = pg_crud_cmn::UnsignedPartOfI32::try_from(
                                         if let Ok(v_9dca0200) = i32::try_from(
                                             //todo temp code. make it better checking all cases
-                                            match #ref_ts.len().checked_sub(1) {
+                                            match #wh_len_ref_ts.len().checked_sub(1) {
                                                 Some(v_92860143) => v_92860143,
                                                 None => {
                                                     return None;
@@ -2906,8 +2902,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 | PgJson::UuidUuidAsJsonbString => quote! {#NoneTs},
             };
             //todo additonal logic for Option<v> and el of arr? optal el of arr?
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nl, IsNl::False)
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
             {
                 let (
                     int_greater_than_one_less_ts,
@@ -2956,8 +2951,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nl, IsNl::False)
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
             {
                 let (
                     btwn_one_less_and_one_more_int_ts,
@@ -3034,8 +3028,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nl, IsNl::False)
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
             {
                 match &pg_json {
                     PgJson::I8AsJsonbNbr |
@@ -3073,8 +3066,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts = if matches!(&pattern, Pattern::Stdrt) &&
-                matches!(&is_nl, IsNl::False)
+            let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
             {
                 match &pg_json {
                     PgJson::I8AsJsonbNbr |
