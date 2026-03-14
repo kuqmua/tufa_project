@@ -297,16 +297,24 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
         }),
     };
     let pub_v_btwn_t_ts = quote! {pub #VSc: Btwn<T>};
-    let query_self_v_qb_ts = quote! {
-        match #SelfSc.#VSc.qb(#QuerySc) {
-            Ok(v_f6d31bdd) => {
-                #QuerySc = v_f6d31bdd;
-            },
-            Err(#ErSc) => {
-                return Err(#ErSc);
+    let gen_match_qb_ts = |field_ts: &dyn ToTokens| {
+        quote! {
+            match #field_ts.qb(#QuerySc) {
+                Ok(v_f6d31bdd) => {
+                    #QuerySc = v_f6d31bdd;
+                },
+                Err(#ErSc) => {
+                    return Err(#ErSc);
+                }
             }
         }
-        Ok(#QuerySc)
+    };
+    let query_self_v_qb_ts = {
+        let ts = gen_match_qb_ts(&quote! {#SelfSc.#VSc});
+        quote! {
+            #ts
+            Ok(#QuerySc)
+        }
     };
     let pg_type_ptrn_stdrt = PgTypePtrn::Stdrt;
     let pg_type_ptrn_arr_dim1 = PgTypePtrn::ArrDim1;
@@ -334,16 +342,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
         #DimsSc: #PgCrudCmnDfltSomeOneElCall
     };
     let dims_dflt_init_comma_ts = quote! {#dims_dflt_init_ts,};
-    let query_self_dims_qb_query_ts = quote! {
-        match #SelfSc.#DimsSc.qb(#QuerySc) {
-            Ok(v_ed6f1157) => {
-                #QuerySc = v_ed6f1157;
-            }
-            Err(#ErSc) => {
-                return Err(#ErSc);
-            }
-        }
-    };
+    let query_self_dims_qb_query_ts = gen_match_qb_ts(&quote! {#SelfSc.#DimsSc});
     let dims_ies_comma_ts = quote! {#DimsIesSc,};
     let gen_mb_dims_dcl_pub_v_t_ts = |ts: &dyn ToTokens| {
         quote! {
@@ -870,16 +869,13 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                     col,
                                     dims_ies2,
                                 },
-                                quote! {
-                                    match #SelfSc.#DimsSc.clone().qb(#QuerySc) {
-                                        Ok(v_6cb14cdc) => {
-                                            #QuerySc = v_6cb14cdc;
-                                        },
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
+                                {
+                                    let dims_clone_qb_ts =
+                                        gen_match_qb_ts(&quote! {#SelfSc.#DimsSc.clone()});
+                                    quote! {
+                                        #dims_clone_qb_ts
+                                        #query_self_dims_qb_query_ts
                                     }
-                                    #query_self_dims_qb_query_ts
                                 },
                             )
                         },

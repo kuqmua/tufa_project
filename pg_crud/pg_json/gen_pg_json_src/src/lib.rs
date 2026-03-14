@@ -934,6 +934,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             };
             let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
             let impl_loc_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let some_dflt_some_one_el_call_ts = quote! {Some(#PgCrudCmnDfltSomeOneElCall)};
             let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let content_ts = match &pattern {
                     Pattern::Stdrt => match &is_nl {
@@ -952,11 +953,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             PgJson::StringAsJsonbString => quote! {String::default()},
                             PgJson::UuidUuidAsJsonbString => quote! {uuid::Uuid::new_v4()},
                         },
-                        IsNl::True => quote! {Some(#PgCrudCmnDfltSomeOneElCall)},
+                        IsNl::True => some_dflt_some_one_el_call_ts,
                     },
                     Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => match &is_nl {
                         IsNl::False => quote! {vec![#PgCrudCmnDfltSomeOneElCall]},
-                        IsNl::True => quote! {Some(#PgCrudCmnDfltSomeOneElCall)},
+                        IsNl::True => some_dflt_some_one_el_call_ts,
                     },
                 };
                 quote! {Self(#content_ts)}
