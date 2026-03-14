@@ -747,6 +747,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             Pattern::ArrDim4 {..} => DCopy::False,
         };
         let ident_rd_inn_sqlx_types_json_type_dcl_ts = gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc);
+        let sqlx_json_ref_self_zero_encode_ts = quote! {sqlx::types::Json(&#SelfSc.0)};
         let ident_orgn_ts = {
             let gen_ident_orgn_non_wrapping_6c0934a6 = |
                 is_nl_e7d1d83c: &IsNl,
@@ -964,7 +965,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 quote! {Self(#content_ts)}
             });
             let impl_sqlx_type_for_ident_orgn_ts = gen_impl_sqlx_type_for_ident_ts(&ident_orgn_ucc, &ident_rd_inn_sqlx_types_json_type_dcl_ts);
-            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
+            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &sqlx_json_ref_self_zero_encode_ts);
             quote! {
                 #ident_orgn_ts
                 #impl_ident_orgn_ts
@@ -1007,13 +1008,29 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &ident_orgn_struct_cnt_ts
                 );
             let impl_new_ts = gen_impl_new_for_ucc_ts(&for_query_ucc);
-            let impl_sqlx_encode_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&for_query_ucc, &quote! {sqlx::types::Json(&#SelfSc.0)});
+            let impl_sqlx_encode_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&for_query_ucc, &sqlx_json_ref_self_zero_encode_ts);
             let impl_sqlx_type_ts = gen_impl_sqlx_type_for_ident_ts(&for_query_ucc, &ident_orgn_ucc);
             quote! {
                 #struct_ts
                 #impl_new_ts
                 #impl_sqlx_encode_ts
                 #impl_sqlx_type_ts
+            }
+        };
+        let gen_cr_or_upd_cmn_ts = |ucc: &dyn ToTokens| {
+            let struct_ts = cmn_d_ts_builder.build_struct(
+                &Ts2::new(),
+                &ucc,
+                &Ts2::new(),
+                &ident_orgn_struct_cnt_ts
+            );
+            let impl_new_ts = gen_impl_new_for_ucc_ts(&ucc);
+            let impl_dflt_some_one_el_ts =
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ucc, &self_dflt_some_one_el_call_ts);
+            quote! {
+                #struct_ts
+                #impl_new_ts
+                #impl_dflt_some_one_el_ts
             }
         };
         let gen_tt_or_rd_ts = |ucc: &dyn ToTokens| {
@@ -1039,22 +1056,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_tt_ts = gen_tt_or_rd_ts(&ident_tt_ucc);
-        let ident_cr_ts = {
-            let ident_cr_ts = cmn_d_ts_builder.build_struct(
-                    &Ts2::new(),
-                    &ident_cr_ucc,
-                    &Ts2::new(),
-                    &ident_orgn_struct_cnt_ts
-                );
-            let impl_ident_cr_ts = gen_impl_new_for_ucc_ts(&ident_cr_ucc);
-            let impl_dflt_some_one_el_for_ident_cr_ts =
-                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_cr_ucc, &self_dflt_some_one_el_call_ts);
-            quote! {
-                #ident_cr_ts
-                #impl_ident_cr_ts
-                #impl_dflt_some_one_el_for_ident_cr_ts
-            }
-        };
+        let ident_cr_ts = gen_cr_or_upd_cmn_ts(&ident_cr_ucc);
         let ident_cr_for_query_ts = {
             let cmn_ts = gen_for_query_ts(&ident_cr_for_query_ucc);
             let impl_from_ident_cr_for_ident_cr_for_query_ts = gen_impl_from_ts(&ident_cr_ucc, &ident_cr_for_query_ucc, &self_v_zero_ts);
@@ -1620,25 +1622,15 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_upd_ts = {
-            let ident_upd_ts = cmn_d_ts_builder.build_struct(
-                    &Ts2::new(),
-                    &ident_upd_ucc,
-                    &Ts2::new(),
-                    &ident_orgn_struct_cnt_ts
-                );
-            let impl_ident_upd_ts = gen_impl_new_for_ucc_ts(&ident_upd_ucc);
+            let cmn_ts = gen_cr_or_upd_cmn_ts(&ident_upd_ucc);
             let impl_loc_lib_to_err_string_for_ident_upd_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
                 gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
             };
-            let impl_dflt_some_one_el_for_ident_upd_ts =
-                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_upd_ucc, &self_dflt_some_one_el_call_ts);
             quote! {
-                #ident_upd_ts
-                #impl_ident_upd_ts
+                #cmn_ts
                 #impl_loc_lib_to_err_string_for_ident_upd_ts
-                #impl_dflt_some_one_el_for_ident_upd_ts
             }
         };
         let ident_upd_for_query_ts = {
