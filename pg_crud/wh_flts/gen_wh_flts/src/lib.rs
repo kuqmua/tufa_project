@@ -356,6 +356,12 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
             #v_dflt_some_one_el_ts
         }
     };
+    let gen_two_ts = |mb_dims_qb_ts: &dyn ToTokens, trailing_ts: &dyn ToTokens| {
+        quote! {
+            #mb_dims_qb_ts
+            #trailing_ts
+        }
+    };
     let is_qb_mut_true = IsQbMut::True;
     let is_qb_mut_false = IsQbMut::False;
     let gen_pub_dims_bounded_vec_not_zero_unsigned_part_of_i32_comma_ts = |dim_nbr: &DimNbr| {
@@ -459,10 +465,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                                 }
                             },
                             is_qb_mut_true,
-                            quote! {
-                                #mb_dims_qb_ts
-                                #qb_one_v_ts
-                            },
+                            gen_two_ts(&mb_dims_qb_ts, &qb_one_v_ts),
                         )
                     };
                 let gen_a2ca84d5_ts = |pg_type_ptrn: &PgTypePtrn, oprtr: &dyn Display| {
@@ -601,10 +604,10 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                             &mb_extra_prms_ts,
                         ),
                         is_qb_mut_true,
-                        quote! {
-                            #mb_dims_qb_ts
-                            #if_let_err_query_try_bind_self_v_to_string_ts
-                        },
+                        gen_two_ts(
+                            &mb_dims_qb_ts,
+                            &if_let_err_query_try_bind_self_v_to_string_ts,
+                        ),
                     )
                 };
                 let gen_before_ts = |pg_type_ptrn: &PgTypePtrn| {
@@ -1159,14 +1162,8 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                     ) = gen_pg_json_dims_helpers(pg_type_ptrn);
                     (
                         generic_true_none.clone(),
-                        quote! {
-                            #mb_dims_dcl_ts
-                            #pub_v_t_ts
-                        },
-                        quote! {
-                            #mb_dims_dflt_init_ts
-                            #v_dflt_some_one_el_ts
-                        },
+                        gen_mb_dims_dcl_pub_v_t_ts(&mb_dims_dcl_ts),
+                        gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                         {
                             let format_ts = dq_ts(&gen_format_h_str(&pg_type_kind));
                             quote! {
@@ -1182,10 +1179,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                             }
                         },
                         is_qb_mut_true,
-                        quote! {
-                            #mb_dims_qb_ts
-                            #qb_sqlx_types_json_self_v_ts
-                        },
+                        gen_two_ts(&mb_dims_qb_ts, &qb_sqlx_types_json_self_v_ts),
                     )
                 };
             let gen_7cc8e29b_ts = |pg_type_ptrn: &PgTypePtrn, oprtr: &dyn Display| {
@@ -1283,10 +1277,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                 ) = gen_pg_json_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                    quote! {
-                        #mb_dims_dcl_ts
-                        #pub_v_btwn_t_ts
-                    },
+                    gen_two_ts(&mb_dims_dcl_ts, &pub_v_btwn_t_ts),
                     gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                     {
                         let ts: &dyn ToTokens = match pg_type_ptrn {
@@ -1357,10 +1348,7 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                 ) = gen_pg_json_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_clone.clone(),
-                    quote! {
-                        #mb_dims_dcl_ts
-                        #pub_v_pg_json_not_empty_unq_vec_t_ts
-                    },
+                    gen_two_ts(&mb_dims_dcl_ts, &pub_v_pg_json_not_empty_unq_vec_t_ts),
                     gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                     {
                         let v_init_ts = gen_ident_match_field_fn_ok_v_return_err_ts(
@@ -1483,10 +1471,10 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                             &mb_extra_prms_ts,
                         ),
                         is_qb_mut_true,
-                        quote! {
-                            #mb_dims_qb_ts
-                            #if_let_err_query_try_bind_self_v_to_string_ts
-                        },
+                        gen_two_ts(
+                            &mb_dims_qb_ts,
+                            &if_let_err_query_try_bind_self_v_to_string_ts,
+                        ),
                     )
                 };
             //todo test it properly using all strange string vrts
@@ -1517,14 +1505,8 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                 ) = gen_pg_json_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_clone.clone(),
-                    quote! {
-                        #mb_dims_dcl_ts
-                        #pub_v_pg_json_not_empty_unq_vec_t_ts
-                    },
-                    quote! {
-                        #mb_dims_dflt_init_ts
-                        #v_dflt_some_one_el_ts
-                    },
+                    gen_two_ts(&mb_dims_dcl_ts, &pub_v_pg_json_not_empty_unq_vec_t_ts),
+                    gen_two_ts(&mb_dims_dflt_init_ts, &v_dflt_some_one_el_ts),
                     {
                         let ts = gen_ts_e527a806(
                             &dq_ts(&format!(
@@ -1557,14 +1539,8 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
                 ) = gen_pg_json_dims_helpers(pg_type_ptrn);
                 (
                     generic_true_debug_partial_eq_clone.clone(),
-                    quote! {
-                        #mb_dims_dcl_ts
-                        #pub_v_pg_json_not_empty_unq_vec_t_ts
-                    },
-                    quote! {
-                        #mb_dims_dflt_init_ts
-                        #v_dflt_some_one_el_ts
-                    },
+                    gen_two_ts(&mb_dims_dcl_ts, &pub_v_pg_json_not_empty_unq_vec_t_ts),
+                    gen_two_ts(&mb_dims_dflt_init_ts, &v_dflt_some_one_el_ts),
                     {
                         let ts = gen_ts_e527a806(
                             &dq_ts(&format!(
