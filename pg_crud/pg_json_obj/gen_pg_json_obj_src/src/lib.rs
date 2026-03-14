@@ -393,6 +393,22 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &quote!{;}
                 );
             let ident_ts = gen_struct_ident_ts(&ident);
+            let gen_id_and_fields_ts = |gen_ts: &dyn Fn(&dyn ToTokens, &dyn ToTokens, &dyn ToTokens) -> Ts2| {
+                let id_ts = gen_ts(
+                    &IdSc,
+                    &uuid_uuid_as_nn_jsonb_string_ts,
+                    &PgCrudDfltSomeOneElCall
+                );
+                let fields_ts = vec_syn_field.iter().map(|el0| {
+                    let fi = &el0.ident;
+                    gen_ts(
+                        &fi,
+                        &el0.type0,
+                        &quote!{#CrSc.#fi}
+                    )
+                }).collect::<Vec<Ts2>>();
+                (id_ts, fields_ts)
+            };
             let mb_ident_with_id_stdrt_nn_ts = if is_stdrt_nn {
                 let ident_with_id_stdrt_nn_ts = gen_struct_ident_ts(&ident_with_id_stdrt_nn_ucc);
                 let cfg_feature_test_utils_impl_ident_with_id_stdrt_nn_ts = {
@@ -414,24 +430,12 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     )
                                 }
                             };
-                            let ident_ts_e06846af = gen_ts(
-                                &IdSc,
-                                &uuid_uuid_as_nn_jsonb_string_ts,
-                                &PgCrudDfltSomeOneElCall
-                            );
-                            let ts = vec_syn_field.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                gen_ts(
-                                    &fi,
-                                    &el0.type0,
-                                    &quote!{#CrSc.#fi}
-                                )
-                            });
+                            let (id_ts, ts) = gen_id_and_fields_ts(&gen_ts);
                             quote!{
                                 #ident_with_id_stdrt_nn_wh_ucc::#EqUcc(pg_crud::PgJsonWhEq {
                                     oprtr: pg_crud::Oprtr::Or,
                                     #VSc: #ident_with_id_stdrt_nn_tt_ucc::new(
-                                        #ident_ts_e06846af,
+                                        #id_ts,
                                         #(#ts),*
                                     ),
                                 })
@@ -463,19 +467,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     )
                                 }
                             };
-                            let id_ts = gen_ts(
-                                &IdSc,
-                                &uuid_uuid_as_nn_jsonb_string_ts,
-                                &PgCrudDfltSomeOneElCall
-                            );
-                            let ts = vec_syn_field.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                gen_ts(
-                                    &fi,
-                                    &el0.type0,
-                                    &quote!{#CrSc.#fi}
-                                )
-                            });
+                            let (id_ts, ts) = gen_id_and_fields_ts(&gen_ts);
                             quote!{
                                 #import::NotEmptyUnqVec::try_new(vec![
                                     #id_ts,
@@ -509,19 +501,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     )
                                 }
                             };
-                            let id_ts = gen_ts(
-                                &IdSc,
-                                &uuid_uuid_as_nn_jsonb_string_ts,
-                                &PgCrudDfltSomeOneElCall
-                            );
-                            let ts = vec_syn_field.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                gen_ts(
-                                    &fi,
-                                    &el0.type0,
-                                    &quote!{#CrSc.#fi}
-                                )
-                            });
+                            let (id_ts, ts) = gen_id_and_fields_ts(&gen_ts);
                             quote!{
                                 #import::NotEmptyUnqVec::try_new(vec![
                                     #id_ts,
