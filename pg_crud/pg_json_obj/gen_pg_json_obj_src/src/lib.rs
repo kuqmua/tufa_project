@@ -976,13 +976,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 #mb_ident_with_id_stdrt_nn_cr_for_query_ts
             }
         };
+        let sqlx_json_self_ucc_type_dcl_ts = gen_sqlx_types_json_type_dcl_ts(&SelfUcc);
         let gen_sqlx_types_json_type_dcl_w_ts = |ts: &dyn ToTokens| gen_impl_sqlx_type_for_ident_ts(
             &ts,
-            &gen_sqlx_types_json_type_dcl_ts(&SelfUcc)
+            &sqlx_json_self_ucc_type_dcl_ts
         );
         let gen_impl_sqlx_decode_sqlx_pg_for_ident_w_ts = |ts: &dyn ToTokens| gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
             &ts,
-            &gen_sqlx_types_json_type_dcl_ts(&SelfUcc),
+            &sqlx_json_self_ucc_type_dcl_ts,
             &quote! {Ok(v.0)}
         );
         let gen_v_type_ts = |ts: &dyn ToTokens| {
@@ -2124,10 +2125,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     quote! {Self{#(#fields_ts),*}}
                 })
             };
+            let impl_pg_crud_dflt_some_one_el_for_nl_rd_ts = gen_impl_pg_crud_dflt_some_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_some_one_el_call_ts);
             let impl_pg_crud_dflt_some_one_el_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts = match &pattern {
                 Pattern::Stdrt => match &is_nl {
                     IsNl::False => gen_impl_pg_crud_dflt_some_one_el_for_ident_rd_or_ident_with_id_stdrt_nn_rd_ts(&is_stdrt_with_id_false),
-                    IsNl::True => gen_impl_pg_crud_dflt_some_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_some_one_el_call_ts),
+                    IsNl::True => impl_pg_crud_dflt_some_one_el_for_nl_rd_ts,
                 },
                 Pattern::Arr => match &is_nl {
                     IsNl::False => gen_impl_pg_crud_dflt_some_one_el_ts(
@@ -2137,7 +2139,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             Self(#vec_pg_crud_dflt_some_one_el_call_ts)
                         },
                     ),
-                    IsNl::True => gen_impl_pg_crud_dflt_some_one_el_ts(&ident_rd_ucc, &Ts2::new(), &self_some_pg_crud_dflt_some_one_el_call_ts),
+                    IsNl::True => impl_pg_crud_dflt_some_one_el_for_nl_rd_ts,
                 },
             };
             let impl_sqlx_type_for_ident_rd_ts = gen_sqlx_types_json_type_dcl_w_ts(&ident_rd_ucc);
