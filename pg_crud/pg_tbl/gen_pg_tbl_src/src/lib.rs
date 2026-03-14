@@ -1664,11 +1664,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let ident_um_payload_ucc = SelfUmPayloadUcc::from_tokens(&ident);
     let ident_upd_try_new_er_ucc = SelfUpdTryNewErUcc::from_tokens(&ident);
     let ident_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident);
+    let path_v_ts = format!("{PgCrudSc}::{VUcc}")
+        .parse::<Ts2>()
+        .expect("dbdbb7f2");
     let ident_upd_ts = {
         let gen_opt_v_ft_as_pg_type_upd_ts = |syn_type: &Type| {
-            let path_v_ts = format!("{PgCrudSc}::{VUcc}")
-                .parse::<Ts2>()
-                .expect("dbdbb7f2");
             let syn_type_as_pg_type_upd_ts = gen_as_pg_type_upd_ts(&syn_type);
             gen_opt_type_dcl_ts(&quote! {#path_v_ts<#syn_type_as_pg_type_upd_ts>})
         };
@@ -1787,9 +1787,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| -> Ts2 {
                             let fi = &el.ident;
                             let opt_v_ft_as_pg_type_upd_for_query_ts = {
-                                let path_v_ts = format!("{PgCrudSc}::{VUcc}")
-                                    .parse::<Ts2>()
-                                    .expect("2b09d4ae");
                                 let syn_type_as_pg_type_upd_for_query_ts =
                                     gen_as_pg_type_upd_for_query_ts(&el.type0);
                                 gen_opt_type_dcl_ts(

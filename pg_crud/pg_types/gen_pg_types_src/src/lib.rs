@@ -1021,6 +1021,38 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         } else {
             IsStdrtNn::False
         };
+        let d_partial_ord = match &is_stdrt_nn {
+            IsStdrtNn::False => DPartialOrd::False,
+            IsStdrtNn::True => match &pg_type {
+                PgType::I16AsInt2
+                | PgType::I32AsInt4
+                | PgType::I64AsInt8
+                | PgType::F32AsFloat4
+                | PgType::F64AsFloat8
+                | PgType::I16AsSmallSerialInitByPg
+                | PgType::I32AsSerialInitByPg
+                | PgType::I64AsBigSerialInitByPg
+                | PgType::BoolAsBool
+                | PgType::StringAsText
+                | PgType::StdVecVecU8AsBytea
+                | PgType::SqlxTypesChronoNaiveTimeAsTime
+                | PgType::SqlxTypesTimeTimeAsTime
+                | PgType::SqlxTypesChronoNaiveDateAsDate
+                | PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp
+                | PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
+                | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => DPartialOrd::True,
+                PgType::SqlxPgTypesPgMoneyAsMoney
+                | PgType::SqlxPgTypesPgIntervalAsInterval
+                | PgType::SqlxTypesUuidUuidAsUuidInitByClient
+                | PgType::SqlxTypesIpnetworkIpNetworkAsInet
+                | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
+                | PgType::SqlxPgTypesPgRangeI32AsInt4Range
+                | PgType::SqlxPgTypesPgRangeI64AsInt8Range
+                | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
+                | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
+                | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DPartialOrd::False,
+            },
+        };
         let is_nn_stdrt_can_be_pk = if matches!((&is_nl, &pg_type_pattern, &can_be_pk), (IsNl::False, PgTypePattern::Stdrt, CanBePk::True)) {
             IsNnStdrtCanBePk::True
         } else {
@@ -1836,38 +1868,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     IsNnStdrtCanBePk::False => DEq::False,
                     IsNnStdrtCanBePk::True => DEq::True,
                 })
-                .d_partial_ord_if(match &is_stdrt_nn {
-                    IsStdrtNn::False => DPartialOrd::False,
-                    IsStdrtNn::True => match &pg_type {
-                        PgType::I16AsInt2
-                        | PgType::I32AsInt4
-                        | PgType::I64AsInt8
-                        | PgType::F32AsFloat4
-                        | PgType::F64AsFloat8
-                        | PgType::I16AsSmallSerialInitByPg
-                        | PgType::I32AsSerialInitByPg
-                        | PgType::I64AsBigSerialInitByPg
-                        | PgType::BoolAsBool
-                        | PgType::StringAsText
-                        | PgType::StdVecVecU8AsBytea
-                        | PgType::SqlxTypesChronoNaiveTimeAsTime
-                        | PgType::SqlxTypesTimeTimeAsTime
-                        | PgType::SqlxTypesChronoNaiveDateAsDate
-                        | PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp
-                        | PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                        | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => DPartialOrd::True,
-                        PgType::SqlxPgTypesPgMoneyAsMoney
-                        | PgType::SqlxPgTypesPgIntervalAsInterval
-                        | PgType::SqlxTypesUuidUuidAsUuidInitByClient
-                        | PgType::SqlxTypesIpnetworkIpNetworkAsInet
-                        | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
-                        | PgType::SqlxPgTypesPgRangeI32AsInt4Range
-                        | PgType::SqlxPgTypesPgRangeI64AsInt8Range
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DPartialOrd::False,
-                    },
-                })
+                .d_partial_ord_if(d_partial_ord)
                 .d_ord_if(match &is_nn_stdrt_can_be_pk {
                     IsNnStdrtCanBePk::False => DOrd::False,
                     IsNnStdrtCanBePk::True => DOrd::True,
@@ -3170,38 +3171,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 .d_clone()
                 .d_copy_if(derive_copy)
                 .d_partial_eq()
-                .d_partial_ord_if(match &is_stdrt_nn {
-                    IsStdrtNn::False => DPartialOrd::False,
-                    IsStdrtNn::True => match &pg_type {
-                        PgType::I16AsInt2
-                        | PgType::I32AsInt4
-                        | PgType::I64AsInt8
-                        | PgType::F32AsFloat4
-                        | PgType::F64AsFloat8
-                        | PgType::I16AsSmallSerialInitByPg
-                        | PgType::I32AsSerialInitByPg
-                        | PgType::I64AsBigSerialInitByPg
-                        | PgType::BoolAsBool
-                        | PgType::StringAsText
-                        | PgType::StdVecVecU8AsBytea
-                        | PgType::SqlxTypesChronoNaiveTimeAsTime
-                        | PgType::SqlxTypesTimeTimeAsTime
-                        | PgType::SqlxTypesChronoNaiveDateAsDate
-                        | PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp
-                        | PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                        | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg => DPartialOrd::True,
-                        PgType::SqlxPgTypesPgMoneyAsMoney
-                        | PgType::SqlxPgTypesPgIntervalAsInterval
-                        | PgType::SqlxTypesUuidUuidAsUuidInitByClient
-                        | PgType::SqlxTypesIpnetworkIpNetworkAsInet
-                        | PgType::SqlxTypesMacAddressMacAddressAsMacAddr
-                        | PgType::SqlxPgTypesPgRangeI32AsInt4Range
-                        | PgType::SqlxPgTypesPgRangeI64AsInt8Range
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                        | PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DPartialOrd::False,
-                    },
-                })
+                .d_partial_ord_if(d_partial_ord)
                 .d_serde_serialize()
                 .d_serde_deserialize()
                 .build_struct(
@@ -5241,33 +5211,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         &quote! {try_new(#greater_than_ts).expect("c369e6ea")},
                     )
                 };
-                let gen_greater_than_test_new_new_vec_ts = |
-                    less_ts: &dyn ToTokens,
-                    less_with_more_ts: &dyn ToTokens,
-                    zero_ts: &dyn ToTokens,
-                    one_ts: &dyn ToTokens, more_ts: &dyn ToTokens, more_with_less_ts: &dyn ToTokens| {
-                    let greater_than_less_ts = gen_greater_than_test_new_new_ts(&greater_than, &less_with_more_ts, &less_ts);
-                    let greater_than_zero_ts = gen_greater_than_test_new_new_ts(&greater_than, &one_ts, &zero_ts);
-                    let greater_than_more_ts = gen_greater_than_test_new_new_ts(&greater_than, &more_ts, &more_with_less_ts);
-                    let not_greater_than_less_ts = gen_greater_than_test_new_new_ts(&not_greater_than, &less_ts, &less_with_more_ts);
-                    let not_greater_than_zero_ts = gen_greater_than_test_new_new_ts(&not_greater_than, &zero_ts, &one_ts);
-                    let not_greater_than_more_ts = gen_greater_than_test_new_new_ts(&not_greater_than, &more_with_less_ts, &more_ts);
-                    let eq_not_greater_than_less_ts = gen_greater_than_test_new_new_ts(&eq_not_greater_than, &less_ts, &less_ts);
-                    let eq_not_greater_than_zero_ts = gen_greater_than_test_new_new_ts(&eq_not_greater_than, &zero_ts, &zero_ts);
-                    let eq_not_greater_than_more_ts = gen_greater_than_test_new_new_ts(&eq_not_greater_than, &more_ts, &more_ts);
-                    quote! {
-                        #greater_than_less_ts,
-                        #greater_than_zero_ts,
-                        #greater_than_more_ts,
-                        #not_greater_than_less_ts,
-                        #not_greater_than_zero_ts,
-                        #not_greater_than_more_ts,
-                        #eq_not_greater_than_less_ts,
-                        #eq_not_greater_than_zero_ts,
-                        #eq_not_greater_than_more_ts
-                    }
-                };
-                let gen_greater_than_test_try_new_try_new_vec_ts = |
+                let gen_greater_than_test_vec_ts = |
+                    gen_ts: &dyn Fn(&PgTypeGreaterThanVrt, &dyn ToTokens, &dyn ToTokens) -> Ts2,
                     less_ts: &dyn ToTokens,
                     less_with_more_ts: &dyn ToTokens,
                     zero_ts: &dyn ToTokens,
@@ -5275,15 +5220,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     more_ts: &dyn ToTokens,
                     more_with_less_ts: &dyn ToTokens
                 | {
-                    let greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&greater_than, &less_with_more_ts, &less_ts);
-                    let greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&greater_than, &one_ts, &zero_ts);
-                    let greater_than_more_ts = gen_greater_than_test_try_new_try_new_ts(&greater_than, &more_ts, &more_with_less_ts);
-                    let not_greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&not_greater_than, &less_ts, &less_with_more_ts);
-                    let not_greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&not_greater_than, &zero_ts, &one_ts);
-                    let not_greater_than_more_ts = gen_greater_than_test_try_new_try_new_ts(&not_greater_than, &more_with_less_ts, &more_ts);
-                    let eq_not_greater_than_less_ts = gen_greater_than_test_try_new_try_new_ts(&eq_not_greater_than, &less_ts, &less_ts);
-                    let eq_not_greater_than_zero_ts = gen_greater_than_test_try_new_try_new_ts(&eq_not_greater_than, &zero_ts, &zero_ts);
-                    let eq_not_greater_than_more_ts = gen_greater_than_test_try_new_try_new_ts(&eq_not_greater_than, &more_ts, &more_ts);
+                    let greater_than_less_ts = gen_ts(&greater_than, &less_with_more_ts, &less_ts);
+                    let greater_than_zero_ts = gen_ts(&greater_than, &one_ts, &zero_ts);
+                    let greater_than_more_ts = gen_ts(&greater_than, &more_ts, &more_with_less_ts);
+                    let not_greater_than_less_ts = gen_ts(&not_greater_than, &less_ts, &less_with_more_ts);
+                    let not_greater_than_zero_ts = gen_ts(&not_greater_than, &zero_ts, &one_ts);
+                    let not_greater_than_more_ts = gen_ts(&not_greater_than, &more_with_less_ts, &more_ts);
+                    let eq_not_greater_than_less_ts = gen_ts(&eq_not_greater_than, &less_ts, &less_ts);
+                    let eq_not_greater_than_zero_ts = gen_ts(&eq_not_greater_than, &zero_ts, &zero_ts);
+                    let eq_not_greater_than_more_ts = gen_ts(&eq_not_greater_than, &more_ts, &more_ts);
                     quote! {
                         #greater_than_less_ts,
                         #greater_than_zero_ts,
@@ -5296,6 +5241,22 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         #eq_not_greater_than_more_ts
                     }
                 };
+                let gen_greater_than_test_new_new_vec_ts = |
+                    less_ts: &dyn ToTokens,
+                    less_with_more_ts: &dyn ToTokens,
+                    zero_ts: &dyn ToTokens,
+                    one_ts: &dyn ToTokens,
+                    more_ts: &dyn ToTokens,
+                    more_with_less_ts: &dyn ToTokens
+                | gen_greater_than_test_vec_ts(&gen_greater_than_test_new_new_ts, less_ts, less_with_more_ts, zero_ts, one_ts, more_ts, more_with_less_ts);
+                let gen_greater_than_test_try_new_try_new_vec_ts = |
+                    less_ts: &dyn ToTokens,
+                    less_with_more_ts: &dyn ToTokens,
+                    zero_ts: &dyn ToTokens,
+                    one_ts: &dyn ToTokens,
+                    more_ts: &dyn ToTokens,
+                    more_with_less_ts: &dyn ToTokens
+                | gen_greater_than_test_vec_ts(&gen_greater_than_test_try_new_try_new_ts, less_ts, less_with_more_ts, zero_ts, one_ts, more_ts, more_with_less_ts);
                 match &pg_type_pattern {
                     PgTypePattern::Stdrt => match &is_nl {
                         IsNl::False => {
