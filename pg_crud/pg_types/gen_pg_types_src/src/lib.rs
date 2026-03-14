@@ -235,31 +235,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     impl PgType {
         const fn can_be_an_arr_el(&self) -> CanBeAnArrEl {
-            match &self {
-                Self::I16AsInt2
-                | Self::I32AsInt4
-                | Self::I64AsInt8
-                | Self::F32AsFloat4
-                | Self::F64AsFloat8
-                | Self::SqlxPgTypesPgMoneyAsMoney
-                | Self::BoolAsBool
-                | Self::StringAsText
-                | Self::StdVecVecU8AsBytea
-                | Self::SqlxTypesChronoNaiveTimeAsTime
-                | Self::SqlxTypesTimeTimeAsTime
-                | Self::SqlxPgTypesPgIntervalAsInterval
-                | Self::SqlxTypesChronoNaiveDateAsDate
-                | Self::SqlxTypesChronoNaiveDateTimeAsTimestamp
-                | Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                | Self::SqlxTypesUuidUuidAsUuidInitByClient
-                | Self::SqlxTypesIpnetworkIpNetworkAsInet
-                | Self::SqlxTypesMacAddressMacAddressAsMacAddr
-                | Self::SqlxPgTypesPgRangeI32AsInt4Range
-                | Self::SqlxPgTypesPgRangeI64AsInt8Range
-                | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
-                | Self::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                | Self::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrEl::True,
-                Self::I16AsSmallSerialInitByPg | Self::I32AsSerialInitByPg | Self::I64AsBigSerialInitByPg | Self::SqlxTypesUuidUuidAsUuidV4InitByPg => CanBeAnArrEl::False,
+            match self.can_be_nl() {
+                CanBeNl::True => CanBeAnArrEl::True,
+                CanBeNl::False => CanBeAnArrEl::False,
             }
         }
         const fn can_be_nl(&self) -> CanBeNl {
@@ -3231,18 +3209,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_stdrt_nn_tt_ucc = SelfTtUcc::from_tokens(&ident_stdrt_nn_ucc);
+        let cmn_d_ts_builder = DTsBuilder::new()
+            .make_pub()
+            .d_debug()
+            .d_clone()
+            .d_copy_if(derive_copy)
+            .d_partial_eq()
+            .d_serde_serialize()
+            .d_serde_deserialize();
         let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
         let ident_cr_ts = {
             let ident_cr_ts = match &can_be_pk {
-                CanBePk::False => DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_clone()
-                    .d_copy_if(derive_copy)
-                    .d_partial_eq()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
-                    .build_struct(
+                CanBePk::False => cmn_d_ts_builder.build_struct(
                         &Ts2::new(),
                         &ident_cr_ucc,
                         &Ts2::new(),
@@ -3729,15 +3707,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_rd_ids_ucc = SelfRdIdsUcc::from_tokens(&ident);
         let ident_rd_ids_ts = if matches!(&is_nn_stdrt_can_be_pk, IsNnStdrtCanBePk::True) {
-            let ident_rd_ids_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(derive_copy)
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .build_struct(
+            let ident_rd_ids_ts = cmn_d_ts_builder.build_struct(
                     &Ts2::new(),
                     &ident_rd_ids_ucc,
                     &Ts2::new(),
@@ -3762,15 +3732,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             pub type #ident_rd_inn_ucc = #ident_inn_type_ts;
         };
         let ident_upd_ts = {
-            let ident_upd_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(derive_copy)
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .build_struct(
+            let ident_upd_ts = cmn_d_ts_builder.build_struct(
                     &Ts2::new(),
                     &ident_upd_ucc,
                     &Ts2::new(),
@@ -3789,15 +3751,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let ident_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident);
         let ident_upd_for_query_ts = {
-            let ident_upd_for_query_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(derive_copy)
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .build_struct(
+            let ident_upd_for_query_ts = cmn_d_ts_builder.build_struct(
                     &Ts2::new(),
                     &ident_upd_for_query_ucc,
                     &Ts2::new(),

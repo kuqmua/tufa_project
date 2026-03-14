@@ -979,51 +979,42 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_orgn_struct_cnt_ts = quote!{(#ident_orgn_ucc);};
-        let ident_tt_ts = {
-            let ident_tt_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(mb_derive_copy)
-                .d_partial_eq()
-                .d_partial_ord()//mb add it to the trait?
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .d_utoipa_to_schema()
-                .d_schemars_json_schema()
+        let self_dflt_some_one_el_call_ts = quote! {Self(#PgCrudCmnDfltSomeOneElCall)};
+        let cmn_d_ts_builder = DTsBuilder::new()
+            .make_pub()
+            .d_debug()
+            .d_clone()
+            .d_copy_if(mb_derive_copy)
+            .d_partial_eq()
+            .d_serde_serialize()
+            .d_serde_deserialize()
+            .d_utoipa_to_schema()
+            .d_schemars_json_schema();
+        let gen_tt_or_rd_ts = |ucc: &dyn ToTokens| {
+            let struct_ts = cmn_d_ts_builder
+                .d_partial_ord()
                 .build_struct(
                     &Ts2::new(),
-                    &ident_tt_ucc,
+                    &ucc,
                     &Ts2::new(),
                     &ident_orgn_struct_cnt_ts
                 );
-            let impl_ident_tt_ts = gen_impl_new_for_ucc_ts(&ident_tt_ucc);
-            let impl_dflt_some_one_el_for_ident_tt_ts =
-                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_tt_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
-            //todo mb add to trait?
-            let impl_sqlx_encode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &quote! {&#SelfSc.0});
-            //todo mb add to trait?
-            let impl_sqlx_type_for_ident_tt_ts = gen_impl_sqlx_type_for_ident_ts(&ident_tt_ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
+            let impl_new_ts = gen_impl_new_for_ucc_ts(&ucc);
+            let impl_dflt_some_one_el_ts =
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ucc, &self_dflt_some_one_el_call_ts);
+            let impl_sqlx_encode_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ucc, &quote! {&#SelfSc.0});
+            let impl_sqlx_type_ts = gen_impl_sqlx_type_for_ident_ts(&ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
             quote! {
-                #ident_tt_ts
-                #impl_ident_tt_ts
-                #impl_dflt_some_one_el_for_ident_tt_ts
-                #impl_sqlx_encode_sqlx_pg_for_ident_tt_ts
-                #impl_sqlx_type_for_ident_tt_ts
+                #struct_ts
+                #impl_new_ts
+                #impl_dflt_some_one_el_ts
+                #impl_sqlx_encode_ts
+                #impl_sqlx_type_ts
             }
         };
+        let ident_tt_ts = gen_tt_or_rd_ts(&ident_tt_ucc);
         let ident_cr_ts = {
-            let ident_cr_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(mb_derive_copy)
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .d_utoipa_to_schema()
-                .d_schemars_json_schema()
-                .build_struct(
+            let ident_cr_ts = cmn_d_ts_builder.build_struct(
                     &Ts2::new(),
                     &ident_cr_ucc,
                     &Ts2::new(),
@@ -1031,7 +1022,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 );
             let impl_ident_cr_ts = gen_impl_new_for_ucc_ts(&ident_cr_ucc);
             let impl_dflt_some_one_el_for_ident_cr_ts =
-                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_cr_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_cr_ucc, &self_dflt_some_one_el_call_ts);
             quote! {
                 #ident_cr_ts
                 #impl_ident_cr_ts
@@ -1502,38 +1493,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         //exists because need to implement .into_inn() for fields (only for rd subtype)
-        let ident_rd_ts = {
-            //todo mb add some derive\impl to trait
-            let ident_rd_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(mb_derive_copy)
-                .d_partial_eq()
-                .d_partial_ord()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .d_utoipa_to_schema()
-                .d_schemars_json_schema()
-                .build_struct(
-                    &Ts2::new(),
-                    &ident_rd_ucc,
-                    &Ts2::new(),
-                    &ident_orgn_struct_cnt_ts
-                );
-            let impl_ident_rd_ts = gen_impl_new_for_ucc_ts(&ident_rd_ucc);
-            let impl_dflt_some_one_el_for_ident_rd_ts =
-                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
-            let impl_sqlx_encode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &quote! {&#SelfSc.0});
-            let impl_sqlx_type_for_ident_rd_ts = gen_impl_sqlx_type_for_ident_ts(&ident_rd_ucc, &gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc));
-            quote! {
-                #ident_rd_ts
-                #impl_ident_rd_ts
-                #impl_dflt_some_one_el_for_ident_rd_ts
-                #impl_sqlx_encode_sqlx_pg_for_ident_rd_ts
-                #impl_sqlx_type_for_ident_rd_ts
-            }
-        };
+        let ident_rd_ts = gen_tt_or_rd_ts(&ident_rd_ucc);
         let ident_rd_ids_stdrt_nn_ucc = SelfRdIdsUcc::from_tokens(&ident_stdrt_nn_ucc);
         let ident_rd_ids_ts = DTsBuilder::new()
             .make_pub()
@@ -1652,17 +1612,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             }
         };
         let ident_upd_ts = {
-            let ident_upd_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_copy_if(mb_derive_copy)
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .d_utoipa_to_schema()
-                .d_schemars_json_schema()
-                .build_struct(
+            let ident_upd_ts = cmn_d_ts_builder.build_struct(
                     &Ts2::new(),
                     &ident_upd_ucc,
                     &Ts2::new(),
@@ -1675,7 +1625,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_dflt_some_one_el_for_ident_upd_ts =
-                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_upd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
+                gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_upd_ucc, &self_dflt_some_one_el_call_ts);
             quote! {
                 #ident_upd_ts
                 #impl_ident_upd_ts

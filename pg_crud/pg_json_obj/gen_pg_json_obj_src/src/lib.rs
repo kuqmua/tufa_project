@@ -573,6 +573,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let ident_arr_nn_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident_arr_nn_ucc);
         let ident_stdrt_nn_rd_inn_ucc = SelfRdInnUcc::from_tokens(&ident_stdrt_nn_ucc);
         let ident_with_id_stdrt_nn_cr_for_query_ucc = SelfCrForQueryUcc::from_tokens(&ident_with_id_stdrt_nn_ucc);
+        let cmn_d_ts_builder = DTsBuilder::new()
+            .make_pub()
+            .d_debug()
+            .d_clone()
+            .d_partial_eq()
+            .d_serde_serialize()
+            .d_serde_deserialize();
         let wrap_into_scopes_dot_comma_ts = |ts: &dyn ToTokens| {
             let scopes_ts = wrap_into_scopes_ts(&ts);
             quote! {#scopes_ts;}
@@ -587,13 +594,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 ident_ts_20954cb5: &dyn ToTokens,
                 ts: &dyn ToTokens
             | {
-                let ts_44f35e48 = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
+                let ts_44f35e48 = cmn_d_ts_builder
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
@@ -1069,13 +1070,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 ident_ts_6fce2985: &dyn ToTokens,
                 ts_fc7ad384: &dyn ToTokens
             | {
-                let ts_83d3ad18 = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
+                let ts_83d3ad18 = cmn_d_ts_builder
                 .d_utoipa_to_schema()
                 .d_schemars_json_schema()
                 .build_struct(
@@ -1364,13 +1359,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     IsStdrtWithId::True => &ident_with_id_stdrt_nn_sel_el_ucc,
                 };
                 let ident_sel_el_or_ident_with_id_stdrt_nn_sel_el_ts = {
-                    let ts_bf3bd19e = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_clone()
-                    .d_partial_eq()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
+                    let ts_bf3bd19e = cmn_d_ts_builder
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_enum(
@@ -1508,13 +1497,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     ident_ts_90ecb979: &dyn ToTokens,
                     ts_e1af2d89: &dyn ToTokens
                 | {
-                    let ts_60d5d187 = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_clone()
-                    .d_partial_eq()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
+                    let ts_60d5d187 = cmn_d_ts_builder
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_enum(
@@ -2267,13 +2250,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         };
         let ident_rd_ids_ts = {
             let mb_ident_rd_ids_h_ts = if is_stdrt_nn {
-                let ts_1e087f4d = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
+                let ts_1e087f4d = cmn_d_ts_builder
                 .build_struct(
                     &Ts2::new(),
                     &ident_rd_ids_h_ucc,
@@ -2288,13 +2265,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             else {
                 Ts2::new()
             };
-            let ident_rd_ids_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
+            let ident_rd_ids_ts = cmn_d_ts_builder
                 .build_struct(
                     &Ts2::new(),
                     &ident_rd_ids_ucc,
@@ -2323,13 +2294,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let mb_ident_with_id_stdrt_nn_rd_ids_ts = if is_stdrt_nn {
                 let ident_with_id_stdrt_nn_rd_ids_ts = {
                     let ident_with_id_stdrt_nn_rd_ids_h_ts = {
-                        let ts_fe644945 = DTsBuilder::new()
-                        .make_pub()
-                        .d_debug()
-                        .d_clone()
-                        .d_partial_eq()
-                        .d_serde_serialize()
-                        .d_serde_deserialize()
+                        let ts_fe644945 = cmn_d_ts_builder
                         .build_struct(
                             &Ts2::new(),
                             &ident_with_id_stdrt_nn_rd_ids_h_ucc,
@@ -2341,13 +2306,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             #ts_fe644945
                         }
                     };
-                    let ident_with_id_stdrt_nn_rd_ids_ts = DTsBuilder::new()
-                        .make_pub()
-                        .d_debug()
-                        .d_clone()
-                        .d_partial_eq()
-                        .d_serde_serialize()
-                        .d_serde_deserialize()
+                    let ident_with_id_stdrt_nn_rd_ids_ts = cmn_d_ts_builder
                         .build_struct(
                             &Ts2::new(),
                             &ident_with_id_stdrt_nn_rd_ids_ucc,
@@ -2924,13 +2883,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             });
             let mb_ident_upd_el_ts = if is_stdrt_nn {
                 let ident_upd_el_ts = {
-                    let ts_b258e2eb = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_clone()
-                    .d_partial_eq()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
+                    let ts_b258e2eb = cmn_d_ts_builder
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_enum(
@@ -2998,13 +2951,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #FieldsSc: #ident_stdrt_nn_as_pg_json_upd_ts
                 };
                 let ident_with_id_stdrt_nn_upd_el_ts = {
-                    let ts_d18600a2 = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_clone()
-                    .d_partial_eq()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
+                    let ts_d18600a2 = cmn_d_ts_builder
                     .d_utoipa_to_schema()
                     .d_schemars_json_schema()
                     .build_struct(
