@@ -567,6 +567,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         );
         let ident_as_pg_json_tt_ts = gen_type_as_pg_json_subtype_ts(&ident, &pg_json_subtype_tt);
         let self_v_ts = quote! {Self(#VSc)};
+        let sqlx_json_self_encode_ts = quote!{sqlx::types::Json(#SelfSc)};
         let pg_type_wh_flt_qb_v_query_ts = quote!{#import::PgTypeWhFlt::qb(#VSc, #QuerySc)};
         let ident_tt_ucc = SelfTtUcc::from_tokens(&ident);
         let ident_cr_ucc = SelfCrUcc::from_tokens(&ident);
@@ -739,7 +740,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             );
             let impl_sqlx_encode_sqlx_pg_for_ident_tt_or_ident_cr_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                 &ident_tt_or_ident_cr_ucc,
-                &quote!{sqlx::types::Json(#SelfSc)}
+                &sqlx_json_self_encode_ts
             );
             let impl_sqlx_type_for_ident_tt_or_ident_cr_ts = gen_impl_sqlx_type_for_ident_ts(
                 &ident_tt_or_ident_cr_ucc,
@@ -934,7 +935,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 );
                 let impl_sqlx_encode_sqlx_pg_for_ident_cr_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                     &ident_cr_for_query_ucc,
-                    &quote!{sqlx::types::Json(#SelfSc)}
+                    &sqlx_json_self_encode_ts
                 );
                 let impl_sqlx_type_for_ident_cr_for_query_ts = gen_impl_sqlx_type_for_ident_ts(
                     &ident_cr_for_query_ucc,
@@ -2142,7 +2143,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let impl_sqlx_type_for_ident_rd_ts = gen_sqlx_types_json_type_dcl_w_ts(&ident_rd_ucc);
             let impl_sqlx_encode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
                 &ident_rd_ucc,
-                &quote!{sqlx::types::Json(#SelfSc)}
+                &sqlx_json_self_encode_ts
             );
             let impl_sqlx_decode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_w_ts(&ident_rd_ucc);
             let mb_ident_with_id_rd_ts = if is_stdrt_nn {
