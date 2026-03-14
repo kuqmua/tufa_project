@@ -2416,14 +2416,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let previous_rd_and_opt_upd_into_rd_ts = quote! {
                 #OptUpdSc.map_or(#RdSc, |v_f6e37412| #ident_rd_ucc(v_f6e37412.into()))
             };
-            let rd_ids_and_cr_into_rd_ts = {
-                let content_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
-                    quote! {#ident_orgn_ucc::new(#RdIdsSc.0.#VSc)}
-                } else {
-                    quote! {#CrSc.into()}
-                };
-                quote! {#ident_rd_ucc(#content_ts)}
+            let rd_ids_and_cr_into_orgn_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
+                quote! {#ident_orgn_ucc::new(#RdIdsSc.0.#VSc)}
+            } else {
+                quote! {#CrSc.into()}
             };
+            let rd_ids_and_cr_into_rd_ts = quote! {#ident_rd_ucc(#rd_ids_and_cr_into_orgn_ts)};
             let rd_ids_and_cr_into_opt_v_rd_ts = {
                 let ts = gen_v_init_ts0(&quote! {
                     <Self as #import::PgJsonTestCases>::#RdIdsAndCrIntoRdSc(
@@ -2433,14 +2431,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 });
                 quote! {Some(#ts)}
             };
-            let rd_ids_and_cr_into_tt_ts = {
-                let ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
-                    quote! {#ident_orgn_ucc::new(#RdIdsSc.0.#VSc)}
-                } else {
-                    quote! {#CrSc.into()}
-                };
-                quote! {#ident_tt_ucc(#ts)}
-            };
+            let rd_ids_and_cr_into_tt_ts = quote! {#ident_tt_ucc(#rd_ids_and_cr_into_orgn_ts)};
             let rd_ids_and_cr_into_wh_eq_ts = {
                 let gen_eq_ts = |ts: &dyn ToTokens| {
                     quote! {
