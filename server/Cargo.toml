@@ -1,8 +1,9 @@
 [package]
-authors = ["sergey shmakov <tyfaproject@gmail.com>"] 
+authors = ["sergey shmakov <tyfaproject@gmail.com>"]
 edition = "2024"
-name = "server" 
-version = "0.1.0" 
+name = "server"
+version = "0.1.0"
+publish = false
 description = "description"
 repository = "repository"
 readme = "readme"
@@ -10,7 +11,6 @@ license = "license"
 keywords = ["keyword"]
 categories = ["category"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
 name = "server"

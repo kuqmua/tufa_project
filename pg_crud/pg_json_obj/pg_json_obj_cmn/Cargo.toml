@@ -1,13 +1,14 @@
 [package]
 name = "pg_json_obj_cmn"
 version = "0.1.0"
-edition = "2024"
+publish = false
 description = "description"
 repository = "repository"
 readme = "readme"
 license = "license"
 keywords = ["keyword"]
 categories = ["category"]
+edition = "2024"
 
 [dependencies]
 utoipa.workspace = true

@@ -9,8 +9,8 @@ use server_config::Config;
 use server_tbl_example::TblExample;
 use sqlx::postgres::PgPoolOptions;
 use std::sync::Arc;
-use tokio::{net::TcpListener, runtime::Builder};
-use tower_http::cors::CorsLayer;
+use tokio::{net::TcpListener, runtime::Builder, signal};
+use tower_http::{cors::CorsLayer, trace::TraceLayer};
 use tracing_subscriber::fmt::init;
 fn main() {
     init();
@@ -45,12 +45,16 @@ fn main() {
                     .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
                         &app_state,
                     )))
+                    .layer(TraceLayer::new_for_http())
                     .layer(
                         CorsLayer::new()
                             .allow_origin(["http://127.0.0.1".parse().expect("2a0b7c30")]),
                     )
                     .into_make_service(),
             )
+            .with_graceful_shutdown(async {
+                signal::ctrl_c().await.expect("a3f7b1c2");
+            })
             .await
             .expect("2dc4449b");
         });
