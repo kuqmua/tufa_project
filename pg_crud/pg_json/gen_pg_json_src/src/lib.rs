@@ -1089,7 +1089,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &ArrDim::try_from(pattern).map_or_else(
                         |()| quote! {;},
                         |arr_dim| {
-                            let mut args_ts = Vec::new();
+                            let mut args_ts = Vec::with_capacity(arr_dim.to_usize());
                             for el0 in 1..=arr_dim.to_usize() {
                                 let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>()
                                 .expect("2ad1faf7");
@@ -1109,7 +1109,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCmnDfltSomeOneElCall,
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCmnDfltSomeOneElMaxPageSizeCall,
                         };
-                        let mut args_ts = Vec::new();
+                        let mut args_ts = Vec::with_capacity(arr_dim.to_usize());
                         for el0 in 1..=arr_dim.to_usize() {
                             let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("26ca29fb");
                             args_ts.push(quote! {

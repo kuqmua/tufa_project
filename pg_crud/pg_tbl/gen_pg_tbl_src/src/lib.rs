@@ -392,8 +392,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let (pk_field, fields, fields_without_pk) = if let Data::Struct(data_struct) = &di.data {
         if let Fields::Named(fields_named) = &data_struct.fields {
             let mut opt_pk_field: Option<SynField> = None;
-            let mut fields = Vec::new();
-            let mut fields_without_pk = Vec::new();
+            let mut fields = Vec::with_capacity(fields_named.named.len());
+            let mut fields_without_pk = Vec::with_capacity(fields_named.named.len());
             for el in &fields_named.named {
                 let fi = el.ident.clone().expect("915ef2ce");
                 let fi_len = fi.to_string().len();
@@ -2281,7 +2281,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     };
     let gen_ident_op_prms_ucc = |op: &Op| gen_ident_op_suffix_ts(op, "Prms");
     let gen_type_vrts_from_req_res_syn_vrts = |syn_vrts: &Vec<&Variant>, op: &Op| -> Vec<Variant> {
-        let mut type_vrts_from_req_res_syn_vrts = Vec::new();
+        let mut type_vrts_from_req_res_syn_vrts = Vec::with_capacity(syn_vrts.len());
         for el in syn_vrts {
             type_vrts_from_req_res_syn_vrts.push((*el).clone());
         }

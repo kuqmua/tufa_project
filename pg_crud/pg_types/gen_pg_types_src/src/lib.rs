@@ -652,7 +652,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             GenPgTypesConfigVrt::Concrete(v) => v,
         };
         {
-            let mut check_acc = Vec::new();
+            let mut check_acc = Vec::with_capacity(acc.len());
             for el in &acc {
                 if check_acc.contains(&el) {
                     panic!("536036f9");
@@ -3259,7 +3259,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &match &pg_type_pattern {
                     PgTypePattern::Stdrt => quote! {;},
                     PgTypePattern::ArrDim1 { .. } => {
-                        let mut args_ts = Vec::new();
+                        let mut args_ts = Vec::with_capacity(arr_dims_nbr);
                         for el0 in 1..=arr_dims_nbr {
                             let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("af86f2d1");
                             args_ts.push(quote! {
@@ -3279,7 +3279,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &PgCrudCmnDfltSomeOneElCall,
                             DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &PgCrudCmnDfltSomeOneElMaxPageSizeCall,
                         };
-                        let mut args_ts = Vec::new();
+                        let mut args_ts = Vec::with_capacity(arr_dims_nbr);
                         for el0 in 1..=arr_dims_nbr {
                             let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("e5250a98");
                             args_ts.push(quote! {
