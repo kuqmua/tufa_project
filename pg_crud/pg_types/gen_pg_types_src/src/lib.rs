@@ -1835,6 +1835,14 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         };
         let sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts = SelfOrgnUcc::from_tokens(&gen_ident_stdrt_nn_ts(&PgType::SqlxTypesChronoNaiveDateAsDate));
         let ident_upd_ucc = SelfUpdUcc::from_tokens(&ident);
+        let sqlx_encode_self_dot_zero_ts = quote! {#SelfSc.0};
+        let serde_er_enum_d_ts_builder = DTsBuilder::new()
+            .make_pub()
+            .d_debug()
+            .d_serde_serialize()
+            .d_serde_deserialize()
+            .d_thiserror_error()
+            .d_loc_lib_location();
         let ident_orgn_ts = {
             let ident_orgn_ts = DTsBuilder::new()
                 .make_pub()
@@ -1982,13 +1990,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let mb_pub_enum_ident_stdrt_nn_orgn_try_new_er_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
                 && let Ok(pg_type_init_try_new) = &pg_type_init_try_new_try_from_pg_type
             {
-                let ts_d57d5de2 = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
-                    .d_thiserror_error()
-                    .d_loc_lib_location()
+                let ts_d57d5de2 = serde_er_enum_d_ts_builder
                     .build_enum(
                         &Ts2::new(),
                         &ident_stdrt_nn_orgn_try_new_er_ucc,
@@ -2064,13 +2066,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let mb_pub_enum_ident_stdrt_nn_orgn_try_new_for_de_er_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True) {
                 //todo this is bad design. refactor later
                 let gen_er_ts = |pg_type_impl_try_new_for_deserialize: &PgTypeImplTryNewForDe|{
-                    let ts_026f2a24 = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_serde_serialize()
-                    .d_serde_deserialize()
-                    .d_thiserror_error()
-                    .d_loc_lib_location()
+                    let ts_026f2a24 = serde_er_enum_d_ts_builder
                     .build_enum(
                         &Ts2::new(),
                         &ident_stdrt_nn_orgn_try_new_for_de_er_ucc,
@@ -3043,7 +3039,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Self(#ts)}
             });
             let impl_sqlx_type_for_ident_orgn_ts = gen_impl_sqlx_type_for_ident_ts(&ident_orgn_ucc, &ft_h);
-            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &sqlx_encode_self_dot_zero_ts);
             let impl_sqlx_decode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &ft_h, &{
                 let scopes_v_ts = quote! {(v)};
                 let ok_self_scopes_v_ts = quote! {Ok(Self #scopes_v_ts)};
@@ -3162,7 +3158,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_dflt_some_one_el_for_ident_tt_ts =
                 gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_tt_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
             let impl_sqlx_type_for_ident_tt_ts = gen_impl_sqlx_type_for_ident_ts(&ident_tt_ucc, &ident_orgn_ucc);
-            let impl_sqlx_encode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_encode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &sqlx_encode_self_dot_zero_ts);
             let impl_sqlx_decode_sqlx_pg_for_ident_tt_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(&ident_tt_ucc, &ident_orgn_ucc, &quote! {Ok(Self(v))});
             //todo rewrite as dependency of PgType trait?
             let impl_pg_type_eq_oprtr_for_ident_tt_ts = impl_pg_type_eq_oprtr_for_ident_ts(
@@ -3240,7 +3236,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 quote! {Self(#ts)}
             });
             let mb_impl_sqlx_encode_sqlx_pg_for_ident_cr_ts = match &can_be_pk {
-                CanBePk::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_cr_ucc, &quote! {#SelfSc.0}),
+                CanBePk::False => gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_cr_ucc, &sqlx_encode_self_dot_zero_ts),
                 CanBePk::True => Ts2::new(),
             };
             let mb_impl_sqlx_type_for_ident_cr_ts = match &can_be_pk {
@@ -3666,7 +3662,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_loc_lib_to_err_string_for_ident_rd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_rd_ucc, &Ts2::new(), &quote! {self.0.to_string()});
             let impl_crate_dflt_some_one_el_for_ident_rd_ts =
                 gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_rd_ucc, &quote! {Self(#PgCrudCmnDfltSomeOneElCall)});
-            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_rd_ucc, &sqlx_encode_self_dot_zero_ts);
             let impl_sqlx_decode_sqlx_pg_for_ident_rd_ts = gen_impl_sqlx_decode_sqlx_pg_for_ident_ts(
                 &ident_rd_ucc,
                 &ident_orgn_ucc,
@@ -3758,7 +3754,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     &ident_orgn_struct_ts
                 );
             let impl_sqlx_type_for_ident_upd_for_query_ts = gen_impl_sqlx_type_for_ident_ts(&ident_upd_for_query_ucc, &ident_orgn_ucc);
-            let impl_sqlx_encode_sqlx_pg_for_ident_upd_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_upd_for_query_ucc, &quote! {#SelfSc.0});
+            let impl_sqlx_encode_sqlx_pg_for_ident_upd_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_upd_for_query_ucc, &sqlx_encode_self_dot_zero_ts);
             let impl_from_ident_upd_for_ident_upd_for_query_ts = gen_impl_from_ts(&ident_upd_ucc, &ident_upd_for_query_ucc, &quote! {Self(#VSc.0)});
             quote! {
                 #ident_upd_for_query_ts

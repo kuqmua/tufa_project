@@ -1895,6 +1895,21 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             });
             quote! {#(#ts),*}
         };
+        let rd_upd_d_ts_builder = DTsBuilder::new()
+            .make_pub()
+            .d_debug()
+            .d_clone()
+            .d_partial_eq()
+            .d_serde_serialize()
+            .d_utoipa_to_schema()
+            .d_schemars_json_schema();
+        let serde_er_enum_d_ts_builder = DTsBuilder::new()
+            .make_pub()
+            .d_debug()
+            .d_serde_serialize()
+            .d_serde_deserialize()
+            .d_thiserror_error()
+            .d_loc_lib_location();
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
         let ident_with_id_stdrt_nn_rd_ucc = SelfRdUcc::from_tokens(&ident_with_id_stdrt_nn_ucc);
         let ident_rd_inn_ucc = SelfRdInnUcc::from_tokens(&ident);
@@ -1909,15 +1924,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 ts_1c85ea2c: &dyn ToTokens,
                 derive_serde_deserialize: DSerdeDeserialize
             | {
-                let ts_3a67b41f = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
+                let ts_3a67b41f = rd_upd_d_ts_builder
                 .d_serde_deserialize_if(derive_serde_deserialize)
-                .d_utoipa_to_schema()
-                .d_schemars_json_schema()
                 .build_struct(
                     &Ts2::new(),
                     &ident_ts_fc625e96,
@@ -1951,13 +1959,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 gen_ident_rd_ts(&ident_rd_ucc, &ts, derive_serde_deserialize)
             };
-            let gen_ident_rd_try_from_er_ts = |ts: &dyn ToTokens|DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .d_thiserror_error()
-                .d_loc_lib_location()
+            let gen_ident_rd_try_from_er_ts = |ts: &dyn ToTokens|serde_er_enum_d_ts_builder
                 .build_enum(
                     &Ts2::new(),
                     &ts,
@@ -2486,15 +2488,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         ),
                     },
                 };
-                let ts_c9a843aa = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
+                let ts_c9a843aa = rd_upd_d_ts_builder
                 .d_serde_deserialize_if(derive_serde_deserialize)
-                .d_utoipa_to_schema()
-                .d_schemars_json_schema()
                 .build_struct(
                     &Ts2::new(),
                     &ident_upd_ucc,
@@ -2510,13 +2505,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let mb_ident_upd_try_new_er_ts = match &pattern {
                 Pattern::Stdrt => Ts2::new(),
                 Pattern::Arr => match &is_nl {
-                    IsNl::False => DTsBuilder::new()
-                        .make_pub()
-                        .d_debug()
-                        .d_serde_serialize()
-                        .d_serde_deserialize()
-                        .d_thiserror_error()
-                        .d_loc_lib_location()
+                    IsNl::False => serde_er_enum_d_ts_builder
                         .build_enum(
                             &Ts2::new(),
                             &ident_upd_try_new_er_ucc,

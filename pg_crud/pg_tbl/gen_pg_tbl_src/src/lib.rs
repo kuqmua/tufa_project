@@ -573,13 +573,19 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let mut impl_ident_vec_ts = Vec::new();
     let mut op_routes_ts = Vec::new();
     let mut content_ts = Vec::new();
-    let ident_prep_pg_er_ucc = SelfPrepPgErUcc::from_tokens(&ident);
-    let ident_prep_pg_er_ts = DTsBuilder::new()
+    let er_enum_d_ts_builder = DTsBuilder::new()
         .make_pub()
         .d_debug()
         .d_thiserror_error()
-        .d_loc_lib_location()
-        .build_enum(&Ts2::new(), &ident_prep_pg_er_ucc, &Ts2::new(), &{
+        .d_loc_lib_location();
+    let serde_ser_utoipa_d_ts_builder = DTsBuilder::new()
+        .make_pub()
+        .d_debug()
+        .d_serde_serialize()
+        .d_utoipa_to_schema();
+    let ident_prep_pg_er_ucc = SelfPrepPgErUcc::from_tokens(&ident);
+    let ident_prep_pg_er_ts =
+        er_enum_d_ts_builder.build_enum(&Ts2::new(), &ident_prep_pg_er_ucc, &Ts2::new(), &{
             let ts = quote! {
                 #[eo_to_err_string]
                 er: sqlx::Error,
@@ -1077,22 +1083,17 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         }
     };
     let gen_no_fields_provided_er_ts = |er_ucc: &dyn ToTokens| {
-        DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_thiserror_error()
-            .d_loc_lib_location()
-            .build_enum(
-                &Ts2::new(),
-                er_ucc,
-                &Ts2::new(),
-                &quote! {{
-                    #NoFieldsProvidedUcc {
-                        #[eo_to_err_string]
-                        loc: loc_lib::loc::Loc,
-                    }
-                }},
-            )
+        er_enum_d_ts_builder.build_enum(
+            &Ts2::new(),
+            er_ucc,
+            &Ts2::new(),
+            &quote! {{
+                #NoFieldsProvidedUcc {
+                    #[eo_to_err_string]
+                    loc: loc_lib::loc::Loc,
+                }
+            }},
+        )
     };
     let ident_wh_ucc = SelfWhManyUcc::from_tokens(&ident);
     let ident_wh_try_new_er_ucc = SelfWhManyTryNewErUcc::from_tokens(&ident);
@@ -1687,17 +1688,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             }
         };
         let ident_upd_ts = {
-            let ts_a09c0471 = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_serde_serialize()
-                .d_utoipa_to_schema()
-                .build_struct(
-                    &Ts2::new(),
-                    &ident_upd_ucc,
-                    &Ts2::new(),
-                    &quote! {{#fields_dcl_ts}},
-                );
+            let ts_a09c0471 = serde_ser_utoipa_d_ts_builder.build_struct(
+                &Ts2::new(),
+                &ident_upd_ucc,
+                &Ts2::new(),
+                &quote! {{#fields_dcl_ts}},
+            );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
                 #ts_a09c0471
@@ -1777,12 +1773,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     };
     let ident_upd_for_query_ts = {
         let ident_upd_for_query_ts = {
-            let ts_50ae0c5f = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_serde_serialize()
-                .d_utoipa_to_schema()
-                .build_struct(&Ts2::new(), &ident_upd_for_query_ucc, &Ts2::new(), &{
+            let ts_50ae0c5f = serde_ser_utoipa_d_ts_builder.build_struct(
+                &Ts2::new(),
+                &ident_upd_for_query_ucc,
+                &Ts2::new(),
+                &{
                     let fields_named_without_pk_ts =
                         gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| -> Ts2 {
                             let fi = &el.ident;
@@ -1799,7 +1794,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         #pk_fi: #pk_ft_upd_for_query_ts,
                         #fields_named_without_pk_ts
                     }}
-                });
+                },
+            );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
                 #ts_50ae0c5f
@@ -3476,11 +3472,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     Op::Um => {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         let vec_ident_upd_ts = gen_vec_tokens_dcl_ts(&ident_upd_ucc);
-                        let ident_op_payload_vec_ts = DTsBuilder::new()
-                            .make_pub()
-                            .d_debug()
-                            .d_serde_serialize()
-                            .d_utoipa_to_schema()
+                        let ident_op_payload_vec_ts = serde_ser_utoipa_d_ts_builder
                             .build_struct(
                                 &Ts2::new(),
                                 &ident_op_payload_ucc,
@@ -3489,11 +3481,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             );
                         let ident_op_payload_try_new_er_ucc =
                             gen_ident_op_suffix_ts(op, "PayloadTryNewEr");
-                        let ident_op_payload_try_new_er_ts = DTsBuilder::new()
-                            .make_pub()
-                            .d_debug()
-                            .d_thiserror_error()
-                            .d_loc_lib_location()
+                        let ident_op_payload_try_new_er_ts = er_enum_d_ts_builder
                             .build_enum(
                                 &Ts2::new(),
                                 &ident_op_payload_try_new_er_ucc,
@@ -3715,11 +3703,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 };
                 let ident_op_er_ts = {
-                    let ts_685e0be8 = DTsBuilder::new()
-                        .make_pub()
-                        .d_debug()
-                        .d_thiserror_error()
-                        .d_loc_lib_location()
+                    let ts_685e0be8 = er_enum_d_ts_builder
                         .build_enum(&Ts2::new(), &ident_op_er_ucc, &Ts2::new(), &{
                             let vrts_ts = type_vrts_from_req_res_syn_vrts
                                 .iter()
@@ -3738,11 +3722,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 }
             };
             let try_op_ts = {
-                let enum_ts = DTsBuilder::new()
-                    .make_pub()
-                    .d_debug()
-                    .d_thiserror_error()
-                    .d_loc_lib_location()
+                let enum_ts = er_enum_d_ts_builder
                     .build_enum(&Ts2::new(), &gen_ident_try_op_er_ucc(op), &Ts2::new(), &{
                         let syn_vrts: &Vec<Variant> = match &op {
                             Op::Rm | Op::Ro => &{
