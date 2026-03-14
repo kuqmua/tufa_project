@@ -3231,17 +3231,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 &{
                     let eq_ts = EqOprtrH::Eq.to_tokens_path(&import);
                     let is_null_ts = EqOprtrH::IsNull.to_tokens_path(&import);
+                    let nl_eq_oprtr_ts = quote! {
+                        if self.0.0.is_some() {
+                            #eq_ts
+                        }
+                        else {
+                            #is_null_ts
+                        }
+                    };
                     match &pg_type_pattern {
                         PgTypePattern::Stdrt => match &is_nl {
                             IsNl::False => eq_ts,
-                            IsNl::True => quote! {
-                                if self.0.0.is_some() {
-                                    #eq_ts
-                                }
-                                else {
-                                    #is_null_ts
-                                }
-                            },
+                            IsNl::True => nl_eq_oprtr_ts,
                         },
                         PgTypePattern::ArrDim1 { dim1_is_nl } => match &is_nl {
                             IsNl::False => match &dim1_is_nl {
@@ -3251,14 +3252,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     eq_ts
                                 }
                             },
-                            IsNl::True => quote! {
-                                if self.0.0.is_some() {
-                                    #eq_ts
-                                }
-                                else {
-                                    #is_null_ts
-                                }
-                            },
+                            IsNl::True => nl_eq_oprtr_ts,
                         },
                     }
                 },
