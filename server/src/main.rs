@@ -10,7 +10,11 @@ use server_tbl_example::TblExample;
 use sqlx::postgres::PgPoolOptions;
 use std::sync::Arc;
 use tokio::{net::TcpListener, runtime::Builder, signal};
-use tower_http::{cors::CorsLayer, trace::TraceLayer};
+use tower_http::{
+    cors::CorsLayer,
+    request_id::{MakeRequestUuid, PropagateRequestIdLayer, SetRequestIdLayer},
+    trace::TraceLayer,
+};
 use tracing_subscriber::fmt::init;
 fn main() {
     init();
@@ -45,7 +49,9 @@ fn main() {
                     .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
                         &app_state,
                     )))
+                    .layer(PropagateRequestIdLayer::x_request_id())
                     .layer(TraceLayer::new_for_http())
+                    .layer(SetRequestIdLayer::x_request_id(MakeRequestUuid))
                     .layer(
                         CorsLayer::new()
                             .allow_origin(["http://127.0.0.1".parse().expect("2a0b7c30")]),

@@ -42,8 +42,6 @@
 - [ ] Evaluate edge case coverage in existing tests
 
 ### 2.2 Test structure
-- [ ] Unify `gen_*_test` / `gen_*_test_cnt` pattern - verify all crates follow it
-- [ ] Verify tests run in CI
 - [ ] Add integration tests for server endpoints
 - [ ] Consider property-based testing for code generators
 
@@ -66,7 +64,6 @@
 ## 4. CI/CD
 
 ### 4.2 Automation
-- [ ] Add pre-commit hooks for fmt and clippy
 - [ ] Consider `cargo-make` or `just` for standardizing dev commands
 - [ ] Automatic changelog generation from commits
 
@@ -103,11 +100,6 @@
 
 ### 7.1 General
 - [ ] Review all endpoints for authentication/authorization
-- [ ] Consider using `secrecy` crate for sensitive data
-
-### 7.2 Dependencies
-- [ ] Regular `cargo audit`
-- [ ] Set up Dependabot or Renovate for automatic dependency updates
 
 ## 8. Documentation
 
@@ -141,7 +133,6 @@
 - [ ] Evaluate necessity of each of ~70 crates - consider merging small ones
 - [ ] Check dependency graph between crates for cycles or redundancy
 - [ ] Standardize structure of each `gen_*` subproject
-- [ ] Consider workspace inheritance for shared Cargo.toml settings
 
 ### 10.2 Code generation
 - [ ] Consider proc-macro alternatives for some generators (build.rs, code generation tools)
@@ -156,14 +147,9 @@
 
 ## 11. Logging and observability
 
-- [ ] Set up structured logging (`tracing` crate)
-- [ ] Add request ID for request tracing
 - [ ] Configure log levels per module
 - [ ] Consider metrics (prometheus/metrics crate)
 
 ## 12. Config library
 
-- [ ] Verify configuration validation at startup
-- [ ] Add default values where appropriate
-- [ ] Document all environment variables
 - [ ] Consider hot-reload for non-critical configuration parameters

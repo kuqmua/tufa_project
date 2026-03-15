@@ -1,5 +1,4 @@
 DATABASE_URL="postgres://postgres:postgres@127.0.0.1:5432/postgres"
-# DATABASE_URL="postgresql://postgres.qymfvacahuoutygydrzc:KXJjZha0ra6b3XLQ@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
 ENABLE_API_GIT_COMMIT_CHECK="true"
 MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES="1048576000" # 100 megabyte in bytes
 SERVICE_SOCKET_ADDRESS="127.0.0.1:8080"
