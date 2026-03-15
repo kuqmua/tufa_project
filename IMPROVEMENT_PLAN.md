@@ -53,7 +53,6 @@
 ## 10. Architecture
 
 ### 10.1 Workspace structure
-- [x] Evaluate necessity of each of ~70 crates — 72 total; merge candidates: `http_logic` (4 lines) → `route_validators`, `panic_loc` (15 lines) → `macros_helpers`, `app_state` (10 lines) → `server_config`, `server_port_cmn` (6 lines) → `server_port`, `constants` (6 lines) → `cmn_routes`; 4 empty `test_cnt` crates could be deleted
 - [ ] Check dependency graph between crates for cycles or redundancy
 - [ ] Standardize structure of each `gen_*` subproject
 
