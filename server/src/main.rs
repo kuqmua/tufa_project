@@ -12,14 +12,19 @@ use server_tbl_example::TblExample;
 use sqlx::postgres::PgPoolOptions;
 use std::sync::Arc;
 use tokio::{net::TcpListener, runtime::Builder, signal};
+use tower::ServiceBuilder;
+use tower_governor::{GovernorLayer, governor::GovernorConfigBuilder};
 use tower_http::{
     cors::CorsLayer,
     request_id::{MakeRequestUuid, PropagateRequestIdLayer, SetRequestIdLayer},
     trace::TraceLayer,
 };
-use tracing_subscriber::fmt::init;
+use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt as _, util::SubscriberInitExt as _};
 fn main() {
-    init();
+    tracing_subscriber::registry()
+        .with(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")))
+        .with(fmt::layer())
+        .init();
     Builder::new_multi_thread()
         .worker_threads(get())
         .enable_all()
@@ -50,6 +55,13 @@ fn main() {
                 config,
                 project_git_info: &PROJECT_GIT_INFO,
             });
+            let governor_conf = Arc::new(
+                GovernorConfigBuilder::default()
+                    .per_second(2)
+                    .burst_size(10)
+                    .finish()
+                    .expect("b7e3a4f1"),
+            );
             serve(
                 tcp_listener,
                 Router::new()
@@ -57,10 +69,14 @@ fn main() {
                     .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
                         &app_state,
                     )))
-                    .layer(PropagateRequestIdLayer::x_request_id())
-                    .layer(TraceLayer::new_for_http())
-                    .layer(SetRequestIdLayer::x_request_id(MakeRequestUuid))
-                    .layer(CorsLayer::new().allow_origin(cors_origins))
+                    .layer(
+                        ServiceBuilder::new()
+                            .layer(PropagateRequestIdLayer::x_request_id())
+                            .layer(TraceLayer::new_for_http())
+                            .layer(SetRequestIdLayer::x_request_id(MakeRequestUuid))
+                            .layer(CorsLayer::new().allow_origin(cors_origins))
+                            .layer(GovernorLayer::new(governor_conf)),
+                    )
                     .into_make_service(),
             )
             .with_graceful_shutdown(async {

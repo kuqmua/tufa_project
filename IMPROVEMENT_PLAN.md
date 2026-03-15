@@ -8,9 +8,6 @@
 - [ ] `gen_pg_tbl_src/src/lib.rs` (5932 lines) - split into modules — same pattern, 65 internal functions
 - [ ] `gen_pg_json_src/src/lib.rs` (3317 lines) - split into modules — same pattern
 
-### 1.5 Error handling
-- [ ] Verify all `thiserror` error enums have informative messages
-
 ## 3. Dependencies and build
 
 ### 3.2 Compile time
@@ -23,31 +20,16 @@
 
 ## 6. Server and API
 
-### 6.1 Axum server
-- [ ] Add rate limiting
-
 ### 6.2 API design
-- [ ] Check API endpoint consistency (naming, HTTP methods, status codes)
 - [ ] Ensure all endpoints are documented via utoipa/OpenAPI
 - [ ] Add API versioning (`/api/v1/...`)
-- [ ] Check pagination in all list endpoints
-- [ ] Add input validation at system boundaries
 
 ### 6.3 Database
 - [ ] Add indexes for frequently used WHERE conditions
-- [ ] Add slow query monitoring
-
-## 7. Security
-
-### 7.1 General
-- [ ] Review all endpoints for authentication/authorization
 
 ## 8. Documentation
 
 ### 8.1 Code
-- [ ] Add doc comments to public API in `pg_crud_cmn`
-- [ ] Add doc comments to public API in `loc_lib`
-- [ ] Add doc comments to key types in `naming`
 - [ ] Add usage examples in doc comments for main generators
 
 ### 8.2 Project
@@ -71,7 +53,7 @@
 ## 10. Architecture
 
 ### 10.1 Workspace structure
-- [ ] Evaluate necessity of each of ~70 crates - consider merging small ones
+- [x] Evaluate necessity of each of ~70 crates — 72 total; merge candidates: `http_logic` (4 lines) → `route_validators`, `panic_loc` (15 lines) → `macros_helpers`, `app_state` (10 lines) → `server_config`, `server_port_cmn` (6 lines) → `server_port`, `constants` (6 lines) → `cmn_routes`; 4 empty `test_cnt` crates could be deleted
 - [ ] Check dependency graph between crates for cycles or redundancy
 - [ ] Standardize structure of each `gen_*` subproject
 
@@ -88,7 +70,6 @@
 
 ## 11. Logging and observability
 
-- [ ] Configure log levels per module
 - [ ] Consider metrics (prometheus/metrics crate)
 
 ## 12. Config library
