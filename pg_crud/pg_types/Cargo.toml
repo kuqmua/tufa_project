@@ -27,4 +27,7 @@ optml = {path = "../../optml"}
 workspace = true
 
 [features]
+default = ["dim1"]
+dim1 = []
+all-dims = ["dim1"]
 test-utils = ["pg_crud_cmn/test-utils"]

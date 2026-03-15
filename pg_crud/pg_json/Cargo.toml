@@ -28,4 +28,10 @@ optml = {path = "../../optml"}
 workspace = true
 
 [features]
+default = ["dim1"]
+dim1 = []
+dim2 = ["dim1"]
+dim3 = ["dim2"]
+dim4 = ["dim3"]
+all-dims = ["dim4"]
 test-utils = ["pg_crud_cmn/test-utils"]

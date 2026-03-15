@@ -459,6 +459,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     enum GenPgTypesConfigVrt {
         All,
         Concrete(Vec<PgTypeRecord>),
+        WithDimOne,
+        WithoutDims,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, serde::Deserialize, Optml)]
@@ -597,16 +599,18 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     };
     let (cols_ts, pg_type_arr) = {
-        let acc = match gen_pg_json_config.vrt {
-            GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
+        let gen_vrts = |include_arr: bool| {
+            PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
                 for el0 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el1| {
                     match &el1 {
                         PgTypePattern::Stdrt => {
                             acc1.push(el1);
                         }
                         PgTypePattern::ArrDim1 { .. } => {
-                            for el2 in IsNl::into_arr() {
-                                acc1.push(PgTypePattern::ArrDim1 { dim1_is_nl: el2 });
+                            if include_arr {
+                                for el2 in IsNl::into_arr() {
+                                    acc1.push(PgTypePattern::ArrDim1 { dim1_is_nl: el2 });
+                                }
                             }
                         }
                     }
@@ -655,7 +659,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     }
                 }
                 acc0
-            }),
+            })
+        };
+        let acc = match gen_pg_json_config.vrt {
+            GenPgTypesConfigVrt::All | GenPgTypesConfigVrt::WithDimOne => gen_vrts(true),
+            GenPgTypesConfigVrt::WithoutDims => gen_vrts(false),
             GenPgTypesConfigVrt::Concrete(v) => v,
         };
         {
