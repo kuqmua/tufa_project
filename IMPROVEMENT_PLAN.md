@@ -21,26 +21,6 @@
 - [ ] Consider replacing `expect()` in proc-macro with `compile_error!()` where possible for better error messages
 - [ ] Verify all `thiserror` error enums have informative messages
 
-## 2. Testing (1,758 tests)
-
-### 2.1 Test coverage
-- [ ] Add tests for `pg_crud_macros_cmn` - macro utilities
-- [ ] Add tests for `pg_crud_cmn` - shared types
-- [ ] Add tests for `pg_crud_cmn_and_macros_cmn`
-- [ ] Add tests for `naming` crates
-- [ ] Add tests for `config_lib` and its subcrates
-- [ ] Add tests for `loc_lib` - error location tracking
-- [ ] Evaluate edge case coverage in existing tests
-
-### 2.2 Test structure
-- [ ] Add integration tests for server endpoints
-- [ ] Consider property-based testing for code generators
-
-### 2.3 Test infrastructure
-- [ ] Set up separate test DB from dev DB
-- [ ] Add fixtures/factories for test data
-- [ ] Consider `sqlx::test` for database tests with automatic rollback
-
 ## 3. Dependencies and build
 
 ### 3.1 Dependencies
@@ -62,11 +42,6 @@
 
 ### 5.1 Docker
 - [ ] Consider multi-stage Docker build for production server image
-
-### 5.2 Deployment
-- [ ] Document deployment process
-- [ ] Set up environment-specific configurations
-- [ ] Consider containerizing the entire application
 
 ## 6. Server and API
 
