@@ -62,13 +62,15 @@ fn main() {
                     .finish()
                     .expect("b7e3a4f1"),
             );
+            let api_routes = Router::new()
+                .merge(cmn_routes(Arc::<ServerAppState<'_>>::clone(&app_state)))
+                .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
+                    &app_state,
+                )));
             serve(
                 tcp_listener,
                 Router::new()
-                    .merge(cmn_routes(Arc::<ServerAppState<'_>>::clone(&app_state)))
-                    .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
-                        &app_state,
-                    )))
+                    .nest("/api/v1", api_routes)
                     .layer(
                         ServiceBuilder::new()
                             .layer(PropagateRequestIdLayer::x_request_id())

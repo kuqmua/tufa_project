@@ -1,7 +1,10 @@
-use enum_extension_lib::EnumExtension;
+pub mod cfg;
+#[allow(clippy::arbitrary_source_item_ordering)]
+pub mod types;
+use cfg::{GenPgJsonsConfig, Pattern, PgJsonObjRecord, TraitGen};
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    DSerdeDeserialize, DTsBuilder, FormatWithCargofmt, ShouldWriteTsIntoFile, SynField,
+    DSerdeDeserialize, DTsBuilder, FormatWithCargofmt, SynField,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
     gen_impl_from_ts, gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
     gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts,
@@ -58,11 +61,9 @@ use pg_crud_macros_cmn::{
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
-use serde::{Deserialize, Serialize};
 use serde_json::from_str;
 use std::fmt::Display;
 use std::iter::repeat_with;
-use strum_macros::{Display, EnumIter};
 use syn::{
     Data, DeriveInput, Field, FieldMutability, Fields, Ident, Path, Type, TypePath, Visibility,
     parse2,
@@ -72,35 +73,14 @@ use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, MustUse, PgCrudDfltSomeOneElCall,
     PgCrudDfltSomeOneElMaxPageSizeCall, StringTs,
 };
+use types::{
+    AddSerdeSkipSerializingIfVecIsEmptyAnn, IdentPattern, IsStdrtWithId, NewTypeOrStructDcl,
+    PgJsonSubtype, PgJsonSubtypeTtOrCr, PgTypeSubtype, RdWithOrWithoutAnnOrInn,
+};
 //todo gen authorization rights enum for json fields
 //todo bug in upd if updating arr and creating el in jsonb arr without anything - rd_ids generation logic of vec returns wrong query part
 #[must_use]
 pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
-    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Optml)]
-    enum TraitGen {
-        PgJson,
-        PgTypeAndPgJson,
-    }
-    #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug, Clone, PartialEq, Serialize, Deserialize, Display, EnumIter, EnumExtension, Optml,
-    )]
-    enum Pattern {
-        Stdrt,
-        Arr,
-    }
-    #[derive(Debug, PartialEq, Serialize, Deserialize, Optml)]
-    struct PgJsonObjRecord {
-        is_nl: IsNl,
-        pattern: Pattern,
-        trait_gen: TraitGen,
-    }
-    #[derive(Debug, Deserialize, Optml)]
-    struct GenPgJsonsConfig {
-        pg_tbl_cols_write_into_pg_tbl_cols_using_pg_json_objs: ShouldWriteTsIntoFile,
-        vrt: PgJsonObjRecord,
-        whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
-    }
     panic_loc();
     let di: DeriveInput = match parse2(input_ts) {
         Ok(v) => v,
@@ -156,77 +136,6 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     .into_iter()
     .enumerate()
     .map(|(i, el)| {
-        #[derive(Debug, Display, EnumIter, EnumExtension, Optml)]
-        enum IsStdrtWithId {
-            False,
-            True,
-        }
-        #[allow(clippy::arbitrary_source_item_ordering)]
-        enum IdentPattern {
-            StdrtNnWithoutId,
-            StdrtNnWithId,
-            StdrtNlWithoutId,
-            ArrNnWithId,
-            ArrNlWithIdentifier,//Identifier instead of Id - just to fix clippy lint
-        }
-        #[allow(clippy::arbitrary_source_item_ordering)]
-        #[derive(Debug, Clone, Display, Optml)]
-        enum PgJsonSubtype {
-            Tt,
-            Cr,
-            CrForQuery,
-            Sel,
-            Wh,
-            Rd,
-            RdIds,
-            RdInn,
-            Upd,
-            UpdForQuery,
-        }
-        fn display_to_tokens(v: &dyn Display, tokens: &mut Ts2) {
-            v.to_string().parse::<Ts2>().expect("43ac0b62").to_tokens(tokens);
-        }
-        impl ToTokens for PgJsonSubtype {
-            fn to_tokens(&self, tokens: &mut Ts2) {
-                display_to_tokens(self, tokens);
-            }
-        }
-        #[derive(Debug, Clone, Display, Optml)]
-        enum PgTypeSubtype {
-            Rd,
-            Upd,
-        }
-        impl ToTokens for PgTypeSubtype {
-            fn to_tokens(&self, tokens: &mut Ts2) {
-                display_to_tokens(self, tokens);
-            }
-        }
-        #[allow(clippy::arbitrary_source_item_ordering)]
-        enum PgJsonSubtypeTtOrCr {
-            Tt,
-            Cr,
-        }
-        impl From<&PgJsonSubtypeTtOrCr> for PgJsonSubtype {
-            fn from(v: &PgJsonSubtypeTtOrCr) -> Self {
-                match &v {
-                    PgJsonSubtypeTtOrCr::Tt => Self::Tt,
-                    PgJsonSubtypeTtOrCr::Cr => Self::Cr,
-                }
-            }
-        }
-        enum RdWithOrWithoutAnnOrInn {
-            Inn,
-            WithSerdeOptIsNoneAnn,
-            WithoutSerdeOptIsNoneAnn,
-        }
-        enum AddSerdeSkipSerializingIfVecIsEmptyAnn {
-            False,
-            True,
-        }
-        enum NewTypeOrStructDcl {
-            NewType,
-            StructDcl,
-        }
         let is_nl = &el.is_nl;
         let pattern = &el.pattern;
         let trait_gen = &el.trait_gen;

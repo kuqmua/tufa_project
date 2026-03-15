@@ -76,3 +76,10 @@
 - `len` length
 - `eq` equal
 - `crnt` current
+- `oprtr` operator
+- `stdrt` standard (standard pattern, non-array)
+- `updd` updated (past tense, e.g., `SelOnlyUpddIds`)
+- `crd` created (past tense, e.g., `SelOnlyCrdIds`)
+- `al` alias (type alias)
+- `dim` dimension (array dimension)
+- `el` element

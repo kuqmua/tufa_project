@@ -12,6 +12,7 @@ categories = ["category"]
 
 
 [dependencies]
+git_info = {path = "../git_info"}
 log.workspace = true
 teloxide.workspace = true
 tokio.workspace = true

@@ -1,3 +1,4 @@
+use git_info::{GetGitCommitLink as _, PROJECT_GIT_INFO};
 use optml::Optml;
 use teloxide::{Bot, prelude::Requester, repl, types::Message, utils::command::BotCommands};
 #[derive(BotCommands, Clone, Optml)]
@@ -27,7 +28,7 @@ async fn main() {
                     Cmd::UsernameAndAge { username, age } => {
                         format!("Your username is @{username} and age is {age}.")
                     }
-                    Cmd::GitInfo => "123message".to_owned(),
+                    Cmd::GitInfo => PROJECT_GIT_INFO.get_git_commit_link(),
                 },
             )
             .await?;

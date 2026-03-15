@@ -1,13 +1,13 @@
 
-GET http://127.0.0.1:8080/health_check HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/health_check HTTP/1.1
 
 ### 
 
-GET http://127.0.0.1:8080/git_info HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/git_info HTTP/1.1
 
 ######################################################
 
-POST http://127.0.0.1:8080/table_example/cm HTTP/1.1
+POST http://127.0.0.1:8080/api/v1/table_example/cm HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
@@ -24,13 +24,13 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 ###
 
-GET http://127.0.0.1:8080/table_example/cm_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/cm_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### 
 
-POST http://127.0.0.1:8080/table_example/co HTTP/1.1
+POST http://127.0.0.1:8080/api/v1/table_example/co HTTP/1.1
 content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
@@ -38,13 +38,13 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 ###
  
-GET http://127.0.0.1:8080/table_example/co_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/co_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-POST http://127.0.0.1:8080/table_example/rm HTTP/1.1
+POST http://127.0.0.1:8080/api/v1/table_example/rm HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
@@ -305,13 +305,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 ###
 
-GET http://127.0.0.1:8080/table_example/rm_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/rm_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-POST http://127.0.0.1:8080/table_example/ro HTTP/1.1
+POST http://127.0.0.1:8080/api/v1/table_example/ro HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -319,13 +319,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-GET http://127.0.0.1:8080/table_example/ro_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/ro_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### fix this  
  
-PATCH http://127.0.0.1:8080/table_example/um HTTP/1.1 
+PATCH http://127.0.0.1:8080/api/v1/table_example/um HTTP/1.1 
 content-type: application/json
 commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
@@ -502,13 +502,13 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 ###
 
-GET http://127.0.0.1:8080/table_example/um_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/um_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### 
 
-PATCH http://127.0.0.1:8080/table_example/uo HTTP/1.1
+PATCH http://127.0.0.1:8080/api/v1/table_example/uo HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -602,13 +602,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/table_example/uo_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/uo_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ####"^first_test_name_cr$"  
 
-DELETE http://127.0.0.1:8080/table_example/dm HTTP/1.1
+DELETE http://127.0.0.1:8080/api/v1/table_example/dm HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -1094,13 +1094,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/table_example/dm_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/dm_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-DELETE http://127.0.0.1:8080/table_example/dlo HTTP/1.1
+DELETE http://127.0.0.1:8080/api/v1/table_example/dlo HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -1110,6 +1110,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/table_example/dlo_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/api/v1/table_example/dlo_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
