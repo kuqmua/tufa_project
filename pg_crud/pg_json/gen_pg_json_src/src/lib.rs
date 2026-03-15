@@ -339,7 +339,13 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         whole_cnt_write_into_gen_pg_json: ShouldWriteTsIntoFile,
     }
     panic_loc();
-    let config = from_str::<GenPgJsonsConfig>(&input_ts.to_string()).expect("1123f78f");
+    let config = match from_str::<GenPgJsonsConfig>(&input_ts.to_string()) {
+        Ok(v) => v,
+        Err(er) => {
+            let msg = format!("failed to parse GenPgJsonsConfig: {er}");
+            return quote! { compile_error!(#msg); };
+        }
+    };
     let (fields_ts, pg_json_arr) = {
         let acc = {
             let gen_vrts = |max_dim: Option<i32>|{

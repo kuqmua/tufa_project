@@ -1,0 +1,61 @@
+[graph]
+all-features = true
+[output]
+feature-depth = 1
+[advisories]
+ignore = [
+    "RUSTSEC-2021-0141", # dotenv is unmaintained — consider migrating to dotenvy
+    "RUSTSEC-2024-0370", # proc-macro-error is unmaintained — used transitively
+]
+[licenses]
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+    "Zlib",
+    "OpenSSL",
+    "BSL-1.0",
+    "MPL-2.0",
+    "CC0-1.0",
+]
+confidence-threshold = 0.8
+exceptions = []
+[licenses.private]
+ignore = true
+registries = []
+[[licenses.clarify]]
+crate = "gen_pg_json_obj_test_cnt"
+expression = "MIT"
+license-files = []
+[[licenses.clarify]]
+crate = "gen_pg_json_test_cnt"
+expression = "MIT"
+license-files = []
+[[licenses.clarify]]
+crate = "gen_pg_tbl_test_cnt"
+expression = "MIT"
+license-files = []
+[[licenses.clarify]]
+crate = "gen_pg_types_test_cnt"
+expression = "MIT"
+license-files = []
+[bans]
+multiple-versions = "warn"
+wildcards = "allow"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+allow = []
+deny = []
+skip = []
+skip-tree = []
+[sources]
+unknown-registry = "warn"
+unknown-git = "warn"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

@@ -45,6 +45,7 @@ use pg_crud_macros_cmn::{
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
     impl_pg_type_eq_oprtr_for_ident_ts, impl_pg_type_wh_flt_for_ident_ts,
+    serde_er_enum_d_ts_builder,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -588,7 +589,13 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     panic_loc();
-    let gen_pg_json_config = from_str::<GenPgJsonsConfig>(&input_ts.to_string()).expect("80485f71");
+    let gen_pg_json_config = match from_str::<GenPgJsonsConfig>(&input_ts.to_string()) {
+        Ok(v) => v,
+        Err(er) => {
+            let msg = format!("failed to parse GenPgJsonsConfig: {er}");
+            return quote! { compile_error!(#msg); };
+        }
+    };
     let (cols_ts, pg_type_arr) = {
         let acc = match gen_pg_json_config.vrt {
             GenPgTypesConfigVrt::All => PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
@@ -1835,13 +1842,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         let sqlx_types_chrono_naive_date_as_date_stdrt_nn_orig_ts = SelfOrgnUcc::from_tokens(&gen_ident_stdrt_nn_ts(&PgType::SqlxTypesChronoNaiveDateAsDate));
         let ident_upd_ucc = SelfUpdUcc::from_tokens(&ident);
         let sqlx_encode_self_dot_zero_ts = quote! {#SelfSc.0};
-        let serde_er_enum_d_ts_builder = DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_serde_serialize()
-            .d_serde_deserialize()
-            .d_thiserror_error()
-            .d_loc_lib_location();
+        let serde_er_enum_d_ts_builder = serde_er_enum_d_ts_builder();
         let ident_orgn_ts = {
             let ident_orgn_ts = DTsBuilder::new()
                 .make_pub()

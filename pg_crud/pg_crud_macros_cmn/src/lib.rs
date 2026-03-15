@@ -2,6 +2,7 @@ mod flts;
 use enum_extension_lib::EnumExtension;
 pub use flts::*;
 use gen_quotes::{dq_str, dq_ts};
+use macros_helpers::DTsBuilder;
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::{
     AddOprtrSc, AllVrtsDfltSomeOneElMaxPageSizeSc, AllVrtsDfltSomeOneElSc, ColFieldForErMsgSc,
@@ -2296,4 +2297,22 @@ pub fn gen_jsonb_build_obj(v: &dyn Display) -> String {
 #[must_use]
 pub fn gen_jsonb_build_obj_v(v: &dyn Display) -> String {
     gen_jsonb_build_obj(&format!("'v',{v}"))
+}
+#[must_use]
+pub fn serde_er_enum_d_ts_builder() -> DTsBuilder {
+    DTsBuilder::new()
+        .make_pub()
+        .d_debug()
+        .d_serde_serialize()
+        .d_serde_deserialize()
+        .d_thiserror_error()
+        .d_loc_lib_location()
+}
+#[must_use]
+pub fn er_enum_d_ts_builder() -> DTsBuilder {
+    DTsBuilder::new()
+        .make_pub()
+        .d_debug()
+        .d_thiserror_error()
+        .d_loc_lib_location()
 }

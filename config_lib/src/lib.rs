@@ -201,3 +201,38 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
         }))
     }
 }
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
+pub struct PgPoolMaxConnections(pub u32);
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
+pub enum TryFromStdEnvVarOkPgPoolMaxConnectionsEr {
+    U32Parsing { u32_parsing: ParseIntError },
+}
+impl TryFromStdEnvVarOk for PgPoolMaxConnections {
+    type Error = TryFromStdEnvVarOkPgPoolMaxConnectionsEr;
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(match v.parse::<u32>() {
+            Ok(v0) => v0,
+            Err(er) => {
+                return Err(Self::Error::U32Parsing { u32_parsing: er });
+            }
+        }))
+    }
+}
+#[derive(Debug, Clone, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
+pub struct CorsAllowOrigin(pub String);
+#[derive(Debug, Error, impl_display_as_debug::ImplDisplayAsDebug, Optml)]
+pub enum TryFromStdEnvVarOkCorsAllowOriginEr {
+    IsEmpty { is_empty: String },
+}
+impl TryFromStdEnvVarOk for CorsAllowOrigin {
+    type Error = TryFromStdEnvVarOkCorsAllowOriginEr;
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(if v.is_empty() {
+            return Err(Self::Error::IsEmpty {
+                is_empty: String::from("is empty"),
+            });
+        } else {
+            v
+        }))
+    }
+}

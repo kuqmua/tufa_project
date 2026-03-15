@@ -54,7 +54,7 @@ use pg_crud_macros_cmn::{
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts,
     gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
-    wrap_into_scopes_ts,
+    serde_er_enum_d_ts_builder, wrap_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -102,16 +102,24 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         whole_write_into_gen_pg_json_obj: ShouldWriteTsIntoFile,
     }
     panic_loc();
-    let di: DeriveInput = parse2(input_ts).expect("e5f0e27b");
+    let di: DeriveInput = match parse2(input_ts) {
+        Ok(v) => v,
+        Err(er) => return er.to_compile_error(),
+    };
     let import = Import::PgCrud;
-    let gen_pg_json_obj_config = from_str::<GenPgJsonsConfig>(
+    let gen_pg_json_obj_config = match from_str::<GenPgJsonsConfig>(
         &get_macro_attr_meta_list_ts(
             &di.attrs,
             &format!("{}::pg_json_obj_config", import.sc_str()),
         )
         .to_string(),
-    )
-    .expect("246de453");
+    ) {
+        Ok(v) => v,
+        Err(er) => {
+            let msg = format!("failed to parse GenPgJsonsConfig: {er}");
+            return quote! { compile_error!(#msg); };
+        }
+    };
     let (fields_ts, pg_json_obj_arr) = {
         let pg_json_obj_record = gen_pg_json_obj_config.vrt;
         match (&pg_json_obj_record.is_nl, &pg_json_obj_record.pattern) {
@@ -1899,13 +1907,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             .d_serde_serialize()
             .d_utoipa_to_schema()
             .d_schemars_json_schema();
-        let serde_er_enum_d_ts_builder = DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_serde_serialize()
-            .d_serde_deserialize()
-            .d_thiserror_error()
-            .d_loc_lib_location();
+        let serde_er_enum_d_ts_builder = serde_er_enum_d_ts_builder();
         let ident_rd_ucc = SelfRdUcc::from_tokens(&ident);
         let ident_with_id_stdrt_nn_rd_ucc = SelfRdUcc::from_tokens(&ident_with_id_stdrt_nn_ucc);
         let ident_rd_inn_ucc = SelfRdInnUcc::from_tokens(&ident);

@@ -107,7 +107,14 @@ pub fn gen_wh_flts(input_ts: Ts) -> Ts {
         whole_write_into_file: ShouldWriteTsIntoFile,
     }
     panic_loc();
-    let gen_wh_flts_config = from_str::<GenWhFltsConfig>(&input_ts.to_string()).expect("1217b73b");
+    let gen_wh_flts_config = match from_str::<GenWhFltsConfig>(&input_ts.to_string()) {
+        Ok(v) => v,
+        Err(er) => {
+            let msg = format!("failed to parse GenWhFltsConfig: {er}");
+            let ts: Ts2 = quote! { compile_error!(#msg); };
+            return ts.into();
+        }
+    };
     let import = Import::PgCrudCmn;
     let t_ts = quote! {T};
     let t_ann_generic_ts = quote! {<#t_ts>};

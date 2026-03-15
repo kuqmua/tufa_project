@@ -1,4 +1,6 @@
-use app_state::{GetDatabaseUrl, GetServiceSocketAddress};
+use app_state::{
+    GetCorsAllowOrigin, GetDatabaseUrl, GetPgPoolMaxConnections, GetServiceSocketAddress,
+};
 use axum::{Router, serve};
 use cmn_routes::cmn_routes;
 use git_info::PROJECT_GIT_INFO;
@@ -26,7 +28,9 @@ fn main() {
         .block_on(async {
             let config = Config::try_from_env().expect("d74a6e5f");
             let pg_pool = PgPoolOptions::new()
-                .max_connections(50)
+                .max_connections(*GetPgPoolMaxConnections::get_pg_pool_max_connections(
+                    &config,
+                ))
                 .connect(ExposeSecret::expose_secret(
                     GetDatabaseUrl::get_database_url(&config),
                 ))
@@ -37,6 +41,10 @@ fn main() {
                 TcpListener::bind(GetServiceSocketAddress::get_service_socket_address(&config))
                     .await
                     .expect("3f294e7c");
+            let cors_origins = GetCorsAllowOrigin::get_cors_allow_origin(&config)
+                .split(',')
+                .filter_map(|s| s.trim().parse().ok())
+                .collect::<Vec<_>>();
             let app_state = Arc::new(ServerAppState {
                 pg_pool,
                 config,
@@ -52,10 +60,7 @@ fn main() {
                     .layer(PropagateRequestIdLayer::x_request_id())
                     .layer(TraceLayer::new_for_http())
                     .layer(SetRequestIdLayer::x_request_id(MakeRequestUuid))
-                    .layer(
-                        CorsLayer::new()
-                            .allow_origin(["http://127.0.0.1".parse().expect("2a0b7c30")]),
-                    )
+                    .layer(CorsLayer::new().allow_origin(cors_origins))
                     .into_make_service(),
             )
             .with_graceful_shutdown(async {

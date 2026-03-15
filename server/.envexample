@@ -1,6 +1,8 @@
+CORS_ALLOW_ORIGIN="http://127.0.0.1" # comma-separated origins, e.g. "http://127.0.0.1,https://example.com"
 DATABASE_URL="postgres://postgres:postgres@127.0.0.1:5432/postgres"
 ENABLE_API_GIT_COMMIT_CHECK="true"
 MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES="1048576000" # 100 megabyte in bytes
+PG_POOL_MAX_CONNECTIONS="50"
 SERVICE_SOCKET_ADDRESS="127.0.0.1:8080"
 SRC_PLACE_TYPE="src" # src|github
 TIMEZONE="10800" # i32, in seconds. main is 10800. value = hours * 3600. -24 < hours < 24. so value is -86_400 < secs && secs < 86_400. Otherwise panics on start.  Makes a new FixedOffset for the Eastern Hemisphere with given timezone difference. The negative secs means the Western Hemisphere

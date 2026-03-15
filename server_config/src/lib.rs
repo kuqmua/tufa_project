@@ -11,9 +11,11 @@ use thiserror::Error;
 #[derive(Debug, TryFromEnv, GenGetterTraitsForStructFields, Optml)]
 pub struct Config {
     //todo mb auto gen .env and docker-compose environment variables. and mb write in directly into files
-    pub maximum_size_of_http_body_in_bytes: usize,
+    pub cors_allow_origin: String,
     pub database_url: SecretBox<String>,
+    pub maximum_size_of_http_body_in_bytes: usize,
     pub service_socket_address: SocketAddr,
+    pub pg_pool_max_connections: u32,
     pub timezone: FixedOffset,
     pub src_place_type: SrcPlaceType,
     pub tracing_level: TracingLevel,

@@ -53,7 +53,7 @@ use optml::Optml;
 use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
-    gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
+    er_enum_d_ts_builder, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
     gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts,
     gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
@@ -377,15 +377,23 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let import = Import::PgCrud;
     let import_ts = quote! {#import::};
     let return_err_qp_er_write_into_buffer_ts = gen_return_err_qp_er_write_into_buffer_ts(import);
-    let di: DeriveInput = parse2(input).expect("991c614f");
-    let gen_pg_tbl_config = from_str::<GenPgTblConfig>(
+    let di: DeriveInput = match parse2(input) {
+        Ok(v) => v,
+        Err(er) => return er.to_compile_error(),
+    };
+    let gen_pg_tbl_config = match from_str::<GenPgTblConfig>(
         &get_macro_attr_meta_list_ts(
             &di.attrs,
             &format!("{}::gen_pg_tbl_config", import.sc_str()),
         )
         .to_string(),
-    )
-    .expect("1b6adf7e");
+    ) {
+        Ok(v) => v,
+        Err(er) => {
+            let msg = format!("failed to parse GenPgTblConfig: {er}");
+            return quote! { compile_error!(#msg); };
+        }
+    };
     let ident = &di.ident;
     let ident_sc_dq_ts = dq_ts(&ToTokensToScStr::case(&ident));
     let self_tbl_name_call_ts = quote! {Self::#TblNameSc()};
@@ -571,11 +579,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let mut impl_ident_vec_ts = Vec::new();
     let mut op_routes_ts = Vec::new();
     let mut content_ts = Vec::new();
-    let er_enum_d_ts_builder = DTsBuilder::new()
-        .make_pub()
-        .d_debug()
-        .d_thiserror_error()
-        .d_loc_lib_location();
+    let er_enum_d_ts_builder = er_enum_d_ts_builder();
     let serde_ser_utoipa_d_ts_builder = DTsBuilder::new()
         .make_pub()
         .d_debug()
@@ -5751,6 +5755,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             maximum_size_of_http_body_in_bytes: <config_lib::MaximumSizeOfHttpBodyInBytes as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "1048576000".to_owned()
                             ).expect("93b2f818").0,
+                            pg_pool_max_connections: <config_lib::PgPoolMaxConnections as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                "50".to_owned()
+                            ).expect("7c4e9f12").0,
+                            cors_allow_origin: <config_lib::CorsAllowOrigin as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                "http://127.0.0.1".to_owned()
+                            ).expect("a1b2c3d4").0,
                         };
                         let #PgPoolSc = sqlx::postgres::PgPoolOptions::new()
                         .max_connections(50)

@@ -1,7 +1,8 @@
 pub use config_lib::{
-    GetDatabaseUrl, GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetMongoUrl,
-    GetRedisUrl, GetServiceSocketAddress, GetSrcPlaceType, GetStartingCheckLink, GetTimezone,
-    GetTracingLevel, types::SrcPlaceType, types::TracingLevel,
+    GetCorsAllowOrigin, GetDatabaseUrl, GetEnableApiGitCommitCheck,
+    GetMaximumSizeOfHttpBodyInBytes, GetMongoUrl, GetPgPoolMaxConnections, GetRedisUrl,
+    GetServiceSocketAddress, GetSrcPlaceType, GetStartingCheckLink, GetTimezone, GetTracingLevel,
+    types::SrcPlaceType, types::TracingLevel,
 };
 use sqlx::PgPool;
 pub trait GetPgPool {
