@@ -1,0 +1,28 @@
+[package]
+name = "pg_types_numeric"
+version = "0.1.0"
+publish = false
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+edition = "2024"
+
+[dependencies]
+sqlx.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+gen_pg_types = {path = "../gen_pg_types"}
+pg_types_cmn = {path = "../pg_types_cmn"}
+pg_crud_cmn = {path = "../../pg_crud_cmn"}
+loc_lib = {path = "../../../loc_lib"}
+wh_flts = {path = "../../wh_flts"}
+optml = {path = "../../../optml"}
+
+[lints]
+workspace = true
+
+[features]
+test-utils = ["pg_crud_cmn/test-utils"]

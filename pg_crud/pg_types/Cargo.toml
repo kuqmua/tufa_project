@@ -11,23 +11,17 @@ categories = ["category"]
 edition = "2024"
 
 [dependencies]
-sqlx.workspace = true
-uuid.workspace = true
-serde.workspace = true
-chrono.workspace = true
-thiserror.workspace = true
-gen_pg_types = {path = "./gen_pg_types"}
 pg_types_cmn = {path = "./pg_types_cmn"}
-pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
-loc_lib = {path = "../../loc_lib"}
-wh_flts = {path = "../wh_flts"}
-optml = {path = "../../optml"}
+pg_types_numeric = {path = "./pg_types_numeric"}
+pg_types_chrono_net = {path = "./pg_types_chrono_net"}
+pg_types_text_misc = {path = "./pg_types_text_misc"}
 
 [lints]
 workspace = true
 
 [features]
-default = ["dim1"]
-dim1 = []
-all-dims = ["dim1"]
-test-utils = ["pg_crud_cmn/test-utils"]
+test-utils = [
+    "pg_types_numeric/test-utils",
+    "pg_types_chrono_net/test-utils",
+    "pg_types_text_misc/test-utils",
+]

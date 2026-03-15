@@ -459,6 +459,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     enum GenPgTypesConfigVrt {
         All,
         Concrete(Vec<PgTypeRecord>),
+        Subset(Vec<PgType>),
         WithDimOne,
         WithoutDims,
     }
@@ -599,8 +600,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     };
     let (cols_ts, pg_type_arr) = {
-        let gen_vrts = |include_arr: bool| {
-            PgType::into_arr().into_iter().fold(Vec::new(), |mut acc0, el| {
+        let gen_vrts = |include_arr: bool, filter: Option<&[PgType]>| {
+            PgType::into_arr().into_iter().filter(|el| filter.is_none_or(|f| f.contains(el))).fold(Vec::new(), |mut acc0, el| {
                 for el0 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el1| {
                     match &el1 {
                         PgTypePattern::Stdrt => {
@@ -662,8 +663,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             })
         };
         let acc = match gen_pg_json_config.vrt {
-            GenPgTypesConfigVrt::All | GenPgTypesConfigVrt::WithDimOne => gen_vrts(true),
-            GenPgTypesConfigVrt::WithoutDims => gen_vrts(false),
+            GenPgTypesConfigVrt::All | GenPgTypesConfigVrt::WithDimOne => gen_vrts(true, None),
+            GenPgTypesConfigVrt::WithoutDims => gen_vrts(false, None),
+            GenPgTypesConfigVrt::Subset(types) => gen_vrts(true, Some(&types)),
             GenPgTypesConfigVrt::Concrete(v) => v,
         };
         {
