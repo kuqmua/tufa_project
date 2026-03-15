@@ -2,15 +2,6 @@
 
 ## 1. Code quality
 
-### 1.1 TODO/FIXME/HACK comments (115+)
-- [ ] Process all TODO comments in `pg_crud/pg_types/gen_pg_types_src/src/lib.rs`
-- [ ] Process all TODO comments in `pg_crud/pg_json_obj/gen_pg_json_obj_src/src/lib.rs`
-- [ ] Process all TODO comments in `pg_crud/pg_tbl/gen_pg_tbl_src/src/lib.rs`
-- [ ] Process all TODO comments in `pg_crud/pg_json/gen_pg_json_src/src/lib.rs`
-- [ ] Process all TODO comments in `pg_crud/wh_flts/gen_wh_flts_src/src/lib.rs`
-- [ ] Process FIXME and HACK comments across all crates
-- [ ] Remove outdated TODOs that are already resolved
-
 ### 1.3 Code reuse in macros
 - [ ] Extract common DTsBuilder patterns across `pg_types`, `pg_json`, `pg_json_obj`, `pg_tbl`
 - [ ] Find duplicate `quote!{}` blocks for sqlx encode/decode across crates
