@@ -2633,7 +2633,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         __D: _serde::Deserializer<'de>,
                                     {
                                         let raw = <#ident_upd_raw_ts as _serde::Deserialize>::deserialize(__deserializer)?;
-                                        #ident_upd_ucc::try_new(raw.#CrSc, raw.#UpdSc, raw.#DelSc)
+                                        Self::try_new(raw.#CrSc, raw.#UpdSc, raw.#DelSc)
                                             .map_err(|er| _serde::de::Error::custom(format!("{er:?}")))
                                     }
                                 }
