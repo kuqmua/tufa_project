@@ -1245,6 +1245,10 @@ pub fn incr_checked_add_one_returning_incr(incr: &mut u64) -> Result<u64, QpEr> 
     )
 }
 #[must_use]
+pub fn fi_jsonb_build_obj_v(fi: &str) -> String {
+    format!("'{fi}',jsonb_build_object('v','null'::jsonb),")
+}
+#[must_use]
 pub const fn i8_test_cases_vec() -> [i8; 3] {
     [i8::MIN, 0, i8::MAX]
 }

@@ -23,7 +23,6 @@ members = [
   "pg_crud/pg_json_obj/pg_json_obj_cmn",
   "pg_crud/pg_json",
   "pg_crud/pg_json/gen_pg_json",
-  "pg_crud/pg_json/gen_pg_json_cmn",
   "pg_crud/pg_json/gen_pg_json_src",
   "pg_crud/pg_json/gen_pg_json_test",
   "pg_crud/pg_json/gen_pg_json_test_cnt",

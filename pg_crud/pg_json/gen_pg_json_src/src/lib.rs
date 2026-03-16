@@ -1678,7 +1678,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                 }
             } else {
-                quote! {Ok(gen_pg_json_cmn::fi_jsonb_build_obj_v(fi))}
+                quote! {Ok(#import::fi_jsonb_build_obj_v(fi))}
             };
             let sel_only_crd_or_updd_ids_qb_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                 quote! {

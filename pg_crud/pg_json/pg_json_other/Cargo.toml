@@ -21,7 +21,6 @@ gen_pg_json = {path = "../gen_pg_json"}
 loc_lib = {path = "../../../loc_lib"}
 pg_crud_cmn = {path = "../../pg_crud_cmn"}
 wh_flts = {path = "../../wh_flts"}
-gen_pg_json_cmn = {path = "../gen_pg_json_cmn"}
 optml = {path = "../../../optml"}
 
 [lints]

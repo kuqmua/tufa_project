@@ -52,7 +52,7 @@ use pg_crud_macros_cmn::{
     gen_impl_pg_type_not_pk_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
+    gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_opt_type_dcl_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts,
@@ -2609,151 +2609,35 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 Pattern::Stdrt => Ts2::new(),
                 Pattern::Arr => match &is_nl {
                     IsNl::False => {
-                        //todo mb reuse?
-                        let tuple_struct_ident_upd_dq_ts = dq_ts(&format!("tuple struct {ident_upd_ucc}"));
-                        let ident_upd_dq_ts = dq_ts(&ident_upd_ucc);
-                        let match_try_new_in_de_ts = gen_match_try_new_in_de_ts(
-                            &ident_upd_ucc,
-                            &quote! {f0_v, f1_v, f2_v}
-                        );
+                        let ident_upd_raw_ts = format!("{ident_upd_ucc}Raw").parse::<Ts2>().expect("d4e5f6a7");
                         quote! {
+                            #[derive(serde::Deserialize, Default)]
+                            #[allow(clippy::arbitrary_source_item_ordering)]
+                            struct #ident_upd_raw_ts {
+                                #[serde(default)]
+                                #CrSc: #vec_ident_with_id_stdrt_nn_cr_ts,
+                                #[serde(default)]
+                                #UpdSc: #import_unq_vec_ident_with_id_stdrt_nn_upd_el_ts,
+                                #[serde(default)]
+                                #DelSc: #vec_pg_crud_path_pg_json_uuid_uuid_upd_ts,
+                            }
+                            #[allow(unused_qualifications)]
                             #[allow(clippy::absolute_paths)]
                             #AllowClippyArbitrarySrcItemOrdering
-                            impl<'de> serde::Deserialize<'de> for #ident_upd_ucc {
-                                fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-                                where
-                                    __D: serde::Deserializer<'de>,
-                                {
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        f0,
-                                        f1,
-                                        f2,
-                                        __ignore,
+                            const _: () = {
+                                extern crate serde as _serde;
+                                #[automatically_derived]
+                                impl<'de> _serde::Deserialize<'de> for #ident_upd_ucc {
+                                    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        let raw = <#ident_upd_raw_ts as _serde::Deserialize>::deserialize(__deserializer)?;
+                                        #ident_upd_ucc::try_new(raw.#CrSc, raw.#UpdSc, raw.#DelSc)
+                                            .map_err(|er| _serde::de::Error::custom(format!("{er:?}")))
                                     }
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
-                                    impl serde::de::Visitor<'_> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
-                                            serde::__private228::Formatter::write_str(__f, "field identifier")
-                                        }
-                                        fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match v {
-                                                0u64 => Ok(__Field::f0),
-                                                1u64 => Ok(__Field::f1),
-                                                2u64 => Ok(__Field::f2),
-                                                _ => Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match v {
-                                                "cr" => Ok(__Field::f0),
-                                                "upd" => Ok(__Field::f1),
-                                                "del" => Ok(__Field::f2),
-                                                _ => Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match v {
-                                                b"cr" => Ok(__Field::f0),
-                                                b"upd" => Ok(__Field::f1),
-                                                b"del" => Ok(__Field::f2),
-                                                _ => Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
-                                    impl<'de> serde::Deserialize<'de> for __Field {
-                                        #[inline]
-                                        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-                                        where
-                                            __D: serde::Deserializer<'de>,
-                                        {
-                                            serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                        }
-                                    }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: serde::__private228::PhantomData<#ident_upd_ucc>,
-                                        lt: serde::__private228::PhantomData<&'de ()>,
-                                    }
-                                    impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                        type Value = #ident_upd_ucc;
-                                        fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
-                                            serde::__private228::Formatter::write_str(__f, #tuple_struct_ident_upd_dq_ts)
-                                        }
-                                        #[inline]
-                                        fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                                        where
-                                            __A: serde::de::SeqAccess<'de>,
-                                        {
-                                            let f0_v = serde::de::SeqAccess::next_element::<#vec_ident_with_id_stdrt_nn_cr_ts>(&mut __seq)?.unwrap_or_default();
-                                            let f1_v = serde::de::SeqAccess::next_element::<#import_unq_vec_ident_with_id_stdrt_nn_upd_el_ts>(&mut __seq)?.unwrap_or_default();
-                                            let f2_v = serde::de::SeqAccess::next_element::<#vec_pg_crud_path_pg_json_uuid_uuid_upd_ts>(&mut __seq)?.unwrap_or_default();
-                                            #match_try_new_in_de_ts
-                                        }
-                                        #[inline]
-                                        fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
-                                        where
-                                            __A: serde::de::MapAccess<'de>,
-                                        {
-                                            let mut f0: Option<#vec_ident_with_id_stdrt_nn_cr_ts> = None;
-                                            let mut f1: Option<#import_unq_vec_ident_with_id_stdrt_nn_upd_el_ts> = None;
-                                            let mut f2: Option<#vec_pg_crud_path_pg_json_uuid_uuid_upd_ts> = None;
-                                            while let Some(__k) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                                match __k {
-                                                    __Field::f0 => {
-                                                        if Option::is_some(&f0) {
-                                                            return Err(<__A::Error as serde::de::Error>::duplicate_field("cr"));
-                                                        }
-                                                        f0 = Some(serde::de::MapAccess::next_value::<#vec_ident_with_id_stdrt_nn_cr_ts>(&mut __map)?);
-                                                    }
-                                                    __Field::f1 => {
-                                                        if Option::is_some(&f1) {
-                                                            return Err(<__A::Error as serde::de::Error>::duplicate_field("upd"));
-                                                        }
-                                                        f1 = Some(serde::de::MapAccess::next_value::<#import_unq_vec_ident_with_id_stdrt_nn_upd_el_ts>(&mut __map)?);
-                                                    }
-                                                    __Field::f2 => {
-                                                        if Option::is_some(&f2) {
-                                                            return Err(<__A::Error as serde::de::Error>::duplicate_field("del"));
-                                                        }
-                                                        f2 = Some(serde::de::MapAccess::next_value::<#vec_pg_crud_path_pg_json_uuid_uuid_upd_ts>(&mut __map)?);
-                                                    }
-                                                    __Field::__ignore => {
-                                                        let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-                                                    }
-                                                }
-                                            }
-                                            let f0_v = f0.unwrap_or_default();
-                                            let f1_v = f1.unwrap_or_default();
-                                            let f2_v = f2.unwrap_or_default();
-                                            #match_try_new_in_de_ts
-                                        }
-                                    }
-                                    #[doc(hidden)]
-                                    const FIELDS: &[&str] = &["cr", "upd", "del"];
-                                    serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        #ident_upd_dq_ts,
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: serde::__private228::PhantomData::<#SelfUcc>,
-                                            lt: serde::__private228::PhantomData,
-                                        },
-                                    )
                                 }
-                            }
+                            };
                         }
                     }
                     IsNl::True => Ts2::new(),
