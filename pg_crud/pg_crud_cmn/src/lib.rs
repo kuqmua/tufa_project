@@ -778,7 +778,15 @@ impl Default for PgnBase {
         Self::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0)
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, ToSchema, JsonSchema, Optml)]
+#[derive(Debug, Deserialize, JsonSchema, Optml)]
+struct PgnStartsWithZeroRaw {
+    limit: i64,
+    offset: i64,
+}
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize, ToSchema, JsonSchema, Optml,
+)]
+#[serde(try_from = "PgnStartsWithZeroRaw")]
 pub struct PgnStartsWithZero(PgnBase);
 #[derive(Debug, Serialize, Deserialize, Error, Location, Optml)]
 pub enum PgnStartsWithZeroTryNewEr {
@@ -830,158 +838,10 @@ impl PgnStartsWithZero {
         }
     }
 }
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-impl<'de> Deserialize<'de> for PgnStartsWithZero {
-    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-    where
-        __D: Deserializer<'de>,
-    {
-        #[expect(non_camel_case_types)]
-        #[doc(hidden)]
-        enum __Field {
-            f0,
-            f1,
-            __ignore,
-        }
-        #[doc(hidden)]
-        struct __FieldVisitor;
-        impl serde::de::Visitor<'_> for __FieldVisitor {
-            type Value = __Field;
-            fn expecting(&self, __f: &mut Formatter<'_>) -> serde::__private228::fmt::Result {
-                serde::__private228::Formatter::write_str(__f, "field identifier")
-            }
-            fn visit_u64<__E>(self, v: u64) -> Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match v {
-                    0u64 => Ok(__Field::f0),
-                    1u64 => Ok(__Field::f1),
-                    _ => Ok(__Field::__ignore),
-                }
-            }
-            fn visit_str<__E>(self, v: &str) -> Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match v {
-                    "limit" => Ok(__Field::f0),
-                    "offset" => Ok(__Field::f1),
-                    _ => Ok(__Field::__ignore),
-                }
-            }
-            fn visit_bytes<__E>(self, v: &[u8]) -> Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match v {
-                    b"limit" => Ok(__Field::f0),
-                    b"offset" => Ok(__Field::f1),
-                    _ => Ok(__Field::__ignore),
-                }
-            }
-        }
-        impl<'de> Deserialize<'de> for __Field {
-            #[inline]
-            fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-            where
-                __D: Deserializer<'de>,
-            {
-                Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-            }
-        }
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private228::PhantomData<PgnStartsWithZero>,
-            lt: serde::__private228::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PgnStartsWithZero;
-            fn expecting(&self, __f: &mut Formatter<'_>) -> serde::__private228::fmt::Result {
-                Formatter::write_str(__f, "struct PgnStartsWithZero")
-            }
-            #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let Some(f0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(
-                        0usize,
-                        &"struct PgnStartsWithZero with 2 els",
-                    ));
-                };
-                let Some(f1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(
-                        1usize,
-                        &"struct PgnStartsWithZero with 2 els",
-                    ));
-                };
-                match PgnStartsWithZero::try_new(f0, f1) {
-                    Ok(v) => Ok(v),
-                    Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))), //todo use serde_json::to_string(&er).unwrap_or_else(|_|"failed to serialize er".into())
-                }
-            }
-            #[inline]
-            fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::MapAccess<'de>,
-            {
-                let mut f0: Option<i64> = None;
-                let mut f1: Option<i64> = None;
-                while let Some(__k) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                    match __k {
-                        __Field::f0 => {
-                            if Option::is_some(&f0) {
-                                return Err(<__A::Error as serde::de::Error>::duplicate_field(
-                                    "limit",
-                                ));
-                            }
-                            f0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
-                        }
-                        __Field::f1 => {
-                            if Option::is_some(&f1) {
-                                return Err(<__A::Error as serde::de::Error>::duplicate_field(
-                                    "offset",
-                                ));
-                            }
-                            f1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
-                        }
-                        __Field::__ignore => {
-                            let _: serde::de::IgnoredAny =
-                                serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(
-                                    &mut __map,
-                                )?;
-                        }
-                    }
-                }
-                let f0_v = match f0 {
-                    Some(v) => v,
-                    None => serde::__private228::de::missing_field("limit")?,
-                };
-                let f1_v = match f1 {
-                    Some(v) => v,
-                    None => serde::__private228::de::missing_field("offset")?,
-                };
-                match PgnStartsWithZero::try_new(f0_v, f1_v) {
-                    Ok(v) => Ok(v),
-                    Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                }
-            }
-        }
-        #[doc(hidden)]
-        const FIELDS: &[&str] = &["limit", "offset"];
-        Deserializer::deserialize_struct(
-            __deserializer,
-            "PgnStartsWithZero",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private228::PhantomData::<Self>,
-                lt: serde::__private228::PhantomData,
-            },
-        )
+impl TryFrom<PgnStartsWithZeroRaw> for PgnStartsWithZero {
+    type Error = PgnStartsWithZeroTryNewEr;
+    fn try_from(v: PgnStartsWithZeroRaw) -> Result<Self, Self::Error> {
+        Self::try_new(v.limit, v.offset)
     }
 }
 impl<'query_lt> PgTypeWhFlt<'query_lt> for PgnStartsWithZero {

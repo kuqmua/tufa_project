@@ -1,5 +1,5 @@
 use optml::Optml;
-use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeEr};
+use serde::{Deserialize, Serialize};
 pub use server_port_try_from_u16::server_port_try_from_u16;
 use std::{
     error::Error,
@@ -11,7 +11,8 @@ const SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE: &str =
     "init failed, reason: system port range 0-1023";
 const SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE: &str =
     "init failed, reason: ephemeral port range 49152-65535";
-#[derive(Debug, Clone, Copy, Serialize, Optml)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Optml)]
+#[serde(try_from = "u16")]
 pub struct ServerPort(u16);
 impl Display for ServerPort {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
@@ -54,23 +55,6 @@ impl TryFrom<u16> for ServerPort {
                 v,
                 msg: String::from(SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
-        }
-    }
-}
-#[allow(clippy::absolute_paths)]
-impl<'de> Deserialize<'de> for ServerPort {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        match Self::try_from(match u16::deserialize(deserializer) {
-            Ok(v) => v,
-            Err(er) => {
-                return Err(er);
-            }
-        }) {
-            Ok(v) => Ok(v),
-            Err(er) => Err(SerdeEr::custom(er)),
         }
     }
 }
