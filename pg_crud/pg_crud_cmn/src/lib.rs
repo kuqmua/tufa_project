@@ -1088,7 +1088,20 @@ impl EqOprtr {
 pub trait PgTypeEqOprtr {
     fn oprtr(&self) -> EqOprtr;
 }
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, Optml)]
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Serialize,
+    Deserialize,
+    JsonSchema,
+    Optml,
+)]
+#[serde(try_from = "i32")]
 pub struct UnsignedPartOfI32(i32); //todo why exactly i32? mb different types for pg type and pg json type
 #[derive(
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, Optml,
@@ -1110,70 +1123,6 @@ impl TryFrom<i32> for UnsignedPartOfI32 {
         }
     }
 }
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-const _: () = {
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> Deserialize<'de> for UnsignedPartOfI32 {
-        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-        where
-            __D: Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private228::PhantomData<UnsignedPartOfI32>,
-                lt: _serde::__private228::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = UnsignedPartOfI32;
-                fn expecting(
-                    &self,
-                    __formatter: &mut Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(__formatter, "tuple struct UnsignedPartOfI32")
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
-                where
-                    __E: Deserializer<'de>,
-                {
-                    let f0: i32 = <i32 as Deserialize>::deserialize(__e)?;
-                    match UnsignedPartOfI32::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let Some(f0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(
-                            0usize,
-                            &"tuple struct UnsignedPartOfI32 with 1 el",
-                        ));
-                    };
-                    match UnsignedPartOfI32::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-            }
-            Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "UnsignedPartOfI32",
-                __Visitor {
-                    marker: _serde::__private228::PhantomData::<Self>,
-                    lt: _serde::__private228::PhantomData,
-                },
-            )
-        }
-    }
-};
 impl ToErrString for UnsignedPartOfI32 {
     fn to_err_string(&self) -> String {
         self.0.to_string()
@@ -1206,7 +1155,20 @@ impl DfltSomeOneEl for UnsignedPartOfI32 {
         Self(0)
     }
 }
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Serialize, JsonSchema, Optml)]
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Serialize,
+    Deserialize,
+    JsonSchema,
+    Optml,
+)]
+#[serde(try_from = "i32")]
 pub struct NotZeroUnsignedPartOfI32(UnsignedPartOfI32);
 #[derive(
     Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Error, Location, JsonSchema, Optml,
@@ -1236,70 +1198,6 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
         }
     }
 }
-#[allow(unused_qualifications)]
-#[allow(clippy::absolute_paths)]
-#[allow(clippy::arbitrary_source_item_ordering)]
-const _: () = {
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> Deserialize<'de> for NotZeroUnsignedPartOfI32 {
-        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
-        where
-            __D: Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private228::PhantomData<NotZeroUnsignedPartOfI32>,
-                lt: _serde::__private228::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = NotZeroUnsignedPartOfI32;
-                fn expecting(
-                    &self,
-                    __formatter: &mut Formatter<'_>,
-                ) -> _serde::__private228::fmt::Result {
-                    Formatter::write_str(__formatter, "tuple struct NotZeroUnsignedPartOfI32")
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
-                where
-                    __E: Deserializer<'de>,
-                {
-                    let f0: i32 = <i32 as Deserialize>::deserialize(__e)?;
-                    match NotZeroUnsignedPartOfI32::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let Some(f0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(
-                            0usize,
-                            &"tuple struct NotZeroUnsignedPartOfI32 with 1 el",
-                        ));
-                    };
-                    match NotZeroUnsignedPartOfI32::try_from(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(serde::de::Error::custom(format!("{er:?}"))),
-                    }
-                }
-            }
-            Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "NotZeroUnsignedPartOfI32",
-                __Visitor {
-                    marker: _serde::__private228::PhantomData::<Self>,
-                    lt: _serde::__private228::PhantomData,
-                },
-            )
-        }
-    }
-};
 impl ToErrString for NotZeroUnsignedPartOfI32 {
     fn to_err_string(&self) -> String {
         self.0.to_err_string()
