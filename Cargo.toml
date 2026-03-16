@@ -28,6 +28,8 @@ members = [
   "pg_crud/pg_json/gen_pg_json_src",
   "pg_crud/pg_json/gen_pg_json_test",
   "pg_crud/pg_json/gen_pg_json_test_cnt",
+  "pg_crud/pg_json/pg_json_nbr",
+  "pg_crud/pg_json/pg_json_other",
   "pg_crud/pg_tbl",
   "pg_crud/pg_tbl/gen_pg_tbl",
   "pg_crud/pg_tbl/gen_pg_tbl_src",

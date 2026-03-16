@@ -11,27 +11,14 @@ categories = ["category"]
 edition = "2024"
 
 [dependencies]
-uuid.workspace = true
-utoipa.workspace = true
-sqlx.workspace = true
-serde.workspace = true
-schemars.workspace = true
-regex.workspace = true
-gen_pg_json = {path = "./gen_pg_json"}
-loc_lib = {path = "../../loc_lib"}
-pg_crud_cmn = {path = "../pg_crud_cmn", features = ["test-utils"]}
-wh_flts = {path = "../wh_flts"}
-gen_pg_json_cmn = {path = "./gen_pg_json_cmn"}
-optml = {path = "../../optml"}
+pg_json_nbr = {path = "./pg_json_nbr"}
+pg_json_other = {path = "./pg_json_other"}
 
 [lints]
 workspace = true
 
 [features]
-default = ["dim1"]
-dim1 = []
-dim2 = ["dim1"]
-dim3 = ["dim2"]
-dim4 = ["dim3"]
-all-dims = ["dim4"]
-test-utils = ["pg_crud_cmn/test-utils"]
+test-utils = [
+    "pg_json_nbr/test-utils",
+    "pg_json_other/test-utils",
+]

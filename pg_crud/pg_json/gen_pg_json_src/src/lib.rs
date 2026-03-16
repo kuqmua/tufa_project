@@ -324,17 +324,27 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     #[derive(Debug, Deserialize, Optml)]
     enum ConfigVrt {
         All,
-        WithoutDims,
-        WithDimOne,
-        WithDimTwo,
-        WithDimThree,
-        WithDimFour,
         Concrete(Vec<Record>),
+        OnlyDimFour,
+        OnlyDimOne,
+        OnlyDimThree,
+        OnlyDimTwo,
+        OnlyStdrt,
+        Subset(Vec<PgJson>),
+        WithDimFour,
+        WithDimOne,
+        WithDimThree,
+        WithDimTwo,
+        WithoutDims,
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(Debug, Deserialize, Optml)]
     struct GenPgJsonsConfig {
         vrt: ConfigVrt,
+        #[serde(default)]
+        mod_name: Option<String>,
+        #[serde(default)]
+        max_dim: Option<i32>,
         pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json: ShouldWriteTsIntoFile,
         whole_cnt_write_into_gen_pg_json: ShouldWriteTsIntoFile,
     }
@@ -348,23 +358,25 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     };
     let (fields_ts, pg_json_arr) = {
         let acc = {
-            let gen_vrts = |max_dim: Option<i32>|{
-                PgJson::into_arr().into_iter().fold(Vec::new(), |mut acc, pg_json| {
+            let dim_of_pattern = |pattern: &Pattern| -> i32 {
+                match pattern {
+                    Pattern::Stdrt => 0i32,
+                    Pattern::ArrDim1 { .. } => 1i32,
+                    Pattern::ArrDim2 { .. } => 2i32,
+                    Pattern::ArrDim3 { .. } => 3i32,
+                    Pattern::ArrDim4 { .. } => 4i32,
+                }
+            };
+            let gen_vrts = |max_dim: Option<i32>, exact_dim: Option<i32>, filter: Option<&[PgJson]>|{
+                PgJson::into_arr().into_iter().filter(|pg_json| filter.is_none_or(|f| f.contains(pg_json))).fold(Vec::new(), |mut acc, pg_json| {
                     for pattern in Pattern::into_arr() {
-                        if match max_dim {
-                            None => true,
-                            Some(0i32) => matches!(pattern, Pattern::Stdrt),
-                            Some(v_b6fece15) => {
-                                let dim = match pattern {
-                                    Pattern::Stdrt => 0i32,
-                                    Pattern::ArrDim1 { .. } => 1i32,
-                                    Pattern::ArrDim2 { .. } => 2i32,
-                                    Pattern::ArrDim3 { .. } => 3i32,
-                                    Pattern::ArrDim4 { .. } => 4i32,
-                                };
-                                dim <= v_b6fece15
-                            }
-                        } {
+                        let pattern_dim = dim_of_pattern(&pattern);
+                        let include = match (exact_dim, max_dim) {
+                            (Some(ed), _) => pattern_dim == ed,
+                            (None, None) => true,
+                            (None, Some(md)) => pattern_dim <= md,
+                        };
+                        if include {
                             match pattern {
                                 Pattern::Stdrt => {
                                     for is_nl in IsNl::into_arr() {
@@ -452,13 +464,19 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 })
             };
             match config.vrt {
-                ConfigVrt::All => gen_vrts(None),
-                ConfigVrt::WithoutDims => gen_vrts(Some(0i32)),
-                ConfigVrt::WithDimOne => gen_vrts(Some(1i32)),
-                ConfigVrt::WithDimTwo => gen_vrts(Some(2i32)),
-                ConfigVrt::WithDimThree => gen_vrts(Some(3i32)),
-                ConfigVrt::WithDimFour => gen_vrts(Some(4i32)),
+                ConfigVrt::All => gen_vrts(None, None, None),
                 ConfigVrt::Concrete(v) => v,
+                ConfigVrt::OnlyDimFour => gen_vrts(None, Some(4i32), None),
+                ConfigVrt::OnlyDimOne => gen_vrts(None, Some(1i32), None),
+                ConfigVrt::OnlyDimThree => gen_vrts(None, Some(3i32), None),
+                ConfigVrt::OnlyDimTwo => gen_vrts(None, Some(2i32), None),
+                ConfigVrt::OnlyStdrt => gen_vrts(None, Some(0i32), None),
+                ConfigVrt::Subset(types) => gen_vrts(config.max_dim, None, Some(&types)),
+                ConfigVrt::WithDimFour => gen_vrts(Some(4i32), None, None),
+                ConfigVrt::WithDimOne => gen_vrts(Some(1i32), None, None),
+                ConfigVrt::WithDimThree => gen_vrts(Some(3i32), None, None),
+                ConfigVrt::WithDimTwo => gen_vrts(Some(2i32), None, None),
+                ConfigVrt::WithoutDims => gen_vrts(Some(0i32), None, None),
             }
         };
         let mut seen = HashSet::new();
@@ -3304,13 +3322,17 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     );
     let generated = {
         let content_ts = parse_strs_to_ts2_vec(pg_json_arr, "84e21b40");
+        let mod_name_ts = config.mod_name.as_ref().map_or_else(
+            || quote! { #GenPgJsonModSc },
+            |name| name.parse::<Ts2>().expect("c7a3f1b2"),
+        );
         quote! {
             #[allow(unused_qualifications)]
             #[allow(clippy::absolute_paths)]
-            mod #GenPgJsonModSc {
+            mod #mod_name_ts {
                 #(#content_ts)*
             }
-            pub use #GenPgJsonModSc::*;
+            pub use #mod_name_ts::*;
         }
     };
     mb_write_ts_into_file(
