@@ -59,7 +59,6 @@ members = [
   "config_lib/try_from_env",
   "config_lib/server_port",
   "config_lib/server_port/server_port_try_from_u16",
-  "config_lib/server_port/server_port_cmn",
   "route_validators",
   "tests",
   "impl_display_as_debug",

@@ -1,14 +1,16 @@
 use optml::Optml;
 use serde::{Deserialize, Deserializer, Serialize, de::Error as SerdeEr};
-use server_port_cmn::{
-    SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
-    SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE, SERVER_PORT_MAX_VALUE, SERVER_PORT_MIN_VALUE,
-};
 pub use server_port_try_from_u16::server_port_try_from_u16;
 use std::{
     error::Error,
     fmt::{Display, Formatter, Result as FmtResult},
 };
+pub const SERVER_PORT_MIN_VALUE: u16 = 1024;
+pub const SERVER_PORT_MAX_VALUE: u16 = 49151;
+const SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE: &str =
+    "init failed, reason: system port range 0-1023";
+const SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE: &str =
+    "init failed, reason: ephemeral port range 49152-65535";
 #[derive(Debug, Clone, Copy, Serialize, Optml)]
 pub struct ServerPort(u16);
 impl Display for ServerPort {

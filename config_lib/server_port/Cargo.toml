@@ -14,7 +14,6 @@ edition = "2024"
 [dependencies]
 serde.workspace = true
 server_port_try_from_u16 = {path = "./server_port_try_from_u16"}
-server_port_cmn = {path = "./server_port_cmn"}
 optml = {path = "../../optml"}
 
 [lints]
