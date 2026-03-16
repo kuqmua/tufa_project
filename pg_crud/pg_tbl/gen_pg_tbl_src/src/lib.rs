@@ -54,9 +54,9 @@ use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
     er_enum_d_ts_builder, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
-    gen_impl_pg_crud_dflt_some_one_el_ts, gen_match_try_new_in_de_ts, gen_opt_type_dcl_ts,
-    gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts,
-    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
+    gen_impl_pg_crud_dflt_some_one_el_ts, gen_opt_type_dcl_ts, gen_qp_er_write_into_buffer_ts,
+    gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
+    impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -3497,84 +3497,24 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 Ok(Self(#VSc))
                             },
                         );
-                        let impl_de_for_ident_um_payload_ts = {
-                            let tuple_struct_ident_op_payload_dq_ts =
-                                dq_ts(&format!("tuple struct {ident_op_payload_ucc}"));
-                            let tuple_struct_ident_op_payload_with_1_el_dq_ts = dq_ts(&format!(
-                                "tuple struct {ident_op_payload_ucc} with 1 el"
-                            ));
-                            let match_ident_um_payload_try_new_field0_ts =
-                                gen_match_try_new_in_de_ts(&ident_op_payload_ucc, &quote! {f0});
-                            let ident_op_payload_dq_ts = dq_ts(&ident_op_payload_ucc);
-                            quote! {
-                                #[allow(unused_qualifications)]
-                                #[allow(clippy::absolute_paths)]
-                                #AllowClippyArbitrarySrcItemOrdering
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute, clippy::arbitrary_source_item_ordering)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for #ident_op_payload_ucc {
-                                        fn deserialize<__D>(
-                                            __deserializer: __D,
-                                        ) -> Result<Self, __D::Error>
-                                        where
-                                            __D: _serde::Deserializer<'de>,
-                                        {
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private228::PhantomData<#ident_op_payload_ucc>,
-                                                lt: _serde::__private228::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = #ident_op_payload_ucc;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private228::Formatter<'_>,
-                                                ) -> _serde::__private228::fmt::Result {
-                                                    _serde::__private228::Formatter::write_str(
-                                                        __formatter,
-                                                        #tuple_struct_ident_op_payload_dq_ts,
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_newtype_struct<__E>(
-                                                    self,
-                                                    __e: __E,
-                                                ) -> Result<Self::Value, __E::Error>
-                                                where
-                                                    __E: _serde::Deserializer<'de>,
-                                                {
-                                                    let f0: #vec_ident_upd_ts = <#vec_ident_upd_ts as _serde::Deserialize>::deserialize(__e)?;
-                                                    #match_ident_um_payload_try_new_field0_ts
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let Some(f0) = _serde::de::SeqAccess::next_element::<#vec_ident_upd_ts>(&mut __seq)? else {
-                                                        return Err(_serde::de::Error::invalid_length(0usize, &#tuple_struct_ident_op_payload_with_1_el_dq_ts));
-                                                    };
-                                                    #match_ident_um_payload_try_new_field0_ts
-                                                }
-                                            }
-                                            _serde::Deserializer::deserialize_newtype_struct(
-                                                __deserializer,
-                                                #ident_op_payload_dq_ts,
-                                                __Visitor {
-                                                    marker: _serde::__private228::PhantomData::<Self>,
-                                                    lt: _serde::__private228::PhantomData,
-                                                },
-                                            )
-                                        }
+                        let impl_de_for_ident_um_payload_ts = quote! {
+                            #[allow(unused_qualifications)]
+                            #[allow(clippy::absolute_paths)]
+                            #AllowClippyArbitrarySrcItemOrdering
+                            const _: () = {
+                                #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                extern crate serde as _serde;
+                                #[automatically_derived]
+                                impl<'de> _serde::Deserialize<'de> for #ident_op_payload_ucc {
+                                    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
+                                    where
+                                        __D: _serde::Deserializer<'de>,
+                                    {
+                                        let raw = <#vec_ident_upd_ts as _serde::Deserialize>::deserialize(__deserializer)?;
+                                        Self::try_new(raw).map_err(|er| _serde::de::Error::custom(format!("{er:?}")))
                                     }
-                                };
-                            }
+                                }
+                            };
                         };
                         let impl_pg_crud_dflt_some_one_el_for_op_payload_ts =
                             gen_impl_pg_crud_dflt_some_one_el_for_tokens_no_lt_ts(
