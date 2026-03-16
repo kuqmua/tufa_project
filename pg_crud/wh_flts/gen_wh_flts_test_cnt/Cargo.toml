@@ -1,0 +1,12 @@
+[package]
+name = "gen_wh_flts_test_cnt"
+version = "0.1.0"
+edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
+[lints]
+workspace = true

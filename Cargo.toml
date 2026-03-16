@@ -45,6 +45,8 @@ members = [
   "pg_crud/wh_flts",
   "pg_crud/wh_flts/gen_wh_flts",
   "pg_crud/wh_flts/gen_wh_flts_src",
+  "pg_crud/wh_flts/gen_wh_flts_test",
+  "pg_crud/wh_flts/gen_wh_flts_test_cnt",
   "gen_quotes",
   "macros_helpers",
   "macros_helpers/gen_derive_ts_builder",
