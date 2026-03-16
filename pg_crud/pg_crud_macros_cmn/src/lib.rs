@@ -1,7 +1,7 @@
 mod flts;
 use enum_extension_lib::EnumExtension;
 pub use flts::*;
-use gen_quotes::{dq_str, dq_ts};
+use gen_quotes::dq_ts;
 use macros_helpers::DTsBuilder;
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::prm::{SelfCrUcc, SelfSelUcc, SelfWhUcc};
@@ -1963,136 +1963,23 @@ pub fn gen_match_try_new_in_de_ts(ident: &dyn ToTokens, init_ts: &dyn ToTokens) 
 pub fn gen_impl_de_for_struct_ts(
     ident: &dyn DisplayPlusToTokens,
     vec_ident_type: &[(&Ident, &Type)],
-    len: usize,
+    _len: usize,
     gen_type_ts: &dyn Fn(&Ident, &Type) -> Ts2,
 ) -> Ts2 {
-    fn gen_undrscr_undrscr_field_i_str(i: usize) -> String {
-        format!("f{i}")
-    }
-    fn gen_undrscr_undrscr_field_i_ts(i: usize) -> Ts2 {
-        gen_undrscr_undrscr_field_i_str(i)
-            .parse::<Ts2>()
-            .expect("ff7433a3")
-    }
-    fn gen_undrscr_undrscr_field_i_h_ts(i: usize) -> Ts2 {
-        format!("{}_h", gen_undrscr_undrscr_field_i_str(i))
-            .parse::<Ts2>()
-            .expect("09a0c518")
-    }
-    fn gen_fi_dq_serde_private_ok_field_ts(field_name_dq_ts: &dyn ToTokens, i: usize) -> Ts2 {
-        let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
-        quote! {#field_name_dq_ts => Ok(__Field::#field_i_ts)}
-    }
-    let vec_ident = vec_ident_type
-        .iter()
-        .map(|el| el.0)
-        .collect::<Vec<&Ident>>();
-    let field_enum_vrts_ts = {
-        let field_enum_vrts_ts = (0..len)
-            .map(|i| format!("f{i}").parse::<Ts2>().expect("c46314b0"))
-            .collect::<Vec<Ts2>>();
-        quote! {#(#field_enum_vrts_ts),*}
-    };
-    let visit_u64_v_enum_vrts_ts = {
-        let visit_u64_v_enum_vrts_ts = (0..len).map(|i| {
-            let i_u64_ts = format!("{i}u64").parse::<Ts2>().expect("828ff7b4");
-            let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
-            quote! {#i_u64_ts => Ok(__Field::#field_i_ts)}
-        });
-        quote! {#(#visit_u64_v_enum_vrts_ts),*}
-    };
-    let visit_str_v_enum_vrts_ts = {
-        let visit_str_v_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
-            let field_name_dq_ts = dq_ts(&el);
-            gen_fi_dq_serde_private_ok_field_ts(&field_name_dq_ts, i)
-        });
-        quote! {#(#visit_str_v_enum_vrts_ts),*,}
-    };
-    let visit_bytes_v_enum_vrts_ts = {
-        let visit_bytes_v_enum_vrts_ts = vec_ident.iter().enumerate().map(|(i, el)| {
-            let b_field_name_dq_ts = format!("b{}", dq_str(&el.to_string()))
-                .parse::<Ts2>()
-                .expect("9e33625e");
-            gen_fi_dq_serde_private_ok_field_ts(&b_field_name_dq_ts, i)
-        });
-        quote! {#(#visit_bytes_v_enum_vrts_ts),*,}
-    };
-    let struct_ident_dq_ts = gen_struct_ident_dq_ts(&ident);
-    let visit_seq_fields_init_ts = {
-        let ts = vec_ident_type.iter().enumerate().map(|(i, (el_ident, el_type))| {
-            let field_i_h_ts = gen_undrscr_undrscr_field_i_h_ts(i);
-            let type_ts = gen_type_ts(el_ident, el_type);
-            let struct_ident_opts_with_dq_ts = dq_ts(&format!("struct {ident} with {len} els"));
-            quote! {
-                let Some(#field_i_h_ts) = serde::de::SeqAccess::next_element::<#type_ts>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_opts_with_dq_ts));
-                };
-            }
-        });
-        quote! {#(#ts)*}
-    };
-    let match_try_new_in_de_ts = gen_match_try_new_in_de_ts(&ident, &{
-        let fields_ts = (0..len).map(gen_undrscr_undrscr_field_i_h_ts);
-        quote! {#(#fields_ts),*}
+    let raw_ident_ts = format!("{ident}Raw").parse::<Ts2>().expect("a1b2c3d4");
+    let raw_fields_ts = vec_ident_type.iter().map(|(fi, ty)| {
+        let type_ts = gen_type_ts(fi, ty);
+        quote! { #fi: #type_ts, }
     });
-    let visit_map_fields_init_ts = {
-        let ts = vec_ident_type
-            .iter()
-            .enumerate()
-            .map(|(i, (el_ident, el_type))| {
-                let type_ts = gen_type_ts(el_ident, el_type);
-                let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
-                quote! {
-                    let mut #field_i_ts: Option<#type_ts> = None;
-                }
-            });
-        quote! {#(#ts)*}
-    };
-    let visit_map_match_vrts_ts =
-        {
-            let visit_map_match_vrts_ts = vec_ident_type.iter().enumerate().map(
-                |(i, (el_ident, el_type))| {
-                    let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
-                    let fi_dq_ts = dq_ts(&el_ident);
-                    let type_ts = gen_type_ts(el_ident, el_type);
-                    quote! {
-                        __Field::#field_i_ts => {
-                            if Option::is_some(&#field_i_ts) {
-                                return Err(
-                                    <__A::Error as serde::de::Error>::duplicate_field(#fi_dq_ts),
-                                );
-                            }
-                            #field_i_ts = Some(
-                                serde::de::MapAccess::next_value::<#type_ts>(&mut __map)?,
-                            );
-                        }
-                    }
-                },
-            );
-            quote! {#(#visit_map_match_vrts_ts)*}
-        };
-    let visit_map_missing_fields_check_ts = {
-        let ts = vec_ident.iter().enumerate().map(|(i, el)| {
-            let field_i_ts = gen_undrscr_undrscr_field_i_ts(i);
-            let field_i_h_ts = gen_undrscr_undrscr_field_i_h_ts(i);
-            let fi_dq_ts = dq_ts(&el);
-            quote! {
-                let #field_i_h_ts = match #field_i_ts {
-                    Some(v) => v,
-                    None => {
-                        serde::__private228::de::missing_field(#fi_dq_ts)?
-                    }
-                };
-            }
-        });
-        quote! {#(#ts)*}
-    };
-    let fields_arr_els_ts = {
-        let fields_arr_els_ts = vec_ident.iter().map(|el| dq_ts(&el));
-        quote! {#(#fields_arr_els_ts),*}
-    };
-    let ident_dq_ts = dq_ts(&ident);
+    let try_from_fields_ts = vec_ident_type.iter().map(|(fi, _)| {
+        quote! { raw.#fi }
+    });
     quote! {
+        #[derive(serde::Deserialize)]
+        #[allow(clippy::arbitrary_source_item_ordering)]
+        struct #raw_ident_ts {
+            #(#raw_fields_ts)*
+        }
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
         #AllowClippyArbitrarySrcItemOrdering
@@ -2107,142 +1994,8 @@ pub fn gen_impl_de_for_struct_ts(
                 where
                     __D: _serde::Deserializer<'de>,
                 {
-                    #[allow(non_camel_case_types)]
-                    #[doc(hidden)]
-                    enum __Field {
-                        #field_enum_vrts_ts,
-                        __ignore,
-                    }
-                    #[doc(hidden)]
-                    struct __FieldVisitor;
-                    #[automatically_derived]
-                    impl _serde::de::Visitor<'_> for __FieldVisitor {
-                        type Value = __Field;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private228::Formatter<'_>,
-                        ) -> _serde::__private228::fmt::Result {
-                            _serde::__private228::Formatter::write_str(
-                                __formatter,
-                                "field identifier",
-                            )
-                        }
-                        fn visit_u64<__E>(
-                            self,
-                            v: u64,
-                        ) -> Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match v {
-                                #visit_u64_v_enum_vrts_ts,
-                                _ => Ok(__Field::__ignore),
-                            }
-                        }
-                        fn visit_str<__E>(
-                            self,
-                            v: &str,
-                        ) -> Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match v {
-                                #visit_str_v_enum_vrts_ts
-                                _ => Ok(__Field::__ignore),
-                            }
-                        }
-                        fn visit_bytes<__E>(
-                            self,
-                            v: &[u8],
-                        ) -> Result<Self::Value, __E>
-                        where
-                            __E: _serde::de::Error,
-                        {
-                            match v {
-                                #visit_bytes_v_enum_vrts_ts
-                                _ => Ok(__Field::__ignore),
-                            }
-                        }
-                    }
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for __Field {
-                        #[inline]
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            _serde::Deserializer::deserialize_identifier(
-                                __deserializer,
-                                __FieldVisitor,
-                            )
-                        }
-                    }
-                    #[doc(hidden)]
-                    struct __Visitor<'de> {
-                        marker: _serde::__private228::PhantomData<#ident>,
-                        lt: _serde::__private228::PhantomData<&'de ()>,
-                    }
-                    #[automatically_derived]
-                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                        type Value = #ident;
-                        fn expecting(
-                            &self,
-                            __formatter: &mut _serde::__private228::Formatter<'_>,
-                        ) -> _serde::__private228::fmt::Result {
-                            _serde::__private228::Formatter::write_str(
-                                __formatter,
-                                #struct_ident_dq_ts,
-                            )
-                        }
-                        #[inline]
-                        fn visit_seq<__A>(
-                            self,
-                            mut __seq: __A,
-                        ) -> Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::SeqAccess<'de>,
-                        {
-                            #visit_seq_fields_init_ts
-                            #match_try_new_in_de_ts
-                        }
-                        #[inline]
-                        fn visit_map<__A>(
-                            self,
-                            mut __map: __A,
-                        ) -> Result<Self::Value, __A::Error>
-                        where
-                            __A: _serde::de::MapAccess<'de>,
-                        {
-                            #visit_map_fields_init_ts
-                            while let Some(__k) = _serde::de::MapAccess::next_key::<
-                                __Field,
-                            >(&mut __map)? {
-                                match __k {
-                                    #visit_map_match_vrts_ts
-                                    __Field::__ignore => {
-                                        let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<
-                                            _serde::de::IgnoredAny,
-                                        >(&mut __map)?;
-                                    }
-                                }
-                            }
-                            #visit_map_missing_fields_check_ts
-                            #match_try_new_in_de_ts
-                        }
-                    }
-                    #[doc(hidden)]
-                    const FIELDS: &[&str] = &[#fields_arr_els_ts];
-                    _serde::Deserializer::deserialize_struct(
-                        __deserializer,
-                        #ident_dq_ts,
-                        FIELDS,
-                        __Visitor {
-                            marker: _serde::__private228::PhantomData::<Self>,
-                            lt: _serde::__private228::PhantomData,
-                        },
-                    )
+                    let raw = <#raw_ident_ts as _serde::Deserialize>::deserialize(__deserializer)?;
+                    Self::try_new(#(#try_from_fields_ts),*).map_err(|er| _serde::de::Error::custom(format!("{er:?}")))
                 }
             }
         };
