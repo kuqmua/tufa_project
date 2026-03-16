@@ -1,4 +1,5 @@
 use enum_extension_lib::EnumExtension;
+use naming::prm::{PgJsonWhSelfUcc, PgTypeWhSelfUcc};
 use naming::{
     AdjacentWithRangeUcc, AllElsEqUcc, AllElsGreaterThanUcc, AllElsRgxUcc, BeforeUcc, BtwnUcc,
     ContainsAllElsOfArrUcc, ContainsElGreaterThanUcc, ContainsElRgxUcc, CrntDateUcc, CrntTimeUcc,
@@ -30,7 +31,6 @@ use naming::{
     GreaterThanExcludedUpperBoundUcc, GreaterThanIncludedLowerBoundUcc, GreaterThanUcc, InUcc,
     IncludedLowerBoundUcc, LenEqUcc, LenGreaterThanUcc, OverlapWithRangeUcc, OverlapsWithArrUcc,
     RangeLenUcc, RgxUcc, StrictlyToLeftOfRangeUcc, StrictlyToRightOfRangeUcc,
-    prm::{PgJsonWhSelfUcc, PgTypeWhSelfUcc},
 };
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;

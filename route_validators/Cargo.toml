@@ -20,7 +20,6 @@ bytes.workspace = true
 git_info = {path = "../git_info"}
 naming = {path = "../naming"}
 loc_lib = {path = "../loc_lib"}
-http_logic = {path = "../http_logic"}
 optml = {path = "../optml"}
 
 [lints]

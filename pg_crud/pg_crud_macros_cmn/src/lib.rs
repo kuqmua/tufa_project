@@ -4,6 +4,7 @@ pub use flts::*;
 use gen_quotes::{dq_str, dq_ts};
 use macros_helpers::DTsBuilder;
 use macros_helpers::gen_impl_to_err_string_ts;
+use naming::prm::{SelfCrUcc, SelfSelUcc, SelfWhUcc};
 use naming::{
     AddOprtrSc, AllVrtsDfltSomeOneElMaxPageSizeSc, AllVrtsDfltSomeOneElSc, ColFieldForErMsgSc,
     ColFieldSc, ColSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLenEqSc,
@@ -26,7 +27,6 @@ use naming::{
     RdUcc, SelOnlyCrdIdsQbSc, SelOnlyCrdIdsQpSc, SelOnlyIdsQpSc, SelOnlyUpddIdsQbSc,
     SelOnlyUpddIdsQpSc, SelQpSc, SelUcc, SelfUcc, TtSc, TtUcc, UpdForQueryUcc, UpdQbSc, UpdQpSc,
     UpdToRdIdsSc, UpdUcc, VSc, VUcc, ValueSc, WhUcc,
-    prm::{SelfCrUcc, SelfSelUcc, SelfWhUcc},
 };
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;

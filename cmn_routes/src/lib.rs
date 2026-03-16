@@ -5,11 +5,11 @@ use axum::{
     http::{StatusCode, Uri},
     routing::get,
 };
-use constants::SLASH_SWAGGER_UI;
 use git_info::GetGitCommitLink;
 use optml::Optml;
 use serde::Serialize;
 use std::sync::Arc;
+const SLASH_SWAGGER_UI: &str = "/swagger-ui";
 type DynArcCmnRoutesPrmsSendSync = Arc<dyn CmnRoutesPrms>;
 pub trait CmnRoutesPrms: GetGitCommitLink + Send + Sync {}
 pub fn cmn_routes(app_state_b9fc2d94: DynArcCmnRoutesPrmsSendSync) -> Router {

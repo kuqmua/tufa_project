@@ -1,8 +1,8 @@
 use macros_helpers::gen_impl_display_ts;
-use naming::prm::{SelfTryFromEnvErUcc, TryFromStdEnvVarOkSelfErUcc};
 use naming::{
     DotenvSc, DotenvUcc, EnvVarNameSc, StdEnvVarErSc, StdEnvVarErUcc, ToTokensToUccTs,
     ToTokensToUpperScStr, TryFromStdEnvVarOkUcc,
+    prm::{SelfTryFromEnvErUcc, TryFromStdEnvVarOkSelfErUcc},
 };
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;

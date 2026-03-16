@@ -4,7 +4,6 @@ members = [
   "app_state",
   "cmn_routes",
   "config_lib",
-  "constants",
   "to_err_string",
   "enum_extension_lib/enum_extension",
   "enum_extension_lib",
@@ -61,7 +60,6 @@ members = [
   "config_lib/server_port",
   "config_lib/server_port/server_port_try_from_u16",
   "config_lib/server_port/server_port_cmn",
-  "http_logic",
   "route_validators",
   "tests",
   "impl_display_as_debug",
@@ -1155,3 +1153,11 @@ same_length_and_capacity = "deny"
 duration_suboptimal_units = "deny"
 manual_take = "deny"
 manual_checked_ops = "deny"
+
+[profile.dev]
+debug = 1
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
