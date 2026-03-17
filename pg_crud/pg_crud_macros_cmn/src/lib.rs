@@ -1537,51 +1537,50 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     let self_pg_type_as_pg_type_cr_ts = quote! {#self_pg_type_as_pg_type_ts::#CrUcc};
     let self_pg_type_as_pg_type_wh_ts = quote! {#self_pg_type_as_pg_type_ts::#WhUcc};
     let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
-    let opt_vec_cr_ts_2d58042f = gen_opt_vec_cr_ts(&self_pg_type_as_pg_type_ts, &opt_vec_cr_ts);
-    let rd_ids_to_2_dims_vec_rd_inn_ts_513b8046 = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
+    let opt_vec_cr_ts_gnrtd = gen_opt_vec_cr_ts(&self_pg_type_as_pg_type_ts, &opt_vec_cr_ts);
+    let rd_ids_to_2_dims_vec_rd_inn_ts_gnrtd = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
         &self_pg_type_as_pg_type_ts,
         &rd_ids_to_2_dims_vec_rd_inn_ts,
     );
-    let rd_inn_into_rd_with_new_or_try_new_unwraped_ts_affc58f5 =
+    let rd_inn_into_rd_with_new_or_try_new_unwraped_ts_gnrtd =
         gen_rd_inn_into_rd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_type_as_pg_type_ts,
             &rd_inn_into_rd_with_new_or_try_new_unwraped_ts,
         );
-    let rd_inn_into_upd_with_new_or_try_new_unwraped_ts_c38e6621 =
+    let rd_inn_into_upd_with_new_or_try_new_unwraped_ts_gnrtd =
         gen_rd_inn_into_upd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_type_as_pg_type_ts,
             &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
         );
-    let upd_to_rd_ids_ts_ee17b828 =
+    let upd_to_rd_ids_ts_gnrtd =
         gen_upd_to_rd_ids_ts(&self_pg_type_as_pg_type_ts, &upd_to_rd_ids_ts);
-    let rd_ids_to_opt_v_rd_dflt_some_one_el_ts_18ef45e8 =
-        gen_rd_ids_to_opt_v_rd_dflt_some_one_el_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_to_opt_v_rd_dflt_some_one_el_ts,
-        );
-    let previous_rd_and_opt_upd_into_rd_ts_c48b8ede = gen_previous_rd_and_opt_upd_into_rd_ts(
+    let rd_ids_to_opt_v_rd_dflt_some_one_el_ts_gnrtd = gen_rd_ids_to_opt_v_rd_dflt_some_one_el_ts(
+        *import,
+        &self_pg_type_as_pg_type_ts,
+        &rd_ids_to_opt_v_rd_dflt_some_one_el_ts,
+    );
+    let previous_rd_and_opt_upd_into_rd_ts_gnrtd = gen_previous_rd_and_opt_upd_into_rd_ts(
         &self_pg_type_as_pg_type_ts,
         &previous_rd_and_opt_upd_into_rd_ts,
     );
-    let rd_ids_and_cr_into_rd_ts_df48e4b7 =
+    let rd_ids_and_cr_into_rd_ts_gnrtd =
         gen_rd_ids_and_cr_into_rd_ts(&self_pg_type_as_pg_type_ts, &rd_ids_and_cr_into_rd_ts);
-    let rd_ids_and_cr_into_opt_v_rd_ts_8b7e9688 = gen_rd_ids_and_cr_into_opt_v_rd_ts(
+    let rd_ids_and_cr_into_opt_v_rd_ts_gnrtd = gen_rd_ids_and_cr_into_opt_v_rd_ts(
         *import,
         &self_pg_type_as_pg_type_ts,
         &rd_ids_and_cr_into_opt_v_rd_ts,
     );
-    let rd_ids_and_cr_into_tt_ts_f227db63 =
+    let rd_ids_and_cr_into_tt_ts_gnrtd =
         gen_rd_ids_and_cr_into_tt_ts(&self_pg_type_as_pg_type_ts, &rd_ids_and_cr_into_tt_ts);
-    let rd_ids_and_cr_into_wh_eq_ts_dcde170f = gen_rd_ids_and_cr_into_wh_eq_ts(
+    let rd_ids_and_cr_into_wh_eq_ts_gnrtd = gen_rd_ids_and_cr_into_wh_eq_ts(
         &self_pg_type_as_pg_type_rd_ids_ts,
         &self_pg_type_as_pg_type_cr_ts,
         &self_pg_type_as_pg_type_wh_ts,
         &rd_ids_and_cr_into_wh_eq_ts,
     );
-    let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_076c6ebd =
+    let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_gnrtd =
         gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts(
             import,
             &self_pg_type_as_pg_type_rd_ids_ts,
@@ -1589,7 +1588,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &self_pg_type_as_pg_type_wh_ts,
             &rd_ids_and_cr_into_vec_wh_eq_using_fields_ts,
         );
-    let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts_948ce180 =
+    let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts_gnrtd =
         gen_rd_ids_and_cr_into_vec_or_opt_vec_wh_eq_to_json_field_pg_type_or_pg_json_ts(
             *import,
             &self_pg_type_as_pg_type_rd_ids_ts,
@@ -1600,72 +1599,72 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         );
     let cr_into_pg_type_opt_vec_wh_dim_one_eq_sc = CrIntoPgTypeOptVecWhDimOneEqSc;
     let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_sc = RdIdsAndTtIntoPgTypeOptWhGreaterThanSc;
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_33093313 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_9522c7a5 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_81696b49 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_2631549b =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
         );
-    let cr_into_pg_json_opt_vec_wh_len_eq_ts_34b74d66 = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
+    let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
         *import,
         &self_pg_type_as_pg_type_ts,
         &cr_into_pg_json_opt_vec_wh_len_eq_ts,
     );
-    let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_b196c70f =
+    let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd =
         gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_498680a8 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_b685b98f =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_ac82295e =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_bfe19de1 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_8d2a6cb8 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_ff2d3a76 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
             *import,
             &self_pg_type_as_pg_type_ts,
@@ -1680,19 +1679,19 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         impl #import::#PgTypeTestCasesUcc for #ident {
             type #PgTypeUcc = #SelfUcc;
             type #SelUcc = #ident_sel_ucc;
-            #opt_vec_cr_ts_2d58042f
-            #rd_ids_to_2_dims_vec_rd_inn_ts_513b8046
-            #rd_inn_into_rd_with_new_or_try_new_unwraped_ts_affc58f5
-            #rd_inn_into_upd_with_new_or_try_new_unwraped_ts_c38e6621
-            #upd_to_rd_ids_ts_ee17b828
-            #rd_ids_to_opt_v_rd_dflt_some_one_el_ts_18ef45e8
-            #previous_rd_and_opt_upd_into_rd_ts_c48b8ede
-            #rd_ids_and_cr_into_rd_ts_df48e4b7
-            #rd_ids_and_cr_into_opt_v_rd_ts_8b7e9688
-            #rd_ids_and_cr_into_tt_ts_f227db63
-            #rd_ids_and_cr_into_wh_eq_ts_dcde170f
-            #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_076c6ebd
-            #rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts_948ce180
+            #opt_vec_cr_ts_gnrtd
+            #rd_ids_to_2_dims_vec_rd_inn_ts_gnrtd
+            #rd_inn_into_rd_with_new_or_try_new_unwraped_ts_gnrtd
+            #rd_inn_into_upd_with_new_or_try_new_unwraped_ts_gnrtd
+            #upd_to_rd_ids_ts_gnrtd
+            #rd_ids_to_opt_v_rd_dflt_some_one_el_ts_gnrtd
+            #previous_rd_and_opt_upd_into_rd_ts_gnrtd
+            #rd_ids_and_cr_into_rd_ts_gnrtd
+            #rd_ids_and_cr_into_opt_v_rd_ts_gnrtd
+            #rd_ids_and_cr_into_tt_ts_gnrtd
+            #rd_ids_and_cr_into_wh_eq_ts_gnrtd
+            #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_gnrtd
+            #rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts_gnrtd
             fn #cr_into_pg_type_opt_vec_wh_dim_one_eq_sc(
                 #CrSc: #self_pg_type_as_pg_type_ts::#CrUcc
             ) -> Option<#import::NotEmptyUnqVec<#self_pg_type_as_pg_type_ts::#WhUcc>> {
@@ -1714,18 +1713,18 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             ) -> Option<#self_pg_type_as_pg_type_ts::#WhUcc> {
                 #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts
             }
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_33093313
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_9522c7a5
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_81696b49
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_2631549b
-            #cr_into_pg_json_opt_vec_wh_len_eq_ts_34b74d66
-            #cr_into_pg_json_opt_vec_wh_len_greater_than_ts_b196c70f
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_498680a8
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_b685b98f
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_ac82295e
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_bfe19de1
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_8d2a6cb8
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_ff2d3a76
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd
+            #cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd
+            #cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd
         }
     }
 }
@@ -1766,51 +1765,50 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     let self_pg_json_as_pg_json_cr_ts = quote! {#self_pg_json_as_pg_json_ts::#CrUcc};
     let self_pg_json_as_pg_json_wh_ts = quote! {#self_pg_json_as_pg_json_ts::#WhUcc};
     let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
-    let opt_vec_cr_ts_a442630a = gen_opt_vec_cr_ts(&self_pg_json_as_pg_json_ts, &opt_vec_cr_ts);
-    let rd_ids_to_2_dims_vec_rd_inn_ts_da1a7cf8 = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
+    let opt_vec_cr_ts_gnrtd = gen_opt_vec_cr_ts(&self_pg_json_as_pg_json_ts, &opt_vec_cr_ts);
+    let rd_ids_to_2_dims_vec_rd_inn_ts_gnrtd = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
         &self_pg_json_as_pg_json_ts,
         &rd_ids_to_2_dims_vec_rd_inn_ts,
     );
-    let rd_inn_into_rd_with_new_or_try_new_unwraped_ts_ccead2b6 =
+    let rd_inn_into_rd_with_new_or_try_new_unwraped_ts_gnrtd =
         gen_rd_inn_into_rd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_json_as_pg_json_ts,
             &rd_inn_into_rd_with_new_or_try_new_unwraped_ts,
         );
-    let rd_inn_into_upd_with_new_or_try_new_unwraped_ts_b45cde72 =
+    let rd_inn_into_upd_with_new_or_try_new_unwraped_ts_gnrtd =
         gen_rd_inn_into_upd_with_new_or_try_new_unwraped_ts(
             &type_ts,
             &self_pg_json_as_pg_json_ts,
             &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
         );
-    let upd_to_rd_ids_ts_d7e0cbf0 =
+    let upd_to_rd_ids_ts_gnrtd =
         gen_upd_to_rd_ids_ts(&self_pg_json_as_pg_json_ts, &upd_to_rd_ids_ts);
-    let rd_ids_to_opt_v_rd_dflt_some_one_el_ts_f5d1b395 =
-        gen_rd_ids_to_opt_v_rd_dflt_some_one_el_ts(
-            *import,
-            &self_pg_json_as_pg_json_ts,
-            &rd_ids_to_opt_v_rd_dflt_some_one_el_ts,
-        );
-    let previous_rd_and_opt_upd_into_rd_ts_ab0384b9 = gen_previous_rd_and_opt_upd_into_rd_ts(
+    let rd_ids_to_opt_v_rd_dflt_some_one_el_ts_gnrtd = gen_rd_ids_to_opt_v_rd_dflt_some_one_el_ts(
+        *import,
+        &self_pg_json_as_pg_json_ts,
+        &rd_ids_to_opt_v_rd_dflt_some_one_el_ts,
+    );
+    let previous_rd_and_opt_upd_into_rd_ts_gnrtd = gen_previous_rd_and_opt_upd_into_rd_ts(
         &self_pg_json_as_pg_json_ts,
         &previous_rd_and_opt_upd_into_rd_ts,
     );
-    let rd_ids_and_cr_into_rd_ts_7df2fa10 =
+    let rd_ids_and_cr_into_rd_ts_gnrtd =
         gen_rd_ids_and_cr_into_rd_ts(&self_pg_json_as_pg_json_ts, &rd_ids_and_cr_into_rd_ts);
-    let rd_ids_and_cr_into_opt_v_rd_ts_1f54e2bf = gen_rd_ids_and_cr_into_opt_v_rd_ts(
+    let rd_ids_and_cr_into_opt_v_rd_ts_gnrtd = gen_rd_ids_and_cr_into_opt_v_rd_ts(
         *import,
         &self_pg_json_as_pg_json_ts,
         &rd_ids_and_cr_into_opt_v_rd_ts,
     );
-    let rd_ids_and_cr_into_tt_ts_b605767e =
+    let rd_ids_and_cr_into_tt_ts_gnrtd =
         gen_rd_ids_and_cr_into_tt_ts(&self_pg_json_as_pg_json_ts, &rd_ids_and_cr_into_tt_ts);
-    let rd_ids_and_cr_into_wh_eq_ts_1009eb88 = gen_rd_ids_and_cr_into_wh_eq_ts(
+    let rd_ids_and_cr_into_wh_eq_ts_gnrtd = gen_rd_ids_and_cr_into_wh_eq_ts(
         &self_pg_json_as_pg_json_rd_ids_ts,
         &self_pg_json_as_pg_json_cr_ts,
         &self_pg_json_as_pg_json_wh_ts,
         &rd_ids_and_cr_into_wh_eq_ts,
     );
-    let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_876245c5 =
+    let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_gnrtd =
         gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts(
             import,
             &self_pg_json_as_pg_json_rd_ids_ts,
@@ -1818,7 +1816,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &self_pg_json_as_pg_json_wh_ts,
             &rd_ids_and_cr_into_vec_wh_eq_using_fields_ts,
         );
-    let rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts_11560e7f =
+    let rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts_gnrtd =
         gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts(
             *import,
             &self_pg_json_as_pg_json_rd_ids_ts,
@@ -1826,72 +1824,72 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &self_pg_json_as_pg_json_wh_ts,
             &rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_aaaa85b2 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_6da8ece7 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_6b473c12 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_b427508f =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
         );
-    let cr_into_pg_json_opt_vec_wh_len_eq_ts_5266addf = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
+    let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
         *import,
         &self_pg_json_as_pg_json_ts,
         &cr_into_pg_json_opt_vec_wh_len_eq_ts,
     );
-    let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_93196cce =
+    let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd =
         gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_e0be3ff7 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_9bdb444a =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_09ea1f4b =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_1b1057eb =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_5dc0a6c8 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
         );
-    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_972d3e87 =
+    let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd =
         gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
             *import,
             &self_pg_json_as_pg_json_ts,
@@ -1906,36 +1904,36 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
         impl #import::#PgJsonTestCasesUcc for #ident {
             type #PgJsonUcc = #SelfUcc;
             type #SelUcc = #ident_sel_ucc;
-            #opt_vec_cr_ts_a442630a
-            #rd_ids_to_2_dims_vec_rd_inn_ts_da1a7cf8
-            #rd_inn_into_rd_with_new_or_try_new_unwraped_ts_ccead2b6
-            #rd_inn_into_upd_with_new_or_try_new_unwraped_ts_b45cde72
+            #opt_vec_cr_ts_gnrtd
+            #rd_ids_to_2_dims_vec_rd_inn_ts_gnrtd
+            #rd_inn_into_rd_with_new_or_try_new_unwraped_ts_gnrtd
+            #rd_inn_into_upd_with_new_or_try_new_unwraped_ts_gnrtd
             fn #RdIdsIntoOptVRdInnSc(
                 #VSc: #self_pg_json_as_pg_json_ts::#RdIdsUcc
             ) -> Option<#import::#VUcc<#self_pg_json_as_pg_json_ts::#RdInnUcc>> {
                 #rd_ids_into_opt_v_rd_inn_ts
             }
-            #upd_to_rd_ids_ts_d7e0cbf0
-            #rd_ids_to_opt_v_rd_dflt_some_one_el_ts_f5d1b395
-            #previous_rd_and_opt_upd_into_rd_ts_ab0384b9
-            #rd_ids_and_cr_into_rd_ts_7df2fa10
-            #rd_ids_and_cr_into_opt_v_rd_ts_1f54e2bf
-            #rd_ids_and_cr_into_tt_ts_b605767e
-            #rd_ids_and_cr_into_wh_eq_ts_1009eb88
-            #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_876245c5
-            #rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts_11560e7f
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_aaaa85b2
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_6da8ece7
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_6b473c12
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_b427508f
-            #cr_into_pg_json_opt_vec_wh_len_eq_ts_5266addf
-            #cr_into_pg_json_opt_vec_wh_len_greater_than_ts_93196cce
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_e0be3ff7
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_9bdb444a
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_09ea1f4b
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_1b1057eb
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_5dc0a6c8
-            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_972d3e87
+            #upd_to_rd_ids_ts_gnrtd
+            #rd_ids_to_opt_v_rd_dflt_some_one_el_ts_gnrtd
+            #previous_rd_and_opt_upd_into_rd_ts_gnrtd
+            #rd_ids_and_cr_into_rd_ts_gnrtd
+            #rd_ids_and_cr_into_opt_v_rd_ts_gnrtd
+            #rd_ids_and_cr_into_tt_ts_gnrtd
+            #rd_ids_and_cr_into_wh_eq_ts_gnrtd
+            #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_gnrtd
+            #rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd
+            #cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd
+            #cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd
+            #rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd
         }
     }
 }

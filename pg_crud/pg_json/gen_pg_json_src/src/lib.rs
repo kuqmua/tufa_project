@@ -495,8 +495,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 pattern: Pattern,
             }
             fn gen_record_h_vec(record_h: RecordH) -> Vec<RecordH> {
-                let gen_vec = |record_h_1e4b61e4: RecordH| gen_record_h_vec(
-                    record_h_1e4b61e4
+                let gen_vec = |record_h_inner: RecordH| gen_record_h_vec(
+                    record_h_inner
                 ).into_iter().chain(once(record_h.clone())).collect();
                 match (&record_h.is_nl, &record_h.pattern) {
                     (IsNl::False, Pattern::Stdrt) => vec![record_h],
@@ -594,8 +594,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         };
         let import = Import::PgCrudCmn;
         let gen_v_init_ts0 = |ts: &dyn ToTokens| gen_v_init_ts(&import, &ts);
-        let gen_ident_ts = |is_nl_ddf79d44: &IsNl, pattern_2c09ee59: &Pattern| {
-            let (rust_part, pg_part) = match &pattern_2c09ee59 {
+        let gen_ident_ts = |is_nl_prm: &IsNl, pattern_prm: &Pattern| {
+            let (rust_part, pg_part) = match &pattern_prm {
                 Pattern::Stdrt => (rust_type_name.to_string(), pg_json_name.to_string()),
                 Pattern::ArrDim1 { dim1_is_nl } => {
                     let d1 = dim1_is_nl.nn_or_nl_str();
@@ -643,8 +643,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     )
                 }
             };
-            let nn_or_nl_str = is_nl_ddf79d44.nn_or_nl_str();
-            format!("{}{rust_part}{AsUcc}{nn_or_nl_str}{pg_part}", is_nl_ddf79d44.rust()).parse::<Ts2>().expect("998d1471")
+            let nn_or_nl_str = is_nl_prm.nn_or_nl_str();
+            format!("{}{rust_part}{AsUcc}{nn_or_nl_str}{pg_part}", is_nl_prm.rust()).parse::<Ts2>().expect("998d1471")
         };
         let ident = &gen_ident_ts(is_nl, pattern);
         let ident_stdrt_nn_ucc = &gen_ident_ts(&IsNl::False, &Pattern::Stdrt);
@@ -772,10 +772,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         let ident_rd_inn_sqlx_types_json_type_dcl_ts = gen_sqlx_types_json_type_dcl_ts(&ident_rd_inn_ucc);
         let sqlx_json_ref_self_zero_encode_ts = quote! {sqlx::types::Json(&#SelfSc.0)};
         let ident_orgn_ts = {
-            let gen_ident_orgn_non_wrapping_6c0934a6 = |
-                is_nl_e7d1d83c: &IsNl,
-                pattern_1ca83c6c: &Pattern
-            | SelfOrgnUcc::from_tokens(&gen_ident_ts(is_nl_e7d1d83c, pattern_1ca83c6c));
+            let gen_ident_orgn_non_wrapping = |
+                is_nl_prm: &IsNl,
+                pattern_prm: &Pattern
+            | SelfOrgnUcc::from_tokens(&gen_ident_ts(is_nl_prm, pattern_prm));
             let ident_orgn_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
@@ -813,19 +813,19 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &Ts2::new(),
                     &{
                         let content_ts: &dyn ToTokens = {
-                            let gen_ident_orgn_6f054930 = |is_nl_70fb22e6: &IsNl, pattern_042c1c1d: &Pattern| {
-                                let v = gen_ident_orgn_non_wrapping_6c0934a6(is_nl_70fb22e6, pattern_042c1c1d);
+                            let gen_ident_orgn_wrapping = |is_nl_prm: &IsNl, pattern_prm: &Pattern| {
+                                let v = gen_ident_orgn_non_wrapping(is_nl_prm, pattern_prm);
                                 match &is_nl {
                                     IsNl::False => gen_vec_tokens_dcl_ts(&v),
                                     IsNl::True => gen_opt_type_dcl_ts(&v),
                                 }
                             };
-                            let gen_dims_ts = |dim1_is_nl_a5c667cd: &IsNl|{
-                                let (is_nl_79be16e9, pattern_3437adad): (&IsNl, &Pattern) = match &is_nl {
-                                    IsNl::False => (dim1_is_nl_a5c667cd, &pattern.down_by_1().expect("e994797d")),
+                            let gen_dims_ts = |dim1_is_nl_prm: &IsNl|{
+                                let (is_nl_drvd, pattern_drvd): (&IsNl, &Pattern) = match &is_nl {
+                                    IsNl::False => (dim1_is_nl_prm, &pattern.down_by_1().expect("e994797d")),
                                     IsNl::True => (&IsNl::False, pattern),
                                 };
-                                gen_ident_orgn_6f054930(is_nl_79be16e9, pattern_3437adad)
+                                gen_ident_orgn_wrapping(is_nl_drvd, pattern_drvd)
                             };
                             match &pattern {
                                 Pattern::Stdrt => match &is_nl {
@@ -856,11 +856,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     Pattern::ArrDim2 { dim1_is_nl, .. } |
                     Pattern::ArrDim3 { dim1_is_nl, .. } |
                     Pattern::ArrDim4 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
-                        let (pattern_38178717, is_nl_b0d116f8): (&Pattern, &IsNl) = match &is_nl {
+                        let (pattern_drvd, is_nl_drvd): (&Pattern, &IsNl) = match &is_nl {
                             IsNl::False => (&pattern.down_by_1().expect("1160d3df"), dim1_is_nl),
                             IsNl::True => (pattern, &IsNl::False),
                         };
-                        gen_ident_orgn_non_wrapping_6c0934a6(is_nl_b0d116f8, pattern_38178717)
+                        gen_ident_orgn_non_wrapping(is_nl_drvd, pattern_drvd)
                     }),
                 }
             };
@@ -1779,7 +1779,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         let one = 1;
                                         gen_jsonb_agg(
                                             &{
-                                                let mut usize_v_0ff8cf42 = match &arr_dim_sel_pattern {
+                                                let mut dim_depth = match &arr_dim_sel_pattern {
                                                     ArrDimSelPattern::ArrDim2 { .. } => 2,
                                                     ArrDimSelPattern::ArrDim3 { .. } => 3,
                                                     ArrDimSelPattern::ArrDim4 { .. } => 4,
@@ -1806,22 +1806,22 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                     ],
                                                 }
                                                 .into_iter()
-                                                .fold(gen_dot_v(&gen_d_nbr_elem(usize_v_0ff8cf42)), |mut acc, is_nl_0ff8cf42| {
-                                                    let usize_v_minus_one_0ff8cf42 = usize_v_0ff8cf42.checked_sub(one).expect("a35e873e");
-                                                    let d_usize_minus_one_elem_v = gen_dot_v(&gen_d_nbr_elem(usize_v_minus_one_0ff8cf42));
+                                                .fold(gen_dot_v(&gen_d_nbr_elem(dim_depth)), |mut acc, is_nl_el| {
+                                                    let dim_depth_minus_one = dim_depth.checked_sub(one).expect("a35e873e");
+                                                    let d_usize_minus_one_elem_v = gen_dot_v(&gen_d_nbr_elem(dim_depth_minus_one));
                                                     let v = gen_jsonb_agg(
                                                         &acc,
                                                         &d_usize_minus_one_elem_v,
-                                                        &gen_as_v_wh(&gen_d_nbr_elem(usize_v_0ff8cf42), &gen_d_nbr_ord(usize_v_0ff8cf42)),
-                                                        usize_v_0ff8cf42,
+                                                        &gen_as_v_wh(&gen_d_nbr_elem(dim_depth), &gen_d_nbr_ord(dim_depth)),
+                                                        dim_depth,
                                                     );
-                                                    acc = match &is_nl_0ff8cf42 {
+                                                    acc = match &is_nl_el {
                                                         IsNl::False => v,
                                                         IsNl::True => {
                                                             format!("case when jsonb_typeof({d_usize_minus_one_elem_v})='arr' then ({v}) else null end")
                                                         }
                                                     };
-                                                    usize_v_0ff8cf42 = usize_v_minus_one_0ff8cf42;
+                                                    dim_depth = dim_depth_minus_one;
                                                     acc
                                                 })
                                             },
@@ -1884,7 +1884,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 },
                 &ident_rd_inn_ucc,
                 &{
-                    let content_ts_0ff8cf42 = quote! {#VSc.0.0};
+                    let inner_content_ts = quote! {#VSc.0.0};
                     let gen_match_el_zero_ts = |
                         match_ts: &dyn ToTokens,
                         v_ts: &dyn ToTokens,
@@ -1900,11 +1900,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     };
                     let gen_into_iter_map_el_collect_is_nl_ts = |
                         el_ts: &dyn ToTokens,
-                        is_nl_d9400a66: &IsNl
+                        is_nl_prm: &IsNl
                     | {
                         gen_into_iter_map_el_collect_ts(
                             &el_ts,
-                            &match &is_nl_d9400a66 {
+                            &match &is_nl_prm {
                                 IsNl::False => quote! {#el_ts.0},
                                 IsNl::True => gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
@@ -1917,19 +1917,19 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let gen_into_iter_map_el_collect_is_nl_cnt_ts = |
                         el_ts: &dyn ToTokens,
                         v_ts: &dyn ToTokens,
-                        is_nl_d9400a66: &IsNl,
-                        content_ts_d9400a66: &dyn ToTokens
+                        is_nl_prm: &IsNl,
+                        content_ts_prm: &dyn ToTokens
                     | {
-                        match &is_nl_d9400a66 {
+                        match &is_nl_prm {
                             IsNl::False => gen_into_iter_map_el_collect_ts(
                                 &el_ts,
-                                &quote! {#el_ts.0 #content_ts_d9400a66}
+                                &quote! {#el_ts.0 #content_ts_prm}
                             ),
                             IsNl::True => {
                                 let match_el_zero_ts = gen_match_el_zero_ts(
                                     &quote! {#el_ts.0},
                                     &v_ts,
-                                    &content_ts_d9400a66
+                                    &content_ts_prm
                                 );
                                 quote! {.into_iter().map(|#el_ts|#match_el_zero_ts).collect()}
                             }
@@ -2006,9 +2006,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         }
                     };
                     match &is_nl {
-                        IsNl::False => quote! {#content_ts_0ff8cf42 #into_inn_cnt_ts},
+                        IsNl::False => quote! {#inner_content_ts #into_inn_cnt_ts},
                         IsNl::True => gen_match_el_zero_ts(
-                            &content_ts_0ff8cf42,
+                            &inner_content_ts,
                             &quote!{v_3432e728},
                             &into_inn_cnt_ts
                         ),
@@ -2135,8 +2135,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 PgJson::UuidUuidAsJsonbString => quote! {uuid_uuid_test_cases_vec},
             };
             let opt_vec_cr_ts = {
-                let gen_some_acc_cnt_ts = |is_nl_c964bb93: &IsNl, ident_ts_dc0d5797: &dyn ToTokens| {
-                    let (new_cnt_ts, mb_acc_push_none_ts) = match &is_nl_c964bb93 {
+                let gen_some_acc_cnt_ts = |is_nl_prm: &IsNl, ident_ts_prm: &dyn ToTokens| {
+                    let (new_cnt_ts, mb_acc_push_none_ts) = match &is_nl_prm {
                         IsNl::False => (quote! {vec![el_88131059.0.into()]}, Ts2::new()),
                         IsNl::True => (quote! {Some(el_88131059.0.into())}, quote! {acc_50e99088.push(<Self as #import::PgJson>::Cr::new(#NoneTs));}),
                     };
@@ -2159,7 +2159,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     };
                     quote! {Some({
                         let mut acc_50e99088 = Vec::new();
-                        if let Some(v_8de026a4) = <#ident_ts_dc0d5797 as #import::PgJsonTestCases>::#OptVecCrSc() {
+                        if let Some(v_8de026a4) = <#ident_ts_prm as #import::PgJsonTestCases>::#OptVecCrSc() {
                             for el_88131059 in v_8de026a4 #mb_dot_clone_ts {
                                 acc_50e99088.push(<Self as #import::PgJson>::Cr::new(#new_cnt_ts));
                             }
@@ -2224,12 +2224,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         }}),
                     )
                 };
-                let gen_acc_cnt_h_ts = |ident_ts_416231d8: &dyn ToTokens, has_len_greater_than_one_cnt_ts: &dyn ToTokens| {
-                    let ident_rd_ids_ucc_1d31038d = SelfRdIdsUcc::from_tokens(&ident_ts_416231d8);
+                let gen_acc_cnt_h_ts = |ident_ts_prm: &dyn ToTokens, has_len_greater_than_one_cnt_ts: &dyn ToTokens| {
+                    let ident_rd_ids_ucc_drvd = SelfRdIdsUcc::from_tokens(&ident_ts_prm);
                     let opt_extra_cnt_ts = {
-                        let el_82c7dc0a_clone_ts = quote! {el_82c7dc0a.clone()};
-                        let first = quote! {vec![#el_82c7dc0a_clone_ts]};
-                        let second = quote! {vec![#el_82c7dc0a_clone_ts, #el_82c7dc0a_clone_ts]};
+                        let el_clone_ts = quote! {el_82c7dc0a.clone()};
+                        let first = quote! {vec![#el_clone_ts]};
+                        let second = quote! {vec![#el_clone_ts, #el_clone_ts]};
                         let (first_cnt_ts, second_cnt_ts) = match &is_nl {
                             IsNl::False => (first, second),
                             IsNl::True => {
@@ -2282,11 +2282,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     quote! {
                         let mut acc_0a07db18 = Vec::new();
                         let rd_ids_to_2_dims_vec_rd_inn = <
-                            #ident_ts_416231d8
+                            #ident_ts_prm
                             as
                             #import::PgJsonTestCases
                         >::#RdIdsTo2DimsVecRdInnSc(
-                            &#ident_rd_ids_ucc_1d31038d(rd_ids.0.clone())
+                            &#ident_rd_ids_ucc_drvd(rd_ids.0.clone())
                         );
                         #opt_extra_cnt_ts
                         #has_len_greater_than_one_cnt_ts
@@ -2365,29 +2365,29 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let upd_to_rd_ids_ts = {
                 let ts = gen_v_init_ts0(&if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                     let gen_iter_or_match_ts = |
-                        is_nl_1d9cc9dd: &IsNl,
-                        ident_ts_36d8e080: &dyn ToTokens,
-                        upd_is_nl_69216aba: &IsNl
+                        is_nl_prm: &IsNl,
+                        ident_ts_prm: &dyn ToTokens,
+                        upd_is_nl_prm: &IsNl
                     | {
                         let v_zero_zero_ts = quote! {#VSc.0.0};
                         let content_ts = {
-                            let ident_upd_ts_7c40250a = SelfUpdUcc::from_tokens(&ident_ts_36d8e080);
+                            let ident_upd_ts_drvd = SelfUpdUcc::from_tokens(&ident_ts_prm);
                             let content_ts = {
-                                let content_ts = match &upd_is_nl_69216aba {
+                                let content_ts = match &upd_is_nl_prm {
                                     IsNl::False => quote! {el_aa999306.clone()},
                                     IsNl::True => quote! {v_92de91cc.clone()},
                                 };
-                                quote! {#ident_upd_ts_7c40250a(#content_ts)}
+                                quote! {#ident_upd_ts_drvd(#content_ts)}
                             };
                             quote! {
                                 <
-                                    #ident_ts_36d8e080
+                                    #ident_ts_prm
                                     as
                                     #import::PgJsonTestCases
                                 >::upd_to_rd_ids(&#content_ts).0.#VSc
                             }
                         };
-                        match &is_nl_1d9cc9dd {
+                        match &is_nl_prm {
                             IsNl::False => quote! {
                                 #v_zero_zero_ts.iter().map(|el_aa999306|#content_ts).collect()
                             },
@@ -2470,13 +2470,13 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         quote! {#ident_wh_ucc::#EqUcc(#eq_ts)}
                     }
                     IsNl::True => {
-                        let ident_wh_ucc_029b3848 = SelfWhUcc::from_tokens(&ident_nn_ts);
-                        let ident_tt_ucc_db49334a = SelfTtUcc::from_tokens(&ident_nn_ts);
-                        let eq_ts = gen_eq_ts(&quote! {#ident_tt_ucc_db49334a::new(v_18544acf.into())});
+                        let ident_wh_ucc_drvd = SelfWhUcc::from_tokens(&ident_nn_ts);
+                        let ident_tt_ucc_drvd = SelfTtUcc::from_tokens(&ident_nn_ts);
+                        let eq_ts = gen_eq_ts(&quote! {#ident_tt_ucc_drvd::new(v_18544acf.into())});
                         quote! {
                             #import::NlJsonObjPgTypeWhFlt(
                                 #CrSc.0.0.map(|v_18544acf| pg_crud_cmn::NotEmptyUnqVec::try_new(
-                                    vec![#ident_wh_ucc_029b3848::#EqUcc(#eq_ts)]
+                                    vec![#ident_wh_ucc_drvd::#EqUcc(#eq_ts)]
                                 ).expect("88bfa095"))
                             )
                         }
@@ -2505,9 +2505,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let dim_i_nbr_max = DimIndexNbr::from(dim);
                     let gen_dim_i_nbr_ts = |is_nl_vec: &[&IsNl]|{
                         assert!(!is_nl_vec.is_empty(), "c1a5939d");
-                        let content_ts_c85923bd = {
-                            let gen_i_nbr_ts = |i_c1128a3e: usize|format!("i_{i_c1128a3e}").parse::<Ts2>().expect("afbe7252");
-                            let gen_v_nbr_ts = |i_0abe6039: usize|format!("v{i_0abe6039}").parse::<Ts2>().expect("568d8eb6");
+                        let content_ts_outer = {
+                            let gen_i_nbr_ts = |nbr: usize|format!("i_{nbr}").parse::<Ts2>().expect("afbe7252");
+                            let gen_v_nbr_ts = |nbr: usize|format!("v{nbr}").parse::<Ts2>().expect("568d8eb6");
                             let gen_for_in_ts = |
                                 i_ts: &dyn ToTokens,
                                 v_ts: &dyn ToTokens,
@@ -2519,14 +2519,14 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             let gen_for_v_i_dot_zero_into_iter_enumerate_ts = |
-                                i_0082bcdf: usize,
-                                i_e81c6d28: usize,
-                                i_b7b230b2: usize,
+                                i_nbr: usize,
+                                v_from: usize,
+                                v_to: usize,
                                 content_ts_d575a40c: &dyn ToTokens,
                             |gen_for_in_ts(
-                                &gen_i_nbr_ts(i_0082bcdf),
-                                &gen_v_nbr_ts(i_e81c6d28),
-                                &gen_v_nbr_ts(i_b7b230b2),
+                                &gen_i_nbr_ts(i_nbr),
+                                &gen_v_nbr_ts(v_from),
+                                &gen_v_nbr_ts(v_to),
                                 &content_ts_d575a40c
                             );
                             let gen_if_let_some_ts = |
@@ -2542,24 +2542,24 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             };
                             let gen_if_let_some_eqs_v_i_dot_zero_ts = |
-                                i_c4552aef: usize,
-                                i_9f1fbc9f: usize,
+                                v_from: usize,
+                                v_to: usize,
                                 content_ts_832b20d5: &dyn ToTokens,
                             |gen_if_let_some_ts(
-                                &gen_v_nbr_ts(i_c4552aef),
-                                &gen_v_nbr_ts(i_9f1fbc9f),
+                                &gen_v_nbr_ts(v_from),
+                                &gen_v_nbr_ts(v_to),
                                 &content_ts_832b20d5
                             );
-                            let gen_i = |start_i: usize, is_nl_vec_41b82a0c: &[&IsNl]| -> usize {
+                            let gen_i = |start_i: usize, is_nl_vec_prm: &[&IsNl]| -> usize {
                                 start_i.checked_add(
-                                    is_nl_vec_41b82a0c
+                                    is_nl_vec_prm
                                     .iter()
                                     .filter(|el0| matches!(el0, IsNl::True))
                                     .count()
                                 ).expect("de4c4116")
                             };
-                            let mut content_ts_4c106eea = {
-                                let content_ts_f1ffd3b2 = {
+                            let mut content_ts_acc = {
+                                let content_ts_inner = {
                                     let ts = gen_v_nbr_ts(
                                         gen_i(
                                             is_nl_vec.len().saturating_sub(1),
@@ -2580,8 +2580,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     };
                                     let dim_nbr_starting_with_one_eq_ts = format!("Dim{}Eq", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("52fa34ac");
                                     let pg_json_wh_dim_nbr_starting_with_one_eq_ts = format!("PgJsonWhDim{}Eq", to_nbr_starting_with_one_word_str(&dim_i_nbr_max)).parse::<Ts2>().expect("15d769b0");
-                                    let wh_ident_wh_ucc_c994819b = SelfWhUcc::from_tokens(&gen_ident_ts(&IsNl::False, pattern));
-                                    let ident_tt_ucc_0d9dce86 = SelfTtUcc::from_tokens(&gen_ident_ts(
+                                    let wh_ident_wh_ucc_drvd = SelfWhUcc::from_tokens(&gen_ident_ts(&IsNl::False, pattern));
+                                    let ident_tt_ucc_drvd = SelfTtUcc::from_tokens(&gen_ident_ts(
                                         is_nl_vec.last().expect("1221f6ec"),
                                         &match dim_i_nbr_max {
                                             DimIndexNbr::Zero => pattern.down_by_1().expect("1a47af86"),
@@ -2613,21 +2613,21 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         quote! {#(#content_ts_0dc5a500),*}
                                     };
                                     quote! {
-                                        #wh_ident_wh_ucc_c994819b::#dim_nbr_starting_with_one_eq_ts(
+                                        #wh_ident_wh_ucc_drvd::#dim_nbr_starting_with_one_eq_ts(
                                             wh_flts::#pg_json_wh_dim_nbr_starting_with_one_eq_ts {
                                                 oprtr: #import::Oprtr::And,
                                                 dims: wh_flts::BoundedVec::try_from(
                                                     vec![#vec_cnt_ts]
                                                 ).expect("82cc0a3c"),
-                                                #VSc: #ident_tt_ucc_0d9dce86::new(#ts.into()),
+                                                #VSc: #ident_tt_ucc_drvd::new(#ts.into()),
                                             }
                                         )
                                     }
                                 };
                                 match is_nl {
-                                    IsNl::False => quote! {acc_049ff0b3.push(#content_ts_f1ffd3b2);},
+                                    IsNl::False => quote! {acc_049ff0b3.push(#content_ts_inner);},
                                     IsNl::True => gen_not_empty_unq_vec_try_new_match_ts(
-                                        &quote!{vec![#content_ts_f1ffd3b2]},
+                                        &quote!{vec![#content_ts_inner]},
                                         &quote!{v_9328b66f},
                                         &quote!{{
                                             acc_049ff0b3.push(#import::NlJsonObjPgTypeWhFlt(Some(v_9328b66f)));
@@ -2637,45 +2637,45 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     )
                                 }
                             };
-                            for (i_ef936914, _) in is_nl_vec.iter().take(is_nl_vec.len().saturating_sub(1)).enumerate() {
-                                let is_nl_vec_e7e7f6f8 = is_nl_vec
+                            for (idx, _) in is_nl_vec.iter().take(is_nl_vec.len().saturating_sub(1)).enumerate() {
+                                let is_nl_vec_drvd = is_nl_vec
                                 .iter()
                                 .take(
                                     is_nl_vec
                                         .len()
-                                        .saturating_sub(i_ef936914.checked_add(1).expect("75d5ed28")),
+                                        .saturating_sub(idx.checked_add(1).expect("75d5ed28")),
                                 )
                                 .copied()
                                 .collect::<Vec<&IsNl>>();
-                                let is_nl_vec_e7e7f6f8_len = is_nl_vec_e7e7f6f8.len();
-                                let is_nl_vec_e7e7f6f8_len_saturating_sub_one = is_nl_vec_e7e7f6f8_len.saturating_sub(1);
-                                content_ts_4c106eea = {
-                                    let i_74ae6d77 = gen_i(
-                                        is_nl_vec_e7e7f6f8_len_saturating_sub_one,
+                                let is_nl_vec_drvd_len = is_nl_vec_drvd.len();
+                                let is_nl_vec_drvd_len_saturating_sub_one = is_nl_vec_drvd_len.saturating_sub(1);
+                                content_ts_acc = {
+                                    let start_idx = gen_i(
+                                        is_nl_vec_drvd_len_saturating_sub_one,
                                         &once(is_nl)
                                         .chain(
-                                            is_nl_vec_e7e7f6f8
+                                            is_nl_vec_drvd
                                                 .iter()
-                                                .take(is_nl_vec_e7e7f6f8_len_saturating_sub_one)
+                                                .take(is_nl_vec_drvd_len_saturating_sub_one)
                                                 .copied(),
                                         ).collect::<Vec<&IsNl>>()
                                     );
-                                    let i_74ae6d77_incr_by_1 = i_74ae6d77.checked_add(1).expect("96e90e72");
-                                    match &is_nl_vec_e7e7f6f8.last().expect("88548240") {
+                                    let start_idx_incr_by_1 = start_idx.checked_add(1).expect("96e90e72");
+                                    match &is_nl_vec_drvd.last().expect("88548240") {
                                         IsNl::False => gen_for_v_i_dot_zero_into_iter_enumerate_ts(
-                                            is_nl_vec_e7e7f6f8_len,
-                                            i_74ae6d77_incr_by_1,
-                                            i_74ae6d77,
-                                            &content_ts_4c106eea,
+                                            is_nl_vec_drvd_len,
+                                            start_idx_incr_by_1,
+                                            start_idx,
+                                            &content_ts_acc,
                                         ),
                                         IsNl::True => gen_if_let_some_eqs_v_i_dot_zero_ts(
-                                            i_74ae6d77_incr_by_1,
-                                            i_74ae6d77,
+                                            start_idx_incr_by_1,
+                                            start_idx,
                                             &gen_for_v_i_dot_zero_into_iter_enumerate_ts(
-                                                is_nl_vec_e7e7f6f8_len,
-                                                i_74ae6d77.checked_add(2).expect("00da046c"),
-                                                i_74ae6d77_incr_by_1,
-                                                &content_ts_4c106eea,
+                                                is_nl_vec_drvd_len,
+                                                start_idx.checked_add(2).expect("00da046c"),
+                                                start_idx_incr_by_1,
+                                                &content_ts_acc,
                                             )
                                         )
                                     }
@@ -2687,7 +2687,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     &gen_i_nbr_ts(0),
                                     &gen_v_nbr_ts(0),
                                     &cr_dot_zero_ts,
-                                    &content_ts_4c106eea
+                                    &content_ts_acc
                                 ),
                                 IsNl::True => gen_if_let_some_ts(
                                     &gen_v_nbr_ts(0),
@@ -2696,7 +2696,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         0,
                                         1,
                                         0,
-                                        &content_ts_4c106eea
+                                        &content_ts_acc
                                     )
                                 )
                             }
@@ -2704,7 +2704,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             Some(#import::NotEmptyUnqVec::try_new({
                                 let mut acc_049ff0b3 = Vec::new();
-                                #content_ts_c85923bd
+                                #content_ts_outer
                                 acc_049ff0b3
                             }).expect("e99ecd08"))
                         }
