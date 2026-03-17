@@ -6690,14 +6690,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
     );
     let generated: Ts2 = {
         let ident_gen_pg_json_obj_mod = SelfGenPgJsonObjModSc::from_tokens(&di.ident);
-        quote! {
-            #[allow(unused_qualifications)]
-            #[allow(clippy::absolute_paths)]
-            mod #ident_gen_pg_json_obj_mod {
-                #(#pg_json_obj_arr)*
-            }
-            pub use #ident_gen_pg_json_obj_mod::*;
-        }
+        pg_crud_macros_cmn::gen_mod_with_pub_use_ts(&ident_gen_pg_json_obj_mod, &pg_json_obj_arr)
     };
     mb_write_ts_into_file(
         gen_pg_json_obj_config.whole_write_into_gen_pg_json_obj,

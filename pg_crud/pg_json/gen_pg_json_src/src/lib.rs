@@ -3273,11 +3273,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    let parse_strs_to_ts2_vec = |v: Vec<String>, uuid: &str| -> Vec<Ts2> {
-        v.into_iter()
-            .map(|el| el.parse::<Ts2>().unwrap_or_else(|_| panic!("{uuid}")))
-            .collect::<Vec<Ts2>>()
-    };
+    let parse_strs_to_ts2_vec = pg_crud_macros_cmn::parse_strs_to_ts2_vec;
     mb_write_ts_into_file(
         config.pg_tbl_cols_cnt_write_into_pg_tbl_cols_using_pg_json,
         "pg_tbl_cols_using_pg_json",
@@ -3297,14 +3293,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             || quote! { #GenPgJsonModSc },
             |name| name.parse::<Ts2>().expect("c7a3f1b2"),
         );
-        quote! {
-            #[allow(unused_qualifications)]
-            #[allow(clippy::absolute_paths)]
-            mod #mod_name_ts {
-                #(#content_ts)*
-            }
-            pub use #mod_name_ts::*;
-        }
+        pg_crud_macros_cmn::gen_mod_with_pub_use_ts(&mod_name_ts, &content_ts)
     };
     mb_write_ts_into_file(
         config.whole_cnt_write_into_gen_pg_json,

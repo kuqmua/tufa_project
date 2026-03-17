@@ -2090,6 +2090,23 @@ pub fn gen_jsonb_agg_by_id(
     )
 }
 #[must_use]
+pub fn parse_strs_to_ts2_vec(v: Vec<String>, uuid: &str) -> Vec<Ts2> {
+    v.into_iter()
+        .map(|el| el.parse::<Ts2>().unwrap_or_else(|_| panic!("{uuid}")))
+        .collect::<Vec<Ts2>>()
+}
+#[must_use]
+pub fn gen_mod_with_pub_use_ts(mod_name: &dyn ToTokens, content_ts: &[Ts2]) -> Ts2 {
+    quote! {
+        #[allow(unused_qualifications)]
+        #[allow(clippy::absolute_paths)]
+        mod #mod_name {
+            #(#content_ts)*
+        }
+        pub use #mod_name::*;
+    }
+}
+#[must_use]
 pub fn serde_er_enum_d_ts_builder() -> DTsBuilder {
     DTsBuilder::new()
         .make_pub()
