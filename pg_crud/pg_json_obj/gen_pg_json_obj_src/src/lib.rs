@@ -1085,9 +1085,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 };
                 let mb_sel_qp_ts = if matches!(&pattern, Pattern::Stdrt) &&
                 matches!(&is_nl, IsNl::False) {
-                    let acc_ac57d097_ts = quote!{acc_ac57d097};
+                    let acc_sel_qp_ts = quote!{acc_sel_qp};
                     let sel_qp_for_loop_ts = gen_sel_qp_for_loop_ts(
-                        &acc_ac57d097_ts,
+                        &acc_sel_qp_ts,
                         &is_stdrt_with_id_false,
                         &SelfSc,
                         &quote!{col_field},
@@ -1099,11 +1099,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             col_field: &str,
                             col_field_for_er_msg: &str,
                         ) -> Result<#StringTs, #import_qp_er_ts> {
-                            let mut #acc_ac57d097_ts = #StringTs::default();
+                            let mut #acc_sel_qp_ts = #StringTs::default();
                             #sel_qp_for_loop_ts
-                            let _: Option<char> = #acc_ac57d097_ts.pop();
-                            let _: Option<char> = #acc_ac57d097_ts.pop();
-                            Ok(#acc_ac57d097_ts)
+                            let _: Option<char> = #acc_sel_qp_ts.pop();
+                            let _: Option<char> = #acc_sel_qp_ts.pop();
+                            Ok(#acc_sel_qp_ts)
                         }
                     }
                 }
@@ -1138,9 +1138,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         },
                         Pattern::Arr => match &is_nl {
                             IsNl::False => {
-                                let acc_399d9786_ts = quote!{acc_399d9786};
+                                let acc_sel_qp_with_id_ts = quote!{acc_sel_qp_with_id};
                                 let sel_qp_for_loop_ts = gen_sel_qp_for_loop_ts(
-                                    &acc_399d9786_ts,
+                                    &acc_sel_qp_with_id_ts,
                                     &is_stdrt_with_id_true,
                                     &quote!{#SelfSc.#ident_with_id_stdrt_nn_sel_sc},
                                     &dq_ts(&ValueSc),
@@ -1151,11 +1151,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 ));
                                 quote! {
                                     let #ident_with_id_stdrt_nn_sel_sc = {
-                                        let mut #acc_399d9786_ts = #StringTs::default();
+                                        let mut #acc_sel_qp_with_id_ts = #StringTs::default();
                                         #sel_qp_for_loop_ts
-                                        let _: Option<char> = #acc_399d9786_ts.pop();
-                                        let _: Option<char> = #acc_399d9786_ts.pop();
-                                        #acc_399d9786_ts
+                                        let _: Option<char> = #acc_sel_qp_with_id_ts.pop();
+                                        let _: Option<char> = #acc_sel_qp_with_id_ts.pop();
+                                        #acc_sel_qp_with_id_ts
                                     };
                                     let dim1_start = self.#dim1_pgn_ts.start();
                                     let dim1_end = self.#dim1_pgn_ts.end();
@@ -3431,11 +3431,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     },
                     Pattern::Arr => match &is_nl {
                         IsNl::False => {
-                            let acc_41dea548_ts = quote!{acc_41dea548};
+                            let acc_sel_qp_arr_with_id_ts = quote!{acc_sel_qp_arr_with_id};
                             let sel_qp_for_loop_ts = {
                                 let v_dq_ts = dq_ts(&ValueSc);
                                 gen_sel_qp_for_loop_ts(
-                                    &acc_41dea548_ts,
+                                    &acc_sel_qp_arr_with_id_ts,
                                     &is_stdrt_with_id_true,
                                     &quote!{#VSc.#ident_with_id_stdrt_nn_sel_sc},
                                     &v_dq_ts,
@@ -3451,11 +3451,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             );
                             quote! {
                                 let #ident_with_id_stdrt_nn_sel_sc = {
-                                    let mut #acc_41dea548_ts = #StringTs::default();
+                                    let mut #acc_sel_qp_arr_with_id_ts = #StringTs::default();
                                     #sel_qp_for_loop_ts
-                                    let _: Option<char> = #acc_41dea548_ts.pop();
-                                    let _: Option<char> = #acc_41dea548_ts.pop();
-                                    #acc_41dea548_ts
+                                    let _: Option<char> = #acc_sel_qp_arr_with_id_ts.pop();
+                                    let _: Option<char> = #acc_sel_qp_arr_with_id_ts.pop();
+                                    #acc_sel_qp_arr_with_id_ts
                                 };
                                 let dim1_start = #VSc.#dim1_pgn_ts.start();
                                 let dim1_end = #VSc.#dim1_pgn_ts.end();
