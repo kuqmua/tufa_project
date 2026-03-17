@@ -197,67 +197,36 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         },
     }
     impl Pattern {
-        const fn down_by_1(&self) -> Option<Self> {
-            match &self {
-                Self::Stdrt => None,
-                Self::ArrDim1 { .. } => Some(Self::Stdrt),
-                Self::ArrDim2 { dim2_is_nl, .. } => Some(Self::ArrDim1 {
-                    dim1_is_nl: *dim2_is_nl,
-                }),
-                Self::ArrDim3 {
-                    dim2_is_nl,
-                    dim3_is_nl,
-                    ..
-                } => Some(Self::ArrDim2 {
-                    dim1_is_nl: *dim2_is_nl,
-                    dim2_is_nl: *dim3_is_nl,
-                }),
-                Self::ArrDim4 {
-                    dim2_is_nl,
-                    dim3_is_nl,
-                    dim4_is_nl,
-                    ..
-                } => Some(Self::ArrDim3 {
-                    dim1_is_nl: *dim2_is_nl,
-                    dim2_is_nl: *dim3_is_nl,
-                    dim3_is_nl: *dim4_is_nl,
-                }),
+        fn down_by(&self, n: usize) -> Option<Self> {
+            let mut result = self.clone();
+            for _ in 0..n {
+                result = match &result {
+                    Self::Stdrt => return None,
+                    Self::ArrDim1 { .. } => Self::Stdrt,
+                    Self::ArrDim2 { dim2_is_nl, .. } => Self::ArrDim1 {
+                        dim1_is_nl: *dim2_is_nl,
+                    },
+                    Self::ArrDim3 {
+                        dim2_is_nl,
+                        dim3_is_nl,
+                        ..
+                    } => Self::ArrDim2 {
+                        dim1_is_nl: *dim2_is_nl,
+                        dim2_is_nl: *dim3_is_nl,
+                    },
+                    Self::ArrDim4 {
+                        dim2_is_nl,
+                        dim3_is_nl,
+                        dim4_is_nl,
+                        ..
+                    } => Self::ArrDim3 {
+                        dim1_is_nl: *dim2_is_nl,
+                        dim2_is_nl: *dim3_is_nl,
+                        dim3_is_nl: *dim4_is_nl,
+                    },
+                };
             }
-        }
-        const fn down_by_2(&self) -> Option<Self> {
-            match &self {
-                Self::Stdrt | Self::ArrDim1 { .. } => None,
-                Self::ArrDim2 { .. } => Some(Self::Stdrt),
-                Self::ArrDim3 { dim3_is_nl, .. } => Some(Self::ArrDim1 {
-                    dim1_is_nl: *dim3_is_nl,
-                }),
-                Self::ArrDim4 {
-                    dim3_is_nl,
-                    dim4_is_nl,
-                    ..
-                } => Some(Self::ArrDim2 {
-                    dim1_is_nl: *dim3_is_nl,
-                    dim2_is_nl: *dim4_is_nl,
-                }),
-            }
-        }
-        const fn down_by_3(&self) -> Option<Self> {
-            match &self {
-                Self::Stdrt | Self::ArrDim1 { .. } | Self::ArrDim2 { .. } => None,
-                Self::ArrDim3 { .. } => Some(Self::Stdrt),
-                Self::ArrDim4 { dim4_is_nl, .. } => Some(Self::ArrDim1 {
-                    dim1_is_nl: *dim4_is_nl,
-                }),
-            }
-        }
-        const fn down_by_4(&self) -> Option<Self> {
-            match &self {
-                Self::Stdrt
-                | Self::ArrDim1 { .. }
-                | Self::ArrDim2 { .. }
-                | Self::ArrDim3 { .. } => None,
-                Self::ArrDim4 { .. } => Some(Self::Stdrt),
-            }
+            Some(result)
         }
     }
     enum ArrDim {
@@ -508,11 +477,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }),
                     (IsNl::False, Pattern::ArrDim1 { dim1_is_nl }) => gen_vec(RecordH {
                         is_nl: *dim1_is_nl,
-                        pattern: record_h.pattern.down_by_1().expect("0e970a4f"),
+                        pattern: record_h.pattern.down_by(1).expect("0e970a4f"),
                     }),
                     (IsNl::False, Pattern::ArrDim2 { dim1_is_nl, .. }) => gen_vec(RecordH {
                         is_nl: *dim1_is_nl,
-                        pattern: record_h.pattern.down_by_1().expect("85f8ed83"),
+                        pattern: record_h.pattern.down_by(1).expect("85f8ed83"),
                     }),
                     (
                         IsNl::False,
@@ -824,7 +793,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             };
                             let gen_dims_ts = |dim1_is_nl_prm: &IsNl|{
                                 let (is_nl_drvd, pattern_drvd): (&IsNl, &Pattern) = match &is_nl {
-                                    IsNl::False => (dim1_is_nl_prm, &pattern.down_by_1().expect("e994797d")),
+                                    IsNl::False => (dim1_is_nl_prm, &pattern.down_by(1).expect("e994797d")),
                                     IsNl::True => (&IsNl::False, pattern),
                                 };
                                 gen_ident_orgn_wrapping(is_nl_drvd, pattern_drvd)
@@ -859,7 +828,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     Pattern::ArrDim3 { dim1_is_nl, .. } |
                     Pattern::ArrDim4 { dim1_is_nl, .. } => gen_arr_dims_init_ts(&{
                         let (pattern_drvd, is_nl_drvd): (&Pattern, &IsNl) = match &is_nl {
-                            IsNl::False => (&pattern.down_by_1().expect("1160d3df"), dim1_is_nl),
+                            IsNl::False => (&pattern.down_by(1).expect("1160d3df"), dim1_is_nl),
                             IsNl::True => (pattern, &IsNl::False),
                         };
                         gen_ident_orgn_non_wrapping(is_nl_drvd, pattern_drvd)
@@ -1220,7 +1189,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         Pattern::ArrDim1 { dim1_is_nl } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by_1().expect("21eaebaf"));
+                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("21eaebaf"));
                             let cmn_arr_dim1_pg_json_flts = {
                                 let mut vec = cmn_pg_json_flts;
                                 vec.push(PgJsonFlt::DimOneEq {
@@ -1272,8 +1241,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                         Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by_1().expect("0c4491c4"));
-                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by_2().expect("2d4ee5d4"));
+                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("0c4491c4"));
+                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by(2).expect("2d4ee5d4"));
                             let cmn_arr_dim2_pg_json_flts = {
                                 let mut vec = cmn_pg_json_flts;
                                 vec.push(PgJsonFlt::DimOneEq {
@@ -1340,9 +1309,9 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             dim2_is_nl,
                             dim3_is_nl,
                         } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by_1().expect("3450bef4"));
-                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by_2().expect("3c0d10f4"));
-                            let arr_dim3_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim3_is_nl, &pattern.down_by_3().expect("9aaf9e82"));
+                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("3450bef4"));
+                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by(2).expect("3c0d10f4"));
+                            let arr_dim3_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim3_is_nl, &pattern.down_by(3).expect("9aaf9e82"));
                             let cmn_arr_dim3_pg_json_flts = {
                                 let mut vec = cmn_pg_json_flts;
                                 vec.push(PgJsonFlt::DimOneEq {
@@ -1421,10 +1390,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             dim3_is_nl,
                             dim4_is_nl,
                         } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by_1().expect("550d313b"));
-                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by_2().expect("7bda1424"));
-                            let arr_dim3_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim3_is_nl, &pattern.down_by_3().expect("b43aa5bd"));
-                            let arr_dim4_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim4_is_nl, &pattern.down_by_4().expect("a246885a"));
+                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("550d313b"));
+                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by(2).expect("7bda1424"));
+                            let arr_dim3_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim3_is_nl, &pattern.down_by(3).expect("b43aa5bd"));
+                            let arr_dim4_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim4_is_nl, &pattern.down_by(4).expect("a246885a"));
                             let cmn_arr_dim4_pg_json_flts = {
                                 let mut vec = cmn_pg_json_flts;
                                 vec.push(PgJsonFlt::DimOneEq {
@@ -2186,7 +2155,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     Pattern::ArrDim4 { dim1_is_nl, .. } => gen_some_acc_cnt_ts(
                         is_nl,
                         &match &is_nl {
-                            IsNl::False => gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("dec468c0")),
+                            IsNl::False => gen_ident_ts(dim1_is_nl, &pattern.down_by(1).expect("dec468c0")),
                             IsNl::True => gen_ident_ts(&IsNl::False, pattern),
                         },
                     ),
@@ -2320,7 +2289,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         },
                     },
                     Pattern::ArrDim1 { dim1_is_nl } => gen_acc_cnt_h_ts(
-                        &gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("d6f89137")),
+                        &gen_ident_ts(dim1_is_nl, &pattern.down_by(1).expect("d6f89137")),
                         &match &dim1_is_nl {
                             IsNl::False => &has_len_greater_than_one_for_for_ts,
                             IsNl::True => &has_len_greater_than_one_ts,
@@ -2328,7 +2297,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     ),
                     Pattern::ArrDim2 { dim1_is_nl, .. } |
                     Pattern::ArrDim3 { dim1_is_nl, .. } |
-                    Pattern::ArrDim4 { dim1_is_nl, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nl, &pattern.down_by_1().expect("38774398")), &has_len_greater_than_one_ts),
+                    Pattern::ArrDim4 { dim1_is_nl, .. } => gen_acc_cnt_h_ts(&gen_ident_ts(dim1_is_nl, &pattern.down_by(1).expect("38774398")), &has_len_greater_than_one_ts),
                 };
                 match &pg_json {
                     PgJson::I8AsJsonbNbr
@@ -2418,7 +2387,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     IsNl::True => IsNl::False,
                                 },
                                 &match &is_nl {
-                                    IsNl::False => pattern.down_by_1().expect("e84064c3"),
+                                    IsNl::False => pattern.down_by(1).expect("e84064c3"),
                                     IsNl::True => pattern.clone(),
                                 },
                             ),
@@ -2586,10 +2555,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                     let ident_tt_ucc_drvd = SelfTtUcc::from_tokens(&gen_ident_ts(
                                         is_nl_vec.last().expect("1221f6ec"),
                                         &match dim_i_nbr_max {
-                                            DimIndexNbr::Zero => pattern.down_by_1().expect("1a47af86"),
-                                            DimIndexNbr::One => pattern.down_by_2().expect("d8260225"),
-                                            DimIndexNbr::Two => pattern.down_by_3().expect("473ac422"),
-                                            DimIndexNbr::Three => pattern.down_by_4().expect("6a143218"),
+                                            DimIndexNbr::Zero => pattern.down_by(1).expect("1a47af86"),
+                                            DimIndexNbr::One => pattern.down_by(2).expect("d8260225"),
+                                            DimIndexNbr::Two => pattern.down_by(3).expect("473ac422"),
+                                            DimIndexNbr::Three => pattern.down_by(4).expect("6a143218"),
                                         }
                                     ));
                                     let vec_cnt_ts = {
