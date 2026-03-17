@@ -1131,7 +1131,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_dq_ts, #third_prm_ts)?;}
                     };
                     let serde_ser_ser_struct_end_ts = quote! {_serde::ser::SerializeStruct::end(__serde_state)};
-                    let ser_cnt_e5bb5640_ts = {
+                    let ser_cnt_start_end_ts = {
                         let gen_self_zero_tokens_ts = |ts: &dyn ToTokens| {
                             quote! {&#self_dot_zero_ts.#ts}
                         };
@@ -1144,7 +1144,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             #serde_ser_ser_struct_end_ts
                         }
                     };
-                    let impl_ser_for_pg_type_nn_tokens_ser_cnt_e5bb5640_ts = gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(&ser_cnt_e5bb5640_ts);
+                    let impl_ser_for_nn_orgn_start_end_ts = gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(&ser_cnt_start_end_ts);
                     let impl_ser_for_uuid_uuid_ts = gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(&gen_ser_cnt(&quote! {.to_string()}));
                     let gen_impl_ser_for_ident_stdrt_nn_orgn_start_end_range_tokens = |ts: &dyn ToTokens| {
                         let gen_ser_field_match_std_ops_bound_ts = |start_or_end: &StartOrEnd| {
@@ -1169,7 +1169,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             #serde_ser_ser_struct_end_ts
                         })
                     };
-                    let gen_b5af560e_ts = |ts: &dyn ToTokens|{
+                    let gen_impl_ser_wrapping_self_zero_ts = |ts: &dyn ToTokens|{
                         DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(
                             &gen_ser_cnt(&ts)
                         ))
@@ -1196,8 +1196,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         | PgType::StdVecVecU8AsBytea
                         | PgType::SqlxTypesChronoNaiveDateAsDate
                         | PgType::SqlxTypesIpnetworkIpNetworkAsInet => DeriveOrImpl::Derive,
-                        PgType::SqlxPgTypesPgMoneyAsMoney => gen_b5af560e_ts(&quote! {.0}),
-                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_b5af560e_ts(&quote! {.bytes()}),
+                        PgType::SqlxPgTypesPgMoneyAsMoney => gen_impl_ser_wrapping_self_zero_ts(&quote! {.0}),
+                        PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_impl_ser_wrapping_self_zero_ts(&quote! {.bytes()}),
                         PgType::SqlxTypesChronoNaiveTimeAsTime => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_tokens(&{
                             let gen_field_inn_type_stdrt_nn_ts_as_chrono_timelike_ts = |ts: &dyn ToTokens| {
                                 quote! {&(<#inn_type_stdrt_nn_ts as chrono::Timelike>::#ts)}
@@ -1296,7 +1296,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             }
                         })),
                         PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => DeriveOrImpl::Impl(impl_ser_for_uuid_uuid_ts),
-                        PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_ser_for_pg_type_nn_tokens_ser_cnt_e5bb5640_ts),
+                        PgType::SqlxPgTypesPgRangeI32AsInt4Range | PgType::SqlxPgTypesPgRangeI64AsInt8Range => DeriveOrImpl::Impl(impl_ser_for_nn_orgn_start_end_ts),
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_start_end_range_tokens(&sqlx_types_chrono_naive_date_as_nn_date_orgn_ucc)),
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_start_end_range_tokens(&sqlx_types_chrono_naive_date_time_as_nn_timestamp_orgn_ucc)),
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => DeriveOrImpl::Impl(gen_impl_ser_for_ident_stdrt_nn_orgn_start_end_range_tokens(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_nn_timestamptz_orgn_ucc)),
@@ -4860,7 +4860,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::ArrDim1 { dim1_is_nl } => match &is_nl {
                         IsNl::False => match &dim1_is_nl {
                             IsNl::False => {
-                                let el_d27d1981_ts = gen_star_or_dot_clone_ts(&quote!{el_d27d1981});
+                                let el_nn_nn_star_or_clone_ts = gen_star_or_dot_clone_ts(&quote!{el_d27d1981});
                                 quote! {
                                     let mut acc_abf96c9f = Vec::new();
                                     let rd_ids_to_2_dims_vec_rd_inn = #ident_stdrt_nn_as_pg_type_test_cases_ts::#RdIdsTo2DimsVecRdInnSc(#RdIdsSc);
@@ -4873,8 +4873,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             for el_d27d1981 in el_cb3f4b45 {
                                                 if opt_extra.is_none() {
                                                     opt_extra = Some((vec![
-                                                        vec![#el_d27d1981_ts]],
-                                                        vec![vec![#el_d27d1981_ts, #el_d27d1981_ts]
+                                                        vec![#el_nn_nn_star_or_clone_ts]],
+                                                        vec![vec![#el_nn_nn_star_or_clone_ts, #el_nn_nn_star_or_clone_ts]
                                                     ]));
                                                 }
                                                 else {
@@ -4909,7 +4909,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                             IsNl::True => {
-                                let el_6b831e7c_ts = gen_star_or_dot_clone_ts(&quote!{el_6b831e7c});
+                                let el_nn_nl_star_or_clone_ts = gen_star_or_dot_clone_ts(&quote!{el_6b831e7c});
                                 quote! {
                                     let mut acc_68eba82f = Vec::new();
                                     let rd_ids_to_2_dims_vec_rd_inn = #ident_stdrt_nl_as_pg_type_test_cases_ts::#RdIdsTo2DimsVecRdInnSc(#RdIdsSc);
@@ -4922,8 +4922,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             for el_6b831e7c in el_b04183c6 {
                                                 if opt_extra.is_none() {
                                                     opt_extra = Some((
-                                                        vec![vec![#el_6b831e7c_ts]],
-                                                        vec![vec![#el_6b831e7c_ts, #el_6b831e7c_ts]]
+                                                        vec![vec![#el_nn_nl_star_or_clone_ts]],
+                                                        vec![vec![#el_nn_nl_star_or_clone_ts, #el_nn_nl_star_or_clone_ts]]
                                                     ));
                                                 }
                                                 else {
@@ -4957,7 +4957,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                 IsNl::False => &ident_arr_nn_as_pg_type_test_cases_ts,
                                 IsNl::True => &ident_arr_nl_as_pg_type_test_cases_ts,
                             };
-                            let el_31abc64a_ts = gen_star_or_dot_clone_ts(&quote!{el_31abc64a});
+                            let el_nl_star_or_clone_ts = gen_star_or_dot_clone_ts(&quote!{el_31abc64a});
                             quote! {
                                 let mut acc_5f7f59ac = Vec::new();
                                 let rd_ids_to_2_dims_vec_rd_inn = #ts::#RdIdsTo2DimsVecRdInnSc(#RdIdsSc);
@@ -4974,8 +4974,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                             for el_31abc64a in el_16a61773 {
                                                 if opt_extra.is_none() {
                                                     opt_extra = Some((
-                                                        vec![Some(vec![#el_31abc64a_ts])],
-                                                        vec![Some(vec![#el_31abc64a_ts, #el_31abc64a_ts])]
+                                                        vec![Some(vec![#el_nl_star_or_clone_ts])],
+                                                        vec![Some(vec![#el_nl_star_or_clone_ts, #el_nl_star_or_clone_ts])]
                                                     ));
                                                 }
                                                 else {
@@ -5406,9 +5406,9 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PgType::SqlxPgTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPgTypeGreaterThanTest::False,
                     };
-                    let gen_some_ts = |v_476d047b: &CrRdIds| match &is_nl {
+                    let gen_some_ts = |cr_rd_ids_prm: &CrRdIds| match &is_nl {
                         IsNl::False => {
-                            let ts = match &v_476d047b {
+                            let ts = match &cr_rd_ids_prm {
                                 CrRdIds::RdIds => quote! {#ident_stdrt_nn_tt_ucc(#RdIdsSc.0.0)},
                                 CrRdIds::Cr => quote! {tt},
                             };
@@ -5420,7 +5420,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ))}
                         }
                         IsNl::True => {
-                            let ts = match &v_476d047b {
+                            let ts = match &cr_rd_ids_prm {
                                 CrRdIds::RdIds => quote! {#RdIdsSc.0},
                                 CrRdIds::Cr => quote! {#TtSc.0.0},
                             };

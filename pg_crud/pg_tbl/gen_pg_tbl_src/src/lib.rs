@@ -1110,7 +1110,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             }
         });
         let ident_wh_ts = {
-            let ts_2ecd6da8 = DTsBuilder::new()
+            let ident_wh_struct_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_clone()
@@ -1124,7 +1124,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                #ts_2ecd6da8
+                #ident_wh_struct_ts
             }
         };
         let ident_wh_try_new_er_ts = gen_no_fields_provided_er_ts(&ident_wh_try_new_er_ucc);
@@ -1299,13 +1299,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             )},
             &quote! {v_d1627695},
             &{
-                let ts_b34ec240 = gen_op_er_init_eprintln_res_ts(
+                let op_er_init_eprintln_rm_or_dm_ts = gen_op_er_init_eprintln_res_ts(
                     &Op::from(rm_or_dm),
                     &qp_syn_vrt,
                     Location::caller(),
                 );
                 quote! {{
-                    #ts_b34ec240
+                    #op_er_init_eprintln_rm_or_dm_ts
                 }}
             },
         )
@@ -1350,20 +1350,20 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 )},
                 &quote! {v_90535a1d},
                 &{
-                    let ts_995d3d1d = gen_op_er_init_eprintln_res_ts(
+                    let op_er_init_eprintln_rm_or_ro_ts = gen_op_er_init_eprintln_res_ts(
                         &Op::from(rm_or_ro),
                         &pg_syn_vrt,
                         Location::caller(),
                     );
                     quote! {{
-                        #ts_995d3d1d
+                        #op_er_init_eprintln_rm_or_ro_ts
                     }}
                 },
             )
         };
     let sel_ts = {
         let ident_sel_ts = {
-            let ts_179037cd = DTsBuilder::new()
+            let ident_sel_enum_ts = DTsBuilder::new()
             .make_pub()
             .d_debug()
             .d_clone()
@@ -1389,7 +1389,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                #ts_179037cd
+                #ident_sel_enum_ts
             }
         };
         let impl_display_for_ident_sel_ts = gen_impl_display_ts(
@@ -1424,7 +1424,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     let sel_pg_crud_dflt_some_one_el_call_ts = gen_fi_dflt_some_one_el_call_ts(&SelSc);
     let ident_rd_ts = {
         let ident_rd_ts = {
-            let ts_f80f1f3e = DTsBuilder::new()
+            let ident_rd_struct_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_partial_eq()
@@ -1458,7 +1458,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 });
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                #ts_f80f1f3e
+                #ident_rd_struct_ts
             }
         };
         let impl_ident_rd_ts = {
@@ -1555,7 +1555,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     };
     let ident_rd_ids_ts = {
         let ident_rd_ids_ts = {
-            let ts_472e3ebf = DTsBuilder::new()
+            let ident_rd_ids_struct_ts = DTsBuilder::new()
                 .make_pub()
                 .d_debug()
                 .d_clone()
@@ -1588,7 +1588,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 });
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                #ts_472e3ebf
+                #ident_rd_ids_struct_ts
             }
         };
         let impl_sqlx_row_for_ident_rd_ids_ts = {
@@ -1688,7 +1688,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             }
         };
         let ident_upd_ts = {
-            let ts_a09c0471 = serde_ser_utoipa_d_ts_builder.build_struct(
+            let ident_upd_struct_ts = serde_ser_utoipa_d_ts_builder.build_struct(
                 &Ts2::new(),
                 &ident_upd_ucc,
                 &Ts2::new(),
@@ -1696,7 +1696,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                #ts_a09c0471
+                #ident_upd_struct_ts
             }
         };
         let ident_upd_try_new_er_ts = gen_no_fields_provided_er_ts(&ident_upd_try_new_er_ucc);
@@ -1773,7 +1773,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     };
     let ident_upd_for_query_ts = {
         let ident_upd_for_query_ts = {
-            let ts_50ae0c5f = serde_ser_utoipa_d_ts_builder.build_struct(
+            let ident_upd_for_query_struct_ts = serde_ser_utoipa_d_ts_builder.build_struct(
                 &Ts2::new(),
                 &ident_upd_for_query_ucc,
                 &Ts2::new(),
@@ -1798,7 +1798,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             );
             quote! {
                 #AllowClippyArbitrarySrcItemOrdering
-                #ts_50ae0c5f
+                #ident_upd_for_query_struct_ts
             }
         };
         let impl_ident_upd_for_query_ts = {
@@ -1942,10 +1942,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             &quote! {#ts.#UpdQpPkSc(&mut #IncrSc)},
             &quote! {v_f269a3b2},
             &{
-                let ts_75b4019b =
+                let op_er_init_eprintln_upd_qp_pk_ts =
                     gen_op_er_init_eprintln_res_ts(op, &qp_syn_vrt, Location::caller());
                 quote! {{
-                    #ts_75b4019b
+                    #op_er_init_eprintln_upd_qp_pk_ts
                 }}
             },
         )
@@ -2126,14 +2126,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         quote! {#pub_h_ts #pk_fi: #ts}
     };
     let gen_match_pg_transaction_rollback_await_ts = |op: &Op, loc: &'static Location<'_>| {
-        let ts_91f19090 = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, loc);
+        let op_er_init_pg_rollback_ts = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, loc);
         let row_and_rollback_syn_vrt_er_init_eprintln_res_creation_ts =
             gen_op_er_init_eprintln_res_ts(op, &row_and_rollback_syn_vrt, loc);
         quote! {{
             if let Err(#Er1) = #ExecutorSc.#RollbackSc().await {
                 #row_and_rollback_syn_vrt_er_init_eprintln_res_creation_ts
             }
-            #ts_91f19090
+            #op_er_init_pg_rollback_ts
         }}
     };
     let gen_drop_rows_match_pg_transaction_rollback_await_h_ts =
@@ -2213,11 +2213,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         };
     let wrap_into_pg_transaction_begin_commit_ts = |op: &Op, ts: &dyn ToTokens| {
         let pg_transaction_begin_ts = {
-            let ts_efebc55b = gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, Location::caller());
+            let op_er_init_pg_begin_ts =
+                gen_op_er_init_eprintln_res_ts(op, &pg_syn_vrt, Location::caller());
             let ts0 = gen_match_ok_err_short_ts(
                 &quote! {#SqlxAcquire::#BeginSc(#ExecutorAcquireSc).await},
                 &quote! {v_1aaca28f},
-                &quote! {{#ts_efebc55b}},
+                &quote! {{#op_er_init_pg_begin_ts}},
             );
             quote! {let mut #ExecutorSc = #ts0;}
         };
@@ -2325,9 +2326,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 }
             }
         };
-        let ts_fa8795ea = gen_op_er_init_eprintln_res_ts(op, &qp_syn_vrt, Location::caller());
+        let op_er_init_qp_ts = gen_op_er_init_eprintln_res_ts(op, &qp_syn_vrt, Location::caller());
         let gen_match_ok_err_upd_ts = |ts0: &dyn ToTokens, ts1: &dyn ToTokens| {
-            gen_match_ok_err_short_ts(&ts0, &ts1, &quote! {{#ts_fa8795ea}})
+            gen_match_ok_err_short_ts(&ts0, &ts1, &quote! {{#op_er_init_qp_ts}})
         };
         let gen_for_el_in_upd_for_query_vec_fi_ts =
             |fi: &dyn ToTokens, ts0: &dyn ToTokens, ts1: &dyn ToTokens| {
@@ -2518,11 +2519,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 };
                 let return_er_ts = {
-                    let ts_6ac7b78e = gen_field_loc_new_ts(file!(), line!(), column!());
+                    let field_loc_new_ts = gen_field_loc_new_ts(file!(), line!(), column!());
                     quote! {
                         Err(#ident_try_op_er_ucc::#try_op_logic_er_with_serde_ucc {
                             #op_er_with_serde_sc,
-                            #ts_6ac7b78e,
+                            #field_loc_new_ts,
                         })
                     }
                 };
@@ -2648,14 +2649,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 let query_string_ts = {
                     let gen_match_ok_err_qp_ts =
                         |ts0: &dyn ToTokens, ts1: &dyn ToTokens, ts2: &dyn ToTokens, ts3: &dyn ToTokens| {
-                            gen_match_ok_err_ts(&ts0, &ts1, &ts2, &ts3, &quote! {{#ts_fa8795ea}})
+                            gen_match_ok_err_ts(&ts0, &ts1, &ts2, &ts3, &quote! {{#op_er_init_qp_ts}})
                         };
                     let write_into_buffer_qp_syn_vrt_er_init_eprintln_res_creation_ts = {
                         let qp_er_write_into_buffer_ts =
                             gen_qp_er_write_into_buffer_ts(import);
                         quote! {
                             let #Er0 = #qp_er_write_into_buffer_ts;
-                            #ts_fa8795ea
+                            #op_er_init_qp_ts
                         }
                     };
                     let incr_init_ts = quote! {let mut #IncrSc: u64 = 0;};
@@ -2835,13 +2836,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     let fi_dq_ts = dq_ts(&fi);
                                     let is_fi_upd_exists_sc = IsSelfUpdExistSc::from_tokens(&fi);
                                     let upd_qp_fi_sc = UpdQpSelfSc::from_tokens(&fi);
-                                    let ts_ee27d6ff = gen_for_el_in_upd_for_query_vec_ts(&quote! {
+                                    let for_el_upd_fi_exists_ts = gen_for_el_in_upd_for_query_vec_ts(&quote! {
                                         if el_a72f3eac.#fi.is_some() {
                                             #is_fi_upd_exists_sc = true;
                                             break;
                                         }
                                     });
-                                    let ts_33401696 = gen_for_el_in_upd_for_query_vec_fi_ts(
+                                    let for_el_upd_fi_qp_ts = gen_for_el_in_upd_for_query_vec_fi_ts(
                                         &fi,
                                         &quote! {v_3ea04126},
                                         &{
@@ -2865,14 +2866,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     quote! {
                                         {
                                             let mut #is_fi_upd_exists_sc = false;
-                                            #ts_ee27d6ff
+                                            #for_el_upd_fi_exists_ts
                                             if #is_fi_upd_exists_sc {
                                                 acc_b86a253a.push_str(&
                                                     #import_ts gen_col_eqs_case_acc_else_col_end_comma_um_qp(
                                                         #fi_dq_ts,
                                                         &{
                                                             let mut acc_8ad06c8c = #StringTs::default();
-                                                            #ts_33401696
+                                                            #for_el_upd_fi_qp_ts
                                                             acc_8ad06c8c
                                                         }
                                                     )
@@ -2898,7 +2899,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     },
                                 )),
                             );
-                            let ts_5abb9ece =
+                            let for_el_sel_only_updd_ids_qp_ts =
                                 gen_for_el_in_upd_for_query_vec_ts(&gen_match_ok_err_qp_ts(
                                     &gen_sel_only_updd_ids_qp_ts(&quote! {el_a72f3eac}),
                                     &quote! {v_4f536654},
@@ -2918,7 +2919,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     };
                                     let return_cols = {
                                         let mut acc_fd44b0aa = String::new();
-                                        #ts_5abb9ece
+                                        #for_el_sel_only_updd_ids_qp_ts
                                         acc_fd44b0aa
                                     };
                                     #import_ts gen_um_query_string(
@@ -2959,7 +2960,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             );
                             let extra_prms_pk_modification_ts =
                                 gen_match_upd_qp_pk_ts(op, &quote! {#UpdForQuerySc});
-                            let ts_a6ae3308 = gen_acc_string_pop_acc_ts(
+                            let acc_string_pop_cols_ts = gen_acc_string_pop_acc_ts(
                                 &quote! {acc_683e37b8},
                                 &extra_prms_modification_ts,
                             );
@@ -2971,7 +2972,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 {
                                     #incr_init_ts
                                     let #ColsSc = {
-                                        #ts_a6ae3308
+                                        #acc_string_pop_cols_ts
                                     };
                                     let #PkQpSc = #extra_prms_pk_modification_ts;
                                     let return_cols = #ts;
@@ -3005,14 +3006,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 };
                 let binded_query_ts = {
-                    let ts_2795ebdc = gen_op_er_init_eprintln_res_ts(
+                    let op_er_init_try_bind_ts = gen_op_er_init_eprintln_res_ts(
                         op,
                         &try_bind_syn_vrt,
                         Location::caller(),
                     );
                     let gen_match_qb_or_err_short_ts =
                         |ts0: &dyn ToTokens, ts1: &dyn ToTokens| {
-                            gen_match_qb_or_err_ts(&ts0, &ts1, &ts_2795ebdc)
+                            gen_match_qb_or_err_ts(&ts0, &ts1, &op_er_init_try_bind_ts)
                         };
                     match &op {
                         Op::Cm => {
@@ -3069,7 +3070,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                             quote! {
                                                 if let Err(er_981062db) = #QuerySc.try_bind(el_a72f3eac.#pk_fi) {
                                                     let #Er0 = er_981062db.to_string();
-                                                    #ts_2795ebdc
+                                                    #op_er_init_try_bind_ts
                                                 }
                                                 #ts
                                             }
@@ -3202,14 +3203,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     };
                     let gen_cr_upd_dm_fetch_ts =
                         |cr_or_upd_or_dm: &CrOrUpdOrDm| {
-                            let op_d1960edc = Op::from(cr_or_upd_or_dm);
+                            let op_cr_upd_dm = Op::from(cr_or_upd_or_dm);
                             gen_fetch_ts(
                                 &ExecutorSc,
                                 &match &cr_or_upd_or_dm {
                                     CrOrUpdOrDm::Cr
                                     | CrOrUpdOrDm::Upd => {
                                         let ts = gen_match_ident_rd_ids_as_from_row_from_row_ts(&gen_drop_rows_match_pg_transaction_rollback_await_h_ts(
-                                            &op_d1960edc,
+                                            &op_cr_upd_dm,
                                             Location::caller(),
                                         ));
                                         quote! {Some(#ts)}
@@ -3218,13 +3219,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                         &pk_ft_as_pg_type_rd_ucc,
                                         &quote! {Some(v_69ecb6a9)},
                                         &gen_drop_rows_match_pg_transaction_rollback_await_h_ts(
-                                            &op_d1960edc,
+                                            &op_cr_upd_dm,
                                             Location::caller(),
                                         ),
                                     ),
                                 },
                                 &gen_drop_rows_match_pg_transaction_rollback_await_h_ts(
-                                    &op_d1960edc,
+                                    &op_cr_upd_dm,
                                     Location::caller(),
                                 ),
                                 &ShouldWrapIntoV::True,
@@ -3377,7 +3378,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         let ident_op_payload_ucc = gen_ident_op_payload_ucc(op);
                         let ident_op_payload_ts = {
                             let (derive_clone, derive_copy) = op.derive_clone_and_copy();
-                            let ts_ec5b096c = DTsBuilder::new()
+                            let ident_op_payload_struct_ts = DTsBuilder::new()
                                 .make_pub()
                                 .d_debug()
                                 .d_clone_if(derive_clone)
@@ -3388,7 +3389,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 .build_struct(&Ts2::new(),&ident_op_payload_ucc, &Ts2::new(), &dcl_ts);
                             quote! {
                                 #AllowClippyArbitrarySrcItemOrdering
-                                #ts_ec5b096c
+                                #ident_op_payload_struct_ts
                             }
                         };
                         let impl_pg_crud_dflt_some_one_el_for_op_payload_ts =
@@ -3552,7 +3553,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             };
             let prms_ts = {
                 let (derive_clone, derive_copy) = op.derive_clone_and_copy();
-                let ts_0d032fce = DTsBuilder::new()
+                let ident_op_prms_struct_ts = DTsBuilder::new()
                     .make_pub()
                     .d_debug()
                     .d_clone_if(derive_clone)
@@ -3565,13 +3566,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     });
                 quote! {
                     #AllowClippyArbitrarySrcItemOrdering
-                    #ts_0d032fce
+                    #ident_op_prms_struct_ts
                 }
             };
             let op_ts = {
                 let ident_op_res_vrts_ucc = gen_ident_op_res_vrts_ucc(op);
                 let ident_try_op_logic_res_vrts_ts = {
-                    let ts_c997a274 = DTsBuilder::new()
+                    let ident_op_res_vrts_enum_ts = DTsBuilder::new()
                         .make_pub()
                         .d_debug()
                         .d_serde_serialize()
@@ -3588,7 +3589,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         });
                     quote! {
                         #AllowClippyArbitrarySrcItemOrdering
-                        #ts_c997a274
+                        #ident_op_res_vrts_enum_ts
                     }
                 };
                 let ident_op_er_ucc = gen_ident_op_er_ucc(op);
@@ -3626,7 +3627,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 };
                 let ident_op_er_ts = {
-                    let ts_685e0be8 = er_enum_d_ts_builder
+                    let ident_op_er_enum_ts = er_enum_d_ts_builder
                         .build_enum(&Ts2::new(), &ident_op_er_ucc, &Ts2::new(), &{
                             let vrts_ts = type_vrts_from_req_res_syn_vrts
                                 .iter()
@@ -3635,7 +3636,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         });
                     quote! {
                         #AllowClippyArbitrarySrcItemOrdering
-                        #ts_685e0be8
+                        #ident_op_er_enum_ts
                     }
                 };
                 quote! {
@@ -3794,11 +3795,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             |method_ts: &dyn ToTokens, ts0: &dyn ToTokens| {
                 quote! {#pk_ft_as_pg_type_pk_ts #method_ts(#ts0)}
             };
-        let rd_ids_el_937c5af3_pk_fi = quote! {rd_ids_el_937c5af3.#pk_fi};
+        let rd_ids_el_pk_fi_ts = quote! {rd_ids_el_937c5af3.#pk_fi};
         let (
             pk_ft_rd_ids_into_rd_el_43ab7fb5_pk_fi_ts,
             pk_ft_rd_ids_into_rd_rd_ids_from_try_co_pk_fi_ts,
-            pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
+            pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts,
             pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts,
         ) = {
             let gen_ts =
@@ -3806,17 +3807,17 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             (
                 gen_ts(&quote! {el_43ab7fb5.#pk_fi}),
                 gen_ts(&quote! {rd_ids_from_try_co.#pk_fi}),
-                gen_ts(&rd_ids_el_937c5af3_pk_fi),
+                gen_ts(&rd_ids_el_pk_fi_ts),
                 gen_ts(&quote! {rd_ids_from_co.#pk_fi}),
             )
         };
-        let ts_ffb964de = {
+        let pk_wh_eq_iter_map_collect_ts = {
             let ts = gen_pk_wh_eq_into_inn_ts(&pk_ft_rd_ids_into_rd_el_43ab7fb5_pk_fi_ts);
             quote! {.iter().map(|el_43ab7fb5| #ts).collect()}
         };
         let pk_ft_as_pg_type_upd_as_pg_type_pk_rd_ids_into_upd_ts = {
             let method_call_ts =
-                gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIdsIntoUpdSc, &rd_ids_el_937c5af3_pk_fi);
+                gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIdsIntoUpdSc, &rd_ids_el_pk_fi_ts);
             quote! {#pk_as_pg_type_ts::Upd::from(#method_call_ts)}
         };
         let (
@@ -3867,7 +3868,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 ),
             )
         };
-        let opt_ident_wh_ts_dc1232c7 =
+        let opt_ident_wh_fields_none_ts =
             gen_fields_named_without_pk_with_comma_ts(&|el: &SynField| {
                 let fi = &el.ident;
                 quote! {#fi: None}
@@ -3878,7 +3879,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             let pk_rd_ts = quote! {pk_rd};
             let pk_rd_clone_ts = quote! {pk_rd.clone()};
             let ts = gen_v_init_ts0(&pk_rd_clone_ts);
-            let assert_eq_ts_4f6bbe8a = gen_assert_eq_ts(
+            let assert_eq_ro_pk_ts = gen_assert_eq_ts(
                 &quote! {
                     #ident_rd_ucc {
                         #pk_fi: Some(#ts),
@@ -3897,7 +3898,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 },
                 &quote! {"3d9f2ec0"},
             );
-            let assert_eq_ts_947d2096 = gen_assert_eq_ts(
+            let assert_eq_dlo_pk_ts = gen_assert_eq_ts(
                 &quote! {
                     gen_try_dlo_h(
                         &url,
@@ -3912,8 +3913,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 let #CmnRdIdsFromCoSc = {
                     let rd_ids_from_try_co = gen_rd_ids_from_try_co_dflt(&#UrlSc, &tbl_init).await;
                     let pk_rd = #pk_ft_rd_ids_into_rd_rd_ids_from_try_co_pk_fi_ts;
-                    #assert_eq_ts_4f6bbe8a
-                    #assert_eq_ts_947d2096
+                    #assert_eq_ro_pk_ts
+                    #assert_eq_dlo_pk_ts
                     gen_check_no_rows_from_ident_try_ro_h_pk(
                         &url,
                         #pk_rd_ts,
@@ -4076,8 +4077,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     }
                 });
             let wh_pk_or_rd_ids_els_ts =
-                gen_wh_pk_or_ts(&quote! {rd_ids_els_efeed554 #ts_ffb964de});
-            let assert_eq_ts_d7cc4bd8 = gen_assert_eq_ts(
+                gen_wh_pk_or_ts(&quote! {rd_ids_els_efeed554 #pk_wh_eq_iter_map_collect_ts});
+            let assert_eq_rd_ids_els_ts = gen_assert_eq_ts(
                 &quote! {
                     itertools::Itertools::sorted_by(
                         rd_ids_els_efeed554.iter().map(|el_f108da5a| {
@@ -4136,7 +4137,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     .into_iter()
                     .flatten()
                     .collect::<Vec<#ident_rd_ids_ucc>>();
-                    #assert_eq_ts_d7cc4bd8
+                    #assert_eq_rd_ids_els_ts
                     rd_ids_els_efeed554
                 }
             }
@@ -4199,7 +4200,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     let ts = gen_try_dm_h_ts(
                         &quote! {
                             #pk_fi: Some(#some_ts),
-                            #opt_ident_wh_ts_dc1232c7
+                            #opt_ident_wh_fields_none_ts
                         },
                         &tbl_ts,
                     );
@@ -4218,7 +4219,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 }));
             }
         };
-        let ts_611ddc2e = quote! {
+        let vec_rd_from_rd_ids_with_cr_ts = quote! {
             gen_vec_ident_rd_from_vec_ident_rd_ids_with_vec_ident_cr(
                 rd_ids_from_try_cm.clone(),
                 ident_vec_cr.clone()
@@ -4228,12 +4229,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             let cm_tests_ts = gen_fields_named_without_pk_without_comma_ts(&|el: &SynField| {
                 let fi = &el.ident;
                 let ft = &el.type0;
-                let ident_cr_ts_910fa600 = gen_ident_cr_cnt_el_id_ts(fi, &quote! {el_03a4f4ee});
+                let cm_ident_cr_cnt_el_id_ts = gen_ident_cr_cnt_el_id_ts(fi, &quote! {el_03a4f4ee});
                 let ft_opt_vec_cr_or_vec_ts = gen_ft_opt_vec_cr_or_vec_ts(ft);
                 let wh_pk_or_rd_ids_cm_ts =
-                    gen_wh_pk_or_ts(&quote! {rd_ids_from_try_cm #ts_ffb964de});
-                let assert_eq_ts_b47328e3 = gen_assert_eq_ts(
-                    &ts_611ddc2e,
+                    gen_wh_pk_or_ts(&quote! {rd_ids_from_try_cm #pk_wh_eq_iter_map_collect_ts});
+                let assert_eq_cm_rm_ts = gen_assert_eq_ts(
+                    &vec_rd_from_rd_ids_with_cr_ts,
                     &quote! {
                         gen_try_rm_order_by_pk_with_big_pgn(
                             &url_cloned,
@@ -4244,12 +4245,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     },
                     &quote! {"d19bbbf6"},
                 );
-                let assert_eq_ts_78d9a1bd = gen_assert_eq_ts(
+                let assert_eq_cm_dm_pks_ts = gen_assert_eq_ts(
                     &quote! {rd_ids_from_try_dm},
                     &vec_pk_sorted_rd_ts,
                     &quote! {"f58f5572"},
                 );
-                let assert_ts_56d830a6 = gen_assert_ts(
+                let assert_cm_dm_empty_ts = gen_assert_ts(
                     &{
                         let ts = gen_pk_wh_eq_into_inn_ts(&quote! {el_a37bca54.clone()});
                         let wh_pk_or_dm_ts = gen_wh_pk_or_ts(&quote! {
@@ -4274,13 +4275,13 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     },
                     &quote! {"4e88679a"},
                 );
-                let ts_08a18039 = gen_rd_ids_from_try_dm_sorted_pk_ts(
+                let cm_rd_ids_from_try_dm_sorted_pk_ts = gen_rd_ids_from_try_dm_sorted_pk_ts(
                     &quote! {tbl_cm_cloned},
                     &quote! {
                         gen_pg_type_wh_try_new_or_pks(&rd_ids_from_try_cm)
                     },
                 );
-                let ts_f318a803 = gen_acc_push_future_ts(
+                let cm_acc_push_future_ts = gen_acc_push_future_ts(
                     &quote! {tbl_cm_cloned},
                     &quote! {tbl_cm},
                     &quote! {
@@ -4288,7 +4289,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             let mut acc_92d248f7 = Vec::new();
                             for el_03a4f4ee in el_fce0969c {
                                 acc_92d248f7.push(#ident_cr_ucc {
-                                    #ident_cr_ts_910fa600
+                                    #cm_ident_cr_cnt_el_id_ts
                                 });
                             }
                             acc_92d248f7
@@ -4300,10 +4301,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             },
                             &tbl_cm_cloned.clone()
                         ).await.expect("5eecedc4");
-                        #assert_eq_ts_b47328e3
-                        #ts_08a18039
-                        #assert_eq_ts_78d9a1bd
-                        #assert_ts_56d830a6
+                        #assert_eq_cm_rm_ts
+                        #cm_rd_ids_from_try_dm_sorted_pk_ts
+                        #assert_eq_cm_dm_pks_ts
+                        #assert_cm_dm_empty_ts
                     },
                 );
                 quote! {
@@ -4311,7 +4312,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         .chunks(10)
                         .map(Vec::from)
                     {
-                        #ts_f318a803
+                        #cm_acc_push_future_ts
                     }
                 }
             });
@@ -4321,10 +4322,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             let co_tests_ts = gen_fields_named_without_pk_without_comma_ts(&|el: &SynField| {
                 let fi = &el.ident;
                 let ft = &el.type0;
-                let ident_cr_ts_f75e4ef0 = gen_ident_cr_cnt_el_id_ts(fi, &quote! {el_7632d698});
+                let co_ident_cr_cnt_el_id_ts = gen_ident_cr_cnt_el_id_ts(fi, &quote! {el_7632d698});
                 let ts = gen_v_init_ts0(&pk_ft_rd_ids_into_rd_rd_ids_from_try_co_pk_fi_ts);
                 let ft_opt_vec_cr_or_vec_ts = gen_ft_opt_vec_cr_or_vec_ts(ft);
-                let assert_eq_ts_e2916686 = gen_assert_eq_ts(
+                let assert_eq_co_ro_pk_ts = gen_assert_eq_ts(
                     &quote! {
                         #ident_rd_ucc {
                             #pk_fi: Some(#ts),
@@ -4343,7 +4344,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     },
                     &quote! {"5f2adbed"},
                 );
-                let assert_eq_ts_f5d5140f = gen_assert_eq_ts(
+                let assert_eq_co_dlo_pk_ts = gen_assert_eq_ts(
                     &quote! {
                         gen_try_dlo_h(
                             &url_cloned,
@@ -4354,20 +4355,20 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     &quote! {#pk_ft_rd_ids_into_rd_rd_ids_from_try_co_pk_fi_ts},
                     &quote! {"4f563faf"},
                 );
-                let ts_eb57f4ce = gen_acc_push_future_ts(
+                let co_acc_push_future_ts = gen_acc_push_future_ts(
                     &quote! {tbl_co_cloned},
                     &quote! {tbl_co},
                     &quote! {
                         let ident_cr = #ident_cr_ucc {
-                            #ident_cr_ts_f75e4ef0
+                            #co_ident_cr_cnt_el_id_ts
                         };
                         let rd_ids_from_try_co = gen_rd_ids_from_try_co(
                             &url_cloned,
                             ident_cr.clone(),
                             &tbl_co_cloned
                         ).await;
-                        #assert_eq_ts_e2916686
-                        #assert_eq_ts_f5d5140f
+                        #assert_eq_co_ro_pk_ts
+                        #assert_eq_co_dlo_pk_ts
                         gen_check_no_rows_from_ident_try_ro_h_pk(
                             &url_cloned,
                             #pk_ft_rd_ids_into_rd_rd_ids_from_try_co_pk_fi_ts,
@@ -4378,7 +4379,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 );
                 quote! {
                     for el_7632d698 in #ft_opt_vec_cr_or_vec_ts {
-                        #ts_eb57f4ce
+                        #co_acc_push_future_ts
                     }
                 }
             });
@@ -4437,9 +4438,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         &quote!{tbl_7e35b1ce},
                         &quote!{tbl_test_rm_by_eq_to_crd_pks},
                         &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                            let wh_pk_or_rd_ids_cm_ts = gen_wh_pk_or_ts(&quote!{rd_ids_from_try_cm #ts_ffb964de});
-                            let assert_eq_ts_03eaa791 = gen_assert_eq_ts(
-                                &ts_611ddc2e,
+                            let wh_pk_or_rd_ids_cm_ts = gen_wh_pk_or_ts(&quote!{rd_ids_from_try_cm #pk_wh_eq_iter_map_collect_ts});
+                            let assert_eq_rm_crd_pks_ts = gen_assert_eq_ts(
+                                &vec_rd_from_rd_ids_with_cr_ts,
                                 &quote! {
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
@@ -4450,12 +4451,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 },
                                 &quote! {"er 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"},
                             );
-                            let assert_eq_ts_10f06d56 = gen_assert_eq_ts(
+                            let assert_eq_rm_dm_pks_ts = gen_assert_eq_ts(
                                 &quote! {rd_ids_from_try_dm},
                                 &vec_pk_sorted_rd_ts,
                                 &quote! {"ebbbea6e"},
                             );
-                            let assert_ts_a5027b61 = gen_assert_ts(
+                            let assert_rm_dm_empty_ts = gen_assert_ts(
                                 &{
                                     let ts = gen_pk_wh_eq_into_inn_ts(&quote!{el_1e9c87ce.clone()});
                                     let wh_pk_or_dm_ts = gen_wh_pk_or_ts(&quote!{
@@ -4477,7 +4478,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 },
                                 &quote!{"d79c0af3"}
                             );
-                            let ts_83ae6884 = gen_rd_ids_from_try_dm_sorted_pk_ts(
+                            let rm_rd_ids_from_try_dm_sorted_pk_ts = gen_rd_ids_from_try_dm_sorted_pk_ts(
                                 &quote!{tbl_7e35b1ce},
                                 &quote!{
                                     gen_pg_type_wh_try_new_or_pks(&rd_ids_from_try_cm)
@@ -4495,10 +4496,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     },
                                     &tbl_7e35b1ce
                                 ).await.expect("d775179f");
-                                #assert_eq_ts_03eaa791
-                                #ts_83ae6884
-                                #assert_eq_ts_10f06d56
-                                #assert_ts_a5027b61
+                                #assert_eq_rm_crd_pks_ts
+                                #rm_rd_ids_from_try_dm_sorted_pk_ts
+                                #assert_eq_rm_dm_pks_ts
+                                #assert_rm_dm_empty_ts
                             }
                         })
                     );
@@ -4546,19 +4547,20 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         let ft = &el.type0;
                         let method_call_ts = gen_method_call_ts(fi, ft);
                         let tbl_test_name_fi_ts = gen_tbl_test_name_fi_ts(test_name, fi);
-                        let ident_cr_ts_013035e1 = gen_cr_ts(fi);
+                        let wh_ident_cr_ts = gen_cr_ts(fi);
                         let ts = gen_ts(el);
-                        let assert_eq_ts_b444d33d = gen_assert_eq_ts(
+                        let assert_eq_wh_dm_pks_ts = gen_assert_eq_ts(
                             &quote! {rd_ids_from_try_dm},
                             &quote! {vec![#pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts]},
                             &quote! {"9fc29fa5"},
                         );
-                        let assert_ts_87ec2ac1 = gen_assert_ts(
+                        let assert_wh_dm_empty_ts = gen_assert_ts(
                             &{
-                                let ts_75998fa9 = gen_pk_wh_eq_into_inn_ts(
+                                let wh_pk_wh_eq_into_inn_ts = gen_pk_wh_eq_into_inn_ts(
                                     &pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts,
                                 );
-                                let wh_pk_or_co_ts = gen_wh_pk_or_ts(&quote! {vec![#ts_75998fa9]});
+                                let wh_pk_or_co_ts =
+                                    gen_wh_pk_or_ts(&quote! {vec![#wh_pk_wh_eq_into_inn_ts]});
                                 quote! {
                                     gen_try_rm_order_by_pk_with_big_pgn(
                                         &url_cloned,
@@ -4572,23 +4574,24 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             },
                             &quote! {"38187925"},
                         );
-                        let ts_490b2aa3 =
+                        let wh_pk_wh_eq_co_ts =
                             gen_pk_wh_eq_into_inn_ts(&pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts);
-                        let ts_7a8c2dcc = gen_rd_ids_from_try_dm_sorted_pk_ts(
-                            &quote! {tbl_7e35b1ce},
-                            &quote! {
-                                gen_pg_type_wh_try_new_pk(
-                                    #oprtr_or_ts,
-                                    vec![#ts_490b2aa3]
-                                )
-                            },
-                        );
-                        let ts_4c3245ed = gen_acc_push_future_ts(
+                        let wh_rd_ids_from_try_dm_sorted_pk_ts =
+                            gen_rd_ids_from_try_dm_sorted_pk_ts(
+                                &quote! {tbl_7e35b1ce},
+                                &quote! {
+                                    gen_pg_type_wh_try_new_pk(
+                                        #oprtr_or_ts,
+                                        vec![#wh_pk_wh_eq_co_ts]
+                                    )
+                                },
+                            );
+                        let wh_acc_push_future_ts = gen_acc_push_future_ts(
                             &quote! {tbl_7e35b1ce},
                             &tbl_test_name_fi_ts,
                             &quote! {
                                 let ident_cr = #ident_cr_ucc {
-                                    #ident_cr_ts_013035e1
+                                    #wh_ident_cr_ts
                                 };
                                 let rd_ids_from_co = gen_rd_ids_from_try_co(
                                     &url_cloned,
@@ -4596,14 +4599,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     &tbl_7e35b1ce
                                 ).await;
                                 #ts
-                                #ts_7a8c2dcc
-                                #assert_eq_ts_b444d33d
-                                #assert_ts_87ec2ac1
+                                #wh_rd_ids_from_try_dm_sorted_pk_ts
+                                #assert_eq_wh_dm_pks_ts
+                                #assert_wh_dm_empty_ts
                             },
                         );
                         quote! {
                             for #ElSc in #method_call_ts {
-                                #ts_4c3245ed
+                                #wh_acc_push_future_ts
                             }
                         }
                     })
@@ -4963,7 +4966,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             });
         };
         let gen_ident_rd_init_ts = |ts: &dyn ToTokens| {
-            let ts0 = gen_v_init_ts0(&pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3);
+            let ts0 = gen_v_init_ts0(&pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts);
             quote! {#ident_rd_ucc {
                 #pk_fi: Some(#ts0),
                 #ts
@@ -5056,9 +5059,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     let ft_ts = gen_as_pg_type_test_cases_path_ts(ft);
                     let is_fields_without_pk_len_greater_than_one = fields_without_pk.len() > 1;
                     let mb_previous_rd_ts = if is_fields_without_pk_len_greater_than_one {
-                        let ts = gen_pk_wh_eq_into_inn_ts(
-                            &pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
-                        );
+                        let ts =
+                            gen_pk_wh_eq_into_inn_ts(&pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts);
                         let wh_pk_or_um_ts = gen_wh_pk_or_ts(&quote! {vec![#ts]});
                         quote! {
                             let previous_rd = itertools::Itertools::sorted_by(
@@ -5096,9 +5098,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             quote! {vec![#ts]}
                         }
                     };
-                    let ts_b13210d0 =
+                    let um_rd_inn_into_upd_ts =
                         gen_rd_inn_into_upd_ts(&fi, &ft, &ft_ts, &quote! {i_7f181188});
-                    let assert_eq_ts_b61aac03 = gen_assert_eq_ts(
+                    let assert_eq_um_rd_ids_ts = gen_assert_eq_ts(
                         &quote! {vec![
                             #ident_rd_ids_ucc {
                                 #pk_fi: rd_ids_el_937c5af3.#pk_fi,
@@ -5121,11 +5123,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         },
                         &quote! {"34bfb3c7"},
                     );
-                    let assert_eq_ts_10783673 = gen_assert_eq_ts(
+                    let assert_eq_um_rm_ts = gen_assert_eq_ts(
                         &quote! {{#expected_rm_ts}},
                         &{
                             let ts = gen_pk_wh_eq_into_inn_ts(
-                                &pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
+                                &pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts,
                             );
                             let wh_pk_or_um_ts = gen_wh_pk_or_ts(&quote! {vec![#ts]});
                             quote! {
@@ -5145,14 +5147,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         },
                         &quote! {"ae2a2da5"},
                     );
-                    let ts_2a6601e1 = gen_acc_push_future_ts(
+                    let um_acc_push_future_ts = gen_acc_push_future_ts(
                         &quote! {tbl_um_cloned},
                         &quote! {tbl_um},
                         &quote! {
                             #mb_previous_rd_ts
-                            #ts_b13210d0
-                            #assert_eq_ts_b61aac03
-                            #assert_eq_ts_10783673
+                            #um_rd_inn_into_upd_ts
+                            #assert_eq_um_rd_ids_ts
+                            #assert_eq_um_rm_ts
                         },
                     );
                     quote! {
@@ -5162,7 +5164,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             #sel_dflt_all_with_max_page_size_clone_ts,
                             #fi_rd_ids_to_2_dims_vec_rd_inn_acc_sc.clone()
                         ).await.into_iter().enumerate() {
-                            #ts_2a6601e1
+                            #um_acc_push_future_ts
                         }
                     }
                 },
@@ -5179,7 +5181,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         quote! {
                             let previous_rd = gen_ident_try_ro_h_pk(
                                 &url_cloned,
-                                #pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
+                                #pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts,
                                 #sel_dflt_all_with_max_page_size_cloned_clone_ts,
                                 &tbl_uo_cloned
                             )
@@ -5199,9 +5201,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         "4f19d0d2",
                         "c7685b19",
                     );
-                    let ts_a903994d =
+                    let uo_rd_inn_into_upd_ts =
                         gen_rd_inn_into_upd_ts(&fi, &ft, &ft_ts, &quote! {i_26824592});
-                    let assert_eq_ts_0ba29fe7 = gen_assert_eq_ts(
+                    let assert_eq_uo_rd_ids_ts = gen_assert_eq_ts(
                         &quote! {#ident_rd_ids_ucc {
                             #pk_fi: rd_ids_el_937c5af3.#pk_fi,
                             #ident_rd_ids_upper_fields_init_without_pk_ts
@@ -5220,12 +5222,12 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         },
                         &quote! {"564de31c"},
                     );
-                    let assert_eq_ts_35a86616 = gen_assert_eq_ts(
+                    let assert_eq_uo_ro_ts = gen_assert_eq_ts(
                         &gen_ident_rd_init_ts(&ident_rd_fields_init_without_pk_after_uo_ts),
                         &quote! {
                             gen_ident_try_ro_h_pk(
                                 &url_cloned,
-                                #pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts_937c5af3,
+                                #pk_ft_rd_only_is_into_rd_rd_ids_el_pk_fi_ts,
                                 sel_dflt_all_with_max_page_size_cloned,
                                 &tbl_uo_cloned
                             )
@@ -5233,14 +5235,14 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         },
                         &quote! {"d5dec823"},
                     );
-                    let ts_fedea8c3 = gen_acc_push_future_ts(
+                    let uo_acc_push_future_ts = gen_acc_push_future_ts(
                         &quote! {tbl_uo_cloned},
                         &quote! {tbl_uo},
                         &quote! {
                             #mb_previous_rd_ts
-                            #ts_a903994d
-                            #assert_eq_ts_0ba29fe7
-                            #assert_eq_ts_35a86616
+                            #uo_rd_inn_into_upd_ts
+                            #assert_eq_uo_rd_ids_ts
+                            #assert_eq_uo_ro_ts
                         },
                     );
                     quote! {
@@ -5250,7 +5252,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             #sel_dflt_all_with_max_page_size_clone_ts,
                             #fi_rd_ids_to_2_dims_vec_rd_inn_acc_sc
                         ).await.into_iter().enumerate() {
-                            #ts_fedea8c3
+                            #uo_acc_push_future_ts
                         }
                     }
                 });
@@ -5285,11 +5287,11 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 )
             );
             let test_dm_by_pks_ts = gen_for_in_1_2_ts(&quote! {el_56409d32}, &{
-                let ts_3240261f = gen_acc_push_future_ts(
+                let dm_acc_push_future_ts = gen_acc_push_future_ts(
                     &quote!{tbl_7e35b1ce},
                     &quote!{tbl_test_rm_by_eq_to_crd_pks},//todo is tbl name correct?
                     &add_co_dflt_and_del_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_ts(&{
-                        let assert_eq_ts_ea7edbc4 = gen_assert_eq_ts(
+                        let assert_eq_dm_rd_ids_ts = gen_assert_eq_ts(
                             &quote!{rd_ids_from_try_dm},
                             &quote!{{
                                 rd_ids_from_try_cm.iter().map(|el_ba0f6b1c|
@@ -5300,7 +5302,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             }},
                             &quote!{"db5e88a6"}
                         );
-                        let assert_ts_d6ec39a3 = gen_assert_ts(
+                        let assert_dm_empty_ts = gen_assert_ts(
                             &{
                                 let ts = gen_pk_wh_eq_ts(&gen_pk_ft_as_pg_type_pk_method_call_ts(&RdIntoTtSc, &quote! {el_adcc8db3}));
                                 let wh_pk_or_dm_ts = gen_wh_pk_or_ts(&quote!{
@@ -5319,16 +5321,16 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             },
                             &quote!{"77f038b0"}
                         );
-                        let ts_212f8aca = gen_pk_wh_eq_ts(&gen_pk_ft_as_pg_type_pk_method_call_ts(
+                        let dm_pk_wh_eq_ts = gen_pk_wh_eq_ts(&gen_pk_ft_as_pg_type_pk_method_call_ts(
                             &RdIdsIntoTtSc,
                             &quote! {el_3bb88958.#pk_fi},
                         ));
-                        let ts_6f76ccd4 = gen_rd_ids_from_try_dm_ts(&gen_try_dm_h_ts(
+                        let dm_rd_ids_from_try_dm_ts = gen_rd_ids_from_try_dm_ts(&gen_try_dm_h_ts(
                             &quote!{
                                 #pk_fi: Some(
                                     gen_pg_type_wh_try_new_pk(
                                         #oprtr_or_ts,
-                                        rd_ids_from_try_cm.iter().map(|el_3bb88958| #ts_212f8aca).collect()
+                                        rd_ids_from_try_cm.iter().map(|el_3bb88958| #dm_pk_wh_eq_ts).collect()
                                     )
                                 ),
                                 #fields_none_init_ts
@@ -5345,15 +5347,15 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 },
                                 &tbl_7e35b1ce
                             ).await.expect("b8695890");
-                            #ts_6f76ccd4
-                            #assert_eq_ts_ea7edbc4
-                            #assert_ts_d6ec39a3
+                            #dm_rd_ids_from_try_dm_ts
+                            #assert_eq_dm_rd_ids_ts
+                            #assert_dm_empty_ts
                         }
                     })
                 );
                 quote! {
                     let ident_cr_dflt_cloned = ident_cr_dflt.clone();
-                    #ts_3240261f
+                    #dm_acc_push_future_ts
                 }
             });
             quote! {
@@ -5363,7 +5365,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         };
         let dlo_tests_ts = {
             let ts = gen_v_init_ts0(&pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts);
-            let assert_eq_ts_6322435c = gen_assert_eq_ts(
+            let assert_eq_dlo_ro_pk_ts = gen_assert_eq_ts(
                 &quote! {#ident_rd_ucc {
                     #pk_fi: Some(#ts),
                     #fi_rd_ids_and_cr_into_opt_v_rd_rd_ids_from_co_cr_ts
@@ -5379,7 +5381,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 },
                 &quote! {"86ef08ae"},
             );
-            let assert_eq_ts_8812d778 = gen_assert_eq_ts(
+            let assert_eq_dlo_del_pk_ts = gen_assert_eq_ts(
                 &quote! {
                     gen_try_dlo_h(
                         &url,
@@ -5390,7 +5392,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 &quote! {#pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts},
                 &quote! {"99f81971"},
             );
-            let assert_ts_9c8cb81a = gen_assert_ts(
+            let assert_dlo_no_rows_ts = gen_assert_ts(
                 &quote! {pg == no_rows_by_a_query_that_expected_to_return_at_least_one_row()},
                 &quote! {"c9261bb8"},
             );
@@ -5412,7 +5414,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                     pg,
                                     ..
                                 } = dlo_er_with_serde {
-                                    #assert_ts_9c8cb81a
+                                    #assert_dlo_no_rows_ts
                                 } else {
                                     panic!("e63b27a3");
                                 }
@@ -5423,8 +5425,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                             panic!("9be62f9f")
                         }
                         let rd_ids_from_co = gen_rd_ids_from_try_co_dflt(&url, &tbl_dlo_cloned).await;
-                        #assert_eq_ts_6322435c
-                        #assert_eq_ts_8812d778
+                        #assert_eq_dlo_ro_pk_ts
+                        #assert_eq_dlo_del_pk_ts
                         gen_check_no_rows_from_ident_try_ro_h_pk(
                             &url,
                             #pk_ft_rd_ids_into_rd_rd_ids_from_co_pk_fi_ts,
@@ -5435,8 +5437,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                 });
             }
         };
-        let assert_ts_48ca54b1 = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
-        let ts_e698d734 = gen_pk_wh_eq_into_inn_ts(&quote! {
+        let assert_tbl_name_len_ts = gen_assert_ts(&quote! {v.len() <= 63}, &quote! {"77f9bfb7"});
+        let pk_wh_eq_into_inn_rd_ids_ts = gen_pk_wh_eq_into_inn_ts(&quote! {
             #pk_ft_as_pg_type_pk_ts rd_ids_into_rd(el_9530b728.#pk_fi)
         });
         let size_of_ts = {
@@ -5477,7 +5479,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             ) -> #import_ts PgTypeWh<#pk_ft_as_pg_type_wh_ts> {
                 gen_pg_type_wh_try_new_pk(
                     #oprtr_or_ts,
-                    vec_rd_ids.iter().map(|el_9530b728| #ts_e698d734).collect()
+                    vec_rd_ids.iter().map(|el_9530b728| #pk_wh_eq_into_inn_rd_ids_ts).collect()
                 )
             }
         };
@@ -5708,7 +5710,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         let tbl = #ident_dq_ts;
                         let add_tbl_postfix = |postfix: &str|{
                             let v = format!("{tbl}_{postfix}");
-                            #assert_ts_48ca54b1
+                            #assert_tbl_name_len_ts
                             v
                         };
                         let tbl_init = add_tbl_postfix("init");
@@ -5842,7 +5844,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     );
     let gend = {
         let ident_gen_pg_tbl_mod_sc = SelfGenPgTblModSc::from_tokens(&ident);
-        let ts_1c0e3fcd = quote! {
+        let impl_and_content_ts = quote! {
             #AllowClippyArbitrarySrcItemOrdering
             impl #ident {
                 #(#impl_ident_vec_ts)*
@@ -5865,7 +5867,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             #[allow(clippy::absolute_paths)]
             mod #ident_gen_pg_tbl_mod_sc {
                 use super::#ident;
-                #ts_1c0e3fcd
+                #impl_and_content_ts
             }
             pub use #ident_gen_pg_tbl_mod_sc::*;
         }

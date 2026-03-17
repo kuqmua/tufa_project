@@ -2512,30 +2512,30 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 i_ts: &dyn ToTokens,
                                 v_ts: &dyn ToTokens,
                                 enumerate_ts: &dyn ToTokens,
-                                content_ts_aaf03124: &dyn ToTokens,
+                                content_ts_for_body: &dyn ToTokens,
                             |quote!{
                                 for (#i_ts, #v_ts) in #enumerate_ts.0.into_iter().enumerate() {
-                                    #content_ts_aaf03124
+                                    #content_ts_for_body
                                 }
                             };
                             let gen_for_v_i_dot_zero_into_iter_enumerate_ts = |
                                 i_nbr: usize,
                                 v_from: usize,
                                 v_to: usize,
-                                content_ts_d575a40c: &dyn ToTokens,
+                                content_ts_enumerate_body: &dyn ToTokens,
                             |gen_for_in_ts(
                                 &gen_i_nbr_ts(i_nbr),
                                 &gen_v_nbr_ts(v_from),
                                 &gen_v_nbr_ts(v_to),
-                                &content_ts_d575a40c
+                                &content_ts_enumerate_body
                             );
                             let gen_if_let_some_ts = |
                                 some_ts: &dyn ToTokens,
                                 eq_ts: &dyn ToTokens,
-                                content_ts_9292e3cf: &dyn ToTokens,
+                                content_ts_if_let_body: &dyn ToTokens,
                             |quote!{
                                 if let Some(#some_ts) = #eq_ts.0 {
-                                    #content_ts_9292e3cf
+                                    #content_ts_if_let_body
                                 }
                                 else {
                                     return None;//todo to fix it - should rewrite logic
@@ -2544,11 +2544,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             let gen_if_let_some_eqs_v_i_dot_zero_ts = |
                                 v_from: usize,
                                 v_to: usize,
-                                content_ts_832b20d5: &dyn ToTokens,
+                                content_ts_if_let_eqs_body: &dyn ToTokens,
                             |gen_if_let_some_ts(
                                 &gen_v_nbr_ts(v_from),
                                 &gen_v_nbr_ts(v_to),
-                                &content_ts_832b20d5
+                                &content_ts_if_let_eqs_body
                             );
                             let gen_i = |start_i: usize, is_nl_vec_prm: &[&IsNl]| -> usize {
                                 start_i.checked_add(
@@ -2591,7 +2591,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                         }
                                     ));
                                     let vec_cnt_ts = {
-                                        let content_ts_0dc5a500 = (
+                                        let content_ts_dim_indices = (
                                             0i32..=match dim_i_nbr_max {
                                                 DimIndexNbr::Zero => 0i32,
                                                 DimIndexNbr::One => 1i32,
@@ -2610,7 +2610,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                 ).expect("ad1ab73f")
                                             }
                                         }).collect::<Vec<Ts2>>();
-                                        quote! {#(#content_ts_0dc5a500),*}
+                                        quote! {#(#content_ts_dim_indices),*}
                                     };
                                     quote! {
                                         #wh_ident_wh_ucc_drvd::#dim_nbr_starting_with_one_eq_ts(
