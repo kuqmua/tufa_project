@@ -552,13 +552,13 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                                 pg_type_kind.format_argument()
                             ));
                             let if_write_is_err_ts = gen_if_write_is_err_ts(
-                                &quote! {acc_14596a52, "${v_daedba9c},"},
+                                &quote! {acc, "${v_daedba9c},"},
                                 &quote! {panic!("87f47f75");},
                             );
                             quote! {
                                 #mb_dims_ies_init_ts
                                 let #VSc = {
-                                    let mut acc_14596a52 = String::default();
+                                    let mut acc = String::default();
                                     for _ in #SelfSc.#VSc.to_vec() {
                                         match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                                             Ok(v_daedba9c) => {
@@ -569,8 +569,8 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                                             },
                                         }
                                     }
-                                    let _ = acc_14596a52.pop();
-                                    acc_14596a52
+                                    let _ = acc.pop();
+                                    acc
                                 };
                                 Ok(format!(
                                     #format_ts,
