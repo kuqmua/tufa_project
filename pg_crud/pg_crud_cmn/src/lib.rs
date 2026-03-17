@@ -431,7 +431,7 @@ where
     fn qp(&self, incr: &mut u64, col: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{col} = 'null'")),
-            |v_b4a9fcfb| v_b4a9fcfb.qp(incr, col, add_oprtr),
+            |v| v.qp(incr, col, add_oprtr),
         )
     }
 }
@@ -1029,8 +1029,8 @@ where
     }
     fn qp(&self, incr: &mut u64, col: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         let mut acc = String::default();
-        for (i, v_953208ce) in self.0.iter().enumerate() {
-            match v_953208ce.qp(incr, col, if i == 0 { add_oprtr } else { true }) {
+        for (i, el) in self.0.iter().enumerate() {
+            match el.qp(incr, col, if i == 0 { add_oprtr } else { true }) {
                 Ok(v) => {
                     acc.push_str(&v);
                 }

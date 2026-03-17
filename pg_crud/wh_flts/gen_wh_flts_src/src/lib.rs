@@ -149,12 +149,9 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                 &ident,
                 &match &generic {
                     Generic::False => proc_macro2_ts_new.clone(),
-                    Generic::True { mb_extra_traits_ts } => {
-                        mb_extra_traits_ts.as_ref().map_or_else(
-                            || quote! {<#t_ts>},
-                            |v_d05f3d4f| quote! {<#t_ts: #v_d05f3d4f>},
-                        )
-                    }
+                    Generic::True { mb_extra_traits_ts } => mb_extra_traits_ts
+                        .as_ref()
+                        .map_or_else(|| quote! {<#t_ts>}, |v| quote! {<#t_ts: #v>}),
                 },
                 &quote::quote! {{
                     #mb_pub_ts oprtr: #import::Oprtr,
@@ -170,7 +167,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                 Generic::False => Ts2::new(),
                 Generic::True { mb_extra_traits_ts } => mb_extra_traits_ts.as_ref().map_or_else(
                     || quote! {<T: #PgCrudCmnDfltSomeOneEl>},
-                    |v_29913af7| quote! {<T: #v_29913af7 + #PgCrudCmnDfltSomeOneEl>},
+                    |v| quote! {<T: #v + #PgCrudCmnDfltSomeOneEl>},
                 ),
             },
             &Import::PgCrudCmn,
@@ -253,7 +250,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
     };
     let v_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&VSc);
     let self_oprtr_to_qp_ts = quote! {&#SelfSc.oprtr.to_qp(add_oprtr),};
-    let gen_ts_dbf9de6b =
+    let gen_rgx_qp_format_ts =
         |v: &dyn Display, mb_dims_ies_init_ts: &dyn ToTokens, mb_extra_prms_ts: &dyn ToTokens| {
             let format_ts = dq_ts(&v);
             quote! {
@@ -455,7 +452,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                 let gen_pg_type_dims_helpers_pg_type = |pg_type_ptrn: &PgTypePtrn| {
                     gen_pg_type_dims_helpers(pg_type_ptrn, &PgTypeOrPgJson::PgType)
                 };
-                let gen_32abfefc_ts =
+                let gen_cmp_flt_ts =
                     |pg_type_ptrn: &PgTypePtrn,
                      gen_format_h_str: &dyn Fn(&PgTypeKind) -> String| {
                         let (
@@ -480,13 +477,13 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             gen_two_ts(&mb_dims_qb_ts, &qb_one_v_ts),
                         )
                     };
-                let gen_a2ca84d5_ts = |pg_type_ptrn: &PgTypePtrn, oprtr: &dyn Display| {
-                    gen_32abfefc_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                let gen_oprtr_cmp_flt_ts = |pg_type_ptrn: &PgTypePtrn, oprtr: &dyn Display| {
+                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                         format!("{{}}({{}}{} {oprtr} ${{}})", pg_type_kind.format_argument())
                     })
                 };
                 let gen_greater_than_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &">");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &">");
                 let gen_btwn_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_dcl_ts,
@@ -610,7 +607,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         add_rgx_case_and_v_dcl_ts(&mb_dims_dcl_ts),
                         add_rgx_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
                         IncrPrmUndrscr::False,
-                        gen_ts_dbf9de6b(
+                        gen_rgx_qp_format_ts(
                             &format!("{{}}({{}}{} {{}} ${{}})", pg_type_kind.format_argument()),
                             &mb_dims_ies_init_ts,
                             &mb_extra_prms_ts,
@@ -622,8 +619,9 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         ),
                     )
                 };
-                let gen_before_ts = |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"<");
-                let gen_1fa0bbf4_ts = |pg_type_ptrn: &PgTypePtrn, pg_syntax: &dyn Display| {
+                let gen_before_ts =
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"<");
+                let gen_pg_syntax_flt_ts = |pg_type_ptrn: &PgTypePtrn, pg_syntax: &dyn Display| {
                     let (
                         mb_dims_dcl_ts,
                         mb_dims_dflt_init_ts,
@@ -671,20 +669,24 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         },
                     )
                 };
-                let gen_crnt_date_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"= current_date");
-                let gen_greater_than_crnt_date_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"> current_date");
+                let gen_crnt_date_ts = |pg_type_ptrn: &PgTypePtrn| {
+                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"= current_date")
+                };
+                let gen_greater_than_crnt_date_ts = |pg_type_ptrn: &PgTypePtrn| {
+                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"> current_date")
+                };
                 let gen_crnt_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_1fa0bbf4_ts(pg_type_ptrn, &"= current_timestamp")
+                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"= current_timestamp")
                 };
                 let gen_greater_than_crnt_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_1fa0bbf4_ts(pg_type_ptrn, &"> current_timestamp")
+                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"> current_timestamp")
                 };
-                let gen_crnt_time_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"= current_time");
-                let gen_greater_than_crnt_time_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_1fa0bbf4_ts(pg_type_ptrn, &"> current_time");
+                let gen_crnt_time_ts = |pg_type_ptrn: &PgTypePtrn| {
+                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"= current_time")
+                };
+                let gen_greater_than_crnt_time_ts = |pg_type_ptrn: &PgTypePtrn| {
+                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"> current_time")
+                };
                 let gen_eq_to_encoded_string_representation_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_dcl_ts,
@@ -736,17 +738,17 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 let gen_find_ranges_within_given_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"<@");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"<@");
                 let gen_find_ranges_that_fully_contain_the_given_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"@>");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"@>");
                 let gen_strictly_to_left_of_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"&<");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"&<");
                 let gen_strictly_to_right_of_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"&>");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"&>");
                 let gen_overlap_with_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"&&");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"&&");
                 let gen_adjacent_with_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_a2ca84d5_ts(pg_type_ptrn, &"-|-");
+                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"-|-");
                 let pub_v_not_zero_unsigned_part_of_i32_dcl_ts =
                     quote! {pub #VSc: #not_zero_unsigned_part_of_i32_ts};
                 let gen_len_flt_pattern_ts = |oprtr: &dyn Display| {
@@ -769,7 +771,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     )
                 };
                 let gen_included_lower_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_32abfefc_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                         format!(
                             "{{}}(lower({{}}{}) = ${{}})",
                             pg_type_kind.format_argument()
@@ -777,7 +779,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     })
                 };
                 let gen_excluded_upper_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_32abfefc_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                         format!(
                             "{{}}(upper({{}}{}) = ${{}})",
                             pg_type_kind.format_argument()
@@ -785,7 +787,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     })
                 };
                 let gen_greater_than_included_lower_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_32abfefc_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                         format!(
                             "{{}}(lower({{}}{}) > ${{}})",
                             pg_type_kind.format_argument()
@@ -793,7 +795,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     })
                 };
                 let gen_greater_than_excluded_upper_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_32abfefc_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                         format!(
                             "{{}}(upper({{}}{}) > ${{}})",
                             pg_type_kind.format_argument()
@@ -882,7 +884,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         },
                     )
                 };
-                let gen_ts_c7811da6 =
+                let gen_eq_oprtr_qp_ts =
                     |mb_dims_ies_init_ts: &dyn ToTokens, format_ts: &dyn ToTokens| {
                         quote! {
                             #mb_dims_ies_init_ts
@@ -902,7 +904,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             ))
                         }
                     };
-                let gen_ts_eeee6e79 = |ts: &dyn ToTokens| {
+                let gen_eq_oprtr_qb_ts = |ts: &dyn ToTokens| {
                     quote! {
                         #ts
                         if let #import::EqOprtr::Eq = &<T as #import::PgTypeEqOprtr>::oprtr(&#SelfSc.#VSc) {
@@ -930,9 +932,9 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             gen_mb_dims_dcl_pub_v_t_ts(&mb_dims_dcl_ts),
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrPrmUndrscr::False,
-                            gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
+                            gen_eq_oprtr_qp_ts(&mb_dims_ies_init_ts, &quote! {"{}({} {})"}),
                             is_qb_mut_true,
-                            gen_ts_eeee6e79(&mb_dims_qb_ts),
+                            gen_eq_oprtr_qb_ts(&mb_dims_qb_ts),
                         )
                     }
                     PgTypeFlt::DimOneEq { .. } => {
@@ -953,9 +955,12 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             gen_mb_dims_dcl_pub_v_t_ts(&mb_dims_dcl_ts),
                             gen_mb_dims_dflt_init_v_dflt_ts(&mb_dims_dflt_init_ts),
                             IncrPrmUndrscr::False,
-                            gen_ts_c7811da6(&mb_dims_ies_init_ts, &quote! {"{}({}{dims_ies} {})"}),
+                            gen_eq_oprtr_qp_ts(
+                                &mb_dims_ies_init_ts,
+                                &quote! {"{}({}{dims_ies} {})"},
+                            ),
                             is_qb_mut_true,
-                            gen_ts_eeee6e79(&mb_dims_qb_ts),
+                            gen_eq_oprtr_qb_ts(&mb_dims_qb_ts),
                         )
                     }
                     PgTypeFlt::GreaterThan { .. } => gen_greater_than_ts(&pg_type_ptrn_stdrt),
@@ -1116,7 +1121,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
             let gen_pg_json_dims_helpers = |pg_type_ptrn: &PgTypePtrn| {
                 gen_pg_type_dims_helpers(pg_type_ptrn, &PgTypeOrPgJson::PgJson)
             };
-            let gen_1763ccf3_ts =
+            let gen_json_cmp_flt_ts =
                 |pg_type_ptrn: &PgTypePtrn, gen_format_h_str: &dyn Fn(&PgTypeKind) -> String| {
                     let (
                         mb_dims_dcl_ts,
@@ -1139,21 +1144,22 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         gen_two_ts(&mb_dims_qb_ts, &qb_sqlx_types_json_self_v_ts),
                     )
                 };
-            let gen_7cc8e29b_ts = |pg_type_ptrn: &PgTypePtrn, oprtr: &dyn Display| {
-                gen_1763ccf3_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+            let gen_json_oprtr_cmp_flt_ts = |pg_type_ptrn: &PgTypePtrn, oprtr: &dyn Display| {
+                gen_json_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                     format!("{{}}({{}}{} {oprtr} ${{}})", pg_type_kind.format_argument())
                 })
             };
-            let gen_eq_ts = |pg_type_ptrn: &PgTypePtrn| gen_7cc8e29b_ts(pg_type_ptrn, &"=");
+            let gen_eq_ts =
+                |pg_type_ptrn: &PgTypePtrn| gen_json_oprtr_cmp_flt_ts(pg_type_ptrn, &"=");
             let gen_all_els_eq_ts = |pg_type_ptrn: &PgTypePtrn| {
-                gen_1763ccf3_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                gen_json_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                     format!(
                         "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{}}))",
                         pg_type_kind.format_argument()
                     )
                 })
             };
-            let gen_ts_e527a806 = |format_ts: &dyn ToTokens, mb_extra_prms_ts: &dyn ToTokens| {
+            let gen_format_qp_ts = |format_ts: &dyn ToTokens, mb_extra_prms_ts: &dyn ToTokens| {
                 quote! {
                     Ok(format!(
                         #format_ts,
@@ -1164,7 +1170,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     ))
                 }
             };
-            let gen_ts_ae2fa44d = |pg_type_ptrn: &PgTypePtrn, op: &dyn Display| {
+            let gen_json_arr_len_flt_ts = |pg_type_ptrn: &PgTypePtrn, op: &dyn Display| {
                 let (
                     mb_dims_dcl_ts,
                     mb_dims_dflt_init_ts,
@@ -1188,7 +1194,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             "{{}}(jsonb_array_length({{}}{}) {op} ${{}})",
                             pg_type_kind.format_argument()
                         ));
-                        let ts = gen_ts_e527a806(&format_ts, &mb_extra_prms_ts);
+                        let ts = gen_format_qp_ts(&format_ts, &mb_extra_prms_ts);
                         quote! {
                             #mb_dims_ies_init_ts
                             #v_match_incr_checked_add_one_init_ts
@@ -1202,13 +1208,14 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     },
                 )
             };
-            let gen_len_eq_ts = |pg_type_ptrn: &PgTypePtrn| gen_ts_ae2fa44d(pg_type_ptrn, &"=");
+            let gen_len_eq_ts =
+                |pg_type_ptrn: &PgTypePtrn| gen_json_arr_len_flt_ts(pg_type_ptrn, &"=");
             let gen_len_greater_than_ts =
-                |pg_type_ptrn: &PgTypePtrn| gen_ts_ae2fa44d(pg_type_ptrn, &">");
+                |pg_type_ptrn: &PgTypePtrn| gen_json_arr_len_flt_ts(pg_type_ptrn, &">");
             let gen_greater_than_ts =
-                |pg_type_ptrn: &PgTypePtrn| gen_7cc8e29b_ts(pg_type_ptrn, &">");
+                |pg_type_ptrn: &PgTypePtrn| gen_json_oprtr_cmp_flt_ts(pg_type_ptrn, &">");
             let gen_contains_el_greater_than_ts = |pg_type_ptrn: &PgTypePtrn| {
-                gen_1763ccf3_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                gen_json_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                     format!(
                         "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))",
                         pg_type_kind.format_argument()
@@ -1216,7 +1223,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                 })
             };
             let gen_all_els_greater_than_ts = |pg_type_ptrn: &PgTypePtrn| {
-                gen_1763ccf3_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                gen_json_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
                     format!(
                         "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))",
                         pg_type_kind.format_argument()
@@ -1255,7 +1262,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             | PgTypePtrn::ArrDim3
                             | PgTypePtrn::ArrDim4 => &v_match_incr_checked_add_one_init_ts,
                         };
-                        let ts0 = gen_ts_e527a806(
+                        let ts0 = gen_format_qp_ts(
                             &dq_ts(&format!(
                                 "{{}}({{}}{} {{}})",
                                 pg_type_kind.format_argument()
@@ -1313,7 +1320,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             &VSc,
                             &quote! {qp_one_by_one},
                         );
-                        let ts = gen_ts_e527a806(
+                        let ts = gen_format_qp_ts(
                             &dq_ts(&format!(
                                 "{{}}({{}}{} in ({{}}))",
                                 pg_type_kind.format_argument()
@@ -1390,7 +1397,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     generic_false.clone(),
                     add_rgx_case_and_v_dcl_ts(&mb_dims_dcl_ts),
                     add_rgx_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
-                    gen_ts_dbf9de6b(
+                    gen_rgx_qp_format_ts(
                         &format!(
                             "{{}}(trim(both '\\\"' from ({{}}{})::text) {{}} ${{}})",
                             match &pg_type_kind {
@@ -1422,7 +1429,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         generic_false.clone(),
                         add_rgx_case_and_v_dcl_ts(&mb_dims_dcl_ts),
                         add_rgx_case_and_v_dflt_init_ts(&mb_dims_dflt_init_ts),
-                        gen_ts_dbf9de6b(
+                        gen_rgx_qp_format_ts(
                             &fmt_fn(pg_type_kind.format_argument()),
                             &mb_dims_ies_init_ts,
                             &mb_extra_prms_ts,
@@ -1466,7 +1473,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         gen_two_ts(&mb_dims_dcl_ts, &pub_v_pg_json_not_empty_unq_vec_t_ts),
                         gen_two_ts(&mb_dims_dflt_init_ts, &v_dflt_some_one_el_ts),
                         {
-                            let ts = gen_ts_e527a806(
+                            let ts = gen_format_qp_ts(
                                 &dq_ts(&gen_format_str(&pg_type_kind)),
                                 &mb_extra_prms_ts,
                             );

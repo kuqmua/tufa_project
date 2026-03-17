@@ -760,11 +760,11 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
         vrt: &Vrt,
     ) -> Result<String, QpEr> {
         let mut acc = String::new();
-        let len_27270409 = match &vrt {
+        let len = match &vrt {
             Vrt::MinusOne => self.0.len().saturating_sub(1),
             Vrt::Normal => self.0.len(),
         };
-        for _ in 0..len_27270409 {
+        for _ in 0..len {
             match incr_checked_add_one_returning_incr(incr) {
                 Ok(v) => {
                     if write!(
