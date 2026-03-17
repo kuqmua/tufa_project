@@ -25,15 +25,12 @@ pub fn mb_write_ts_into_file(
             let mut file = File::create(path).expect("933f96b3");
             Write::write_all(&mut file, ts.to_string().as_bytes()).expect("a503bf88");
         };
-        //no other way to format only one file. it formats all files in project
         if matches!(format_with_cargofmt, FormatWithCargofmt::True) {
-            let status = Command::new("cargo")
-                .arg("fmt")
-                .arg("--")
+            let status = Command::new("rustfmt")
                 .arg(path)
                 .status()
                 .expect("5ecc3880");
-            assert!(status.success(), "cargo fmt failed for {}", path.display());
+            assert!(status.success(), "rustfmt failed for {}", path.display());
         }
     }
 }
