@@ -2107,6 +2107,16 @@ pub fn gen_mod_with_pub_use_ts(mod_name: &dyn ToTokens, content_ts: &[Ts2]) -> T
     }
 }
 #[must_use]
+pub fn cmn_d_ts_builder() -> DTsBuilder {
+    DTsBuilder::new()
+        .make_pub()
+        .d_debug()
+        .d_clone()
+        .d_partial_eq()
+        .d_serde_serialize()
+        .d_serde_deserialize()
+}
+#[must_use]
 pub fn serde_er_enum_d_ts_builder() -> DTsBuilder {
     DTsBuilder::new()
         .make_pub()

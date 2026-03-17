@@ -977,14 +977,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         let ident_orgn_struct_cnt_ts = quote!{(#ident_orgn_ucc);};
         let self_dflt_some_one_el_call_ts = quote! {Self(#PgCrudCmnDfltSomeOneElCall)};
         let self_v_zero_ts = quote! {Self(#VSc.0)};
-        let cmn_d_ts_builder = DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_clone()
+        let cmn_d_ts_builder = pg_crud_macros_cmn::cmn_d_ts_builder()
             .d_copy_if(mb_derive_copy)
-            .d_partial_eq()
-            .d_serde_serialize()
-            .d_serde_deserialize()
             .d_utoipa_to_schema()
             .d_schemars_json_schema();
         let gen_for_query_ts = |for_query_ucc: &dyn ToTokens| {

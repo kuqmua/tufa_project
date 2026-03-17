@@ -487,13 +487,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let ident_arr_nn_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident_arr_nn_ucc);
         let ident_stdrt_nn_rd_inn_ucc = SelfRdInnUcc::from_tokens(&ident_stdrt_nn_ucc);
         let ident_with_id_stdrt_nn_cr_for_query_ucc = SelfCrForQueryUcc::from_tokens(&ident_with_id_stdrt_nn_ucc);
-        let cmn_d_ts_builder = DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_clone()
-            .d_partial_eq()
-            .d_serde_serialize()
-            .d_serde_deserialize();
+        let cmn_d_ts_builder = pg_crud_macros_cmn::cmn_d_ts_builder();
         let wrap_into_scopes_dot_comma_ts = |ts: &dyn ToTokens| {
             let scopes_ts = wrap_into_scopes_ts(&ts);
             quote! {#scopes_ts;}
