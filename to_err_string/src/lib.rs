@@ -17,112 +17,85 @@ use sqlx::{
 use std::io::Error as IoEr;
 use time::error::ComponentRange;
 use tracing::{dispatcher::SetGlobalDefaultError, log::SetLoggerError};
+macro_rules! impl_to_err_string_to_string {
+    ($($ty:ty),+) => {
+        $(impl ToErrString for $ty {
+            fn to_err_string(&self) -> String {
+                self.to_string()
+            }
+        })+
+    };
+}
+macro_rules! impl_to_err_string_debug {
+    ($($ty:ty),+) => {
+        $(impl ToErrString for $ty {
+            fn to_err_string(&self) -> String {
+                format!("{self:?}")
+            }
+        })+
+    };
+}
+macro_rules! impl_to_err_string_display {
+    ($($ty:ty),+) => {
+        $(impl ToErrString for $ty {
+            fn to_err_string(&self) -> String {
+                format!("{self}")
+            }
+        })+
+    };
+}
+macro_rules! impl_to_err_string_debug_pretty {
+    ($($ty:ty),+) => {
+        $(impl ToErrString for $ty {
+            fn to_err_string(&self) -> String {
+                format!("{self:#?}")
+            }
+        })+
+    };
+}
+impl_to_err_string_to_string!(i8, i16, i32, i64, u8, u16, u32, u64, f32, f64);
+impl_to_err_string_debug!(
+    Option<i8>,
+    Option<i16>,
+    Option<i32>,
+    Option<i64>,
+    Option<u8>,
+    Option<u16>,
+    Option<u32>,
+    Option<u64>,
+    Option<f32>,
+    Option<f64>
+);
+impl_to_err_string_debug_pretty!(HeaderMap, SizeHint);
+impl_to_err_string_display!(
+    ToStrError,
+    AxumEr,
+    usize,
+    ComponentRange,
+    UuidEr,
+    IoEr,
+    SqlxEr,
+    SerdeJsonEr,
+    Error,
+    StatusCode,
+    JsonDataError,
+    MigrateError,
+    JsonSyntaxError,
+    JsonRejection,
+    NaiveTime,
+    NaiveDate,
+    NaiveDateTime,
+    Time,
+    PrimitiveDateTime,
+    Decimal,
+    BigDecimal
+);
 pub trait ToErrString {
     fn to_err_string(&self) -> String;
 }
 impl ToErrString for String {
     fn to_err_string(&self) -> String {
         self.clone()
-    }
-}
-impl ToErrString for i8 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for i16 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for i32 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for i64 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for u8 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for u16 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for u32 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for u64 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for f32 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for f64 {
-    fn to_err_string(&self) -> String {
-        self.to_string()
-    }
-}
-impl ToErrString for Option<i8> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<i16> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<i32> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<i64> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<u8> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<u16> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<u32> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<u64> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<f32> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
-    }
-}
-impl ToErrString for Option<f64> {
-    fn to_err_string(&self) -> String {
-        format!("{self:?}")
     }
 }
 impl ToErrString for SetGlobalDefaultError {
@@ -133,120 +106,5 @@ impl ToErrString for SetGlobalDefaultError {
 impl ToErrString for SetLoggerError {
     fn to_err_string(&self) -> String {
         String::from("tracing::log::SetLoggerError")
-    }
-}
-impl ToErrString for HeaderMap {
-    fn to_err_string(&self) -> String {
-        format!("{self:#?}")
-    }
-}
-impl ToErrString for SizeHint {
-    fn to_err_string(&self) -> String {
-        format!("{self:#?}")
-    }
-}
-impl ToErrString for ToStrError {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for AxumEr {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for usize {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for ComponentRange {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for UuidEr {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for IoEr {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for SqlxEr {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for SerdeJsonEr {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for Error {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for StatusCode {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for JsonDataError {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for MigrateError {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for JsonSyntaxError {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for JsonRejection {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for NaiveTime {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for NaiveDate {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for NaiveDateTime {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for Time {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for PrimitiveDateTime {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for Decimal {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToErrString for BigDecimal {
-    fn to_err_string(&self) -> String {
-        format!("{self}")
     }
 }
