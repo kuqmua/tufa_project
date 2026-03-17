@@ -1249,6 +1249,10 @@ pub fn fi_jsonb_build_obj_v(fi: &str) -> String {
     format!("'{fi}',jsonb_build_object('v','null'::jsonb),")
 }
 #[must_use]
+pub fn case_jsonb_typeof_null(target: &dyn Display, else_expr: &dyn Display) -> String {
+    format!("case when jsonb_typeof({target}) = 'null' then 'null'::jsonb else ({else_expr}) end")
+}
+#[must_use]
 pub const fn i8_test_cases_vec() -> [i8; 3] {
     [i8::MIN, 0, i8::MAX]
 }

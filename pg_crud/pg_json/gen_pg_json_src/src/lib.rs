@@ -30,7 +30,9 @@ use pg_crud_macros_cmn::{
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
 };
-use pg_crud_macros_cmn::{gen_jsonb_build_obj, gen_jsonb_build_obj_v};
+use pg_crud_macros_cmn::{
+    gen_case_jsonb_typeof_null, gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set,
+};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
@@ -1835,7 +1837,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         );
                         match &is_nl {
                             IsNl::False => format_h,
-                            IsNl::True => format!("case when jsonb_typeof({col_field_fi})='null' then 'null'::jsonb else ({format_h}) end"),
+                            IsNl::True => gen_case_jsonb_typeof_null(&col_field_fi, &format_h),
                         }
                     };
                     let mb_dims_start_end_init = ArrDim::try_from(pattern).ok().into_iter().flat_map(|arr_dim| {
@@ -2017,7 +2019,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ident_upd_ucc,
                 &ident_upd_for_query_ucc,
                 &{
-                    let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{jsonb_set_path}}}}}}',${{v_26526e0f}})"));
+                    let format_ts = dq_ts(&gen_jsonb_set(&format!("{{{JsonbSetAccumulatorSc}}}"), &"{{jsonb_set_path}}", &"${v_26526e0f}"));
                     quote! {
                         match #import::incr_checked_add_one_returning_incr(#IncrSc) {
                             Ok(v_26526e0f) => Ok(format!(#format_ts)),

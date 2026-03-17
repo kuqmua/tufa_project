@@ -45,18 +45,20 @@ use pg_crud_macros_cmn::{
     IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
     IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr, UpdQpJsonbSetAccumulatorUndrscr,
     UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
-    gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
+    gen_case_jsonb_typeof_null, gen_impl_de_for_struct_ts,
+    gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_max_page_size_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
     gen_impl_pg_json_test_cases_for_ident_ts, gen_impl_pg_json_ts,
     gen_impl_pg_type_not_pk_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_opt_type_dcl_ts,
-    gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
+    gen_jsonb_agg_by_id, gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set,
+    gen_opt_type_dcl_ts, gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
-    gen_return_err_qp_er_write_into_buffer_ts, gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts,
-    gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
+    gen_return_err_qp_er_write_into_buffer_ts, gen_sel_arr_pgn_agg,
+    gen_sqlx_types_json_type_dcl_ts, gen_upd_arr_null_guard_agg, gen_v_dcl_ts, gen_v_init_ts,
+    gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
     serde_er_enum_d_ts_builder, wrap_into_scopes_ts,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -1130,7 +1132,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         Clone::clone
                                     );
                                     match #VSc.#SelQpPgTypeSc(#ColSc) {
-                                        Ok(v_c69f1ffe) => Ok(format!("case when jsonb_typeof({col}) = 'null' then 'null'::jsonb else ({v_c69f1ffe}) end")),
+                                        Ok(v_c69f1ffe) => Ok(#import::case_jsonb_typeof_null(&col, &v_c69f1ffe)),
                                         Err(#ErSc) => Err(#ErSc)
                                     }
                                 }
@@ -1146,9 +1148,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     &dq_ts(&ValueSc),
                                     &ColSc
                                 );
-                                let format_ts = dq_ts(&format!(
-                                    "(case when (jsonb_array_length({{col}}) = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_nn_sel_sc}}})) from jsonb_array_elements((select {{col}})) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end)"
-                                ));
+                                let format_ts = dq_ts(&gen_sel_arr_pgn_agg(&"{col}", &format!("{{{ident_with_id_stdrt_nn_sel_sc}}}"), &"{dim1_start}", &"{dim1_end}"));
                                 quote! {
                                     let #ident_with_id_stdrt_nn_sel_sc = {
                                         let mut #acc_sel_qp_with_id_ts = #StringTs::default();
@@ -1163,7 +1163,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 }
                             }
                             IsNl::True => {
-                                let format_ts = dq_ts(&"case when jsonb_typeof({col}) = 'null' then 'null'::jsonb else ({v_c2ca032e}) end");
+                                let format_ts = dq_ts(&gen_case_jsonb_typeof_null(&"{col}", &"{v_c2ca032e}"));
                                 let ident_with_id_arr_nn_as_pg_json_sel_as_dflt_but_opt_is_some_ts = gen_ident_as_dflt_but_opt_is_some_ts(
                                     &ident_with_id_arr_nn_as_pg_json_sel_ts
                                 );
@@ -3002,9 +3002,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     &return_err_qp_er_write_into_buffer_ts
                                 );
                                 let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{acc_57cd0744}"));
+                                let jsonb_agg_by_id_fmt = dq_ts(&gen_jsonb_agg_by_id(&"{}", &"{}", &"{}"));
                                 quote!{
                                     Ok(format!(
-                                        "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
+                                        #jsonb_agg_by_id_fmt,
                                         {
                                             let mut acc_57cd0744 = #StringTs::new();
                                             for el_d7561f40 in self.#UpdSc.to_vec() {
@@ -3244,7 +3245,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let pg_type_or_pg_json_pg_json = PgTypeOrPgJson::PgJson;
             let gen_upd_qp_stdrt_nl_ts = |pg_type_or_pg_json: &PgTypeOrPgJson|{
                 let format_ts = dq_ts(&match &pg_type_or_pg_json {
-                    PgTypeOrPgJson::PgType => format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',${{v_27b8537f}})"),
+                    PgTypeOrPgJson::PgType => gen_jsonb_set(&format!("{{{JsonbSetAccumulatorSc}}}"), &format!("{{{{{JsonbSetPathSc}}}}}"), &"${v_27b8537f}"),
                     PgTypeOrPgJson::PgJson => "${v_27b8537f}".to_owned(),
                 });
                 quote! {
@@ -3357,8 +3358,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             };
             let gen_upd_qp_arr_nn_ts = |pg_type_or_pg_json: &PgTypeOrPgJson|{
                 let upd_del_cr_arr_ts = gen_upd_del_cr_arr_ts(&dq_ts(&match &pg_type_or_pg_json {
-                    PgTypeOrPgJson::PgType => "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_wh}),'[]'::jsonb)) end {mb_jsonb_build_arr})",
-                    PgTypeOrPgJson::PgJson => "((select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_wh}),'[]'::jsonb)) {mb_jsonb_build_arr})",
+                    PgTypeOrPgJson::PgType => gen_jsonb_set(&"{jsonb_set_accumulator}", &"{{jsonb_set_path}}", &gen_upd_arr_null_guard_agg(&"{jsonb_set_target}", &"{upd_qp_acc}", &"{mb_wh}", &"{mb_jsonb_build_arr}")),
+                    PgTypeOrPgJson::PgJson => "((select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_wh}),'[]'::jsonb)) {mb_jsonb_build_arr})".to_owned(),
                 }));
                 quote!{
                     let v_58d685d3 = #VSc;
@@ -3405,7 +3406,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             );
                             let dq_ts0 = dq_ts(
                                 &gen_jsonb_build_obj(
-                                    &format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&"case when jsonb_typeof({col_field_fi}) = 'null' then 'null'::jsonb else ({v_1f8de96a}) end"))
+                                    &format!("'{{fi}}',{}", gen_jsonb_build_obj_v(&gen_case_jsonb_typeof_null(&"{col_field_fi}", &"{v_1f8de96a}")))
                                 )
                             );
                             quote! {
@@ -3445,8 +3446,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             let format_ts = dq_ts(
                                 &gen_jsonb_build_obj(
                                     &format!("'{{fi}}',{}", gen_jsonb_build_obj_v(
-                                        &format!("case when (jsonb_array_length({{col_field}}->'{{fi}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_stdrt_nn_sel_sc}}})) from jsonb_array_elements((select {{col_field}}->'{{fi}}')) with ordinality where ordinality between {{dim1_start}} and {{dim1_end}}) end "
-                                    )))
+                                        &gen_sel_arr_pgn_agg(&"{col_field}->'{fi}'", &format!("{{{ident_with_id_stdrt_nn_sel_sc}}}"), &"{dim1_start}", &"{dim1_end}")
+                                    ))
                                 )
                             );
                             quote! {
@@ -3556,7 +3557,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             Pattern::Arr => &ident_with_id_arr_nn_as_pg_json_ts,
                         };
                         let case_null_format_ts = dq_ts(
-                            &gen_jsonb_build_obj_v(&format!("case when jsonb_typeof({{{ColFieldSc}}})='null' then 'null'::jsonb else {{v_21000130}} end"))
+                            &gen_jsonb_build_obj_v(&gen_case_jsonb_typeof_null(&format!("{{{ColFieldSc}}}"), &"{v_21000130}"))
                         );
                         quote! {
                             match #ts::#SelOnlyIdsQpSc(#ColFieldSc) {
@@ -3614,7 +3615,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => {
-                            let format_ts = dq_ts(&format!("jsonb_set({{{JsonbSetAccumulatorSc}}},'{{{{{{{JsonbSetPathSc}}}}}}}',{{{StdOptOptObjAccSc}}})"));
+                            let format_ts = dq_ts(&gen_jsonb_set(&format!("{{{JsonbSetAccumulatorSc}}}"), &format!("{{{{{JsonbSetPathSc}}}}}"), &format!("{{{StdOptOptObjAccSc}}}")));
                             let qp_vrts_ts = vec_syn_field.iter().map(|el0| {
                                 let vrt_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
                                 let fi_dq_ts = gen_fi_dq_ts(el0);
@@ -3671,18 +3672,21 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         IsNl::False => gen_upd_qp_arr_nn_ts(
                             &pg_type_or_pg_json_pg_type
                         ),
-                        IsNl::True => quote! {
-                            match &#VSc.0 {
-                                Some(v_3245b79f) => #ident_arr_nn_as_pg_json_ts::#UpdQpSc(
-                                    v_3245b79f,
-                                    jsonb_set_accumulator,
-                                    jsonb_set_target,
-                                    jsonb_set_path,
-                                    #IncrSc,
-                                ),
-                                None => match #import::incr_checked_add_one_returning_incr(#IncrSc) {
-                                    Ok(v_87e08bec) => Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${v_87e08bec})")),
-                                    Err(#ErSc) => Err(#ErSc)
+                        IsNl::True => {
+                            let jsonb_set_fmt = dq_ts(&gen_jsonb_set(&format!("{{{JsonbSetAccumulatorSc}}}"), &format!("{{{{{JsonbSetPathSc}}}}}"), &"${v_87e08bec}"));
+                            quote! {
+                                match &#VSc.0 {
+                                    Some(v_3245b79f) => #ident_arr_nn_as_pg_json_ts::#UpdQpSc(
+                                        v_3245b79f,
+                                        jsonb_set_accumulator,
+                                        jsonb_set_target,
+                                        jsonb_set_path,
+                                        #IncrSc,
+                                    ),
+                                    None => match #import::incr_checked_add_one_returning_incr(#IncrSc) {
+                                        Ok(v_87e08bec) => Ok(format!(#jsonb_set_fmt)),
+                                        Err(#ErSc) => Err(#ErSc)
+                                    }
                                 }
                             }
                         },
@@ -4087,7 +4091,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 &quote!{acc_44b1f772, "${v_73b58d3a},"},
                                 &return_err_qp_er_write_into_buffer_ts
                             );
-                            let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))")));
+                            let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&gen_jsonb_agg_by_id(&"{}", &"{}", &"{}"))));
                             let dq_ts1 = dq_ts(&gen_jsonb_build_obj_v(&"{acc_0f2b92d0}"));
                             quote!{
                                 Ok(format!(
@@ -4154,7 +4158,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 &return_err_qp_er_write_into_buffer_ts
                             );
                             let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"{}")));
-                            let dq_ts1 = dq_ts(&gen_jsonb_build_obj_v(&"(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))"));
+                            let dq_ts1 = dq_ts(&gen_jsonb_build_obj_v(&gen_jsonb_agg_by_id(&"{}", &"{}", &"{}")));
                             let dq_ts2 = dq_ts(&gen_jsonb_build_obj_v(&"{acc_1a91bdc7}"));
                             quote!{
                                 Ok(format!(
@@ -4368,8 +4372,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             &pg_type_or_pg_json_pg_json
                         ),
                         IsNl::True => {
+                            let upd_arr_null_guard_str = format!("({})", gen_upd_arr_null_guard_agg(&"{jsonb_set_target}", &"{upd_qp_acc}", &"{mb_wh}", &"{mb_jsonb_build_arr}"));
                             let ts = gen_upd_del_cr_arr_ts(&quote!{
-                                "(case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({upd_qp_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {mb_wh}),'[]'::jsonb)) end {mb_jsonb_build_arr})"
+                                #upd_arr_null_guard_str
                             });
                             quote! {
                                 match &#VSc.0 {

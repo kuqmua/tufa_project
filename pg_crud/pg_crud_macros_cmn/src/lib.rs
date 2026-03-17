@@ -2050,6 +2050,46 @@ pub fn gen_jsonb_build_obj_v(v: &dyn Display) -> String {
     gen_jsonb_build_obj(&format!("'v',{v}"))
 }
 #[must_use]
+pub fn gen_jsonb_set(accumulator: &dyn Display, path: &dyn Display, value: &dyn Display) -> String {
+    format!("jsonb_set({accumulator},'{{{path}}}',{value})")
+}
+#[must_use]
+pub fn gen_case_jsonb_typeof_null(target: &dyn Display, else_expr: &dyn Display) -> String {
+    format!("case when jsonb_typeof({target}) = 'null' then 'null'::jsonb else ({else_expr}) end")
+}
+#[must_use]
+pub fn gen_upd_arr_null_guard_agg(
+    target: &dyn Display,
+    agg_cnt: &dyn Display,
+    mb_wh: &dyn Display,
+    mb_jsonb_build_arr: &dyn Display,
+) -> String {
+    format!(
+        "case when jsonb_typeof({target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({agg_cnt}) from jsonb_array_elements({target}) as elem {mb_wh}),'[]'::jsonb)) end {mb_jsonb_build_arr}"
+    )
+}
+#[must_use]
+pub fn gen_sel_arr_pgn_agg(
+    source: &dyn Display,
+    content: &dyn Display,
+    start: &dyn Display,
+    end_v: &dyn Display,
+) -> String {
+    format!(
+        "(case when (jsonb_array_length({source}) = 0) then '[]'::jsonb else (select jsonb_agg(({content})) from jsonb_array_elements((select {source})) with ordinality where ordinality between {start} and {end_v}) end)"
+    )
+}
+#[must_use]
+pub fn gen_jsonb_agg_by_id(
+    agg_cnt: &dyn Display,
+    source: &dyn Display,
+    ids: &dyn Display,
+) -> String {
+    format!(
+        "(select jsonb_agg({agg_cnt}) from jsonb_array_elements({source}) as elem where elem->>'id' in ({ids}))"
+    )
+}
+#[must_use]
 pub fn serde_er_enum_d_ts_builder() -> DTsBuilder {
     DTsBuilder::new()
         .make_pub()
