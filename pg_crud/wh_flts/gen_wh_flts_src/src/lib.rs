@@ -17,7 +17,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
-use token_patterns::{CoreDefault, PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall};
+use token_patterns::{PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall};
 #[must_use]
 pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
     #[derive(Clone, Optml)]
@@ -553,7 +553,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                             ));
                             let if_write_is_err_ts = gen_if_write_is_err_ts(
                                 &quote! {acc, "${v_daedba9c},"},
-                                &quote! {panic!("87f47f75");},
+                                &quote! {return Err(#import::QpEr::WriteIntoBuffer { loc: loc_lib::loc!() });},
                             );
                             quote! {
                                 #mb_dims_ies_init_ts
@@ -706,7 +706,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         quote! {
                             #mb_dims_dflt_init_ts
                             encode_format: #PgCrudCmnDfltSomeOneElCall,
-                            encoded_string_representation: #CoreDefault
+                            encoded_string_representation: String::default()
                         },
                         IncrPrmUndrscr::False,
                         {
@@ -907,8 +907,10 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                 let gen_eq_oprtr_qb_ts = |ts: &dyn ToTokens| {
                     quote! {
                         #ts
-                        if let #import::EqOprtr::Eq = &<T as #import::PgTypeEqOprtr>::oprtr(&#SelfSc.#VSc) {
-                            #if_let_err_query_try_bind_self_v_ts
+                        if let #import::EqOprtr::Eq = &<T as #import::PgTypeEqOprtr>::oprtr(&#SelfSc.#VSc)
+                            && let Err(#ErSc) = #QuerySc.try_bind(#SelfSc.#VSc)
+                        {
+                            return Err(#ErSc.to_string());
                         }
                         Ok(#QuerySc)
                     }
@@ -1187,7 +1189,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     },
                     quote! {
                         #mb_dims_dflt_init_ts
-                        #VSc: #CoreDefault
+                        #VSc: #unsigned_part_of_i32_ts::default()
                     },
                     {
                         let format_ts = dq_ts(&format!(
@@ -1284,7 +1286,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                                         query = v_b3d3fd36;
                                     },
                                     Err(er) => {
-                                        return Err(er.to_string());
+                                        return Err(er);
                                     }
                                 }
                                 Ok(query)

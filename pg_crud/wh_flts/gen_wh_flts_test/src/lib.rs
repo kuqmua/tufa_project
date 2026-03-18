@@ -21,7 +21,7 @@ optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,
             &format!(
-                "#![allow(clippy::wildcard_imports)]\n#![allow(clippy::absolute_paths)]\n#![allow(clippy::arbitrary_source_item_ordering)]\n#![allow(clippy::default_constructed_unit_structs)]\n#![allow(clippy::redundant_clone)]\n#![allow(clippy::implicit_clone)]\n#![allow(clippy::collapsible_if)]\n#![allow(clippy::match_like_matches_macro)]\n#![allow(clippy::panic_in_result_fn)]\n#![allow(clippy::let_unit_value)]\n#![allow(clippy::default_trait_access)]\n#![allow(clippy::manual_string_new)]\n#![allow(clippy::let_underscore_untyped)]\n#![allow(clippy::equatable_if_let)]\nuse wh_flts::*;\n{}",
+                "#![allow(clippy::absolute_paths)]\n#![allow(clippy::arbitrary_source_item_ordering)]\n#![allow(clippy::let_underscore_untyped)]\n#![allow(clippy::equatable_if_let)]\nuse wh_flts::{{BoundedVec, Btwn, PgTypeNotEmptyUnqVec, RgxCase, RgxRgx, EncodeFormat, PgJsonNotEmptyUnqVec}};\n{}",
                 gen_wh_flts_src::gen_wh_flts(&quote! {
                     {
                         "pg_types_write_into_file": "False",
