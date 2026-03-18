@@ -1,0 +1,17 @@
+[profile.default]
+retries = 0
+slow-timeout = { period = "120s" }
+failure-output = "immediate"
+success-output = "never"
+
+[[profile.default.overrides]]
+filter = "package(gen_wh_flts_test) | package(gen_pg_json_test) | package(gen_pg_json_obj_test) | package(gen_pg_tbl_test) | package(gen_pg_types_test) | package(tests)"
+test-group = "serial-file-tests"
+
+[test-groups.serial-file-tests]
+max-threads = 1
+
+[profile.ci]
+retries = 2
+slow-timeout = { period = "120s", terminate-after = 3 }
+failure-output = "immediate-final"

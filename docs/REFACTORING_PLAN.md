@@ -73,7 +73,7 @@ Same issue as 3.1 — deeply nested closures with shared captured state.
 
 ### ~~3.3 Evaluate build.rs for large generated code~~
 
-Prototyped with pg_types_text_misc: 3.7s → 20.6s (5.6x slower). build.rs requires sequential compilation of gen_pg_types_src as build-dependency, blocking parallelism. Proc-macro approach is faster.
+Prototyped with pg_types_text_misc: 3.7s -> 20.6s (5.6x slower). build.rs requires sequential compilation of gen_pg_types_src as build-dependency, blocking parallelism. Proc-macro approach is faster.
 
 ---
 
