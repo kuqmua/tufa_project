@@ -21,7 +21,7 @@ optml = {path = "../../../optml"}
 [features]
 test-utils = []"#,
             &format!(
-                "#![allow(clippy::arbitrary_source_item_ordering)]\nuse wh_flts::{{BoundedVec, Btwn, PgTypeNotEmptyUnqVec, RgxCase, RgxRgx, EncodeFormat, PgJsonNotEmptyUnqVec}};\n{}",
+"#![allow(unreachable_pub)]\n#![allow(unused_imports)]\n#[allow(clippy::wildcard_imports)]\nuse wh_flts::*;\n{}",
                 gen_wh_flts_src::gen_wh_flts(&quote! {
                     {
                         "pg_types_write_into_file": "False",

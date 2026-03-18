@@ -2100,6 +2100,7 @@ pub fn gen_mod_with_pub_use_ts(mod_name: &dyn ToTokens, content_ts: &[Ts2]) -> T
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
+        #[allow(clippy::arbitrary_source_item_ordering)]
         mod #mod_name {
             #(#content_ts)*
         }
