@@ -569,7 +569,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                                             },
                                         }
                                     }
-                                    let _ = acc.pop();
+                                    let _: Option<char> = acc.pop();
                                     acc
                                 };
                                 Ok(format!(
@@ -907,7 +907,7 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                 let gen_eq_oprtr_qb_ts = |ts: &dyn ToTokens| {
                     quote! {
                         #ts
-                        if let #import::EqOprtr::Eq = &<T as #import::PgTypeEqOprtr>::oprtr(&#SelfSc.#VSc)
+                        if matches!(&<T as #import::PgTypeEqOprtr>::oprtr(&#SelfSc.#VSc), #import::EqOprtr::Eq)
                             && let Err(#ErSc) = #QuerySc.try_bind(#SelfSc.#VSc)
                         {
                             return Err(#ErSc.to_string());
