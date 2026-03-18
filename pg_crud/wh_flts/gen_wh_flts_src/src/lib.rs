@@ -1660,10 +1660,14 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
         );
         gend
     };
-    let gend = quote! {
-        #pg_type_ts
-        #pg_json_ts
+    let imports_ts = quote! {
+        #[allow(clippy::wildcard_imports)]
+        use super::*;
     };
+    let gend = pg_crud_macros_cmn::gen_mod_with_pub_use_ts(
+        &quote::format_ident!("gen_wh_flts_mod"),
+        &[imports_ts, pg_type_ts, pg_json_ts],
+    );
     mb_write_ts_into_file(
         gen_wh_flts_config.whole_write_into_file,
         "gen_wh_flts",
