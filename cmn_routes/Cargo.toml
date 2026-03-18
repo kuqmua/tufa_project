@@ -13,6 +13,8 @@ edition = "2024"
 [dependencies]
 axum.workspace = true
 serde.workspace = true
+sqlx.workspace = true
+app_state = {path = "../app_state"}
 git_info = {path = "../git_info"}
 optml = {path = "../optml"}
 

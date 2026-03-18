@@ -1,4 +1,5 @@
 //todo gen openapi spec
+use app_state::GetPgPool;
 use axum::{
     Json, Router,
     extract::State,
@@ -11,10 +12,23 @@ use serde::Serialize;
 use std::sync::Arc;
 const SLASH_SWAGGER_UI: &str = "/swagger-ui";
 type DynArcCmnRoutesPrmsSendSync = Arc<dyn CmnRoutesPrms>;
-pub trait CmnRoutesPrms: GetGitCommitLink + Send + Sync {}
+pub trait CmnRoutesPrms: GetGitCommitLink + GetPgPool + Send + Sync {}
 pub fn cmn_routes(app_state_b9fc2d94: DynArcCmnRoutesPrmsSendSync) -> Router {
     Router::new()
-        .route("/health_check", get(async || StatusCode::OK))
+        .route(
+            "/health_check",
+            get(
+                async |State(app_state_hc): State<DynArcCmnRoutesPrmsSendSync>| match sqlx::query(
+                    "SELECT 1",
+                )
+                .execute(app_state_hc.get_pg_pool())
+                .await
+                {
+                    Ok(_) => StatusCode::OK,
+                    Err(_) => StatusCode::SERVICE_UNAVAILABLE,
+                },
+            ),
+        )
         .route(
             "/git_info",
             get(
