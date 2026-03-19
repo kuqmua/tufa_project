@@ -1596,7 +1596,7 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     import: &Import,
     type_ts: &dyn ToTokens,
     ident: &dyn ToTokens,
-    opt_vec_cr_ts: &dyn ToTokens,
+    opt_vec_cr_ts: Option<&Ts2>,
     rd_ids_to_2_dims_vec_rd_inn_ts: &dyn ToTokens,
     rd_inn_into_rd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
     rd_inn_into_upd_with_new_or_try_new_unwraped_ts: &dyn ToTokens,
@@ -1608,29 +1608,30 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     rd_ids_and_cr_into_tt_ts: &dyn ToTokens,
     rd_ids_and_cr_into_wh_eq_ts: &dyn ToTokens,
     rd_ids_and_cr_into_vec_wh_eq_using_fields_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts: &dyn ToTokens,
-    cr_into_pg_type_opt_vec_wh_dim_one_eq_ts: &dyn ToTokens,
-    pg_type_opt_vec_wh_greater_than_test_ts: &dyn ToTokens,
-    rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_dim_one_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_dim_two_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_dim_three_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_dim_four_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_len_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_len_greater_than_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts: &dyn ToTokens,
+    rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts: Option<&Ts2>,
+    cr_into_pg_type_opt_vec_wh_dim_one_eq_ts: Option<&Ts2>,
+    pg_type_opt_vec_wh_greater_than_test_ts: Option<&Ts2>,
+    rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts: Option<&Ts2>,
+    cr_into_pg_json_opt_vec_wh_dim_one_eq_ts: Option<&Ts2>,
+    cr_into_pg_json_opt_vec_wh_dim_two_eq_ts: Option<&Ts2>,
+    cr_into_pg_json_opt_vec_wh_dim_three_eq_ts: Option<&Ts2>,
+    cr_into_pg_json_opt_vec_wh_dim_four_eq_ts: Option<&Ts2>,
+    cr_into_pg_json_opt_vec_wh_len_eq_ts: Option<&Ts2>,
+    cr_into_pg_json_opt_vec_wh_len_greater_than_ts: Option<&Ts2>,
+    rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts: Option<&Ts2>,
+    rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts: Option<&Ts2>,
+    rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts: Option<&Ts2>,
+    rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts: Option<&Ts2>,
+    rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts: Option<&Ts2>,
+    rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts: Option<&Ts2>,
 ) -> Ts2 {
     let self_pg_type_as_pg_type_ts = quote! {<#SelfUcc::#PgTypeUcc as #import::#PgTypeUcc>};
     let self_pg_type_as_pg_type_rd_ids_ts = quote! {#self_pg_type_as_pg_type_ts::#RdIdsUcc};
     let self_pg_type_as_pg_type_cr_ts = quote! {#self_pg_type_as_pg_type_ts::#CrUcc};
     let self_pg_type_as_pg_type_wh_ts = quote! {#self_pg_type_as_pg_type_ts::#WhUcc};
     let ident_sel_ucc = SelfSelUcc::from_tokens(&ident);
-    let opt_vec_cr_ts_gnrtd = gen_opt_vec_cr_ts(&self_pg_type_as_pg_type_ts, &opt_vec_cr_ts);
+    let opt_vec_cr_ts_gnrtd =
+        opt_vec_cr_ts.map(|ts| gen_opt_vec_cr_ts(&self_pg_type_as_pg_type_ts, ts));
     let rd_ids_to_2_dims_vec_rd_inn_ts_gnrtd = gen_rd_ids_to_2_dims_vec_rd_inn_ts(
         &self_pg_type_as_pg_type_ts,
         &rd_ids_to_2_dims_vec_rd_inn_ts,
@@ -1682,87 +1683,147 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             &rd_ids_and_cr_into_vec_wh_eq_using_fields_ts,
         );
     let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts_gnrtd =
-        gen_rd_ids_and_cr_into_vec_or_opt_vec_wh_eq_to_json_field_pg_type_or_pg_json_ts(
-            *import,
-            &self_pg_type_as_pg_type_rd_ids_ts,
-            &self_pg_type_as_pg_type_cr_ts,
-            &self_pg_type_as_pg_type_wh_ts,
-            &rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts,
-            PgTypeOrPgJson::PgType,
-        );
-    let cr_into_pg_type_opt_vec_wh_dim_one_eq_sc = CrIntoPgTypeOptVecWhDimOneEqSc;
-    let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_sc = RdIdsAndTtIntoPgTypeOptWhGreaterThanSc;
+        rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_vec_or_opt_vec_wh_eq_to_json_field_pg_type_or_pg_json_ts(
+                *import,
+                &self_pg_type_as_pg_type_rd_ids_ts,
+                &self_pg_type_as_pg_type_cr_ts,
+                &self_pg_type_as_pg_type_wh_ts,
+                ts,
+                PgTypeOrPgJson::PgType,
+            )
+        });
+    let cr_into_pg_type_opt_vec_wh_dim_one_eq_ts_gnrtd = cr_into_pg_type_opt_vec_wh_dim_one_eq_ts
+        .map(|ts| {
+            let cr_into_pg_type_opt_vec_wh_dim_one_eq_sc = CrIntoPgTypeOptVecWhDimOneEqSc;
+            quote! {
+                fn #cr_into_pg_type_opt_vec_wh_dim_one_eq_sc(
+                    #CrSc: #self_pg_type_as_pg_type_ts::#CrUcc
+                ) -> Option<#import::NotEmptyUnqVec<#self_pg_type_as_pg_type_ts::#WhUcc>> {
+                    #ts
+                }
+            }
+        });
+    let pg_type_opt_vec_wh_greater_than_test_ts_gnrtd = pg_type_opt_vec_wh_greater_than_test_ts
+        .map(|ts| {
+            quote! {
+                fn #PgTypeOptVecWhGreaterThanTestSc() -> Option<
+                    #import::NotEmptyUnqVec<
+                        #import::PgTypeGreaterThanTest<
+                            #SelfUcc::#PgTypeUcc
+                        >
+                    >
+                > {
+                    #ts
+                }
+            }
+        });
+    let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts_gnrtd =
+        rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts.map(|ts| {
+            let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_sc =
+                RdIdsAndTtIntoPgTypeOptWhGreaterThanSc;
+            quote! {
+                fn #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_sc(
+                    greater_than_vrt: #import::PgTypeGreaterThanVrt,
+                    #RdIdsSc: #self_pg_type_as_pg_type_ts::#RdIdsUcc,
+                    #TtSc: #self_pg_type_as_pg_type_ts::#TtUcc,
+                ) -> Option<#self_pg_type_as_pg_type_ts::#WhUcc> {
+                    #ts
+                }
+            }
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
-        );
+        cr_into_pg_json_opt_vec_wh_dim_one_eq_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
-        );
+        cr_into_pg_json_opt_vec_wh_dim_two_eq_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
-        );
+        cr_into_pg_json_opt_vec_wh_dim_three_eq_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
-        );
-    let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
-        *import,
-        &self_pg_type_as_pg_type_ts,
-        &cr_into_pg_json_opt_vec_wh_len_eq_ts,
-    );
+        cr_into_pg_json_opt_vec_wh_dim_four_eq_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
+    let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd =
+        cr_into_pg_json_opt_vec_wh_len_eq_ts.map(|ts| {
+            gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(*import, &self_pg_type_as_pg_type_ts, ts)
+        });
     let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd =
-        gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
-        );
+        cr_into_pg_json_opt_vec_wh_len_greater_than_ts.map(|ts| {
+            gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
-        );
+        rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
-        );
+        rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
-        );
+        rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts,
-        );
+        rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
-        );
+        rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
-            *import,
-            &self_pg_type_as_pg_type_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts,
-        );
+        rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
+        });
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
@@ -1785,27 +1846,9 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
             #rd_ids_and_cr_into_wh_eq_ts_gnrtd
             #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts_gnrtd
             #rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts_gnrtd
-            fn #cr_into_pg_type_opt_vec_wh_dim_one_eq_sc(
-                #CrSc: #self_pg_type_as_pg_type_ts::#CrUcc
-            ) -> Option<#import::NotEmptyUnqVec<#self_pg_type_as_pg_type_ts::#WhUcc>> {
-                #cr_into_pg_type_opt_vec_wh_dim_one_eq_ts
-            }
-            fn #PgTypeOptVecWhGreaterThanTestSc() -> Option<
-                #import::NotEmptyUnqVec<
-                    #import::PgTypeGreaterThanTest<
-                        #SelfUcc::#PgTypeUcc
-                    >
-                >
-            > {
-                #pg_type_opt_vec_wh_greater_than_test_ts
-            }
-            fn #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_sc(
-                greater_than_vrt: #import::PgTypeGreaterThanVrt,
-                #RdIdsSc: #self_pg_type_as_pg_type_ts::#RdIdsUcc,
-                #TtSc: #self_pg_type_as_pg_type_ts::#TtUcc,
-            ) -> Option<#self_pg_type_as_pg_type_ts::#WhUcc> {
-                #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts
-            }
+            #cr_into_pg_type_opt_vec_wh_dim_one_eq_ts_gnrtd
+            #pg_type_opt_vec_wh_greater_than_test_ts_gnrtd
+            #rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts_gnrtd
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd
             #rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd

@@ -144,7 +144,6 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let self_field_vec_ts = quote! {.0.to_vec()};
         let cfg_feature_test_utils = quote! {#[cfg(feature = "test-utils")]};
         let return_err_qp_er_write_into_buffer_ts = gen_return_err_qp_er_write_into_buffer_ts(import);
-        let none_ts = quote!{None};
         let import_qp_er_ts = quote! {#import::#QpErUcc};
         let vec_pg_crud_dflt_some_one_el_call_ts = quote!{vec![#PgCrudDfltSomeOneElCall]};
         let dflt_but_opt_is_some_ts = quote!{
@@ -6582,9 +6581,6 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             let rd_ids_and_cr_into_vec_wh_eq_using_fields_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoVecWhEqUsingFieldsSc);
             let inner_eq_to_json_ts = gen_rd_ids_cr_ts(&RdIdsAndCrIntoVecWhEqToJsonFieldSc);
             let rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts = quote!{Some(#inner_eq_to_json_ts)};
-            let cr_into_pg_type_opt_vec_wh_dim_one_eq_ts = &none_ts;
-            let pg_type_opt_vec_wh_greater_than_test_ts = &none_ts;
-            let rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts = &none_ts;
             let (
                 rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
                 rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
@@ -6612,7 +6608,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &import,
                 &ident_rd_inn_ucc,
                 &ident,
-                &opt_vec_cr_ts,
+                Some(&opt_vec_cr_ts),
                 &rd_ids_to_2_dims_vec_rd_inn_ts,
                 &rd_inn_into_rd_with_new_or_try_new_unwraped_ts,
                 &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
@@ -6624,22 +6620,22 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_tt_ts,
                 &rd_ids_and_cr_into_wh_eq_ts,
                 &rd_ids_and_cr_into_vec_wh_eq_using_fields_ts,
-                &rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts,
-                &cr_into_pg_type_opt_vec_wh_dim_one_eq_ts,
-                &pg_type_opt_vec_wh_greater_than_test_ts,
-                &rd_ids_and_tt_into_pg_type_opt_wh_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_len_eq_ts,
-                &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts,
+                Some(&rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field_ts),
+                None,
+                None,
+                None,
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts),
+                Some(&cr_into_pg_json_opt_vec_wh_len_eq_ts),
+                Some(&cr_into_pg_json_opt_vec_wh_len_greater_than_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts),
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts),
             )
         };
         let impl_pg_type_not_pk_for_ident_ts = gen_impl_pg_type_not_pk_for_ident_ts(&import, &ident);
