@@ -1851,7 +1851,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts: &dyn ToTokens,
     opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts: Option<&dyn ToTokens>,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts: &dyn ToTokens,
-    rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts: &dyn ToTokens,
+    opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts: Option<&dyn ToTokens>,
 ) -> Ts2 {
     let self_pg_json_as_pg_json_ts = quote! {<#SelfUcc::#PgJsonUcc as #import::#PgJsonUcc>};
     let self_pg_json_as_pg_json_rd_ids_ts = quote! {#self_pg_json_as_pg_json_ts::#RdIdsUcc};
@@ -1987,11 +1987,13 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
-            *import,
-            &self_pg_json_as_pg_json_ts,
-            &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts,
-        );
+        opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
+                *import,
+                &self_pg_json_as_pg_json_ts,
+                ts,
+            )
+        });
     quote! {
         #[allow(unused_qualifications)]
         #[allow(clippy::absolute_paths)]
