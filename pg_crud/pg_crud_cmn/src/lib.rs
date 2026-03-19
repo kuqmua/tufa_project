@@ -197,7 +197,10 @@ pub trait PgJsonObjVecElId {
 pub trait PgTypeTestCases {
     type PgType: PgType;
     type Sel: SelAl + DfltSomeOneElMaxPageSize;
-    fn opt_vec_cr() -> Option<Vec<<Self::PgType as PgType>::Cr>>;
+    #[must_use]
+    fn opt_vec_cr() -> Option<Vec<<Self::PgType as PgType>::Cr>> {
+        None
+    }
     fn rd_ids_to_2_dims_vec_rd_inn(
         rd_ids: &<Self::PgType as PgType>::RdIds,
     ) -> Vec<Vec<<Self::PgType as PgType>::RdInn>>;
@@ -209,8 +212,10 @@ pub trait PgTypeTestCases {
     ) -> <Self::PgType as PgType>::Upd;
     fn upd_to_rd_ids(v: &<Self::PgType as PgType>::Upd) -> <Self::PgType as PgType>::RdIds;
     fn rd_ids_to_opt_v_rd_dflt_some_one_el(
-        v: &<Self::PgType as PgType>::RdIds,
-    ) -> Option<V<<Self::PgType as PgType>::Rd>>;
+        _v: &<Self::PgType as PgType>::RdIds,
+    ) -> Option<V<<Self::PgType as PgType>::Rd>> {
+        None
+    }
     fn previous_rd_and_opt_upd_into_rd(
         rd: <Self::PgType as PgType>::Rd,
         opt_upd: Option<<Self::PgType as PgType>::Upd>,
@@ -220,9 +225,11 @@ pub trait PgTypeTestCases {
         cr: <Self::PgType as PgType>::Cr,
     ) -> <Self::PgType as PgType>::Rd;
     fn rd_ids_and_cr_into_opt_v_rd(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<V<<Self::PgType as PgType>::Rd>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<V<<Self::PgType as PgType>::Rd>> {
+        None
+    }
     fn rd_ids_and_cr_into_tt(
         rd_ids: <Self::PgType as PgType>::RdIds,
         cr: <Self::PgType as PgType>::Cr,
@@ -237,65 +244,98 @@ pub trait PgTypeTestCases {
         cr: <Self::PgType as PgType>::Cr,
     ) -> NotEmptyUnqVec<<Self::PgType as PgType>::Wh>;
     fn rd_ids_and_cr_into_opt_vec_wh_eq_to_json_field(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn cr_into_pg_type_opt_vec_wh_dim_one_eq(
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
+    #[must_use]
     fn pg_type_opt_vec_wh_greater_than_test()
-    -> Option<NotEmptyUnqVec<PgTypeGreaterThanTest<Self::PgType>>>;
+    -> Option<NotEmptyUnqVec<PgTypeGreaterThanTest<Self::PgType>>> {
+        None
+    }
     fn rd_ids_and_tt_into_pg_type_opt_wh_greater_than(
-        greater_than_vrt: PgTypeGreaterThanVrt,
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        tt: <Self::PgType as PgType>::Tt,
-    ) -> Option<<Self::PgType as PgType>::Wh>;
+        _greater_than_vrt: PgTypeGreaterThanVrt,
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _tt: <Self::PgType as PgType>::Tt,
+    ) -> Option<<Self::PgType as PgType>::Wh> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn cr_into_pg_json_opt_vec_wh_len_eq(
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn cr_into_pg_json_opt_vec_wh_len_greater_than(
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>>;
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgType as PgType>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_in(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx(
-        rd_ids: <Self::PgType as PgType>::RdIds,
-        cr: <Self::PgType as PgType>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>>;
+        _rd_ids: <Self::PgType as PgType>::RdIds,
+        _cr: <Self::PgType as PgType>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgType as PgType>::Wh>>> {
+        None
+    }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Clone, PartialEq, Optml)]
