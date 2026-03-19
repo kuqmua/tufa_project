@@ -6560,7 +6560,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts,
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts),
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts,
             )

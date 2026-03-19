@@ -3025,43 +3025,25 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             else {
                 quote!{#NoneTs}
             };
-            let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts = if matches!(&is_stdrt_nn, IsStdrtNn::True)
-            {
-                match &pg_json {
-                    PgJson::I8AsJsonbNbr |
-                    PgJson::I16AsJsonbNbr |
-                    PgJson::I32AsJsonbNbr |
-                    PgJson::I64AsJsonbNbr |
-                    PgJson::U8AsJsonbNbr |
-                    PgJson::U16AsJsonbNbr |
-                    PgJson::U32AsJsonbNbr |
-                    PgJson::U64AsJsonbNbr |
-                    PgJson::F32AsJsonbNbr |
-                    PgJson::F64AsJsonbNbr |
-                    PgJson::BoolAsJsonbBoolean |
-                    PgJson::UuidUuidAsJsonbString => quote!{#NoneTs},
-                    PgJson::StringAsJsonbString => gen_not_empty_unq_vec_try_new_match_ts(
-                        &quote!{vec![
-                            #import::SingleOrMultiple::Single(
-                                #ident_wh_ucc::Rgx(
-                                    wh_flts::PgJsonWhRgx {
-                                        oprtr: #import::Oprtr::Or,
-                                        rgx_case: wh_flts::RgxCase::Sensitive,
-                                        #VSc: wh_flts::RgxRgx(regex::Regex::new(&format!("^{}$", regex::escape(&#CrSc.0.0))).expect("3814ff38")),
-                                    }
-                                ),
-                            )
-                        ]},
-                        &quote!{v_75ae8964},
-                        &quote!{Some(v_75ae8964)},
-                        &quote!{None},
-                        &quote!{panic!("b9713787")},
-                    )
-                }
-            }
-            else {
-                quote!{#NoneTs}
-            };
+            let opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts: Option<Ts2> = matches!((&is_stdrt_nn, &pg_json), (IsStdrtNn::True, PgJson::StringAsJsonbString)).then(||
+                gen_not_empty_unq_vec_try_new_match_ts(
+                    &quote!{vec![
+                        #import::SingleOrMultiple::Single(
+                            #ident_wh_ucc::Rgx(
+                                wh_flts::PgJsonWhRgx {
+                                    oprtr: #import::Oprtr::Or,
+                                    rgx_case: wh_flts::RgxCase::Sensitive,
+                                    #VSc: wh_flts::RgxRgx(regex::Regex::new(&format!("^{}$", regex::escape(&#CrSc.0.0))).expect("3814ff38")),
+                                }
+                            ),
+                        )
+                    ]},
+                    &quote!{v_75ae8964},
+                    &quote!{Some(v_75ae8964)},
+                    &quote!{None},
+                    &quote!{panic!("b9713787")},
+                )
+            );
             //todo add contains_el_greater_than for dim 2,3,4
             let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts = match &pattern {
                 Pattern::ArrDim1 { dim1_is_nl } => {
@@ -3219,7 +3201,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts,
+                opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts.as_ref().map(|v| {let r: &dyn ToTokens = v; r}),
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts,
             )
