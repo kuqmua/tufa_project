@@ -6554,7 +6554,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
-                &rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
+                Some(&rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts),
                 &cr_into_pg_json_opt_vec_wh_len_eq_ts,
                 &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
                 &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,

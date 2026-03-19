@@ -1843,7 +1843,7 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
     cr_into_pg_json_opt_vec_wh_dim_one_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_dim_two_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_dim_three_eq_ts: &dyn ToTokens,
-    cr_into_pg_json_opt_vec_wh_dim_four_eq_ts: &dyn ToTokens,
+    opt_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts: Option<&dyn ToTokens>,
     cr_into_pg_json_opt_vec_wh_len_eq_ts: &dyn ToTokens,
     cr_into_pg_json_opt_vec_wh_len_greater_than_ts: &dyn ToTokens,
     rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts: &dyn ToTokens,
@@ -1936,11 +1936,13 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
-            *import,
-            &self_pg_json_as_pg_json_ts,
-            &cr_into_pg_json_opt_vec_wh_dim_four_eq_ts,
-        );
+        opt_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts.map(|ts| {
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
+                *import,
+                &self_pg_json_as_pg_json_ts,
+                ts,
+            )
+        });
     let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
         *import,
         &self_pg_json_as_pg_json_ts,
