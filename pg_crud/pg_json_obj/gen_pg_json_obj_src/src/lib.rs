@@ -49,7 +49,7 @@ use pg_crud_macros_cmn::{
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_max_page_size_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
-    gen_impl_pg_json_test_cases_for_ident_ts, gen_impl_pg_json_ts,
+    gen_impl_pg_json_all_methods_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_type_not_pk_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
@@ -3360,7 +3360,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #upd_del_cr_arr_ts
                 }
             };
-            let impl_pg_crud_pg_json_for_ident_ts = gen_impl_pg_json_ts(
+            let impl_pg_crud_pg_json_for_ident_ts = gen_impl_pg_json_all_methods_ts(
                 &Import::PgCrud,
                 &ident,
                 &ident_tt_ucc,

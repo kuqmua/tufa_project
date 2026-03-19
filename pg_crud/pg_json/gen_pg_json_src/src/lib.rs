@@ -7,10 +7,9 @@ use macros_helpers::{
 };
 use naming::{
     ArrOfUcc, AsUcc, BooleanUcc, ColFieldSc, CrForQueryUcc, CrSc, EqUcc, ErSc, GenPgJsonModSc,
-    IncrSc, JsonbSetAccumulatorSc, NbrUcc, NewSc, OptUpdSc, OptVecCrSc, PgJsonUcc, QuerySc,
-    RdIdsAndCrIntoRdSc, RdIdsAndCrIntoVecWhEqUsingFieldsSc, RdIdsAndCrIntoWhEqSc, RdIdsSc,
-    RdIdsTo2DimsVecRdInnSc, RdInnUcc, RdSc, SelfSc, SelfUcc, StringUcc, UpdForQueryUcc, UpdUcc,
-    VSc, VecOfUcc,
+    IncrSc, NbrUcc, NewSc, OptUpdSc, OptVecCrSc, PgJsonUcc, QuerySc, RdIdsAndCrIntoRdSc,
+    RdIdsAndCrIntoVecWhEqUsingFieldsSc, RdIdsAndCrIntoWhEqSc, RdIdsSc, RdIdsTo2DimsVecRdInnSc,
+    RdInnUcc, RdSc, SelfSc, SelfUcc, StringUcc, UpdForQueryUcc, UpdUcc, VSc, VecOfUcc,
     prm::{
         JsonbSelfUcc, SelfCrForQueryUcc, SelfCrUcc, SelfOrgnUcc, SelfRdIdsUcc, SelfRdInnUcc,
         SelfRdUcc, SelfSelUcc, SelfTtUcc, SelfUpdForQueryUcc, SelfUpdUcc, SelfWhUcc,
@@ -21,8 +20,8 @@ use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNl, IsQbMut,
     IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed, IsSelQpIsPgTypeUsed,
-    IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed, IsUpdQpSelfUpdUsed,
-    PgFlt, PgJsonFlt, RdOrUpd, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, PgFlt, PgJsonFlt, RdOrUpd,
+    ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
     gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
@@ -30,9 +29,7 @@ use pg_crud_macros_cmn::{
     gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
     gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
 };
-use pg_crud_macros_cmn::{
-    gen_case_jsonb_typeof_null, gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set,
-};
+use pg_crud_macros_cmn::{gen_case_jsonb_typeof_null, gen_jsonb_build_obj, gen_jsonb_build_obj_v};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use rayon::iter::{IntoParallelRefIterator as _, ParallelIterator as _};
@@ -1634,7 +1631,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let gen_dim_nbr_str = |dims_nbr: usize| format!("dim{dims_nbr}");
             let gen_dim_nbr_start_str = |dims_nbr: usize| format!("{}_start", gen_dim_nbr_str(dims_nbr));
             let gen_dim_nbr_end_str = |dims_nbr: usize| format!("{}_end", gen_dim_nbr_str(dims_nbr));
-            let sel_only_crd_or_updd_ids_qp_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
+            let is_uuid = matches!(&pg_json, PgJson::UuidUuidAsJsonbString);
+            let opt_sel_only_ids_qp_ts: Option<Ts2> = is_uuid.then(|| {
+                let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{col_field}"));
+                quote! {Ok(format!(#dq_ts0))}
+            });
+            let opt_sel_only_crd_or_updd_ids_qp_ts = is_uuid.then(|| {
                 let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"${v_f06128be}")));
                 quote! {
                     match #import::incr_checked_add_one_returning_incr(#IncrSc) {
@@ -1642,19 +1644,15 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         Err(#ErSc) => Err(#ErSc),
                     }
                 }
-            } else {
-                quote! {Ok(#import::fi_jsonb_build_obj_v(fi))}
-            };
-            let sel_only_crd_or_updd_ids_qb_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
+            });
+            let opt_sel_only_crd_or_updd_ids_qb_ts = is_uuid.then(|| {
                 quote! {
                     if let Err(#ErSc) = #QuerySc.try_bind(#VSc) {
                         return Err(#ErSc.to_string());
                     }
                     Ok(#QuerySc)
                 }
-            } else {
-                quote! {Ok(#QuerySc)}
-            };
+            });
             gen_impl_pg_json_ts(
                 &pg_crud_macros_cmn_import_pg_crud_cmn,
                 &ident,
@@ -1837,16 +1835,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 &ident_wh_ucc,
                 &ident_rd_ucc,
                 &ident_rd_ids_ucc,
-                &{
-                    let content_ts = if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{col_field}"));
-                        quote! {format!(#dq_ts0)}
-                    } else {
-                        let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"'null'::jsonb"));
-                        quote! {#dq_ts0.to_owned()}
-                    };
-                    quote! {Ok(#content_ts)}
-                },
+                opt_sel_only_ids_qp_ts.as_ref().map(|v| {
+                    let r: &dyn ToTokens = v;
+                    r
+                }),
                 &ident_rd_inn_ucc,
                 &{
                     let inner_content_ts = quote! {#VSc.0.0};
@@ -1981,17 +1973,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 },
                 &ident_upd_ucc,
                 &ident_upd_for_query_ucc,
-                &{
-                    let format_ts = dq_ts(&gen_jsonb_set(&format!("{{{JsonbSetAccumulatorSc}}}"), &"{{jsonb_set_path}}", &"${v_26526e0f}"));
-                    quote! {
-                        match #import::incr_checked_add_one_returning_incr(#IncrSc) {
-                            Ok(v_26526e0f) => Ok(format!(#format_ts)),
-                            Err(#ErSc) => Err(#ErSc),
-                        }
-                    }
-                },
-                &IsUpdQpSelfUpdUsed::False,
-                &IsUpdQpJsonbSetTargetUsed::False,
+                None,
                 &IsUpdQbMut::True,
                 &quote! {
                     if let Err(er) = query.try_bind(#VSc) {
@@ -1999,20 +1981,18 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     }
                     Ok(query)
                 },
-                &sel_only_crd_or_updd_ids_qp_ts,
-                &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                    IsSelOnlyUpddIdsQbMut::True
-                } else {
-                    IsSelOnlyUpddIdsQbMut::False
-                },
-                &sel_only_crd_or_updd_ids_qb_ts,
-                &sel_only_crd_or_updd_ids_qp_ts,
-                &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
-                    IsSelOnlyCrdIdsQbMut::True
-                } else {
-                    IsSelOnlyCrdIdsQbMut::False
-                },
-                &sel_only_crd_or_updd_ids_qb_ts,
+                opt_sel_only_crd_or_updd_ids_qp_ts.as_ref().map(|qp_ts| {
+                    let qb_ts = opt_sel_only_crd_or_updd_ids_qb_ts.as_ref().expect("5b3a21f8");
+                    let qp_r: &dyn ToTokens = qp_ts;
+                    let qb_r: &dyn ToTokens = qb_ts;
+                    (qp_r, &IsSelOnlyUpddIdsQbMut::True, qb_r)
+                }),
+                opt_sel_only_crd_or_updd_ids_qp_ts.as_ref().map(|qp_ts| {
+                    let qb_ts = opt_sel_only_crd_or_updd_ids_qb_ts.as_ref().expect("7c4e92d1");
+                    let qp_r: &dyn ToTokens = qp_ts;
+                    let qb_r: &dyn ToTokens = qb_ts;
+                    (qp_r, &IsSelOnlyCrdIdsQbMut::True, qb_r)
+                }),
             )
         };
         let mb_impl_pg_json_obj_vec_el_id_for_ident_orgn_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {

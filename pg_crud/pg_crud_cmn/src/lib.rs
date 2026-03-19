@@ -110,42 +110,54 @@ pub trait PgJson {
     //todo mb add Decode trait here and Type
     type Rd: RdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltSomeOneEl;
     type RdIds: RdIdsAl;
-    fn sel_only_ids_qp(col_field: &str) -> Result<String, QpEr>;
+    fn sel_only_ids_qp(_col_field: &str) -> Result<String, QpEr> {
+        Ok("jsonb_build_object('v','null'::jsonb)".to_owned())
+    }
     type RdInn: RdInnAl;
     fn into_inn(v: Self::Rd) -> Self::RdInn;
     type Upd: UpdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl;
     type UpdForQuery: UpdForQueryAl + From<Self::Upd>;
     fn upd_qp(
-        v: &Self::UpdForQuery,
+        _v: &Self::UpdForQuery,
         jsonb_set_accumulator: &str,
-        jsonb_set_target: &str,
+        _jsonb_set_target: &str,
         jsonb_set_path: &str,
         incr: &mut u64,
-    ) -> Result<String, QpEr>;
+    ) -> Result<String, QpEr> {
+        pg_json_upd_qp(jsonb_set_accumulator, jsonb_set_path, incr)
+    }
     fn upd_qb(
         v: Self::UpdForQuery,
         query: Query<'_, Postgres, PgArguments>,
     ) -> Result<Query<'_, Postgres, PgArguments>, String>;
     fn sel_only_updd_ids_qp(
-        v: &Self::UpdForQuery,
+        _v: &Self::UpdForQuery,
         fi: &str,
-        col_field: &str,
-        incr: &mut u64,
-    ) -> Result<String, QpEr>;
+        _col_field: &str,
+        _incr: &mut u64,
+    ) -> Result<String, QpEr> {
+        Ok(fi_jsonb_build_obj_v(fi))
+    }
     fn sel_only_updd_ids_qb<'lt>(
-        v: &'lt Self::UpdForQuery,
+        _v: &'lt Self::UpdForQuery,
         query: Query<'lt, Postgres, PgArguments>,
-    ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
+        Ok(query)
+    }
     fn sel_only_crd_ids_qp(
-        v: &Self::CrForQuery,
+        _v: &Self::CrForQuery,
         fi: &str,
-        col_field: &str,
-        incr: &mut u64,
-    ) -> Result<String, QpEr>;
+        _col_field: &str,
+        _incr: &mut u64,
+    ) -> Result<String, QpEr> {
+        Ok(fi_jsonb_build_obj_v(fi))
+    }
     fn sel_only_crd_ids_qb<'lt>(
-        v: &'lt Self::CrForQuery,
+        _v: &'lt Self::CrForQuery,
         query: Query<'lt, Postgres, PgArguments>,
-    ) -> Result<Query<'lt, Postgres, PgArguments>, String>;
+    ) -> Result<Query<'lt, Postgres, PgArguments>, String> {
+        Ok(query)
+    }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 pub trait PgTypePk {
@@ -326,8 +338,12 @@ pub trait PgJsonTestCases {
     ) -> Option<V<<Self::PgJson as PgJson>::RdInn>>;
     fn upd_to_rd_ids(v: &<Self::PgJson as PgJson>::Upd) -> <Self::PgJson as PgJson>::RdIds;
     fn rd_ids_to_opt_v_rd_dflt_some_one_el(
-        v: &<Self::PgJson as PgJson>::RdIds,
-    ) -> Option<V<<Self::PgJson as PgJson>::Rd>>;
+        _v: &<Self::PgJson as PgJson>::RdIds,
+    ) -> Option<V<<Self::PgJson as PgJson>::Rd>> {
+        Some(V {
+            v: DfltSomeOneEl::dflt_some_one_el(),
+        })
+    }
     fn previous_rd_and_opt_upd_into_rd(
         rd: <Self::PgJson as PgJson>::Rd,
         opt_upd: Option<<Self::PgJson as PgJson>::Upd>,
@@ -339,7 +355,11 @@ pub trait PgJsonTestCases {
     fn rd_ids_and_cr_into_opt_v_rd(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<V<<Self::PgJson as PgJson>::Rd>>;
+    ) -> Option<V<<Self::PgJson as PgJson>::Rd>> {
+        Some(V {
+            v: Self::rd_ids_and_cr_into_rd(rd_ids, cr),
+        })
+    }
     fn rd_ids_and_cr_into_tt(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
@@ -355,53 +375,79 @@ pub trait PgJsonTestCases {
     fn rd_ids_and_cr_into_vec_wh_eq_to_json_field(
         rd_ids: <Self::PgJson as PgJson>::RdIds,
         cr: <Self::PgJson as PgJson>::Cr,
-    ) -> NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>;
+    ) -> NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh> {
+        Self::rd_ids_and_cr_into_vec_wh_eq_using_fields(rd_ids, cr)
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>> {
+        None
+    }
     fn cr_into_pg_json_opt_vec_wh_len_eq(
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>> {
+        None
+    }
     fn cr_into_pg_json_opt_vec_wh_len_greater_than(
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>>;
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<<Self::PgJson as PgJson>::Wh>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_in(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>> {
+        None
+    }
     fn rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx(
-        rd_ids: <Self::PgJson as PgJson>::RdIds,
-        cr: <Self::PgJson as PgJson>::Cr,
-    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>>;
+        _rd_ids: <Self::PgJson as PgJson>::RdIds,
+        _cr: <Self::PgJson as PgJson>::Cr,
+    ) -> Option<NotEmptyUnqVec<SingleOrMultiple<<Self::PgJson as PgJson>::Wh>>> {
+        None
+    }
 }
 pub trait PgTypeWhFlt<'query_lt> {
     fn qb(
@@ -1247,6 +1293,18 @@ pub fn incr_checked_add_one_returning_incr(incr: &mut u64) -> Result<u64, QpEr> 
 #[must_use]
 pub fn fi_jsonb_build_obj_v(fi: &str) -> String {
     format!("'{fi}',jsonb_build_object('v','null'::jsonb),")
+}
+pub fn pg_json_upd_qp(
+    jsonb_set_accumulator: &str,
+    jsonb_set_path: &str,
+    incr: &mut u64,
+) -> Result<String, QpEr> {
+    match incr_checked_add_one_returning_incr(incr) {
+        Ok(v) => Ok(format!(
+            "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${v})"
+        )),
+        Err(er) => Err(er),
+    }
 }
 #[must_use]
 pub fn case_jsonb_typeof_null(target: &dyn Display, else_expr: &dyn Display) -> String {

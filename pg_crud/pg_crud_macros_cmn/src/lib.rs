@@ -688,7 +688,7 @@ pub fn gen_de_dq_ts(ident: &dyn DisplayPlusToTokens, len: usize) -> (Ts2, Ts2, T
         pg_type_ident_wh_tokens_dq_ts,
     )
 }
-pub fn gen_impl_pg_json_ts(
+pub fn gen_impl_pg_json_all_methods_ts(
     import: &Import,
     ident: &dyn ToTokens,
     tt_type_ts: &dyn ToTokens,
@@ -719,12 +719,143 @@ pub fn gen_impl_pg_json_ts(
     is_sel_only_crd_ids_qb_mut: &IsSelOnlyCrdIdsQbMut,
     sel_only_crd_ids_qb_ts: &dyn ToTokens,
 ) -> Ts2 {
+    gen_impl_pg_json_ts(
+        import,
+        ident,
+        tt_type_ts,
+        cr_type_ts,
+        cr_for_query_type_ts,
+        sel_type_ts,
+        is_sel_qp_self_sel_used,
+        is_sel_qp_col_field_for_er_msg_used,
+        is_sel_qp_is_pg_type_used,
+        sel_qp_ts,
+        wh_type_ts,
+        rd_type_ts,
+        rd_ids_type_ts,
+        Some(sel_only_ids_qp_ts),
+        rd_inn_type_ts,
+        into_inn_ts,
+        upd_type_ts,
+        upd_type_for_query_ts,
+        Some((
+            upd_qp_ts,
+            is_upd_qp_self_upd_used,
+            is_upd_qp_jsonb_set_target_used,
+        )),
+        is_upd_qb_mut,
+        upd_qb_ts,
+        Some((
+            sel_only_updd_ids_qp_ts,
+            is_sel_only_updd_ids_qb_mut,
+            sel_only_updd_ids_qb_ts,
+        )),
+        Some((
+            sel_only_crd_ids_qp_ts,
+            is_sel_only_crd_ids_qb_mut,
+            sel_only_crd_ids_qb_ts,
+        )),
+    )
+}
+pub fn gen_impl_pg_json_ts(
+    import: &Import,
+    ident: &dyn ToTokens,
+    tt_type_ts: &dyn ToTokens,
+    cr_type_ts: &dyn ToTokens,
+    cr_for_query_type_ts: &dyn ToTokens,
+    sel_type_ts: &dyn ToTokens,
+    is_sel_qp_self_sel_used: &IsSelQpSelfSelUsed,
+    is_sel_qp_col_field_for_er_msg_used: &IsSelQpColFieldForErMsgUsed,
+    is_sel_qp_is_pg_type_used: &IsSelQpIsPgTypeUsed,
+    sel_qp_ts: &dyn ToTokens,
+    wh_type_ts: &dyn ToTokens,
+    rd_type_ts: &dyn ToTokens,
+    rd_ids_type_ts: &dyn ToTokens,
+    opt_sel_only_ids_qp_ts: Option<&dyn ToTokens>,
+    rd_inn_type_ts: &dyn ToTokens,
+    into_inn_ts: &dyn ToTokens,
+    upd_type_ts: &dyn ToTokens,
+    upd_type_for_query_ts: &dyn ToTokens,
+    opt_upd_qp_ts: Option<(
+        &dyn ToTokens,
+        &IsUpdQpSelfUpdUsed,
+        &IsUpdQpJsonbSetTargetUsed,
+    )>,
+    is_upd_qb_mut: &IsUpdQbMut,
+    upd_qb_ts: &dyn ToTokens,
+    opt_sel_only_updd_ids: Option<(&dyn ToTokens, &IsSelOnlyUpddIdsQbMut, &dyn ToTokens)>,
+    opt_sel_only_crd_ids: Option<(&dyn ToTokens, &IsSelOnlyCrdIdsQbMut, &dyn ToTokens)>,
+) -> Ts2 {
     let path_ts = quote! {#import ::};
     let reference_mut_u64_ts = quote! {&mut #U64};
     let query_pg_args_ts =
         quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let query_lt_pg_args_ts =
         quote! {sqlx::query::Query<'lt, sqlx::Postgres, sqlx::postgres::PgArguments>};
+    let opt_sel_only_ids_qp_method_ts = opt_sel_only_ids_qp_ts.map(|sel_only_ids_qp_ts| {
+        quote! {
+            fn #SelOnlyIdsQpSc(
+                #ColFieldSc: #RefStr,
+            ) -> Result<#StringTs, #import ::#QpErUcc> {
+                #sel_only_ids_qp_ts
+            }
+        }
+    });
+    let opt_upd_qp_method_ts = opt_upd_qp_ts.map(
+        |(upd_qp_ts, is_upd_qp_self_upd_used, is_upd_qp_jsonb_set_target_used)| {
+            quote! {
+                fn #UpdQpSc(
+                    #is_upd_qp_self_upd_used: &Self::#UpdForQueryUcc,
+                    #JsonbSetAccumulatorSc: #RefStr,
+                    #is_upd_qp_jsonb_set_target_used: #RefStr,
+                    #JsonbSetPathSc: #RefStr,
+                    #IncrSc: #reference_mut_u64_ts,
+                ) -> Result<#StringTs, #path_ts #QpErUcc> {
+                    #upd_qp_ts
+                }
+            }
+        },
+    );
+    let opt_sel_only_updd_ids_method_ts = opt_sel_only_updd_ids.map(
+        |(sel_only_updd_ids_qp_ts, is_sel_only_updd_ids_qb_mut, sel_only_updd_ids_qb_ts)| {
+            quote! {
+                fn #SelOnlyUpddIdsQpSc(
+                    #VSc: &Self::#UpdForQueryUcc,
+                    #FiSc: #RefStr,
+                    #ColFieldSc: #RefStr,
+                    #IncrSc: &mut #U64
+                ) -> Result<#StringTs, #import ::#QpErUcc> {
+                    #sel_only_updd_ids_qp_ts
+                }
+                fn #SelOnlyUpddIdsQbSc<'lt>(
+                    #VSc: &'lt Self::#UpdForQueryUcc,
+                    #is_sel_only_updd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+                ) -> Result<#query_lt_pg_args_ts, #StringTs> {
+                    #sel_only_updd_ids_qb_ts
+                }
+            }
+        },
+    );
+    let opt_sel_only_crd_ids_method_ts = opt_sel_only_crd_ids.map(
+        |(sel_only_crd_ids_qp_ts, is_sel_only_crd_ids_qb_mut, sel_only_crd_ids_qb_ts)| {
+            quote! {
+                fn #SelOnlyCrdIdsQpSc(
+                    #VSc: &Self::#CrForQueryUcc,
+                    #FiSc: #RefStr,
+                    #ColFieldSc: #RefStr,
+                    #IncrSc: &mut #U64
+                ) -> Result<#StringTs, #import ::#QpErUcc> {
+                    #sel_only_crd_ids_qp_ts
+                }
+                fn #SelOnlyCrdIdsQbSc<'lt>(
+                    #VSc: &'lt Self::#CrForQueryUcc,
+                    #is_sel_only_crd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
+                ) -> Result<#query_lt_pg_args_ts, #StringTs> {
+                    #sel_only_crd_ids_qb_ts
+                }
+            }
+        },
+    );
     //todo mb reexport sqlx?
     quote! {
         #AllowClippyArbitrarySrcItemOrdering
@@ -745,60 +876,22 @@ pub fn gen_impl_pg_json_ts(
             type #WhUcc = #wh_type_ts;
             type #RdUcc = #rd_type_ts;
             type #RdIdsUcc = #rd_ids_type_ts;
-            fn #SelOnlyIdsQpSc(
-                #ColFieldSc: #RefStr,
-            ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #sel_only_ids_qp_ts
-            }
+            #opt_sel_only_ids_qp_method_ts
             type #RdInnUcc = #rd_inn_type_ts;
             fn into_inn(#VSc: Self::#RdUcc) -> Self::#RdInnUcc {
                 #into_inn_ts
             }
             type #UpdUcc = #upd_type_ts;
             type #UpdForQueryUcc = #upd_type_for_query_ts;
-            fn #UpdQpSc(
-                #is_upd_qp_self_upd_used: &Self::#UpdForQueryUcc,
-                #JsonbSetAccumulatorSc: #RefStr,
-                #is_upd_qp_jsonb_set_target_used: #RefStr,
-                #JsonbSetPathSc: #RefStr,
-                #IncrSc: #reference_mut_u64_ts,
-            ) -> Result<#StringTs, #path_ts #QpErUcc> {
-                #upd_qp_ts
-            }
+            #opt_upd_qp_method_ts
             fn #UpdQbSc(
                 #VSc: Self::#UpdForQueryUcc,
                 #is_upd_qb_mut #QuerySc: #query_pg_args_ts
             ) -> Result<#query_pg_args_ts, #StringTs> {
                 #upd_qb_ts
             }
-            fn #SelOnlyUpddIdsQpSc(
-                #VSc: &Self::#UpdForQueryUcc,
-                #FiSc: #RefStr,
-                #ColFieldSc: #RefStr,
-                #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #sel_only_updd_ids_qp_ts
-            }
-            fn #SelOnlyUpddIdsQbSc<'lt>(
-                #VSc: &'lt Self::#UpdForQueryUcc,
-                #is_sel_only_updd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
-            ) -> Result<#query_lt_pg_args_ts, #StringTs> {
-                #sel_only_updd_ids_qb_ts
-            }
-            fn #SelOnlyCrdIdsQpSc(
-                #VSc: &Self::#CrForQueryUcc,
-                #FiSc: #RefStr,
-                #ColFieldSc: #RefStr,
-                #IncrSc: &mut #U64
-            ) -> Result<#StringTs, #import ::#QpErUcc> {
-                #sel_only_crd_ids_qp_ts
-            }
-            fn #SelOnlyCrdIdsQbSc<'lt>(
-                #VSc: &'lt Self::#CrForQueryUcc,
-                #is_sel_only_crd_ids_qb_mut #QuerySc: #query_lt_pg_args_ts
-            ) -> Result<#query_lt_pg_args_ts, #StringTs> {
-                #sel_only_crd_ids_qb_ts
-            }
+            #opt_sel_only_updd_ids_method_ts
+            #opt_sel_only_crd_ids_method_ts
         }
     }
 }
