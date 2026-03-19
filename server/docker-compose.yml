@@ -17,6 +17,7 @@ services:
   # image build from https://github.com/kuqmua/pg_jsonschema_custom
     image: ghcr.io/kuqmua/postgresql_16_with_pg_jsonschema
     container_name: postgres16
+    restart: always
     ports:
       - "5432:5432"
     environment:
