@@ -290,6 +290,162 @@ pub enum PgJsonFlt {
     DimThreeOverlapsWithArr { ident: Ts2 },
     DimFourOverlapsWithArr { ident: Ts2 },
 }
+impl PgJsonFlt {
+    #[must_use]
+    pub fn dim_all_els_eq(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::AllElsEq { ident },
+            1 => Self::DimOneAllElsEq { ident },
+            2 => Self::DimTwoAllElsEq { ident },
+            3 => Self::DimThreeAllElsEq { ident },
+            4 => Self::DimFourAllElsEq { ident },
+            _ => panic!("a1b2c3d4 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_all_els_greater_than(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::AllElsGreaterThan { ident },
+            1 => Self::DimOneAllElsGreaterThan { ident },
+            2 => Self::DimTwoAllElsGreaterThan { ident },
+            3 => Self::DimThreeAllElsGreaterThan { ident },
+            4 => Self::DimFourAllElsGreaterThan { ident },
+            _ => panic!("e5f6a7b8 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_all_els_rgx(dim: usize) -> Self {
+        match dim {
+            0 => Self::AllElsRgx,
+            1 => Self::DimOneAllElsRgx,
+            2 => Self::DimTwoAllElsRgx,
+            3 => Self::DimThreeAllElsRgx,
+            4 => Self::DimFourAllElsRgx,
+            _ => panic!("c9d0e1f2 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_btwn(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::Btwn { ident },
+            1 => Self::DimOneBtwn { ident },
+            2 => Self::DimTwoBtwn { ident },
+            3 => Self::DimThreeBtwn { ident },
+            4 => Self::DimFourBtwn { ident },
+            _ => panic!("a3b4c5d6 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_contains_all_els_of_arr(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::ContainsAllElsOfArr { ident },
+            1 => Self::DimOneContainsAllElsOfArr { ident },
+            2 => Self::DimTwoContainsAllElsOfArr { ident },
+            3 => Self::DimThreeContainsAllElsOfArr { ident },
+            4 => Self::DimFourContainsAllElsOfArr { ident },
+            _ => panic!("e7f8a9b0 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_contains_el_greater_than(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::ContainsElGreaterThan { ident },
+            1 => Self::DimOneContainsElGreaterThan { ident },
+            2 => Self::DimTwoContainsElGreaterThan { ident },
+            3 => Self::DimThreeContainsElGreaterThan { ident },
+            4 => Self::DimFourContainsElGreaterThan { ident },
+            _ => panic!("c1d2e3f4 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_contains_el_rgx(dim: usize) -> Self {
+        match dim {
+            0 => Self::ContainsElRgx,
+            1 => Self::DimOneContainsElRgx,
+            2 => Self::DimTwoContainsElRgx,
+            3 => Self::DimThreeContainsElRgx,
+            4 => Self::DimFourContainsElRgx,
+            _ => panic!("a5b6c7d8 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_eq(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::Eq { ident },
+            1 => Self::DimOneEq { ident },
+            2 => Self::DimTwoEq { ident },
+            3 => Self::DimThreeEq { ident },
+            4 => Self::DimFourEq { ident },
+            _ => panic!("e9f0a1b2 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_greater_than(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::GreaterThan { ident },
+            1 => Self::DimOneGreaterThan { ident },
+            2 => Self::DimTwoGreaterThan { ident },
+            3 => Self::DimThreeGreaterThan { ident },
+            4 => Self::DimFourGreaterThan { ident },
+            _ => panic!("c3d4e5f6 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_in(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::In { ident },
+            1 => Self::DimOneIn { ident },
+            2 => Self::DimTwoIn { ident },
+            3 => Self::DimThreeIn { ident },
+            4 => Self::DimFourIn { ident },
+            _ => panic!("a7b8c9d0 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_len_eq(dim: usize) -> Self {
+        match dim {
+            0 => Self::LenEq,
+            1 => Self::DimOneLenEq,
+            2 => Self::DimTwoLenEq,
+            3 => Self::DimThreeLenEq,
+            4 => Self::DimFourLenEq,
+            _ => panic!("e1f2a3b4 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_len_greater_than(dim: usize) -> Self {
+        match dim {
+            0 => Self::LenGreaterThan,
+            1 => Self::DimOneLenGreaterThan,
+            2 => Self::DimTwoLenGreaterThan,
+            3 => Self::DimThreeLenGreaterThan,
+            4 => Self::DimFourLenGreaterThan,
+            _ => panic!("c5d6e7f8 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_overlaps_with_arr(dim: usize, ident: Ts2) -> Self {
+        match dim {
+            0 => Self::OverlapsWithArr { ident },
+            1 => Self::DimOneOverlapsWithArr { ident },
+            2 => Self::DimTwoOverlapsWithArr { ident },
+            3 => Self::DimThreeOverlapsWithArr { ident },
+            4 => Self::DimFourOverlapsWithArr { ident },
+            _ => panic!("a9b0c1d2 unsupported dim"),
+        }
+    }
+    #[must_use]
+    pub fn dim_rgx(dim: usize) -> Self {
+        match dim {
+            0 => Self::Rgx,
+            1 => Self::DimOneRgx,
+            2 => Self::DimTwoRgx,
+            3 => Self::DimThreeRgx,
+            4 => Self::DimFourRgx,
+            _ => panic!("e3f4a5b6 unsupported dim"),
+        }
+    }
+}
 impl PgFlt for PgJsonFlt {
     fn mb_generic(&self) -> Option<Ts2> {
         match &self {

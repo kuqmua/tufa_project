@@ -998,294 +998,48 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 }
                             }
                         }
-                        Pattern::ArrDim1 { dim1_is_nl } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("21eaebaf"));
-                            let cmn_arr_dim1_pg_json_flts = {
-                                let mut vec = cmn_pg_json_flts;
-                                vec.push(PgJsonFlt::DimOneEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::LenEq);
-                                vec.push(PgJsonFlt::DimOneLenEq);
-                                vec.push(PgJsonFlt::LenGreaterThan);
-                                vec.push(PgJsonFlt::DimOneLenGreaterThan);
-                                vec.push(PgJsonFlt::DimOneContainsAllElsOfArr {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneOverlapsWithArr {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::AllElsEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneIn {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec
-                            };
+                        Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => {
+                            let dims_vec = pattern.dims();
+                            let n_dims = dims_vec.len();
+                            let dim_idents: Vec<Ts2> = dims_vec.iter().enumerate().map(|(dim_idx, dim_is_nl)| {
+                                gen_dim_tt_ucc_ts(dim_is_nl, &pattern.down_by(dim_idx.checked_add(1).expect("b1c2d3e4")).expect("f5a6b7c8"))
+                            }).collect();
+                            let last_ident = dim_idents.last().expect("d9e0f1a2").clone();
+                            let mut flts = cmn_pg_json_flts;
+                            for (k, ident_k) in dim_idents.iter().enumerate() {
+                                flts.push(PgJsonFlt::dim_eq(k.checked_add(1).expect("a3b4c5d6"), ident_k.clone()));
+                            }
+                            flts.push(PgJsonFlt::LenEq);
+                            for k in 1..=n_dims {
+                                flts.push(PgJsonFlt::dim_len_eq(k));
+                            }
+                            flts.push(PgJsonFlt::LenGreaterThan);
+                            for k in 1..=n_dims {
+                                flts.push(PgJsonFlt::dim_len_greater_than(k));
+                            }
+                            flts.push(PgJsonFlt::dim_contains_all_els_of_arr(n_dims, last_ident.clone()));
+                            flts.push(PgJsonFlt::dim_overlaps_with_arr(n_dims, last_ident.clone()));
+                            for (k, ident_k) in dim_idents.iter().enumerate() {
+                                flts.push(PgJsonFlt::dim_all_els_eq(k, ident_k.clone()));
+                            }
+                            for (k, ident_k) in dim_idents.iter().enumerate() {
+                                flts.push(PgJsonFlt::dim_in(k.checked_add(1).expect("e7f8a9b0"), ident_k.clone()));
+                            }
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
-                                    let mut flts = cmn_arr_dim1_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimOneGreaterThan {
-                                        ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimOneBtwn {
-                                        ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::ContainsElGreaterThan {
-                                        ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::AllElsGreaterThan {
-                                        ident: arr_dim1_inn_el_ident_tt_ucc,
-                                    });
-                                    flts
+                                    flts.push(PgJsonFlt::dim_greater_than(n_dims, last_ident.clone()));
+                                    flts.push(PgJsonFlt::dim_btwn(n_dims, last_ident.clone()));
+                                    flts.push(PgJsonFlt::dim_contains_el_greater_than(n_dims.checked_sub(1).expect("c1d2e3f4"), last_ident.clone()));
+                                    flts.push(PgJsonFlt::dim_all_els_greater_than(n_dims.checked_sub(1).expect("a5b6c7d8"), last_ident));
                                 }
-                                PgJsonSpecific::Bool => cmn_arr_dim1_pg_json_flts,
+                                PgJsonSpecific::Bool => {}
                                 PgJsonSpecific::String => {
-                                    let mut flts = cmn_arr_dim1_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimOneRgx);
-                                    flts.push(PgJsonFlt::ContainsElRgx);
-                                    flts.push(PgJsonFlt::AllElsRgx);
-                                    flts
+                                    flts.push(PgJsonFlt::dim_rgx(n_dims));
+                                    flts.push(PgJsonFlt::dim_contains_el_rgx(n_dims.checked_sub(1).expect("e9f0a1b2")));
+                                    flts.push(PgJsonFlt::dim_all_els_rgx(n_dims.checked_sub(1).expect("c3d4e5f6")));
                                 }
                             }
-                        }
-                        Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("0c4491c4"));
-                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by(2).expect("2d4ee5d4"));
-                            let cmn_arr_dim2_pg_json_flts = {
-                                let mut vec = cmn_pg_json_flts;
-                                vec.push(PgJsonFlt::DimOneEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimTwoEq {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::LenEq);
-                                vec.push(PgJsonFlt::DimOneLenEq);
-                                vec.push(PgJsonFlt::DimTwoLenEq);
-                                vec.push(PgJsonFlt::LenGreaterThan);
-                                vec.push(PgJsonFlt::DimOneLenGreaterThan);
-                                vec.push(PgJsonFlt::DimTwoLenGreaterThan);
-                                vec.push(PgJsonFlt::DimTwoContainsAllElsOfArr {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimTwoOverlapsWithArr {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::AllElsEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneAllElsEq {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneIn {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc,
-                                });
-                                vec.push(PgJsonFlt::DimTwoIn {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec
-                            };
-                            match &pg_json_specific {
-                                PgJsonSpecific::Nbr => {
-                                    let mut flts = cmn_arr_dim2_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimTwoGreaterThan {
-                                        ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimTwoBtwn {
-                                        ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimOneContainsElGreaterThan {
-                                        ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimOneAllElsGreaterThan {
-                                        ident: arr_dim2_inn_el_ident_tt_ucc,
-                                    });
-                                    flts
-                                }
-                                PgJsonSpecific::Bool => cmn_arr_dim2_pg_json_flts,
-                                PgJsonSpecific::String => {
-                                    let mut flts = cmn_arr_dim2_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimTwoRgx);
-                                    flts.push(PgJsonFlt::DimOneContainsElRgx);
-                                    flts.push(PgJsonFlt::DimOneAllElsRgx);
-                                    flts
-                                }
-                            }
-                        }
-                        Pattern::ArrDim3 {
-                            dim1_is_nl,
-                            dim2_is_nl,
-                            dim3_is_nl,
-                        } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("3450bef4"));
-                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by(2).expect("3c0d10f4"));
-                            let arr_dim3_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim3_is_nl, &pattern.down_by(3).expect("9aaf9e82"));
-                            let cmn_arr_dim3_pg_json_flts = {
-                                let mut vec = cmn_pg_json_flts;
-                                vec.push(PgJsonFlt::DimOneEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimTwoEq {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimThreeEq {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::LenEq);
-                                vec.push(PgJsonFlt::DimOneLenEq);
-                                vec.push(PgJsonFlt::DimTwoLenEq);
-                                vec.push(PgJsonFlt::DimThreeLenEq);
-                                vec.push(PgJsonFlt::LenGreaterThan);
-                                vec.push(PgJsonFlt::DimOneLenGreaterThan);
-                                vec.push(PgJsonFlt::DimTwoLenGreaterThan);
-                                vec.push(PgJsonFlt::DimThreeLenGreaterThan);
-                                vec.push(PgJsonFlt::DimThreeContainsAllElsOfArr {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimThreeOverlapsWithArr {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::AllElsEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneAllElsEq {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimTwoAllElsEq {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneIn {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc,
-                                });
-                                vec.push(PgJsonFlt::DimTwoIn {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc,
-                                });
-                                vec.push(PgJsonFlt::DimThreeIn {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec
-                            };
-                            match &pg_json_specific {
-                                PgJsonSpecific::Nbr => {
-                                    let mut flts = cmn_arr_dim3_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimThreeGreaterThan {
-                                        ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimThreeBtwn {
-                                        ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimTwoContainsElGreaterThan {
-                                        ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimTwoAllElsGreaterThan {
-                                        ident: arr_dim3_inn_el_ident_tt_ucc,
-                                    });
-                                    flts
-                                }
-                                PgJsonSpecific::Bool => cmn_arr_dim3_pg_json_flts,
-                                PgJsonSpecific::String => {
-                                    let mut flts = cmn_arr_dim3_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimThreeRgx);
-                                    flts.push(PgJsonFlt::DimTwoContainsElRgx);
-                                    flts.push(PgJsonFlt::DimTwoAllElsRgx);
-                                    flts
-                                }
-                            }
-                        }
-                        Pattern::ArrDim4 {
-                            dim1_is_nl,
-                            dim2_is_nl,
-                            dim3_is_nl,
-                            dim4_is_nl,
-                        } => {
-                            let arr_dim1_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim1_is_nl, &pattern.down_by(1).expect("550d313b"));
-                            let arr_dim2_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim2_is_nl, &pattern.down_by(2).expect("7bda1424"));
-                            let arr_dim3_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim3_is_nl, &pattern.down_by(3).expect("b43aa5bd"));
-                            let arr_dim4_inn_el_ident_tt_ucc = gen_dim_tt_ucc_ts(dim4_is_nl, &pattern.down_by(4).expect("a246885a"));
-                            let cmn_arr_dim4_pg_json_flts = {
-                                let mut vec = cmn_pg_json_flts;
-                                vec.push(PgJsonFlt::DimOneEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimTwoEq {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimThreeEq {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimFourEq {
-                                    ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::LenEq);
-                                vec.push(PgJsonFlt::DimOneLenEq);
-                                vec.push(PgJsonFlt::DimTwoLenEq);
-                                vec.push(PgJsonFlt::DimThreeLenEq);
-                                vec.push(PgJsonFlt::DimFourLenEq);
-                                vec.push(PgJsonFlt::LenGreaterThan);
-                                vec.push(PgJsonFlt::DimOneLenGreaterThan);
-                                vec.push(PgJsonFlt::DimTwoLenGreaterThan);
-                                vec.push(PgJsonFlt::DimThreeLenGreaterThan);
-                                vec.push(PgJsonFlt::DimFourLenGreaterThan);
-                                vec.push(PgJsonFlt::DimFourContainsAllElsOfArr {
-                                    ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimFourOverlapsWithArr {
-                                    ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::AllElsEq {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneAllElsEq {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimTwoAllElsEq {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimThreeAllElsEq {
-                                    ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec.push(PgJsonFlt::DimOneIn {
-                                    ident: arr_dim1_inn_el_ident_tt_ucc,
-                                });
-                                vec.push(PgJsonFlt::DimTwoIn {
-                                    ident: arr_dim2_inn_el_ident_tt_ucc,
-                                });
-                                vec.push(PgJsonFlt::DimThreeIn {
-                                    ident: arr_dim3_inn_el_ident_tt_ucc,
-                                });
-                                vec.push(PgJsonFlt::DimFourIn {
-                                    ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                });
-                                vec
-                            };
-                            match &pg_json_specific {
-                                PgJsonSpecific::Nbr => {
-                                    let mut flts = cmn_arr_dim4_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimFourGreaterThan {
-                                        ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimFourBtwn {
-                                        ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimThreeContainsElGreaterThan {
-                                        ident: arr_dim4_inn_el_ident_tt_ucc.clone(),
-                                    });
-                                    flts.push(PgJsonFlt::DimThreeAllElsGreaterThan {
-                                        ident: arr_dim4_inn_el_ident_tt_ucc,
-                                    });
-                                    flts
-                                }
-                                PgJsonSpecific::Bool => cmn_arr_dim4_pg_json_flts,
-                                PgJsonSpecific::String => {
-                                    let mut flts = cmn_arr_dim4_pg_json_flts;
-                                    flts.push(PgJsonFlt::DimFourRgx);
-                                    flts.push(PgJsonFlt::DimThreeContainsElRgx);
-                                    flts.push(PgJsonFlt::DimThreeAllElsRgx);
-                                    flts
-                                }
-                            }
+                            flts
                         }
                     }
                 }
@@ -2461,69 +2215,20 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }).expect("e99ecd08"))
                         }
                     };
-                    match &pattern {
-                        Pattern::Stdrt => quote!{#NoneTs},
-                        Pattern::ArrDim1 { dim1_is_nl } => match dim_i_nbr_max {
-                            DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                dim1_is_nl,
-                            ]),
-                            DimIndexNbr::One | DimIndexNbr::Two | DimIndexNbr::Three => quote!{#NoneTs},
-                        },
-                        Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => match dim_i_nbr_max {
-                            DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                dim1_is_nl,
-                            ]),
-                            DimIndexNbr::One => gen_dim_i_nbr_ts(&[
-                                dim1_is_nl,
-                                dim2_is_nl
-                            ]),
-                            DimIndexNbr::Two | DimIndexNbr::Three => quote!{#NoneTs},
-                        },
-                        Pattern::ArrDim3 {
-                            dim1_is_nl,
-                            dim2_is_nl,
-                            dim3_is_nl,
-                        } => match dim_i_nbr_max {
-                            DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                dim1_is_nl,
-                            ]),
-                            DimIndexNbr::One => gen_dim_i_nbr_ts(&[
-                                dim1_is_nl,
-                                dim2_is_nl,
-                            ]),
-                            DimIndexNbr::Two => gen_dim_i_nbr_ts(&[
-                                dim1_is_nl,
-                                dim2_is_nl,
-                                dim3_is_nl
-                            ]),
-                            DimIndexNbr::Three => quote!{#NoneTs},
-                        },
-                        Pattern::ArrDim4 {
-                            dim1_is_nl,
-                            dim2_is_nl,
-                            dim3_is_nl,
-                            dim4_is_nl,
-                        } => {
-                            match dim_i_nbr_max {
-                                DimIndexNbr::Zero => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nl
-                                ]),
-                                DimIndexNbr::One => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nl,
-                                    dim2_is_nl,
-                                ]),
-                                DimIndexNbr::Two => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nl,
-                                    dim2_is_nl,
-                                    dim3_is_nl,
-                                ]),
-                                DimIndexNbr::Three => gen_dim_i_nbr_ts(&[
-                                    dim1_is_nl,
-                                    dim2_is_nl,
-                                    dim3_is_nl,
-                                    dim4_is_nl
-                                ])
-                            }
+                    {
+                        let dims_vec = pattern.dims();
+                        let dim_i_nbr_max_usize = match dim_i_nbr_max {
+                            DimIndexNbr::Zero => 0usize,
+                            DimIndexNbr::One => 1usize,
+                            DimIndexNbr::Two => 2usize,
+                            DimIndexNbr::Three => 3usize,
+                        };
+                        let take_count = dim_i_nbr_max_usize.checked_add(1).expect("a4b5c6d7");
+                        if dims_vec.is_empty() || take_count > dims_vec.len() {
+                            quote!{#NoneTs}
+                        } else {
+                            let dims_refs: Vec<&IsNl> = dims_vec.iter().take(take_count).collect();
+                            gen_dim_i_nbr_ts(&dims_refs)
                         }
                     }
                 };
