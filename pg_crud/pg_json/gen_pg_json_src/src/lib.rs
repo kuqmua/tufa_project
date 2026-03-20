@@ -1007,7 +1007,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             let last_ident = dim_idents.last().expect("d9e0f1a2").clone();
                             let mut flts = cmn_pg_json_flts;
                             for (k, ident_k) in dim_idents.iter().enumerate() {
-                                flts.push(PgJsonFlt::dim_eq(k.checked_add(1).expect("a3b4c5d6"), ident_k.clone()));
+                                flts.push(PgJsonFlt::dim_eq(k.checked_add(1).expect("3be06657"), ident_k.clone()));
                             }
                             flts.push(PgJsonFlt::LenEq);
                             for k in 1..=n_dims {
@@ -1023,13 +1023,13 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                 flts.push(PgJsonFlt::dim_all_els_eq(k, ident_k.clone()));
                             }
                             for (k, ident_k) in dim_idents.iter().enumerate() {
-                                flts.push(PgJsonFlt::dim_in(k.checked_add(1).expect("e7f8a9b0"), ident_k.clone()));
+                                flts.push(PgJsonFlt::dim_in(k.checked_add(1).expect("16f28538"), ident_k.clone()));
                             }
                             match &pg_json_specific {
                                 PgJsonSpecific::Nbr => {
                                     flts.push(PgJsonFlt::dim_greater_than(n_dims, last_ident.clone()));
                                     flts.push(PgJsonFlt::dim_btwn(n_dims, last_ident.clone()));
-                                    flts.push(PgJsonFlt::dim_contains_el_greater_than(n_dims.checked_sub(1).expect("c1d2e3f4"), last_ident.clone()));
+                                    flts.push(PgJsonFlt::dim_contains_el_greater_than(n_dims.checked_sub(1).expect("5bcc63f3"), last_ident.clone()));
                                     flts.push(PgJsonFlt::dim_all_els_greater_than(n_dims.checked_sub(1).expect("a5b6c7d8"), last_ident));
                                 }
                                 PgJsonSpecific::Bool => {}
@@ -1079,35 +1079,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let vec_ts = |ts: &dyn ToTokens| gen_vec_tokens_dcl_ts(&ts);
                     let content_ts = gen_v_dcl_ts(&import, &if matches!(&pg_json, PgJson::UuidUuidAsJsonbString) {
                         let base_ts = quote! {#ident_rd_inn_stdrt_nn_al_ts};
-                        match &pattern {
-                            Pattern::Stdrt => is_nl.mb_opt_wrap(base_ts),
-                            Pattern::ArrDim1 { dim1_is_nl } => {
-                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(base_ts)))
-                            }
-                            Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
-                                let ts1 = vec_ts(&dim2_is_nl.mb_opt_wrap(base_ts));
-                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(ts1)))
-                            }
-                            Pattern::ArrDim3 {
-                                dim1_is_nl,
-                                dim2_is_nl,
-                                dim3_is_nl,
-                            } => {
-                                let ts1 = vec_ts(&dim3_is_nl.mb_opt_wrap(base_ts));
-                                let ts2 = vec_ts(&dim2_is_nl.mb_opt_wrap(ts1));
-                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(ts2)))
-                            }
-                            Pattern::ArrDim4 {
-                                dim1_is_nl,
-                                dim2_is_nl,
-                                dim3_is_nl,
-                                dim4_is_nl,
-                            } => {
-                                let ts1 = vec_ts(&dim4_is_nl.mb_opt_wrap(base_ts));
-                                let ts2 = vec_ts(&dim3_is_nl.mb_opt_wrap(ts1));
-                                let ts3 = vec_ts(&dim2_is_nl.mb_opt_wrap(ts2));
-                                is_nl.mb_opt_wrap(vec_ts(&dim1_is_nl.mb_opt_wrap(ts3)))
-                            }
+                        {
+                            let dims_vec = pattern.dims();
+                            let folded = dims_vec.iter().rev().fold(base_ts, |acc, dim_nl| {
+                                vec_ts(&dim_nl.mb_opt_wrap(acc))
+                            });
+                            is_nl.mb_opt_wrap(folded)
                         }
                     } else {
                         opt_unit_ts
@@ -1116,43 +1093,22 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 }
             );
         let ident_rd_inn_ts = {
-            let type_ts = match &pattern {
-                Pattern::Stdrt => match &is_nl {
-                    IsNl::False => &ident_rd_inn_stdrt_nn_al_ts,
-                    IsNl::True => &gen_opt_type_dcl_ts(&ident_rd_inn_stdrt_nn_al_ts),
-                },
-                Pattern::ArrDim1 { dim1_is_nl } => &{
-                    let dim1_type = dim1_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
-                },
-                Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => &{
-                    let dim2_type = dim2_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    let dim1_type = dim1_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
-                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
-                },
-                Pattern::ArrDim3 {
-                    dim1_is_nl,
-                    dim2_is_nl,
-                    dim3_is_nl,
-                } => &{
-                    let dim3_type = dim3_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    let dim2_type = dim2_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim3_type));
-                    let dim1_type = dim1_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
-                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
-                },
-                Pattern::ArrDim4 {
-                    dim1_is_nl,
-                    dim2_is_nl,
-                    dim3_is_nl,
-                    dim4_is_nl,
-                } => &{
-                    let dim4_type = dim4_is_nl.mb_opt_wrap(quote! {#ident_rd_inn_stdrt_nn_al_ts});
-                    let dim3_type = dim3_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim4_type));
-                    let dim2_type = dim2_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim3_type));
-                    let dim1_type = dim1_is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim2_type));
-                    is_nl.mb_opt_wrap(gen_vec_tokens_dcl_ts(&dim1_type))
-                },
+            let type_ts_owned = {
+                let dims_vec = pattern.dims();
+                let base = quote! {#ident_rd_inn_stdrt_nn_al_ts};
+                if dims_vec.is_empty() {
+                    match &is_nl {
+                        IsNl::False => base,
+                        IsNl::True => gen_opt_type_dcl_ts(&base),
+                    }
+                } else {
+                    let folded = dims_vec.iter().rev().fold(base, |acc, dim_nl| {
+                        gen_vec_tokens_dcl_ts(&dim_nl.mb_opt_wrap(acc))
+                    });
+                    is_nl.mb_opt_wrap(folded)
+                }
             };
+            let type_ts = &type_ts_owned;
             let impl_from_ident_orgn_for_ident_rd_inn_ts = gen_impl_from_ts(
                 &ident_orgn_ucc,
                 &ident_rd_inn_ucc,
@@ -1459,74 +1415,34 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                             }
                         }
                     };
-                    let into_inn_cnt_ts = match &pattern {
-                        Pattern::Stdrt => Ts2::new(),
-                        Pattern::ArrDim1 { dim1_is_nl } => gen_into_iter_map_el_collect_is_nl_ts(
-                            &quote!{el_0fdb74a5},
-                            dim1_is_nl,
-                        ),
-                        Pattern::ArrDim2 { dim1_is_nl, dim2_is_nl } => {
-                            let dim2_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_ts(
-                                &quote!{el_dac5ba56},
-                                dim2_is_nl
+                    let into_inn_cnt_ts = {
+                        let dims_vec = pattern.dims();
+                        let el_names: [Ts2; 4] = [
+                            quote!{el_0fdb74a5}, quote!{el_cf5646e9},
+                            quote!{el_bf67606b}, quote!{el_f64124e2},
+                        ];
+                        let v_names: [Ts2; 4] = [
+                            quote!{v_f8b0b01d}, quote!{v_1c90c80c},
+                            quote!{v_721e4164}, quote!{v_7fc1b146},
+                        ];
+                        let n_dims = dims_vec.len();
+                        if n_dims == 0 {
+                            Ts2::new()
+                        } else {
+                            let last_idx = n_dims.checked_sub(1).expect("163218c1");
+                            let mut acc_ts = gen_into_iter_map_el_collect_is_nl_ts(
+                                el_names.get(last_idx).expect("a3528607"),
+                                dims_vec.get(last_idx).expect("c94eb65d"),
                             );
-                            gen_into_iter_map_el_collect_is_nl_cnt_ts(
-                                &quote!{el_cf5646e9},
-                                &quote!{v_1c90c80c},
-                                dim1_is_nl,
-                                &dim2_is_nl_cnt_ts
-                            )
-                        }
-                        Pattern::ArrDim3 {
-                            dim1_is_nl,
-                            dim2_is_nl,
-                            dim3_is_nl,
-                        } => {
-                            let dim3_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_ts(
-                                &quote!{el_c935a865},
-                                dim3_is_nl
-                            );
-                            let dim2_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
-                                &quote!{el_dc9e788b},
-                                &quote!{v_3d1307e8},
-                                dim2_is_nl,
-                                &dim3_is_nl_cnt_ts
-                            );
-                            gen_into_iter_map_el_collect_is_nl_cnt_ts(
-                                &quote!{el_bf67606b},
-                                &quote!{v_721e4164},
-                                dim1_is_nl,
-                                &dim2_is_nl_cnt_ts
-                            )
-                        }
-                        Pattern::ArrDim4 {
-                            dim1_is_nl,
-                            dim2_is_nl,
-                            dim3_is_nl,
-                            dim4_is_nl,
-                        } => {
-                            let dim4_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_ts(
-                                &quote!{el_144c60e6},
-                                dim4_is_nl
-                            );
-                            let dim3_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
-                                &quote!{el_98961cb7},
-                                &quote!{v_995a5fbe},
-                                dim3_is_nl,
-                                &dim4_is_nl_cnt_ts
-                            );
-                            let dim2_is_nl_cnt_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
-                                &quote!{el_34e95172},
-                                &quote!{v_75b18ade},
-                                dim2_is_nl,
-                                &dim3_is_nl_cnt_ts
-                            );
-                            gen_into_iter_map_el_collect_is_nl_cnt_ts(
-                                &quote!{el_f64124e2},
-                                &quote!{v_7fc1b146},
-                                dim1_is_nl,
-                                &dim2_is_nl_cnt_ts
-                            )
+                            for rev_idx in (0..last_idx).rev() {
+                                acc_ts = gen_into_iter_map_el_collect_is_nl_cnt_ts(
+                                    el_names.get(rev_idx).expect("9a38f4fc"),
+                                    v_names.get(rev_idx).expect("ac3bdb9e"),
+                                    dims_vec.get(rev_idx).expect("e14ddc0c"),
+                                    &acc_ts,
+                                );
+                            }
+                            acc_ts
                         }
                     };
                     match &is_nl {
