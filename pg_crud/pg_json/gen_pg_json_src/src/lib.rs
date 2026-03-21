@@ -1304,7 +1304,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                                                     acc = match &is_nl_el {
                                                         IsNl::False => v,
                                                         IsNl::True => {
-                                                            format!("case when jsonb_typeof({d_usize_minus_one_elem_v})='arr' then ({v}) else null end")
+                                                            format!("case when jsonb_typeof({d_usize_minus_one_elem_v})='array' then ({v}) else null end")
                                                         }
                                                     };
                                                     dim_depth = dim_depth_minus_one;
