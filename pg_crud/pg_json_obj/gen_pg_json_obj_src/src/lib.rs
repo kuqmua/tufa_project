@@ -52,9 +52,10 @@ use pg_crud_macros_cmn::{
     gen_impl_pg_json_all_methods_ts, gen_impl_pg_json_test_cases_for_ident_ts,
     gen_impl_pg_type_not_pk_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_for_ident_ts,
-    gen_jsonb_agg_by_id, gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set,
-    gen_opt_type_dcl_ts, gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
+    gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_and_encode_for_ident_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_jsonb_agg_by_id, gen_jsonb_build_obj,
+    gen_jsonb_build_obj_v, gen_jsonb_set, gen_opt_type_dcl_ts,
+    gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sel_arr_pgn_agg,
     gen_sqlx_types_json_type_dcl_ts, gen_upd_arr_null_guard_agg, gen_v_dcl_ts, gen_v_init_ts,
@@ -644,13 +645,10 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     IsNl::True => &scopes_some_pg_crud_dflt_some_one_el_call_ts,
                 },
             );
-            let impl_sqlx_encode_sqlx_pg_for_ident_tt_or_ident_cr_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
+            let impl_sqlx_type_and_encode_for_ident_tt_or_ident_cr_ts = gen_impl_sqlx_type_and_encode_for_ident_ts(
                 &ident_tt_or_ident_cr_ucc,
+                &quote!{sqlx::types::Json<#SelfUcc>},
                 &sqlx_json_self_encode_ts
-            );
-            let impl_sqlx_type_for_ident_tt_or_ident_cr_ts = gen_impl_sqlx_type_for_ident_ts(
-                &ident_tt_or_ident_cr_ucc,
-                &quote!{sqlx::types::Json<#SelfUcc>}
             );
             let mb_ident_with_id_tt_or_ident_with_id_cr_stdrt_nn_ts = if is_stdrt_nn {
                 let ident_with_id_tt_or_ident_with_id_stdrt_nn_cr_ucc: &dyn DisplayPlusToTokens = match &pg_json_subtype_tt_or_cr {
@@ -691,8 +689,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 #ident_tt_or_ident_cr_ts
                 #impl_pub_new_for_ident_tt_or_ident_cr_ts
                 #impl_pg_crud_dflt_some_one_el_for_ident_tt_or_ident_cr_ts
-                #impl_sqlx_encode_sqlx_pg_for_ident_tt_or_ident_cr_ts
-                #impl_sqlx_type_for_ident_tt_or_ident_cr_ts
+                #impl_sqlx_type_and_encode_for_ident_tt_or_ident_cr_ts
                 #mb_ident_with_id_tt_or_ident_with_id_cr_stdrt_nn_ts
             }
         };
@@ -839,19 +836,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         quote! {Self #ts}
                     }
                 );
-                let impl_sqlx_encode_sqlx_pg_for_ident_cr_for_query_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(
+                let impl_sqlx_type_and_encode_for_ident_cr_for_query_ts = gen_impl_sqlx_type_and_encode_for_ident_ts(
                     &ident_cr_for_query_ucc,
+                    &quote!{sqlx::types::Json<#SelfUcc>},
                     &sqlx_json_self_encode_ts
-                );
-                let impl_sqlx_type_for_ident_cr_for_query_ts = gen_impl_sqlx_type_for_ident_ts(
-                    &ident_cr_for_query_ucc,
-                    &quote!{sqlx::types::Json<#SelfUcc>}
                 );
                 quote! {
                     #ident_cr_for_query_ts
                     #impl_from_ident_cr_for_ident_cr_for_query_ts
-                    #impl_sqlx_encode_sqlx_pg_for_ident_cr_for_query_ts
-                    #impl_sqlx_type_for_ident_cr_for_query_ts
+                    #impl_sqlx_type_and_encode_for_ident_cr_for_query_ts
                 }
             };
             let mb_ident_with_id_stdrt_nn_cr_for_query_ts = if is_stdrt_nn {

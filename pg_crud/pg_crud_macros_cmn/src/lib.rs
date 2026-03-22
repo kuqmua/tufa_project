@@ -1075,6 +1075,18 @@ pub fn gen_impl_sqlx_type_for_ident_ts(ident_ts: &dyn ToTokens, type_ts: &dyn To
         }
     }
 }
+pub fn gen_impl_sqlx_type_and_encode_for_ident_ts(
+    ident_ts: &dyn ToTokens,
+    type_ts: &dyn ToTokens,
+    encode_ts: &dyn ToTokens,
+) -> Ts2 {
+    let impl_type_ts = gen_impl_sqlx_type_for_ident_ts(ident_ts, type_ts);
+    let impl_encode_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(ident_ts, encode_ts);
+    quote! {
+        #impl_type_ts
+        #impl_encode_ts
+    }
+}
 pub fn gen_impl_pg_type_ts(
     import: &Import,
     ident: &dyn ToTokens,

@@ -25,9 +25,9 @@ use pg_crud_macros_cmn::{
     gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
-    gen_impl_pg_json_ts, gen_impl_sqlx_encode_sqlx_pg_for_ident_ts,
-    gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
-    gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
+    gen_impl_pg_json_ts, gen_impl_sqlx_type_and_encode_for_ident_ts, gen_opt_type_dcl_ts,
+    gen_pg_type_wh_ts, gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts,
+    gen_vec_tokens_dcl_ts,
 };
 use pg_crud_macros_cmn::{gen_case_jsonb_typeof_null, gen_jsonb_build_obj, gen_jsonb_build_obj_v};
 use proc_macro2::TokenStream as Ts2;
@@ -774,8 +774,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 };
                 quote! {Self(#content_ts)}
             });
-            let impl_sqlx_type_for_ident_orgn_ts = gen_impl_sqlx_type_for_ident_ts(&ident_orgn_ucc, &ident_rd_inn_sqlx_types_json_type_dcl_ts);
-            let impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ident_orgn_ucc, &sqlx_json_ref_self_zero_encode_ts);
+            let impl_sqlx_type_and_encode_for_ident_orgn_ts = gen_impl_sqlx_type_and_encode_for_ident_ts(&ident_orgn_ucc, &ident_rd_inn_sqlx_types_json_type_dcl_ts, &sqlx_json_ref_self_zero_encode_ts);
             quote! {
                 #ident_orgn_ts
                 #impl_ident_orgn_ts
@@ -786,8 +785,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #impl_display_for_ident_orgn_ts
                 #impl_loc_lib_to_err_string_for_ident_orgn_ts
                 #impl_dflt_some_one_el_for_ident_orgn_ts
-                #impl_sqlx_type_for_ident_orgn_ts
-                #impl_sqlx_encode_sqlx_pg_for_ident_orgn_ts
+                #impl_sqlx_type_and_encode_for_ident_orgn_ts
             }
         };
         let ident_orgn_struct_cnt_ts = quote!{(#ident_orgn_ucc);};
@@ -812,13 +810,11 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     &ident_orgn_struct_cnt_ts
                 );
             let impl_new_ts = gen_impl_new_for_ucc_ts(&for_query_ucc);
-            let impl_sqlx_encode_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&for_query_ucc, &sqlx_json_ref_self_zero_encode_ts);
-            let impl_sqlx_type_ts = gen_impl_sqlx_type_for_ident_ts(&for_query_ucc, &ident_orgn_ucc);
+            let impl_sqlx_type_and_encode_ts = gen_impl_sqlx_type_and_encode_for_ident_ts(&for_query_ucc, &ident_orgn_ucc, &sqlx_json_ref_self_zero_encode_ts);
             quote! {
                 #struct_ts
                 #impl_new_ts
-                #impl_sqlx_encode_ts
-                #impl_sqlx_type_ts
+                #impl_sqlx_type_and_encode_ts
             }
         };
         let gen_cr_or_upd_cmn_ts = |ucc: &dyn ToTokens| {
@@ -849,14 +845,12 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             let impl_new_ts = gen_impl_new_for_ucc_ts(&ucc);
             let impl_dflt_some_one_el_ts =
                 gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ucc, &self_dflt_some_one_el_call_ts);
-            let impl_sqlx_encode_ts = gen_impl_sqlx_encode_sqlx_pg_for_ident_ts(&ucc, &quote! {&#SelfSc.0});
-            let impl_sqlx_type_ts = gen_impl_sqlx_type_for_ident_ts(&ucc, &ident_rd_inn_sqlx_types_json_type_dcl_ts);
+            let impl_sqlx_type_and_encode_ts = gen_impl_sqlx_type_and_encode_for_ident_ts(&ucc, &ident_rd_inn_sqlx_types_json_type_dcl_ts, &quote! {&#SelfSc.0});
             quote! {
                 #struct_ts
                 #impl_new_ts
                 #impl_dflt_some_one_el_ts
-                #impl_sqlx_encode_ts
-                #impl_sqlx_type_ts
+                #impl_sqlx_type_and_encode_ts
             }
         };
         let ident_tt_ts = gen_tt_or_rd_ts(&ident_tt_ucc);
