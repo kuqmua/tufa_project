@@ -669,24 +669,6 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         },
                     )
                 };
-                let gen_crnt_date_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"= current_date")
-                };
-                let gen_greater_than_crnt_date_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"> current_date")
-                };
-                let gen_crnt_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"= current_timestamp")
-                };
-                let gen_greater_than_crnt_timestamp_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"> current_timestamp")
-                };
-                let gen_crnt_time_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"= current_time")
-                };
-                let gen_greater_than_crnt_time_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_pg_syntax_flt_ts(pg_type_ptrn, &"> current_time")
-                };
                 let gen_eq_to_encoded_string_representation_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_dcl_ts,
@@ -737,18 +719,6 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         },
                     )
                 };
-                let gen_find_ranges_within_given_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"<@");
-                let gen_find_ranges_that_fully_contain_the_given_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"@>");
-                let gen_strictly_to_left_of_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"&<");
-                let gen_strictly_to_right_of_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"&>");
-                let gen_overlap_with_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"&&");
-                let gen_adjacent_with_range_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"-|-");
                 let pub_v_not_zero_unsigned_part_of_i32_dcl_ts =
                     quote! {pub #VSc: #not_zero_unsigned_part_of_i32_ts};
                 let gen_len_flt_pattern_ts = |oprtr: &dyn Display| {
@@ -770,38 +740,15 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         qb_one_v_ts.clone(),
                     )
                 };
-                let gen_included_lower_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(lower({{}}{}) = ${{}})",
-                            pg_type_kind.format_argument()
-                        )
-                    })
-                };
-                let gen_excluded_upper_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(upper({{}}{}) = ${{}})",
-                            pg_type_kind.format_argument()
-                        )
-                    })
-                };
-                let gen_greater_than_included_lower_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(lower({{}}{}) > ${{}})",
-                            pg_type_kind.format_argument()
-                        )
-                    })
-                };
-                let gen_greater_than_excluded_upper_bound_ts = |pg_type_ptrn: &PgTypePtrn| {
-                    gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
-                        format!(
-                            "{{}}(upper({{}}{}) > ${{}})",
-                            pg_type_kind.format_argument()
-                        )
-                    })
-                };
+                let gen_range_bound_cmp_flt_ts =
+                    |pg_type_ptrn: &PgTypePtrn, bound_fn: &str, oprtr: &str| {
+                        gen_cmp_flt_ts(pg_type_ptrn, &|pg_type_kind: &PgTypeKind| {
+                            format!(
+                                "{{}}({bound_fn}({{}}{}) {oprtr} ${{}})",
+                                pg_type_kind.format_argument()
+                            )
+                        })
+                    };
                 let gen_range_len_ts = |pg_type_ptrn: &PgTypePtrn| {
                     let (
                         mb_dims_dcl_ts,
@@ -977,29 +924,41 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     PgTypeFlt::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
                     PgTypeFlt::Before { .. } => gen_before_ts(&pg_type_ptrn_stdrt),
                     PgTypeFlt::DimOneBefore { .. } => gen_before_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFlt::CrntDate => gen_crnt_date_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFlt::DimOneCrntDate => gen_crnt_date_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::CrntDate => {
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"= current_date")
+                    }
+                    PgTypeFlt::DimOneCrntDate => {
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_arr_dim1, &"= current_date")
+                    }
                     PgTypeFlt::GreaterThanCrntDate => {
-                        gen_greater_than_crnt_date_ts(&pg_type_ptrn_stdrt)
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"> current_date")
                     }
                     PgTypeFlt::DimOneGreaterThanCrntDate => {
-                        gen_greater_than_crnt_date_ts(&pg_type_ptrn_arr_dim1)
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_arr_dim1, &"> current_date")
                     }
-                    PgTypeFlt::CrntTimestamp => gen_crnt_timestamp_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFlt::DimOneCrntTimestamp => gen_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::CrntTimestamp => {
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"= current_timestamp")
+                    }
+                    PgTypeFlt::DimOneCrntTimestamp => {
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_arr_dim1, &"= current_timestamp")
+                    }
                     PgTypeFlt::GreaterThanCrntTimestamp => {
-                        gen_greater_than_crnt_timestamp_ts(&pg_type_ptrn_stdrt)
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"> current_timestamp")
                     }
                     PgTypeFlt::DimOneGreaterThanCrntTimestamp => {
-                        gen_greater_than_crnt_timestamp_ts(&pg_type_ptrn_arr_dim1)
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_arr_dim1, &"> current_timestamp")
                     }
-                    PgTypeFlt::CrntTime => gen_crnt_time_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFlt::DimOneCrntTime => gen_crnt_time_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::CrntTime => {
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"= current_time")
+                    }
+                    PgTypeFlt::DimOneCrntTime => {
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_arr_dim1, &"= current_time")
+                    }
                     PgTypeFlt::GreaterThanCrntTime => {
-                        gen_greater_than_crnt_time_ts(&pg_type_ptrn_stdrt)
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"> current_time")
                     }
                     PgTypeFlt::DimOneGreaterThanCrntTime => {
-                        gen_greater_than_crnt_time_ts(&pg_type_ptrn_arr_dim1)
+                        gen_pg_syntax_flt_ts(&pg_type_ptrn_arr_dim1, &"> current_time")
                     }
                     PgTypeFlt::DimOneLenEq => gen_len_flt_pattern_ts(&"="),
                     PgTypeFlt::DimOneLenGreaterThan => gen_len_flt_pattern_ts(&">"),
@@ -1010,66 +969,64 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         gen_eq_to_encoded_string_representation_ts(&pg_type_ptrn_arr_dim1)
                     }
                     PgTypeFlt::FindRangesWithinGivenRange { .. } => {
-                        gen_find_ranges_within_given_range_ts(&pg_type_ptrn_stdrt)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"<@")
                     }
                     PgTypeFlt::DimOneFindRangesWithinGivenRange { .. } => {
-                        gen_find_ranges_within_given_range_ts(&pg_type_ptrn_arr_dim1)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"<@")
                     }
                     PgTypeFlt::FindRangesThatFullyContainTheGivenRange { .. } => {
-                        gen_find_ranges_that_fully_contain_the_given_range_ts(&pg_type_ptrn_stdrt)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"@>")
                     }
                     PgTypeFlt::DimOneFindRangesThatFullyContainTheGivenRange { .. } => {
-                        gen_find_ranges_that_fully_contain_the_given_range_ts(
-                            &pg_type_ptrn_arr_dim1,
-                        )
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"@>")
                     }
                     PgTypeFlt::StrictlyToLeftOfRange { .. } => {
-                        gen_strictly_to_left_of_range_ts(&pg_type_ptrn_stdrt)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"&<")
                     }
                     PgTypeFlt::DimOneStrictlyToLeftOfRange { .. } => {
-                        gen_strictly_to_left_of_range_ts(&pg_type_ptrn_arr_dim1)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"&<")
                     }
                     PgTypeFlt::StrictlyToRightOfRange { .. } => {
-                        gen_strictly_to_right_of_range_ts(&pg_type_ptrn_stdrt)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"&>")
                     }
                     PgTypeFlt::DimOneStrictlyToRightOfRange { .. } => {
-                        gen_strictly_to_right_of_range_ts(&pg_type_ptrn_arr_dim1)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"&>")
                     }
                     PgTypeFlt::IncludedLowerBound { .. } => {
-                        gen_included_lower_bound_ts(&pg_type_ptrn_stdrt)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_stdrt, "lower", "=")
                     }
                     PgTypeFlt::DimOneIncludedLowerBound { .. } => {
-                        gen_included_lower_bound_ts(&pg_type_ptrn_arr_dim1)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_arr_dim1, "lower", "=")
                     }
                     PgTypeFlt::ExcludedUpperBound { .. } => {
-                        gen_excluded_upper_bound_ts(&pg_type_ptrn_stdrt)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_stdrt, "upper", "=")
                     }
                     PgTypeFlt::DimOneExcludedUpperBound { .. } => {
-                        gen_excluded_upper_bound_ts(&pg_type_ptrn_arr_dim1)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_arr_dim1, "upper", "=")
                     }
                     PgTypeFlt::GreaterThanIncludedLowerBound { .. } => {
-                        gen_greater_than_included_lower_bound_ts(&pg_type_ptrn_stdrt)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_stdrt, "lower", ">")
                     }
                     PgTypeFlt::DimOneGreaterThanIncludedLowerBound { .. } => {
-                        gen_greater_than_included_lower_bound_ts(&pg_type_ptrn_arr_dim1)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_arr_dim1, "lower", ">")
                     }
                     PgTypeFlt::GreaterThanExcludedUpperBound { .. } => {
-                        gen_greater_than_excluded_upper_bound_ts(&pg_type_ptrn_stdrt)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_stdrt, "upper", ">")
                     }
                     PgTypeFlt::DimOneGreaterThanExcludedUpperBound { .. } => {
-                        gen_greater_than_excluded_upper_bound_ts(&pg_type_ptrn_arr_dim1)
+                        gen_range_bound_cmp_flt_ts(&pg_type_ptrn_arr_dim1, "upper", ">")
                     }
                     PgTypeFlt::OverlapWithRange { .. } => {
-                        gen_overlap_with_range_ts(&pg_type_ptrn_stdrt)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"&&")
                     }
                     PgTypeFlt::DimOneOverlapWithRange { .. } => {
-                        gen_overlap_with_range_ts(&pg_type_ptrn_arr_dim1)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"&&")
                     }
                     PgTypeFlt::AdjacentWithRange { .. } => {
-                        gen_adjacent_with_range_ts(&pg_type_ptrn_stdrt)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"-|-")
                     }
                     PgTypeFlt::DimOneAdjacentWithRange { .. } => {
-                        gen_adjacent_with_range_ts(&pg_type_ptrn_arr_dim1)
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"-|-")
                     }
                     PgTypeFlt::RangeLen => gen_range_len_ts(&pg_type_ptrn_stdrt),
                     PgTypeFlt::DimOneRangeLen => gen_range_len_ts(&pg_type_ptrn_arr_dim1),
