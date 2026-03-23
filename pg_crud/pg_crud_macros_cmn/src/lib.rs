@@ -44,6 +44,23 @@ use token_patterns::{
     PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall, PgCrudCmnDfltSomeOneElMaxPageSize,
     PgCrudDfltSomeOneEl, PgCrudDfltSomeOneElMaxPageSize, RefStr, StdFmtDisplay, StringTs, U64,
 };
+macro_rules! bool_enum_to_tokens {
+    ($name:ident, false => $false_expr:expr, true => $true_expr:expr) => {
+        #[derive(Debug, Clone, Copy, Optml)]
+        pub enum $name {
+            False,
+            True,
+        }
+        impl ToTokens for $name {
+            fn to_tokens(&self, tokens: &mut Ts2) {
+                match &self {
+                    Self::False => ($false_expr).to_tokens(tokens),
+                    Self::True => ($true_expr).to_tokens(tokens),
+                }
+            }
+        }
+    };
+}
 #[derive(Debug, Clone, Optml)]
 pub enum DeriveOrImpl {
     Derive,
@@ -171,203 +188,21 @@ impl ToTokens for Import {
             .to_tokens(tokens);
     }
 }
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum ShouldDSchemarsJsonSchema {
-    False,
-    True,
-}
-impl ToTokens for ShouldDSchemarsJsonSchema {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => quote! {, schemars::JsonSchema}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum ShouldDeriveUtoipaToSchema {
-    False,
-    True,
-}
-impl ToTokens for ShouldDeriveUtoipaToSchema {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => quote! {, utoipa::ToSchema}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsCrQbMut {
-    False,
-    True,
-}
-impl ToTokens for IsCrQbMut {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => MutSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelQpSelfSelUsed {
-    False,
-    True,
-}
-impl ToTokens for IsSelQpSelfSelUsed {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => VSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelQpColFieldForErMsgUsed {
-    False,
-    True,
-}
-impl ToTokens for IsSelQpColFieldForErMsgUsed {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => {
-                ColFieldForErMsgSc.to_tokens(tokens);
-            }
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelQpIsPgTypeUsed {
-    False,
-    True,
-}
-impl ToTokens for IsSelQpIsPgTypeUsed {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => quote! {is_pg_type}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsUpdQpSelfUpdUsed {
-    False,
-    True,
-}
-impl ToTokens for IsUpdQpSelfUpdUsed {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => VSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsUpdQpJsonbSetTargetUsed {
-    False,
-    True,
-}
-impl ToTokens for IsUpdQpJsonbSetTargetUsed {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {_}.to_tokens(tokens),
-            Self::True => JsonbSetTargetSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsUpdQbMut {
-    False,
-    True,
-}
-impl ToTokens for IsUpdQbMut {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => MutSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelOnlyUpddIdsQbMut {
-    False,
-    True,
-}
-impl ToTokens for IsSelOnlyUpddIdsQbMut {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => MutSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsSelOnlyCrdIdsQbMut {
-    False,
-    True,
-}
-impl ToTokens for IsSelOnlyCrdIdsQbMut {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => MutSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsQbMut {
-    False,
-    True,
-}
-impl ToTokens for IsQbMut {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => Ts2::new().to_tokens(tokens),
-            Self::True => MutSc.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IncrPrmUndrscr {
-    False,
-    True,
-}
-impl ToTokens for IncrPrmUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => IncrSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum ColPrmUndrscr {
-    False,
-    True,
-}
-impl ToTokens for ColPrmUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => ColSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum AddOprtrUndrscr {
-    False,
-    True,
-}
-impl ToTokens for AddOprtrUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => AddOprtrSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
+bool_enum_to_tokens!(AddOprtrUndrscr, false => AddOprtrSc, true => quote! {_});
+bool_enum_to_tokens!(ColPrmUndrscr, false => ColSc, true => quote! {_});
+bool_enum_to_tokens!(IncrPrmUndrscr, false => IncrSc, true => quote! {_});
+bool_enum_to_tokens!(IsCrQbMut, false => Ts2::new(), true => MutSc);
+bool_enum_to_tokens!(IsQbMut, false => Ts2::new(), true => MutSc);
+bool_enum_to_tokens!(IsSelOnlyCrdIdsQbMut, false => Ts2::new(), true => MutSc);
+bool_enum_to_tokens!(IsSelOnlyUpddIdsQbMut, false => Ts2::new(), true => MutSc);
+bool_enum_to_tokens!(IsSelQpColFieldForErMsgUsed, false => quote! {_}, true => ColFieldForErMsgSc);
+bool_enum_to_tokens!(IsSelQpIsPgTypeUsed, false => quote! {_}, true => quote! {is_pg_type});
+bool_enum_to_tokens!(IsSelQpSelfSelUsed, false => quote! {_}, true => VSc);
+bool_enum_to_tokens!(IsUpdQbMut, false => Ts2::new(), true => MutSc);
+bool_enum_to_tokens!(IsUpdQpJsonbSetTargetUsed, false => quote! {_}, true => JsonbSetTargetSc);
+bool_enum_to_tokens!(IsUpdQpSelfUpdUsed, false => quote! {_}, true => VSc);
+bool_enum_to_tokens!(ShouldDSchemarsJsonSchema, false => Ts2::new(), true => quote! {, schemars::JsonSchema});
+bool_enum_to_tokens!(ShouldDeriveUtoipaToSchema, false => Ts2::new(), true => quote! {, utoipa::ToSchema});
 #[derive(Debug, Clone, Copy, Optml)]
 pub enum RdOrUpd {
     Rd,
@@ -382,19 +217,7 @@ impl RdOrUpd {
         }
     }
 }
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum IsPkUndrscr {
-    False,
-    True,
-}
-impl ToTokens for IsPkUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => IsPkSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
+bool_enum_to_tokens!(IsPkUndrscr, false => IsPkSc, true => quote! {_});
 #[derive(Debug, Clone, Copy, Optml)]
 pub enum PgTypeOrPgJson {
     PgJson,
@@ -465,110 +288,14 @@ impl From<&Dim> for DimIndexNbr {
         }
     }
 }
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum CrQpValueUndrscr {
-    False,
-    True,
-}
-impl ToTokens for CrQpValueUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => VSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum CrQpIncrUndrscr {
-    False,
-    True,
-}
-impl ToTokens for CrQpIncrUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => IncrSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum CrQbValueUndrscr {
-    False,
-    True,
-}
-impl ToTokens for CrQbValueUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => VSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum SelQpValueUndrscr {
-    False,
-    True,
-}
-impl ToTokens for SelQpValueUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => VSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdQpValueUndrscr {
-    False,
-    True,
-}
-impl ToTokens for UpdQpValueUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => VSc.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdQpJsonbSetAccumulatorUndrscr {
-    False,
-    True,
-}
-impl ToTokens for UpdQpJsonbSetAccumulatorUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {jsonb_set_accumulator}.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdQpJsonbSetTargetUndrscr {
-    False,
-    True,
-}
-impl ToTokens for UpdQpJsonbSetTargetUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {jsonb_set_target}.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone, Copy, Optml)]
-pub enum UpdQpJsonbSetPathUndrscr {
-    False,
-    True,
-}
-impl ToTokens for UpdQpJsonbSetPathUndrscr {
-    fn to_tokens(&self, tokens: &mut Ts2) {
-        match &self {
-            Self::False => quote! {jsonb_set_path}.to_tokens(tokens),
-            Self::True => quote! {_}.to_tokens(tokens),
-        }
-    }
-}
+bool_enum_to_tokens!(CrQbValueUndrscr, false => VSc, true => quote! {_});
+bool_enum_to_tokens!(CrQpIncrUndrscr, false => IncrSc, true => quote! {_});
+bool_enum_to_tokens!(CrQpValueUndrscr, false => VSc, true => quote! {_});
+bool_enum_to_tokens!(SelQpValueUndrscr, false => VSc, true => quote! {_});
+bool_enum_to_tokens!(UpdQpJsonbSetAccumulatorUndrscr, false => quote! {jsonb_set_accumulator}, true => quote! {_});
+bool_enum_to_tokens!(UpdQpJsonbSetPathUndrscr, false => quote! {jsonb_set_path}, true => quote! {_});
+bool_enum_to_tokens!(UpdQpJsonbSetTargetUndrscr, false => quote! {jsonb_set_target}, true => quote! {_});
+bool_enum_to_tokens!(UpdQpValueUndrscr, false => VSc, true => quote! {_});
 pub fn gen_pg_type_wh_ts(
     attrs_ts: &dyn ToTokens,
     vrts: &Vec<&dyn PgFlt>,
