@@ -3489,7 +3489,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     };
                                     gen_if_write_is_err_ts(
                                         &quote!{
-                                            acc_2912b128,
+                                            acc,
                                             #dq_ts0,
                                             match #ft_as_pg_json_ts::#SelOnlyIdsQpSc(#ts) {
                                                 Ok(v_2317e0af) => v_2317e0af,
@@ -3501,12 +3501,12 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         &return_err_qp_er_write_into_buffer_ts
                                     )
                                 });
-                                let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{acc_2912b128}"));
+                                let dq_ts0 = dq_ts(&gen_jsonb_build_obj_v(&"{acc}"));
                                 quote! {{
-                                    let mut acc_2912b128 = #StringTs::default();
+                                    let mut acc = #StringTs::default();
                                     #(#acc_push_ts)*
-                                    let _: Option<char> = acc_2912b128.pop();
-                                    let _: Option<char> = acc_2912b128.pop();
+                                    let _: Option<char> = acc.pop();
+                                    let _: Option<char> = acc.pop();
                                     format!(#dq_ts0)
                                 }}
                             };
