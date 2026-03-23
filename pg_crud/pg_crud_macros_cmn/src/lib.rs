@@ -1174,12 +1174,13 @@ pub fn gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts(
         PgTypeOrPgJson::PgJson,
     )
 }
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_ts(
+fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
     import: Import,
-    name_ts: &dyn ToTokens,
+    dim: Dim,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
+    let name_ts = dim.rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_sc();
     quote! {
         fn #name_ts(
             #RdIdsSc: #path_ts::#RdIdsUcc,
@@ -1188,54 +1189,6 @@ fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_ts(
             #ts
         }
     }
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_ts(
-        import,
-        &RdIdsAndCrIntoPgJsonOptVecWhDimOneEqSc,
-        &path_ts,
-        &ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_ts(
-        import,
-        &RdIdsAndCrIntoPgJsonOptVecWhDimTwoEqSc,
-        &path_ts,
-        &ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_ts(
-        import,
-        &RdIdsAndCrIntoPgJsonOptVecWhDimThreeEqSc,
-        &path_ts,
-        &ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_nbr_eq_ts(
-        import,
-        &RdIdsAndCrIntoPgJsonOptVecWhDimFourEqSc,
-        &path_ts,
-        &ts,
-    )
 }
 fn gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
     import: Import,
@@ -1493,32 +1446,36 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd =
         cr_into_pg_json_opt_vec_wh_dim_one_eq_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
                 *import,
+                Dim::One,
                 &self_pg_type_as_pg_type_ts,
                 ts,
             )
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd =
         cr_into_pg_json_opt_vec_wh_dim_two_eq_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
                 *import,
+                Dim::Two,
                 &self_pg_type_as_pg_type_ts,
                 ts,
             )
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd =
         cr_into_pg_json_opt_vec_wh_dim_three_eq_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
                 *import,
+                Dim::Three,
                 &self_pg_type_as_pg_type_ts,
                 ts,
             )
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd =
         cr_into_pg_json_opt_vec_wh_dim_four_eq_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
                 *import,
+                Dim::Four,
                 &self_pg_type_as_pg_type_ts,
                 ts,
             )
@@ -1720,27 +1677,31 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_one_eq_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
             *import,
+            Dim::One,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_one_eq_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_two_eq_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
             *import,
+            Dim::Two,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_two_eq_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_three_eq_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
             *import,
+            Dim::Three,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_dim_three_eq_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts_gnrtd =
         opt_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_four_eq_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
                 *import,
+                Dim::Four,
                 &self_pg_json_as_pg_json_ts,
                 ts,
             )
