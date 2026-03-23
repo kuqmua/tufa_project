@@ -3,9 +3,8 @@ use macros_helpers::{
     AttrIdentStr, DClone, DCopy, DTsBuilder, FormatWithCargofmt, LocFieldAttr,
     ShouldWriteTsIntoFile, StatusCode, SynField, gen_field_loc_new_ts,
     gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_pub_try_new_for_ident_ts, gen_impl_to_err_string_ts,
-    gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct, get_macro_attr_meta_list_ts,
-    loc_syn_field, mb_write_ts_into_file,
+    gen_impl_pub_try_new_for_ident_ts, gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct,
+    get_macro_attr_meta_list_ts, loc_syn_field, mb_write_ts_into_file,
 };
 use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
@@ -54,9 +53,10 @@ use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
     er_enum_d_ts_builder, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
-    gen_impl_pg_crud_dflt_some_one_el_ts, gen_opt_type_dcl_ts, gen_qp_er_write_into_buffer_ts,
-    gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
-    impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
+    gen_impl_pg_crud_dflt_some_one_el_ts, gen_impl_to_err_string_no_generics_ts,
+    gen_opt_type_dcl_ts, gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts,
+    gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts,
+    mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -1398,12 +1398,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
             &Ts2::new(),
             &quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|el_2636212f|format!("cannot serialize into json: {el_2636212f:?}")))},
         );
-        let impl_loc_lib_to_err_string_for_ident_sel_ts = gen_impl_to_err_string_ts(
-            &Ts2::new(),
-            &ident_sel_ucc,
-            &Ts2::new(),
-            &quote! {format!("{self}")},
-        );
+        let impl_loc_lib_to_err_string_for_ident_sel_ts =
+            gen_impl_to_err_string_no_generics_ts(&ident_sel_ucc, &quote! {format!("{self}")});
         let impl_pg_crud_all_vrts_dflt_some_one_el_for_ident_sel_ts =
             gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts(&ident_sel_ucc, &{
                 let els_ts = gen_fields_named_with_comma_ts(&|el: &SynField| {

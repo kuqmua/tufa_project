@@ -2,8 +2,7 @@ use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
     DCopy, DSchemarsJsonSchema, DTsBuilder, FormatWithCargofmt, ShouldWriteTsIntoFile,
-    gen_impl_display_ts, gen_impl_from_ts, gen_impl_to_err_string_ts, gen_pub_const_new_ts,
-    gen_pub_new_ts, mb_write_ts_into_file,
+    gen_impl_from_ts, gen_pub_const_new_ts, gen_pub_new_ts, mb_write_ts_into_file,
 };
 use naming::{
     ArrOfUcc, AsUcc, BooleanUcc, ColFieldSc, CrForQueryUcc, CrSc, EqUcc, ErSc, GenPgJsonModSc,
@@ -22,12 +21,12 @@ use pg_crud_macros_cmn::{
     IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed, IsSelQpIsPgTypeUsed,
     IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, PgFlt, PgJsonFlt, RdOrUpd,
     ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
-    gen_impl_crate_is_string_empty_for_ident_ts,
+    gen_impl_crate_is_string_empty_for_ident_ts, gen_impl_display_and_to_err_string_debug_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
-    gen_impl_pg_json_ts, gen_impl_sqlx_type_and_encode_for_ident_ts, gen_opt_type_dcl_ts,
-    gen_pg_type_wh_ts, gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts,
-    gen_vec_tokens_dcl_ts,
+    gen_impl_pg_json_ts, gen_impl_sqlx_type_and_encode_for_ident_ts,
+    gen_impl_to_err_string_no_generics_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
+    gen_sqlx_types_json_type_dcl_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
 };
 use pg_crud_macros_cmn::{gen_case_jsonb_typeof_null, gen_jsonb_build_obj, gen_jsonb_build_obj_v};
 use proc_macro2::TokenStream as Ts2;
@@ -754,8 +753,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
             } else {
                 Ts2::new()
             };
-            let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_loc_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {format!("{self:#?}")});
+            let impl_display_and_to_err_string_for_ident_orgn_ts = gen_impl_display_and_to_err_string_debug_ts(&ident_orgn_ucc);
             let some_dflt_some_one_el_call_ts = quote! {Some(#PgCrudCmnDfltSomeOneElCall)};
             let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let content_ts = match &pattern {
@@ -782,8 +780,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 #impl_from_ident_upd_for_ident_orgn_ts
                 #mb_impl_schemars_json_schema_for_ident_orgn_ts
                 #mb_impl_is_string_empty_for_ident_orgn_ts
-                #impl_display_for_ident_orgn_ts
-                #impl_loc_lib_to_err_string_for_ident_orgn_ts
+                #impl_display_and_to_err_string_for_ident_orgn_ts
                 #impl_dflt_some_one_el_for_ident_orgn_ts
                 #impl_sqlx_type_and_encode_for_ident_orgn_ts
             }
@@ -1129,7 +1126,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         let ident_upd_ts = {
             let cmn_ts = gen_cr_or_upd_cmn_ts(&ident_upd_ucc);
             let impl_loc_lib_to_err_string_for_ident_upd_ts = if matches!(&is_stdrt_nn_uuid, IsStdrtNnUuid::True) {
-                gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {format!("{self:?}")})
+                gen_impl_to_err_string_no_generics_ts(&ident_upd_ucc, &quote! {format!("{self:?}")})
             } else {
                 Ts2::new()
             };

@@ -4,8 +4,8 @@ use macros_helpers::gen_impl_try_from_ts;
 use macros_helpers::{
     DCopy, DDefault, DEq, DOrd, DPartialOrd, DSerdeDeserialize, DSerdeSerialize, DTsBuilder,
     FormatWithCargofmt, ShouldWriteTsIntoFile, gen_const_new_ts, gen_if_write_is_err_ts,
-    gen_impl_display_ts, gen_impl_from_ts, gen_impl_to_err_string_ts, gen_new_ts,
-    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, mb_write_ts_into_file,
+    gen_impl_display_ts, gen_impl_from_ts, gen_new_ts, gen_pub_const_new_ts, gen_pub_new_ts,
+    gen_pub_try_new_ts, mb_write_ts_into_file,
 };
 use naming::{
     ArrOfUcc, AsUcc, ColSc, ContainsNullByteUcc, CrSc, DateNaiveSc, DateNaiveUcc, DateSc, DateUcc,
@@ -42,9 +42,9 @@ use pg_crud_macros_cmn::{
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
     gen_impl_sqlx_decode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_and_encode_for_ident_ts,
-    gen_impl_sqlx_type_for_ident_ts, gen_opt_type_dcl_ts, gen_pg_type_wh_ts,
-    gen_return_err_qp_er_write_into_buffer_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
-    impl_pg_type_eq_oprtr_for_ident_ts, impl_pg_type_wh_flt_for_ident_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_impl_to_err_string_no_generics_ts, gen_opt_type_dcl_ts,
+    gen_pg_type_wh_ts, gen_return_err_qp_er_write_into_buffer_ts, gen_v_init_ts,
+    gen_vec_tokens_dcl_ts, impl_pg_type_eq_oprtr_for_ident_ts, impl_pg_type_wh_flt_for_ident_ts,
     serde_er_enum_d_ts_builder,
 };
 use proc_macro2::TokenStream as Ts2;
@@ -2973,7 +2973,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                 Ts2::new()
             };
             let impl_display_for_ident_orgn_ts = gen_impl_display_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {write!(f, "{self:?}")});
-            let impl_loc_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_orgn_ucc, &Ts2::new(), &quote! {self.to_string()});
+            let impl_loc_lib_to_err_string_for_ident_orgn_ts = gen_impl_to_err_string_no_generics_ts(&ident_orgn_ucc, &quote! {self.to_string()});
             let some_dflt_some_one_el_call_ts = quote! {Some(#PgCrudCmnDfltSomeOneElCall)};
             let impl_dflt_some_one_el_for_ident_orgn_ts = gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_orgn_ucc, &{
                 let ts = match &pg_type_pattern {
@@ -3655,7 +3655,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     )
             };
             let impl_ident_rd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_rd_ucc);
-            let impl_loc_lib_to_err_string_for_ident_rd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_rd_ucc, &Ts2::new(), &quote! {self.0.to_string()});
+            let impl_loc_lib_to_err_string_for_ident_rd_ts = gen_impl_to_err_string_no_generics_ts(&ident_rd_ucc, &quote! {self.0.to_string()});
             let impl_crate_dflt_some_one_el_for_ident_rd_ts =
                 gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_rd_ucc, &self_dflt_some_one_el_call_ts);
             let impl_sqlx_type_and_encode_for_ident_rd_ts = gen_impl_sqlx_type_and_encode_for_ident_ts(&ident_rd_ucc, &ident_orgn_ucc, &sqlx_encode_self_dot_zero_ts);
@@ -3731,7 +3731,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             let impl_ident_upd_ts = gen_pub_const_new_or_pub_try_new_ts(&ident_upd_ucc);
             let impl_dflt_some_one_el_for_ident_upd_ts =
                 gen_impl_pg_crud_cmn_dflt_some_one_el_ts(&ident_upd_ucc, &self_dflt_some_one_el_call_ts);
-            let impl_loc_lib_to_err_string_for_ident_upd_ts = gen_impl_to_err_string_ts(&Ts2::new(), &ident_upd_ucc, &Ts2::new(), &quote! {self.0.#ToErrStringSc()});
+            let impl_loc_lib_to_err_string_for_ident_upd_ts = gen_impl_to_err_string_no_generics_ts(&ident_upd_ucc, &quote! {self.0.#ToErrStringSc()});
             quote! {
                 #ident_upd_ts
                 #impl_ident_upd_ts

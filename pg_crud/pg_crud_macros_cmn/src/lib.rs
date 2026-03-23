@@ -3,6 +3,7 @@ use enum_extension_lib::EnumExtension;
 pub use flts::*;
 use gen_quotes::dq_ts;
 use macros_helpers::DTsBuilder;
+use macros_helpers::gen_impl_display_ts;
 use macros_helpers::gen_impl_to_err_string_ts;
 use naming::prm::{SelfCrUcc, SelfSelUcc, SelfWhUcc};
 use naming::{
@@ -637,12 +638,8 @@ pub fn gen_pg_type_wh_ts(
         },
         &Import::PgCrudCmn,
     );
-    let impl_loc_lib_to_err_string_for_pg_type_tokens_wh_ts = gen_impl_to_err_string_ts(
-        &Ts2::new(),
-        &ident,
-        &Ts2::new(),
-        &quote! {format!("{self:#?}")},
-    );
+    let impl_loc_lib_to_err_string_for_pg_type_tokens_wh_ts =
+        gen_impl_to_err_string_no_generics_ts(&ident, &quote! {format!("{self:#?}")});
     let impl_all_vrts_dflt_some_one_el_for_pg_type_tokens_wh_ts =
         gen_impl_pg_crud_cmn_all_vrts_dflt_some_one_el_ts(&ident, &{
             let vrts_ts = vrts.iter().map(|el| {
@@ -656,6 +653,23 @@ pub fn gen_pg_type_wh_ts(
         #impl_pg_type_pg_type_wh_flt_for_pg_type_tokens_wh_ts
         #impl_loc_lib_to_err_string_for_pg_type_tokens_wh_ts
         #impl_all_vrts_dflt_some_one_el_for_pg_type_tokens_wh_ts
+    }
+}
+pub fn gen_impl_to_err_string_no_generics_ts(ident: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
+    gen_impl_to_err_string_ts(&Ts2::new(), ident, &Ts2::new(), ts)
+}
+pub fn gen_impl_display_and_to_err_string_debug_ts(ident: &dyn ToTokens) -> Ts2 {
+    let impl_display_ts = gen_impl_display_ts(
+        &Ts2::new(),
+        ident,
+        &Ts2::new(),
+        &quote! {write!(f, "{self:?}")},
+    );
+    let impl_to_err_string_ts =
+        gen_impl_to_err_string_no_generics_ts(ident, &quote! {format!("{self:#?}")});
+    quote! {
+        #impl_display_ts
+        #impl_to_err_string_ts
     }
 }
 #[must_use]

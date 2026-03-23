@@ -5,10 +5,10 @@ use cfg::{GenPgJsonsConfig, Pattern, PgJsonObjRecord, TraitGen};
 use gen_quotes::dq_ts;
 use macros_helpers::{
     DSerdeDeserialize, DTsBuilder, FormatWithCargofmt, SynField,
-    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_from_ts, gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
-    gen_impl_to_err_string_ts, gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts,
-    gen_pub_type_al_ts, gen_simple_syn_punct, get_macro_attr_meta_list_ts, mb_write_ts_into_file,
+    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_from_ts,
+    gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_pub_const_new_ts,
+    gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_al_ts, gen_simple_syn_punct,
+    get_macro_attr_meta_list_ts, mb_write_ts_into_file,
 };
 use naming::{
     AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColFieldSc, ColSc,
@@ -46,6 +46,7 @@ use pg_crud_macros_cmn::{
     IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr, UpdQpJsonbSetAccumulatorUndrscr,
     UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
     gen_case_jsonb_typeof_null, gen_impl_de_for_struct_ts,
+    gen_impl_display_and_to_err_string_debug_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_max_page_size_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
@@ -53,8 +54,8 @@ use pg_crud_macros_cmn::{
     gen_impl_pg_type_not_pk_for_ident_ts, gen_impl_pg_type_test_cases_for_ident_ts,
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_and_encode_for_ident_ts,
-    gen_impl_sqlx_type_for_ident_ts, gen_jsonb_agg_by_id, gen_jsonb_build_obj,
-    gen_jsonb_build_obj_v, gen_jsonb_set, gen_opt_type_dcl_ts,
+    gen_impl_sqlx_type_for_ident_ts, gen_impl_to_err_string_no_generics_ts, gen_jsonb_agg_by_id,
+    gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set, gen_opt_type_dcl_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sel_arr_pgn_agg,
@@ -472,10 +473,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         | gen_type_as_pg_json_ts(
             &syn_field.type0
         );
-        let gen_gen_impl_loc_lib_to_err_string_w_ts = |ts: &dyn ToTokens| gen_impl_to_err_string_ts(
-            &Ts2::new(),
+        let gen_gen_impl_loc_lib_to_err_string_w_ts = |ts: &dyn ToTokens| gen_impl_to_err_string_no_generics_ts(
             &ts,
-            &Ts2::new(),
             &quote! {format!("{self:?}")}
         );
         let ident_as_pg_json_tt_ts = gen_type_as_pg_json_subtype_ts(&ident, &pg_json_subtype_tt);
@@ -703,28 +702,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
         let gen_type_as_pg_json_cr_for_query_ts = |ts: &dyn ToTokens| gen_type_as_pg_json_subtype_ts(&ts, &pg_json_subtype_cr_for_query);
         let ident_cr_ts = {
             let ident_cr_cmn_ts = gen_ident_tt_or_ident_cr_cmn_ts(&PgJsonSubtypeTtOrCr::Cr);
-            let gen_impl_display_for_ident_cr_ts = |ts: &dyn ToTokens| gen_impl_display_ts(
-                &Ts2::new(),
-                &ts,
-                &Ts2::new(),
-                &quote! {write!(f, "{self:?}")}
-            );
-            let impl_display_for_ident_cr_ts = gen_impl_display_for_ident_cr_ts(&ident_cr_ucc);
-            let impl_loc_lib_to_err_string_for_ident_cr_ts = gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_cr_ucc);
+            let impl_display_and_to_err_string_for_ident_cr_ts = gen_impl_display_and_to_err_string_debug_ts(&ident_cr_ucc);
             let mb_ident_with_id_cr_stdrt_nn_ts = if is_stdrt_nn {
-                let impl_display_for_ident_with_id_cr_stdrt_nn_ts = gen_impl_display_for_ident_cr_ts(&ident_with_id_stdrt_nn_cr_ucc);
-                let impl_loc_lib_to_err_string_for_ident_with_id_cr_stdrt_nn_ts = gen_gen_impl_loc_lib_to_err_string_w_ts(&ident_with_id_stdrt_nn_cr_ucc);
-                quote! {
-                    #impl_display_for_ident_with_id_cr_stdrt_nn_ts
-                    #impl_loc_lib_to_err_string_for_ident_with_id_cr_stdrt_nn_ts
-                }
+                gen_impl_display_and_to_err_string_debug_ts(&ident_with_id_stdrt_nn_cr_ucc)
             } else {
                 Ts2::new()
             };
             quote! {
                 #ident_cr_cmn_ts
-                #impl_display_for_ident_cr_ts
-                #impl_loc_lib_to_err_string_for_ident_cr_ts
+                #impl_display_and_to_err_string_for_ident_cr_ts
                 #mb_ident_with_id_cr_stdrt_nn_ts
             }
         };
