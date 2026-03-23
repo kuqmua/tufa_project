@@ -37,7 +37,7 @@ use pg_crud_macros_cmn::{
     IsCrQbMut, IsNl, IsPkUndrscr, IsQbMut, IsSelOnlyUpddIdsQbMut, IsStdrtNn, IsUpdQbMut, PgFlt,
     PgTypeFlt, RdOrUpd, SelQpValueUndrscr, ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
     UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
-    UpdQpValueUndrscr, gen_impl_crate_is_string_empty_for_ident_ts,
+    UpdQpValueUndrscr, gen_dim_nbr_pgn_ts, gen_impl_crate_is_string_empty_for_ident_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_type_not_pk_for_ident_ts,
     gen_impl_pg_type_test_cases_for_ident_ts, gen_impl_pg_type_ts,
@@ -3257,7 +3257,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                     PgTypePattern::ArrDim1 { .. } => {
                         let mut args_ts = Vec::with_capacity(arr_dims_nbr);
                         for el0 in 1..=arr_dims_nbr {
-                            let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("af86f2d1");
+                            let dim_nbr_pgn_ts = gen_dim_nbr_pgn_ts(el0);
                             args_ts.push(quote! {
                                 #dim_nbr_pgn_ts: pg_types_cmn::PgnStartsWithOne
                             });
@@ -3277,7 +3277,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         };
                         let mut args_ts = Vec::with_capacity(arr_dims_nbr);
                         for el0 in 1..=arr_dims_nbr {
-                            let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("e5250a98");
+                            let dim_nbr_pgn_ts = gen_dim_nbr_pgn_ts(el0);
                             args_ts.push(quote! {
                                 #dim_nbr_pgn_ts: #ts
                             });
@@ -3927,9 +3927,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             });
                             let args_ts = (1..=arr_dims_nbr)
                             .map(|el0| {
-                                let dim_nbr_pgn_ts = format!("dim{el0}_pgn")
-                                .parse::<Ts2>()
-                                .expect("6f2305ee");
+                                let dim_nbr_pgn_ts = gen_dim_nbr_pgn_ts(el0);
                                 quote! {
                                     #VSc.#dim_nbr_pgn_ts.start(),
                                     #VSc.#dim_nbr_pgn_ts.end(),

@@ -20,7 +20,7 @@ use pg_crud_macros_cmn::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, DimIndexNbr, Import, IsNl, IsQbMut,
     IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed, IsSelQpIsPgTypeUsed,
     IsSelQpSelfSelUsed, IsStdrtNn, IsUpdQbMut, PgFlt, PgJsonFlt, RdOrUpd,
-    ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema,
+    ShouldDSchemarsJsonSchema, ShouldDeriveUtoipaToSchema, gen_dim_nbr_pgn_ts,
     gen_impl_crate_is_string_empty_for_ident_ts, gen_impl_display_and_to_err_string_debug_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_cmn_dflt_some_one_el_ts, gen_impl_pg_json_test_cases_for_ident_ts,
@@ -887,8 +887,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         |arr_dim| {
                             let mut args_ts = Vec::with_capacity(arr_dim.to_usize());
                             for el0 in 1..=arr_dim.to_usize() {
-                                let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>()
-                                .expect("2ad1faf7");
+                                let dim_nbr_pgn_ts = gen_dim_nbr_pgn_ts(el0);
                                 args_ts.push(quote! {
                                     #dim_nbr_pgn_ts: #import::PgnStartsWithZero
                                 });
@@ -907,7 +906,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         };
                         let mut args_ts = Vec::with_capacity(arr_dim.to_usize());
                         for el0 in 1..=arr_dim.to_usize() {
-                            let dim_nbr_pgn_ts = format!("dim{el0}_pgn").parse::<Ts2>().expect("26ca29fb");
+                            let dim_nbr_pgn_ts = gen_dim_nbr_pgn_ts(el0);
                             args_ts.push(quote! {
                                 #dim_nbr_pgn_ts: #content_ts
                             });

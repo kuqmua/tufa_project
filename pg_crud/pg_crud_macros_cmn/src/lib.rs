@@ -676,6 +676,12 @@ pub fn gen_impl_display_and_to_err_string_debug_ts(ident: &dyn ToTokens) -> Ts2 
 pub fn pg_crud_cmn_qp_er_ts() -> Ts2 {
     quote! {pg_crud_cmn::#QpErUcc}
 }
+#[must_use]
+pub fn gen_dim_nbr_pgn_ts(dim_nbr: usize) -> Ts2 {
+    format!("dim{dim_nbr}_pgn")
+        .parse::<Ts2>()
+        .expect("7c3a91b2")
+}
 pub fn gen_struct_ident_dq_ts(v: &dyn Display) -> Ts2 {
     dq_ts(&format!("struct {v}"))
 }
