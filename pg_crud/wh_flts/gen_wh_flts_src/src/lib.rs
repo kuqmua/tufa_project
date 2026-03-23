@@ -619,8 +619,6 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         ),
                     )
                 };
-                let gen_before_ts =
-                    |pg_type_ptrn: &PgTypePtrn| gen_oprtr_cmp_flt_ts(pg_type_ptrn, &"<");
                 let gen_pg_syntax_flt_ts = |pg_type_ptrn: &PgTypePtrn, pg_syntax: &dyn Display| {
                     let (
                         mb_dims_dcl_ts,
@@ -922,8 +920,10 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                     PgTypeFlt::DimOneIn { .. } => gen_in_ts(&pg_type_ptrn_arr_dim1),
                     PgTypeFlt::Rgx => gen_rgx_ts(&pg_type_ptrn_stdrt),
                     PgTypeFlt::DimOneRgx => gen_rgx_ts(&pg_type_ptrn_arr_dim1),
-                    PgTypeFlt::Before { .. } => gen_before_ts(&pg_type_ptrn_stdrt),
-                    PgTypeFlt::DimOneBefore { .. } => gen_before_ts(&pg_type_ptrn_arr_dim1),
+                    PgTypeFlt::Before { .. } => gen_oprtr_cmp_flt_ts(&pg_type_ptrn_stdrt, &"<"),
+                    PgTypeFlt::DimOneBefore { .. } => {
+                        gen_oprtr_cmp_flt_ts(&pg_type_ptrn_arr_dim1, &"<")
+                    }
                     PgTypeFlt::CrntDate => {
                         gen_pg_syntax_flt_ts(&pg_type_ptrn_stdrt, &"= current_date")
                     }
