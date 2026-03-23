@@ -1009,26 +1009,17 @@ fn gen_rd_ids_to_2_dims_vec_rd_inn_ts(path_ts: &dyn ToTokens, ts: &dyn ToTokens)
         }
     }
 }
-fn gen_rd_inn_into_rd_with_new_or_try_new_unwraped_ts(
+fn gen_rd_inn_into_rd_or_upd_with_new_or_try_new_unwraped_ts(
+    method_name_ts: &dyn ToTokens,
     type_ts: &dyn ToTokens,
     path_ts: &dyn ToTokens,
+    return_type_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #RdInnIntoRdWithNewOrTryNewUnwrapedSc(
+        fn #method_name_ts(
             #VSc: #type_ts
-        ) -> #path_ts::#RdUcc {
-            #ts
-        }
-    }
-}
-fn gen_rd_inn_into_upd_with_new_or_try_new_unwraped_ts(
-    type_ts: &dyn ToTokens,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    quote! {
-        fn #RdInnIntoUpdWithNewOrTryNewUnwrapedSc(#VSc: #type_ts) -> #path_ts::#UpdUcc {
+        ) -> #path_ts::#return_type_ts {
             #ts
         }
     }
@@ -1190,26 +1181,14 @@ fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_dim_eq_ts(
         }
     }
 }
-fn gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
+fn gen_cr_into_pg_json_opt_vec_wh_len_ts(
+    method_name_ts: &dyn ToTokens,
     import: Import,
     path_ts: &dyn ToTokens,
     ts: &dyn ToTokens,
 ) -> Ts2 {
     quote! {
-        fn #CrIntoPgJsonOptVecWhLenEqSc(
-            #CrSc: #path_ts::#CrUcc
-        ) -> Option<#import::NotEmptyUnqVec<#path_ts::#WhUcc>> {
-            #ts
-        }
-    }
-}
-fn gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    quote! {
-        fn #CrIntoPgJsonOptVecWhLenGreaterThanSc(
+        fn #method_name_ts(
             #CrSc: #path_ts::#CrUcc
         ) -> Option<#import::NotEmptyUnqVec<#path_ts::#WhUcc>> {
             #ts
@@ -1277,15 +1256,19 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         &rd_ids_to_2_dims_vec_rd_inn_ts,
     );
     let rd_inn_into_rd_with_new_or_try_new_unwraped_ts_gnrtd =
-        gen_rd_inn_into_rd_with_new_or_try_new_unwraped_ts(
+        gen_rd_inn_into_rd_or_upd_with_new_or_try_new_unwraped_ts(
+            &RdInnIntoRdWithNewOrTryNewUnwrapedSc,
             &type_ts,
             &self_pg_type_as_pg_type_ts,
+            &RdUcc,
             &rd_inn_into_rd_with_new_or_try_new_unwraped_ts,
         );
     let rd_inn_into_upd_with_new_or_try_new_unwraped_ts_gnrtd =
-        gen_rd_inn_into_upd_with_new_or_try_new_unwraped_ts(
+        gen_rd_inn_into_rd_or_upd_with_new_or_try_new_unwraped_ts(
+            &RdInnIntoUpdWithNewOrTryNewUnwrapedSc,
             &type_ts,
             &self_pg_type_as_pg_type_ts,
+            &UpdUcc,
             &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
         );
     let upd_to_rd_ids_ts_gnrtd =
@@ -1410,11 +1393,17 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd =
         cr_into_pg_json_opt_vec_wh_len_eq_ts.map(|ts| {
-            gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(*import, &self_pg_type_as_pg_type_ts, ts)
+            gen_cr_into_pg_json_opt_vec_wh_len_ts(
+                &CrIntoPgJsonOptVecWhLenEqSc,
+                *import,
+                &self_pg_type_as_pg_type_ts,
+                ts,
+            )
         });
     let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd =
         cr_into_pg_json_opt_vec_wh_len_greater_than_ts.map(|ts| {
-            gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
+            gen_cr_into_pg_json_opt_vec_wh_len_ts(
+                &CrIntoPgJsonOptVecWhLenGreaterThanSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1557,15 +1546,19 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
         &rd_ids_to_2_dims_vec_rd_inn_ts,
     );
     let rd_inn_into_rd_with_new_or_try_new_unwraped_ts_gnrtd =
-        gen_rd_inn_into_rd_with_new_or_try_new_unwraped_ts(
+        gen_rd_inn_into_rd_or_upd_with_new_or_try_new_unwraped_ts(
+            &RdInnIntoRdWithNewOrTryNewUnwrapedSc,
             &type_ts,
             &self_pg_json_as_pg_json_ts,
+            &RdUcc,
             &rd_inn_into_rd_with_new_or_try_new_unwraped_ts,
         );
     let rd_inn_into_upd_with_new_or_try_new_unwraped_ts_gnrtd =
-        gen_rd_inn_into_upd_with_new_or_try_new_unwraped_ts(
+        gen_rd_inn_into_rd_or_upd_with_new_or_try_new_unwraped_ts(
+            &RdInnIntoUpdWithNewOrTryNewUnwrapedSc,
             &type_ts,
             &self_pg_json_as_pg_json_ts,
+            &UpdUcc,
             &rd_inn_into_upd_with_new_or_try_new_unwraped_ts,
         );
     let upd_to_rd_ids_ts_gnrtd =
@@ -1640,13 +1633,15 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
                 ts,
             )
         });
-    let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd = gen_cr_into_pg_json_opt_vec_wh_len_eq_ts(
+    let cr_into_pg_json_opt_vec_wh_len_eq_ts_gnrtd = gen_cr_into_pg_json_opt_vec_wh_len_ts(
+        &CrIntoPgJsonOptVecWhLenEqSc,
         *import,
         &self_pg_json_as_pg_json_ts,
         &cr_into_pg_json_opt_vec_wh_len_eq_ts,
     );
     let cr_into_pg_json_opt_vec_wh_len_greater_than_ts_gnrtd =
-        gen_cr_into_pg_json_opt_vec_wh_len_greater_than_ts(
+        gen_cr_into_pg_json_opt_vec_wh_len_ts(
+            &CrIntoPgJsonOptVecWhLenGreaterThanSc,
             *import,
             &self_pg_json_as_pg_json_ts,
             &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
