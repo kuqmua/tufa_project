@@ -1231,78 +1231,6 @@ fn gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts
         }
     }
 }
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
-        &RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
-        import,
-        path_ts,
-        ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
-        &RdIdsAndCrIntoPgJsonOptVecWhBtwnSc,
-        import,
-        path_ts,
-        ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
-        &RdIdsAndCrIntoPgJsonOptVecWhInSc,
-        import,
-        path_ts,
-        ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
-        &RdIdsAndCrIntoPgJsonOptVecWhRgxSc,
-        import,
-        path_ts,
-        ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
-        &RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
-        import,
-        path_ts,
-        ts,
-    )
-}
-fn gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
-    import: Import,
-    path_ts: &dyn ToTokens,
-    ts: &dyn ToTokens,
-) -> Ts2 {
-    gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
-        &RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc,
-        import,
-        path_ts,
-        ts,
-    )
-}
 pub fn gen_impl_pg_type_test_cases_for_ident_ts(
     cfg_ts: &dyn ToTokens,
     import: &Import,
@@ -1494,7 +1422,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd =
         rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1502,7 +1431,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd =
         rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhBtwnSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1510,7 +1440,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd =
         rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhInSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1518,7 +1449,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd =
         rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhRgxSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1526,7 +1458,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd =
         rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1534,7 +1467,8 @@ pub fn gen_impl_pg_type_test_cases_for_ident_ts(
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd =
         rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc,
                 *import,
                 &self_pg_type_as_pg_type_ts,
                 ts,
@@ -1718,40 +1652,46 @@ pub fn gen_impl_pg_json_test_cases_for_ident_ts(
             &cr_into_pg_json_opt_vec_wh_len_greater_than_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+            &RdIdsAndCrIntoPgJsonOptVecWhGreaterThanSc,
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_greater_than_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+            &RdIdsAndCrIntoPgJsonOptVecWhBtwnSc,
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_btwn_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+            &RdIdsAndCrIntoPgJsonOptVecWhInSc,
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_in_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts_gnrtd =
         opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_rgx_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhRgxSc,
                 *import,
                 &self_pg_json_as_pg_json_ts,
                 ts,
             )
         });
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts_gnrtd =
-        gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts(
+        gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+            &RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
             *import,
             &self_pg_json_as_pg_json_ts,
             &rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_greater_than_ts,
         );
     let rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts_gnrtd =
         opt_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts.map(|ts| {
-            gen_rd_ids_and_cr_into_pg_json_opt_vec_wh_contains_el_rgx_ts(
+            gen_rd_ids_and_cr_into_pg_json_opt_not_empty_unq_vec_single_or_multiple_wh_ts(
+                &RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc,
                 *import,
                 &self_pg_json_as_pg_json_ts,
                 ts,
