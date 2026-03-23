@@ -11,11 +11,11 @@ use naming::{
     ColFieldSc, ColSc, CrForQueryUcc, CrIntoPgJsonOptVecWhLenEqSc,
     CrIntoPgJsonOptVecWhLenGreaterThanSc, CrIntoPgTypeOptVecWhDimOneEqSc, CrQbSc, CrQpSc, CrSc,
     CrTblColQpSc, CrUcc, DfltSomeOneElMaxPageSizeSc, DfltSomeOneElSc, DisplayPlusToTokens,
-    EqOprtrUcc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc, JsonbSetTargetSc,
-    MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc, PgJsonUcc,
-    PgTypeEqOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhGreaterThanTestSc, PgTypeTestCasesUcc,
-    PgTypeUcc, PgTypeWhFltUcc, PreviousRdAndOptUpdIntoRdSc, QbSc, QpErUcc, QpSc, QuerySc,
-    RdIdsAndCrIntoOptVRdSc, RdIdsAndCrIntoOptVecWhEqToJsonFieldSc,
+    EqOprtrUcc, ErSc, FiSc, IncrSc, IsPkSc, JsonbSetAccumulatorSc, JsonbSetPathSc,
+    JsonbSetTargetSc, MutSc, NormalizeSc, OptUcc, OptUpdSc, OptVecCrSc, PgJsonTestCasesUcc,
+    PgJsonUcc, PgTypeEqOprtrUcc, PgTypeNotPkUcc, PgTypeOptVecWhGreaterThanTestSc,
+    PgTypeTestCasesUcc, PgTypeUcc, PgTypeWhFltUcc, PreviousRdAndOptUpdIntoRdSc, QbSc, QpErUcc,
+    QpSc, QuerySc, RdIdsAndCrIntoOptVRdSc, RdIdsAndCrIntoOptVecWhEqToJsonFieldSc,
     RdIdsAndCrIntoPgJsonOptVecWhBtwnSc, RdIdsAndCrIntoPgJsonOptVecWhContainsElGreaterThanSc,
     RdIdsAndCrIntoPgJsonOptVecWhContainsElRgxSc, RdIdsAndCrIntoPgJsonOptVecWhDimFourEqSc,
     RdIdsAndCrIntoPgJsonOptVecWhDimOneEqSc, RdIdsAndCrIntoPgJsonOptVecWhDimThreeEqSc,
@@ -1931,4 +1931,21 @@ pub fn er_enum_d_ts_builder() -> DTsBuilder {
         .d_debug()
         .d_thiserror_error()
         .d_loc_lib_location()
+}
+#[must_use]
+pub fn gen_match_ok_assign_or_return_err_ts(
+    expr_ts: &dyn ToTokens,
+    assign_target_ts: &dyn ToTokens,
+    ok_v_ts: &dyn ToTokens,
+) -> Ts2 {
+    quote! {
+        match #expr_ts {
+            Ok(#ok_v_ts) => {
+                #assign_target_ts = #ok_v_ts;
+            }
+            Err(#ErSc) => {
+                return Err(#ErSc);
+            }
+        }
+    }
 }

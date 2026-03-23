@@ -54,7 +54,8 @@ use pg_crud_macros_cmn::{
     gen_impl_pg_type_ts, gen_impl_sqlx_decode_sqlx_pg_for_ident_ts,
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_and_encode_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_impl_to_err_string_no_generics_ts, gen_jsonb_agg_by_id,
-    gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set, gen_opt_type_dcl_ts,
+    gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set,
+    gen_match_ok_assign_or_return_err_ts, gen_opt_type_dcl_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sel_arr_pgn_agg,
@@ -3591,21 +3592,21 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let vrt_ident_ucc_ts = AsRefStrToUccTs::case_or_panic(&el0.ident.to_string());
                                 let fi_dq_ts = gen_fi_dq_ts(el0);
                                 let ft_as_crud_pg_json_from_field_ts = gen_ft_as_crud_pg_json_from_field_ts(el0);
-                                quote! {
-                                    #ident_upd_for_query_el_ucc::#vrt_ident_ucc_ts(v_3b3fae4c) => {
-                                        match #ft_as_crud_pg_json_from_field_ts::#UpdQpSc(
+                                {
+                                    let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                        &quote!{#ft_as_crud_pg_json_from_field_ts::#UpdQpSc(
                                             &v_3b3fae4c.#VSc,
                                             &#StdOptOptObjAccSc,
                                             &#GenJsonbSetTargetSc(#fi_dq_ts),
                                             #fi_dq_ts,
                                             #IncrSc,
-                                        ) {
-                                            Ok(v_5edc1648) => {
-                                                #StdOptOptObjAccSc = v_5edc1648;
-                                            }
-                                            Err(#ErSc) => {
-                                                return Err(#ErSc);
-                                            }
+                                        )},
+                                        &StdOptOptObjAccSc,
+                                        &quote!{v_5edc1648},
+                                    );
+                                    quote! {
+                                        #ident_upd_for_query_el_ucc::#vrt_ident_ucc_ts(v_3b3fae4c) => {
+                                            #match_ts
                                         }
                                     }
                                 }
@@ -3674,18 +3675,18 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let ft_as_crud_pg_json_from_field_ts = gen_ft_as_crud_pg_json_from_field_ts(
                                     el0
                                 );
-                                quote! {
-                                    #ident_upd_for_query_el_ucc::#vrt_ident_ucc_ts(v_b27f5b09) => {
-                                        match #ft_as_crud_pg_json_from_field_ts::#UpdQbSc(
+                                {
+                                    let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                        &quote!{#ft_as_crud_pg_json_from_field_ts::#UpdQbSc(
                                             v_b27f5b09.#VSc,
                                             #QuerySc
-                                        ) {
-                                            Ok(v_a4870bad) => {
-                                                #QuerySc = v_a4870bad;
-                                            },
-                                            Err(#ErSc) => {
-                                                return Err(#ErSc);
-                                            }
+                                        )},
+                                        &QuerySc,
+                                        &quote!{v_a4870bad},
+                                    );
+                                    quote! {
+                                        #ident_upd_for_query_el_ucc::#vrt_ident_ucc_ts(v_b27f5b09) => {
+                                            #match_ts
                                         }
                                     }
                                 }
@@ -3715,50 +3716,46 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         }
                     },
                     Pattern::Arr => match &is_nl {
-                        IsNl::False => quote! {
-                            for el in #VSc.#UpdSc.into_vec() {
-                                match #uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
+                        IsNl::False => {
+                            let match_id_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                     el.#IdSc,
                                     #QuerySc
-                                ) {
-                                    Ok(v_7633dc9b) => {
-                                        #QuerySc = v_7633dc9b;
-                                    },
-                                    Err(#ErSc) => {
-                                        return Err(#ErSc);
-                                    }
-                                }
-                                match #ident_stdrt_nn_as_pg_json_ts::upd_qb(
+                                )},
+                                &QuerySc,
+                                &quote!{v_7633dc9b},
+                            );
+                            let match_fields_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#ident_stdrt_nn_as_pg_json_ts::upd_qb(
                                     el.#FieldsSc,
                                     #QuerySc
-                                ) {
-                                    Ok(v_2073f07a) => {
-                                        #QuerySc = v_2073f07a;
-                                    },
-                                    Err(#ErSc) => {
-                                        return Err(#ErSc);
-                                    }
-                                }
-                            }
-                            for el in #VSc.del {
-                                match #uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
+                                )},
+                                &QuerySc,
+                                &quote!{v_2073f07a},
+                            );
+                            let match_del_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
                                     el,
                                     #QuerySc
-                                ) {
-                                    Ok(v_31262d92) => {
-                                        #QuerySc = v_31262d92;
-                                    },
-                                    Err(#ErSc) => {
-                                        return Err(#ErSc);
+                                )},
+                                &QuerySc,
+                                &quote!{v_31262d92},
+                            );
+                            quote! {
+                                for el in #VSc.#UpdSc.into_vec() {
+                                    #match_id_ts
+                                    #match_fields_ts
+                                }
+                                for el in #VSc.del {
+                                    #match_del_ts
+                                }
+                                for el in #VSc.#CrSc {
+                                    if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(el)) {
+                                        return Err(#ErSc.to_string());
                                     }
                                 }
+                                Ok(#QuerySc)
                             }
-                            for el in #VSc.#CrSc {
-                                if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(el)) {
-                                    return Err(#ErSc.to_string());
-                                }
-                            }
-                            Ok(#QuerySc)
                         },
                         IsNl::True => quote! {
                             match #VSc.0 {
@@ -3796,18 +3793,18 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
                                 let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
-                                quote! {
-                                    #ident_stdrt_nn_upd_for_query_el_ucc::#fi_ucc(v_b79c2851) => {
-                                        match #ft_as_pg_json_ts::#SelOnlyUpddIdsQbSc(
+                                {
+                                    let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                        &quote!{#ft_as_pg_json_ts::#SelOnlyUpddIdsQbSc(
                                             &v_b79c2851.#VSc,
                                             #QuerySc
-                                        ) {
-                                            Ok(v_e8914f75) => {
-                                                #QuerySc = v_e8914f75;
-                                            },
-                                            Err(#ErSc) => {
-                                                return Err(#ErSc);
-                                            }
+                                        )},
+                                        &QuerySc,
+                                        &quote!{v_e8914f75},
+                                    );
+                                    quote! {
+                                        #ident_stdrt_nn_upd_for_query_el_ucc::#fi_ucc(v_b79c2851) => {
+                                            #match_ts
                                         }
                                     }
                                 }
@@ -3821,108 +3818,96 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNl::True => quote!{
+                        IsNl::True => {
+                            let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_6334d77d, #QuerySc)},
+                                &QuerySc,
+                                &quote!{v_0bd3ba6f},
+                            );
+                            quote!{
                             if let Some(v_6334d77d) = &#VSc.0 {
-                                match #ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_6334d77d, #QuerySc) {
-                                    Ok(v_0bd3ba6f) => {
-                                        #QuerySc = v_0bd3ba6f;
-                                    },
-                                    Err(#ErSc) => {
-                                        return Err(#ErSc);
-                                    }
-                                }
+                                #match_ts
                             }
                             Ok(#QuerySc)
-                        },
+                        }},
                     },
                     Pattern::Arr => match &is_nl {
                         IsNl::False => {
                             let sel_only_crd_ids_qb_ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQbSc(
+                                gen_match_ok_assign_or_return_err_ts(
+                                    &quote!{#ft_as_pg_json_ts::#SelOnlyCrdIdsQbSc(
                                         &el_5fba4c1f.#fi,
                                         #QuerySc
-                                    ) {
-                                        Ok(v_cb81ec2c) => {
-                                            #QuerySc = v_cb81ec2c;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                    )},
+                                    &QuerySc,
+                                    &quote!{v_cb81ec2c},
+                                )
                             });
+                            {
+                            let match_upd_id_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#import_pg_json_uuid_uuid_as_nn_jsonb_string_as_pg_json_ts::#SelOnlyUpddIdsQbSc(
+                                    &el.#IdSc,
+                                    #QuerySc
+                                )},
+                                &QuerySc,
+                                &quote!{v_0fd735de},
+                            );
+                            let match_upd_fields_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(
+                                    &el.fields,
+                                    #QuerySc
+                                )},
+                                &QuerySc,
+                                &quote!{v_4b52fa4f},
+                            );
+                            let match_upd_qb_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
+                                    el.#IdSc.clone(),
+                                    #QuerySc
+                                )},
+                                &QuerySc,
+                                &quote!{v_b0da764b},
+                            );
+                            let match_cr_qb_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
+                                    el.#IdSc.clone(),
+                                    #QuerySc
+                                )},
+                                &QuerySc,
+                                &quote!{v_dd8932e8},
+                            );
                             quote!{
                                 for el in #VSc.#UpdSc.to_vec() {
-                                    match #import_pg_json_uuid_uuid_as_nn_jsonb_string_as_pg_json_ts::#SelOnlyUpddIdsQbSc(
-                                        &el.#IdSc,
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_0fd735de) => {
-                                            #QuerySc = v_0fd735de;
-                                        },
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                    match #ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(
-                                        &el.fields,
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_4b52fa4f) => {
-                                            #QuerySc = v_4b52fa4f;
-                                        },
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
+                                    #match_upd_id_ts
+                                    #match_upd_fields_ts
                                 }
                                 for el_5fba4c1f in &#VSc.cr {
                                     #(#sel_only_crd_ids_qb_ts)*
                                 }
                                 for el in #VSc.#UpdSc.to_vec() {
-                                    match #uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_upd_for_query(
-                                        el.#IdSc.clone(),
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_b0da764b) => {
-                                            #QuerySc = v_b0da764b;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
+                                    #match_upd_qb_ts
                                 }
                                 for el in &#VSc.#CrSc {
-                                    match #uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
-                                        el.#IdSc.clone(),
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_dd8932e8) => {
-                                            #QuerySc = v_dd8932e8;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
+                                    #match_cr_qb_ts
                                 }
                                 Ok(#QuerySc)
                             }
-                        },
-                        IsNl::True => quote!{
-                            if let Some(v_107e6639) = &#VSc.0 {
-                                match #ident_arr_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_107e6639, #QuerySc) {
-                                    Ok(v_ecf1b8de) => {
-                                        #QuerySc = v_ecf1b8de;
-                                    },
-                                    Err(#ErSc) => {
-                                        return Err(#ErSc);
-                                    }
-                                }
                             }
-                            Ok(#QuerySc)
+                        },
+                        IsNl::True => {
+                            let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#ident_arr_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_107e6639, #QuerySc)},
+                                &QuerySc,
+                                &quote!{v_ecf1b8de},
+                            );
+                            quote!{
+                                if let Some(v_107e6639) = &#VSc.0 {
+                                    #match_ts
+                                }
+                                Ok(#QuerySc)
+                            }
                         },
                     },
                 },
@@ -4177,19 +4162,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             let ts = vec_syn_field.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQbSc(
+                                gen_match_ok_assign_or_return_err_ts(
+                                    &quote!{#ft_as_pg_json_ts::#SelOnlyCrdIdsQbSc(
                                         &#VSc.#fi,
                                         #QuerySc
-                                    ) {
-                                        Ok(v_231618d9) => {
-                                            #QuerySc = v_231618d9;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                    )},
+                                    &QuerySc,
+                                    &quote!{v_231618d9},
+                                )
                             });
                             quote!{
                                 #(#ts)*
@@ -4197,22 +4177,21 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                         },
                         IsNl::True => {
+                            {
+                            let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#ident_stdrt_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(
+                                    v_a1ccd526,
+                                    #QuerySc
+                                )},
+                                &QuerySc,
+                                &quote!{v_70ed6013},
+                            );
                             quote!{
                                 if let Some(v_a1ccd526) = &#VSc.0 {
-                                    match #ident_stdrt_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(
-                                        v_a1ccd526,
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_70ed6013) => {
-                                            #QuerySc = v_70ed6013;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
+                                    #match_ts
                                 }
                                 Ok(#QuerySc)
-                            }
+                            }}
                         },
                     },
                     Pattern::Arr => match &is_nl {
@@ -4220,48 +4199,39 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             let ts = vec_syn_field_with_id.iter().map(|el0| {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQbSc(&el_9bdcd847.#fi, #QuerySc) {
-                                        Ok(v_ade27463) => {
-                                            #QuerySc = v_ade27463;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                gen_match_ok_assign_or_return_err_ts(
+                                    &quote!{#ft_as_pg_json_ts::#SelOnlyCrdIdsQbSc(&el_9bdcd847.#fi, #QuerySc)},
+                                    &QuerySc,
+                                    &quote!{v_ade27463},
+                                )
                             });
+                            let match_cr_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
+                                    el.#IdSc.clone(),
+                                    #QuerySc
+                                )},
+                                &QuerySc,
+                                &quote!{v_a3749ea8},
+                            );
                             quote!{
                                 for el_9bdcd847 in &#VSc.0 {
                                     #(#ts)*
                                 }
                                 for el in &#VSc.0 {
-                                    match #uuid_uuid_as_nn_jsonb_string_as_pg_json_obj_vec_el_id_ts::qb_string_as_pg_text_cr_for_query(
-                                        el.#IdSc.clone(),
-                                        #QuerySc
-                                    ) {
-                                        Ok(v_a3749ea8) => {
-                                            #QuerySc = v_a3749ea8;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
+                                    #match_cr_ts
                                 }
                                 Ok(#QuerySc)
                             }
                         },
                         IsNl::True => {
+                            let match_ts = gen_match_ok_assign_or_return_err_ts(
+                                &quote!{#ident_arr_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(v_0b55a65a, #QuerySc)},
+                                &QuerySc,
+                                &quote!{v_ad6a1ac5},
+                            );
                             quote!{
                                 if let Some(v_0b55a65a) = &#VSc.0 {
-                                    match #ident_arr_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(v_0b55a65a, #QuerySc) {
-                                        Ok(v_ad6a1ac5) => {
-                                            #QuerySc = v_ad6a1ac5;
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
+                                    #match_ts
                                 }
                                 Ok(#QuerySc)
                             }

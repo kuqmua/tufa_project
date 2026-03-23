@@ -11,7 +11,8 @@ use optml::Optml;
 use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFlt, PgTypeFlt,
-    PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, impl_pg_type_wh_flt_for_ident_ts,
+    PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, gen_match_ok_assign_or_return_err_ts,
+    impl_pg_type_wh_flt_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -300,16 +301,11 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
     };
     let pub_v_btwn_t_ts = quote! {pub #VSc: Btwn<T>};
     let gen_match_qb_ts = |field_ts: &dyn ToTokens| {
-        quote! {
-            match #field_ts.qb(#QuerySc) {
-                Ok(v_f6d31bdd) => {
-                    #QuerySc = v_f6d31bdd;
-                },
-                Err(#ErSc) => {
-                    return Err(#ErSc);
-                }
-            }
-        }
+        gen_match_ok_assign_or_return_err_ts(
+            &quote! {#field_ts.qb(#QuerySc)},
+            &QuerySc,
+            &quote! {v_f6d31bdd},
+        )
     };
     let query_self_v_qb_ts = {
         let ts = gen_match_qb_ts(&quote! {#SelfSc.#VSc});
@@ -1293,17 +1289,17 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
                         }
                     },
                     is_qb_mut_true,
-                    quote! {
-                        #mb_dims_qb_ts
-                        match #SelfSc.#VSc.qb_one_by_one(#QuerySc) {
-                            Ok(v_c79b2256) => {
-                                #QuerySc = v_c79b2256;
-                            }
-                            Err(#ErSc) => {
-                                return Err(#ErSc);
-                            }
+                    {
+                        let match_ts = gen_match_ok_assign_or_return_err_ts(
+                            &quote! {#SelfSc.#VSc.qb_one_by_one(#QuerySc)},
+                            &QuerySc,
+                            &quote! {v_c79b2256},
+                        );
+                        quote! {
+                            #mb_dims_qb_ts
+                            #match_ts
+                            Ok(#QuerySc)
                         }
-                        Ok(#QuerySc)
                     },
                 )
             };
