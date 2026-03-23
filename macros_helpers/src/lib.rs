@@ -26,7 +26,7 @@ pub use derive_ts_builder::{
     DUtoipaToSchema, MakePub,
 };
 pub use gen_field_loc_new_ts::gen_field_loc_new_ts;
-pub use gen_if_write_is_err_ts::{gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts};
+pub use gen_if_write_is_err_ts::gen_if_write_is_err_ts;
 pub use gen_impl_dflt_ts::gen_impl_dflt_ts;
 pub use gen_impl_display_ts::gen_impl_display_ts;
 pub use gen_impl_from_ts::gen_impl_from_ts;

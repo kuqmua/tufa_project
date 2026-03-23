@@ -1,10 +1,9 @@
 use gen_quotes::dq_ts;
 use macros_helpers::{
     AttrIdentStr, DClone, DCopy, DTsBuilder, FormatWithCargofmt, LocFieldAttr,
-    ShouldWriteTsIntoFile, StatusCode, SynField, gen_field_loc_new_ts,
-    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_display_ts,
-    gen_impl_pub_try_new_for_ident_ts, gen_serde_version_of_named_syn_vrt, gen_simple_syn_punct,
-    get_macro_attr_meta_list_ts, loc_syn_field, mb_write_ts_into_file,
+    ShouldWriteTsIntoFile, StatusCode, SynField, gen_field_loc_new_ts, gen_if_write_is_err_ts,
+    gen_impl_display_ts, gen_impl_pub_try_new_for_ident_ts, gen_serde_version_of_named_syn_vrt,
+    gen_simple_syn_punct, get_macro_attr_meta_list_ts, loc_syn_field, mb_write_ts_into_file,
 };
 use naming::{
     AppStateSc, AsRefStrEnumWithUnitFieldsToScStr, AsRefStrEnumWithUnitFieldsToUccStr,
@@ -2755,7 +2754,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                                 });
                             let (if_write_is_err_curly_braces_0_ts, if_write_is_err_curly_braces_1_ts) = {
                                 let gen_if_write_is_err_curly_braces_short_ts = |ts: &dyn ToTokens| {
-                                    gen_if_write_is_err_curly_braces_ts(
+                                    gen_if_write_is_err_ts(
                                     &ts,
                                     &write_into_buffer_qp_syn_vrt_er_init_eprintln_res_creation_ts
                                 )

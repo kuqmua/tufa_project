@@ -10,6 +10,3 @@ pub fn gen_if_write_is_err_ts(prms_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 
         }
     }
 }
-pub fn gen_if_write_is_err_curly_braces_ts(prms_ts: &dyn ToTokens, ts: &dyn ToTokens) -> Ts2 {
-    gen_if_write_is_err_ts(prms_ts, ts)
-}

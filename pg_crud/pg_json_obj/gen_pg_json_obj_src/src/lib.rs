@@ -4,11 +4,10 @@ pub mod types;
 use cfg::{GenPgJsonsConfig, Pattern, PgJsonObjRecord, TraitGen};
 use gen_quotes::dq_ts;
 use macros_helpers::{
-    DSerdeDeserialize, DTsBuilder, FormatWithCargofmt, SynField,
-    gen_if_write_is_err_curly_braces_ts, gen_if_write_is_err_ts, gen_impl_from_ts,
-    gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts, gen_pub_const_new_ts,
-    gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_al_ts, gen_simple_syn_punct,
-    get_macro_attr_meta_list_ts, mb_write_ts_into_file,
+    DSerdeDeserialize, DTsBuilder, FormatWithCargofmt, SynField, gen_if_write_is_err_ts,
+    gen_impl_from_ts, gen_impl_pub_const_new_for_ident_ts, gen_impl_pub_new_for_ident_ts,
+    gen_pub_const_new_ts, gen_pub_new_ts, gen_pub_try_new_ts, gen_pub_type_al_ts,
+    gen_simple_syn_punct, get_macro_attr_meta_list_ts, mb_write_ts_into_file,
 };
 use naming::{
     AddOprtrSc, AllFieldsAreNoneUcc, ArrOfUcc, AsRefStrToUccTs, AsUcc, ColFieldSc, ColSc,
@@ -2806,7 +2805,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                         &{
                                             let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_c3ae3be4}");
                                             quote!{acc_8e628eaf,#dq_ts0}
@@ -2850,7 +2849,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     let fi_ucc_ts = ToTokensToUccTs::case_or_panic(&fi);
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                         &{
                                             let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_a9da8905}");
                                             quote!{acc_f7537df2, #dq_ts0}
@@ -2902,7 +2901,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     let fi_ucc = ToTokensToUccTs::case_or_panic(&fi);
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                         &{
                                             let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_33d3b52e}");
                                             quote!{acc_892857b1, #dq_ts0}
@@ -2930,7 +2929,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     let fi = &el0.ident;
                                     let fi_dq_ts = dq_ts(&fi);
                                     let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                         &{
                                             let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_549a93c8}");
                                             quote!{acc_57cd0744, #dq_ts0}
@@ -2954,14 +2953,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         }
                                     }
                                 });
-                                let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
+                                let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_ts(
                                     &{
                                         let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_6bac798d}");
                                         quote!{acc_892857b1, #dq_ts0}
                                     },
                                     &return_err_qp_er_write_into_buffer_ts
                                 );
-                                let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
+                                let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_ts(
                                     &quote!{acc_57cd0744, "{acc_892857b1}||"},
                                     &return_err_qp_er_write_into_buffer_ts
                                 );
@@ -3241,11 +3240,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     &quote!{acc_2e2ad041, "{v_8333f8f4}"},
                     &return_err_qp_er_write_into_buffer_ts
                 );
-                let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_curly_braces_ts(
+                let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_ts(
                     &quote!{acc_5b4cd920, "{mb_space_and_space}elem->>'id' <> ${incr_cb6ba4a7}"},
                     &return_err_qp_er_write_into_buffer_ts
                 );
-                let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_curly_braces_ts(
+                let if_write_is_err_curly_braces_1_ts = gen_if_write_is_err_ts(
                     &quote!{acc_8554f572, "${incr_5bbc4961},"},
                     &return_err_qp_er_write_into_buffer_ts
                 );
@@ -3488,7 +3487,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                         },
                                         Pattern::Arr => dq_ts(&format!("elem->'{fi}'"))
                                     };
-                                    gen_if_write_is_err_curly_braces_ts(
+                                    gen_if_write_is_err_ts(
                                         &quote!{
                                             acc_2912b128,
                                             #dq_ts0,
@@ -3937,7 +3936,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let col_field_fi_dq_ts = &dq_ts(
                                     &format!("{{{ColFieldSc}}}->'{fi}'")
                                 );
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                     &{
                                         let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_cddc8a0a}");
                                         quote!{acc_0fe559fa, #dq_ts0}
@@ -3983,7 +3982,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let col_field_fi_dq_ts = &dq_ts(
                                     &format!("{{{ColFieldSc}}}->'{fi}'")
                                 );
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                     &{
                                         let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_93015133}");
                                         quote!{acc_0e9170a3, #dq_ts0}
@@ -4035,7 +4034,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
                                 let fi_dq_ts = &dq_ts(&fi);
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                     &{
                                         let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_6d76c065}");
                                         quote!{acc_0f2b92d0, #dq_ts0}
@@ -4101,7 +4100,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 let fi = &el0.ident;
                                 let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
                                 let fi_dq_ts = &dq_ts(&fi);
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_curly_braces_ts(
+                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
                                     &{
                                         let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_d49fe9d8}");
                                         quote!{acc_1a91bdc7, #dq_ts0}
