@@ -2738,6 +2738,40 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
             }
         };
         let gen_jsonb_build_obj_or_dq_ts = |v: &dyn Display|dq_ts(&format!("{}||", gen_jsonb_build_obj(v)));
+        let gen_sel_only_crd_ids_qp_match_ts = |
+            el0: &SynField,
+            prefix_ts: &dyn ToTokens,
+            col_field_ts: &dyn ToTokens,
+            ok_v_ts: &dyn ToTokens,
+            acc_ts: &dyn ToTokens,
+        | {
+            let fi = &el0.ident;
+            let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
+            let fi_dq_ts = &dq_ts(&fi);
+            let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
+                &{
+                    let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&format!("{{{}}}", ok_v_ts.to_token_stream()));
+                    quote!{#acc_ts, #dq_ts0}
+                },
+                &return_err_qp_er_write_into_buffer_ts
+            );
+            quote! {
+                match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
+                    &#prefix_ts.#fi,
+                    #fi_dq_ts,
+                    #col_field_ts,
+                    #IncrSc
+                ) {
+                    Ok(mut #ok_v_ts) => {
+                        let _: Option<char> = #ok_v_ts.pop();
+                        #if_write_is_err_curly_braces_ts
+                    },
+                    Err(#ErSc) => {
+                        return Err(#ErSc);
+                    }
+                }
+            }
+        };
         let ident_upd_for_query_ucc = SelfUpdForQueryUcc::from_tokens(&ident);
         let ident_upd_for_query_ts = {
             let ident_upd_for_query_ts = {
@@ -2927,32 +2961,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     }
                                 });
                                 let sel_only_crd_ids_qp_ts = vec_syn_field_with_id.iter().map(|el0| {
-                                    let fi = &el0.ident;
-                                    let fi_dq_ts = dq_ts(&fi);
-                                    let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                    let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
-                                        &{
-                                            let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_549a93c8}");
-                                            quote!{acc_57cd0744, #dq_ts0}
-                                        },
-                                        &return_err_qp_er_write_into_buffer_ts
-                                    );
-                                    quote! {
-                                        match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
-                                            &el_b1359d90.#fi,
-                                            #fi_dq_ts,
-                                            "elem",
-                                            #IncrSc
-                                        ) {
-                                            Ok(mut v_549a93c8) => {
-                                                let _: Option<char> = v_549a93c8.pop();
-                                                #if_write_is_err_curly_braces_ts
-                                            },
-                                            Err(#ErSc) => {
-                                                return Err(#ErSc);
-                                            }
-                                        }
-                                    }
+                                    gen_sel_only_crd_ids_qp_match_ts(
+                                        el0,
+                                        &quote!{el_b1359d90},
+                                        &quote!{"elem"},
+                                        &quote!{v_549a93c8},
+                                        &quote!{acc_57cd0744},
+                                    )
                                 });
                                 let if_write_is_err_curly_braces_0_ts = gen_if_write_is_err_ts(
                                     &{
@@ -3891,35 +3906,16 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => {
                             let ts = vec_syn_field.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                let fi_dq_ts = &dq_ts(&fi);
-                                let col_field_fi_dq_ts = &dq_ts(
-                                    &format!("{{{ColFieldSc}}}->'{fi}'")
+                                let col_field_fi_dq_ts = dq_ts(
+                                    &format!("{{{ColFieldSc}}}->'{}'", el0.ident)
                                 );
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
-                                    &{
-                                        let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_cddc8a0a}");
-                                        quote!{acc_0fe559fa, #dq_ts0}
-                                    },
-                                    &return_err_qp_er_write_into_buffer_ts
-                                );
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
-                                        &#VSc.#fi,
-                                        #fi_dq_ts,
-                                        &format!(#col_field_fi_dq_ts),
-                                        #IncrSc
-                                    ) {
-                                        Ok(mut v_cddc8a0a) => {
-                                            let _: Option<char> = v_cddc8a0a.pop();
-                                            #if_write_is_err_curly_braces_ts
-                                        },
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                gen_sel_only_crd_ids_qp_match_ts(
+                                    el0,
+                                    &VSc,
+                                    &quote!{&format!(#col_field_fi_dq_ts)},
+                                    &quote!{v_cddc8a0a},
+                                    &quote!{acc_0fe559fa},
+                                )
                             });
                             let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"{}")));
                             quote!{
@@ -3937,35 +3933,16 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         },
                         IsNl::True => {
                             let ts = vec_syn_field.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                let fi_dq_ts = &dq_ts(&fi);
-                                let col_field_fi_dq_ts = &dq_ts(
-                                    &format!("{{{ColFieldSc}}}->'{fi}'")
+                                let col_field_fi_dq_ts = dq_ts(
+                                    &format!("{{{ColFieldSc}}}->'{}'", el0.ident)
                                 );
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
-                                    &{
-                                        let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_93015133}");
-                                        quote!{acc_0e9170a3, #dq_ts0}
-                                    },
-                                    &return_err_qp_er_write_into_buffer_ts
-                                );
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
-                                        &v_90219286.#fi,
-                                        #fi_dq_ts,
-                                        &format!(#col_field_fi_dq_ts),
-                                        #IncrSc
-                                    ) {
-                                        Ok(mut v_93015133) => {
-                                            let _: Option<char> = v_93015133.pop();
-                                            #if_write_is_err_curly_braces_ts
-                                        },
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                gen_sel_only_crd_ids_qp_match_ts(
+                                    el0,
+                                    &quote!{v_90219286},
+                                    &quote!{&format!(#col_field_fi_dq_ts)},
+                                    &quote!{v_93015133},
+                                    &quote!{acc_0e9170a3},
+                                )
                             });
                             let dq_ts0 = dq_ts(&format!("'{{fi}}'{},", gen_jsonb_build_obj_v(&"{}")));
                             let dq_ts1 = dq_ts(&gen_jsonb_build_obj_v(&"{}"));
@@ -3992,32 +3969,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     Pattern::Arr => match &is_nl {
                         IsNl::False => {
                             let ts = vec_syn_field_with_id.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                let fi_dq_ts = &dq_ts(&fi);
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
-                                    &{
-                                        let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_6d76c065}");
-                                        quote!{acc_0f2b92d0, #dq_ts0}
-                                    },
-                                    &return_err_qp_er_write_into_buffer_ts
-                                );
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
-                                        &el.#fi,
-                                        #fi_dq_ts,
-                                        "elem",
-                                        #IncrSc
-                                    ) {
-                                        Ok(mut v_6d76c065) => {
-                                            let _: Option<char> = v_6d76c065.pop();
-                                            #if_write_is_err_curly_braces_ts
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                gen_sel_only_crd_ids_qp_match_ts(
+                                    el0,
+                                    &quote!{el},
+                                    &quote!{"elem"},
+                                    &quote!{v_6d76c065},
+                                    &quote!{acc_0f2b92d0},
+                                )
                             });
                             let if_write_is_err_ts = gen_if_write_is_err_ts(
                                 &quote!{acc_44b1f772, "${v_73b58d3a},"},
@@ -4058,32 +4016,13 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                         },
                         IsNl::True => {
                             let ts = vec_syn_field_with_id.iter().map(|el0| {
-                                let fi = &el0.ident;
-                                let ft_as_pg_json_ts = gen_type_as_pg_json_ts(&el0.type0);
-                                let fi_dq_ts = &dq_ts(&fi);
-                                let if_write_is_err_curly_braces_ts = gen_if_write_is_err_ts(
-                                    &{
-                                        let dq_ts0 = gen_jsonb_build_obj_or_dq_ts(&"{v_d49fe9d8}");
-                                        quote!{acc_1a91bdc7, #dq_ts0}
-                                    },
-                                    &return_err_qp_er_write_into_buffer_ts
-                                );
-                                quote! {
-                                    match #ft_as_pg_json_ts::#SelOnlyCrdIdsQpSc(
-                                        &el_9bdcd847.#fi,
-                                        #fi_dq_ts,
-                                        "elem",
-                                        #IncrSc
-                                    ) {
-                                        Ok(mut v_d49fe9d8) => {
-                                            let _: Option<char> = v_d49fe9d8.pop();
-                                            #if_write_is_err_curly_braces_ts
-                                        }
-                                        Err(#ErSc) => {
-                                            return Err(#ErSc);
-                                        }
-                                    }
-                                }
+                                gen_sel_only_crd_ids_qp_match_ts(
+                                    el0,
+                                    &quote!{el_9bdcd847},
+                                    &quote!{"elem"},
+                                    &quote!{v_d49fe9d8},
+                                    &quote!{acc_1a91bdc7},
+                                )
                             });
                             let if_write_is_err_ts = gen_if_write_is_err_ts(
                                 &quote!{acc_857ce631, "${v_7f11bec0},"},
