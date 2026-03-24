@@ -44,8 +44,8 @@ use pg_crud_macros_cmn::{
     IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
     IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr, UpdQpJsonbSetAccumulatorUndrscr,
     UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
-    gen_case_jsonb_typeof_null, gen_impl_de_for_struct_ts,
-    gen_impl_display_and_to_err_string_debug_ts,
+    gen_case_jsonb_typeof_null, gen_if_let_some_match_ok_assign_query_or_return_err_ts,
+    gen_impl_de_for_struct_ts, gen_impl_display_and_to_err_string_debug_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_max_page_size_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
@@ -3667,7 +3667,24 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &IsUpdQpSelfUpdUsed::True,
                 &IsUpdQpJsonbSetTargetUsed::True,
                 &IsUpdQbMut::True,
-                &match &pattern {
+                &{
+                    let gen_upd_qb_nl_ts = |as_pg_json_ts: &dyn ToTokens, ok_v_ts: &dyn ToTokens| {
+                        quote! {
+                            match #VSc.0 {
+                                Some(#ok_v_ts) => #as_pg_json_ts::upd_qb(
+                                    #ok_v_ts,
+                                    #QuerySc
+                                ),
+                                None => if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(#self_as_pg_json_upd_ts::new(None))) {
+                                    Err(#ErSc.to_string())
+                                }
+                                else {
+                                    Ok(#QuerySc)
+                                },
+                            }
+                        }
+                    };
+                    match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => {
                             let upd_qb_vrts_ts = vec_syn_field.iter().map(|el0| {
@@ -3700,20 +3717,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNl::True => quote! {
-                            match #VSc.0 {
-                                Some(v_269a0d34) => #ident_stdrt_nn_as_pg_json_ts::upd_qb(
-                                    v_269a0d34,
-                                    #QuerySc
-                                ),
-                                None => if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(#self_as_pg_json_upd_ts::new(None))) {
-                                    Err(#ErSc.to_string())
-                                }
-                                else {
-                                    Ok(#QuerySc)
-                                },
-                            }
-                        }
+                        IsNl::True => gen_upd_qb_nl_ts(&ident_stdrt_nn_as_pg_json_ts, &quote!{v_269a0d34})
                     },
                     Pattern::Arr => match &is_nl {
                         IsNl::False => {
@@ -3757,22 +3761,9 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNl::True => quote! {
-                            match #VSc.0 {
-                                Some(v_a2156b3e) => #ident_arr_nn_as_pg_json_ts::upd_qb(
-                                    v_a2156b3e,
-                                    #QuerySc
-                                ),
-                                None => if let Err(#ErSc) = #QuerySc.try_bind(sqlx::types::Json(#self_as_pg_json_upd_ts::new(None))) {
-                                    Err(#ErSc.to_string())
-                                }
-                                else {
-                                    Ok(#QuerySc)
-                                },
-                            }
-                        },
+                        IsNl::True => gen_upd_qb_nl_ts(&ident_arr_nn_as_pg_json_ts, &quote!{v_a2156b3e}),
                     },
-                },
+                }},
                 &{
                     let dq_ts0 = dq_ts(&format!("'{{fi}}',{},", gen_jsonb_build_obj_v(&"{v_e137951b}")));
                     quote!{
@@ -3818,18 +3809,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNl::True => {
-                            let match_ts = gen_match_ok_assign_or_return_err_ts(
-                                &quote!{#ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_6334d77d, #QuerySc)},
-                                &QuerySc,
-                                &quote!{v_0bd3ba6f},
-                            );
-                            quote!{
-                            if let Some(v_6334d77d) = &#VSc.0 {
-                                #match_ts
-                            }
-                            Ok(#QuerySc)
-                        }},
+                        IsNl::True => gen_if_let_some_match_ok_assign_query_or_return_err_ts(
+                            &quote!{#ident_stdrt_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_6334d77d, #QuerySc)},
+                            &quote!{v_6334d77d},
+                            &quote!{v_0bd3ba6f},
+                        ),
                     },
                     Pattern::Arr => match &is_nl {
                         IsNl::False => {
@@ -3896,19 +3880,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             }
                             }
                         },
-                        IsNl::True => {
-                            let match_ts = gen_match_ok_assign_or_return_err_ts(
-                                &quote!{#ident_arr_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_107e6639, #QuerySc)},
-                                &QuerySc,
-                                &quote!{v_ecf1b8de},
-                            );
-                            quote!{
-                                if let Some(v_107e6639) = &#VSc.0 {
-                                    #match_ts
-                                }
-                                Ok(#QuerySc)
-                            }
-                        },
+                        IsNl::True => gen_if_let_some_match_ok_assign_query_or_return_err_ts(
+                            &quote!{#ident_arr_nn_as_pg_json_ts::#SelOnlyUpddIdsQbSc(v_107e6639, #QuerySc)},
+                            &quote!{v_107e6639},
+                            &quote!{v_ecf1b8de},
+                        ),
                     },
                 },
                 &match &pattern {
@@ -4176,23 +4152,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNl::True => {
-                            {
-                            let match_ts = gen_match_ok_assign_or_return_err_ts(
-                                &quote!{#ident_stdrt_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(
-                                    v_a1ccd526,
-                                    #QuerySc
-                                )},
-                                &QuerySc,
-                                &quote!{v_70ed6013},
-                            );
-                            quote!{
-                                if let Some(v_a1ccd526) = &#VSc.0 {
-                                    #match_ts
-                                }
-                                Ok(#QuerySc)
-                            }}
-                        },
+                        IsNl::True => gen_if_let_some_match_ok_assign_query_or_return_err_ts(
+                            &quote!{#ident_stdrt_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(
+                                v_a1ccd526,
+                                #QuerySc
+                            )},
+                            &quote!{v_a1ccd526},
+                            &quote!{v_70ed6013},
+                        ),
                     },
                     Pattern::Arr => match &is_nl {
                         IsNl::False => {
@@ -4223,19 +4190,11 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                 Ok(#QuerySc)
                             }
                         },
-                        IsNl::True => {
-                            let match_ts = gen_match_ok_assign_or_return_err_ts(
-                                &quote!{#ident_arr_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(v_0b55a65a, #QuerySc)},
-                                &QuerySc,
-                                &quote!{v_ad6a1ac5},
-                            );
-                            quote!{
-                                if let Some(v_0b55a65a) = &#VSc.0 {
-                                    #match_ts
-                                }
-                                Ok(#QuerySc)
-                            }
-                        },
+                        IsNl::True => gen_if_let_some_match_ok_assign_query_or_return_err_ts(
+                            &quote!{#ident_arr_nn_as_import_pg_json_ts::#SelOnlyCrdIdsQbSc(v_0b55a65a, #QuerySc)},
+                            &quote!{v_0b55a65a},
+                            &quote!{v_ad6a1ac5},
+                        ),
                     },
                 },
             );

@@ -1949,3 +1949,17 @@ pub fn gen_match_ok_assign_or_return_err_ts(
         }
     }
 }
+#[must_use]
+pub fn gen_if_let_some_match_ok_assign_query_or_return_err_ts(
+    expr_ts: &dyn ToTokens,
+    some_v_ts: &dyn ToTokens,
+    ok_v_ts: &dyn ToTokens,
+) -> Ts2 {
+    let match_ts = gen_match_ok_assign_or_return_err_ts(expr_ts, &QuerySc, ok_v_ts);
+    quote! {
+        if let Some(#some_v_ts) = &#VSc.0 {
+            #match_ts
+        }
+        Ok(#QuerySc)
+    }
+}
