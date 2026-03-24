@@ -55,8 +55,8 @@ use pg_crud_macros_cmn::{
     gen_impl_sqlx_encode_sqlx_pg_for_ident_ts, gen_impl_sqlx_type_and_encode_for_ident_ts,
     gen_impl_sqlx_type_for_ident_ts, gen_impl_to_err_string_no_generics_ts, gen_jsonb_agg_by_id,
     gen_jsonb_build_obj, gen_jsonb_build_obj_v, gen_jsonb_set,
-    gen_match_ok_assign_or_return_err_ts, gen_opt_type_dcl_ts,
-    gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
+    gen_match_not_empty_unq_vec_try_new_some_or_none_ts, gen_match_ok_assign_or_return_err_ts,
+    gen_opt_type_dcl_ts, gen_rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts,
     gen_rd_ids_and_cr_into_vec_wh_eq_using_fields_ts, gen_rd_ids_and_cr_into_wh_eq_ts,
     gen_return_err_qp_er_write_into_buffer_ts, gen_sel_arr_pgn_agg,
     gen_sqlx_types_json_type_dcl_ts, gen_upd_arr_null_guard_agg, gen_v_dcl_ts, gen_v_init_ts,
@@ -5435,21 +5435,23 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             ]
                         }
                     };
-                    quote! {
-                        #import::NlJsonObjPgTypeWhFlt(
-                            match (#RdIdsSc.0.#VSc, #CrSc.0) {
-                                (Some(rd_ids_ce30c0fe), Some(cr_8fd81ed8)) => match #import::NotEmptyUnqVec::try_new(#ts) {
-                                    Ok(v_7a9cd49b) => Some(v_7a9cd49b),
-                                    Err(er) => match er {
-                                        #import::NotEmptyUnqVecTryNewEr::IsEmpty {..} => None,
-                                        #import::NotEmptyUnqVecTryNewEr::NotUnq {..} => panic!("463769fc")
-                                    }
-                                },
-                                (Some(_), None) => panic!("1a2b314c"),
-                                (None, Some(_)) => panic!("9faea0f9"),
-                                (None, None) => None,
-                            }
-                        )
+                    {
+                        let try_new_ts = gen_match_not_empty_unq_vec_try_new_some_or_none_ts(
+                            &import,
+                            &quote!{#import::NotEmptyUnqVec::try_new(#ts)},
+                            &quote!{v_7a9cd49b},
+                            "463769fc",
+                        );
+                        quote! {
+                            #import::NlJsonObjPgTypeWhFlt(
+                                match (#RdIdsSc.0.#VSc, #CrSc.0) {
+                                    (Some(rd_ids_ce30c0fe), Some(cr_8fd81ed8)) => #try_new_ts,
+                                    (Some(_), None) => panic!("1a2b314c"),
+                                    (None, Some(_)) => panic!("9faea0f9"),
+                                    (None, None) => None,
+                                }
+                            )
+                        }
                     }
                 },
             };

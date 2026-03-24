@@ -1950,6 +1950,35 @@ pub fn gen_match_ok_assign_or_return_err_ts(
     }
 }
 #[must_use]
+pub fn gen_match_ok_or_return_err_ts(expr_ts: &dyn ToTokens, ok_v_ts: &dyn ToTokens) -> Ts2 {
+    quote! {
+        match #expr_ts {
+            Ok(#ok_v_ts) => #ok_v_ts,
+            Err(#ErSc) => {
+                return Err(#ErSc);
+            }
+        }
+    }
+}
+#[must_use]
+pub fn gen_match_not_empty_unq_vec_try_new_some_or_none_ts(
+    import: &Import,
+    expr_ts: &dyn ToTokens,
+    ok_v_ts: &dyn ToTokens,
+    panic_uuid: &str,
+) -> Ts2 {
+    let panic_uuid_ts = dq_ts(&panic_uuid);
+    quote! {
+        match #expr_ts {
+            Ok(#ok_v_ts) => Some(#ok_v_ts),
+            Err(er) => match er {
+                #import::NotEmptyUnqVecTryNewEr::IsEmpty {..} => None,
+                #import::NotEmptyUnqVecTryNewEr::NotUnq {..} => panic!(#panic_uuid_ts)
+            }
+        }
+    }
+}
+#[must_use]
 pub fn gen_if_let_some_match_ok_assign_query_or_return_err_ts(
     expr_ts: &dyn ToTokens,
     some_v_ts: &dyn ToTokens,

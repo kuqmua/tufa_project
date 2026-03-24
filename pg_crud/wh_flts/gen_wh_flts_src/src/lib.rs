@@ -12,7 +12,7 @@ use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Import, IncrPrmUndrscr, IsQbMut, PgJsonFlt, PgTypeFlt,
     PgTypeOrPgJson, gen_impl_dflt_some_one_el_ts, gen_match_ok_assign_or_return_err_ts,
-    impl_pg_type_wh_flt_for_ident_ts,
+    gen_match_ok_or_return_err_ts, impl_pg_type_wh_flt_for_ident_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -240,13 +240,12 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
         }
     };
     let gen_match_incr_checked_add_one_init_ts = |ts: &dyn ToTokens| {
+        let match_ts = gen_match_ok_or_return_err_ts(
+            &quote! {#import::incr_checked_add_one_returning_incr(#IncrSc)},
+            &quote! {v_25d59e01},
+        );
         quote! {
-            let #ts = match #import::incr_checked_add_one_returning_incr(#IncrSc) {
-                Ok(v_25d59e01) => v_25d59e01,
-                Err(#ErSc) => {
-                    return Err(#ErSc);
-                },
-            };
+            let #ts = #match_ts;
         }
     };
     let v_match_incr_checked_add_one_init_ts = gen_match_incr_checked_add_one_init_ts(&VSc);
@@ -325,13 +324,12 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
         };
     let gen_ident_match_field_fn_ok_v_return_err_ts =
         |ident_ts: &dyn ToTokens, field_ts: &dyn ToTokens, fn_ts: &dyn ToTokens| {
+            let match_ts = gen_match_ok_or_return_err_ts(
+                &quote! {self.#field_ts.#fn_ts(#IncrSc, #ColSc, add_oprtr)},
+                &quote! {v_0a22ee9a},
+            );
             quote! {
-                let #ident_ts = match self.#field_ts.#fn_ts(#IncrSc, #ColSc, add_oprtr) {
-                    Ok(v_0a22ee9a) => v_0a22ee9a,
-                    Err(#ErSc) => {
-                        return Err(#ErSc);
-                    }
-                };
+                let #ident_ts = #match_ts;
             }
         };
     let v_match_self_v_qp_init_ts =
