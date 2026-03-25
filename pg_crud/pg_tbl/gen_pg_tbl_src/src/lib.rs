@@ -51,11 +51,11 @@ use optml::Optml;
 use panic_loc::panic_loc;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, Dim, EqOrEqUsingFields, Import, IncrPrmUndrscr, IsQbMut,
-    er_enum_d_ts_builder, gen_impl_de_for_struct_ts, gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
-    gen_impl_pg_crud_dflt_some_one_el_ts, gen_impl_to_err_string_no_generics_ts,
-    gen_opt_type_dcl_ts, gen_qp_er_write_into_buffer_ts, gen_return_err_qp_er_write_into_buffer_ts,
-    gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts, impl_pg_type_wh_flt_for_ident_ts,
-    mb_wrap_into_braces_ts,
+    cmn_d_ts_builder, er_enum_d_ts_builder, gen_impl_de_for_struct_ts,
+    gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
+    gen_impl_to_err_string_no_generics_ts, gen_opt_type_dcl_ts, gen_qp_er_write_into_buffer_ts,
+    gen_return_err_qp_er_write_into_buffer_ts, gen_v_dcl_ts, gen_v_init_ts, gen_vec_tokens_dcl_ts,
+    impl_pg_type_wh_flt_for_ident_ts, mb_wrap_into_braces_ts,
 };
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
@@ -1362,13 +1362,7 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
         };
     let sel_ts = {
         let ident_sel_ts = {
-            let ident_sel_enum_ts = DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_clone()
-            .d_partial_eq()
-            .d_serde_serialize()
-            .d_serde_deserialize()
+            let ident_sel_enum_ts = cmn_d_ts_builder()
             .build_enum(
                 &Ts2::new(),
                 &ident_sel_ucc,
@@ -1550,14 +1544,8 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
     };
     let ident_rd_ids_ts = {
         let ident_rd_ids_ts = {
-            let ident_rd_ids_struct_ts = DTsBuilder::new()
-                .make_pub()
-                .d_debug()
-                .d_clone()
-                .d_partial_eq()
-                .d_serde_serialize()
-                .d_serde_deserialize()
-                .build_struct(&Ts2::new(), &ident_rd_ids_ucc, &Ts2::new(), &{
+            let ident_rd_ids_struct_ts =
+                cmn_d_ts_builder().build_struct(&Ts2::new(), &ident_rd_ids_ucc, &Ts2::new(), &{
                     enum WrapIntoOpt {
                         False,
                         True,

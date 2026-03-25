@@ -1046,13 +1046,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
         //exists because need to implement .into_inn() for fields (only for rd subtype)
         let ident_rd_ts = gen_tt_or_rd_ts(&ident_rd_ucc);
         let ident_rd_ids_stdrt_nn_ucc = SelfRdIdsUcc::from_tokens(&ident_stdrt_nn_ucc);
-        let ident_rd_ids_ts = DTsBuilder::new()
-            .make_pub()
-            .d_debug()
-            .d_clone()
-            .d_partial_eq()
-            .d_serde_serialize()
-            .d_serde_deserialize()
+        let ident_rd_ids_ts = pg_crud_macros_cmn::cmn_d_ts_builder()
             .build_struct(
                 &Ts2::new(),
                 &ident_rd_ids_ucc,
