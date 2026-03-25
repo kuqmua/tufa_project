@@ -13,8 +13,8 @@ edition = "2024"
 [dependencies]
 thiserror.workspace = true
 serde.workspace = true
-loc_lib = {path = "../loc_lib"}
-optml = {path = "../optml"}
+loc_lib = {path = ".."}
+optml = {path = "../../optml"}
 
 [lints]
 workspace = true

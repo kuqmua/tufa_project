@@ -64,7 +64,7 @@ members = [
   "tests",
   "impl_display_as_debug",
   "macro_clippy_check_cmn",
-  "loc_test",
+  "loc_lib/loc_test",
   "file_system",
   "token_patterns",
   "naming",
