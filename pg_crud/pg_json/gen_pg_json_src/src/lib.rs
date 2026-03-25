@@ -962,30 +962,23 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                     let pg_json_specific = PgJsonSpecific::from(pg_json);
                     let cmn_pg_json_flts = vec![PgJsonFlt::Eq { ident: quote! {#ident_tt_ucc} }];
                     let ident_tt_ucc_ts = quote! {#ident_tt_ucc};
+                    let gen_flts_with = |base: Vec<PgJsonFlt>, extra: &[PgJsonFlt]| {
+                        let mut vec = base;
+                        vec.extend_from_slice(extra);
+                        vec
+                    };
                     match &pattern {
                         Pattern::Stdrt => {
-                            let cmn_stdrt_pg_json_flts = {
-                                let mut vec = cmn_pg_json_flts;
-                                vec.push(PgJsonFlt::In {
-                                    ident: ident_tt_ucc_ts.clone(),
-                                });
-                                vec
-                            };
+                            let cmn_stdrt_pg_json_flts = gen_flts_with(cmn_pg_json_flts, &[PgJsonFlt::In {
+                                ident: ident_tt_ucc_ts.clone(),
+                            }]);
                             match &pg_json_specific {
-                                PgJsonSpecific::Nbr => {
-                                    let mut vec = cmn_stdrt_pg_json_flts;
-                                    vec.push(PgJsonFlt::GreaterThan {
-                                        ident: ident_tt_ucc_ts.clone(),
-                                    });
-                                    vec.push(PgJsonFlt::Btwn { ident: ident_tt_ucc_ts });
-                                    vec
-                                }
+                                PgJsonSpecific::Nbr => gen_flts_with(cmn_stdrt_pg_json_flts, &[
+                                    PgJsonFlt::GreaterThan { ident: ident_tt_ucc_ts.clone() },
+                                    PgJsonFlt::Btwn { ident: ident_tt_ucc_ts },
+                                ]),
                                 PgJsonSpecific::Bool => cmn_stdrt_pg_json_flts,
-                                PgJsonSpecific::String => {
-                                    let mut vec = cmn_stdrt_pg_json_flts;
-                                    vec.push(PgJsonFlt::Rgx);
-                                    vec
-                                }
+                                PgJsonSpecific::String => gen_flts_with(cmn_stdrt_pg_json_flts, &[PgJsonFlt::Rgx]),
                             }
                         }
                         Pattern::ArrDim1 { .. } | Pattern::ArrDim2 { .. } | Pattern::ArrDim3 { .. } | Pattern::ArrDim4 { .. } => {

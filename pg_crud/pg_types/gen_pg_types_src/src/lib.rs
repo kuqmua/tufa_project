@@ -3399,9 +3399,8 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                         let dim_one_before = PgTypeFlt::DimOneBefore {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
-                        let cmn_arr_dim1_pg_type_flts = {
-                            let mut vec = cmn_pg_type_flts;
-                            vec.push(PgTypeFlt::DimOneEq {
+                        let cmn_arr_dim1_pg_type_flts = gen_flts_with(cmn_pg_type_flts, &[
+                            PgTypeFlt::DimOneEq {
                                 ident: {
                                     let ts = SelfTtUcc::from_tokens(&match &dim1_is_nl {
                                         IsNl::False => &ident_stdrt_nn_ucc,
@@ -3409,11 +3408,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     });
                                     quote! {#ts}
                                 },
-                            });
-                            vec.push(PgTypeFlt::DimOneLenEq);
-                            vec.push(PgTypeFlt::DimOneLenGreaterThan);
-                            vec
-                        };
+                            },
+                            PgTypeFlt::DimOneLenEq,
+                            PgTypeFlt::DimOneLenGreaterThan,
+                        ]);
                         let cmn_arr_dim1_pg_type_nbr_flts = gen_flts_with(
                             cmn_arr_dim1_pg_type_flts.clone(),
                             &[dim_one_greater_than.clone(), dim_one_btwn.clone(), dim_one_in_h.clone()],
@@ -3428,43 +3426,24 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             let gen_ts = |range: Range| {
                                 let pg_type_from_range = PgType::from(&range);
                                 let range_el_ident_stdrt_nn_ts = gen_ident_stdrt_nn_ts(&pg_type_from_range);
-                                let mut vec = cmn_arr_dim1_pg_type_flts.clone();
                                 let range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts = {
                                     let range_el_ident_stdrt_nn_as_crate_pg_type_ts = gen_as_pg_type_ts(&range_el_ident_stdrt_nn_ts);
                                     quote! {#range_el_ident_stdrt_nn_as_crate_pg_type_ts::Rd}
                                 };
-                                vec.push(PgTypeFlt::DimOneFindRangesWithinGivenRange {
-                                    ident: quote! {#ident_stdrt_nn_tt_ucc},
-                                });
-                                vec.push(PgTypeFlt::DimOneFindRangesThatFullyContainTheGivenRange {
-                                    ident: quote! {#ident_stdrt_nn_tt_ucc},
-                                });
-                                vec.push(PgTypeFlt::DimOneStrictlyToLeftOfRange {
-                                    ident: quote! {#ident_stdrt_nn_tt_ucc},
-                                });
-                                vec.push(PgTypeFlt::DimOneStrictlyToRightOfRange {
-                                    ident: quote! {#ident_stdrt_nn_tt_ucc},
-                                });
-                                vec.push(PgTypeFlt::DimOneIncludedLowerBound {
-                                    ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone(),
-                                });
-                                vec.push(PgTypeFlt::DimOneExcludedUpperBound {
-                                    ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone(),
-                                });
-                                vec.push(PgTypeFlt::DimOneGreaterThanIncludedLowerBound {
-                                    ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone(),
-                                });
-                                vec.push(PgTypeFlt::DimOneGreaterThanExcludedUpperBound {
-                                    ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts,
-                                });
-                                vec.push(PgTypeFlt::DimOneOverlapWithRange {
-                                    ident: quote! {#ident_stdrt_nn_tt_ucc},
-                                });
-                                vec.push(PgTypeFlt::DimOneAdjacentWithRange {
-                                    ident: quote! {#ident_stdrt_nn_tt_ucc},
-                                });
-                                vec.push(PgTypeFlt::DimOneRangeLen);
-                                vec
+                                let range_ident_ts = quote! {#ident_stdrt_nn_tt_ucc};
+                                gen_flts_with(cmn_arr_dim1_pg_type_flts.clone(), &[
+                                    PgTypeFlt::DimOneFindRangesWithinGivenRange { ident: range_ident_ts.clone() },
+                                    PgTypeFlt::DimOneFindRangesThatFullyContainTheGivenRange { ident: range_ident_ts.clone() },
+                                    PgTypeFlt::DimOneStrictlyToLeftOfRange { ident: range_ident_ts.clone() },
+                                    PgTypeFlt::DimOneStrictlyToRightOfRange { ident: range_ident_ts.clone() },
+                                    PgTypeFlt::DimOneIncludedLowerBound { ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone() },
+                                    PgTypeFlt::DimOneExcludedUpperBound { ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone() },
+                                    PgTypeFlt::DimOneGreaterThanIncludedLowerBound { ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts.clone() },
+                                    PgTypeFlt::DimOneGreaterThanExcludedUpperBound { ident: range_el_ident_stdrt_nn_as_crate_pg_type_rd_ts },
+                                    PgTypeFlt::DimOneOverlapWithRange { ident: range_ident_ts.clone() },
+                                    PgTypeFlt::DimOneAdjacentWithRange { ident: range_ident_ts },
+                                    PgTypeFlt::DimOneRangeLen,
+                                ])
                             };
                             (
                                 gen_ts(Range::I32AsInt4),
