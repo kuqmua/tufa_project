@@ -3302,6 +3302,11 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
             &AllowClippyArbitrarySrcItemOrdering,
             &{
                 let cmn_pg_type_flts = vec![PgTypeFlt::Eq { ident: quote! {#ident_tt_ucc} }];
+                let gen_flts_with = |base: Vec<PgTypeFlt>, extra: &[PgTypeFlt]| {
+                    let mut vec = base;
+                    vec.extend_from_slice(extra);
+                    vec
+                };
                 match &pg_type_pattern {
                     PgTypePattern::Stdrt => {
                         let greater_than = PgTypeFlt::GreaterThan {
@@ -3323,47 +3328,25 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             ident: quote! {#ident_stdrt_nn_tt_ucc},
                         };
                         let cmn_stdrt_pg_type_flts = { cmn_pg_type_flts };
-                        let cmn_stdrt_pg_type_nbr_flts = {
-                            let mut vec = cmn_stdrt_pg_type_flts.clone();
-                            vec.push(greater_than.clone());
-                            vec.push(btwn.clone());
-                            vec.push(in_h.clone());
-                            vec
-                        };
+                        let cmn_stdrt_pg_type_nbr_flts = gen_flts_with(
+                            cmn_stdrt_pg_type_flts.clone(),
+                            &[greater_than.clone(), btwn.clone(), in_h.clone()],
+                        );
                         let ranges_cmn_flt_vec = {
-                            let mut vec = cmn_stdrt_pg_type_flts.clone();
-                            vec.push(PgTypeFlt::FindRangesWithinGivenRange {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::FindRangesThatFullyContainTheGivenRange {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::StrictlyToLeftOfRange {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::StrictlyToRightOfRange {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::IncludedLowerBound {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::ExcludedUpperBound {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::GreaterThanIncludedLowerBound {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::GreaterThanExcludedUpperBound {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::OverlapWithRange {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::AdjacentWithRange {
-                                ident: quote! {#ident_stdrt_nn_tt_ucc},
-                            });
-                            vec.push(PgTypeFlt::RangeLen);
-                            vec
+                            let range_ident_ts = quote! {#ident_stdrt_nn_tt_ucc};
+                            gen_flts_with(cmn_stdrt_pg_type_flts.clone(), &[
+                                PgTypeFlt::FindRangesWithinGivenRange { ident: range_ident_ts.clone() },
+                                PgTypeFlt::FindRangesThatFullyContainTheGivenRange { ident: range_ident_ts.clone() },
+                                PgTypeFlt::StrictlyToLeftOfRange { ident: range_ident_ts.clone() },
+                                PgTypeFlt::StrictlyToRightOfRange { ident: range_ident_ts.clone() },
+                                PgTypeFlt::IncludedLowerBound { ident: range_ident_ts.clone() },
+                                PgTypeFlt::ExcludedUpperBound { ident: range_ident_ts.clone() },
+                                PgTypeFlt::GreaterThanIncludedLowerBound { ident: range_ident_ts.clone() },
+                                PgTypeFlt::GreaterThanExcludedUpperBound { ident: range_ident_ts.clone() },
+                                PgTypeFlt::OverlapWithRange { ident: range_ident_ts.clone() },
+                                PgTypeFlt::AdjacentWithRange { ident: range_ident_ts },
+                                PgTypeFlt::RangeLen,
+                            ])
                         };
                         match &pg_type {
                             PgType::I16AsInt2
@@ -3374,58 +3357,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::I16AsSmallSerialInitByPg
                             | PgType::I32AsSerialInitByPg
                             | PgType::I64AsBigSerialInitByPg => cmn_stdrt_pg_type_nbr_flts,
-                            PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(in_h);
-                                vec
-                            }
-                            PgType::StdVecVecU8AsBytea => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(eq_to_encoded_string_representation);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(greater_than);
-                                vec.push(btwn);
-                                vec.push(crnt_time_flt);
-                                vec.push(greater_than_crnt_time);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(greater_than);
-                                vec.push(btwn);
-                                vec.push(crnt_date_flt);
-                                vec.push(greater_than_crnt_date);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(greater_than);
-                                vec.push(btwn);
-                                vec.push(crnt_timestamp_flt);
-                                vec.push(greater_than_crnt_timestamp);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(before);
-                                vec.push(btwn);
-                                vec
-                            }
-                            PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(rgx);
-                                vec
-                            }
+                            PgType::SqlxPgTypesPgMoneyAsMoney => gen_flts_with(cmn_stdrt_pg_type_flts, &[in_h]),
+                            PgType::StdVecVecU8AsBytea => gen_flts_with(cmn_stdrt_pg_type_flts, &[eq_to_encoded_string_representation]),
+                            PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => gen_flts_with(cmn_stdrt_pg_type_flts, &[greater_than, btwn, crnt_time_flt, greater_than_crnt_time]),
+                            PgType::SqlxTypesChronoNaiveDateAsDate => gen_flts_with(cmn_stdrt_pg_type_flts, &[greater_than, btwn, crnt_date_flt, greater_than_crnt_date]),
+                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => gen_flts_with(cmn_stdrt_pg_type_flts, &[greater_than, btwn, crnt_timestamp_flt, greater_than_crnt_timestamp]),
+                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => gen_flts_with(cmn_stdrt_pg_type_flts, &[before, btwn]),
+                            PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => gen_flts_with(cmn_stdrt_pg_type_flts, &[rgx]),
                             PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_stdrt_pg_type_flts,
-                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = cmn_stdrt_pg_type_flts;
-                                vec.push(greater_than);
-                                vec.push(rgx);
-                                vec
-                            },
+                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_flts_with(cmn_stdrt_pg_type_flts, &[greater_than, rgx]),
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range |
                             PgType::SqlxPgTypesPgRangeI64AsInt8Range |
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
@@ -3474,13 +3414,10 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             vec.push(PgTypeFlt::DimOneLenGreaterThan);
                             vec
                         };
-                        let cmn_arr_dim1_pg_type_nbr_flts = {
-                            let mut vec = cmn_arr_dim1_pg_type_flts.clone();
-                            vec.push(dim_one_greater_than.clone());
-                            vec.push(dim_one_btwn.clone());
-                            vec.push(dim_one_in_h.clone());
-                            vec
-                        };
+                        let cmn_arr_dim1_pg_type_nbr_flts = gen_flts_with(
+                            cmn_arr_dim1_pg_type_flts.clone(),
+                            &[dim_one_greater_than.clone(), dim_one_btwn.clone(), dim_one_in_h.clone()],
+                        );
                         let (
                             wh_sqlx_pg_types_pg_range_i32_ts,
                             wh_sqlx_pg_types_pg_range_i64_ts,
@@ -3546,58 +3483,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             | PgType::I16AsSmallSerialInitByPg
                             | PgType::I32AsSerialInitByPg
                             | PgType::I64AsBigSerialInitByPg => cmn_arr_dim1_pg_type_nbr_flts,
-                            PgType::SqlxPgTypesPgMoneyAsMoney => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_in_h);
-                                vec
-                            }
-                            PgType::StdVecVecU8AsBytea => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(PgTypeFlt::DimOneEqToEncodedStringRepresentation);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_greater_than);
-                                vec.push(dim_one_btwn);
-                                vec.push(dim_one_crnt_time);
-                                vec.push(dim_one_greater_than_crnt_time);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoNaiveDateAsDate => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_greater_than);
-                                vec.push(dim_one_btwn);
-                                vec.push(dim_one_crnt_date);
-                                vec.push(dim_one_greater_than_crnt_date);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_greater_than);
-                                vec.push(dim_one_btwn);
-                                vec.push(dim_one_crnt_timestamp);
-                                vec.push(dim_one_greater_than_crnt_timestamp);
-                                vec
-                            }
-                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_before);
-                                vec.push(dim_one_btwn);
-                                vec
-                            }
-                            PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_rgx);
-                                vec
-                            }
+                            PgType::SqlxPgTypesPgMoneyAsMoney => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_in_h]),
+                            PgType::StdVecVecU8AsBytea => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[PgTypeFlt::DimOneEqToEncodedStringRepresentation]),
+                            PgType::SqlxTypesChronoNaiveTimeAsTime | PgType::SqlxTypesTimeTimeAsTime => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_greater_than, dim_one_btwn, dim_one_crnt_time, dim_one_greater_than_crnt_time]),
+                            PgType::SqlxTypesChronoNaiveDateAsDate => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_greater_than, dim_one_btwn, dim_one_crnt_date, dim_one_greater_than_crnt_date]),
+                            PgType::SqlxTypesChronoNaiveDateTimeAsTimestamp => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_greater_than, dim_one_btwn, dim_one_crnt_timestamp, dim_one_greater_than_crnt_timestamp]),
+                            PgType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_before, dim_one_btwn]),
+                            PgType::StringAsText | PgType::SqlxTypesUuidUuidAsUuidV4InitByPg | PgType::SqlxTypesUuidUuidAsUuidInitByClient => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_rgx]),
                             PgType::BoolAsBool | PgType::SqlxPgTypesPgIntervalAsInterval | PgType::SqlxTypesIpnetworkIpNetworkAsInet => cmn_arr_dim1_pg_type_flts,
-                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr => {
-                                let mut vec = cmn_arr_dim1_pg_type_flts;
-                                vec.push(dim_one_greater_than);
-                                vec.push(dim_one_rgx);
-                                vec
-                            }
+                            PgType::SqlxTypesMacAddressMacAddressAsMacAddr => gen_flts_with(cmn_arr_dim1_pg_type_flts, &[dim_one_greater_than, dim_one_rgx]),
                             PgType::SqlxPgTypesPgRangeI32AsInt4Range => wh_sqlx_pg_types_pg_range_i32_ts,
                             PgType::SqlxPgTypesPgRangeI64AsInt8Range => wh_sqlx_pg_types_pg_range_i64_ts,
                             PgType::SqlxPgTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wh_sqlx_pg_types_pg_range_sqlx_types_chrono_naive_date_ts,
