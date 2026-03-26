@@ -1,5 +1,6 @@
 [package]
 name = "gen_wh_flts_test_cnt"
+publish = false
 version = "0.1.0"
 edition = "2024"
 description = "description"

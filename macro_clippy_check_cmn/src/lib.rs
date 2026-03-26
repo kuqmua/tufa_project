@@ -6,6 +6,7 @@ pub fn clippy_check(crate_name: &str, cmd_path: &str, extra_cnt: &str, content_t
     let cargo_toml_cnt = format!(
         r#"[package]
 name = "{crate_name}"
+publish = false
 version = "0.1.0"
 edition = "2024"
 description = "description"

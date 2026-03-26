@@ -18,6 +18,11 @@ mod tests {
     use uuid::Uuid;
     use walkdir::WalkDir;
     #[derive(Debug, Clone, Copy, Optml)]
+    enum ExpectOrPanic {
+        Expect,
+        Panic,
+    }
+    #[derive(Debug, Clone, Copy, Optml)]
     enum RustOrClippy {
         Clippy,
         Rust,
@@ -30,71 +35,184 @@ mod tests {
             }
         }
     }
-    #[derive(Debug, Clone, Copy, Optml)]
-    enum ExpectOrPanic {
-        Expect,
-        Panic,
+    struct DbgVisitor {
+        found: bool,
     }
-    fn toml_v_from_from_cargo_toml_workspace() -> Value {
-        let tbl = read_to_string("../Cargo.toml")
-            .expect("39a0d238")
-            .parse::<TomlTable>()
-            .expect("beb11586");
-        tbl.get("workspace").expect("f728192d").clone()
-    }
-    fn sel(s: &str, uuid: &str) -> Selector {
-        Selector::parse(s).unwrap_or_else(|_| panic!("{uuid}"))
-    }
-    fn is_exception(path: &Path, exceptions: &[&str]) -> bool {
-        exceptions.contains(&path.display().to_string().as_str())
-    }
-    fn toml_val_as_tbl(v: Value, uuid: &str) -> Table {
-        match v {
-            Value::Table(t) => t,
-            Value::String(_)
-            | Value::Integer(_)
-            | Value::Float(_)
-            | Value::Boolean(_)
-            | Value::Datetime(_)
-            | Value::Array(_) => panic!("{uuid}"),
+    impl<'ast> Visit<'ast> for DbgVisitor {
+        fn visit_macro(&mut self, i: &'ast syn::Macro) {
+            if i.path
+                .segments
+                .last()
+                .is_some_and(|v_4b8e1c7a| v_4b8e1c7a.ident == "dbg")
+            {
+                self.found = true;
+            }
         }
     }
-    fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
-        let workspace = toml_v_from_from_cargo_toml_workspace();
-        let lints = workspace.get("lints").expect("82eaea37");
-        let toml_v_tbl = toml_val_as_tbl(
-            lints.get(rust_or_clippy.name()).expect("dbd02f72").clone(),
-            "cae226cd",
-        );
-        toml_v_tbl.keys().cloned().collect::<Vec<String>>()
+    struct TodoUnimplVisitor {
+        found: Vec<String>,
     }
-    fn compare_lints_vecs(
-        rust_or_clippy: RustOrClippy,
-        lints_vec_from_cargo_toml: &[String],
-        lints_to_check: &[String],
-        lints_not_in_cargo_toml_vec_exceptions: &[String],
-    ) {
-        let rust_or_clippy_name = rust_or_clippy.name();
-        let mut lints_not_in_cargo_toml = Vec::new();
-        for el_31af38d6 in lints_to_check {
-            if !lints_vec_from_cargo_toml.contains(el_31af38d6) {
-                if lints_not_in_cargo_toml_vec_exceptions.contains(el_31af38d6) {
-                    println!(
-                        "todo!() {rust_or_clippy_name} {el_31af38d6} 158b5c43-05fa-4b8f-b6fe-9cda49d26997"
-                    );
-                } else {
-                    lints_not_in_cargo_toml.push(el_31af38d6);
+    impl<'ast> Visit<'ast> for TodoUnimplVisitor {
+        fn visit_macro(&mut self, i: &'ast syn::Macro) {
+            if let Some(last_segment) = i.path.segments.last() {
+                let name = last_segment.ident.to_string();
+                if name == "todo" || name == "unimplemented" {
+                    self.found.push(name);
                 }
             }
         }
-        assert!(lints_not_in_cargo_toml.is_empty(), "d2b7ba9f");
-        let mut outdated_lints_in_file = Vec::new();
-        for el_d3c0c904 in lints_vec_from_cargo_toml {
-            if !lints_to_check.contains(el_d3c0c904) {
-                outdated_lints_in_file.push(el_d3c0c904);
+    }
+    struct UnwrapVisitor {
+        found: Vec<String>,
+    }
+    impl<'ast> Visit<'ast> for UnwrapVisitor {
+        fn visit_expr_method_call(&mut self, i: &'ast ExprMethodCall) {
+            if i.method == "unwrap" && i.args.is_empty() {
+                self.found.push(String::from("unwrap() call"));
+            }
+            visit_expr_method_call(self, i);
+        }
+    }
+    #[test]
+    fn all_crates_have_publish_false() {
+        let exceptions = ["../Cargo.toml"];
+        let mut ers = Vec::new();
+        for el_a8d3e6f1 in cargo_toml_project_files() {
+            let path = el_a8d3e6f1.path();
+            if is_exception(path, &exceptions) {
+                continue;
+            }
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let Ok(parsed) = v.parse::<TomlTable>() else {
+                continue;
+            };
+            let publish = parsed
+                .get("package")
+                .and_then(|v_1c7b4e9d| v_1c7b4e9d.get("publish"));
+            if publish != Some(&Value::Boolean(false)) {
+                ers.push(format!("{}: missing `publish = false`", path.display()));
             }
         }
-        assert!(outdated_lints_in_file.is_empty(), "93787d2d");
+        assert!(ers.is_empty(), "f2a8c5d3\n{}", ers.join("\n"));
+    }
+    #[test]
+    fn all_crates_have_workspace_lints() {
+        let exceptions = ["../Cargo.toml"];
+        let mut ers = Vec::new();
+        for el_e3a17c4b in cargo_toml_project_files() {
+            let path = el_e3a17c4b.path();
+            if is_exception(path, &exceptions) {
+                continue;
+            }
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let Ok(parsed) = v.parse::<TomlTable>() else {
+                continue;
+            };
+            match parsed
+                .get("lints")
+                .and_then(|v_8f2a3d6b| v_8f2a3d6b.as_table())
+            {
+                Some(lints_tbl) => {
+                    if lints_tbl.get("workspace") != Some(&Value::Boolean(true)) {
+                        ers.push(format!(
+                            "{}: [lints] missing `workspace = true`",
+                            path.display()
+                        ));
+                    }
+                }
+                None => {
+                    ers.push(format!("{}: missing [lints] section", path.display()));
+                }
+            }
+        }
+        assert!(ers.is_empty(), "d5f1a4e7\n{}", ers.join("\n"));
+    }
+    #[test]
+    fn all_crates_use_edition_2024() {
+        let exceptions = ["../Cargo.toml"];
+        let mut ers = Vec::new();
+        for el_b4c7e1a3 in cargo_toml_project_files() {
+            let path = el_b4c7e1a3.path();
+            if is_exception(path, &exceptions) {
+                continue;
+            }
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let Ok(parsed) = v.parse::<TomlTable>() else {
+                continue;
+            };
+            let edition = parsed
+                .get("package")
+                .and_then(|v_6d9f2a3e| v_6d9f2a3e.get("edition"));
+            if edition != Some(&Value::String(String::from("2024"))) {
+                ers.push(format!("{}: edition is not \"2024\"", path.display()));
+            }
+        }
+        assert!(ers.is_empty(), "a3d7f1c8\n{}", ers.join("\n"));
+    }
+    #[test]
+    fn all_files_are_english_only() {
+        let mut ers = Vec::new();
+        let exceptions = [
+            "../pg_crud/pg_crud_cmn/src/lib.rs", //contain utf-8 String test
+        ];
+        for el_d87f0495 in project_dir()
+            .into_iter()
+            .filter_entry(|el_6870bc3d| {
+                let name = el_6870bc3d.file_name().to_string_lossy();
+                name != "target" && name != ".git"
+            })
+            .filter_map(Result::ok)
+        {
+            let path = el_d87f0495.path();
+            if !path.is_file()
+                || !path
+                    .extension()
+                    .and_then(|v_56829539| v_56829539.to_str())
+                    .is_some_and(|v_c980b45f| {
+                        matches!(
+                            v_c980b45f,
+                            "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
+                        )
+                    })
+            {
+                continue;
+            }
+            if is_exception(path, &exceptions) {
+                continue;
+            }
+            let Ok(v) = read_to_string(path) else {
+                continue; //skip binary non-utf8 files
+            };
+            for (k_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
+                for el_c0fa9fc2 in v_3d676d2e.chars() {
+                    if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t' | '\u{2014}' | '\u{2194}')
+                        || el_c0fa9fc2.is_ascii())
+                    {
+                        ers.push(format!(
+                            "{}:{} non-english symbol `{}` (U+{:04X})",
+                            path.display(),
+                            k_0fa16fc1 + 1,
+                            el_c0fa9fc2,
+                            u32::from(el_c0fa9fc2)
+                        ));
+                    }
+                }
+            }
+        }
+        assert!(ers.is_empty(), "non-english symbols:\n{}", ers.join("\n"));
+    }
+    fn cargo_toml_project_files() -> impl Iterator<Item = walkdir::DirEntry> {
+        project_dir()
+            .into_iter()
+            .filter_entry(|el| el.file_name() != "target" && el.file_name() != ".git")
+            .filter_map(Result::ok)
+            .filter(|el| el.file_name() == "Cargo.toml")
     }
     fn check_expect_or_panic_contains_only_unq_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {
@@ -164,68 +282,9 @@ mod tests {
         }
         assert!(all_ers.is_empty(), "6062a9e9 {all_ers:#?}",);
     }
-    fn project_dir() -> WalkDir {
-        WalkDir::new("../")
-    }
-    fn rs_project_files() -> impl Iterator<Item = walkdir::DirEntry> {
-        project_dir()
-            .into_iter()
-            .filter_entry(|el| {
-                el.file_name() != "target"
-                    && el.file_name() != ".git"
-                    && (el.file_type().is_dir()
-                        || el.path().extension().and_then(|e| e.to_str()) == Some("rs"))
-            })
-            .filter_map(Result::ok)
-            .filter(|el| el.path().extension().and_then(|e| e.to_str()) == Some("rs"))
-    }
     #[test]
-    fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
-        let rust_or_clippy = RustOrClippy::Rust;
-        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
-        let lints_from_cmd = {
-            let output = Command::new("rustc")
-                .args(["-W", "help"])
-                .stdout(Stdio::piped())
-                .output()
-                .expect("7c939ff3");
-            assert!(output.status.success(), "0c000f24");
-            {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                assert!(stderr.trim().is_empty(), "0a4b2082");
-            };
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
-                .expect("60d99c87")
-                .captures_iter(&stdout)
-                .map(|el_70833f93| el_70833f93[1].to_string().replace('-', "_").to_lowercase())
-                .collect::<Vec<String>>()
-        };
-        compare_lints_vecs(
-            rust_or_clippy,
-            &lints_vec_from_cargo_toml,
-            &lints_from_cmd,
-            //todo on commit momment seems like this lints still not added to rustc, but in the list of rustc -W help
-            &vec![
-                String::from("fuzzy_provenance_casts"),
-                String::from("lossy_provenance_casts"),
-                String::from("multiple_supertrait_upcastable"),
-                String::from("must_not_suspend"),
-                String::from("non_exhaustive_omitted_patterns"),
-                String::from("supertrait_item_shadowing_definition"),
-                String::from("supertrait_item_shadowing_usage"),
-                String::from("aarch_64_softfloat_neon"),
-                String::from("dflt_overrides_dflt_fields"),
-                String::from("test_unstable_lint"),
-                String::from("resolving_to_items_shadowing_supertrait_items"),
-                String::from("shadowing_supertrait_items"),
-                String::from("unqualified_local_imports"), //need to use some kind of different test flag or something for this
-                String::from("unreachable_cfg_select_predicates"),
-                String::from("default_overrides_default_fields"),
-                String::from("linker_info"),
-                String::from("duplicate_features"),
-            ],
-        );
+    fn check_expect_contains_only_unq_uuid_v4() {
+        check_expect_or_panic_contains_only_unq_uuid_v4(ExpectOrPanic::Expect);
     }
     #[test]
     fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lints() {
@@ -302,6 +361,75 @@ mod tests {
         );
     }
     #[test]
+    fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
+        let rust_or_clippy = RustOrClippy::Rust;
+        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
+        let lints_from_cmd = {
+            let output = Command::new("rustc")
+                .args(["-W", "help"])
+                .stdout(Stdio::piped())
+                .output()
+                .expect("7c939ff3");
+            assert!(output.status.success(), "0c000f24");
+            {
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                assert!(stderr.trim().is_empty(), "0a4b2082");
+            };
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
+                .expect("60d99c87")
+                .captures_iter(&stdout)
+                .map(|el_70833f93| el_70833f93[1].to_string().replace('-', "_").to_lowercase())
+                .collect::<Vec<String>>()
+        };
+        compare_lints_vecs(
+            rust_or_clippy,
+            &lints_vec_from_cargo_toml,
+            &lints_from_cmd,
+            //todo on commit momment seems like this lints still not added to rustc, but in the list of rustc -W help
+            &vec![
+                String::from("fuzzy_provenance_casts"),
+                String::from("lossy_provenance_casts"),
+                String::from("multiple_supertrait_upcastable"),
+                String::from("must_not_suspend"),
+                String::from("non_exhaustive_omitted_patterns"),
+                String::from("supertrait_item_shadowing_definition"),
+                String::from("supertrait_item_shadowing_usage"),
+                String::from("aarch_64_softfloat_neon"),
+                String::from("dflt_overrides_dflt_fields"),
+                String::from("test_unstable_lint"),
+                String::from("resolving_to_items_shadowing_supertrait_items"),
+                String::from("shadowing_supertrait_items"),
+                String::from("unqualified_local_imports"), //need to use some kind of different test flag or something for this
+                String::from("unreachable_cfg_select_predicates"),
+                String::from("default_overrides_default_fields"),
+                String::from("linker_info"),
+                String::from("duplicate_features"),
+            ],
+        );
+    }
+    #[test]
+    fn check_panic_contains_only_unq_uuid_v4() {
+        check_expect_or_panic_contains_only_unq_uuid_v4(ExpectOrPanic::Panic);
+    }
+    #[test]
+    fn check_rs_files_contains_only_unq_uuid_v4() {
+        let rgx = Regex::new(
+            r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
+        ).expect("e098a1ff");
+        let mut seen = HashSet::new();
+        for el_44a8aa56 in rs_project_files() {
+            let Ok(v) = read_to_string(el_44a8aa56.path()) else {
+                continue;
+            };
+            for el_714b3d9c in rgx.find_iter(&v) {
+                let uuid = Uuid::parse_str(el_714b3d9c.as_str()).expect("c9711efd");
+                assert!(uuid.get_version_num() == 4, "49b49b21");
+                assert!(seen.insert(uuid), "4cf9d239");
+            }
+        }
+    }
+    #[test]
     fn check_workspace_dependencies_having_exact_version() {
         for (_, v_5c36cb98) in toml_val_as_tbl(
             toml_v_from_from_cargo_toml_workspace()
@@ -369,82 +497,173 @@ mod tests {
             }
         }
     }
-    #[test]
-    fn check_expect_contains_only_unq_uuid_v4() {
-        check_expect_or_panic_contains_only_unq_uuid_v4(ExpectOrPanic::Expect);
-    }
-    #[test]
-    fn check_panic_contains_only_unq_uuid_v4() {
-        check_expect_or_panic_contains_only_unq_uuid_v4(ExpectOrPanic::Panic);
-    }
-    #[test]
-    fn check_rs_files_contains_only_unq_uuid_v4() {
-        let rgx = Regex::new(
-            r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
-        ).expect("e098a1ff");
-        let mut seen = HashSet::new();
-        for el_44a8aa56 in rs_project_files() {
-            let Ok(v) = read_to_string(el_44a8aa56.path()) else {
-                continue;
-            };
-            for el_714b3d9c in rgx.find_iter(&v) {
-                let uuid = Uuid::parse_str(el_714b3d9c.as_str()).expect("c9711efd");
-                assert!(uuid.get_version_num() == 4, "49b49b21");
-                assert!(seen.insert(uuid), "4cf9d239");
-            }
-        }
-    }
-    #[test]
-    fn all_files_are_english_only() {
-        let mut ers = Vec::new();
-        let exceptions = [
-            "../pg_crud/pg_crud_cmn/src/lib.rs", //contain utf-8 String test
-        ];
-        for el_d87f0495 in project_dir()
-            .into_iter()
-            .filter_entry(|el_6870bc3d| {
-                let name = el_6870bc3d.file_name().to_string_lossy();
-                name != "target" && name != ".git"
-            })
-            .filter_map(Result::ok)
-        {
-            let path = el_d87f0495.path();
-            if !path.is_file()
-                || !path
-                    .extension()
-                    .and_then(|v_56829539| v_56829539.to_str())
-                    .is_some_and(|v_c980b45f| {
-                        matches!(
-                            v_c980b45f,
-                            "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
-                        )
-                    })
-            {
-                continue;
-            }
-            if is_exception(path, &exceptions) {
-                continue;
-            }
-            let Ok(v) = read_to_string(path) else {
-                continue; //skip binary non-utf8 files
-            };
-            for (k_0fa16fc1, v_3d676d2e) in v.lines().enumerate() {
-                for el_c0fa9fc2 in v_3d676d2e.chars() {
-                    if !(matches!(el_c0fa9fc2, '\n' | '\r' | '\t' | '\u{2014}' | '\u{2194}')
-                        || el_c0fa9fc2.is_ascii())
-                    {
-                        ers.push(format!(
-                            "{}:{} non-english symbol `{}` (U+{:04X})",
-                            path.display(),
-                            k_0fa16fc1 + 1,
-                            el_c0fa9fc2,
-                            u32::from(el_c0fa9fc2)
-                        ));
-                    }
+    fn compare_lints_vecs(
+        rust_or_clippy: RustOrClippy,
+        lints_vec_from_cargo_toml: &[String],
+        lints_to_check: &[String],
+        lints_not_in_cargo_toml_vec_exceptions: &[String],
+    ) {
+        let rust_or_clippy_name = rust_or_clippy.name();
+        let mut lints_not_in_cargo_toml = Vec::new();
+        for el_31af38d6 in lints_to_check {
+            if !lints_vec_from_cargo_toml.contains(el_31af38d6) {
+                if lints_not_in_cargo_toml_vec_exceptions.contains(el_31af38d6) {
+                    println!(
+                        "todo!() {rust_or_clippy_name} {el_31af38d6} 158b5c43-05fa-4b8f-b6fe-9cda49d26997"
+                    );
+                } else {
+                    lints_not_in_cargo_toml.push(el_31af38d6);
                 }
             }
         }
-        assert!(ers.is_empty(), "non-english symbols:\n{}", ers.join("\n"));
+        assert!(lints_not_in_cargo_toml.is_empty(), "d2b7ba9f");
+        let mut outdated_lints_in_file = Vec::new();
+        for el_d3c0c904 in lints_vec_from_cargo_toml {
+            if !lints_to_check.contains(el_d3c0c904) {
+                outdated_lints_in_file.push(el_d3c0c904);
+            }
+        }
+        assert!(outdated_lints_in_file.is_empty(), "93787d2d");
+    }
+    fn is_exception(path: &Path, exceptions: &[&str]) -> bool {
+        exceptions.contains(&path.display().to_string().as_str())
+    }
+    fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
+        let workspace = toml_v_from_from_cargo_toml_workspace();
+        let lints = workspace.get("lints").expect("82eaea37");
+        let toml_v_tbl = toml_val_as_tbl(
+            lints.get(rust_or_clippy.name()).expect("dbd02f72").clone(),
+            "cae226cd",
+        );
+        toml_v_tbl.keys().cloned().collect::<Vec<String>>()
+    }
+    #[test]
+    fn no_dbg_macro_in_source_code() {
+        let mut ers = Vec::new();
+        for el_d7a2c4e9 in rs_project_files() {
+            let path = el_d7a2c4e9.path();
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let Ok(ast) = parse_file(&v) else {
+                continue;
+            };
+            let mut visitor = DbgVisitor { found: false };
+            Visit::visit_file(&mut visitor, &ast);
+            if visitor.found {
+                ers.push(format!("{}: contains dbg!()", path.display()));
+            }
+        }
+        assert!(ers.is_empty(), "f1c7a4e3 dbg!() found:\n{}", ers.join("\n"));
+    }
+    #[test]
+    fn no_empty_lines_in_rust_files() {
+        let mut ers = Vec::new();
+        for entry in rs_project_files() {
+            let path = entry.path();
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let mut lines_iter = v.lines();
+            if let Some(first_line) = lines_iter.next()
+                && first_line.trim().is_empty()
+                && lines_iter.next().is_none()
+            {
+                continue;
+            }
+            for (line_nbr, line) in v.lines().enumerate() {
+                if line.trim().is_empty() {
+                    ers.push(format!("{}:{} empty line", path.display(), line_nbr + 1));
+                }
+            }
+        }
+        assert!(
+            ers.is_empty(),
+            "Empty lines found in Rust files:\n{}",
+            ers.join("\n")
+        );
+    }
+    #[test]
+    fn no_todo_or_unimplemented_macro_in_source_code() {
+        let mut ers = Vec::new();
+        for el_a4d8e2f6 in rs_project_files() {
+            let path = el_a4d8e2f6.path();
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let Ok(ast) = parse_file(&v) else {
+                continue;
+            };
+            let mut visitor = TodoUnimplVisitor { found: Vec::new() };
+            Visit::visit_file(&mut visitor, &ast);
+            for el_8c3a5e1d in &visitor.found {
+                ers.push(format!("{}: contains {el_8c3a5e1d}!()", path.display()));
+            }
+        }
+        assert!(
+            ers.is_empty(),
+            "c4e9a2d7 todo!/unimplemented! found:\n{}",
+            ers.join("\n")
+        );
+    }
+    #[test]
+    fn no_unwrap_in_source_code() {
+        let mut ers = Vec::new();
+        for el_c1e8a3d5 in rs_project_files() {
+            let path = el_c1e8a3d5.path();
+            let Ok(v) = read_to_string(path) else {
+                continue;
+            };
+            let Ok(ast) = parse_file(&v) else {
+                continue;
+            };
+            let mut visitor = UnwrapVisitor { found: Vec::new() };
+            Visit::visit_file(&mut visitor, &ast);
+            for el_5d2f8a1c in visitor.found {
+                ers.push(format!("{}: {el_5d2f8a1c}", path.display()));
+            }
+        }
+        assert!(
+            ers.is_empty(),
+            "e8b3a6d2 unwrap() found:\n{}",
+            ers.join("\n")
+        );
+    }
+    fn project_dir() -> WalkDir {
+        WalkDir::new("../")
+    }
+    fn rs_project_files() -> impl Iterator<Item = walkdir::DirEntry> {
+        project_dir()
+            .into_iter()
+            .filter_entry(|el| {
+                el.file_name() != "target"
+                    && el.file_name() != ".git"
+                    && (el.file_type().is_dir()
+                        || el.path().extension().and_then(|e| e.to_str()) == Some("rs"))
+            })
+            .filter_map(Result::ok)
+            .filter(|el| el.path().extension().and_then(|e| e.to_str()) == Some("rs"))
+    }
+    fn sel(s: &str, uuid: &str) -> Selector {
+        Selector::parse(s).unwrap_or_else(|_| panic!("{uuid}"))
+    }
+    fn toml_v_from_from_cargo_toml_workspace() -> Value {
+        let tbl = read_to_string("../Cargo.toml")
+            .expect("39a0d238")
+            .parse::<TomlTable>()
+            .expect("beb11586");
+        tbl.get("workspace").expect("f728192d").clone()
+    }
+    fn toml_val_as_tbl(v: Value, uuid: &str) -> Table {
+        match v {
+            Value::Table(t) => t,
+            Value::String(_)
+            | Value::Integer(_)
+            | Value::Float(_)
+            | Value::Boolean(_)
+            | Value::Datetime(_)
+            | Value::Array(_) => panic!("{uuid}"),
+        }
     }
     #[test]
     fn workspace_crates_must_use_workspace_dependencies() {
@@ -501,29 +720,54 @@ mod tests {
         }
     }
     #[test]
-    fn check_no_empty_lines_in_rust_files() {
+    fn workspace_members_exist_on_disk() {
+        let workspace = toml_v_from_from_cargo_toml_workspace();
+        let root = workspace
+            .get("members")
+            .and_then(|v_2a6c1b0e| v_2a6c1b0e.as_array());
+        let Some(members) = root else {
+            panic!("7f3a1c4e");
+        };
         let mut ers = Vec::new();
-        for entry in rs_project_files() {
-            let path = entry.path();
-            let Ok(v) = read_to_string(path) else {
-                continue;
-            };
-            let mut lines_iter = v.lines();
-            if let Some(first_line) = lines_iter.next()
-                && first_line.trim().is_empty()
-                && lines_iter.next().is_none()
-            {
-                continue;
-            }
-            for (line_nbr, line) in v.lines().enumerate() {
-                if line.trim().is_empty() {
-                    ers.push(format!("{}:{} empty line", path.display(), line_nbr + 1));
+        for el_7b2d9e5a in members {
+            if let Some(member_str) = el_7b2d9e5a.as_str() {
+                let path = Path::new("..").join(member_str).join("Cargo.toml");
+                if !path.exists() {
+                    ers.push(format!(
+                        "member `{member_str}` Cargo.toml not found at {}",
+                        path.display()
+                    ));
                 }
+            }
+        }
+        assert!(ers.is_empty(), "a4e3b8d1 {ers:#?}");
+    }
+    #[test]
+    fn workspace_members_sorted_alphabetically() {
+        let workspace = toml_v_from_from_cargo_toml_workspace();
+        let Some(members) = workspace
+            .get("members")
+            .and_then(|v_6e8f2c1a| v_6e8f2c1a.as_array())
+        else {
+            panic!("c1d4f7a2");
+        };
+        let members_vec: Vec<String> = members
+            .iter()
+            .filter_map(|v_0d3a7b9f| v_0d3a7b9f.as_str().map(String::from))
+            .collect();
+        let mut sorted = members_vec.clone();
+        sorted.sort();
+        let mut ers = Vec::new();
+        for (k_4b1e6a8c, (got, expected)) in members_vec.iter().zip(sorted.iter()).enumerate() {
+            if got != expected {
+                ers.push(format!(
+                    "index {k_4b1e6a8c}: got `{got}`, expected `{expected}`"
+                ));
             }
         }
         assert!(
             ers.is_empty(),
-            "Empty lines found in Rust files:\n{}",
+            "b7c2e5f8 members not sorted:\n{}",
             ers.join("\n")
         );
     }
