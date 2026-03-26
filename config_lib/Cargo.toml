@@ -22,7 +22,6 @@ dotenv.workspace = true
 convert_case.workspace = true
 try_from_env = {path = "./try_from_env"}
 gen_getter_traits_for_struct_fields = {path = "./gen_getter_traits_for_struct_fields"}
-impl_display_as_debug = {path = "../impl_display_as_debug"}
 optml = {path = "../optml"}
 
 [lints]

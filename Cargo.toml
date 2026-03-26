@@ -12,7 +12,6 @@ members = [
   "gen_quotes",
   "git_info",
   "git_sync_cmd",
-  "impl_display_as_debug",
   "loc_lib",
   "loc_lib/loc_test",
   "macro_clippy_check_cmn",
