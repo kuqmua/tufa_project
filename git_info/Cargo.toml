@@ -14,7 +14,7 @@ edition = "2024"
 [dependencies]
 serde.workspace = true
 serde_derive.workspace = true
-compile_time_git_info = {path = "./compile_time_git_info"}
+git-version.workspace = true
 naming = {path = "../naming"}
 optml = {path = "../optml"}
 

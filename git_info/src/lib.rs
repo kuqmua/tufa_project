@@ -1,8 +1,9 @@
 pub use naming::GITHUB_URL;
 use optml::Optml;
 use serde_derive::{Deserialize, Serialize};
-pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> =
-    compile_time_git_info::compile_time_project_git_info!();
+pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> = ProjectGitInfo {
+    commit: git_version::git_version!(args = ["--always", "--abbrev=40"]),
+};
 #[derive(Debug, Serialize, Deserialize, Clone, Hash, PartialEq, Eq, Default, Optml)]
 pub struct ProjectGitInfo<'commit_lt> {
     pub commit: &'commit_lt str,
