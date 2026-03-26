@@ -1,4 +1,3 @@
-use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::gen_impl_try_from_ts;
 use macros_helpers::{
@@ -56,6 +55,7 @@ use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::{once, repeat_n},
 };
+use strum::IntoEnumIterator as _;
 use strum_macros::{Display as StrumDisplay, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, CoreDefault, F32, I16, I32, I64, MustUse,
@@ -182,17 +182,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
         }
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Serialize,
-        Deserialize,
-        StrumDisplay,
-        EnumIter,
-        EnumExtension,
-        Optml,
-    )]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, Optml)]
     enum PgType {
         I16AsInt2,
         I32AsInt4,
@@ -350,17 +340,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     }
     // todo reuse it(move to pg_macros_cmn) if sqlx devs will add nested arr support
     #[allow(clippy::arbitrary_source_item_ordering)]
-    #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Serialize,
-        Deserialize,
-        StrumDisplay,
-        EnumIter,
-        EnumExtension,
-        Optml,
-    )]
+    #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, StrumDisplay, EnumIter, Optml)]
     enum PgTypePattern {
         Stdrt,
         ArrDim1 { dim1_is_nl: IsNl },
@@ -601,15 +581,15 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
     };
     let (cols_ts, pg_type_arr) = {
         let gen_vrts = |include_arr: bool, filter: Option<&[PgType]>| {
-            PgType::into_arr().into_iter().filter(|el| filter.is_none_or(|f| f.contains(el))).fold(Vec::new(), |mut acc0, el| {
-                for el0 in PgTypePattern::into_arr().into_iter().fold(Vec::new(), |mut acc1, el1| {
+            PgType::iter().filter(|el| filter.is_none_or(|f| f.contains(el))).fold(Vec::new(), |mut acc0, el| {
+                for el0 in PgTypePattern::iter().fold(Vec::new(), |mut acc1, el1| {
                     match &el1 {
                         PgTypePattern::Stdrt => {
                             acc1.push(el1);
                         }
                         PgTypePattern::ArrDim1 { .. } => {
                             if include_arr {
-                                for el2 in IsNl::into_arr() {
+                                for el2 in IsNl::iter() {
                                     acc1.push(PgTypePattern::ArrDim1 { dim1_is_nl: el2 });
                                 }
                             }
@@ -626,7 +606,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                     pg_type_pattern: el0,
                                 });
                             },
-                            CanBeNl::True => IsNl::into_arr().into_iter().for_each(|el1| {
+                            CanBeNl::True => IsNl::iter().for_each(|el1| {
                                 acc0.push(PgTypeRecord {
                                     pg_type: el.clone(),
                                     is_nl: el1,
@@ -639,7 +619,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                             CanBeAnArrEl::True => match &el.can_be_nl() {
                                 CanBeNl::False => {
                                     if matches!(&dim1_is_nl, IsNl::False) {
-                                        for el1 in IsNl::into_arr() {
+                                        for el1 in IsNl::iter() {
                                             acc0.push(PgTypeRecord {
                                                 pg_type: el.clone(),
                                                 is_nl: el1,
@@ -648,7 +628,7 @@ pub fn gen_pg_types(input_ts: &Ts2) -> Ts2 {
                                         }
                                     }
                                 },
-                                CanBeNl::True => IsNl::into_arr().into_iter().for_each(|is_nl| {
+                                CanBeNl::True => IsNl::iter().for_each(|is_nl| {
                                     acc0.push(PgTypeRecord {
                                         pg_type: el.clone(),
                                         is_nl,

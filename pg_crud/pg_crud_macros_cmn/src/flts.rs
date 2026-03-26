@@ -1,4 +1,3 @@
-use enum_extension_lib::EnumExtension;
 use naming::prm::{PgJsonWhSelfUcc, PgTypeWhSelfUcc};
 use naming::{
     AdjacentWithRangeUcc, AllElsEqUcc, AllElsGreaterThanUcc, AllElsRgxUcc, BeforeUcc, BtwnUcc,
@@ -65,7 +64,7 @@ macro_rules! pg_json_flt_dim {
     };
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
+#[derive(Debug, Clone, Display, EnumIter, Optml)]
 pub enum PgTypeFlt {
     Eq { ident: Ts2 },
     DimOneEq { ident: Ts2 },
@@ -244,7 +243,7 @@ impl PgFlt for PgTypeFlt {
     }
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(Debug, Clone, Display, EnumIter, EnumExtension, Optml)]
+#[derive(Debug, Clone, Display, EnumIter, Optml)]
 pub enum PgJsonFlt {
     Eq { ident: Ts2 },
     DimOneEq { ident: Ts2 },

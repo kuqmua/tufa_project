@@ -1,10 +1,9 @@
-use enum_extension_lib::EnumExtension;
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::ToTokens;
 use std::fmt::Display;
 use strum_macros::{Display, EnumIter};
-#[derive(Debug, Display, EnumIter, EnumExtension, Optml)]
+#[derive(Debug, Display, EnumIter, Optml)]
 pub enum IsStdrtWithId {
     False,
     True,

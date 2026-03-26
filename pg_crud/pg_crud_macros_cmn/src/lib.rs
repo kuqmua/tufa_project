@@ -1,5 +1,4 @@
 mod flts;
-use enum_extension_lib::EnumExtension;
 pub use flts::*;
 use gen_quotes::dq_ts;
 use macros_helpers::DTsBuilder;
@@ -83,7 +82,6 @@ pub enum IsStdrtNn {
     Deserialize,
     Display,
     EnumIter,
-    EnumExtension,
     Optml,
 )]
 pub enum IsNl {

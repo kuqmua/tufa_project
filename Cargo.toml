@@ -8,8 +8,6 @@ members = [
   "config_lib/server_port",
   "config_lib/server_port/server_port_try_from_u16",
   "config_lib/try_from_env",
-  "enum_extension_lib",
-  "enum_extension_lib/enum_extension",
   "file_system",
   "gen_quotes",
   "git_info",

@@ -1,4 +1,3 @@
-use enum_extension_lib::EnumExtension;
 use gen_quotes::dq_ts;
 use macros_helpers::{
     DCopy, DSchemarsJsonSchema, DTsBuilder, FormatWithCargofmt, ShouldWriteTsIntoFile,
@@ -39,6 +38,7 @@ use std::{
     fmt::{Display, Formatter, Result as StdFmtResult},
     iter::once,
 };
+use strum::IntoEnumIterator as _;
 use strum_macros::{Display, EnumIter};
 use token_patterns::{
     AllowClippyArbitrarySrcItemOrdering, Bool, F32, F64, I8, I16, I32, I64, MustUse, NoneTs,
@@ -122,17 +122,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Eq,
-        Hash,
-        Serialize,
-        Deserialize,
-        Display,
-        EnumIter,
-        EnumExtension,
-        Optml,
+        Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, Optml,
     )]
     enum PgJson {
         I8AsJsonbNbr,
@@ -159,17 +149,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
     }
     #[allow(clippy::arbitrary_source_item_ordering)]
     #[derive(
-        Debug,
-        Clone,
-        PartialEq,
-        Eq,
-        Hash,
-        Serialize,
-        Deserialize,
-        Display,
-        EnumIter,
-        EnumExtension,
-        Optml,
+        Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Display, EnumIter, Optml,
     )]
     enum Pattern {
         Stdrt,
@@ -355,7 +335,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 }
                 let sub = all_is_nl_combinations(depth.checked_sub(1).expect("a3b7c9d1"));
                 sub.into_iter().flat_map(|combo| {
-                    IsNl::into_arr().into_iter().map(move |nl| {
+                    IsNl::iter().map(move |nl| {
                         let mut c_drvd = combo.clone();
                         c_drvd.push(nl);
                         c_drvd
@@ -366,8 +346,8 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 i32::try_from(pattern.dim_count()).expect("c5d9e3f7")
             };
             let gen_vrts = |max_dim: Option<i32>, exact_dim: Option<i32>, filter: Option<&[PgJson]>|{
-                PgJson::into_arr().into_iter().filter(|pg_json| filter.is_none_or(|f| f.contains(pg_json))).fold(Vec::new(), |mut acc, pg_json| {
-                    for pattern in Pattern::into_arr() {
+                PgJson::iter().filter(|pg_json| filter.is_none_or(|f| f.contains(pg_json))).fold(Vec::new(), |mut acc, pg_json| {
+                    for pattern in Pattern::iter() {
                         let pattern_dim = dim_of_pattern(&pattern);
                         let include = match (exact_dim, max_dim) {
                             (Some(ed), _) => pattern_dim == ed,
@@ -377,7 +357,7 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                         if include {
                             let dim_count = pattern.dim_count();
                             for combo in all_is_nl_combinations(dim_count) {
-                                for is_nl in IsNl::into_arr() {
+                                for is_nl in IsNl::iter() {
                                     acc.push(Record {
                                         pg_json: pg_json.clone(),
                                         is_nl,

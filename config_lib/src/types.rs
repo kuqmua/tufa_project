@@ -1,5 +1,4 @@
 use dotenv::dotenv;
-use enum_extension_lib::EnumExtension;
 use optml::Optml;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -9,19 +8,7 @@ use std::{
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    EnumIter,
-    EnumExtension,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Eq,
-    Optml,
-)]
+#[derive(Debug, Default, Clone, Copy, EnumIter, Serialize, Deserialize, PartialEq, Eq, Optml)]
 pub enum TracingLevel {
     Trace,
     Debug,
@@ -45,7 +32,11 @@ impl FromStr for TracingLevel {
 }
 impl Display for TracingLevel {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        write!(f, "{}", self.to_sc())
+        write!(
+            f,
+            "{}",
+            convert_case::Casing::to_case(&format!("{self:?}"), convert_case::Case::Snake)
+        )
     }
 }
 #[derive(

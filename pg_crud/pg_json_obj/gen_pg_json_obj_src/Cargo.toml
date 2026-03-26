@@ -24,7 +24,6 @@ panic_loc = {path = "../../../panic_loc"}
 naming = {path = "../../../naming"}
 macros_helpers = {path = "../../../macros_helpers"}
 token_patterns = {path = "../../../token_patterns"}
-enum_extension_lib = {path = "../../../enum_extension_lib"}
 optml = {path = "../../../optml"}
 
 [lints]

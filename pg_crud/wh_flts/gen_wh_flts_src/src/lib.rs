@@ -18,6 +18,7 @@ use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde_json::from_str;
 use std::fmt::Display;
+use strum::IntoEnumIterator as _;
 use token_patterns::{PgCrudCmnDfltSomeOneEl, PgCrudCmnDfltSomeOneElCall};
 #[must_use]
 pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
@@ -1049,7 +1050,9 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
             };
             gend
         };
-        let flt_arr_ts = PgTypeFlt::into_arr().map(|el| gen_flts_ts(&el));
+        let flt_arr_ts = PgTypeFlt::iter()
+            .map(|el| gen_flts_ts(&el))
+            .collect::<Vec<_>>();
         let gend = quote! {#(#flt_arr_ts)*};
         mb_write_ts_into_file(
             gen_wh_flts_config.pg_types_write_into_file,
@@ -1601,7 +1604,9 @@ pub fn gen_wh_flts(input_ts: &Ts2) -> Ts2 {
             };
             gend
         };
-        let flt_arr_ts = PgJsonFlt::into_arr().map(|el| gen_flts_ts(&el));
+        let flt_arr_ts = PgJsonFlt::iter()
+            .map(|el| gen_flts_ts(&el))
+            .collect::<Vec<_>>();
         let gend = quote! {#(#flt_arr_ts)*};
         mb_write_ts_into_file(
             gen_wh_flts_config.pg_json_write_into_file,

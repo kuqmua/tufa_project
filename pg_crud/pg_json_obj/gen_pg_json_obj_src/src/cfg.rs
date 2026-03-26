@@ -1,4 +1,3 @@
-use enum_extension_lib::EnumExtension;
 use macros_helpers::ShouldWriteTsIntoFile;
 use optml::Optml;
 use pg_crud_macros_cmn::IsNl;
@@ -10,9 +9,7 @@ pub enum TraitGen {
     PgTypeAndPgJson,
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
-#[derive(
-    Debug, Clone, PartialEq, Serialize, Deserialize, Display, EnumIter, EnumExtension, Optml,
-)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display, EnumIter, Optml)]
 pub enum Pattern {
     Stdrt,
     Arr,
