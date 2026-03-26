@@ -18,7 +18,8 @@ serde.workspace = true
 thiserror.workspace = true
 schemars.workspace = true
 loc_lib = {path = "../../loc_lib"}
-from_str = {path = "../../from_str"}
+strum.workspace = true
+strum_macros.workspace = true
 naming = {path = "../../naming"}
 pg_crud_cmn_and_macros_cmn = {path = "../pg_crud_cmn_and_macros_cmn"}
 optml = {path = "../../optml"}

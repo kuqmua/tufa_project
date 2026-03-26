@@ -1,4 +1,3 @@
-use from_str::FromStr;
 use loc_lib::{Location, ToErrString, loc, loc::Loc};
 use naming::{AscUcc, DescUcc, DisplayToScStr, DisplayToUccStr};
 use optml::Optml;
@@ -19,6 +18,7 @@ use std::{
         Formatter, Result as StdFmtResult, {Debug, Display},
     },
 };
+use strum_macros::EnumString;
 use thiserror::Error;
 use utoipa::ToSchema;
 use uuid::Uuid;
@@ -773,7 +773,8 @@ impl<T: Debug + PartialEq + Clone + AllEnumVrtsArrDfltSomeOneEl> DfltSomeOneEl f
         }
     }
 }
-#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, FromStr, Optml)]
+#[derive(Debug, Default, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, EnumString, Optml)]
+#[strum(serialize_all = "snake_case")]
 pub enum Order {
     #[serde(rename(serialize = "asc", deserialize = "asc"))]
     #[default]
