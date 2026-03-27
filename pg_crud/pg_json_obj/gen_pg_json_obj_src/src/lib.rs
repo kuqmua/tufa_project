@@ -42,10 +42,11 @@ use pg_crud_macros_cmn::{
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, Dim, Import, IncrPrmUndrscr, IsCrQbMut, IsNl,
     IsPkUndrscr, IsQbMut, IsSelOnlyCrdIdsQbMut, IsSelOnlyUpddIdsQbMut, IsSelQpColFieldForErMsgUsed,
     IsSelQpIsPgTypeUsed, IsSelQpSelfSelUsed, IsUpdQbMut, IsUpdQpJsonbSetTargetUsed,
-    IsUpdQpSelfUpdUsed, PgTypeOrPgJson, SelQpValueUndrscr, UpdQpJsonbSetAccumulatorUndrscr,
-    UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr, UpdQpValueUndrscr,
-    gen_case_jsonb_typeof_null, gen_if_let_some_match_ok_assign_query_or_return_err_ts,
-    gen_impl_de_for_struct_ts, gen_impl_display_and_to_err_string_debug_ts,
+    IsUpdQpSelfUpdUsed, NULL_JSONB, PgTypeOrPgJson, SelQpValueUndrscr,
+    UpdQpJsonbSetAccumulatorUndrscr, UpdQpJsonbSetPathUndrscr, UpdQpJsonbSetTargetUndrscr,
+    UpdQpValueUndrscr, gen_case_jsonb_typeof_null,
+    gen_if_let_some_match_ok_assign_query_or_return_err_ts, gen_impl_de_for_struct_ts,
+    gen_impl_display_and_to_err_string_debug_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_max_page_size_ts,
     gen_impl_pg_crud_all_vrts_dflt_some_one_el_ts,
     gen_impl_pg_crud_dflt_some_one_el_max_page_size_ts, gen_impl_pg_crud_dflt_some_one_el_ts,
@@ -2894,7 +2895,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                             let _: Option<char> = acc_f7537df2.pop();
                                             format!(#dq_ts0)
                                         },
-                                        None => "'null'::jsonb".to_owned()//todo mb reuse
+                                        None => pg_crud::NULL_JSONB.to_owned()
                                     })
                                 }
                             },
@@ -3031,7 +3032,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 }
                                             }
                                         ),
-                                        None => "'null'::jsonb".to_owned(),
+                                        None => pg_crud::NULL_JSONB.to_owned(),
                                     })
                                 }
                             },
@@ -3413,7 +3414,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                     "case when jsonb_typeof({{col_field}}->'{{fi}}') = 'null' then {} else ({{v_d7bbd03c}}) end",
                                     gen_jsonb_build_obj(&format!(
                                         "'{{fi}}',{}",
-                                        gen_jsonb_build_obj_v(&"'null'::jsonb")
+                                        gen_jsonb_build_obj_v(&NULL_JSONB)
                                     ))
                                 )
                             );
@@ -3921,7 +3922,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 acc_0e9170a3
                                             }
                                         ),
-                                        None => "'null'::jsonb".to_owned(),
+                                        None => pg_crud::NULL_JSONB.to_owned(),
                                     }
                                 ))
                             }
@@ -4028,7 +4029,7 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                                                 acc_857ce631
                                             }
                                         ),
-                                        None => "'null'::jsonb".to_owned(),
+                                        None => pg_crud::NULL_JSONB.to_owned(),
                                     }
                                 ))
                             }

@@ -30,6 +30,7 @@ macro_rules! trait_al {
     };
 }
 pub const DEFAULT_PAGINATION_LIMIT: i64 = 5;
+pub const NULL_JSONB: &str = "'null'::jsonb";
 pub trait AllEnumVrtsArrDfltSomeOneEl: Sized {
     fn all_vrts_dflt_some_one_el() -> Vec<Self>;
 }
@@ -224,7 +225,7 @@ pub trait PgJson {
     type Rd: RdAl + UtoipaToSchemaAndSchemarsJsonSchemaAl + DfltSomeOneEl;
     type RdIds: RdIdsAl;
     fn sel_only_ids_qp(_col_field: &str) -> Result<String, QpEr> {
-        Ok("jsonb_build_object('v','null'::jsonb)".to_owned())
+        Ok(format!("jsonb_build_object('v',{NULL_JSONB})"))
     }
     type RdInn: RdInnAl;
     fn into_inn(v: Self::Rd) -> Self::RdInn;
@@ -1446,7 +1447,7 @@ pub fn incr_checked_add_one_returning_incr(incr: &mut u64) -> Result<u64, QpEr> 
 }
 #[must_use]
 pub fn fi_jsonb_build_obj_v(fi: &str) -> String {
-    format!("'{fi}',jsonb_build_object('v','null'::jsonb),")
+    format!("'{fi}',jsonb_build_object('v',{NULL_JSONB}),")
 }
 pub fn pg_json_upd_qp(
     jsonb_set_accumulator: &str,
@@ -1462,7 +1463,7 @@ pub fn pg_json_upd_qp(
 }
 #[must_use]
 pub fn case_jsonb_typeof_null(target: &dyn Display, else_expr: &dyn Display) -> String {
-    format!("case when jsonb_typeof({target}) = 'null' then 'null'::jsonb else ({else_expr}) end")
+    format!("case when jsonb_typeof({target}) = 'null' then {NULL_JSONB} else ({else_expr}) end")
 }
 #[must_use]
 pub const fn i8_test_cases_vec() -> [i8; 3] {

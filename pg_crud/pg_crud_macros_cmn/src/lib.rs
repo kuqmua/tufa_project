@@ -60,6 +60,7 @@ macro_rules! bool_enum_to_tokens {
         }
     };
 }
+pub const NULL_JSONB: &str = "'null'::jsonb";
 #[derive(Debug, Clone, Optml)]
 pub enum DeriveOrImpl {
     Derive,
@@ -1850,7 +1851,7 @@ pub fn gen_jsonb_set(accumulator: &dyn Display, path: &dyn Display, value: &dyn 
 }
 #[must_use]
 pub fn gen_case_jsonb_typeof_null(target: &dyn Display, else_expr: &dyn Display) -> String {
-    format!("case when jsonb_typeof({target}) = 'null' then 'null'::jsonb else ({else_expr}) end")
+    format!("case when jsonb_typeof({target}) = 'null' then {NULL_JSONB} else ({else_expr}) end")
 }
 #[must_use]
 pub fn gen_upd_arr_null_guard_agg(
