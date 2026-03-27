@@ -1,5 +1,3 @@
-//todo
-use proc_macro2::TokenStream as Ts2;
 gen_derive_ts_builder::gen_derive_ts_builder!([
     "Debug",
     "Default",

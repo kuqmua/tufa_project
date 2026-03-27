@@ -133,6 +133,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
     let derive_ts_builder_ucc = quote! {DTsBuilder};
     let struct_or_enum_ucc = quote! {StructOrEnum};
     let quote_to_tokens_ts = quote! {quote::ToTokens};
+    let ts2_ts = quote! {proc_macro2::TokenStream};
     let generated: Ts2 = quote! {
         #make_pub_pub_enum_ts
         #(#pub_enum_derive_vec_ts)*
@@ -159,7 +160,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                 ident_d8cbb733: &dyn #quote_to_tokens_ts,
                 generics_7d48c97a: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
-            ) -> Ts2 {
+            ) -> #ts2_ts {
                 let mb_pub_ts = self.#make_pub_sc_ts.then(|| quote::quote!{pub});
                 let derive_ts = {
                     let mut acc_2a71375c = Vec::new();
@@ -233,7 +234,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                 ident_d87c6809: &dyn #quote_to_tokens_ts,
                 generics_c33a0ef2: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
-            ) -> Ts2 {
+            ) -> #ts2_ts {
                 self.build_h(
                     #struct_or_enum_ucc::Struct,
                     ann,
@@ -248,7 +249,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                 ident_273dd063: &dyn #quote_to_tokens_ts,
                 generics_84bc3f7f: &dyn #quote_to_tokens_ts,
                 ts: &dyn #quote_to_tokens_ts,
-            ) -> Ts2 {
+            ) -> #ts2_ts {
                 self.build_h(
                     #struct_or_enum_ucc::Enum,
                     ann,
