@@ -19,7 +19,7 @@ strum.workspace = true
 strum_macros.workspace = true
 rayon.workspace = true
 pg_crud_macros_cmn = {path = "../../pg_crud_macros_cmn"}
-pg_crud_cmn_and_macros_cmn = {path = "../../pg_crud_cmn_and_macros_cmn"}
+pg_crud_cmn = {path = "../../pg_crud_cmn"}
 gen_quotes = {path = "../../../gen_quotes"}
 panic_loc = {path = "../../../panic_loc"}
 macros_helpers = {path = "../../../macros_helpers"}

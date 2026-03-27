@@ -17,11 +17,12 @@ sqlx.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 schemars.workspace = true
+proc-macro2.workspace = true
+quote.workspace = true
 loc_lib = {path = "../../loc_lib"}
 strum.workspace = true
 strum_macros.workspace = true
 naming = {path = "../../naming"}
-pg_crud_cmn_and_macros_cmn = {path = "../pg_crud_cmn_and_macros_cmn"}
 optml = {path = "../../optml"}
 
 [features]

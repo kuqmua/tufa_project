@@ -160,6 +160,8 @@ mod tests {
         let mut ers = Vec::new();
         let exceptions = [
             "../pg_crud/pg_crud_cmn/src/lib.rs", //contain utf-8 String test
+            "../CODE_IMPROVEMENT_PLAN.md",
+            "../DEVELOPMENT_PLAN.md",
         ];
         for el_d87f0495 in project_dir()
             .into_iter()
@@ -524,6 +526,35 @@ mod tests {
             }
         }
         assert!(outdated_lints_in_file.is_empty(), "93787d2d");
+    }
+    fn env_keys_from_file(path: &str) -> Vec<String> {
+        read_to_string(path)
+            .expect("b3a7c1e4")
+            .lines()
+            .filter(|line| !line.starts_with('#') && line.contains('='))
+            .map(|line| line.split('=').next().expect("d1f4a7c2").to_owned())
+            .collect()
+    }
+    #[test]
+    fn env_and_envexample_have_same_keys() {
+        let env_keys = env_keys_from_file("../server/.env");
+        let example_keys = env_keys_from_file("../server/.envexample");
+        let mut ers = Vec::new();
+        for el_a1b2c3d4 in &env_keys {
+            if !example_keys.contains(el_a1b2c3d4) {
+                ers.push(format!(
+                    "key `{el_a1b2c3d4}` in .env but missing from .envexample"
+                ));
+            }
+        }
+        for el_e5f6a7b8 in &example_keys {
+            if !env_keys.contains(el_e5f6a7b8) {
+                ers.push(format!(
+                    "key `{el_e5f6a7b8}` in .envexample but missing from .env"
+                ));
+            }
+        }
+        assert!(ers.is_empty(), "c8d2f1a3\n{}", ers.join("\n"));
     }
     fn is_exception(path: &Path, exceptions: &[&str]) -> bool {
         exceptions.contains(&path.display().to_string().as_str())

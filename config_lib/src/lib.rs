@@ -10,10 +10,115 @@ use std::{
 };
 use thiserror::Error;
 pub use try_from_env::TryFromEnv;
+macro_rules! impl_try_from_non_empty_string {
+    ($name:ident, $er_name:ident) => {
+        #[derive(Debug, Clone, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
+        pub struct $name(pub String);
+        #[derive(Debug, Error, Optml)]
+        pub enum $er_name {
+            #[error("{is_empty:?}")]
+            IsEmpty { is_empty: String },
+        }
+        impl TryFromStdEnvVarOk for $name {
+            type Error = $er_name;
+            fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+                if v.is_empty() {
+                    return Err(Self::Error::IsEmpty {
+                        is_empty: String::from("is empty"),
+                    });
+                }
+                Ok(Self(v))
+            }
+        }
+    };
+}
+macro_rules! impl_try_from_parse {
+    ($name:ident, $er_name:ident, $inner:ty, $er_vrt:ident, $er_field:ident, $er_ty:ty, $($derive:ident),*) => {
+        #[derive(Debug, $($derive,)* gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
+        pub struct $name(pub $inner);
+        #[derive(Debug, Optml)]
+        pub enum $er_name {
+            $er_vrt { $er_field: $er_ty },
+        }
+        impl std::fmt::Display for $er_name {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                match self {
+                    Self::$er_vrt { $er_field } => write!(f, "{:?}", $er_field),
+                }
+            }
+        }
+        impl std::error::Error for $er_name {}
+        impl TryFromStdEnvVarOk for $name {
+            type Error = $er_name;
+            fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+                match v.parse::<$inner>() {
+                    Ok(v0) => Ok(Self(v0)),
+                    Err(er) => Err(Self::Error::$er_vrt { $er_field: er }),
+                }
+            }
+        }
+    };
+}
+macro_rules! impl_try_from_secret_url {
+    ($name:ident, $er_name:ident) => {
+        #[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
+        pub struct $name(pub SecretBox<String>);
+        #[derive(Debug, Error, Optml)]
+        pub enum $er_name {
+            #[error("{is_empty:?}")]
+            IsEmpty { is_empty: String },
+        }
+        impl TryFromStdEnvVarOk for $name {
+            type Error = $er_name;
+            fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+                if v.is_empty() {
+                    return Err(Self::Error::IsEmpty {
+                        is_empty: String::from("is empty"),
+                    });
+                }
+                Ok(Self(SecretBox::new(Box::new(v))))
+            }
+        }
+    };
+}
 pub trait TryFromStdEnvVarOk: Sized {
     type Error;
     fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error>;
 }
+impl_try_from_non_empty_string!(CorsAllowOrigin, TryFromStdEnvVarOkCorsAllowOriginEr);
+impl_try_from_secret_url!(DatabaseUrl, TryFromStdEnvVarOkDatabaseUrlEr);
+impl_try_from_parse!(
+    EnableApiGitCommitCheck,
+    TryFromStdEnvVarOkEnableApiGitCommitCheckEr,
+    bool,
+    BoolParsing,
+    bool_parsing,
+    ParseBoolError,
+    Clone,
+    Copy
+);
+impl_try_from_parse!(
+    MaximumSizeOfHttpBodyInBytes,
+    TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr,
+    usize,
+    UsizeParsing,
+    usize_parsing,
+    ParseIntError,
+    Clone,
+    Copy
+);
+impl_try_from_secret_url!(MongoUrl, TryFromStdEnvVarOkMongoUrlEr);
+impl_try_from_parse!(
+    PgPoolMaxConnections,
+    TryFromStdEnvVarOkPgPoolMaxConnectionsEr,
+    u32,
+    U32Parsing,
+    u32_parsing,
+    ParseIntError,
+    Clone,
+    Copy
+);
+impl_try_from_secret_url!(RedisUrl, TryFromStdEnvVarOkRedisUrlEr);
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct ServiceSocketAddress(pub SocketAddr);
 #[derive(Debug, Error, Optml)]
@@ -31,6 +136,29 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
             })
     }
 }
+#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
+pub struct SrcPlaceType(pub types::SrcPlaceType);
+#[derive(Debug, Error, Optml)]
+pub enum TryFromStdEnvVarOkSrcPlaceTypeEr {
+    #[error("{app_state_src_place_type_parsing:?}")]
+    AppStateSrcPlaceTypeParsing {
+        app_state_src_place_type_parsing: String,
+    },
+}
+impl TryFromStdEnvVarOk for SrcPlaceType {
+    type Error = TryFromStdEnvVarOkSrcPlaceTypeEr;
+    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
+        Ok(Self(match v.parse::<types::SrcPlaceType>() {
+            Ok(v0) => v0,
+            Err(er) => {
+                return Err(Self::Error::AppStateSrcPlaceTypeParsing {
+                    app_state_src_place_type_parsing: er,
+                });
+            }
+        }))
+    }
+}
+impl_try_from_non_empty_string!(StartingCheckLink, TryFromStdEnvVarOkStartingCheckLinkEr);
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct Timezone(pub FixedOffset);
 #[derive(Debug, Error, Optml)]
@@ -56,82 +184,6 @@ impl TryFromStdEnvVarOk for Timezone {
         Ok(Self(fixed_offset))
     }
 }
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct RedisUrl(pub SecretBox<String>);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkRedisUrlEr {
-    #[error("{is_empty:?}")]
-    IsEmpty { is_empty: String },
-}
-impl TryFromStdEnvVarOk for RedisUrl {
-    type Error = TryFromStdEnvVarOkRedisUrlEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(if v.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: String::from("is empty"),
-            });
-        } else {
-            SecretBox::new(Box::new(v))
-        }))
-    }
-}
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct MongoUrl(pub SecretBox<String>);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkMongoUrlEr {
-    #[error("{is_empty:?}")]
-    IsEmpty { is_empty: String },
-}
-impl TryFromStdEnvVarOk for MongoUrl {
-    type Error = TryFromStdEnvVarOkMongoUrlEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(if v.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: String::from("is empty"),
-            });
-        } else {
-            SecretBox::new(Box::new(v))
-        }))
-    }
-}
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct DatabaseUrl(pub SecretBox<String>);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkDatabaseUrlEr {
-    #[error("{is_empty:?}")]
-    IsEmpty { is_empty: String },
-}
-impl TryFromStdEnvVarOk for DatabaseUrl {
-    type Error = TryFromStdEnvVarOkDatabaseUrlEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(if v.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: String::from("is empty"),
-            });
-        } else {
-            SecretBox::new(Box::new(v))
-        }))
-    }
-}
-#[derive(Debug, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct StartingCheckLink(pub String);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkStartingCheckLinkEr {
-    #[error("{is_empty:?}")]
-    IsEmpty { is_empty: String },
-}
-impl TryFromStdEnvVarOk for StartingCheckLink {
-    type Error = TryFromStdEnvVarOkStartingCheckLinkEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(if v.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: String::from("is empty"),
-            });
-        } else {
-            v
-        }))
-    }
-}
 #[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
 pub struct TracingLevel(pub types::TracingLevel);
 #[derive(Debug, Error, Optml)]
@@ -151,101 +203,6 @@ impl TryFromStdEnvVarOk for TracingLevel {
                     app_state_tracing_type_parsing: er,
                 });
             }
-        }))
-    }
-}
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct SrcPlaceType(pub types::SrcPlaceType);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkSrcPlaceTypeEr {
-    #[error("{app_state_src_place_type_parsing:?}")]
-    AppStateSrcPlaceTypeParsing {
-        app_state_src_place_type_parsing: String,
-    },
-}
-impl TryFromStdEnvVarOk for SrcPlaceType {
-    type Error = TryFromStdEnvVarOkSrcPlaceTypeEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(match v.parse::<types::SrcPlaceType>() {
-            Ok(v0) => v0,
-            Err(er) => {
-                return Err(Self::Error::AppStateSrcPlaceTypeParsing {
-                    app_state_src_place_type_parsing: er,
-                });
-            }
-        }))
-    }
-}
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct EnableApiGitCommitCheck(pub bool);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckEr {
-    #[error("{bool_parsing:?}")]
-    BoolParsing { bool_parsing: ParseBoolError },
-}
-impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
-    type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(match v.parse::<bool>() {
-            Ok(v0) => v0,
-            Err(er) => {
-                return Err(Self::Error::BoolParsing { bool_parsing: er });
-            }
-        }))
-    }
-}
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr {
-    #[error("{usize_parsing:?}")]
-    UsizeParsing { usize_parsing: ParseIntError },
-}
-impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
-    type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(match v.parse::<usize>() {
-            Ok(v0) => v0,
-            Err(er) => {
-                return Err(Self::Error::UsizeParsing { usize_parsing: er });
-            }
-        }))
-    }
-}
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct PgPoolMaxConnections(pub u32);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkPgPoolMaxConnectionsEr {
-    #[error("{u32_parsing:?}")]
-    U32Parsing { u32_parsing: ParseIntError },
-}
-impl TryFromStdEnvVarOk for PgPoolMaxConnections {
-    type Error = TryFromStdEnvVarOkPgPoolMaxConnectionsEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(match v.parse::<u32>() {
-            Ok(v0) => v0,
-            Err(er) => {
-                return Err(Self::Error::U32Parsing { u32_parsing: er });
-            }
-        }))
-    }
-}
-#[derive(Debug, Clone, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct CorsAllowOrigin(pub String);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkCorsAllowOriginEr {
-    #[error("{is_empty:?}")]
-    IsEmpty { is_empty: String },
-}
-impl TryFromStdEnvVarOk for CorsAllowOrigin {
-    type Error = TryFromStdEnvVarOkCorsAllowOriginEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        Ok(Self(if v.is_empty() {
-            return Err(Self::Error::IsEmpty {
-                is_empty: String::from("is empty"),
-            });
-        } else {
-            v
         }))
     }
 }

@@ -29,7 +29,7 @@ use naming::{
 };
 use optml::Optml;
 use panic_loc::panic_loc;
-use pg_crud_cmn_and_macros_cmn::PgTypeGreaterThanVrt;
+use pg_crud_cmn::PgTypeGreaterThanVrt;
 use pg_crud_macros_cmn::{
     AddOprtrUndrscr, ColPrmUndrscr, CrQbValueUndrscr, CrQpIncrUndrscr, CrQpValueUndrscr,
     DefaultSomeOneOrDefaultSomeOneWithMaxPageSize, DeriveOrImpl, EqOprtrH, Import, IncrPrmUndrscr,
