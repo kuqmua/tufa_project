@@ -149,33 +149,7 @@ pub fn optml(input_ts: Ts) -> Ts {
         .iter()
         .any(|p| matches!(p, GenericParam::Type(_) | GenericParam::Const(_)));
     let generated = if has_type_prms {
-        quote! {
-            #impl_check_ts
-            //todo
-            // #[derive(Debug)]
-            // pub struct MyStruct<T> {
-            //     cr: T,
-            //     vrt: u32,
-            //     len_greater_than: u8,
-            // }
-            // impl<T> MyStruct<T> {
-            //     const #const_name_ts: () = {
-            //         let alignments: [usize; 3usize] = [align_of::<T>(), align_of::<String>(), align_of::<bool>()];
-            //         assert!(alignments[0usize] >= alignments[1usize], "1");
-            //         assert!(alignments[1usize] >= alignments[2usize], "2");
-            //     };
-            // }
-            // this is example for generic checks. instead of u8 must be concrete type. or mb multiple generics
-            // const _: () = #ident::<u8>::#const_name_ts;
-            // fn main() {
-            //     let my_struct_u8: MyStruct<u8> = MyStruct {
-            //         cr: 0,
-            //         vrt: 0,
-            //         len_greater_than: 0,
-            //     };
-            //     println!("{my_struct_u8:#?}");
-            // }
-        }
+        quote! {#impl_check_ts}
     } else {
         quote! {
             #impl_check_ts
