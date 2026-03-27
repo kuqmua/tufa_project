@@ -12,8 +12,8 @@ use token_patterns::StringTs;
 const REGEX_VALUE: &str = "^[a-zA-Z0-9]+$";
 fn gen_impl_to_tokens_ts(ts0: &dyn ToTokens, ts1: &dyn ToTokens) -> Ts2 {
     quote! {
-        impl ToTokens for #ts0 {
-            fn to_tokens(&self, tokens: &mut Ts2) {
+        impl quote::ToTokens for #ts0 {
+            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
                 #ts1
             }
         }
@@ -194,7 +194,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
             };
             let impl_to_tokens_ts = gen_impl_to_tokens_ts(
                 &struct_ident_ts,
-                &quote!{self.to_string().parse::<Ts2>().expect("71c8d26b").to_tokens(tokens);}
+                &quote!{self.to_string().parse::<proc_macro2::TokenStream>().expect("71c8d26b").to_tokens(tokens);}
             );
             quote! {
                 #[derive(Debug, optml::Optml)]
@@ -209,10 +209,10 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     pub fn from_display(v: &dyn std::fmt::Display) -> Self {
                         Self::wrap(&#casing_ts(&v.to_string()))
                     }
-                    pub fn from_tokens(v: &dyn ToTokens) -> Self {
+                    pub fn from_tokens(v: &dyn quote::ToTokens) -> Self {
                         Self::wrap(&#casing_ts(&{
-                            let mut tokens = Ts2::new();
-                            ToTokens::to_tokens(&v, &mut tokens);
+                            let mut tokens = proc_macro2::TokenStream::new();
+                            quote::ToTokens::to_tokens(&v, &mut tokens);
                             tokens
                         }.to_string()))
                     }
@@ -240,7 +240,7 @@ pub fn gen_self_ucc_and_sc_str_and_ts(input_ts: Ts) -> Ts {
                     }
                 }
                 #impl_to_tokens_ts
-                pub trait #trait_ident_ts: std::fmt::Display + ToTokens {}
+                pub trait #trait_ident_ts: std::fmt::Display + quote::ToTokens {}
                 impl #trait_ident_ts for #struct_ident_ts {}
             }
         };

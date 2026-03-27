@@ -1,6 +1,3 @@
-//todo
-use proc_macro2::TokenStream as Ts2;
-use quote::ToTokens;
 naming_macros::gen_self_ucc_and_sc_str_and_ts!([
     ["self", "payload"],
     ["try", "self"],
