@@ -1,4 +1,3 @@
-use crate::GetAxumHttpStatusCode;
 use axum::http::{
     HeaderMap, StatusCode,
     header::{HeaderValue, ToStrError},
@@ -28,7 +27,7 @@ pub enum CommitEr {
         loc: Loc,
     },
 }
-impl GetAxumHttpStatusCode for CommitEr {
+impl crate::GetAxumHttpStatusCode for CommitEr {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::CommitNotEq { .. }

@@ -1,3 +1,4 @@
+use crate::str_from_enum_macros::impl_from_str_for_enum_helper;
 use dotenv::dotenv;
 use optml::Optml;
 use serde::{Deserialize, Serialize};
@@ -20,14 +21,16 @@ pub enum TracingLevel {
 impl FromStr for TracingLevel {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "trace" => Ok(Self::Trace),
-            "debug" => Ok(Self::Debug),
-            "info" => Ok(Self::Info),
-            "warn" => Ok(Self::Warn),
-            "er" => Ok(Self::Er),
-            _ => Err(format!("Unknown tracing level: {s}")),
-        }
+        impl_from_str_for_enum_helper(
+            s,
+            &[
+                ("trace", Self::Trace),
+                ("debug", Self::Debug),
+                ("info", Self::Info),
+                ("warn", Self::Warn),
+                ("er", Self::Er),
+            ],
+        )
     }
 }
 impl Display for TracingLevel {
@@ -50,11 +53,7 @@ pub enum SrcPlaceType {
 impl FromStr for SrcPlaceType {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "github" => Ok(Self::Github),
-            "src" => Ok(Self::Src),
-            _ => Err(format!("Unknown src place type: {s}")),
-        }
+        impl_from_str_for_enum_helper(s, &[("github", Self::Github), ("src", Self::Src)])
     }
 }
 impl SrcPlaceType {

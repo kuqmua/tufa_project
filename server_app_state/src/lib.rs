@@ -2,7 +2,6 @@ use app_state::{
     GetEnableApiGitCommitCheck, GetMaximumSizeOfHttpBodyInBytes, GetPgPool, GetSrcPlaceType,
     GetTimezone,
 };
-use chrono::FixedOffset;
 use cmn_routes::CmnRoutesPrms;
 use config_lib::types::SrcPlaceType;
 use git_info::{GetGitCommitLink, ProjectGitInfo};
@@ -29,7 +28,7 @@ impl GetSrcPlaceType for ServerAppState<'_> {
     }
 }
 impl GetTimezone for ServerAppState<'_> {
-    fn get_timezone(&self) -> &FixedOffset {
+    fn get_timezone(&self) -> &chrono::FixedOffset {
         self.config.get_timezone()
     }
 }

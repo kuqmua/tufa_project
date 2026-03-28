@@ -1,4 +1,3 @@
-use crate::GetAxumHttpStatusCode;
 use axum::{
     Error,
     body::{Body, HttpBody, to_bytes},
@@ -21,7 +20,7 @@ pub enum BodySizeEr {
         loc: Loc,
     },
 }
-impl GetAxumHttpStatusCode for BodySizeEr {
+impl crate::GetAxumHttpStatusCode for BodySizeEr {
     fn get_axum_http_status_code(&self) -> StatusCode {
         match self {
             Self::ReachedMaximumSizeOfBody { .. } => StatusCode::PAYLOAD_TOO_LARGE,
