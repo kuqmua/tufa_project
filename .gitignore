@@ -17,4 +17,4 @@ src/**/*.rs.bk
 
 /server/.env
 /telegram_bot/.env
-/claude/settings.json
+/.claude/settings.json
