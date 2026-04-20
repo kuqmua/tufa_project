@@ -18,3 +18,5 @@ src/**/*.rs.bk
 /server/.env
 /telegram_bot/.env
 /.claude/settings.json
+/tasks.json
+/cdx_cli_manage/

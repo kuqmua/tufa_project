@@ -18,3 +18,5 @@ README.md
 !/.git/COMMIT_EDITMSG
 !/.git/ORIG_HEAD
 !/.git/FETCH_HEAD
+/tasks.json
+/cdx_cli_manage/
