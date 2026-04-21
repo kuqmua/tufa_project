@@ -433,6 +433,15 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                             #rd_ids_and_cr_into_vec_wh_eq_using_fields_ts
                             #rd_ids_and_cr_into_vec_wh_eq_to_json_field_ts
                         }
+                        #[cfg(feature = "test-utils")]
+                        const _: () = {
+                            let _ = #ident_with_id_stdrt_nn_ucc::#RdIdsAndCrIntoWhEqSc;
+                            let _ = #ident_with_id_stdrt_nn_ucc::#RdIdsAndCrIntoWhEqSc;
+                            let _ = #ident_with_id_stdrt_nn_ucc::#RdIdsAndCrIntoVecWhEqUsingFieldsSc;
+                            let _ = #ident_with_id_stdrt_nn_ucc::#RdIdsAndCrIntoVecWhEqUsingFieldsSc;
+                            let _ = #ident_with_id_stdrt_nn_ucc::#RdIdsAndCrIntoVecWhEqToJsonFieldSc;
+                            let _ = #ident_with_id_stdrt_nn_ucc::#RdIdsAndCrIntoVecWhEqToJsonFieldSc;
+                        };
                     }
                 };
                 quote! {
@@ -3311,6 +3320,14 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                     #upd_del_cr_arr_ts
                 }
             };
+            let is_sel_qp_col_field_for_er_msg_used = match (&pattern, &is_nl) {
+                (Pattern::Arr, IsNl::False) => IsSelQpColFieldForErMsgUsed::False,
+                _ => IsSelQpColFieldForErMsgUsed::True,
+            };
+            let is_sel_qp_is_pg_type_used = match (&pattern, &is_nl) {
+                (Pattern::Stdrt, IsNl::False) => IsSelQpIsPgTypeUsed::True,
+                _ => IsSelQpIsPgTypeUsed::False,
+            };
             let impl_pg_crud_pg_json_for_ident_ts = gen_impl_pg_json_all_methods_ts(
                 &Import::PgCrud,
                 &ident,
@@ -3319,8 +3336,8 @@ pub fn gen_pg_json_obj(input_ts: Ts2) -> Ts2 {
                 &ident_cr_for_query_ucc,
                 &ident_sel_ucc,
                 &IsSelQpSelfSelUsed::True,
-                &IsSelQpColFieldForErMsgUsed::True,
-                &IsSelQpIsPgTypeUsed::True,
+                &is_sel_qp_col_field_for_er_msg_used,
+                &is_sel_qp_is_pg_type_used,
                 &match &pattern {
                     Pattern::Stdrt => match &is_nl {
                         IsNl::False => {

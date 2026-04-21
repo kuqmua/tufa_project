@@ -107,6 +107,11 @@ bytes = {version = "=1.11.1"}
 walkdir = {version = "=2.5.0"}
 git-version = {version = "=0.3.9"}
 itertools = {version = "=0.14.0"}
+app_state = {path = "./app_state"}
+git_info = {path = "./git_info"}
+loc_lib = {path = "./loc_lib"}
+naming = {path = "./naming"}
+optml = {path = "./optml"}
 
 [workspace.lints.rust]
 unsafe_code = "deny"

@@ -17,10 +17,10 @@ thiserror.workspace = true
 serde.workspace = true
 http-body.workspace = true
 bytes.workspace = true
-git_info = {path = "../git_info"}
-naming = {path = "../naming"}
-loc_lib = {path = "../loc_lib"}
-optml = {path = "../optml"}
+git_info.workspace = true
+naming.workspace = true
+loc_lib.workspace = true
+optml.workspace = true
 
 [lints]
 workspace = true

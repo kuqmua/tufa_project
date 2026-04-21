@@ -14,9 +14,9 @@ edition = "2024"
 axum.workspace = true
 serde.workspace = true
 sqlx.workspace = true
-app_state = {path = "../app_state"}
-git_info = {path = "../git_info"}
-optml = {path = "../optml"}
+app_state.workspace = true
+git_info.workspace = true
+optml.workspace = true
 
 [lints]
 workspace = true

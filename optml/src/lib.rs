@@ -13,6 +13,8 @@ pub fn optml(input_ts: Ts) -> Ts {
         Enum(String),
         Struct,
     }
+    let gen_alignments_ident_ts =
+        |i: usize| format!("alignments_{i}").parse::<Ts2>().expect("5a0bb723");
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
     let ident = &di.ident;
     let gen_align_of_ts = |field: &Field| {
@@ -30,14 +32,21 @@ pub fn optml(input_ts: Ts) -> Ts {
     let gen_fi = |i: usize| Ident::new(&format!("field_{i}"), ident.span());
     let gen_assertions_ts = |fields: &Punctuated<Field, Comma>,
                              alignments_ts: &dyn ToTokens,
-                             fields_len: usize,
                              struct_or_enum: StructOrEnum|
      -> Option<Ts2> {
+        let fields_len = fields.len();
+        if fields_len <= 1 {
+            return None;
+        }
         let align_of_ts = fields.iter().map(&gen_align_of_ts);
-        let assertions_ts = fields.iter().enumerate().take(fields.len().checked_sub(1).expect("14b7aa69")).map(|(i, field)| {
-            let i_plus_one = i.checked_add(1).expect("941a5489");
+        let assertions_ts = fields
+            .iter()
+            .zip(fields.iter().skip(1))
+            .enumerate()
+            .map(|(i, (field, next_field))| {
+            let i_plus_one = i.saturating_add(1);
             let fi = &field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone);
-            let fi_next = &fields.get(i_plus_one).expect("ae113a45").ident.as_ref().map_or_else(|| gen_fi(i_plus_one), Clone::clone);
+            let fi_next = &next_field.ident.as_ref().map_or_else(|| gen_fi(i_plus_one), Clone::clone);
             let msg_ts = dq_ts(&format!(
                 "In {} '{ident}' {}align_of field '{fi}' < align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment",
                 match &struct_or_enum {
@@ -56,14 +65,10 @@ pub fn optml(input_ts: Ts) -> Ts {
                 );
             }
         });
-        if assertions_ts.len() == 0 {
-            None
-        } else {
-            Some(quote! {
-                let #alignments_ts: [usize; #fields_len] = [#(#align_of_ts),*];
-                #(#assertions_ts)*
-            })
-        }
+        Some(quote! {
+            let #alignments_ts: [usize; #fields_len] = [#(#align_of_ts),*];
+            #(#assertions_ts)*
+        })
     };
     let ts = match &di.data {
         Data::Struct(data) => {
@@ -75,15 +80,10 @@ pub fn optml(input_ts: Ts) -> Ts {
                 }
             };
             let fields_len = fields.len();
-            if fields.is_empty() || fields_len == 1 {
+            if fields_len <= 1 {
                 return Ts::new();
             }
-            match gen_assertions_ts(
-                fields,
-                &quote! {alignments},
-                fields_len,
-                StructOrEnum::Struct,
-            ) {
+            match gen_assertions_ts(fields, &quote! {alignments}, StructOrEnum::Struct) {
                 Some(v) => v,
                 None => {
                     return Ts::new();
@@ -100,13 +100,12 @@ pub fn optml(input_ts: Ts) -> Ts {
                     Fields::Unit => continue,
                 };
                 let fields_len = fields.len();
-                if fields.is_empty() || fields_len == 1 {
+                if fields_len <= 1 {
                     continue;
                 }
                 if let Some(v) = gen_assertions_ts(
                     fields,
-                    &format!("alignments_{i}").parse::<Ts2>().expect("1cb9411b"),
-                    fields_len,
+                    &gen_alignments_ident_ts(i),
                     StructOrEnum::Enum(var_ident.to_string()),
                 ) {
                     vars_ts.push(v);

@@ -15,8 +15,8 @@ edition = "2024"
 serde.workspace = true
 serde_derive.workspace = true
 git-version.workspace = true
-naming = {path = "../naming"}
-optml = {path = "../optml"}
+naming.workspace = true
+optml.workspace = true
 
 [lints]
 workspace = true

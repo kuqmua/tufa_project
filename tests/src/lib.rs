@@ -82,10 +82,7 @@ mod tests {
             if is_exception(path, &exceptions) {
                 continue;
             }
-            let Ok(v) = read_to_string(path) else {
-                continue;
-            };
-            let Ok(parsed) = v.parse::<TomlTable>() else {
+            let Some(parsed) = read_toml_tbl(path) else {
                 continue;
             };
             let publish = parsed
@@ -106,10 +103,7 @@ mod tests {
             if is_exception(path, &exceptions) {
                 continue;
             }
-            let Ok(v) = read_to_string(path) else {
-                continue;
-            };
-            let Ok(parsed) = v.parse::<TomlTable>() else {
+            let Some(parsed) = read_toml_tbl(path) else {
                 continue;
             };
             match parsed
@@ -140,10 +134,7 @@ mod tests {
             if is_exception(path, &exceptions) {
                 continue;
             }
-            let Ok(v) = read_to_string(path) else {
-                continue;
-            };
-            let Ok(parsed) = v.parse::<TomlTable>() else {
+            let Some(parsed) = read_toml_tbl(path) else {
                 continue;
             };
             let edition = parsed
@@ -230,10 +221,10 @@ mod tests {
                 };
                 if i.method == expect_or_panic_str {
                     if i.args.len() == 1 {
-                        if let Expr::Lit(ExprLit {
+                        if let Some(Expr::Lit(ExprLit {
                             lit: Lit::Str(lit_str),
                             ..
-                        }) = i.args.get(0).expect("d5ad7bff").clone()
+                        })) = i.args.first()
                         {
                             let v = lit_str.value();
                             if v.len() == 8 {
@@ -274,9 +265,9 @@ mod tests {
         }
         let mut seen = HashSet::new();
         let mut duplicates = Vec::new();
-        for el_45f4b8bc in all_uuids {
-            if !seen.insert(el_45f4b8bc.clone()) {
-                duplicates.push(el_45f4b8bc);
+        for el_45f4b8bc in &all_uuids {
+            if !seen.insert(el_45f4b8bc.as_str()) {
+                duplicates.push(el_45f4b8bc.clone());
             }
         }
         if !duplicates.is_empty() {
@@ -359,6 +350,9 @@ mod tests {
                 "unstable_as_slice".to_owned(),
                 "unused_collect".to_owned(),
                 "wrong_pub_self_convention".to_owned(),
+                "manual_noop_waker".to_owned(),
+                "manual_option_zip".to_owned(),
+                "useless_borrows_in_formatting".to_owned(),
             ],
         );
     }
@@ -407,6 +401,7 @@ mod tests {
                 String::from("default_overrides_default_fields"),
                 String::from("linker_info"),
                 String::from("duplicate_features"),
+                String::from("deprecated_llvm_intrinsic"),
             ],
         );
     }
@@ -441,6 +436,17 @@ mod tests {
             "e117fa5a",
         ) {
             let v_tbl = toml_val_as_tbl(v_5c36cb98, "cb693a3f");
+            if let Some(path_v) = v_tbl.get("path") {
+                match path_v {
+                    Value::String(_) => continue,
+                    Value::Table(_)
+                    | Value::Integer(_)
+                    | Value::Float(_)
+                    | Value::Boolean(_)
+                    | Value::Datetime(_)
+                    | Value::Array(_) => panic!("6ca03a1f"),
+                }
+            }
             let v_tbl_len = v_tbl.len();
             let check_version =
                 |v_df993c3d: &Table| match v_df993c3d.get("version").expect("d5b2b269").clone() {
@@ -506,10 +512,22 @@ mod tests {
         lints_not_in_cargo_toml_vec_exceptions: &[String],
     ) {
         let rust_or_clippy_name = rust_or_clippy.name();
+        let lints_from_cargo_set = lints_vec_from_cargo_toml
+            .iter()
+            .map(String::as_str)
+            .collect::<HashSet<&str>>();
+        let lints_to_check_set = lints_to_check
+            .iter()
+            .map(String::as_str)
+            .collect::<HashSet<&str>>();
+        let lints_exceptions_set = lints_not_in_cargo_toml_vec_exceptions
+            .iter()
+            .map(String::as_str)
+            .collect::<HashSet<&str>>();
         let mut lints_not_in_cargo_toml = Vec::new();
         for el_31af38d6 in lints_to_check {
-            if !lints_vec_from_cargo_toml.contains(el_31af38d6) {
-                if lints_not_in_cargo_toml_vec_exceptions.contains(el_31af38d6) {
+            if !lints_from_cargo_set.contains(el_31af38d6.as_str()) {
+                if lints_exceptions_set.contains(el_31af38d6.as_str()) {
                     println!(
                         "todo!() {rust_or_clippy_name} {el_31af38d6} 158b5c43-05fa-4b8f-b6fe-9cda49d26997"
                     );
@@ -521,7 +539,7 @@ mod tests {
         assert!(lints_not_in_cargo_toml.is_empty(), "d2b7ba9f");
         let mut outdated_lints_in_file = Vec::new();
         for el_d3c0c904 in lints_vec_from_cargo_toml {
-            if !lints_to_check.contains(el_d3c0c904) {
+            if !lints_to_check_set.contains(el_d3c0c904.as_str()) {
                 outdated_lints_in_file.push(el_d3c0c904);
             }
         }
@@ -539,21 +557,30 @@ mod tests {
     fn env_and_envexample_have_same_keys() {
         let env_keys = env_keys_from_file("../server/.env");
         let example_keys = env_keys_from_file("../server/.envexample");
+        let env_keys_set = env_keys
+            .iter()
+            .map(String::as_str)
+            .collect::<HashSet<&str>>();
+        let example_keys_set = example_keys
+            .iter()
+            .map(String::as_str)
+            .collect::<HashSet<&str>>();
         let mut ers = Vec::new();
         for el_a1b2c3d4 in &env_keys {
-            if !example_keys.contains(el_a1b2c3d4) {
+            if !example_keys_set.contains(el_a1b2c3d4.as_str()) {
                 ers.push(format!(
                     "key `{el_a1b2c3d4}` in .env but missing from .envexample"
                 ));
             }
         }
         for el_e5f6a7b8 in &example_keys {
-            if !env_keys.contains(el_e5f6a7b8) {
+            if !env_keys_set.contains(el_e5f6a7b8.as_str()) {
                 ers.push(format!(
                     "key `{el_e5f6a7b8}` in .envexample but missing from .env"
                 ));
             }
         }
+        ers.sort();
         assert!(ers.is_empty(), "c8d2f1a3\n{}", ers.join("\n"));
     }
     fn is_exception(path: &Path, exceptions: &[&str]) -> bool {
@@ -567,6 +594,10 @@ mod tests {
             "cae226cd",
         );
         toml_v_tbl.keys().cloned().collect::<Vec<String>>()
+    }
+    fn read_toml_tbl(path: &Path) -> Option<TomlTable> {
+        let v = read_to_string(path).ok()?;
+        v.parse::<TomlTable>().ok()
     }
     #[test]
     fn no_dbg_macro_in_source_code() {

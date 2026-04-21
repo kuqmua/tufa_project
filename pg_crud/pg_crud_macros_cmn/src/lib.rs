@@ -557,6 +557,8 @@ pub fn gen_impl_pg_json_ts(
                     #JsonbSetPathSc: #RefStr,
                     #IncrSc: #reference_mut_u64_ts,
                 ) -> Result<#StringTs, #path_ts #QpErUcc> {
+                    let _: #RefStr = #JsonbSetAccumulatorSc;
+                    let _: #RefStr = #JsonbSetPathSc;
                     #upd_qp_ts
                 }
             }

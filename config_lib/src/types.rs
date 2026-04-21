@@ -8,6 +8,18 @@ use std::{
     str::FromStr,
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
+const TRACING_LEVEL_PARSE_PAIRS: [(&str, TracingLevel); 5] = [
+    ("trace", TracingLevel::Trace),
+    ("debug", TracingLevel::Debug),
+    ("info", TracingLevel::Info),
+    ("warn", TracingLevel::Warn),
+    ("er", TracingLevel::Er),
+];
+const SRC_PLACE_TYPE_PARSE_PAIRS: [(&str, SrcPlaceType); 2] =
+    [("github", SrcPlaceType::Github), ("src", SrcPlaceType::Src)];
+const SRC_PLACE_TYPE_ENV_VAR: &str = "SRC_PLACE_TYPE";
+const SRC_PLACE_TYPE_FIX_MSG: &str =
+    "You can set environment variable SRC_PLACE_TYPE to be eq \"src\" or \"github\"";
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Default, Clone, Copy, EnumIter, Serialize, Deserialize, PartialEq, Eq, Optml)]
 pub enum TracingLevel {
@@ -18,28 +30,26 @@ pub enum TracingLevel {
     #[default]
     Er,
 }
+impl TracingLevel {
+    const fn as_str(self) -> &'static str {
+        match self {
+            Self::Trace => "trace",
+            Self::Debug => "debug",
+            Self::Info => "info",
+            Self::Warn => "warn",
+            Self::Er => "er",
+        }
+    }
+}
 impl FromStr for TracingLevel {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        impl_from_str_for_enum_helper(
-            s,
-            &[
-                ("trace", Self::Trace),
-                ("debug", Self::Debug),
-                ("info", Self::Info),
-                ("warn", Self::Warn),
-                ("er", Self::Er),
-            ],
-        )
+        impl_from_str_for_enum_helper(s, &TRACING_LEVEL_PARSE_PAIRS)
     }
 }
 impl Display for TracingLevel {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        write!(
-            f,
-            "{}",
-            convert_case::Casing::to_case(&format!("{self:?}"), convert_case::Case::Snake)
-        )
+        write!(f, "{}", (*self).as_str())
     }
 }
 #[derive(
@@ -53,38 +63,54 @@ pub enum SrcPlaceType {
 impl FromStr for SrcPlaceType {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        impl_from_str_for_enum_helper(s, &[("github", Self::Github), ("src", Self::Src)])
+        impl_from_str_for_enum_helper(s, &SRC_PLACE_TYPE_PARSE_PAIRS)
     }
 }
 impl SrcPlaceType {
     #[must_use]
     pub fn from_env_or_dflt() -> Self {
-        let fix_msg =
-            "You can set environment variable SRC_PLACE_TYPE to be eq \"src\" or \"github\"";
+        let dflt = Self::default();
+        let log_and_get_dflt = |msg: &str| {
+            eprintln!("using dflt SrcPlaceType::{dflt:#?} ({msg}) {SRC_PLACE_TYPE_FIX_MSG}");
+            dflt
+        };
         if let Err(er) = dotenv() {
-            let dflt = Self::default();
-            eprintln!("using dflt SrcPlaceType::{dflt:#?} (failed to dotenv(): {er}) {fix_msg}");
-            return dflt;
+            return log_and_get_dflt(&format!("failed to dotenv(): {er}"));
         }
-        let name = "SRC_PLACE_TYPE";
-        match env::var(name) {
+        match env::var(SRC_PLACE_TYPE_ENV_VAR) {
             Ok(v) => match <Self as FromStr>::from_str(&v) {
                 Ok(v0) => v0,
                 Err(er) => {
-                    let dflt = Self::default();
-                    eprintln!(
-                        "using dflt SrcPlaceType::{dflt:#?} (<SrcPlaceType as FromStr>::from_str(&v): {er}) {fix_msg}"
-                    );
-                    dflt
+                    log_and_get_dflt(&format!("<SrcPlaceType as FromStr>::from_str(&v): {er}"))
                 }
             },
-            Err(er) => {
-                let dflt = Self::default();
-                eprintln!(
-                    "using dflt SrcPlaceType::{dflt:#?} (env::var(\"{name}\"): {er}) {fix_msg}"
-                );
-                dflt
-            }
+            Err(er) => log_and_get_dflt(&format!("env::var(\"{SRC_PLACE_TYPE_ENV_VAR}\"): {er}")),
+        }
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::{TRACING_LEVEL_PARSE_PAIRS, TracingLevel};
+    use std::str::FromStr as _;
+    #[test]
+    fn tracing_level_display_is_stable() {
+        assert_eq!(TracingLevel::Trace.to_string(), "trace");
+        assert_eq!(TracingLevel::Debug.to_string(), "debug");
+        assert_eq!(TracingLevel::Info.to_string(), "info");
+        assert_eq!(TracingLevel::Warn.to_string(), "warn");
+        assert_eq!(TracingLevel::Er.to_string(), "er");
+    }
+    #[test]
+    fn tracing_level_from_str_is_case_insensitive() {
+        assert_eq!(TracingLevel::from_str("TRACE"), Ok(TracingLevel::Trace));
+        assert_eq!(TracingLevel::from_str("Warn"), Ok(TracingLevel::Warn));
+        let _er = TracingLevel::from_str("bad").expect_err("9f8d72a1");
+    }
+    #[test]
+    fn tracing_level_roundtrip_is_stable_for_all_variants() {
+        for (name, level) in TRACING_LEVEL_PARSE_PAIRS {
+            assert_eq!(TracingLevel::from_str(name), Ok(level));
+            assert_eq!(level.to_string(), name);
         }
     }
 }

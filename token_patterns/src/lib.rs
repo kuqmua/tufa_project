@@ -23,6 +23,13 @@ macro_rules! tp_parts {
         }
     };
 }
+macro_rules! ts_path_fn {
+    ($fn_name:ident, $($tt:tt)*) => {
+        fn $fn_name() -> Ts2 {
+            quote! {$($tt)*}
+        }
+    };
+}
 tp!(SqlxAcquire, sqlx::Acquire);
 tp!(
     AxumExtractRejectionJsonRejection,
@@ -197,37 +204,26 @@ tp_parts!(
 tp!(MustUse, #[must_use]);
 tp!(AllowClippyArbitrarySrcItemOrdering, #[allow(clippy::arbitrary_source_item_ordering)]);
 tp!(NoneTs, None);
-//todo better reuse
-fn path_all_vrts_dflt_some_one_el_max_page_size_call() -> Ts2 {
-    quote! {::all_vrts_dflt_some_one_el_max_page_size()}
-}
-fn dflt_some_one_el_max_page_size_ucc() -> Ts2 {
-    quote! {DfltSomeOneElMaxPageSize}
-}
-fn crate_path_ts() -> Ts2 {
-    quote! {crate::}
-}
-fn pg_crud() -> Ts2 {
-    quote! {pg_crud::}
-}
-fn pg_crud_cmn() -> Ts2 {
-    quote! {pg_crud_cmn::}
-}
-fn dflt_some_one_el_ucc() -> Ts2 {
-    quote! {DfltSomeOneEl}
-}
-fn all_vrts_dflt_some_one_el_ucc() -> Ts2 {
-    quote! {AllEnumVrtsArrDfltSomeOneEl}
-}
-fn path_dflt_some_one_el_call() -> Ts2 {
-    quote! {::dflt_some_one_el()}
-}
-fn path_dflt_some_one_el_max_page_size_call() -> Ts2 {
-    quote! {::dflt_some_one_el_max_page_size()}
-}
-fn all_vrts_dflt_some_one_el_max_page_size_ucc() -> Ts2 {
-    quote! {AllEnumVrtsArrDfltSomeOneElMaxPageSize}
-}
-fn path_all_vrts_dflt_some_one_el_call() -> Ts2 {
-    quote! {::all_vrts_dflt_some_one_el()}
-}
+ts_path_fn!(
+    path_all_vrts_dflt_some_one_el_max_page_size_call,
+    ::all_vrts_dflt_some_one_el_max_page_size()
+);
+ts_path_fn!(dflt_some_one_el_max_page_size_ucc, DfltSomeOneElMaxPageSize);
+ts_path_fn!(crate_path_ts, crate::);
+ts_path_fn!(pg_crud, pg_crud::);
+ts_path_fn!(pg_crud_cmn, pg_crud_cmn::);
+ts_path_fn!(dflt_some_one_el_ucc, DfltSomeOneEl);
+ts_path_fn!(all_vrts_dflt_some_one_el_ucc, AllEnumVrtsArrDfltSomeOneEl);
+ts_path_fn!(path_dflt_some_one_el_call, ::dflt_some_one_el());
+ts_path_fn!(
+    path_dflt_some_one_el_max_page_size_call,
+    ::dflt_some_one_el_max_page_size()
+);
+ts_path_fn!(
+    all_vrts_dflt_some_one_el_max_page_size_ucc,
+    AllEnumVrtsArrDfltSomeOneElMaxPageSize
+);
+ts_path_fn!(
+    path_all_vrts_dflt_some_one_el_call,
+    ::all_vrts_dflt_some_one_el()
+);
