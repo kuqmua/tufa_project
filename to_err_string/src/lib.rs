@@ -35,16 +35,16 @@ macro_rules! impl_to_err_string_const {
     ($($ty:ty => $msg:expr),+ $(,)?) => {
         $(impl ToErrString for $ty {
             fn to_err_string(&self) -> String {
-                String::from($msg)
+                static_str_to_owned($msg)
             }
         })+
     };
 }
-macro_rules! impl_to_err_string_str_ref {
+macro_rules! impl_to_err_string_as_ref_str {
     ($($ty:ty),+ $(,)?) => {
         $(impl ToErrString for $ty {
             fn to_err_string(&self) -> String {
-                str_ref_to_owned(self.as_ref())
+                as_ref_str_to_owned(self)
             }
         })+
     };
@@ -95,7 +95,7 @@ where
         debug_to_string(self)
     }
 }
-impl_to_err_string_str_ref!(String, str, &str, Cow<'_, str>);
+impl_to_err_string_as_ref_str!(String, str, &str, Cow<'_, str>);
 impl_to_err_string_const!(
     SetGlobalDefaultError => "tracing::dispatcher::SetGlobalDefaultEr",
     SetLoggerError => "tracing::log::SetLoggerError",
@@ -109,7 +109,13 @@ fn debug_to_string<T: Debug>(v: &T) -> String {
 fn debug_alt_to_string<T: Debug>(v: &T) -> String {
     format!("{v:#?}")
 }
-fn str_ref_to_owned(v: &str) -> String {
+fn as_ref_str_to_owned<T>(v: &T) -> String
+where
+    T: ?Sized + AsRef<str>,
+{
+    v.as_ref().to_owned()
+}
+fn static_str_to_owned(v: &'static str) -> String {
     v.to_owned()
 }
 #[cfg(test)]

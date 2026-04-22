@@ -5656,9 +5656,9 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21").block_on(async {
                         //todo mb refactor
-                        let #ConfigSc = #config_path_ts {
+                        let mut #ConfigSc = #config_path_ts {
                             service_socket_address: <config_lib::ServiceSocketAddress as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                "127.0.0.1:8080".to_owned()
+                                "127.0.0.1:0".to_owned()
                             ).expect("b5b3915a").0,
                             database_url: <config_lib::DatabaseUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                 "postgres://postgres:postgres@127.0.0.1:5432/postgres?connect_timeout=10".to_owned()
@@ -5689,7 +5689,10 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         .max_connections(50)
                         .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#ConfigSc)))
                         .await.expect("e3044bb9");
-                        let #UrlSc = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc));
+                        let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc)).await.expect("663ae29e");
+                        let actual_service_socket_address = tcp_listener.local_addr().expect("f31a9d0c");
+                        #ConfigSc.service_socket_address = actual_service_socket_address;
+                        let #UrlSc = format!("http://{actual_service_socket_address}");
                         let tbl = #ident_dq_ts;
                         let add_tbl_postfix = |postfix: &str|{
                             let v = format!("{tbl}_{postfix}");
@@ -5747,7 +5750,6 @@ pub fn gen_pg_tbl(input: Ts2) -> Ts2 {
                         let tbl_names_cloned = tbl_names.iter().map(|el_26b304d1| (*el_26b304d1).to_owned()).collect::<Vec<String>>();
                         let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                         let #undrscr_unused_ts = tokio::spawn(async move {
-                            let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#ConfigSc)).await.expect("663ae29e");
                             let #AppStateSc = std::sync::Arc::new(server_app_state::ServerAppState {
                                 #PgPoolSc: #PgPoolForTokioSpawnSyncMoveSc.clone(),
                                 #ConfigSc,

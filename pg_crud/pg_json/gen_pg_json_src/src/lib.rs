@@ -2530,7 +2530,10 @@ pub fn gen_pg_json(input_ts: &Ts2) -> Ts2 {
                 Pattern::ArrDim4 {..} => None
             };
             gen_impl_pg_json_test_cases_for_ident_ts(
-                &quote! {#[cfg(feature = "test-utils")]},
+                &quote! {
+                    #[cfg(feature = "test-utils")]
+                    #[allow(clippy::question_mark)] // generated test-case expansions prefer explicit branches over `?`
+                },
                 &pg_crud_macros_cmn_import_pg_crud_cmn,
                 &ident_rd_inn_ucc,
                 &ident,

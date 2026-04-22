@@ -70,27 +70,29 @@ impl SrcPlaceType {
     #[must_use]
     pub fn from_env_or_dflt() -> Self {
         let dflt = Self::default();
-        let log_and_get_dflt = |msg: &str| {
-            eprintln!("using dflt SrcPlaceType::{dflt:#?} ({msg}) {SRC_PLACE_TYPE_FIX_MSG}");
-            dflt
-        };
         if let Err(er) = dotenv() {
-            return log_and_get_dflt(&format!("failed to dotenv(): {er}"));
+            eprintln!("dotenv() failed in SrcPlaceType::from_env_or_dflt: {er}");
         }
-        match env::var(SRC_PLACE_TYPE_ENV_VAR) {
-            Ok(v) => match <Self as FromStr>::from_str(&v) {
-                Ok(v0) => v0,
-                Err(er) => {
-                    log_and_get_dflt(&format!("<SrcPlaceType as FromStr>::from_str(&v): {er}"))
-                }
-            },
-            Err(er) => log_and_get_dflt(&format!("env::var(\"{SRC_PLACE_TYPE_ENV_VAR}\"): {er}")),
+        let parsed = env::var(SRC_PLACE_TYPE_ENV_VAR)
+            .map_err(|er| format!("env::var(\"{SRC_PLACE_TYPE_ENV_VAR}\"): {er}"))
+            .and_then(|v| {
+                <Self as FromStr>::from_str(&v)
+                    .map_err(|er| format!("<SrcPlaceType as FromStr>::from_str(&v): {er}"))
+            });
+        match parsed {
+            Ok(v) => v,
+            Err(msg) => {
+                eprintln!("using dflt SrcPlaceType::{dflt:#?} ({msg}) {SRC_PLACE_TYPE_FIX_MSG}");
+                dflt
+            }
         }
     }
 }
 #[cfg(test)]
 mod tests {
-    use super::{TRACING_LEVEL_PARSE_PAIRS, TracingLevel};
+    use super::{
+        SRC_PLACE_TYPE_PARSE_PAIRS, SrcPlaceType, TRACING_LEVEL_PARSE_PAIRS, TracingLevel,
+    };
     use std::str::FromStr as _;
     #[test]
     fn tracing_level_display_is_stable() {
@@ -112,5 +114,29 @@ mod tests {
             assert_eq!(TracingLevel::from_str(name), Ok(level));
             assert_eq!(level.to_string(), name);
         }
+    }
+    #[test]
+    fn src_place_type_from_str_roundtrip_is_stable_for_all_variants() {
+        for (name, value) in SRC_PLACE_TYPE_PARSE_PAIRS {
+            assert_eq!(SrcPlaceType::from_str(name), Ok(value));
+        }
+    }
+    #[test]
+    fn src_place_type_from_str_accepts_src_value() {
+        assert_eq!(SrcPlaceType::from_str("src"), Ok(SrcPlaceType::Src));
+    }
+    #[test]
+    fn src_place_type_from_str_rejects_unknown_value() {
+        let _er = SrcPlaceType::from_str("bad").expect_err("8d6f70bb");
+    }
+    #[test]
+    fn src_place_type_default_is_github() {
+        assert_eq!(SrcPlaceType::default(), SrcPlaceType::Github);
+    }
+    #[test]
+    fn src_place_type_parse_error_contains_expected_context() {
+        let er = SrcPlaceType::from_str("unknown").expect_err("f2cc7d6b");
+        assert!(er.contains("Unknown value"));
+        assert!(er.contains("Allowed values:"));
     }
 }

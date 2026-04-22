@@ -920,6 +920,7 @@ pub fn gen_impl_pg_type_ts(
             }
             type #UpdUcc = #ident_upd_ucc;
             type #UpdForQueryUcc = #ident_upd_for_query_ucc;
+            #[allow(unused_variables)]
             fn #UpdQpSc(
                 #upd_qp_v_undrscr: &Self::#UpdForQueryUcc,
                 #upd_qp_jsonb_set_accumulator_undrscr: #RefStr,

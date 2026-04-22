@@ -11,6 +11,11 @@ pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> = ProjectGitInfo {
 pub struct ProjectGitInfo<'commit_lt> {
     pub commit: &'commit_lt str,
 }
+impl AsRef<str> for ProjectGitInfo<'_> {
+    fn as_ref(&self) -> &str {
+        self.commit
+    }
+}
 pub trait GetGitCommitLink {
     fn get_git_commit_link(&self) -> String;
 }
@@ -24,8 +29,8 @@ pub trait GetGitCommitId {
         &'commit_id_lt self,
         fallback: &'commit_id_lt mut Option<String>,
     ) -> &'commit_id_lt str {
-        if let Some(commit_id_ref) = self.get_git_commit_id_ref() {
-            return commit_id_ref;
+        if let Some(commit_id) = self.get_git_commit_id_ref() {
+            return commit_id;
         }
         fallback
             .get_or_insert_with(|| self.get_git_commit_id())
@@ -33,14 +38,6 @@ pub trait GetGitCommitId {
     }
     fn get_git_commit_id_ref(&self) -> Option<&str> {
         None
-    }
-}
-impl GetGitCommitId for ProjectGitInfo<'_> {
-    fn get_git_commit_id(&self) -> String {
-        self.commit.to_owned()
-    }
-    fn get_git_commit_id_ref(&self) -> Option<&str> {
-        Some(self.commit)
     }
 }
 impl<T: ?Sized + AsRef<str>> GetGitCommitId for T {
@@ -53,33 +50,48 @@ impl<T: ?Sized + AsRef<str>> GetGitCommitId for T {
 }
 impl<T: ?Sized + GetGitCommitId> GetGitCommitLink for T {
     fn get_git_commit_link(&self) -> String {
-        let mut fallback = None;
-        git_commit_link(self.get_git_commit_id_or_else(&mut fallback))
+        let commit_id = self.get_git_commit_id_cow();
+        build_git_commit_link(commit_id.as_ref())
     }
+}
+const fn project_git_commit_id() -> &'static str {
+    PROJECT_GIT_INFO.commit
 }
 #[must_use]
 pub fn is_project_commit(commit_id: &str) -> bool {
-    commit_id == PROJECT_GIT_INFO.commit
+    commit_id == project_git_commit_id()
+}
+pub fn validate_project_commit(commit_id: &str) -> Result<(), String> {
+    is_project_commit(commit_id)
+        .then_some(())
+        .ok_or_else(project_git_commit_link)
 }
 #[must_use]
 pub fn project_git_commit_link() -> String {
-    git_commit_link(PROJECT_GIT_INFO.commit)
+    build_git_commit_link(project_git_commit_id())
 }
 #[must_use]
 pub fn git_commit_link(commit_id: &str) -> String {
-    let cap = BASE_GIT_COMMIT_LINK_LEN.saturating_add(commit_id.len());
+    build_git_commit_link(commit_id)
+}
+fn build_git_commit_link(commit_id: &str) -> String {
+    let cap = git_commit_link_capacity(commit_id);
     let mut output = String::with_capacity(cap);
     output.push_str(GITHUB_URL);
     output.push_str(TREE_SEGMENT);
     output.push_str(commit_id);
     output
 }
+#[must_use]
+pub const fn git_commit_link_capacity(commit_id: &str) -> usize {
+    BASE_GIT_COMMIT_LINK_LEN.saturating_add(commit_id.len())
+}
 #[cfg(test)]
 mod tests {
     use super::{
-        BASE_GIT_COMMIT_LINK_LEN, GITHUB_URL, GetGitCommitId, GetGitCommitLink as _,
-        PROJECT_GIT_INFO, ProjectGitInfo, git_commit_link, is_project_commit,
-        project_git_commit_link,
+        GITHUB_URL, GetGitCommitId, GetGitCommitLink as _, ProjectGitInfo, TREE_SEGMENT,
+        git_commit_link, git_commit_link_capacity, is_project_commit, project_git_commit_id,
+        project_git_commit_link, validate_project_commit,
     };
     use std::{borrow::Cow, cell::Cell};
     #[derive(Debug)]
@@ -110,7 +122,7 @@ mod tests {
         }
     }
     fn expected_git_commit_link(commit_id: &str) -> String {
-        format!("{GITHUB_URL}/tree/{commit_id}")
+        format!("{GITHUB_URL}{TREE_SEGMENT}{commit_id}")
     }
     #[test]
     fn git_commit_link_builds_expected_url() {
@@ -125,17 +137,28 @@ mod tests {
     }
     #[test]
     fn is_project_commit_returns_true_for_project_commit() {
-        assert!(is_project_commit(PROJECT_GIT_INFO.commit));
+        assert!(is_project_commit(project_git_commit_id()));
     }
     #[test]
     fn is_project_commit_returns_false_for_other_commit() {
         assert!(!is_project_commit("deadbeef"));
     }
     #[test]
+    fn validate_project_commit_returns_ok_for_project_commit() {
+        assert_eq!(validate_project_commit(project_git_commit_id()), Ok(()));
+    }
+    #[test]
+    fn validate_project_commit_returns_project_link_for_non_project_commit() {
+        assert_eq!(
+            validate_project_commit("deadbeef"),
+            Err(project_git_commit_link())
+        );
+    }
+    #[test]
     fn project_git_commit_link_matches_project_commit() {
         assert_eq!(
             project_git_commit_link(),
-            expected_git_commit_link(PROJECT_GIT_INFO.commit)
+            expected_git_commit_link(project_git_commit_id())
         );
     }
     #[test]
@@ -159,6 +182,15 @@ mod tests {
         assert_eq!(test_git_commit.fallback_calls.get(), 1);
     }
     #[test]
+    fn get_git_commit_link_calls_allocating_fallback_once_without_ref() {
+        let test_git_commit = TestGitCommit {
+            commit: "f00dbabe",
+            fallback_calls: Cell::new(0),
+        };
+        drop(test_git_commit.get_git_commit_link());
+        assert_eq!(test_git_commit.fallback_calls.get(), 1);
+    }
+    #[test]
     fn get_git_commit_id_or_else_computes_fallback_once() {
         let test_git_commit = TestGitCommit {
             commit: "f00dbabe",
@@ -170,6 +202,18 @@ mod tests {
         let second = test_git_commit.get_git_commit_id_or_else(&mut fallback);
         assert_eq!(second, "f00dbabe");
         assert_eq!(test_git_commit.fallback_calls.get(), 1);
+    }
+    #[test]
+    fn get_git_commit_id_or_else_prefers_borrowed_ref_without_fallback() {
+        let test_git_commit = BorrowedTestGitCommit {
+            commit: "cafebabe",
+            fallback_calls: Cell::new(0),
+        };
+        let mut fallback = None;
+        let commit = test_git_commit.get_git_commit_id_or_else(&mut fallback);
+        assert_eq!(commit, "cafebabe");
+        assert_eq!(test_git_commit.fallback_calls.get(), 0);
+        assert!(fallback.is_none());
     }
     #[test]
     fn get_git_commit_link_prefers_borrowed_commit_id() {
@@ -195,10 +239,12 @@ mod tests {
     fn base_git_commit_link_len_matches_expected_prefix_len() {
         let commit_id = "abc123";
         let expected = format!("{GITHUB_URL}/tree/{commit_id}").len();
-        assert_eq!(
-            BASE_GIT_COMMIT_LINK_LEN.saturating_add(commit_id.len()),
-            expected
-        );
+        assert_eq!(git_commit_link_capacity(commit_id), expected);
+    }
+    #[test]
+    fn git_commit_link_capacity_handles_empty_commit() {
+        let expected = format!("{GITHUB_URL}{TREE_SEGMENT}").len();
+        assert_eq!(git_commit_link_capacity(""), expected);
     }
     #[test]
     fn get_git_commit_link_works_for_str_and_string() {
@@ -230,5 +276,10 @@ mod tests {
             owned.get_git_commit_link(),
             expected_git_commit_link("12344321")
         );
+    }
+    #[test]
+    fn project_git_info_as_ref_returns_commit() {
+        let git_info = ProjectGitInfo { commit: "ab12cd34" };
+        assert_eq!(git_info.as_ref(), "ab12cd34");
     }
 }

@@ -1,4 +1,4 @@
-use convert_case::{Case, Casing};
+use convert_case::{Case, Casing as _};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::Display;
@@ -34,18 +34,18 @@ macro_rules! case_ts_trait {
         }
     };
 }
-case_str_trait!(AsRefStrToUccStr, AsRef<str>, |self_ref| to_case_str(
-    self_ref,
+case_str_trait!(AsRefStrToUccStr, AsRef<str>, |self_ref| str_case(
+    self_ref.as_ref(),
     Case::UpperCamel
 ));
 case_ts_trait!(AsRefStrToUccTs, AsRefStrToUccStr);
-case_str_trait!(AsRefStrToScStr, AsRef<str>, |self_ref| to_case_str(
-    self_ref,
+case_str_trait!(AsRefStrToScStr, AsRef<str>, |self_ref| str_case(
+    self_ref.as_ref(),
     Case::Snake
 ));
 case_ts_trait!(AsRefStrToScTs, AsRefStrToScStr);
-case_str_trait!(AsRefStrToUpperScStr, AsRef<str>, |self_ref| to_case_str(
-    self_ref,
+case_str_trait!(AsRefStrToUpperScStr, AsRef<str>, |self_ref| str_case(
+    self_ref.as_ref(),
     Case::UpperSnake
 ));
 case_ts_trait!(AsRefStrToUpperScTs, AsRefStrToUpperScStr);
@@ -78,26 +78,30 @@ case_str_trait!(ToTokensToUpperScStr, ToTokens, |self_ref| {
     tokenized_case_str(self_ref, Case::UpperSnake)
 });
 case_ts_trait!(ToTokensToUpperScTs, ToTokensToUpperScStr);
-fn to_ts_or_panic(v: &dyn Display) -> Ts2 {
+fn to_ts_or_panic<T>(v: &T) -> Ts2
+where
+    T: Display + ?Sized,
+{
     v.to_string().parse::<Ts2>().expect("753ce6dd")
 }
 fn display_case_str<T: Display>(v: &T, case: Case<'_>) -> String {
     let stringified = v.to_string();
-    to_case_str(&stringified, case)
+    str_case(&stringified, case)
 }
 fn tokenized_case_str<T: ToTokens>(v: &T, case: Case<'_>) -> String {
     let tokenized = quote! {#v}.to_string();
-    to_case_str(&tokenized, case)
+    str_case(&tokenized, case)
 }
-fn to_case_str<T: AsRef<str>>(v: &T, case: Case<'_>) -> String {
-    Casing::to_case(v, case)
+fn str_case(v: &str, case: Case<'_>) -> String {
+    v.to_case(case)
 }
 #[cfg(test)]
 mod tests {
     use super::{
         AsRefStrToScStr, AsRefStrToScTs, AsRefStrToUccStr, AsRefStrToUccTs, AsRefStrToUpperScStr,
-        DisplayToScStr, DisplayToUccStr, DisplayToUpperScStr, ToTokensToScStr, ToTokensToUccStr,
-        ToTokensToUpperScStr,
+        AsRefStrToUpperScTs, DisplayToScStr, DisplayToScTs, DisplayToUccStr, DisplayToUccTs,
+        DisplayToUpperScStr, DisplayToUpperScTs, ToTokensToScStr, ToTokensToScTs, ToTokensToUccStr,
+        ToTokensToUccTs, ToTokensToUpperScStr, ToTokensToUpperScTs,
     };
     use quote::quote;
     #[test]
@@ -116,6 +120,10 @@ mod tests {
             AsRefStrToScTs::case_or_panic(&"HelloWorld").to_string(),
             "hello_world"
         );
+        assert_eq!(
+            AsRefStrToUpperScTs::case_or_panic(&"helloWorld").to_string(),
+            "HELLO_WORLD"
+        );
     }
     #[test]
     fn display_and_tokens_conversion_are_expected() {
@@ -126,6 +134,33 @@ mod tests {
         assert_eq!(ToTokensToScStr::case(&quote! {HelloWorld}), "hello_world");
         assert_eq!(
             ToTokensToUpperScStr::case(&quote! {helloWorld}),
+            "HELLO_WORLD"
+        );
+    }
+    #[test]
+    fn display_and_tokens_ts_conversion_are_expected() {
+        assert_eq!(
+            DisplayToUccTs::case_or_panic(&"hello_world").to_string(),
+            "HelloWorld"
+        );
+        assert_eq!(
+            DisplayToScTs::case_or_panic(&"HelloWorld").to_string(),
+            "hello_world"
+        );
+        assert_eq!(
+            DisplayToUpperScTs::case_or_panic(&"helloWorld").to_string(),
+            "HELLO_WORLD"
+        );
+        assert_eq!(
+            ToTokensToUccTs::case_or_panic(&quote! {hello_world}).to_string(),
+            "HelloWorld"
+        );
+        assert_eq!(
+            ToTokensToScTs::case_or_panic(&quote! {HelloWorld}).to_string(),
+            "hello_world"
+        );
+        assert_eq!(
+            ToTokensToUpperScTs::case_or_panic(&quote! {helloWorld}).to_string(),
             "HELLO_WORLD"
         );
     }

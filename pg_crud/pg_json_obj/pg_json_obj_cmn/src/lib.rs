@@ -29,7 +29,7 @@ impl<T: PartialEq + Clone> UnqVec<T> {
         &self.0
     }
     pub fn try_new(v: Vec<T>) -> Result<Self, UnqVecTryNewEr<T>> {
-        let mut acc = Vec::new();
+        let mut acc: Vec<&T> = Vec::with_capacity(v.len());
         for el in &v {
             if acc.contains(&el) {
                 return Err(UnqVecTryNewEr::NotUnq {
@@ -132,5 +132,39 @@ impl<T> From<UnqVec<T>> for Vec<T> {
 impl<T1> UnqVec<T1> {
     pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> UnqVec<T2> {
         UnqVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::{UnqVec, UnqVecTryNewEr};
+    #[test]
+    fn try_new_returns_ok_for_unq_values() {
+        let v = UnqVec::try_new(vec![1i32, 2i32, 3i32]).expect("90a6f3e1");
+        assert_eq!(v.to_vec(), &vec![1i32, 2i32, 3i32]);
+    }
+    #[test]
+    fn try_new_returns_not_unq_for_duplicate() {
+        let er = UnqVec::try_new(vec![1i32, 2i32, 1i32]).expect_err("9230d2a3");
+        match er {
+            UnqVecTryNewEr::NotUnq { v, .. } => assert_eq!(v, 1i32),
+        }
+    }
+    #[test]
+    fn default_and_is_empty_are_consistent() {
+        let v = UnqVec::<i32>::default();
+        assert!(v.is_empty());
+        assert!(v.to_vec().is_empty());
+    }
+    #[test]
+    fn into_vec_preserves_inner_values() {
+        let v = UnqVec::try_new(vec![4i32, 5i32]).expect("736fd1f4");
+        let actual = v.into_vec();
+        assert_eq!(actual, vec![4i32, 5i32]);
+    }
+    #[test]
+    fn from_t1_impl_from_t2_converts_elements() {
+        let src = UnqVec::try_new(vec![1i32, 2i32]).expect("ab4976d9");
+        let actual = UnqVec::from_t1_impl_from_t2::<i64>(src);
+        assert_eq!(actual.into_vec(), vec![1i64, 2i64]);
     }
 }

@@ -13,7 +13,7 @@ edition = "2024"
 [dependencies]
 proc-macro2.workspace = true
 quote.workspace = true
-optml = {path = "../optml"}
+optml.workspace = true
 
 [lints]
 workspace = true

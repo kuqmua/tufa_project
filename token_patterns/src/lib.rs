@@ -7,7 +7,7 @@ macro_rules! tp {
         pub struct $name;
         impl ToTokens for $name {
             fn to_tokens(&self, tokens: &mut Ts2) {
-                quote! {$($tt)*}.to_tokens(tokens);
+                append_tokens(tokens, quote! {$($tt)*});
             }
         }
     };
@@ -18,7 +18,7 @@ macro_rules! tp_parts {
         pub struct $name;
         impl ToTokens for $name {
             fn to_tokens(&self, tokens: &mut Ts2) {
-                $($part.to_tokens(tokens);)+
+                $(append_tokens(tokens, $part);)+
             }
         }
     };
@@ -227,3 +227,46 @@ ts_path_fn!(
     path_all_vrts_dflt_some_one_el_call,
     ::all_vrts_dflt_some_one_el()
 );
+fn append_tokens(tokens: &mut Ts2, part: impl ToTokens) {
+    part.to_tokens(tokens);
+}
+#[cfg(test)]
+mod tests {
+    use super::{
+        CrateDfltSomeOneEl, CrateDfltSomeOneElCall, DeriveDebugCloneCopy, SqlxAcquire,
+        path_dflt_some_one_el_call,
+    };
+    use quote::{ToTokens, quote};
+    fn as_ts_string(v: impl ToTokens) -> String {
+        quote! {#v}.to_string()
+    }
+    #[test]
+    fn tp_struct_outputs_expected_tokens() {
+        assert_eq!(
+            as_ts_string(SqlxAcquire),
+            quote! {sqlx::Acquire}.to_string()
+        );
+        assert_eq!(
+            as_ts_string(DeriveDebugCloneCopy),
+            quote! {#[derive(Debug, Clone, Copy, Optml)]}.to_string()
+        );
+    }
+    #[test]
+    fn tp_parts_struct_outputs_expected_tokens() {
+        assert_eq!(
+            as_ts_string(CrateDfltSomeOneEl),
+            quote! {crate::DfltSomeOneEl}.to_string()
+        );
+        assert_eq!(
+            as_ts_string(CrateDfltSomeOneElCall),
+            quote! {crate::DfltSomeOneEl::dflt_some_one_el()}.to_string()
+        );
+    }
+    #[test]
+    fn path_helper_outputs_expected_tokens() {
+        assert_eq!(
+            path_dflt_some_one_el_call().to_string(),
+            quote! {::dflt_some_one_el()}.to_string()
+        );
+    }
+}

@@ -27,7 +27,7 @@ pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySize
     let size_hint = HttpBody::size_hint(&body);
     to_bytes(body, limit)
         .await
-        .map_err(|er| BodySizeEr::ReachedMaximumSizeOfBody {
+        .map_err(|er: AxumEr| BodySizeEr::ReachedMaximumSizeOfBody {
             er,
             maximum_size_of_body_limit_in_bytes: limit,
             size_hint,
@@ -37,22 +37,27 @@ pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySize
 #[cfg(test)]
 mod tests {
     use super::{BodySizeEr, check_body_size};
-    use crate::test_hlp::{assert_status_code, block_on, expect_er, expect_ok};
+    use crate::test_hlp::{assert_err_status_code, block_on, expect_er, expect_ok};
     use axum::{body::Body, http::StatusCode};
     use bytes::Bytes;
-    fn get_limit_from_er(er: &BodySizeEr) -> usize {
-        match er {
-            BodySizeEr::ReachedMaximumSizeOfBody {
-                maximum_size_of_body_limit_in_bytes,
-                ..
-            } => *maximum_size_of_body_limit_in_bytes,
-        }
+    struct ReachedMaxSize {
+        maximum_size_of_body_limit_in_bytes: usize,
+        size_hint_upper: Option<u64>,
     }
     fn check_body_size_ok(body: Body, limit: usize, exp_id: &'static str) -> Bytes {
         expect_ok(block_on(check_body_size(body, limit)), exp_id)
     }
-    fn check_body_size_er(body: Body, limit: usize, exp_id: &'static str) -> BodySizeEr {
-        expect_er(block_on(check_body_size(body, limit)), exp_id)
+    fn expect_reached_max_size(body: Body, limit: usize, exp_id: &'static str) -> ReachedMaxSize {
+        match expect_er(block_on(check_body_size(body, limit)), exp_id) {
+            BodySizeEr::ReachedMaximumSizeOfBody {
+                maximum_size_of_body_limit_in_bytes,
+                size_hint,
+                ..
+            } => ReachedMaxSize {
+                maximum_size_of_body_limit_in_bytes,
+                size_hint_upper: size_hint.upper(),
+            },
+        }
     }
     #[test]
     fn check_body_size_returns_bytes_when_body_fits_limit() {
@@ -71,17 +76,30 @@ mod tests {
     }
     #[test]
     fn check_body_size_returns_error_when_body_exceeds_limit() {
-        let er = check_body_size_er(Body::from("oversized"), 2, "ddf0983a");
-        assert_eq!(get_limit_from_er(&er), 2);
+        let reached_max_size = expect_reached_max_size(Body::from("oversized"), 2, "ddf0983a");
+        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, 2);
     }
     #[test]
     fn check_body_size_returns_error_when_body_not_empty_and_limit_is_zero() {
-        let er = check_body_size_er(Body::from("x"), 0, "7da3cae4");
-        assert_eq!(get_limit_from_er(&er), 0);
+        let reached_max_size = expect_reached_max_size(Body::from("x"), 0, "7da3cae4");
+        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, 0);
+    }
+    #[test]
+    fn check_body_size_error_contains_exact_size_hint_for_static_body() {
+        let reached_max_size = expect_reached_max_size(Body::from("oversized"), 2, "cc0f2f3e");
+        assert_eq!(reached_max_size.size_hint_upper, Some(9));
     }
     #[test]
     fn body_size_error_maps_to_payload_too_large() {
-        let er = check_body_size_er(Body::from("too-big"), 1, "7ed49ba1");
-        assert_status_code(&er, StatusCode::PAYLOAD_TOO_LARGE);
+        let _err = assert_err_status_code(
+            block_on(check_body_size(Body::from("too-big"), 1)),
+            "7ed49ba1",
+            StatusCode::PAYLOAD_TOO_LARGE,
+        );
+    }
+    #[test]
+    fn body_size_error_keeps_limit_when_limit_is_one() {
+        let reached_max_size = expect_reached_max_size(Body::from("ab"), 1, "1fe7a3b4");
+        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, 1);
     }
 }

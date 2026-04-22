@@ -13,9 +13,7 @@ edition = "2024"
 [dependencies]
 
 [dev-dependencies]
-reqwest.workspace = true
 toml.workspace = true
-scraper.workspace = true
 regex.workspace = true
 syn.workspace = true
 uuid.workspace = true
@@ -24,4 +22,3 @@ optml = {path = "../optml"}
 
 [lints]
 workspace = true
-

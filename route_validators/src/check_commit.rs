@@ -1,9 +1,12 @@
-use axum::http::{HeaderMap, StatusCode, header::ToStrError};
-use git_info::{is_project_commit, project_git_commit_link};
+use axum::http::{
+    HeaderMap, StatusCode,
+    header::{HeaderName, ToStrError},
+};
+use git_info::validate_project_commit;
 use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use thiserror::Error;
-const COMMIT_HEADER_NAME: &str = "commit";
+const COMMIT_HEADER_NAME: HeaderName = HeaderName::from_static("commit");
 const NO_COMMIT_HEADER_MSG: &str = "no_commit_header";
 const COMMIT_NOT_EQ_MSG: &str =
     "different project commit provided, services must work only with eq project commits";
@@ -48,12 +51,9 @@ pub fn check_commit(
             commit_to_str_conversion,
             loc: loc!(),
         })?;
-    if is_project_commit(commit) {
-        return Ok(());
-    }
-    Err(CommitEr::CommitNotEq {
+    validate_project_commit(commit).map_err(|commit_to_use| CommitEr::CommitNotEq {
         commit_not_eq: COMMIT_NOT_EQ_MSG,
-        commit_to_use: project_git_commit_link(),
+        commit_to_use,
         loc: loc!(),
     })
 }
@@ -62,23 +62,23 @@ mod tests {
     use super::{
         COMMIT_HEADER_NAME, COMMIT_NOT_EQ_MSG, CommitEr, NO_COMMIT_HEADER_MSG, check_commit,
     };
-    use crate::test_hlp::{assert_status_code, expect_er, expect_ok};
+    use crate::test_hlp::{
+        assert_err_status_code, expect_er, expect_ok, mk_headers_with_entry,
+        panic_unexpected_variant,
+    };
     use axum::http::{HeaderMap, StatusCode, header::HeaderValue};
-    use git_info::{PROJECT_GIT_INFO, project_git_commit_link};
-    fn mk_headers_with_commit(commit: HeaderValue) -> HeaderMap {
-        let mut headers = HeaderMap::new();
-        let prev = headers.insert(COMMIT_HEADER_NAME, commit);
-        assert!(prev.is_none());
-        headers
+    use git_info::{PROJECT_GIT_INFO, is_project_commit, project_git_commit_link};
+    fn non_utf8_commit_header() -> HeaderValue {
+        HeaderValue::from_bytes(&[0x80]).expect("8fc59e84")
+    }
+    fn mk_headers_with_commit(commit: &'static str) -> HeaderMap {
+        mk_headers_with_entry(COMMIT_HEADER_NAME, HeaderValue::from_static(commit))
     }
     fn mk_headers_with_wrong_commit() -> HeaderMap {
-        mk_headers_with_commit(HeaderValue::from_static("deadbeef"))
+        mk_headers_with_commit("deadbeef")
     }
     fn mk_headers_with_project_commit() -> HeaderMap {
-        mk_headers_with_commit(HeaderValue::from_str(PROJECT_GIT_INFO.commit).expect("0ad4f301"))
-    }
-    fn assert_is_bad_request(er: &CommitEr) {
-        assert_status_code(er, StatusCode::BAD_REQUEST);
+        mk_headers_with_commit(PROJECT_GIT_INFO.commit)
     }
     fn check_commit_ok(
         enable_api_git_commit_check: bool,
@@ -87,23 +87,45 @@ mod tests {
     ) {
         expect_ok(check_commit(enable_api_git_commit_check, headers), exp_id);
     }
-    fn check_commit_er(
-        enable_api_git_commit_check: bool,
+    fn check_commit_enabled_ok(headers: &HeaderMap, exp_id: &'static str) {
+        check_commit_ok(true, headers, exp_id);
+    }
+    fn check_commit_enabled_err(headers: &HeaderMap, exp_id: &'static str) -> CommitEr {
+        expect_er(check_commit(true, headers), exp_id)
+    }
+    fn check_commit_bad_request(headers: &HeaderMap, exp_id: &'static str) -> CommitEr {
+        assert_err_status_code(check_commit(true, headers), exp_id, StatusCode::BAD_REQUEST)
+    }
+    fn expect_no_commit_header_err(headers: &HeaderMap, exp_id: &'static str) -> &'static str {
+        match check_commit_enabled_err(headers, exp_id) {
+            CommitEr::NoCommitHeader {
+                no_commit_header, ..
+            } => no_commit_header,
+            CommitEr::CommitNotEq { .. } | CommitEr::CommitToStrConversion { .. } => {
+                panic_unexpected_variant(exp_id)
+            }
+        }
+    }
+    fn expect_commit_to_str_conversion_err(headers: &HeaderMap, exp_id: &'static str) -> CommitEr {
+        match check_commit_enabled_err(headers, exp_id) {
+            err @ CommitEr::CommitToStrConversion { .. } => err,
+            CommitEr::CommitNotEq { .. } | CommitEr::NoCommitHeader { .. } => {
+                panic_unexpected_variant(exp_id)
+            }
+        }
+    }
+    fn expect_commit_not_eq_err(
         headers: &HeaderMap,
         exp_id: &'static str,
-    ) -> CommitEr {
-        expect_er(check_commit(enable_api_git_commit_check, headers), exp_id)
-    }
-    fn check_commit_not_eq_er(headers: &HeaderMap, exp_id: &'static str) -> (&'static str, String) {
-        let er = check_commit_er(true, headers, exp_id);
-        match er {
+    ) -> (&'static str, String) {
+        match check_commit_enabled_err(headers, exp_id) {
             CommitEr::CommitNotEq {
                 commit_not_eq,
                 commit_to_use,
                 ..
             } => (commit_not_eq, commit_to_use),
             CommitEr::CommitToStrConversion { .. } | CommitEr::NoCommitHeader { .. } => {
-                panic!("7f8f24a9");
+                panic_unexpected_variant(exp_id)
             }
         }
     }
@@ -114,44 +136,38 @@ mod tests {
     }
     #[test]
     fn check_commit_skip_mode_ignores_non_utf8_commit_header() {
-        let headers = mk_headers_with_commit(HeaderValue::from_bytes(&[0x80]).expect("46076c3e"));
+        let headers = mk_headers_with_entry(COMMIT_HEADER_NAME, non_utf8_commit_header());
         check_commit_ok(false, &headers, "2f2a7b69");
     }
     #[test]
     fn check_commit_returns_no_header_error_when_header_is_absent() {
         let headers = HeaderMap::new();
-        let no_commit_header = match check_commit_er(true, &headers, "c89f19a5") {
-            CommitEr::NoCommitHeader {
-                no_commit_header, ..
-            } => no_commit_header,
-            CommitEr::CommitNotEq { .. } | CommitEr::CommitToStrConversion { .. } => {
-                panic!("7932cda5");
-            }
-        };
+        let no_commit_header = expect_no_commit_header_err(&headers, "c89f19a5");
         assert_eq!(no_commit_header, NO_COMMIT_HEADER_MSG);
     }
     #[test]
     fn check_commit_returns_to_str_error_for_non_utf8_header() {
-        let headers = mk_headers_with_commit(HeaderValue::from_bytes(&[0x80]).expect("f77798f0"));
-        let er = check_commit_er(true, &headers, "7b9ac2e3");
-        match er {
-            CommitEr::CommitToStrConversion { .. } => {}
-            CommitEr::CommitNotEq { .. } | CommitEr::NoCommitHeader { .. } => {
-                panic!("85df9706");
-            }
-        }
+        let headers = mk_headers_with_entry(COMMIT_HEADER_NAME, non_utf8_commit_header());
+        drop(expect_commit_to_str_conversion_err(&headers, "7b9ac2e3"));
     }
     #[test]
     fn check_commit_returns_mismatch_error_for_wrong_commit() {
         let headers = mk_headers_with_wrong_commit();
-        let (commit_not_eq, commit_to_use) = check_commit_not_eq_er(&headers, "14f304d8");
+        let (commit_not_eq, commit_to_use) = expect_commit_not_eq_err(&headers, "14f304d8");
         assert_eq!(commit_not_eq, COMMIT_NOT_EQ_MSG);
         assert!(commit_to_use.contains(PROJECT_GIT_INFO.commit));
     }
     #[test]
     fn check_commit_returns_expected_commit_link_for_wrong_commit() {
         let headers = mk_headers_with_wrong_commit();
-        let (_, commit_to_use) = check_commit_not_eq_er(&headers, "3db98d20");
+        let (_, commit_to_use) = expect_commit_not_eq_err(&headers, "3db98d20");
+        assert_eq!(commit_to_use, project_git_commit_link());
+    }
+    #[test]
+    fn check_commit_treats_empty_commit_as_mismatch() {
+        let headers = mk_headers_with_commit("");
+        let (commit_not_eq, commit_to_use) = expect_commit_not_eq_err(&headers, "491ef4d6");
+        assert_eq!(commit_not_eq, COMMIT_NOT_EQ_MSG);
         assert_eq!(commit_to_use, project_git_commit_link());
     }
     #[test]
@@ -160,19 +176,34 @@ mod tests {
         let commit = headers.remove(COMMIT_HEADER_NAME).expect("12653c9a");
         let prev = headers.insert("Commit", commit);
         assert!(prev.is_none());
-        check_commit_ok(true, &headers, "bb6c239e");
+        check_commit_enabled_ok(&headers, "bb6c239e");
     }
     #[test]
     fn check_commit_returns_ok_for_matching_commit() {
         let headers = mk_headers_with_project_commit();
-        check_commit_ok(true, &headers, "c95e27d1");
+        check_commit_enabled_ok(&headers, "c95e27d1");
+    }
+    #[test]
+    fn project_commit_is_recognized_by_git_info_helper() {
+        assert!(is_project_commit(PROJECT_GIT_INFO.commit));
+    }
+    #[test]
+    fn non_project_commit_is_rejected_by_git_info_helper() {
+        assert!(!is_project_commit("deadbeef"));
     }
     #[test]
     fn commit_errors_have_bad_request_status_code() {
-        let no_header_er = check_commit_er(true, &HeaderMap::new(), "76314db5");
-        assert_is_bad_request(&no_header_er);
-        let headers = mk_headers_with_wrong_commit();
-        let mismatch_er = check_commit_er(true, &headers, "1cabe205");
-        assert_is_bad_request(&mismatch_er);
+        let headers = HeaderMap::new();
+        let no_header_msg = expect_no_commit_header_err(&headers, "76314db5");
+        assert_eq!(no_header_msg, NO_COMMIT_HEADER_MSG);
+        drop(check_commit_bad_request(&headers, "f39bdcc6"));
+        let non_utf8_headers = mk_headers_with_entry(COMMIT_HEADER_NAME, non_utf8_commit_header());
+        drop(expect_commit_to_str_conversion_err(
+            &non_utf8_headers,
+            "e1c2d84a",
+        ));
+        drop(check_commit_bad_request(&non_utf8_headers, "2e86aa15"));
+        let mismatch_headers = mk_headers_with_wrong_commit();
+        drop(check_commit_bad_request(&mismatch_headers, "1cabe205"));
     }
 }

@@ -342,6 +342,7 @@ ambiguous_glob_imported_traits = "deny"
 ambiguous_import_visibilities = "deny"
 ambiguous_derive_helpers = "deny"
 internal_eq_trait_method_impls = "deny"
+float_literal_f32_fallback = "deny"
 
 [workspace.lints.clippy]
 absolute_paths = "deny"
