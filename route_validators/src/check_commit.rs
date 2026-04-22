@@ -40,22 +40,26 @@ pub fn check_commit(
     if !enable_api_git_commit_check {
         return Ok(());
     }
-    let commit = headers
-        .get(COMMIT_HEADER_NAME)
-        .ok_or_else(|| CommitEr::NoCommitHeader {
-            no_commit_header: NO_COMMIT_HEADER_MSG,
-            loc: loc!(),
-        })?
-        .to_str()
-        .map_err(|commit_to_str_conversion| CommitEr::CommitToStrConversion {
+    let no_commit_header_er = || CommitEr::NoCommitHeader {
+        no_commit_header: NO_COMMIT_HEADER_MSG,
+        loc: loc!(),
+    };
+    let commit_to_str_conversion_er =
+        |commit_to_str_conversion: ToStrError| CommitEr::CommitToStrConversion {
             commit_to_str_conversion,
             loc: loc!(),
-        })?;
-    validate_project_commit(commit).map_err(|commit_to_use| CommitEr::CommitNotEq {
+        };
+    let commit_not_eq_er = |commit_to_use: String| CommitEr::CommitNotEq {
         commit_not_eq: COMMIT_NOT_EQ_MSG,
         commit_to_use,
         loc: loc!(),
-    })
+    };
+    let commit = headers
+        .get(COMMIT_HEADER_NAME)
+        .ok_or_else(no_commit_header_er)?
+        .to_str()
+        .map_err(commit_to_str_conversion_er)?;
+    validate_project_commit(commit).map_err(commit_not_eq_er)
 }
 #[cfg(test)]
 mod tests {

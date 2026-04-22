@@ -1,6 +1,7 @@
 use app_state::{
     GetCorsAllowOrigin, GetDatabaseUrl, GetPgPoolMaxConnections, GetServiceSocketAddress,
 };
+use axum::http::HeaderValue;
 use axum::{Router, serve};
 use cmn_routes::cmn_routes;
 use git_info::PROJECT_GIT_INFO;
@@ -20,6 +21,10 @@ use tower_http::{
     trace::TraceLayer,
 };
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt as _, util::SubscriberInitExt as _};
+#[allow(clippy::single_call_fn)] // extracted for reuse in main setup and tests
+fn parse_cors_allow_origin(v: &str) -> Vec<HeaderValue> {
+    v.split(',').filter_map(|s| s.trim().parse().ok()).collect()
+}
 fn main() {
     tracing_subscriber::registry()
         .with(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")))
@@ -46,10 +51,8 @@ fn main() {
                 TcpListener::bind(GetServiceSocketAddress::get_service_socket_address(&config))
                     .await
                     .expect("3f294e7c");
-            let cors_origins = GetCorsAllowOrigin::get_cors_allow_origin(&config)
-                .split(',')
-                .filter_map(|s| s.trim().parse().ok())
-                .collect::<Vec<_>>();
+            let cors_origins =
+                parse_cors_allow_origin(GetCorsAllowOrigin::get_cors_allow_origin(&config));
             let app_state = Arc::new(ServerAppState {
                 pg_pool,
                 config,
@@ -87,4 +90,32 @@ fn main() {
             .await
             .expect("2dc4449b");
         });
+}
+#[cfg(test)]
+mod tests {
+    use super::parse_cors_allow_origin;
+    use axum::http::HeaderValue;
+    #[test]
+    fn parse_cors_allow_origin_keeps_valid_values() {
+        let v = parse_cors_allow_origin("https://a.example, https://b.example");
+        assert_eq!(v.len(), 2);
+        assert_eq!(
+            v.first(),
+            Some(&HeaderValue::from_static("https://a.example"))
+        );
+        assert_eq!(
+            v.get(1),
+            Some(&HeaderValue::from_static("https://b.example"))
+        );
+    }
+    #[test]
+    fn parse_cors_allow_origin_skips_invalid_values() {
+        let v = parse_cors_allow_origin("https://ok.example,bad\nvalue");
+        assert_eq!(v, vec![HeaderValue::from_static("https://ok.example")]);
+    }
+    #[test]
+    fn parse_cors_allow_origin_keeps_empty_item_behavior() {
+        let v = parse_cors_allow_origin("");
+        assert_eq!(v, vec![HeaderValue::from_static("")]);
+    }
 }

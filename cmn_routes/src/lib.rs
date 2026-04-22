@@ -35,14 +35,15 @@ const fn mk_git_info_payload(commit: String) -> GitInfo {
 #[allow(clippy::single_call_fn)] // single source for no-route text reused by payload builder and tests
 fn mk_no_route_msg(uri: &Uri) -> String {
     let uri_suffix = get_uri_suffix(uri);
-    let cap = NO_ROUTE_MSG_PREFIX
-        .len()
-        .saturating_add(uri_suffix.len())
-        .saturating_add(32);
+    let cap = no_route_msg_capacity(uri_suffix);
     let mut msg = String::with_capacity(cap);
     msg.push_str(NO_ROUTE_MSG_PREFIX);
     msg.push_str(uri_suffix);
     msg
+}
+#[allow(clippy::single_call_fn)] // isolated for reuse in tests and message builder
+const fn no_route_msg_capacity(uri_suffix: &str) -> usize {
+    NO_ROUTE_MSG_PREFIX.len().saturating_add(uri_suffix.len())
 }
 #[allow(clippy::single_call_fn)] // keeps route text construction consistent for path-only and path+query URIs
 fn get_uri_suffix(uri: &Uri) -> &str {
@@ -176,5 +177,12 @@ mod tests {
     #[test]
     fn no_route_prefix_stays_stable() {
         assert_eq!(NO_ROUTE_MSG_PREFIX, "No route for ");
+    }
+    #[test]
+    fn no_route_msg_capacity_is_exact_for_uri_suffix() {
+        assert_eq!(
+            super::no_route_msg_capacity("/abc?x=1"),
+            "No route for /abc?x=1".len()
+        );
     }
 }

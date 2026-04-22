@@ -25,14 +25,15 @@ impl crate::GetAxumHttpStatusCode for BodySizeEr {
 }
 pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
     let size_hint = HttpBody::size_hint(&body);
+    let reached_maximum_size_of_body_er = |er: AxumEr| BodySizeEr::ReachedMaximumSizeOfBody {
+        er,
+        maximum_size_of_body_limit_in_bytes: limit,
+        size_hint,
+        loc: loc!(),
+    };
     to_bytes(body, limit)
         .await
-        .map_err(|er: AxumEr| BodySizeEr::ReachedMaximumSizeOfBody {
-            er,
-            maximum_size_of_body_limit_in_bytes: limit,
-            size_hint,
-            loc: loc!(),
-        })
+        .map_err(reached_maximum_size_of_body_er)
 }
 #[cfg(test)]
 mod tests {
@@ -59,6 +60,10 @@ mod tests {
             },
         }
     }
+    fn assert_reached_max_size_limit(body: Body, limit: usize, exp_id: &'static str) {
+        let reached_max_size = expect_reached_max_size(body, limit, exp_id);
+        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, limit);
+    }
     #[test]
     fn check_body_size_returns_bytes_when_body_fits_limit() {
         let bytes = check_body_size_ok(Body::from("ok"), 8, "2fb3e958");
@@ -76,13 +81,11 @@ mod tests {
     }
     #[test]
     fn check_body_size_returns_error_when_body_exceeds_limit() {
-        let reached_max_size = expect_reached_max_size(Body::from("oversized"), 2, "ddf0983a");
-        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, 2);
+        assert_reached_max_size_limit(Body::from("oversized"), 2, "ddf0983a");
     }
     #[test]
     fn check_body_size_returns_error_when_body_not_empty_and_limit_is_zero() {
-        let reached_max_size = expect_reached_max_size(Body::from("x"), 0, "7da3cae4");
-        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, 0);
+        assert_reached_max_size_limit(Body::from("x"), 0, "7da3cae4");
     }
     #[test]
     fn check_body_size_error_contains_exact_size_hint_for_static_body() {
@@ -99,7 +102,6 @@ mod tests {
     }
     #[test]
     fn body_size_error_keeps_limit_when_limit_is_one() {
-        let reached_max_size = expect_reached_max_size(Body::from("ab"), 1, "1fe7a3b4");
-        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, 1);
+        assert_reached_max_size_limit(Body::from("ab"), 1, "1fe7a3b4");
     }
 }
