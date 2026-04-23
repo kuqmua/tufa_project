@@ -19,30 +19,30 @@ impl AsRef<str> for ProjectGitInfo<'_> {
 }
 pub trait GetGitCommitLink {
     fn get_git_commit_link(&self) -> String;
+    fn get_git_commit_link_cow(&self) -> Cow<'static, str>;
 }
 pub trait GetGitCommitId {
     fn get_git_commit_id(&self) -> String;
     fn get_git_commit_id_cow(&self) -> Cow<'_, str> {
-        if let Some(commit_id) = self.get_git_commit_id_ref() {
-            return Cow::Borrowed(commit_id);
-        }
-        Cow::Owned(self.get_git_commit_id())
+        self.git_commit_id_cow()
     }
     fn get_git_commit_id_or_else<'commit_id_lt>(
         &'commit_id_lt self,
         fallback: &'commit_id_lt mut Option<String>,
     ) -> &'commit_id_lt str {
-        self.get_git_commit_id_ref().map_or_else(
-            || {
-                fallback
-                    .get_or_insert_with(|| self.get_git_commit_id())
-                    .as_str()
-            },
-            |commit_id| commit_id,
-        )
+        self.get_git_commit_id_ref().unwrap_or_else(|| {
+            fallback
+                .get_or_insert_with(|| self.get_git_commit_id())
+                .as_str()
+        })
     }
     fn get_git_commit_id_ref(&self) -> Option<&str> {
         None
+    }
+    #[allow(clippy::single_call_fn)] // single helper keeps borrowed/owned commit-id selection consistent
+    fn git_commit_id_cow(&self) -> Cow<'_, str> {
+        self.get_git_commit_id_ref()
+            .map_or_else(|| Cow::Owned(self.get_git_commit_id()), Cow::Borrowed)
     }
     fn with_git_commit_id<R>(&self, f: impl FnOnce(&str) -> R) -> R {
         let mut fallback = None;
@@ -59,7 +59,10 @@ impl<T: ?Sized + AsRef<str>> GetGitCommitId for T {
 }
 impl<T: ?Sized + GetGitCommitId> GetGitCommitLink for T {
     fn get_git_commit_link(&self) -> String {
-        self.with_git_commit_id(build_git_commit_link)
+        self.get_git_commit_link_cow().into_owned()
+    }
+    fn get_git_commit_link_cow(&self) -> Cow<'static, str> {
+        self.with_git_commit_id(git_commit_link_cow)
     }
 }
 const fn project_git_commit_id() -> &'static str {
@@ -88,6 +91,13 @@ pub fn project_git_commit_link_ref() -> &'static str {
 pub fn git_commit_link(commit_id: &str) -> String {
     build_git_commit_link(commit_id)
 }
+#[must_use]
+pub fn git_commit_link_cow(commit_id: &str) -> Cow<'static, str> {
+    if is_project_commit(commit_id) {
+        return Cow::Borrowed(project_git_commit_link_ref());
+    }
+    Cow::Owned(build_git_commit_link(commit_id))
+}
 fn build_git_commit_link(commit_id: &str) -> String {
     let cap = git_commit_link_capacity(commit_id);
     let mut output = String::with_capacity(cap);
@@ -108,8 +118,9 @@ pub const fn git_commit_link_capacity(commit_id: &str) -> usize {
 mod tests {
     use super::{
         GITHUB_URL, GetGitCommitId, GetGitCommitLink as _, ProjectGitInfo, TREE_SEGMENT,
-        git_commit_link, git_commit_link_capacity, is_project_commit, project_git_commit_id,
-        project_git_commit_link, project_git_commit_link_ref, validate_project_commit,
+        git_commit_link, git_commit_link_capacity, git_commit_link_cow, is_project_commit,
+        project_git_commit_id, project_git_commit_link, project_git_commit_link_ref,
+        validate_project_commit,
     };
     use std::{borrow::Cow, cell::Cell, ptr};
     #[derive(Debug)]
@@ -166,6 +177,17 @@ mod tests {
     #[test]
     fn git_commit_link_handles_empty_commit() {
         assert_eq!(git_commit_link(""), expected_git_commit_link(""));
+    }
+    #[test]
+    fn git_commit_link_cow_borrows_cached_project_link_for_project_commit() {
+        let project_commit = project_git_commit_id();
+        let actual = git_commit_link_cow(project_commit);
+        assert!(matches!(actual, Cow::Borrowed(v) if ptr::eq(v, project_git_commit_link_ref())));
+    }
+    #[test]
+    fn git_commit_link_cow_owns_link_for_non_project_commit() {
+        let actual = git_commit_link_cow("deadbeef");
+        assert!(matches!(actual, Cow::Owned(v) if v == expected_git_commit_link("deadbeef")));
     }
     #[test]
     fn is_project_commit_returns_true_for_project_commit() {
@@ -261,6 +283,14 @@ mod tests {
         let link = test_git_commit.get_git_commit_link();
         assert_eq!(link, expected_git_commit_link("cafebabe"));
         assert_eq!(test_git_commit.fallback_calls.get(), 0);
+    }
+    #[test]
+    fn get_git_commit_link_cow_borrows_project_link_for_project_commit() {
+        let git_info = ProjectGitInfo {
+            commit: project_git_commit_id(),
+        };
+        let link = git_info.get_git_commit_link_cow();
+        assert!(matches!(link, Cow::Borrowed(v) if ptr::eq(v, project_git_commit_link_ref())));
     }
     #[test]
     fn get_git_commit_id_cow_returns_borrowed_when_ref_is_available() {

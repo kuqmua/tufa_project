@@ -97,13 +97,12 @@ impl CommitEr {
 fn validate_commit_header_value(commit: &str) -> Result<(), CommitEr> {
     validate_project_commit(commit).map_err(CommitEr::commit_not_eq)
 }
-pub fn check_commit(
-    enable_api_git_commit_check: bool,
-    headers: &HeaderMap,
-) -> Result<(), CommitEr> {
-    if !enable_api_git_commit_check {
-        return Ok(());
-    }
+#[allow(clippy::single_call_fn)] // keeps skip condition named for reuse and test clarity
+const fn is_commit_check_disabled(enable_api_git_commit_check: bool) -> bool {
+    !enable_api_git_commit_check
+}
+#[allow(clippy::single_call_fn)] // keeps commit header parsing pipeline in one reusable helper
+fn parse_required_commit_header(headers: &HeaderMap) -> Result<(), CommitEr> {
     get_required_header_str_parsed(
         headers,
         COMMIT_HEADER_NAME,
@@ -111,6 +110,15 @@ pub fn check_commit(
         CommitEr::commit_to_str_conversion,
         validate_commit_header_value,
     )
+}
+pub fn check_commit(
+    enable_api_git_commit_check: bool,
+    headers: &HeaderMap,
+) -> Result<(), CommitEr> {
+    if is_commit_check_disabled(enable_api_git_commit_check) {
+        return Ok(());
+    }
+    parse_required_commit_header(headers)
 }
 #[cfg(test)]
 mod tests {
@@ -176,6 +184,7 @@ mod tests {
     fn check_commit_is_skipped_when_validation_is_disabled() {
         let headers = HeaderMap::new();
         check_commit_ok(false, &headers, "f4cab210");
+        assert!(super::is_commit_check_disabled(false));
     }
     #[test]
     fn check_commit_skip_mode_ignores_non_utf8_commit_header() {
@@ -239,6 +248,7 @@ mod tests {
     fn check_commit_returns_ok_for_matching_commit() {
         let headers = mk_headers_with_project_commit();
         check_commit_enabled_ok(&headers, "c95e27d1");
+        assert!(!super::is_commit_check_disabled(true));
     }
     #[test]
     fn project_commit_is_recognized_by_git_info_helper() {

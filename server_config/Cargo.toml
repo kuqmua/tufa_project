@@ -15,9 +15,9 @@ chrono.workspace = true
 thiserror.workspace = true
 dotenv.workspace = true
 secrecy.workspace = true
-config_lib = {path = "../config_lib"}
-app_state = {path = "../app_state"}
-optml = {path = "../optml"}
+config_lib.workspace = true
+app_state.workspace = true
+optml.workspace = true
 
 [lints]
 workspace = true

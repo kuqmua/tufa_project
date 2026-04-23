@@ -9,7 +9,7 @@ use axum::{
 use git_info::GetGitCommitLink;
 use optml::Optml;
 use serde::Serialize;
-use std::sync::Arc;
+use std::{borrow::Cow, sync::Arc};
 const SLASH_HEALTH_CHECK: &str = "/health_check";
 const SLASH_GIT_INFO: &str = "/git_info";
 const SLASH_SWAGGER_UI: &str = "/swagger-ui";
@@ -20,19 +20,19 @@ const HEALTH_CHECK_ER_STATUS: StatusCode = StatusCode::SERVICE_UNAVAILABLE;
 type DynArcCmnRoutesPrms = Arc<dyn CmnRoutesPrms>;
 type CmnState = State<DynArcCmnRoutesPrms>;
 type JsonRes<T> = (StatusCode, Json<T>);
-pub trait CmnRoutesPrms: GetGitCommitLink + GetPgPool + Send + Sync {}
 #[derive(Debug, Serialize, Optml)]
 struct GitInfo {
-    commit: String,
+    commit: Cow<'static, str>,
 }
 #[derive(Debug, Serialize, Optml)]
 struct NotFoundH {
-    commit: String,
+    commit: Cow<'static, str>,
     msg: String,
     open_api_specification: &'static str,
 }
+pub trait CmnRoutesPrms: GetGitCommitLink + GetPgPool + Send + Sync {}
 #[allow(clippy::single_call_fn)] // keeps commit-link extraction shape shared between handlers and tests
-const fn mk_git_info_payload(commit: String) -> GitInfo {
+const fn mk_git_info_payload(commit: Cow<'static, str>) -> GitInfo {
     GitInfo { commit }
 }
 #[allow(clippy::single_call_fn)] // single source for no-route text reused by payload builder and tests
@@ -54,7 +54,7 @@ fn get_uri_suffix(uri: &Uri) -> &str {
         .map_or_else(|| uri.path(), |v| v.as_str())
 }
 #[allow(clippy::single_call_fn)] // keeps fallback payload assembly in one place
-fn mk_not_found_payload(uri: &Uri, commit: String) -> NotFoundH {
+fn mk_not_found_payload(uri: &Uri, commit: Cow<'static, str>) -> NotFoundH {
     NotFoundH {
         commit,
         msg: mk_no_route_msg(uri),
@@ -62,8 +62,23 @@ fn mk_not_found_payload(uri: &Uri, commit: String) -> NotFoundH {
     }
 }
 #[allow(clippy::single_call_fn)] // centralizes how handlers get commit links from shared app state
-fn state_commit_link(app_state: &DynArcCmnRoutesPrms) -> String {
-    app_state.get_git_commit_link()
+fn state_commit_link(app_state: &DynArcCmnRoutesPrms) -> Cow<'static, str> {
+    app_state.get_git_commit_link_cow()
+}
+#[allow(clippy::single_call_fn)] // shared helper keeps commit-link extraction reusable across payload builders
+fn with_state_commit_link<T>(
+    app_state: &DynArcCmnRoutesPrms,
+    map: impl FnOnce(Cow<'static, str>) -> T,
+) -> T {
+    map(state_commit_link(app_state))
+}
+#[allow(clippy::single_call_fn)] // shared path keeps git-info payload creation from state in one place
+fn mk_git_info_payload_from_state(app_state: &DynArcCmnRoutesPrms) -> GitInfo {
+    with_state_commit_link(app_state, mk_git_info_payload)
+}
+#[allow(clippy::single_call_fn)] // shared path keeps not-found payload creation from state in one place
+fn mk_not_found_payload_from_state(uri: &Uri, app_state: &DynArcCmnRoutesPrms) -> NotFoundH {
+    with_state_commit_link(app_state, |commit| mk_not_found_payload(uri, commit))
 }
 #[allow(clippy::single_call_fn)] // keeps status+json tuple construction consistent across handlers
 const fn mk_json_res<T>(status: StatusCode, payload: T) -> JsonRes<T> {
@@ -90,14 +105,14 @@ async fn health_check(State(app_state_hc): CmnState) -> StatusCode {
 async fn git_info(State(app_state_76fb2013): CmnState) -> JsonRes<GitInfo> {
     mk_json_res(
         StatusCode::OK,
-        mk_git_info_payload(state_commit_link(&app_state_76fb2013)),
+        mk_git_info_payload_from_state(&app_state_76fb2013),
     )
 }
 #[allow(clippy::single_call_fn)] // named handler isolates fallback behavior for maintenance
 async fn not_found(uri: Uri, State(app_state_19103bd5): CmnState) -> JsonRes<NotFoundH> {
     mk_json_res(
         StatusCode::NOT_FOUND,
-        mk_not_found_payload(&uri, state_commit_link(&app_state_19103bd5)),
+        mk_not_found_payload_from_state(&uri, &app_state_19103bd5),
     )
 }
 pub fn cmn_routes(app_state_b9fc2d94: DynArcCmnRoutesPrms) -> Router {
@@ -111,8 +126,9 @@ pub fn cmn_routes(app_state_b9fc2d94: DynArcCmnRoutesPrms) -> Router {
 mod tests {
     use super::{
         HEALTH_CHECK_ER_STATUS, HEALTH_CHECK_OK_STATUS, NO_ROUTE_MSG_PREFIX, SLASH_SWAGGER_UI,
-        get_uri_suffix, map_health_check_status, mk_git_info_payload, mk_json_res, mk_no_route_msg,
-        mk_not_found_payload, state_commit_link,
+        get_uri_suffix, map_health_check_status, mk_git_info_payload,
+        mk_git_info_payload_from_state, mk_json_res, mk_no_route_msg, mk_not_found_payload,
+        mk_not_found_payload_from_state, state_commit_link, with_state_commit_link,
     };
     use crate::CmnRoutesPrms;
     use app_state::GetPgPool;
@@ -143,13 +159,13 @@ mod tests {
     }
     #[test]
     fn git_info_response_shape_stays_stable() {
-        let git_info = mk_git_info_payload(String::from("abc123"));
+        let git_info = mk_git_info_payload(String::from("abc123").into());
         assert_eq!(git_info.commit, "abc123");
     }
     #[test]
     fn not_found_response_shape_stays_stable() {
         let uri = Uri::from_static("/unknown");
-        let not_found = mk_not_found_payload(&uri, String::from("deadbeef"));
+        let not_found = mk_not_found_payload(&uri, String::from("deadbeef").into());
         assert_eq!(not_found.commit, "deadbeef");
         assert_eq!(not_found.msg, "No route for /unknown");
         assert_eq!(not_found.open_api_specification, SLASH_SWAGGER_UI);
@@ -176,13 +192,25 @@ mod tests {
     }
     #[test]
     fn git_info_response_contains_commit_link() {
-        let payload = mk_git_info_payload(mk_state("abc123").get_git_commit_link());
+        let payload = mk_git_info_payload(git_commit_link("abc123").into());
+        assert_eq!(payload.commit, git_commit_link("abc123"));
+    }
+    #[test]
+    fn git_info_payload_from_state_contains_commit_link() {
+        let payload = mk_git_info_payload_from_state(&mk_state("abc123"));
         assert_eq!(payload.commit, git_commit_link("abc123"));
     }
     #[test]
     fn not_found_response_uses_uri_and_swagger_path() {
         let uri = Uri::from_static("/missing");
-        let payload = mk_not_found_payload(&uri, mk_state("abc123").get_git_commit_link());
+        let payload = mk_not_found_payload(&uri, git_commit_link("abc123").into());
+        assert_eq!(payload.msg, "No route for /missing");
+        assert_eq!(payload.open_api_specification, SLASH_SWAGGER_UI);
+    }
+    #[test]
+    fn not_found_payload_from_state_uses_uri_and_swagger_path() {
+        let uri = Uri::from_static("/missing");
+        let payload = mk_not_found_payload_from_state(&uri, &mk_state("abc123"));
         assert_eq!(payload.msg, "No route for /missing");
         assert_eq!(payload.open_api_specification, SLASH_SWAGGER_UI);
     }
@@ -216,9 +244,14 @@ mod tests {
     fn mk_json_res_wraps_payload_with_status() {
         let (status, payload) = mk_json_res(
             StatusCode::CREATED,
-            mk_git_info_payload(String::from("abc123")),
+            mk_git_info_payload(String::from("abc123").into()),
         );
         assert_eq!(status, StatusCode::CREATED);
         assert_eq!(payload.0.commit, "abc123");
+    }
+    #[test]
+    fn with_state_commit_link_passes_commit_link_to_mapper() {
+        let actual = with_state_commit_link(&mk_state("abc123"), |commit| format!("v={commit}"));
+        assert_eq!(actual, format!("v={}", git_commit_link("abc123")));
     }
 }

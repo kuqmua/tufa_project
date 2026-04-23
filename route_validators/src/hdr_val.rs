@@ -2,6 +2,18 @@ use axum::http::{
     HeaderMap,
     header::{AsHeaderName, HeaderValue, ToStrError},
 };
+#[allow(clippy::single_call_fn)] // core helper centralizes required-header fetch and transform flow reused by all helpers
+fn get_required_header_then<'headers, E, T>(
+    headers: &'headers HeaderMap,
+    header_name: impl AsHeaderName,
+    no_header_er: impl FnOnce() -> E,
+    map: impl FnOnce(&'headers HeaderValue) -> Result<T, E>,
+) -> Result<T, E> {
+    headers
+        .get(header_name)
+        .ok_or_else(no_header_er)
+        .and_then(map)
+}
 #[allow(clippy::single_call_fn)] // core helper centralizes required-header transform flow reused by parsing helpers
 pub(crate) fn get_required_header_mapped<'headers, E, T>(
     headers: &'headers HeaderMap,
@@ -9,17 +21,19 @@ pub(crate) fn get_required_header_mapped<'headers, E, T>(
     no_header_er: impl FnOnce() -> E,
     map: impl FnOnce(&'headers HeaderValue) -> Result<T, E>,
 ) -> Result<T, E> {
-    map(get_required_header(headers, header_name, no_header_er)?)
+    get_required_header_then(headers, header_name, no_header_er, map)
 }
 #[allow(clippy::single_call_fn)] // helper centralizes required-header parsing and is reused by this module tests
+#[cfg(test)]
 pub(crate) fn get_required_header<E>(
     headers: &HeaderMap,
     header_name: impl AsHeaderName,
     no_header_er: impl FnOnce() -> E,
 ) -> Result<&HeaderValue, E> {
-    headers.get(header_name).ok_or_else(no_header_er)
+    get_required_header_mapped(headers, header_name, no_header_er, Ok)
 }
 #[allow(clippy::single_call_fn)] // helper centralizes required-header string parsing and is reused by route validators
+#[cfg(test)]
 pub(crate) fn get_required_header_str<E>(
     headers: &HeaderMap,
     header_name: impl AsHeaderName,
@@ -38,12 +52,9 @@ pub(crate) fn get_required_header_str_parsed<'headers, E, T>(
     to_str_er: impl FnOnce(ToStrError) -> E,
     parse: impl FnOnce(&'headers str) -> Result<T, E>,
 ) -> Result<T, E> {
-    parse(get_required_header_str(
-        headers,
-        header_name,
-        no_header_er,
-        to_str_er,
-    )?)
+    get_required_header_mapped(headers, header_name, no_header_er, |header_value| {
+        parse(header_value.to_str().map_err(to_str_er)?)
+    })
 }
 #[cfg(test)]
 mod tests {

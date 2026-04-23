@@ -48,11 +48,15 @@ impl BodySizeEr {
         }
     }
 }
+#[allow(clippy::single_call_fn)] // keeps conversion from axum body error to domain error reusable for future body validators
+fn map_body_size_er(er: AxumEr, limit: usize, size_hint: SizeHint) -> BodySizeEr {
+    BodySizeEr::reached_maximum_size_of_body(er, limit, size_hint)
+}
 pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
     let size_hint = HttpBody::size_hint(&body);
     to_bytes(body, limit)
         .await
-        .map_err(|er: AxumEr| BodySizeEr::reached_maximum_size_of_body(er, limit, size_hint))
+        .map_err(|er: AxumEr| map_body_size_er(er, limit, size_hint))
 }
 #[cfg(test)]
 mod tests {

@@ -7,24 +7,30 @@ use syn::{
     Data, DeriveInput, Field, Fields, GenericParam, Ident, Lifetime, parse, punctuated::Punctuated,
     token::Comma, visit_mut::VisitMut,
 };
+struct ReplaceLts;
+impl VisitMut for ReplaceLts {
+    fn visit_lifetime_mut(&mut self, i: &mut Lifetime) {
+        i.ident = Ident::new("static", i.ident.span());
+    }
+}
+#[allow(clippy::single_call_fn)] // isolated helper keeps lifetime rewrite reusable when alignment logic grows
+fn field_ty_with_static_lts(field: &Field) -> syn::Type {
+    let mut ft = field.ty.clone();
+    let mut visitor = ReplaceLts;
+    visitor.visit_type_mut(&mut ft);
+    ft
+}
+#[allow(clippy::single_call_fn)] // isolated helper keeps align token generation reusable and explicit
+fn gen_align_of_ts(field: &Field) -> Ts2 {
+    let ft = field_ty_with_static_lts(field);
+    quote! {align_of::<#ft>()}
+}
 #[proc_macro_derive(Optml)]
 pub fn optml(input_ts: Ts) -> Ts {
     let gen_alignments_ident_ts =
         |i: usize| format!("alignments_{i}").parse::<Ts2>().expect("5a0bb723");
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
     let ident = &di.ident;
-    let gen_align_of_ts = |field: &Field| {
-        struct ReplaceLts;
-        impl VisitMut for ReplaceLts {
-            fn visit_lifetime_mut(&mut self, i: &mut Lifetime) {
-                i.ident = Ident::new("static", i.ident.span());
-            }
-        }
-        let mut ft = field.ty.clone();
-        let mut visitor = ReplaceLts;
-        visitor.visit_type_mut(&mut ft);
-        quote! {align_of::<#ft>()}
-    };
     let gen_fi = |i: usize| Ident::new(&format!("field_{i}"), ident.span());
     let gen_assertions_ts = |fields: &Punctuated<Field, Comma>,
                              alignments_ts: &dyn ToTokens,

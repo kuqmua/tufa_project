@@ -26,12 +26,12 @@ sqlx.workspace = true
 tokio.workspace = true
 secrecy.workspace = true
 tracing-subscriber.workspace = true
-git_info = {path = "../git_info"}
-app_state = {path = "../app_state"}
-cmn_routes = {path = "../cmn_routes"}
-server_app_state = {path = "../server_app_state"}
-server_config = {path = "../server_config"}
-server_tbl_example = {path = "../server_tbl_example"}
+git_info.workspace = true
+app_state.workspace = true
+cmn_routes.workspace = true
+server_app_state.workspace = true
+server_config.workspace = true
+server_tbl_example.workspace = true
 
 [dev-dependencies]
 tokio.workspace = true

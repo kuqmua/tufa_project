@@ -12,6 +12,11 @@ const MAX_BLOCK_ON_POLLS: usize = 4096;
 const BLOCK_ON_POLL_LIMIT_ER_ID: &str = "cf6e91ab";
 const EXPECT_OK_ER_ID: &str = "db9d2f63";
 const EXPECT_ER_ER_ID: &str = "2f755472";
+#[derive(Copy, Clone)]
+enum ExpRslt {
+    Er,
+    Ok,
+}
 #[allow(clippy::single_call_fn)] // extracted to keep block_on loop hot path simple and reusable
 const fn is_block_on_poll_limit_reached(poll_count: usize) -> bool {
     poll_count >= MAX_BLOCK_ON_POLLS
@@ -42,6 +47,7 @@ pub(crate) fn panic_unexpected_variant(exp_id: &'static str) -> ! {
     panic!("4fe6f2e6 id={exp_id}");
 }
 #[track_caller]
+#[allow(clippy::single_call_fn)] // shared panic formatting keeps expectation failures consistent across helpers
 fn panic_unexpected_result(
     er_id: &'static str,
     fn_name: &'static str,
@@ -51,15 +57,31 @@ fn panic_unexpected_result(
     panic!("{er_id} unexpected {expected} for {fn_name}, id={exp_id}");
 }
 #[track_caller]
+fn on_exp_rslt<T, E, R>(
+    v: Result<T, E>,
+    exp_rslt: ExpRslt,
+    on_ok: impl FnOnce(T) -> R,
+    on_er: impl FnOnce(E) -> R,
+    exp_id: &'static str,
+) -> R {
+    match (exp_rslt, v) {
+        (ExpRslt::Ok, Ok(ok_v)) => on_ok(ok_v),
+        (ExpRslt::Er, Err(er_v)) => on_er(er_v),
+        (ExpRslt::Ok, Err(_)) => {
+            panic_unexpected_result(EXPECT_OK_ER_ID, "expect_ok", "Err", exp_id)
+        }
+        (ExpRslt::Er, Ok(_)) => {
+            panic_unexpected_result(EXPECT_ER_ER_ID, "expect_er", "Ok", exp_id)
+        }
+    }
+}
+#[track_caller]
 pub(crate) fn expect_ok<T, E>(v: Result<T, E>, exp_id: &'static str) -> T {
-    v.unwrap_or_else(|_| panic_unexpected_result(EXPECT_OK_ER_ID, "expect_ok", "Err", exp_id))
+    on_exp_rslt(v, ExpRslt::Ok, |ok_v| ok_v, |_| panic!("6f179d42"), exp_id)
 }
 #[track_caller]
 pub(crate) fn expect_er<T, E>(v: Result<T, E>, exp_id: &'static str) -> E {
-    v.map_or_else(
-        |er| er,
-        |_| panic_unexpected_result(EXPECT_ER_ER_ID, "expect_er", "Ok", exp_id),
-    )
+    on_exp_rslt(v, ExpRslt::Er, |_| panic!("7155e30f"), |er_v| er_v, exp_id)
 }
 #[track_caller]
 pub(crate) fn assert_err_status_code<T, E>(

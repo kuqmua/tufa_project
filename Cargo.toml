@@ -108,10 +108,15 @@ walkdir = {version = "=2.5.0"}
 git-version = {version = "=0.3.9"}
 itertools = {version = "=0.14.0"}
 app_state = {path = "./app_state"}
+cmn_routes = {path = "./cmn_routes"}
+config_lib = {path = "./config_lib"}
 git_info = {path = "./git_info"}
 loc_lib = {path = "./loc_lib"}
 naming = {path = "./naming"}
 optml = {path = "./optml"}
+server_app_state = {path = "./server_app_state"}
+server_config = {path = "./server_config"}
+server_tbl_example = {path = "./server_tbl_example"}
 
 [workspace.lints.rust]
 unsafe_code = "deny"
