@@ -23,46 +23,56 @@ pub enum BodySizeEr {
 impl crate::GetAxumHttpStatusCode for BodySizeEr {
     const AXUM_HTTP_STATUS_CODE: StatusCode = StatusCode::PAYLOAD_TOO_LARGE;
 }
-pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
-    let size_hint = HttpBody::size_hint(&body);
-    let reached_maximum_size_of_body_er = |er: AxumEr| BodySizeEr::ReachedMaximumSizeOfBody {
-        er,
-        maximum_size_of_body_limit_in_bytes: limit,
-        size_hint,
-        loc: loc!(),
-    };
-    to_bytes(body, limit)
-        .await
-        .map_err(reached_maximum_size_of_body_er)
-}
-#[cfg(test)]
-mod tests {
-    use super::{BodySizeEr, check_body_size};
-    use crate::test_hlp::{assert_err_status_code, block_on, expect_er, expect_ok};
-    use axum::{body::Body, http::StatusCode};
-    use bytes::Bytes;
-    struct ReachedMaxSize {
-        maximum_size_of_body_limit_in_bytes: usize,
-        size_hint_upper: Option<u64>,
-    }
-    fn check_body_size_ok(body: Body, limit: usize, exp_id: &'static str) -> Bytes {
-        expect_ok(block_on(check_body_size(body, limit)), exp_id)
-    }
-    fn expect_reached_max_size(body: Body, limit: usize, exp_id: &'static str) -> ReachedMaxSize {
-        match expect_er(block_on(check_body_size(body, limit)), exp_id) {
-            BodySizeEr::ReachedMaximumSizeOfBody {
+impl BodySizeEr {
+    #[cfg(test)]
+    fn expect_reached_maximum_size(self) -> (usize, Option<u64>) {
+        match self {
+            Self::ReachedMaximumSizeOfBody {
                 maximum_size_of_body_limit_in_bytes,
                 size_hint,
                 ..
-            } => ReachedMaxSize {
-                maximum_size_of_body_limit_in_bytes,
-                size_hint_upper: size_hint.upper(),
-            },
+            } => (maximum_size_of_body_limit_in_bytes, size_hint.upper()),
         }
     }
+    #[allow(clippy::single_call_fn)] // keeps body-size error construction reusable and testable in one place
+    fn reached_maximum_size_of_body(
+        er: AxumEr,
+        maximum_size_of_body_limit_in_bytes: usize,
+        size_hint: SizeHint,
+    ) -> Self {
+        Self::ReachedMaximumSizeOfBody {
+            er,
+            maximum_size_of_body_limit_in_bytes,
+            size_hint,
+            loc: loc!(),
+        }
+    }
+}
+pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
+    let size_hint = HttpBody::size_hint(&body);
+    to_bytes(body, limit)
+        .await
+        .map_err(|er: AxumEr| BodySizeEr::reached_maximum_size_of_body(er, limit, size_hint))
+}
+#[cfg(test)]
+mod tests {
+    use super::check_body_size;
+    use crate::test_hlp::{assert_err_status_code_only, block_on, expect_er, expect_ok};
+    use axum::{body::Body, http::StatusCode};
+    use bytes::Bytes;
+    fn check_body_size_ok(body: Body, limit: usize, exp_id: &'static str) -> Bytes {
+        expect_ok(block_on(check_body_size(body, limit)), exp_id)
+    }
+    fn expect_reached_max_size(
+        body: Body,
+        limit: usize,
+        exp_id: &'static str,
+    ) -> (usize, Option<u64>) {
+        expect_er(block_on(check_body_size(body, limit)), exp_id).expect_reached_maximum_size()
+    }
     fn assert_reached_max_size_limit(body: Body, limit: usize, exp_id: &'static str) {
-        let reached_max_size = expect_reached_max_size(body, limit, exp_id);
-        assert_eq!(reached_max_size.maximum_size_of_body_limit_in_bytes, limit);
+        let (maximum_size_of_body_limit_in_bytes, _) = expect_reached_max_size(body, limit, exp_id);
+        assert_eq!(maximum_size_of_body_limit_in_bytes, limit);
     }
     #[test]
     fn check_body_size_returns_bytes_when_body_fits_limit() {
@@ -88,13 +98,14 @@ mod tests {
         assert_reached_max_size_limit(Body::from("x"), 0, "7da3cae4");
     }
     #[test]
-    fn check_body_size_error_contains_exact_size_hint_for_static_body() {
-        let reached_max_size = expect_reached_max_size(Body::from("oversized"), 2, "cc0f2f3e");
-        assert_eq!(reached_max_size.size_hint_upper, Some(9));
+    fn check_body_size_error_contains_expected_non_zero_size_hint_for_static_body() {
+        let (_, size_hint_upper) = expect_reached_max_size(Body::from("oversized"), 2, "cc0f2f3e");
+        assert_eq!(size_hint_upper, Some(9));
+        assert_eq!(size_hint_upper.map(|v| v > 0), Some(true));
     }
     #[test]
     fn body_size_error_maps_to_payload_too_large() {
-        let _err = assert_err_status_code(
+        assert_err_status_code_only(
             block_on(check_body_size(Body::from("too-big"), 1)),
             "7ed49ba1",
             StatusCode::PAYLOAD_TOO_LARGE,

@@ -15,7 +15,7 @@ pub enum UnqVecTryNewEr<T> {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct UnqVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> UnqVec<T> {
+impl<T> UnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
@@ -28,16 +28,15 @@ impl<T: PartialEq + Clone> UnqVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(v: Vec<T>) -> Result<Self, UnqVecTryNewEr<T>> {
-        let mut acc: Vec<&T> = Vec::with_capacity(v.len());
-        for el in &v {
-            if acc.contains(&el) {
-                return Err(UnqVecTryNewEr::NotUnq {
-                    v: el.clone(),
-                    loc: loc!(),
-                });
-            }
-            acc.push(el);
+}
+impl<T: PartialEq> UnqVec<T> {
+    pub fn try_new(mut v: Vec<T>) -> Result<Self, UnqVecTryNewEr<T>> {
+        if let Some(duplicate_idx) = first_duplicate_idx(&v) {
+            let duplicate = v.remove(duplicate_idx);
+            return Err(UnqVecTryNewEr::NotUnq {
+                v: duplicate,
+                loc: loc!(),
+            });
         }
         Ok(Self(v))
     }
@@ -134,9 +133,20 @@ impl<T1> UnqVec<T1> {
         UnqVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
+#[allow(clippy::single_call_fn)] // duplicate index search is shared by constructor and unit tests
+fn first_duplicate_idx<T: PartialEq>(v: &[T]) -> Option<usize> {
+    for (idx, el) in v.iter().enumerate() {
+        if v.iter().take(idx).any(|seen| seen == el) {
+            return Some(idx);
+        }
+    }
+    None
+}
 #[cfg(test)]
 mod tests {
-    use super::{UnqVec, UnqVecTryNewEr};
+    use super::{UnqVec, UnqVecTryNewEr, first_duplicate_idx};
+    #[derive(Debug, PartialEq, Eq)]
+    struct NonClone(u8);
     #[test]
     fn try_new_returns_ok_for_unq_values() {
         let v = UnqVec::try_new(vec![1i32, 2i32, 3i32]).expect("90a6f3e1");
@@ -147,6 +157,21 @@ mod tests {
         let er = UnqVec::try_new(vec![1i32, 2i32, 1i32]).expect_err("9230d2a3");
         match er {
             UnqVecTryNewEr::NotUnq { v, .. } => assert_eq!(v, 1i32),
+        }
+    }
+    #[test]
+    fn try_new_returns_first_repeated_value_when_many_duplicates_exist() {
+        let er = UnqVec::try_new(vec![3i32, 4i32, 4i32, 3i32]).expect_err("d22e7b7a");
+        match er {
+            UnqVecTryNewEr::NotUnq { v, .. } => assert_eq!(v, 4i32),
+        }
+    }
+    #[test]
+    fn try_new_supports_non_clone_values() {
+        let er =
+            UnqVec::try_new(vec![NonClone(1), NonClone(2), NonClone(1)]).expect_err("0ed6be5b");
+        match er {
+            UnqVecTryNewEr::NotUnq { v, .. } => assert_eq!(v, NonClone(1)),
         }
     }
     #[test]
@@ -166,5 +191,15 @@ mod tests {
         let src = UnqVec::try_new(vec![1i32, 2i32]).expect("ab4976d9");
         let actual = UnqVec::from_t1_impl_from_t2::<i64>(src);
         assert_eq!(actual.into_vec(), vec![1i64, 2i64]);
+    }
+    #[test]
+    fn first_duplicate_idx_returns_none_for_unq_input() {
+        let v = vec![1u8, 2u8, 3u8];
+        assert!(first_duplicate_idx(&v).is_none());
+    }
+    #[test]
+    fn first_duplicate_idx_returns_first_repeated_value_index() {
+        let v = vec![7u8, 8u8, 8u8, 7u8];
+        assert_eq!(first_duplicate_idx(&v), Some(2usize));
     }
 }

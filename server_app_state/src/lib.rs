@@ -45,9 +45,9 @@ impl GetPgPool for ServerAppState<'_> {
 }
 impl GetGitCommitId for ServerAppState<'_> {
     fn get_git_commit_id(&self) -> String {
-        self.project_git_info.commit.to_owned()
+        self.project_git_info.get_git_commit_id()
     }
     fn get_git_commit_id_ref(&self) -> Option<&str> {
-        Some(self.project_git_info.commit)
+        self.project_git_info.get_git_commit_id_ref()
     }
 }

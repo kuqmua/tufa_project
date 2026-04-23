@@ -12,6 +12,9 @@ use std::{
 };
 use utoipa::ToSchema;
 static SRC_PLACE_TYPE: OnceLock<SrcPlaceType> = OnceLock::new();
+static LOC_DISPLAY_TIMEZONE: OnceLock<Option<FixedOffset>> = OnceLock::new();
+const LOC_DISPLAY_UTC_OFFSET_SECS: i32 = 10_800;
+const INCORRECT_DATETIME_MSG: &str = "incorrect datetime";
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize, ToSchema, JsonSchema, Optml)]
 pub struct Occr {
@@ -32,6 +35,12 @@ pub struct Loc {
 }
 #[allow(clippy::arbitrary_source_item_ordering)]
 impl Loc {
+    #[allow(clippy::single_call_fn)] // shared cached offset accessor is reused by formatter and tests
+    fn loc_display_timezone() -> Option<&'static FixedOffset> {
+        LOC_DISPLAY_TIMEZONE
+            .get_or_init(|| FixedOffset::east_opt(LOC_DISPLAY_UTC_OFFSET_SECS))
+            .as_ref()
+    }
     fn fmt_with_occr(
         &self,
         f: &mut Formatter<'_>,
@@ -56,16 +65,16 @@ impl Loc {
     fn fmt_datetime(&self, f: &mut Formatter<'_>) -> FmtResult {
         match (
             UNIX_EPOCH.checked_add(self.duration),
-            FixedOffset::east_opt(10800),
+            Self::loc_display_timezone(),
         ) {
             (Some(epoch), Some(offset)) => write!(
                 f,
                 "{}",
                 DateTime::<Utc>::from(epoch)
-                    .with_timezone(&offset)
+                    .with_timezone(offset)
                     .format("%Y-%m-%d %H:%M:%S")
             ),
-            _ => f.write_str("incorrect datetime"),
+            _ => f.write_str(INCORRECT_DATETIME_MSG),
         }
     }
     fn fmt_github_place(&self, f: &mut Formatter<'_>) -> FmtResult {
@@ -121,7 +130,7 @@ impl Display for Loc {
 #[cfg(test)]
 #[allow(clippy::arbitrary_source_item_ordering)]
 mod tests {
-    use super::{GITHUB_URL, Loc, Occr};
+    use super::{GITHUB_URL, INCORRECT_DATETIME_MSG, LOC_DISPLAY_UTC_OFFSET_SECS, Loc, Occr};
     use app_state::SrcPlaceType;
     use std::{
         fmt::{Display, Formatter, Result as FmtResult},
@@ -232,7 +241,12 @@ mod tests {
         };
         assert_eq!(
             format!("{}", DatetimeFmt { loc: &loc }),
-            "incorrect datetime"
+            INCORRECT_DATETIME_MSG
         );
+    }
+    #[test]
+    fn loc_display_timezone_uses_expected_offset() {
+        let offset = Loc::loc_display_timezone().expect("5c53d969");
+        assert_eq!(offset.local_minus_utc(), LOC_DISPLAY_UTC_OFFSET_SECS);
     }
 }

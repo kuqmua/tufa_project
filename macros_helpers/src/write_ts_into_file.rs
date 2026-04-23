@@ -1,8 +1,10 @@
-use crate::write_string_into_file::{path_with_rs_extension, try_write_string_into_path};
+use crate::panic_if_err::panic_if_err;
+use crate::rs_file_path::rs_file_path;
+use crate::write_string_into_file::try_write_string_into_path_with_outcome;
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use serde::Deserialize;
-use std::{io, process::Command};
+use std::{io, path::Path, process::Command};
 #[derive(Debug, Clone, Copy, Optml)]
 pub enum FormatWithCargofmt {
     False,
@@ -13,64 +15,71 @@ pub enum ShouldWriteTsIntoFile {
     False,
     True,
 }
-pub fn try_mb_write_ts_into_file(
+#[allow(clippy::single_call_fn)] // rustfmt execution is isolated so io/process errors stay localized and easy to test
+fn try_run_rustfmt(path: &Path) -> io::Result<()> {
+    let status = Command::new("rustfmt").arg(path).status()?;
+    if status.success() {
+        Ok(())
+    } else {
+        Err(io::Error::other(format!(
+            "rustfmt failed for {}",
+            path.display()
+        )))
+    }
+}
+pub fn try_mb_write_ts_into_file<P>(
     should_write_ts_into_file: ShouldWriteTsIntoFile,
-    file_name: &str,
+    file_name: P,
     ts: &Ts2,
     format_with_cargofmt: &FormatWithCargofmt,
-) -> io::Result<()> {
+) -> io::Result<()>
+where
+    P: AsRef<Path>,
+{
     if matches!(should_write_ts_into_file, ShouldWriteTsIntoFile::False) {
         return Ok(());
     }
-    let path = path_with_rs_extension(file_name);
-    let ts_string = ts.to_string();
-    try_write_string_into_path(&path, &ts_string)?;
-    if matches!(format_with_cargofmt, FormatWithCargofmt::True) {
-        let status = Command::new("rustfmt").arg(&path).status()?;
-        if !status.success() {
-            return Err(io::Error::other(format!(
-                "rustfmt failed for {}",
-                path.display()
-            )));
-        }
+    let rs_path = rs_file_path(file_name);
+    let wr_outcome = try_write_string_into_path_with_outcome(rs_path, &ts.to_string())?;
+    if wr_outcome.is_changed() && matches!(format_with_cargofmt, FormatWithCargofmt::True) {
+        try_run_rustfmt(wr_outcome.path())?;
     }
     Ok(())
 }
-pub fn mb_write_ts_into_file(
+pub fn mb_write_ts_into_file<P>(
     should_write_ts_into_file: ShouldWriteTsIntoFile,
-    file_name: &str,
+    file_name: P,
     ts: &Ts2,
     format_with_cargofmt: &FormatWithCargofmt,
-) {
-    if let Err(er) = try_mb_write_ts_into_file(
-        should_write_ts_into_file,
-        file_name,
-        ts,
-        format_with_cargofmt,
-    ) {
-        panic!("5ecc3880:{er}");
-    }
+) where
+    P: AsRef<Path>,
+{
+    panic_if_err(
+        try_mb_write_ts_into_file(
+            should_write_ts_into_file,
+            file_name,
+            ts,
+            format_with_cargofmt,
+        ),
+        |er| format!("5ecc3880:{er}"),
+    );
 }
 #[cfg(test)]
 mod tests {
     use super::{
         FormatWithCargofmt, ShouldWriteTsIntoFile, mb_write_ts_into_file, try_mb_write_ts_into_file,
     };
-    use crate::{
-        test_hlp::{cleanup_test_file, test_path},
-        write_string_into_file::path_with_rs_extension,
-    };
+    use crate::test_hlp::{assert_file_content, cleanup_test_file, rs_file_path, test_path};
     use proc_macro2::TokenStream as Ts2;
-    use std::fs::{metadata, read_to_string};
+    use std::fs::{metadata, write};
     #[test]
     fn mb_write_ts_into_file_skips_when_flag_is_false() {
         let base = test_path("macros_helpers_skip");
-        let base_str = base.to_string_lossy().into_owned();
-        let path = path_with_rs_extension(&base_str);
+        let path = rs_file_path(&base);
         let ts: Ts2 = "struct SkipWrite;".parse().expect("5994e7e2");
         mb_write_ts_into_file(
             ShouldWriteTsIntoFile::False,
-            &base_str,
+            &base,
             &ts,
             &FormatWithCargofmt::False,
         );
@@ -79,36 +88,64 @@ mod tests {
     #[test]
     fn mb_write_ts_into_file_writes_tokens_when_flag_is_true() {
         let base = test_path("macros_helpers_write");
-        let base_str = base.to_string_lossy().into_owned();
-        let path = path_with_rs_extension(&base_str);
+        let path = rs_file_path(&base);
         let ts: Ts2 = "struct DidWrite ;".parse().expect("6c20f49a");
         let expected = ts.to_string();
         mb_write_ts_into_file(
             ShouldWriteTsIntoFile::True,
-            &base_str,
+            &base,
             &ts,
             &FormatWithCargofmt::False,
         );
-        let actual = read_to_string(&path).expect("dcfd3d1d");
-        assert_eq!(actual, expected);
+        assert_file_content(&path, &expected);
         cleanup_test_file(path);
     }
     #[test]
     fn try_mb_write_ts_into_file_writes_tokens_when_enabled() {
         let base = test_path("macros_helpers_try_write");
-        let base_str = base.to_string_lossy().into_owned();
-        let path = path_with_rs_extension(&base_str);
+        let path = rs_file_path(&base);
         let ts: Ts2 = "struct TryDidWrite ;".parse().expect("f771ac2d");
         let expected = ts.to_string();
         try_mb_write_ts_into_file(
             ShouldWriteTsIntoFile::True,
-            &base_str,
+            &base,
             &ts,
             &FormatWithCargofmt::False,
         )
         .expect("6fee9f6f");
-        let actual = read_to_string(&path).expect("c53ea835");
-        assert_eq!(actual, expected);
+        assert_file_content(&path, &expected);
+        cleanup_test_file(path);
+    }
+    #[test]
+    fn try_mb_write_ts_into_file_accepts_path_input() {
+        let base = test_path("macros_helpers_try_write_path");
+        let path = rs_file_path(&base);
+        let ts: Ts2 = "struct PathInput ;".parse().expect("f9b0cd83");
+        let expected = ts.to_string();
+        try_mb_write_ts_into_file(
+            ShouldWriteTsIntoFile::True,
+            &base,
+            &ts,
+            &FormatWithCargofmt::False,
+        )
+        .expect("f341cde7");
+        assert_file_content(&path, &expected);
+        cleanup_test_file(path);
+    }
+    #[test]
+    fn try_mb_write_ts_into_file_formats_when_rustfmt_enabled() {
+        let base = test_path("macros_helpers_try_run_rustfmt");
+        let path = rs_file_path(&base);
+        write(&path, "struct B;").expect("7091840d");
+        let ts: Ts2 = "struct A ;".parse().expect("0f30ca53");
+        try_mb_write_ts_into_file(
+            ShouldWriteTsIntoFile::True,
+            &base,
+            &ts,
+            &FormatWithCargofmt::True,
+        )
+        .expect("00a995a4");
+        assert_file_content(&path, "struct A;\n");
         cleanup_test_file(path);
     }
 }

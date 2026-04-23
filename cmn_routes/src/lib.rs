@@ -15,8 +15,11 @@ const SLASH_GIT_INFO: &str = "/git_info";
 const SLASH_SWAGGER_UI: &str = "/swagger-ui";
 const HEALTH_CHECK_SQL: &str = "SELECT 1";
 const NO_ROUTE_MSG_PREFIX: &str = "No route for ";
+const HEALTH_CHECK_OK_STATUS: StatusCode = StatusCode::OK;
+const HEALTH_CHECK_ER_STATUS: StatusCode = StatusCode::SERVICE_UNAVAILABLE;
 type DynArcCmnRoutesPrms = Arc<dyn CmnRoutesPrms>;
 type CmnState = State<DynArcCmnRoutesPrms>;
+type JsonRes<T> = (StatusCode, Json<T>);
 pub trait CmnRoutesPrms: GetGitCommitLink + GetPgPool + Send + Sync {}
 #[derive(Debug, Serialize, Optml)]
 struct GitInfo {
@@ -58,35 +61,43 @@ fn mk_not_found_payload(uri: &Uri, commit: String) -> NotFoundH {
         open_api_specification: SLASH_SWAGGER_UI,
     }
 }
-#[allow(clippy::single_call_fn)] // named handler is clearer than inline closure for route wiring
-async fn health_check(State(app_state_hc): CmnState) -> StatusCode {
-    if sqlx::query(HEALTH_CHECK_SQL)
-        .execute(app_state_hc.get_pg_pool())
-        .await
-        .is_ok()
-    {
-        StatusCode::OK
+#[allow(clippy::single_call_fn)] // centralizes how handlers get commit links from shared app state
+fn state_commit_link(app_state: &DynArcCmnRoutesPrms) -> String {
+    app_state.get_git_commit_link()
+}
+#[allow(clippy::single_call_fn)] // keeps status+json tuple construction consistent across handlers
+const fn mk_json_res<T>(status: StatusCode, payload: T) -> JsonRes<T> {
+    (status, Json(payload))
+}
+#[allow(clippy::single_call_fn)] // shared mapping keeps health-check status behavior centralized
+const fn map_health_check_status(is_ok: bool) -> StatusCode {
+    if is_ok {
+        HEALTH_CHECK_OK_STATUS
     } else {
-        StatusCode::SERVICE_UNAVAILABLE
+        HEALTH_CHECK_ER_STATUS
     }
 }
 #[allow(clippy::single_call_fn)] // named handler is clearer than inline closure for route wiring
-async fn git_info(State(app_state_76fb2013): CmnState) -> (StatusCode, Json<GitInfo>) {
-    (
+async fn health_check(State(app_state_hc): CmnState) -> StatusCode {
+    map_health_check_status(
+        sqlx::query(HEALTH_CHECK_SQL)
+            .execute(app_state_hc.get_pg_pool())
+            .await
+            .is_ok(),
+    )
+}
+#[allow(clippy::single_call_fn)] // named handler is clearer than inline closure for route wiring
+async fn git_info(State(app_state_76fb2013): CmnState) -> JsonRes<GitInfo> {
+    mk_json_res(
         StatusCode::OK,
-        Json(mk_git_info_payload(
-            app_state_76fb2013.get_git_commit_link(),
-        )),
+        mk_git_info_payload(state_commit_link(&app_state_76fb2013)),
     )
 }
 #[allow(clippy::single_call_fn)] // named handler isolates fallback behavior for maintenance
-async fn not_found(uri: Uri, State(app_state_19103bd5): CmnState) -> (StatusCode, Json<NotFoundH>) {
-    (
+async fn not_found(uri: Uri, State(app_state_19103bd5): CmnState) -> JsonRes<NotFoundH> {
+    mk_json_res(
         StatusCode::NOT_FOUND,
-        Json(mk_not_found_payload(
-            &uri,
-            app_state_19103bd5.get_git_commit_link(),
-        )),
+        mk_not_found_payload(&uri, state_commit_link(&app_state_19103bd5)),
     )
 }
 pub fn cmn_routes(app_state_b9fc2d94: DynArcCmnRoutesPrms) -> Router {
@@ -99,8 +110,9 @@ pub fn cmn_routes(app_state_b9fc2d94: DynArcCmnRoutesPrms) -> Router {
 #[cfg(test)]
 mod tests {
     use super::{
-        NO_ROUTE_MSG_PREFIX, SLASH_SWAGGER_UI, get_uri_suffix, mk_git_info_payload,
-        mk_no_route_msg, mk_not_found_payload,
+        HEALTH_CHECK_ER_STATUS, HEALTH_CHECK_OK_STATUS, NO_ROUTE_MSG_PREFIX, SLASH_SWAGGER_UI,
+        get_uri_suffix, map_health_check_status, mk_git_info_payload, mk_json_res, mk_no_route_msg,
+        mk_not_found_payload, state_commit_link,
     };
     use crate::CmnRoutesPrms;
     use app_state::GetPgPool;
@@ -184,5 +196,29 @@ mod tests {
             super::no_route_msg_capacity("/abc?x=1"),
             "No route for /abc?x=1".len()
         );
+    }
+    #[test]
+    fn map_health_check_status_returns_ok_for_success() {
+        assert_eq!(map_health_check_status(true), HEALTH_CHECK_OK_STATUS);
+    }
+    #[test]
+    fn map_health_check_status_returns_unavailable_for_error() {
+        assert_eq!(map_health_check_status(false), HEALTH_CHECK_ER_STATUS);
+    }
+    #[test]
+    fn state_commit_link_uses_state_trait_object() {
+        assert_eq!(
+            state_commit_link(&mk_state("abc123")),
+            git_commit_link("abc123")
+        );
+    }
+    #[test]
+    fn mk_json_res_wraps_payload_with_status() {
+        let (status, payload) = mk_json_res(
+            StatusCode::CREATED,
+            mk_git_info_payload(String::from("abc123")),
+        );
+        assert_eq!(status, StatusCode::CREATED);
+        assert_eq!(payload.0.commit, "abc123");
     }
 }

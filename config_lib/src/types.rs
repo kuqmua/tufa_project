@@ -6,6 +6,7 @@ use std::{
     env,
     fmt::{Display, Formatter, Result as FmtResult},
     str::FromStr,
+    sync::OnceLock,
 };
 use strum_macros::{Display as StrumDisplay, EnumIter};
 const TRACING_LEVEL_PARSE_PAIRS: [(&str, TracingLevel); 5] = [
@@ -20,6 +21,7 @@ const SRC_PLACE_TYPE_PARSE_PAIRS: [(&str, SrcPlaceType); 2] =
 const SRC_PLACE_TYPE_ENV_VAR: &str = "SRC_PLACE_TYPE";
 const SRC_PLACE_TYPE_FIX_MSG: &str =
     "You can set environment variable SRC_PLACE_TYPE to be eq \"src\" or \"github\"";
+static DOTENV_INIT: OnceLock<()> = OnceLock::new();
 #[allow(clippy::arbitrary_source_item_ordering)]
 #[derive(Debug, Default, Clone, Copy, EnumIter, Serialize, Deserialize, PartialEq, Eq, Optml)]
 pub enum TracingLevel {
@@ -70,15 +72,12 @@ impl SrcPlaceType {
     #[must_use]
     pub fn from_env_or_dflt() -> Self {
         let dflt = Self::default();
-        if let Err(er) = dotenv() {
-            eprintln!("dotenv() failed in SrcPlaceType::from_env_or_dflt: {er}");
-        }
-        let parsed = env::var(SRC_PLACE_TYPE_ENV_VAR)
-            .map_err(|er| format!("env::var(\"{SRC_PLACE_TYPE_ENV_VAR}\"): {er}"))
-            .and_then(|v| {
-                <Self as FromStr>::from_str(&v)
-                    .map_err(|er| format!("<SrcPlaceType as FromStr>::from_str(&v): {er}"))
-            });
+        let _: &() = DOTENV_INIT.get_or_init(|| {
+            if let Err(er) = dotenv() {
+                eprintln!("dotenv() failed in SrcPlaceType::from_env_or_dflt: {er}");
+            }
+        });
+        let parsed = Self::parse_src_place_type_from_env_var(env::var(SRC_PLACE_TYPE_ENV_VAR));
         match parsed {
             Ok(v) => v,
             Err(msg) => {
@@ -87,12 +86,24 @@ impl SrcPlaceType {
             }
         }
     }
+    #[allow(clippy::single_call_fn)] // parsing helper isolates context-rich error formatting and is reused by tests
+    fn parse_src_place_type_env_value(v: &str) -> Result<Self, String> {
+        <Self as FromStr>::from_str(v)
+            .map_err(|er| format!("<SrcPlaceType as FromStr>::from_str(&v): {er}"))
+    }
+    #[allow(clippy::single_call_fn)] // helper keeps env-read error context centralized and deterministic for tests
+    fn parse_src_place_type_from_env_var(v: Result<String, env::VarError>) -> Result<Self, String> {
+        let src_place_type_env_v =
+            v.map_err(|er| format!("env::var(\"{SRC_PLACE_TYPE_ENV_VAR}\"): {er}"))?;
+        Self::parse_src_place_type_env_value(&src_place_type_env_v)
+    }
 }
 #[cfg(test)]
 mod tests {
     use super::{
         SRC_PLACE_TYPE_PARSE_PAIRS, SrcPlaceType, TRACING_LEVEL_PARSE_PAIRS, TracingLevel,
     };
+    use std::env;
     use std::str::FromStr as _;
     #[test]
     fn tracing_level_display_is_stable() {
@@ -138,5 +149,27 @@ mod tests {
         let er = SrcPlaceType::from_str("unknown").expect_err("f2cc7d6b");
         assert!(er.contains("Unknown value"));
         assert!(er.contains("Allowed values:"));
+    }
+    #[test]
+    fn parse_src_place_type_env_value_parses_case_insensitively() {
+        let parsed = SrcPlaceType::parse_src_place_type_env_value("GiThUb");
+        assert_eq!(parsed, Ok(SrcPlaceType::Github));
+    }
+    #[test]
+    fn parse_src_place_type_env_value_wraps_parse_context() {
+        let er = SrcPlaceType::parse_src_place_type_env_value("bad").expect_err("8c9f2a17");
+        assert!(er.contains("<SrcPlaceType as FromStr>::from_str(&v):"));
+        assert!(er.contains("Unknown value: bad"));
+    }
+    #[test]
+    fn parse_src_place_type_from_env_var_wraps_missing_var_context() {
+        let er = SrcPlaceType::parse_src_place_type_from_env_var(Err(env::VarError::NotPresent))
+            .expect_err("5a83f2be");
+        assert!(er.contains("env::var(\"SRC_PLACE_TYPE\")"));
+    }
+    #[test]
+    fn parse_src_place_type_from_env_var_parses_ok_value() {
+        let parsed = SrcPlaceType::parse_src_place_type_from_env_var(Ok(String::from("src")));
+        assert_eq!(parsed, Ok(SrcPlaceType::Src));
     }
 }

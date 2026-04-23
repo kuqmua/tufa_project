@@ -42,4 +42,4 @@ server_config = {path = "../server_config"}
 workspace = true
 
 [features]
-test-utils = ["pg_crud/test-utils"]
+test-utils = ["pg_crud/test-utils", "server_types/test-utils"]

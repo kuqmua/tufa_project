@@ -1,3 +1,26 @@
+const ALLOWED_VALUES_SEPARATOR: &str = ", ";
+#[allow(clippy::single_call_fn)] // extracted for reuse by allowed-values formatter and tests
+fn allowed_values_capacity<T>(vrts: &[(&str, T)]) -> usize {
+    vrts.iter()
+        .map(|(name, _)| name.len())
+        .sum::<usize>()
+        .saturating_add(
+            vrts.len()
+                .saturating_sub(1)
+                .saturating_mul(ALLOWED_VALUES_SEPARATOR.len()),
+        )
+}
+#[allow(clippy::single_call_fn)] // extracted to keep allowed-values formatting reusable and tested
+fn mk_allowed_values<T>(vrts: &[(&str, T)]) -> String {
+    let mut allowed_values = String::with_capacity(allowed_values_capacity(vrts));
+    for (k_6e44a22d, (name, _)) in vrts.iter().enumerate() {
+        if k_6e44a22d != 0 {
+            allowed_values.push_str(ALLOWED_VALUES_SEPARATOR);
+        }
+        allowed_values.push_str(name);
+    }
+    allowed_values
+}
 pub fn impl_from_str_for_enum_helper<T>(v: &str, vrts: &[(&str, T)]) -> Result<T, String>
 where
     T: Copy,
@@ -7,25 +30,14 @@ where
             return Ok(enum_vrt);
         }
     }
-    let cap = vrts
-        .iter()
-        .map(|(name, _)| name.len())
-        .sum::<usize>()
-        .saturating_add(vrts.len().saturating_sub(1).saturating_mul(2));
-    let mut allowed_values = String::with_capacity(cap);
-    for (k_6e44a22d, (name, _)) in vrts.iter().enumerate() {
-        if k_6e44a22d != 0 {
-            allowed_values.push_str(", ");
-        }
-        allowed_values.push_str(name);
-    }
+    let allowed_values = mk_allowed_values(vrts);
     Err(format!(
         "Unknown value: {v}. Allowed values: {allowed_values}"
     ))
 }
 #[cfg(test)]
 mod tests {
-    use super::impl_from_str_for_enum_helper;
+    use super::{impl_from_str_for_enum_helper, mk_allowed_values};
     const PAIRS: [(&str, V); 2] = [("a", V::A), ("b", V::B)];
     #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     enum V {
@@ -54,5 +66,14 @@ mod tests {
         let pairs: [(&str, V); 0] = [];
         let er = impl_from_str_for_enum_helper("x", &pairs).expect_err("312f79de");
         assert_eq!(er, "Unknown value: x. Allowed values: ");
+    }
+    #[test]
+    fn mk_allowed_values_formats_multiple_variants() {
+        assert_eq!(mk_allowed_values(&PAIRS), "a, b");
+    }
+    #[test]
+    fn mk_allowed_values_returns_empty_for_no_variants() {
+        let pairs: [(&str, V); 0] = [];
+        assert_eq!(mk_allowed_values(&pairs), "");
     }
 }

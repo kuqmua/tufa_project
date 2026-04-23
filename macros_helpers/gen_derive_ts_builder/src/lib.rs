@@ -4,6 +4,36 @@ use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use serde_json::from_str;
+#[allow(clippy::single_call_fn)] // extracted to isolate case-normalization logic and keep macro expansion flow focused
+fn to_sc(input: &str) -> String {
+    let mut result = String::with_capacity(input.len());
+    let mut prev_is_undrscr = false;
+    let mut prev_is_lowercase = false;
+    for el0 in input.chars() {
+        if el0.is_alphabetic() {
+            if el0.is_uppercase() {
+                if prev_is_lowercase && !prev_is_undrscr {
+                    result.push('_');
+                }
+                for el1 in el0.to_lowercase() {
+                    result.push(el1);
+                }
+                prev_is_lowercase = false;
+            } else {
+                result.push(el0);
+                prev_is_lowercase = true;
+            }
+            prev_is_undrscr = false;
+        } else {
+            if !prev_is_undrscr && !result.is_empty() {
+                result.push('_');
+                prev_is_undrscr = true;
+            }
+            prev_is_lowercase = false;
+        }
+    }
+    result.trim_matches('_').to_owned()
+}
 #[proc_macro]
 pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
     #[derive(Clone, Optml)]
@@ -20,35 +50,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
         .expect("c5d09740")
         .into_iter()
         .map(|el| {
-            let sc = {
-                let mut result = String::with_capacity(el.len());
-                let mut prev_is_undrscr = false;
-                let mut prev_is_lowercase = false;
-                for el0 in el.chars() {
-                    if el0.is_alphabetic() {
-                        if el0.is_uppercase() {
-                            if prev_is_lowercase && !prev_is_undrscr {
-                                result.push('_');
-                            }
-                            for el1 in el0.to_lowercase() {
-                                result.push(el1);
-                            }
-                            prev_is_lowercase = false;
-                        } else {
-                            result.push(el0);
-                            prev_is_lowercase = true;
-                        }
-                        prev_is_undrscr = false;
-                    } else {
-                        if !prev_is_undrscr && !result.is_empty() {
-                            result.push('_');
-                            prev_is_undrscr = true;
-                        }
-                        prev_is_lowercase = false;
-                    }
-                }
-                result.trim_matches('_').to_owned()
-            };
+            let sc = to_sc(&el);
             El {
                 d_trait_name_ucc: {
                     let v = DSelfUcc::from_display(&sc);
@@ -110,7 +112,7 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
         (
             gen_ts(&make_pub_sc_ts, &make_pub_if_sc_ts, &make_pub_ucc_ts),
             {
-                let ts = el_vec.clone().into_iter().map(|el| {
+                let ts = el_vec.iter().map(|el| {
                     gen_ts(
                         &el.d_trait_name_sc,
                         &el.d_trait_name_if_sc,
@@ -171,11 +173,6 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
                     #struct_or_enum_ucc::Struct => quote::quote!{struct},
                     #struct_or_enum_ucc::Enum => quote::quote!{enum},
                 };
-                // quote::quote! {
-                //     #[derive(#(#derive_ts),*)]
-                //     #mb_pub_ts #struct_or_enum_ts #ident_d8cbb733 #ts
-                // }
-                // this is cargo expand ouput coz double quote::quote!{quote::quote!{}}
                 {
                     let mut _s = ::quote::__private::TokenStream::new();
                     ::quote::__private::push_pound(&mut _s);
@@ -261,4 +258,20 @@ pub fn gen_derive_ts_builder(input_ts: Ts) -> Ts {
         }
     };
     generated.into()
+}
+#[cfg(test)]
+mod tests {
+    use super::to_sc;
+    #[test]
+    fn to_sc_handles_pascal_case() {
+        assert_eq!(to_sc("HelloWorld"), "hello_world");
+    }
+    #[test]
+    fn to_sc_collapses_non_alpha_chunks() {
+        assert_eq!(to_sc("A--B__C"), "a_b_c");
+    }
+    #[test]
+    fn to_sc_trims_edge_separators() {
+        assert_eq!(to_sc("__Hello__"), "hello");
+    }
 }

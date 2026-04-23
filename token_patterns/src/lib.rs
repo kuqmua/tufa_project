@@ -30,6 +30,11 @@ macro_rules! ts_path_fn {
         }
     };
 }
+macro_rules! tp_batch {
+    ($(($name:ident, $($tt:tt)*)),+ $(,)?) => {
+        $(tp!($name, $($tt)*);)+
+    };
+}
 tp!(SqlxAcquire, sqlx::Acquire);
 tp!(
     AxumExtractRejectionJsonRejection,
@@ -74,19 +79,21 @@ tp!(Er1, er_1);
 tp!(Er2, er_2);
 tp!(Er3, er_3);
 tp!(FieldAttrSerdeSkipSerializingIfOptIsNone, #[serde(skip_serializing_if = "Option::is_none")]);
-tp!(Bool, bool);
-tp!(U8, u8);
-tp!(U16, u16);
-tp!(U32, u32);
-tp!(U64, u64);
-tp!(I8, i8);
-tp!(I16, i16);
-tp!(I32, i32);
-tp!(I64, i64);
-tp!(F32, f32);
-tp!(F64, f64);
-tp!(UuidUuid, uuid::Uuid);
-tp!(StdFmtDisplay, std::fmt::Display);
+tp_batch!(
+    (Bool, bool),
+    (U8, u8),
+    (U16, u16),
+    (U32, u32),
+    (U64, u64),
+    (I8, i8),
+    (I16, i16),
+    (I32, i32),
+    (I64, i64),
+    (F32, f32),
+    (F64, f64),
+    (UuidUuid, uuid::Uuid),
+    (StdFmtDisplay, std::fmt::Display)
+);
 tp_parts!(CrateDfltSomeOneEl, crate_path_ts(), dflt_some_one_el_ucc());
 tp_parts!(
     CrateDfltSomeOneElCall,

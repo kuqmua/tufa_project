@@ -13,7 +13,9 @@ mod gen_simple_syn_punct;
 mod get_macro_attr;
 mod loc;
 mod loc_syn_field;
+mod panic_if_err;
 mod pgn_start_end_init_ts;
+mod rs_file_path;
 mod status_code;
 mod syn_field;
 #[cfg(test)]
@@ -44,7 +46,10 @@ pub use gen_new_or_try_new::{
 };
 pub use gen_pub_type_al_ts::gen_pub_type_al_ts;
 pub use gen_simple_syn_punct::{gen_simple_syn_punct, string_syn_punct};
-pub use get_macro_attr::{get_macro_attr, get_macro_attr_meta_list_ts};
+pub use get_macro_attr::{
+    find_macro_attr, get_macro_attr, get_macro_attr_meta_list_ts, try_get_macro_attr,
+    try_get_macro_attr_meta_list_ts,
+};
 pub use loc::{LocFieldAttr, gen_serde_version_of_named_syn_vrt};
 pub use loc_syn_field::loc_syn_field;
 pub use pgn_start_end_init_ts::pgn_start_end_init_ts;

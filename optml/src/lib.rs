@@ -9,10 +9,6 @@ use syn::{
 };
 #[proc_macro_derive(Optml)]
 pub fn optml(input_ts: Ts) -> Ts {
-    enum StructOrEnum {
-        Enum(String),
-        Struct,
-    }
     let gen_alignments_ident_ts =
         |i: usize| format!("alignments_{i}").parse::<Ts2>().expect("5a0bb723");
     let di: DeriveInput = parse(input_ts).expect("a1d306de");
@@ -32,31 +28,33 @@ pub fn optml(input_ts: Ts) -> Ts {
     let gen_fi = |i: usize| Ident::new(&format!("field_{i}"), ident.span());
     let gen_assertions_ts = |fields: &Punctuated<Field, Comma>,
                              alignments_ts: &dyn ToTokens,
-                             struct_or_enum: StructOrEnum|
+                             kind_name: &'static str,
+                             variant: Option<&Ident>|
      -> Option<Ts2> {
         let fields_len = fields.len();
         if fields_len <= 1 {
             return None;
         }
         let align_of_ts = fields.iter().map(&gen_align_of_ts);
+        let variant_info = variant.map_or_else(String::new, |variant_ident| {
+            format!("variant '{variant_ident}' ")
+        });
+        let gen_or_copy_ident = |field: &Field, idx: usize| {
+            field
+                .ident
+                .as_ref()
+                .map_or_else(|| gen_fi(idx), Clone::clone)
+        };
         let assertions_ts = fields
             .iter()
             .zip(fields.iter().skip(1))
             .enumerate()
             .map(|(i, (field, next_field))| {
             let i_plus_one = i.saturating_add(1);
-            let fi = &field.ident.as_ref().map_or_else(|| gen_fi(i), Clone::clone);
-            let fi_next = &next_field.ident.as_ref().map_or_else(|| gen_fi(i_plus_one), Clone::clone);
+            let fi = gen_or_copy_ident(field, i);
+            let fi_next = gen_or_copy_ident(next_field, i_plus_one);
             let msg_ts = dq_ts(&format!(
-                "In {} '{ident}' {}align_of field '{fi}' < align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment",
-                match &struct_or_enum {
-                    StructOrEnum::Struct => "struct",
-                    StructOrEnum::Enum(_) => "enum"
-                },
-                match &struct_or_enum {
-                    StructOrEnum::Struct => String::new(),
-                    StructOrEnum::Enum(v) => format!("variant '{v}' ")
-                },
+                "In {kind_name} '{ident}' {variant_info}align_of field '{fi}' < align_of field '{fi_next}'. Field '{fi_next}' must be placed before '{fi}' for better memory alignment",
             ));
             quote!{
                 assert!(
@@ -83,7 +81,7 @@ pub fn optml(input_ts: Ts) -> Ts {
             if fields_len <= 1 {
                 return Ts::new();
             }
-            match gen_assertions_ts(fields, &quote! {alignments}, StructOrEnum::Struct) {
+            match gen_assertions_ts(fields, &quote! {alignments}, "struct", None) {
                 Some(v) => v,
                 None => {
                     return Ts::new();
@@ -103,11 +101,9 @@ pub fn optml(input_ts: Ts) -> Ts {
                 if fields_len <= 1 {
                     continue;
                 }
-                if let Some(v) = gen_assertions_ts(
-                    fields,
-                    &gen_alignments_ident_ts(i),
-                    StructOrEnum::Enum(var_ident.to_string()),
-                ) {
+                if let Some(v) =
+                    gen_assertions_ts(fields, &gen_alignments_ident_ts(i), "enum", Some(var_ident))
+                {
                     vars_ts.push(v);
                 }
             }
@@ -155,8 +151,5 @@ pub fn optml(input_ts: Ts) -> Ts {
             const _: () = #ident::#const_name_ts;
         }
     };
-    // if ident == "" {
-    //     println!("{generated}");
-    // }
     generated.into()
 }

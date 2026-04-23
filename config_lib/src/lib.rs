@@ -23,8 +23,7 @@ macro_rules! impl_try_from_non_empty_string {
         impl TryFromStdEnvVarOk for $name {
             type Error = $er_name;
             fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-                ensure_non_empty_env_value(v, |is_empty| Self::Error::IsEmpty { is_empty })
-                    .map(Self)
+                try_map_non_empty_env_value(v, |is_empty| Self::Error::IsEmpty { is_empty }, Self)
             }
         }
     };
@@ -78,9 +77,11 @@ macro_rules! impl_try_from_secret_url {
         impl TryFromStdEnvVarOk for $name {
             type Error = $er_name;
             fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-                ensure_non_empty_env_value(v, |is_empty| Self::Error::IsEmpty { is_empty })
-                    .map(|v| SecretBox::new(Box::new(v)))
-                    .map(Self)
+                try_map_non_empty_env_value(
+                    v,
+                    |is_empty| Self::Error::IsEmpty { is_empty },
+                    |v| Self(SecretBox::new(Box::new(v))),
+                )
             }
         }
     };
@@ -178,14 +179,15 @@ impl_try_from_parse_string_er!(
     AppStateTracingLevelParsing,
     app_state_tracing_type_parsing
 );
-fn ensure_non_empty_env_value<Er>(
+fn try_map_non_empty_env_value<T, Er>(
     v: String,
     mk_er: impl FnOnce(&'static str) -> Er,
-) -> Result<String, Er> {
+    map_ok: impl FnOnce(String) -> T,
+) -> Result<T, Er> {
     if v.is_empty() {
         return Err(mk_er(ENV_VALUE_IS_EMPTY_MSG));
     }
-    Ok(v)
+    Ok(map_ok(v))
 }
 fn parse_from_str_with_er<T, ParseEr, Er>(
     v: &str,
@@ -200,14 +202,26 @@ where
 mod tests {
     use super::{
         CorsAllowOrigin, DatabaseUrl, EnableApiGitCommitCheck, MaximumSizeOfHttpBodyInBytes,
-        PgPoolMaxConnections, ServiceSocketAddress, SrcPlaceType, StartingCheckLink, Timezone,
-        TracingLevel, TryFromStdEnvVarOk as _, TryFromStdEnvVarOkCorsAllowOriginEr,
-        TryFromStdEnvVarOkDatabaseUrlEr, TryFromStdEnvVarOkEnableApiGitCommitCheckEr,
-        TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr, TryFromStdEnvVarOkPgPoolMaxConnectionsEr,
+        MongoUrl, PgPoolMaxConnections, RedisUrl, ServiceSocketAddress, SrcPlaceType,
+        StartingCheckLink, Timezone, TracingLevel, TryFromStdEnvVarOk as _,
+        TryFromStdEnvVarOkCorsAllowOriginEr, TryFromStdEnvVarOkDatabaseUrlEr,
+        TryFromStdEnvVarOkEnableApiGitCommitCheckEr,
+        TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr, TryFromStdEnvVarOkMongoUrlEr,
+        TryFromStdEnvVarOkPgPoolMaxConnectionsEr, TryFromStdEnvVarOkRedisUrlEr,
         TryFromStdEnvVarOkServiceSocketAddressEr, TryFromStdEnvVarOkSrcPlaceTypeEr,
         TryFromStdEnvVarOkStartingCheckLinkEr, TryFromStdEnvVarOkTimezoneEr,
         TryFromStdEnvVarOkTracingLevelEr, types,
     };
+    macro_rules! assert_parse_ok_matches {
+        ($type0:ty, $value:expr, $pattern:pat) => {
+            assert!(matches!(parse_env::<$type0>($value), Ok($pattern)));
+        };
+    }
+    macro_rules! assert_parse_err_matches {
+        ($type0:ty, $value:expr, $pattern:pat) => {
+            assert!(matches!(parse_env::<$type0>($value), Err($pattern)));
+        };
+    }
     fn parse_env<T>(v: &str) -> Result<T, T::Error>
     where
         T: super::TryFromStdEnvVarOk,
@@ -216,8 +230,7 @@ mod tests {
     }
     #[test]
     fn cors_allow_origin_parsing_returns_value() {
-        let v = parse_env::<CorsAllowOrigin>("*");
-        assert!(matches!(v, Ok(CorsAllowOrigin(_))));
+        assert_parse_ok_matches!(CorsAllowOrigin, "*", CorsAllowOrigin(_));
     }
     #[test]
     fn cors_allow_origin_parsing_returns_error_for_empty_string() {
@@ -229,8 +242,7 @@ mod tests {
     }
     #[test]
     fn database_url_parsing_returns_value_for_non_empty_input() {
-        let v = parse_env::<DatabaseUrl>("postgres://db");
-        assert!(matches!(v, Ok(DatabaseUrl(_))));
+        assert_parse_ok_matches!(DatabaseUrl, "postgres://db", DatabaseUrl(_));
     }
     #[test]
     fn database_url_parsing_returns_error_for_empty_string() {
@@ -241,69 +253,104 @@ mod tests {
         ));
     }
     #[test]
+    fn mongo_url_parsing_returns_value_for_non_empty_input() {
+        assert_parse_ok_matches!(MongoUrl, "mongodb://db", MongoUrl(_));
+    }
+    #[test]
+    fn mongo_url_parsing_returns_error_for_empty_string() {
+        let er = MongoUrl::try_from_std_env_var_ok(String::new());
+        assert!(matches!(
+            er,
+            Err(TryFromStdEnvVarOkMongoUrlEr::IsEmpty { .. })
+        ));
+    }
+    #[test]
+    fn redis_url_parsing_returns_value_for_non_empty_input() {
+        assert_parse_ok_matches!(RedisUrl, "redis://db", RedisUrl(_));
+    }
+    #[test]
+    fn redis_url_parsing_returns_error_for_empty_string() {
+        let er = RedisUrl::try_from_std_env_var_ok(String::new());
+        assert!(matches!(
+            er,
+            Err(TryFromStdEnvVarOkRedisUrlEr::IsEmpty { .. })
+        ));
+    }
+    #[test]
     fn src_place_type_parsing_is_case_insensitive() {
-        let v = parse_env::<SrcPlaceType>("GITHUB");
-        assert!(matches!(v, Ok(SrcPlaceType(types::SrcPlaceType::Github))));
+        assert_parse_ok_matches!(
+            SrcPlaceType,
+            "GITHUB",
+            SrcPlaceType(types::SrcPlaceType::Github)
+        );
     }
     #[test]
     fn src_place_type_parsing_returns_error_for_unknown_value() {
-        let er = parse_env::<SrcPlaceType>("bad");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkSrcPlaceTypeEr::AppStateSrcPlaceTypeParsing { .. })
-        ));
+        assert_parse_err_matches!(
+            SrcPlaceType,
+            "bad",
+            TryFromStdEnvVarOkSrcPlaceTypeEr::AppStateSrcPlaceTypeParsing { .. }
+        );
     }
     #[test]
     fn tracing_level_parsing_is_case_insensitive() {
-        let v = parse_env::<TracingLevel>("DeBuG");
-        assert!(matches!(v, Ok(TracingLevel(types::TracingLevel::Debug))));
+        assert_parse_ok_matches!(
+            TracingLevel,
+            "DeBuG",
+            TracingLevel(types::TracingLevel::Debug)
+        );
     }
     #[test]
     fn tracing_level_parsing_returns_error_for_unknown_value() {
-        let er = parse_env::<TracingLevel>("bad");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkTracingLevelEr::AppStateTracingLevelParsing { .. })
-        ));
+        assert_parse_err_matches!(
+            TracingLevel,
+            "bad",
+            TryFromStdEnvVarOkTracingLevelEr::AppStateTracingLevelParsing { .. }
+        );
     }
     #[test]
     fn enable_api_git_commit_check_parsing_returns_bool() {
-        let v = parse_env::<EnableApiGitCommitCheck>("true");
-        assert!(matches!(v, Ok(EnableApiGitCommitCheck(true))));
+        assert_parse_ok_matches!(
+            EnableApiGitCommitCheck,
+            "true",
+            EnableApiGitCommitCheck(true)
+        );
     }
     #[test]
     fn enable_api_git_commit_check_parsing_returns_error_for_invalid_bool() {
-        let er = parse_env::<EnableApiGitCommitCheck>("truthy");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkEnableApiGitCommitCheckEr::BoolParsing { .. })
-        ));
+        assert_parse_err_matches!(
+            EnableApiGitCommitCheck,
+            "truthy",
+            TryFromStdEnvVarOkEnableApiGitCommitCheckEr::BoolParsing { .. }
+        );
     }
     #[test]
     fn maximum_size_of_http_body_in_bytes_parsing_returns_usize() {
-        let v = parse_env::<MaximumSizeOfHttpBodyInBytes>("128");
-        assert!(matches!(v, Ok(MaximumSizeOfHttpBodyInBytes(128))));
+        assert_parse_ok_matches!(
+            MaximumSizeOfHttpBodyInBytes,
+            "128",
+            MaximumSizeOfHttpBodyInBytes(128)
+        );
     }
     #[test]
     fn maximum_size_of_http_body_in_bytes_parsing_returns_error_for_invalid_number() {
-        let er = parse_env::<MaximumSizeOfHttpBodyInBytes>("1k");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr::UsizeParsing { .. })
-        ));
+        assert_parse_err_matches!(
+            MaximumSizeOfHttpBodyInBytes,
+            "1k",
+            TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr::UsizeParsing { .. }
+        );
     }
     #[test]
     fn pg_pool_max_connections_parsing_returns_u32() {
-        let v = parse_env::<PgPoolMaxConnections>("10");
-        assert!(matches!(v, Ok(PgPoolMaxConnections(10))));
+        assert_parse_ok_matches!(PgPoolMaxConnections, "10", PgPoolMaxConnections(10));
     }
     #[test]
     fn pg_pool_max_connections_parsing_returns_error_for_invalid_number() {
-        let er = parse_env::<PgPoolMaxConnections>("bad");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkPgPoolMaxConnectionsEr::U32Parsing { .. })
-        ));
+        assert_parse_err_matches!(
+            PgPoolMaxConnections,
+            "bad",
+            TryFromStdEnvVarOkPgPoolMaxConnectionsEr::U32Parsing { .. }
+        );
     }
     #[test]
     fn non_empty_string_parser_returns_error_for_empty_value() {
@@ -314,9 +361,20 @@ mod tests {
         ));
     }
     #[test]
+    fn non_empty_string_parser_returns_value_for_non_empty_value() {
+        assert_parse_ok_matches!(
+            StartingCheckLink,
+            "https://example.com",
+            StartingCheckLink(_)
+        );
+    }
+    #[test]
     fn service_socket_address_parsing_returns_socket_addr() {
-        let v = parse_env::<ServiceSocketAddress>("127.0.0.1:3000");
-        assert!(matches!(v, Ok(ServiceSocketAddress(_))));
+        assert_parse_ok_matches!(
+            ServiceSocketAddress,
+            "127.0.0.1:3000",
+            ServiceSocketAddress(_)
+        );
     }
     #[test]
     fn service_socket_address_parsing_returns_error_for_invalid_addr() {
@@ -328,16 +386,15 @@ mod tests {
     }
     #[test]
     fn timezone_parsing_returns_timezone_for_valid_offset() {
-        let v = parse_env::<Timezone>("0");
-        assert!(matches!(v, Ok(Timezone(_))));
+        assert_parse_ok_matches!(Timezone, "0", Timezone(_));
     }
     #[test]
     fn timezone_parsing_returns_i32_error_for_non_number() {
-        let er = parse_env::<Timezone>("nan");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkTimezoneEr::I32Parsing { .. })
-        ));
+        assert_parse_err_matches!(
+            Timezone,
+            "nan",
+            TryFromStdEnvVarOkTimezoneEr::I32Parsing { .. }
+        );
     }
     #[test]
     fn timezone_parsing_returns_offset_error_when_out_of_range() {

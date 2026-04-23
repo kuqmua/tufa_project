@@ -1,5 +1,5 @@
 use proc_macro2::TokenStream as Ts2;
-use std::fmt::Display;
+use std::fmt::{Display, Write as _};
 const NO_PREFIX: &str = "";
 const BINARY_PREFIX: &str = "b";
 const SINGLE_QUOTE: char = '\'';
@@ -8,16 +8,12 @@ fn quote_literal<Dsp>(prefix: &str, quote_ch: char, v: &Dsp) -> String
 where
     Dsp: Display + ?Sized,
 {
-    let rendered = v.to_string();
-    let mut out = String::with_capacity(
-        prefix
-            .len()
-            .saturating_add(rendered.len())
-            .saturating_add(2),
-    );
+    let mut out = String::with_capacity(prefix.len().saturating_add(2));
     out.push_str(prefix);
     out.push(quote_ch);
-    out.push_str(&rendered);
+    if out.write_fmt(format_args!("{v}")).is_err() {
+        return format!("{prefix}{quote_ch}{v}{quote_ch}");
+    }
     out.push(quote_ch);
     out
 }

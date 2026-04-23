@@ -78,6 +78,14 @@ impl_to_err_string_with!(
 pub trait ToErrString {
     fn to_err_string(&self) -> String;
 }
+impl<T> ToErrString for &T
+where
+    T: ToErrString + ?Sized,
+{
+    fn to_err_string(&self) -> String {
+        (*self).to_err_string()
+    }
+}
 impl<T> ToErrString for Option<T>
 where
     T: Debug,
@@ -95,7 +103,7 @@ where
         debug_to_string(self)
     }
 }
-impl_to_err_string_as_ref_str!(String, str, &str, Cow<'_, str>);
+impl_to_err_string_as_ref_str!(String, str, Cow<'_, str>);
 impl_to_err_string_const!(
     SetGlobalDefaultError => "tracing::dispatcher::SetGlobalDefaultEr",
     SetLoggerError => "tracing::log::SetLoggerError",
@@ -136,6 +144,7 @@ mod tests {
         let owned = String::from("abc");
         assert_eq!(owned.to_err_string(), "abc");
         assert_eq!("xyz".to_err_string(), "xyz");
+        assert_eq!((&"xyz").to_err_string(), "xyz");
         assert_eq!(Cow::Borrowed("qwe").to_err_string(), "qwe");
         assert_eq!(
             Cow::<'_, str>::Owned(String::from("rty")).to_err_string(),

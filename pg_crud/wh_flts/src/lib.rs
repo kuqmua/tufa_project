@@ -72,15 +72,14 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
     ) -> Result<String, QpEr> {
         let mut acc = String::default();
         for _ in self.to_vec() {
-            match incr_checked_add_one_returning_incr(incr) {
-                Ok(v) => {
-                    if write!(acc, "${v},").is_err() {
-                        return Err(QpEr::WriteIntoBuffer { loc: loc!() });
-                    }
-                }
+            let v = match incr_checked_add_one_returning_incr(incr) {
+                Ok(v) => v,
                 Err(er) => {
                     return Err(er);
                 }
+            };
+            if write!(acc, "${v},").is_err() {
+                return Err(QpEr::WriteIntoBuffer { loc: loc!() });
             }
         }
         let _: Option<char> = acc.pop();
@@ -90,21 +89,7 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
 impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgJsonNotEmptyUnqVec<T> {
     type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
-        if v.is_empty() {
-            return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
-        }
-        {
-            let mut acc = Vec::new();
-            for el in &v {
-                if acc.contains(&el) {
-                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
-                        v: el.clone(),
-                        loc: loc!(),
-                    });
-                }
-                acc.push(el);
-            }
-        }
+        chk_vec_ne_unq(v.as_slice())?;
         Ok(Self(v))
     }
 }
@@ -558,21 +543,7 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUnqVec<T> {
 impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgTypeNotEmptyUnqVec<T> {
     type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
-        if v.is_empty() {
-            return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
-        }
-        {
-            let mut acc = Vec::new();
-            for el in &v {
-                if acc.contains(&el) {
-                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
-                        v: el.clone(),
-                        loc: loc!(),
-                    });
-                }
-                acc.push(el);
-            }
-        }
+        chk_vec_ne_unq(v.as_slice())?;
         Ok(Self(v))
     }
 }
@@ -765,26 +736,18 @@ impl<'lt, T: Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt, const LENGTH
             Vrt::Normal => self.0.len(),
         };
         for _ in 0..len {
-            match incr_checked_add_one_returning_incr(incr) {
-                Ok(v) => {
-                    if write!(
-                        acc,
-                        "{}",
-                        &match &pg_type_or_pg_json {
-                            PgTypeOrPgJson::PgType => format!("[${v}]"),
-                            PgTypeOrPgJson::PgJson => {
-                                format!("->${v}")
-                            }
-                        }
-                    )
-                    .is_err()
-                    {
-                        return Err(QpEr::WriteIntoBuffer { loc: loc!() });
-                    }
-                }
+            let v = match incr_checked_add_one_returning_incr(incr) {
+                Ok(v) => v,
                 Err(er) => {
                     return Err(er);
                 }
+            };
+            let write_res = match &pg_type_or_pg_json {
+                PgTypeOrPgJson::PgType => write!(acc, "[${v}]"),
+                PgTypeOrPgJson::PgJson => write!(acc, "->${v}"),
+            };
+            if write_res.is_err() {
+                return Err(QpEr::WriteIntoBuffer { loc: loc!() });
             }
         }
         Ok(acc)
@@ -812,5 +775,66 @@ impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedVec<T, LENGTH> {
 impl<T: Clone + DfltSomeOneEl, const LENGTH: usize> DfltSomeOneEl for BoundedVec<T, LENGTH> {
     fn dflt_some_one_el() -> Self {
         Self(vec![<T as DfltSomeOneEl>::dflt_some_one_el(); LENGTH])
+    }
+}
+fn chk_vec_ne_unq<T: PartialEq + Clone>(v: &[T]) -> Result<(), NotEmptyUnqVecTryNewEr<T>> {
+    if v.is_empty() {
+        return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
+    }
+    for (idx, el) in v.iter().enumerate() {
+        if v.get(..idx)
+            .is_some_and(|prev| prev.iter().any(|el_prev| el_prev == el))
+        {
+            return Err(NotEmptyUnqVecTryNewEr::NotUnq {
+                v: el.clone(),
+                loc: loc!(),
+            });
+        }
+    }
+    Ok(())
+}
+#[cfg(test)]
+mod tests {
+    use super::{PgJsonNotEmptyUnqVec, PgTypeNotEmptyUnqVec};
+    use pg_crud_cmn::NotEmptyUnqVecTryNewEr;
+    #[test]
+    fn pg_json_not_empty_unq_vec_try_from_ok() {
+        let rslt = PgJsonNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32, 3i32]);
+        if let Err(er) = rslt {
+            panic!("c56f564c {er:?}");
+        }
+    }
+    #[test]
+    fn pg_json_not_empty_unq_vec_try_from_empty() {
+        let rslt = PgJsonNotEmptyUnqVec::<i32>::try_from(Vec::new());
+        assert!(matches!(rslt, Err(NotEmptyUnqVecTryNewEr::IsEmpty { .. })));
+    }
+    #[test]
+    fn pg_json_not_empty_unq_vec_try_from_not_unq() {
+        let rslt = PgJsonNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32, 1i32]);
+        assert!(matches!(
+            rslt,
+            Err(NotEmptyUnqVecTryNewEr::NotUnq { v: 1i32, .. })
+        ));
+    }
+    #[test]
+    fn pg_type_not_empty_unq_vec_try_from_ok() {
+        let rslt = PgTypeNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32, 3i32]);
+        if let Err(er) = rslt {
+            panic!("5a6afcfa {er:?}");
+        }
+    }
+    #[test]
+    fn pg_type_not_empty_unq_vec_try_from_empty() {
+        let rslt = PgTypeNotEmptyUnqVec::<i32>::try_from(Vec::new());
+        assert!(matches!(rslt, Err(NotEmptyUnqVecTryNewEr::IsEmpty { .. })));
+    }
+    #[test]
+    fn pg_type_not_empty_unq_vec_try_from_not_unq() {
+        let rslt = PgTypeNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32, 1i32]);
+        assert!(matches!(
+            rslt,
+            Err(NotEmptyUnqVecTryNewEr::NotUnq { v: 1i32, .. })
+        ));
     }
 }

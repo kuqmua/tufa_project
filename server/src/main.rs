@@ -21,9 +21,28 @@ use tower_http::{
     trace::TraceLayer,
 };
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt as _, util::SubscriberInitExt as _};
+#[allow(clippy::single_call_fn)] // route wiring is reused by startup flow and isolated from layer setup
+fn mk_api_routes(app_state: &Arc<ServerAppState<'static>>) -> Router {
+    Router::new()
+        .merge(cmn_routes(Arc::<ServerAppState<'static>>::clone(app_state)))
+        .merge(TblExample::routes(Arc::<ServerAppState<'static>>::clone(
+            app_state,
+        )))
+}
 #[allow(clippy::single_call_fn)] // extracted for reuse in main setup and tests
 fn parse_cors_allow_origin(v: &str) -> Vec<HeaderValue> {
-    v.split(',').filter_map(|s| s.trim().parse().ok()).collect()
+    let mut cors_origins = Vec::with_capacity(
+        v.bytes()
+            .filter(|byte| *byte == b',')
+            .count()
+            .saturating_add(1),
+    );
+    cors_origins.extend(
+        v.split(',')
+            .map(str::trim)
+            .filter_map(|value| value.parse::<HeaderValue>().ok()),
+    );
+    cors_origins
 }
 fn main() {
     tracing_subscriber::registry()
@@ -53,11 +72,12 @@ fn main() {
                     .expect("3f294e7c");
             let cors_origins =
                 parse_cors_allow_origin(GetCorsAllowOrigin::get_cors_allow_origin(&config));
-            let app_state = Arc::new(ServerAppState {
+            let app_state: Arc<ServerAppState<'static>> = Arc::new(ServerAppState {
                 pg_pool,
                 config,
                 project_git_info: &PROJECT_GIT_INFO,
             });
+            let api_routes = mk_api_routes(&app_state);
             let governor_conf = Arc::new(
                 GovernorConfigBuilder::default()
                     .per_second(2)
@@ -65,11 +85,6 @@ fn main() {
                     .finish()
                     .expect("b7e3a4f1"),
             );
-            let api_routes = Router::new()
-                .merge(cmn_routes(Arc::<ServerAppState<'_>>::clone(&app_state)))
-                .merge(TblExample::routes(Arc::<ServerAppState<'_>>::clone(
-                    &app_state,
-                )));
             serve(
                 tcp_listener,
                 Router::new()

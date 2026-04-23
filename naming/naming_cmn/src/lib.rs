@@ -2,13 +2,12 @@ use convert_case::{Case, Casing as _};
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
 use std::fmt::Display;
-//todo mb add another generic - trait casing. and ToUccString and others would implement it like .to_case::<UpperCamel>()
-macro_rules! case_str_trait {
-    ($trait_name:ident, $bound:path, |$slf:ident| $body:expr) => {
-        pub trait $trait_name {
+macro_rules! case_trait_pair {
+    ($str_trait:ident, $ts_trait:ident, $bound:path, |$slf:ident| $body:expr) => {
+        pub trait $str_trait {
             fn case(&self) -> String;
         }
-        impl<T> $trait_name for T
+        impl<T> $str_trait for T
         where
             T: $bound,
         {
@@ -17,10 +16,6 @@ macro_rules! case_str_trait {
                 $body
             }
         }
-    };
-}
-macro_rules! case_ts_trait {
-    ($ts_trait:ident, $str_trait:ident) => {
         pub trait $ts_trait {
             fn case_or_panic(&self) -> Ts2;
         }
@@ -34,50 +29,42 @@ macro_rules! case_ts_trait {
         }
     };
 }
-case_str_trait!(AsRefStrToUccStr, AsRef<str>, |self_ref| str_case(
-    self_ref.as_ref(),
-    Case::UpperCamel
-));
-case_ts_trait!(AsRefStrToUccTs, AsRefStrToUccStr);
-case_str_trait!(AsRefStrToScStr, AsRef<str>, |self_ref| str_case(
-    self_ref.as_ref(),
-    Case::Snake
-));
-case_ts_trait!(AsRefStrToScTs, AsRefStrToScStr);
-case_str_trait!(AsRefStrToUpperScStr, AsRef<str>, |self_ref| str_case(
-    self_ref.as_ref(),
-    Case::UpperSnake
-));
-case_ts_trait!(AsRefStrToUpperScTs, AsRefStrToUpperScStr);
-case_str_trait!(DisplayToUccStr, Display, |self_ref| display_case_str(
-    self_ref,
-    Case::UpperCamel
-));
-case_ts_trait!(DisplayToUccTs, DisplayToUccStr);
-case_str_trait!(DisplayToScStr, Display, |self_ref| display_case_str(
-    self_ref,
-    Case::Snake
-));
-case_ts_trait!(DisplayToScTs, DisplayToScStr);
-case_str_trait!(DisplayToUpperScStr, Display, |self_ref| display_case_str(
-    self_ref,
-    Case::UpperSnake
-));
-case_ts_trait!(DisplayToUpperScTs, DisplayToUpperScStr);
-case_str_trait!(ToTokensToUccStr, ToTokens, |self_ref| tokenized_case_str(
-    self_ref,
-    Case::UpperCamel
-));
-case_ts_trait!(ToTokensToUccTs, ToTokensToUccStr);
-case_str_trait!(ToTokensToScStr, ToTokens, |self_ref| tokenized_case_str(
-    self_ref,
-    Case::Snake
-));
-case_ts_trait!(ToTokensToScTs, ToTokensToScStr);
-case_str_trait!(ToTokensToUpperScStr, ToTokens, |self_ref| {
-    tokenized_case_str(self_ref, Case::UpperSnake)
+case_trait_pair!(AsRefStrToUccStr, AsRefStrToUccTs, AsRef<str>, |self_ref| {
+    str_case(self_ref.as_ref(), Case::UpperCamel)
 });
-case_ts_trait!(ToTokensToUpperScTs, ToTokensToUpperScStr);
+case_trait_pair!(AsRefStrToScStr, AsRefStrToScTs, AsRef<str>, |self_ref| {
+    str_case(self_ref.as_ref(), Case::Snake)
+});
+case_trait_pair!(
+    AsRefStrToUpperScStr,
+    AsRefStrToUpperScTs,
+    AsRef<str>,
+    |self_ref| str_case(self_ref.as_ref(), Case::UpperSnake)
+);
+case_trait_pair!(DisplayToUccStr, DisplayToUccTs, Display, |self_ref| {
+    display_case_str(self_ref, Case::UpperCamel)
+});
+case_trait_pair!(DisplayToScStr, DisplayToScTs, Display, |self_ref| {
+    display_case_str(self_ref, Case::Snake)
+});
+case_trait_pair!(
+    DisplayToUpperScStr,
+    DisplayToUpperScTs,
+    Display,
+    |self_ref| display_case_str(self_ref, Case::UpperSnake)
+);
+case_trait_pair!(ToTokensToUccStr, ToTokensToUccTs, ToTokens, |self_ref| {
+    tokenized_case_str(self_ref, Case::UpperCamel)
+});
+case_trait_pair!(ToTokensToScStr, ToTokensToScTs, ToTokens, |self_ref| {
+    tokenized_case_str(self_ref, Case::Snake)
+});
+case_trait_pair!(
+    ToTokensToUpperScStr,
+    ToTokensToUpperScTs,
+    ToTokens,
+    |self_ref| tokenized_case_str(self_ref, Case::UpperSnake)
+);
 fn to_ts_or_panic<T>(v: &T) -> Ts2
 where
     T: Display + ?Sized,
