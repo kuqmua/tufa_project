@@ -2,6 +2,14 @@ use axum::http::{
     HeaderMap,
     header::{AsHeaderName, HeaderValue, ToStrError},
 };
+#[allow(clippy::single_call_fn)] // shared helper centralizes required-header extraction and no-header error mapping
+fn get_required_header_value<E>(
+    headers: &HeaderMap,
+    header_name: impl AsHeaderName,
+    no_header_er: impl FnOnce() -> E,
+) -> Result<&HeaderValue, E> {
+    headers.get(header_name).ok_or_else(no_header_er)
+}
 #[allow(clippy::single_call_fn)] // shared helper keeps HeaderValue->str conversion and error mapping centralized for header parsers
 fn header_value_to_str<E>(
     header_value: &HeaderValue,
@@ -10,13 +18,14 @@ fn header_value_to_str<E>(
     header_value.to_str().map_err(to_str_er)
 }
 #[allow(clippy::single_call_fn)] // core helper centralizes required-header transform flow reused by parsing helpers
+#[cfg(test)]
 pub(crate) fn get_required_header_mapped<'headers, E, T>(
     headers: &'headers HeaderMap,
     header_name: impl AsHeaderName,
     no_header_er: impl FnOnce() -> E,
     map: impl FnOnce(&'headers HeaderValue) -> Result<T, E>,
 ) -> Result<T, E> {
-    let header = headers.get(header_name).ok_or_else(no_header_er)?;
+    let header = get_required_header_value(headers, header_name, no_header_er)?;
     map(header)
 }
 #[allow(clippy::single_call_fn)] // helper centralizes required-header parsing and is reusable across validators
@@ -26,7 +35,7 @@ pub(crate) fn get_required_header<E>(
     header_name: impl AsHeaderName,
     no_header_er: impl FnOnce() -> E,
 ) -> Result<&HeaderValue, E> {
-    get_required_header_mapped(headers, header_name, no_header_er, Ok)
+    get_required_header_value(headers, header_name, no_header_er)
 }
 #[allow(clippy::single_call_fn)] // helper centralizes required-header string parsing and is reusable across validators
 pub(crate) fn get_required_header_str<E>(
@@ -45,7 +54,7 @@ pub(crate) fn get_required_header_str_parsed<'headers, E, T>(
     to_str_er: impl FnOnce(ToStrError) -> E,
     parse: impl FnOnce(&'headers str) -> Result<T, E>,
 ) -> Result<T, E> {
-    let header_value = get_required_header_mapped(headers, header_name, no_header_er, Ok)?;
+    let header_value = get_required_header_value(headers, header_name, no_header_er)?;
     let header_str = header_value_to_str(header_value, to_str_er)?;
     parse(header_str)
 }
@@ -160,5 +169,39 @@ mod tests {
             |v| v.to_str().map(str::len).map_err(|_to_str_er| TestEr::ToStr),
         );
         assert_eq!(actual, Ok(3));
+    }
+    #[test]
+    fn get_required_header_str_parsed_does_not_call_parse_when_header_absent() {
+        let headers = HeaderMap::new();
+        let mut parse_called = false;
+        let actual = get_required_header_str_parsed(
+            &headers,
+            TEST_HEADER_NAME,
+            || TestEr::NoHeader,
+            |_to_str_er| TestEr::ToStr,
+            |_header_value| {
+                parse_called = true;
+                Ok(true)
+            },
+        );
+        assert_eq!(actual, Err(TestEr::NoHeader));
+        assert!(!parse_called);
+    }
+    #[test]
+    fn get_required_header_str_parsed_does_not_call_parse_for_non_utf8_header() {
+        let headers = mk_test_headers(non_utf8_header_value());
+        let mut parse_called = false;
+        let actual = get_required_header_str_parsed(
+            &headers,
+            TEST_HEADER_NAME,
+            || TestEr::NoHeader,
+            |_to_str_er| TestEr::ToStr,
+            |_header_value| {
+                parse_called = true;
+                Ok(true)
+            },
+        );
+        assert_eq!(actual, Err(TestEr::ToStr));
+        assert!(!parse_called);
     }
 }

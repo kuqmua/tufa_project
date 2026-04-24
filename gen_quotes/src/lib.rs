@@ -26,61 +26,49 @@ where
         .parse::<Ts2>()
         .unwrap_or_else(|_| panic!("{panic_id}"))
 }
-fn quote_str_with_prefix<Dsp>(prefix: &str, quote_ch: char, v: &Dsp) -> String
-where
-    Dsp: Display + ?Sized,
-{
-    quote_literal(prefix, quote_ch, v)
-}
-fn quote_ts_with_prefix<Dsp>(prefix: &str, quote_ch: char, v: &Dsp, panic_id: &str) -> Ts2
-where
-    Dsp: Display + ?Sized,
-{
-    quote_literal_ts(prefix, quote_ch, v, panic_id)
-}
 #[must_use]
 pub fn single_quotes_str(v: &str) -> String {
-    quote_str_with_prefix(NO_PREFIX, SINGLE_QUOTE, v)
+    quote_literal(NO_PREFIX, SINGLE_QUOTE, v)
 }
 #[must_use]
 pub fn single_quotes_ts(v: &str) -> Ts2 {
-    quote_ts_with_prefix(NO_PREFIX, SINGLE_QUOTE, v, "ec1e77d5")
+    quote_literal_ts(NO_PREFIX, SINGLE_QUOTE, v, "ec1e77d5")
 }
 #[must_use]
 pub fn dq_str<Dsp>(v: &Dsp) -> String
 where
     Dsp: Display + ?Sized,
 {
-    quote_str_with_prefix(NO_PREFIX, DQ, v)
+    quote_literal(NO_PREFIX, DQ, v)
 }
 #[must_use]
 pub fn dq_ts<Dsp>(v: &Dsp) -> Ts2
 where
     Dsp: Display + ?Sized,
 {
-    quote_ts_with_prefix(NO_PREFIX, DQ, v, "0391ac99")
+    quote_literal_ts(NO_PREFIX, DQ, v, "0391ac99")
 }
 #[must_use]
 pub fn binary_single_quotes_str(v: &str) -> String {
-    quote_str_with_prefix(BINARY_PREFIX, SINGLE_QUOTE, v)
+    quote_literal(BINARY_PREFIX, SINGLE_QUOTE, v)
 }
 #[must_use]
 pub fn binary_single_quotes_ts(v: &str) -> Ts2 {
-    quote_ts_with_prefix(BINARY_PREFIX, SINGLE_QUOTE, v, "8bce26e7")
+    quote_literal_ts(BINARY_PREFIX, SINGLE_QUOTE, v, "8bce26e7")
 }
 #[must_use]
 pub fn binary_dq_str<Dsp>(v: &Dsp) -> String
 where
     Dsp: Display + ?Sized,
 {
-    quote_str_with_prefix(BINARY_PREFIX, DQ, v)
+    quote_literal(BINARY_PREFIX, DQ, v)
 }
 #[must_use]
 pub fn binary_dq_ts<Dsp>(v: &Dsp) -> Ts2
 where
     Dsp: Display + ?Sized,
 {
-    quote_ts_with_prefix(BINARY_PREFIX, DQ, v, "5dc6f142")
+    quote_literal_ts(BINARY_PREFIX, DQ, v, "5dc6f142")
 }
 #[cfg(test)]
 mod tests {

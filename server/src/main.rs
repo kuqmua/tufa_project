@@ -35,12 +35,8 @@ type SplitByChar<'split_lt> = Split<'split_lt, char>;
 #[allow(clippy::single_call_fn)] // route wiring is reused by startup flow and isolated from layer setup
 fn mk_api_routes(app_state: &SharedAppState) -> Router {
     Router::new()
-        .merge(cmn_routes(clone_shared_app_state(app_state)))
-        .merge(TblExample::routes(clone_shared_app_state(app_state)))
-}
-#[allow(clippy::single_call_fn)] // keeps SharedAppState cloning typed in one place for route wiring reuse
-fn clone_shared_app_state(app_state: &SharedAppState) -> SharedAppState {
-    Arc::clone(app_state)
+        .merge(cmn_routes(SharedAppState::clone(app_state)))
+        .merge(TblExample::routes(SharedAppState::clone(app_state)))
 }
 #[allow(clippy::single_call_fn)] // keeps state creation shape reusable and type-stable in one place
 fn mk_app_state(config: Config, pg_pool: sqlx::PgPool) -> SharedAppState {
@@ -56,19 +52,35 @@ fn parse_separated_values<T>(
     split_ch: char,
     parse_value: impl FnMut(&str) -> Option<T>,
 ) -> Vec<T> {
-    v.split(split_ch).filter_map(parse_value).collect()
+    parse_separated_values_with_capacity(v, split_ch, parse_value)
+}
+#[allow(clippy::single_call_fn)] // extracted so separator-count capacity logic is reusable and testable
+fn parse_separated_values_with_capacity<T>(
+    v: &str,
+    split_ch: char,
+    mut parse_value: impl FnMut(&str) -> Option<T>,
+) -> Vec<T> {
+    let mut parsed = Vec::with_capacity(split_count(v, split_ch).saturating_add(1));
+    for segment in v.split(split_ch) {
+        if let Some(parsed_value) = parse_value(segment) {
+            parsed.push(parsed_value);
+        }
+    }
+    parsed
+}
+#[allow(clippy::single_call_fn)] // isolated to keep capacity estimation reusable for parser helpers
+fn split_count(v: &str, split_ch: char) -> usize {
+    v.chars()
+        .filter(|checked_split_ch| checked_split_ch == &split_ch)
+        .count()
 }
 #[allow(clippy::single_call_fn)] // extracted so per-value parse behavior can be reused and tested directly
 fn parse_cors_allow_origin_value(value: &str) -> Option<HeaderValue> {
     value.trim().parse::<HeaderValue>().ok()
 }
-#[allow(clippy::single_call_fn)] // reusable comma-separated header parser keeps split+parse behavior in one place
-fn parse_comma_separated_header_values(v: &str) -> Vec<HeaderValue> {
-    parse_separated_values(v, CORS_ALLOW_ORIGIN_SPLIT_CH, parse_cors_allow_origin_value)
-}
 #[allow(clippy::single_call_fn)] // extracted for reuse in main setup and tests
 fn parse_cors_allow_origin(v: &str) -> Vec<HeaderValue> {
-    parse_comma_separated_header_values(v)
+    parse_separated_values(v, CORS_ALLOW_ORIGIN_SPLIT_CH, parse_cors_allow_origin_value)
 }
 #[allow(clippy::single_call_fn)] // generic splitter is test-only and keeps separator behavior assertions deterministic
 #[cfg(test)]
@@ -151,9 +163,9 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::{
-        CORS_ALLOW_ORIGIN_SPLIT_CH, TRACING_DFLT_FILTER, parse_comma_separated_header_values,
-        parse_cors_allow_origin, parse_cors_allow_origin_value, parse_separated_values,
-        split_by_char,
+        CORS_ALLOW_ORIGIN_SPLIT_CH, TRACING_DFLT_FILTER, parse_cors_allow_origin,
+        parse_cors_allow_origin_value, parse_separated_values,
+        parse_separated_values_with_capacity, split_by_char, split_count,
     };
     use axum::http::HeaderValue;
     #[allow(clippy::single_call_fn)] // shared fixture keeps two-origin header expectations reusable across parser tests
@@ -175,6 +187,12 @@ mod tests {
     #[allow(clippy::single_call_fn)] // shared assertion keeps numeric parser checks consistent across separator helpers
     fn assert_parsed_u8_values(input: &str, split_ch: char, exp: &[u8]) {
         let parsed = parse_separated_values(input, split_ch, |part| part.parse::<u8>().ok());
+        assert_eq!(parsed, exp);
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps parse helper outputs aligned across capacity and direct parser entry points
+    fn assert_parsed_u8_values_with_capacity(input: &str, split_ch: char, exp: &[u8]) {
+        let parsed =
+            parse_separated_values_with_capacity(input, split_ch, |part| part.parse::<u8>().ok());
         assert_eq!(parsed, exp);
     }
     #[test]
@@ -208,9 +226,8 @@ mod tests {
         assert_split_by_char_parts("a,,b,", CORS_ALLOW_ORIGIN_SPLIT_CH, &["a", "", "b", ""]);
     }
     #[test]
-    fn parse_comma_separated_header_values_keeps_only_valid_values() {
-        let parsed =
-            parse_comma_separated_header_values("https://a.example,bad\nvalue, https://b.example");
+    fn parse_cors_allow_origin_keeps_only_valid_values() {
+        let parsed = parse_cors_allow_origin("https://a.example,bad\nvalue, https://b.example");
         assert_two_origin_headers(&parsed);
     }
     #[test]
@@ -224,6 +241,14 @@ mod tests {
     #[test]
     fn parse_separated_values_supports_custom_separator() {
         assert_parsed_u8_values("10;20;bad;30", ';', &[10, 20, 30]);
+    }
+    #[test]
+    fn parse_separated_values_with_capacity_supports_custom_separator() {
+        assert_parsed_u8_values_with_capacity("10;20;bad;30", ';', &[10, 20, 30]);
+    }
+    #[test]
+    fn split_count_returns_expected_separator_occurrences() {
+        assert_eq!(split_count("a,b,,", ','), 3);
     }
     #[test]
     fn cors_allow_origin_split_char_is_stable() {

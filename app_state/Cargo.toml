@@ -13,7 +13,7 @@ edition = "2024"
 
 [dependencies]
 sqlx.workspace = true
-config_lib = {path = "../config_lib"}
+config_lib.workspace = true
 
 [lints]
 workspace = true

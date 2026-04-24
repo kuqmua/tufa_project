@@ -1114,6 +1114,10 @@ pub enum NotEmptyUnqVecTryNewEr<T> {
 pub struct NotEmptyUnqVec<T>(Vec<T>);
 impl<T> NotEmptyUnqVec<T> {
     #[must_use]
+    pub const fn as_slice(&self) -> &[T] {
+        self.0.as_slice()
+    }
+    #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
     }
@@ -1127,8 +1131,7 @@ impl<T: PartialEq> NotEmptyUnqVec<T> {
         if values.is_empty() {
             return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
         }
-        if let Some(duplicate_idx) = first_duplicate_idx(&values) {
-            let duplicate = values.remove(duplicate_idx);
+        if let Some(duplicate) = take_fst_dup(&mut values) {
             return Err(NotEmptyUnqVecTryNewEr::NotUnq {
                 v: duplicate,
                 loc: loc!(),
@@ -1227,7 +1230,7 @@ impl<T1> NotEmptyUnqVec<T1> {
 }
 #[cfg(test)]
 mod tests_not_empty_unq_vec {
-    use super::{NotEmptyUnqVec, NotEmptyUnqVecTryNewEr, first_duplicate_idx};
+    use super::{NotEmptyUnqVec, NotEmptyUnqVecTryNewEr, first_duplicate_idx, take_fst_dup};
     #[derive(Debug, PartialEq, Eq)]
     struct NonClone(u8);
     #[test]
@@ -1250,9 +1253,34 @@ mod tests_not_empty_unq_vec {
         assert!(first_duplicate_idx(&values).is_none());
     }
     #[test]
+    fn first_duplicate_idx_returns_none_for_empty_and_single_input() {
+        assert!(first_duplicate_idx::<u8>(&[]).is_none());
+        assert!(first_duplicate_idx(&[1u8]).is_none());
+    }
+    #[test]
     fn first_duplicate_idx_returns_first_repeated_value_index() {
         let values = vec![7u8, 8u8, 8u8, 7u8];
         assert_eq!(first_duplicate_idx(&values), Some(2usize));
+    }
+    #[test]
+    fn take_fst_dup_returns_none_for_unq_input() {
+        let mut values = vec![1u8, 2u8, 3u8];
+        let actual = take_fst_dup(&mut values);
+        assert!(actual.is_none());
+        assert_eq!(values, vec![1u8, 2u8, 3u8]);
+    }
+    #[test]
+    fn take_fst_dup_returns_first_duplicate_value() {
+        let mut values = vec![7u8, 8u8, 8u8, 7u8];
+        let actual = take_fst_dup(&mut values);
+        assert_eq!(actual, Some(8u8));
+        assert_eq!(values.len(), 3usize);
+    }
+    #[test]
+    fn as_slice_matches_to_vec_view() {
+        let values = NotEmptyUnqVec::try_new(vec![1u8, 2u8, 3u8]).expect("3f6e8a12");
+        assert_eq!(values.as_slice(), &[1u8, 2u8, 3u8]);
+        assert_eq!(values.as_slice(), values.to_vec().as_slice());
     }
 }
 impl<'query_lt, T> PgTypeWhFlt<'query_lt> for NotEmptyUnqVec<T>
@@ -1264,28 +1292,15 @@ where
         mut query: Query<'query_lt, Postgres, PgArguments>,
     ) -> Result<Query<'query_lt, Postgres, PgArguments>, String> {
         for el in self.0 {
-            match el.qb(query) {
-                Ok(v) => {
-                    query = v;
-                }
-                Err(er) => {
-                    return Err(er);
-                }
-            }
+            query = el.qb(query)?;
         }
         Ok(query)
     }
     fn qp(&self, incr: &mut u64, col: &dyn Display, add_oprtr: bool) -> Result<String, QpEr> {
         let mut acc = String::default();
         for (i, el) in self.0.iter().enumerate() {
-            match el.qp(incr, col, if i == 0 { add_oprtr } else { true }) {
-                Ok(v) => {
-                    acc.push_str(&v);
-                }
-                Err(er) => {
-                    return Err(er);
-                }
-            }
+            let v = el.qp(incr, col, if i == 0 { add_oprtr } else { true })?;
+            acc.push_str(&v);
         }
         Ok(acc)
     }
@@ -1300,10 +1315,7 @@ pub struct JsonFieldRights {
 pub struct NonPkPgTypeRdIds(pub V<Option<()>>);
 impl Decode<'_, Postgres> for NonPkPgTypeRdIds {
     fn decode(value: PgValueRef<'_>) -> Result<Self, BoxDynError> {
-        match <Json<Self> as Decode<Postgres>>::decode(value) {
-            Ok(v0) => Ok(v0.0),
-            Err(er) => Err(er),
-        }
+        <Json<Self> as Decode<Postgres>>::decode(value).map(|v0| v0.0)
     }
 }
 impl Type<Postgres> for NonPkPgTypeRdIds {
@@ -1434,15 +1446,12 @@ pub enum NotZeroUnsignedPartOfI32TryFromI32Er {
 impl TryFrom<i32> for NotZeroUnsignedPartOfI32 {
     type Error = NotZeroUnsignedPartOfI32TryFromI32Er;
     fn try_from(v: i32) -> Result<Self, Self::Error> {
-        match UnsignedPartOfI32::try_from(v) {
-            Ok(v0) => {
-                if v0.0 == 0 {
-                    Err(Self::Error::IsZero { loc: loc!() })
-                } else {
-                    Ok(Self(v0))
-                }
-            }
-            Err(er) => Err(Self::Error::UnsignedPartOfI32TryFromI32Er { v: er, loc: loc!() }),
+        let v0 = UnsignedPartOfI32::try_from(v)
+            .map_err(|er| Self::Error::UnsignedPartOfI32TryFromI32Er { v: er, loc: loc!() })?;
+        if v0.0 == 0 {
+            Err(Self::Error::IsZero { loc: loc!() })
+        } else {
+            Ok(Self(v0))
         }
     }
 }
@@ -1501,12 +1510,10 @@ pub fn pg_json_upd_qp(
     jsonb_set_path: &str,
     incr: &mut u64,
 ) -> Result<String, QpEr> {
-    match incr_checked_add_one_returning_incr(incr) {
-        Ok(v) => Ok(format!(
-            "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${v})"
-        )),
-        Err(er) => Err(er),
-    }
+    let v = incr_checked_add_one_returning_incr(incr)?;
+    Ok(format!(
+        "jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${v})"
+    ))
 }
 #[must_use]
 pub fn case_jsonb_typeof_null(target: &dyn Display, else_expr: &dyn Display) -> String {
@@ -1609,7 +1616,7 @@ pub fn string_test_cases_vec() -> [String; 12] {
         "🌍🚀✨ Rust 💖🦀".to_owned(),
         "a".repeat(1024),
         "line1\nline2\nline3".to_owned(),
-        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(),
+        "💖".to_owned(),
     ]
 }
 #[must_use]
@@ -1618,10 +1625,15 @@ pub fn uuid_uuid_test_cases_vec() -> [Uuid; 1] {
 }
 #[must_use]
 pub fn first_duplicate_idx<T: PartialEq>(values: &[T]) -> Option<usize> {
-    for (idx, el) in values.iter().enumerate() {
-        if values.iter().take(idx).any(|seen| seen == el) {
+    for (idx, current) in values.iter().enumerate() {
+        if values.iter().take(idx).any(|prev| prev == current) {
             return Some(idx);
         }
     }
     None
+}
+#[must_use]
+pub fn take_fst_dup<T: PartialEq>(values: &mut Vec<T>) -> Option<T> {
+    let duplicate_idx = first_duplicate_idx(values.as_slice())?;
+    Some(values.swap_remove(duplicate_idx))
 }

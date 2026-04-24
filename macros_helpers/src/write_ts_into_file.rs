@@ -1,6 +1,5 @@
 use crate::panic_if_err::panic_if_err;
-use crate::rs_file_path::rs_file_path;
-use crate::write_string_into_file::{WritePathOutcome, try_write_string_into_path_with_outcome};
+use crate::write_string_into_file::{WritePathOutcome, try_write_string_into_file_with_outcome};
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use serde::Deserialize;
@@ -32,8 +31,11 @@ const fn should_write_ts_flag(v: ShouldWriteTsIntoFile) -> bool {
     matches!(v, ShouldWriteTsIntoFile::True)
 }
 #[allow(clippy::single_call_fn)] // centralizes token-to-file write mapping and outcome extraction
-fn try_write_ts_into_path(path: &Path, ts: &Ts2) -> io::Result<WritePathOutcome> {
-    try_write_string_into_path_with_outcome(path, &ts.to_string())
+fn try_write_ts_into_file<P>(file_name: P, ts: &Ts2) -> io::Result<WritePathOutcome>
+where
+    P: AsRef<Path>,
+{
+    try_write_string_into_file_with_outcome(file_name, &ts.to_string())
 }
 #[allow(clippy::single_call_fn)] // keeps rustfmt-trigger policy in one reusable decision helper
 const fn should_run_rustfmt(
@@ -54,8 +56,7 @@ where
     if !should_write_ts_flag(should_write_ts_into_file) {
         return Ok(());
     }
-    let rs_path = rs_file_path(file_name);
-    let wr_outcome = try_write_ts_into_path(rs_path.as_path(), ts)?;
+    let wr_outcome = try_write_ts_into_file(file_name, ts)?;
     if should_run_rustfmt(*format_with_cargofmt, &wr_outcome) {
         try_run_rustfmt(wr_outcome.path())?;
     }

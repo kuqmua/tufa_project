@@ -107,13 +107,25 @@ pub(crate) fn expect_er<T, E>(v: Result<T, E>, exp_id: &'static str) -> E {
         .unwrap_or_else(|| panic_unexpected_result(EXPECT_ER_ER_ID, "expect_er", "Ok", exp_id))
 }
 #[track_caller]
+#[allow(clippy::single_call_fn)] // shared helper centralizes error extraction and post-check mapping so higher-level helpers avoid repeating expect_er plumbing
+fn map_err<T, E, R>(
+    v: Result<T, E>,
+    exp_id: &'static str,
+    check: impl FnOnce(&E),
+    map: impl FnOnce(E, &'static str) -> R,
+) -> R {
+    let er = expect_er(v, exp_id);
+    check(&er);
+    map(er, exp_id)
+}
+#[track_caller]
 #[allow(clippy::single_call_fn)] // shared mapper avoids repeating expect_er + variant extraction boilerplate in tests
 pub(crate) fn expect_er_mapped<T, E, R>(
     v: Result<T, E>,
     exp_id: &'static str,
     map: impl FnOnce(E, &'static str) -> R,
 ) -> R {
-    map(expect_er(v, exp_id), exp_id)
+    map_err(v, exp_id, |_| (), map)
 }
 #[track_caller]
 #[allow(clippy::single_call_fn)] // shared helper composes result extraction with variant mapping for concise validator tests
@@ -148,7 +160,14 @@ fn map_err_after_status_check<T, E, R>(
 where
     E: GetAxumHttpStatusCode,
 {
-    map(assert_err_status_code(v, exp_id, expected), exp_id)
+    map_err(
+        v,
+        exp_id,
+        |er| {
+            assert_eq!(er.get_axum_http_status_code(), expected);
+        },
+        map,
+    )
 }
 #[track_caller]
 pub(crate) fn assert_err_status_code<T, E>(
@@ -159,9 +178,7 @@ pub(crate) fn assert_err_status_code<T, E>(
 where
     E: GetAxumHttpStatusCode,
 {
-    let err = expect_er(v, exp_id);
-    assert_eq!(err.get_axum_http_status_code(), expected);
-    err
+    map_err_after_status_check(v, exp_id, expected, |er, _| er)
 }
 #[track_caller]
 pub(crate) fn assert_err_status_code_only<T, E>(
@@ -202,6 +219,22 @@ where
     map_err_after_status_check(v, exp_id, expected, |er, mapped_exp_id| {
         expect_variant_ref(&er, map, mapped_exp_id)
     })
+}
+#[track_caller]
+#[allow(clippy::single_call_fn)] // shared helper lets tests reuse err-variant extraction with optional status checks without duplicating branching
+pub(crate) fn expect_err_variant_ref_with_status<T, E, R>(
+    v: Result<T, E>,
+    exp_id: &'static str,
+    expected: Option<StatusCode>,
+    map: impl FnOnce(&E) -> Option<R>,
+) -> R
+where
+    E: GetAxumHttpStatusCode,
+{
+    match expected {
+        Some(status_code) => assert_err_status_code_variant_ref(v, exp_id, status_code, map),
+        None => expect_er_variant_ref(v, exp_id, map),
+    }
 }
 pub(crate) fn mk_headers_with_entry(name: impl IntoHeaderName, value: HeaderValue) -> HeaderMap {
     let mut headers = HeaderMap::new();

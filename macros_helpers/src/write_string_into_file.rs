@@ -1,26 +1,29 @@
 use crate::panic_if_err::panic_if_err;
 use crate::rs_file_path::rs_file_path;
 use std::{
-    fs::{read_to_string, write},
+    fs::{metadata, read_to_string, write},
     io::{self, ErrorKind},
     path::{Path, PathBuf},
 };
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub(crate) enum WritePathOutcome {
+pub enum WritePathOutcome {
     Changed(PathBuf),
     Unchanged(PathBuf),
 }
 impl WritePathOutcome {
     #[allow(clippy::single_call_fn)] // named conversion keeps enum->path mapping centralized for callers and tests
-    pub(crate) fn into_path(self) -> PathBuf {
+    #[must_use]
+    pub fn into_path(self) -> PathBuf {
         match self {
             Self::Changed(path) | Self::Unchanged(path) => path,
         }
     }
-    pub(crate) const fn is_changed(&self) -> bool {
+    #[must_use]
+    pub const fn is_changed(&self) -> bool {
         matches!(self, Self::Changed(_))
     }
-    pub(crate) fn path(&self) -> &Path {
+    #[must_use]
+    pub fn path(&self) -> &Path {
         match self {
             Self::Changed(path) | Self::Unchanged(path) => path.as_path(),
         }
@@ -28,11 +31,41 @@ impl WritePathOutcome {
 }
 #[allow(clippy::single_call_fn)] // write-decision logic is split out to keep file write path minimal and focused
 fn should_write_string_into_file(path: &Path, string_cnt: &str) -> io::Result<bool> {
-    match read_to_string(path) {
-        Ok(v) => Ok(v != string_cnt),
+    match metadata(path) {
+        Ok(v) => {
+            let new_len_u64 = u64::try_from(string_cnt.len())
+                .map_err(|_er| io::Error::other("2f4d7a8c failed converting string length"))?;
+            if v.len() != new_len_u64 {
+                return Ok(true);
+            }
+            read_to_string(path).map(|old_cnt| old_cnt != string_cnt)
+        }
         Err(er) if er.kind() == ErrorKind::NotFound => Ok(true),
         Err(er) => Err(er),
     }
+}
+#[allow(clippy::single_call_fn)]
+// shared test helper checks unchanged-length diff content path to ensure content comparison still runs
+#[cfg(test)]
+fn should_write_with_same_len_diff(path: &Path, old: &str, new: &str) -> io::Result<bool> {
+    if old.len() != new.len() {
+        return Err(io::Error::other(
+            "f4c1d7a9 same-len helper requires equal lengths",
+        ));
+    }
+    write(path, old)?;
+    should_write_string_into_file(path, new)
+}
+#[allow(clippy::single_call_fn)] // shared test helper checks changed-length short-circuit path via metadata length comparison
+#[cfg(test)]
+fn should_write_with_diff_len(path: &Path, old: &str, new: &str) -> io::Result<bool> {
+    if old.len() == new.len() {
+        return Err(io::Error::other(
+            "9a6d2c1b diff-len helper requires different lengths",
+        ));
+    }
+    write(path, old)?;
+    should_write_string_into_file(path, new)
 }
 #[allow(clippy::single_call_fn)] // central mapping keeps changed/unchanged outcome construction consistent
 const fn mk_write_path_outcome(path: PathBuf, is_changed: bool) -> WritePathOutcome {
@@ -60,7 +93,18 @@ pub(crate) fn try_write_string_into_path_with_outcome(
     let path_buf = path_ref.to_path_buf();
     Ok(mk_write_path_outcome(path_buf, should_write))
 }
+#[allow(clippy::single_call_fn)] // shared write helper keeps change-outcome API reusable for extension-based write callers
+pub fn try_write_string_into_file_with_outcome<P>(
+    file_name: P,
+    string_cnt: &str,
+) -> io::Result<WritePathOutcome>
+where
+    P: AsRef<Path>,
+{
+    try_write_string_into_path_with_outcome(rs_file_path(file_name), string_cnt)
+}
 #[allow(clippy::single_call_fn)] // shared write helper retains simple path-returning API used by file-level wrappers and tests
+#[cfg(test)]
 pub(crate) fn try_write_string_into_path(
     path: impl AsRef<Path>,
     string_cnt: &str,
@@ -71,7 +115,7 @@ pub fn try_write_string_into_file<P>(file_name: P, string_cnt: &str) -> io::Resu
 where
     P: AsRef<Path>,
 {
-    try_write_string_into_path(rs_file_path(file_name), string_cnt)
+    try_write_string_into_file_with_outcome(file_name, string_cnt).map(WritePathOutcome::into_path)
 }
 pub fn write_string_into_file<P>(file_name: P, string_cnt: &str)
 where
@@ -84,9 +128,10 @@ where
 #[cfg(test)]
 mod tests {
     use super::{
-        WritePathOutcome, should_write_string_into_file, try_write_string_into_file,
-        try_write_string_into_path, try_write_string_into_path_with_outcome,
-        write_string_if_needed, write_string_into_file,
+        WritePathOutcome, should_write_string_into_file, should_write_with_diff_len,
+        should_write_with_same_len_diff, try_write_string_into_file,
+        try_write_string_into_file_with_outcome, try_write_string_into_path,
+        try_write_string_into_path_with_outcome, write_string_if_needed, write_string_into_file,
     };
     use crate::rs_file_path::rs_file_path;
     use crate::test_hlp::{assert_file_content, cleanup_test_file, test_path};
@@ -157,6 +202,20 @@ mod tests {
         cleanup(path.as_path());
     }
     #[test]
+    fn should_write_string_into_file_returns_true_for_same_len_diff_content() {
+        let path = txt_path("macros_helpers_should_write_same_len_diff");
+        let should_write = should_write_with_same_len_diff(&path, "abc", "xyz").expect("517fd0c9");
+        assert!(should_write);
+        cleanup(path.as_path());
+    }
+    #[test]
+    fn should_write_string_into_file_returns_true_for_diff_len_content() {
+        let path = txt_path("macros_helpers_should_write_diff_len");
+        let should_write = should_write_with_diff_len(&path, "abcd", "a").expect("e2d99b73");
+        assert!(should_write);
+        cleanup(path.as_path());
+    }
+    #[test]
     fn write_string_if_needed_returns_false_without_rewrite_for_eq_content() {
         let path = txt_path("macros_helpers_write_if_needed_eq");
         write(&path, "same").expect("924bdc58");
@@ -209,6 +268,25 @@ mod tests {
         write(&path, "abc").expect("d293f783");
         let outcome = try_write_string_into_path_with_outcome(&path, "abc").expect("b8f8eaf1");
         assert_outcome_and_cleanup(path.as_path(), &outcome, false);
+    }
+    #[test]
+    fn try_write_string_into_file_with_outcome_returns_changed_and_rs_path() {
+        let base = test_path("macros_helpers_write_file_outcome_changed");
+        let path = rs_file_path(&base);
+        let outcome = try_write_string_into_file_with_outcome(&base, "abc").expect("57cf209a");
+        assert_eq!(outcome.path(), path.as_path());
+        assert!(outcome.is_changed());
+        assert_content_and_cleanup(path.as_path(), "abc");
+    }
+    #[test]
+    fn try_write_string_into_file_with_outcome_returns_unchanged_for_same_content() {
+        let base = test_path("macros_helpers_write_file_outcome_unchanged");
+        let path = rs_file_path(&base);
+        write(&path, "abc").expect("2199f0a7");
+        let outcome = try_write_string_into_file_with_outcome(&base, "abc").expect("f60721a2");
+        assert_eq!(outcome.path(), path.as_path());
+        assert!(!outcome.is_changed());
+        cleanup(path.as_path());
     }
     #[test]
     fn write_path_outcome_into_path_returns_owned_path() {

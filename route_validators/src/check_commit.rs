@@ -62,14 +62,18 @@ impl CommitEr {
 fn validate_commit_header_value(commit: &str) -> Result<(), CommitEr> {
     validate_project_commit(commit).map_err(CommitEr::commit_not_eq)
 }
-#[allow(clippy::single_call_fn)] // dedicated extractor enables reuse in tests and keeps parsing separate from validation
-fn get_commit_header_str(headers: &HeaderMap) -> Result<&str, CommitEr> {
+#[allow(clippy::single_call_fn)] // shared extractor keeps commit-header parsing reusable across commit-check entry points
+fn read_commit_header_str(headers: &HeaderMap) -> Result<&str, CommitEr> {
     get_required_header_str(
         headers,
         COMMIT_HEADER_NAME,
         CommitEr::no_commit_header,
         CommitEr::commit_to_str_conversion,
     )
+}
+#[allow(clippy::single_call_fn)] // reusable validator keeps check_commit focused on feature-toggle behavior
+fn validate_commit_header(headers: &HeaderMap) -> Result<(), CommitEr> {
+    validate_commit_header_value(read_commit_header_str(headers)?)
 }
 pub fn check_commit(
     enable_api_git_commit_check: bool,
@@ -78,19 +82,18 @@ pub fn check_commit(
     if !enable_api_git_commit_check {
         return Ok(());
     }
-    let commit = get_commit_header_str(headers)?;
-    validate_commit_header_value(commit)
+    validate_commit_header(headers)
 }
 #[cfg(test)]
 mod tests {
     use super::{
         COMMIT_HEADER_NAME, COMMIT_NOT_EQ_MSG, CommitEr, NO_COMMIT_HEADER_MSG, check_commit,
-        get_commit_header_str, validate_commit_header_value,
+        read_commit_header_str, validate_commit_header, validate_commit_header_value,
     };
     use crate::test_hlp::{
-        assert_err_status_code_only, assert_err_status_code_variant_ref, assert_ok_eq,
-        expect_er_variant_ref, expect_ok, mk_headers_with_entry, non_utf8_header_value,
-        replace_header_name,
+        assert_err_status_code_only, assert_ok_eq, expect_er_variant_ref,
+        expect_err_variant_ref_with_status, expect_ok, mk_headers_with_entry,
+        non_utf8_header_value, replace_header_name,
     };
     use axum::http::{HeaderMap, StatusCode, header::HeaderValue};
     use git_info::{PROJECT_GIT_INFO, is_project_commit, project_git_commit_link_ref};
@@ -166,13 +169,6 @@ mod tests {
     fn expect_commit_to_str_conversion_err(headers: &HeaderMap, exp_id: &'static str) {
         expect_check_commit_err_variant(headers, exp_id, is_commit_to_str_conversion);
     }
-    #[allow(clippy::single_call_fn)] // shared wrapper keeps CommitNotEq extraction reusable and explicit for mismatch assertions
-    fn expect_commit_not_eq_err(
-        headers: &HeaderMap,
-        exp_id: &'static str,
-    ) -> (&'static str, &'static str) {
-        expect_check_commit_err_variant(headers, exp_id, commit_not_eq_fields)
-    }
     #[allow(clippy::single_call_fn)] // shared assertion keeps CommitNotEq expectation consistent across mismatch tests
     fn assert_commit_not_eq_fields(
         fields: (&'static str, &'static str),
@@ -189,7 +185,7 @@ mod tests {
     }
     #[allow(clippy::single_call_fn)] // shared helper keeps wrong-commit check+assert flow reusable across mismatch tests
     fn assert_wrong_commit_err(headers: &HeaderMap, exp_id: &'static str) {
-        let fields = expect_commit_not_eq_err(headers, exp_id);
+        let fields = expect_check_commit_err_variant(headers, exp_id, commit_not_eq_fields);
         assert_wrong_commit_fields(fields);
     }
     #[allow(clippy::single_call_fn)] // shared assertion wrapper keeps commit-enabled error mapping reusable across variant-specific helpers
@@ -198,7 +194,7 @@ mod tests {
         exp_id: &'static str,
         map: impl FnOnce(&CommitEr) -> Option<R>,
     ) -> R {
-        expect_commit_result_err_variant(
+        expect_err_variant_ref_with_status(
             check_commit_enabled(headers),
             exp_id,
             Some(StatusCode::BAD_REQUEST),
@@ -211,19 +207,7 @@ mod tests {
         exp_id: &'static str,
         map: impl FnOnce(&CommitEr) -> Option<R>,
     ) -> R {
-        expect_commit_result_err_variant(get_commit_header_str(headers), exp_id, None, map)
-    }
-    #[allow(clippy::single_call_fn)] // generic helper keeps borrowed-variant assertions reusable for both status-checked and plain extraction paths
-    fn expect_commit_result_err_variant<T, R>(
-        v: Result<T, CommitEr>,
-        exp_id: &'static str,
-        expected_status: Option<StatusCode>,
-        map: impl FnOnce(&CommitEr) -> Option<R>,
-    ) -> R {
-        match expected_status {
-            Some(status_code) => assert_err_status_code_variant_ref(v, exp_id, status_code, map),
-            None => expect_er_variant_ref(v, exp_id, map),
-        }
+        expect_err_variant_ref_with_status(read_commit_header_str(headers), exp_id, None, map)
     }
     #[test]
     fn check_commit_is_skipped_when_validation_is_disabled() {
@@ -249,10 +233,25 @@ mod tests {
     fn get_commit_header_str_returns_header_value_when_present() {
         let headers = mk_headers_with_project_commit();
         assert_ok_eq(
-            get_commit_header_str(&headers),
+            read_commit_header_str(&headers),
             "e1d07f53",
             &PROJECT_GIT_INFO.commit,
         );
+    }
+    #[test]
+    fn validate_commit_header_returns_error_when_header_is_absent() {
+        let headers = HeaderMap::new();
+        let no_commit_header = expect_er_variant_ref(
+            validate_commit_header(&headers),
+            "31ea9a57",
+            no_commit_header_msg,
+        );
+        assert_eq!(no_commit_header, NO_COMMIT_HEADER_MSG);
+    }
+    #[test]
+    fn validate_commit_header_accepts_project_commit() {
+        let headers = mk_headers_with_project_commit();
+        expect_ok(validate_commit_header(&headers), "4d60c385");
     }
     #[test]
     fn get_commit_header_str_returns_error_when_header_is_absent() {

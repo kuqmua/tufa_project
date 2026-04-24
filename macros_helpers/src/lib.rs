@@ -56,7 +56,10 @@ pub use pgn_start_end_init_ts::pgn_start_end_init_ts;
 pub use status_code::{StatusCode, get_only_one};
 pub use syn_field::SynField;
 pub use wrap_derive::wrap_derive;
-pub use write_string_into_file::{try_write_string_into_file, write_string_into_file};
+pub use write_string_into_file::{
+    WritePathOutcome, try_write_string_into_file, try_write_string_into_file_with_outcome,
+    write_string_into_file,
+};
 pub use write_ts_into_file::{
     FormatWithCargofmt, ShouldWriteTsIntoFile, mb_write_ts_into_file, try_mb_write_ts_into_file,
 };

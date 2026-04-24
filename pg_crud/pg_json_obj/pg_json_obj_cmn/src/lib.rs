@@ -1,6 +1,6 @@
 use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
-use pg_crud_cmn::{DfltSomeOneEl, first_duplicate_idx};
+use pg_crud_cmn::{DfltSomeOneEl, take_fst_dup};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -33,10 +33,14 @@ impl<T> UnqVec<T> {
         &self.0
     }
 }
+impl<T> AsRef<[T]> for UnqVec<T> {
+    fn as_ref(&self) -> &[T] {
+        self.as_slice()
+    }
+}
 impl<T: PartialEq> UnqVec<T> {
     pub fn try_new(mut v: Vec<T>) -> Result<Self, UnqVecTryNewEr<T>> {
-        if let Some(duplicate_idx) = first_duplicate_idx(&v) {
-            let duplicate = v.swap_remove(duplicate_idx);
+        if let Some(duplicate) = take_fst_dup(&mut v) {
             return Err(UnqVecTryNewEr::NotUnq {
                 v: duplicate,
                 loc: loc!(),
@@ -58,6 +62,14 @@ const _: () = {
         where
             __D: _serde::Deserializer<'de>,
         {
+            #[allow(clippy::single_call_fn)] // shared converter keeps try_new->serde::de::Error mapping in one place for all visitor entry points
+            fn try_new_or_de_error<T, E>(v: Vec<T>) -> Result<UnqVec<T>, E>
+            where
+                T: std::fmt::Debug + PartialEq + Clone,
+                E: _serde::de::Error,
+            {
+                UnqVec::try_new(v).map_err(|er| E::custom(format!("{er:?}")))
+            }
             #[doc(hidden)]
             struct __Visitor<'de, T>
             where
@@ -83,10 +95,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let f0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    match UnqVec::try_new(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
-                    }
+                    try_new_or_de_error(f0)
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -100,10 +109,7 @@ const _: () = {
                             &"tuple struct UnqVec with 1 el",
                         ));
                     };
-                    match UnqVec::try_new(f0) {
-                        Ok(v) => Ok(v),
-                        Err(er) => Err(_serde::de::Error::custom(format!("{er:?}"))),
-                    }
+                    try_new_or_de_error(f0)
                 }
             }
             _serde::Deserializer::deserialize_newtype_struct(
@@ -140,7 +146,7 @@ impl<T1> UnqVec<T1> {
 #[cfg(test)]
 mod tests {
     use super::{UnqVec, UnqVecTryNewEr};
-    use pg_crud_cmn::first_duplicate_idx;
+    use pg_crud_cmn::{first_duplicate_idx, take_fst_dup};
     #[derive(Debug, PartialEq, Eq)]
     struct NonClone(u8);
     #[test]
@@ -200,6 +206,20 @@ mod tests {
         assert_eq!(first_duplicate_idx(&v), Some(2usize));
     }
     #[test]
+    fn take_fst_dup_returns_none_for_unq_input() {
+        let mut values = vec![1u8, 2u8, 3u8];
+        let actual = take_fst_dup(&mut values);
+        assert!(actual.is_none());
+        assert_eq!(values, vec![1u8, 2u8, 3u8]);
+    }
+    #[test]
+    fn take_fst_dup_returns_first_duplicate_value() {
+        let mut values = vec![7u8, 8u8, 8u8, 7u8];
+        let actual = take_fst_dup(&mut values);
+        assert_eq!(actual, Some(8u8));
+        assert_eq!(values.len(), 3usize);
+    }
+    #[test]
     fn as_slice_matches_to_vec_view() {
         let v = UnqVec::try_new(vec![1u8, 2u8, 3u8]).expect("0ec4e973");
         assert_eq!(v.as_slice(), &[1u8, 2u8, 3u8]);
@@ -210,5 +230,10 @@ mod tests {
         let v = UnqVec::try_new(vec![4u8, 5u8, 6u8]).expect("8b0ae3f4");
         let actual = v.as_slice().to_vec();
         assert_eq!(actual, vec![4u8, 5u8, 6u8]);
+    }
+    #[test]
+    fn as_ref_slice_matches_as_slice() {
+        let v = UnqVec::try_new(vec![9u8, 8u8, 7u8]).expect("ad547bd8");
+        assert_eq!(v.as_ref(), v.as_slice());
     }
 }

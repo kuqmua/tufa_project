@@ -26,16 +26,22 @@ pub trait GetGitCommitLink {
 pub trait GetGitCommitId {
     fn get_git_commit_id(&self) -> String;
     fn get_git_commit_id_cow(&self) -> Cow<'_, str> {
-        with_git_commit_id_ref(self, Cow::Borrowed, || owned_git_commit_id_cow(self))
+        with_git_commit_id_ref_or(self, Cow::Borrowed, |src| {
+            Cow::Owned(src.get_git_commit_id())
+        })
     }
     fn get_git_commit_id_or_else<'commit_id_lt>(
         &'commit_id_lt self,
         fallback: &'commit_id_lt mut Option<String>,
     ) -> &'commit_id_lt str {
-        with_git_commit_id_ref(
+        with_git_commit_id_ref_or(
             self,
             |commit_id| commit_id,
-            || fallback_git_commit_id_ref(self, fallback),
+            |src| {
+                fallback
+                    .get_or_insert_with(|| src.get_git_commit_id())
+                    .as_str()
+            },
         )
     }
     fn get_git_commit_id_ref(&self) -> Option<&str> {
@@ -59,34 +65,16 @@ impl<T: ?Sized + GetGitCommitId> GetGitCommitLink for T {
         self.with_git_commit_id(git_commit_link_cow)
     }
 }
-fn with_git_commit_id_ref<'src, T, R>(
+fn with_git_commit_id_ref_or<'src, T, R>(
     src: &'src T,
     on_ref: impl FnOnce(&'src str) -> R,
-    on_owned: impl FnOnce() -> R,
+    on_owned: impl FnOnce(&'src T) -> R,
 ) -> R
 where
     T: ?Sized + GetGitCommitId,
 {
-    src.get_git_commit_id_ref().map_or_else(on_owned, on_ref)
-}
-#[allow(clippy::single_call_fn)] // shared helper keeps owned commit-id Cow construction reusable across GetGitCommitId defaults
-fn owned_git_commit_id_cow<T>(src: &T) -> Cow<'_, str>
-where
-    T: ?Sized + GetGitCommitId,
-{
-    Cow::Owned(src.get_git_commit_id())
-}
-#[allow(clippy::single_call_fn)] // shared helper keeps fallback storage wiring reusable across GetGitCommitId defaults
-fn fallback_git_commit_id_ref<'fallback, T>(
-    src: &T,
-    fallback: &'fallback mut Option<String>,
-) -> &'fallback str
-where
-    T: ?Sized + GetGitCommitId,
-{
-    fallback
-        .get_or_insert_with(|| src.get_git_commit_id())
-        .as_str()
+    src.get_git_commit_id_ref()
+        .map_or_else(|| on_owned(src), on_ref)
 }
 const fn project_git_commit_id() -> &'static str {
     PROJECT_GIT_INFO.commit
@@ -144,7 +132,7 @@ mod tests {
         GITHUB_URL, GetGitCommitId, GetGitCommitLink as _, ProjectGitInfo, TREE_SEGMENT,
         git_commit_link, git_commit_link_capacity, git_commit_link_cow, is_project_commit,
         project_git_commit_id, project_git_commit_link, project_git_commit_link_ref,
-        validate_project_commit,
+        validate_project_commit, with_git_commit_id_ref_or,
     };
     use std::{borrow::Cow, cell::Cell, ptr};
     #[derive(Debug)]
@@ -227,6 +215,17 @@ mod tests {
         exp_fallback_calls: usize,
     ) {
         let commit_len = v.with_git_commit_id(str::len);
+        assert_eq!(commit_len, exp_commit_len);
+        assert_fallback_calls(v, exp_fallback_calls);
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps with_git_commit_id_ref_or branch behavior checks reusable across borrowed/owned test cases
+    fn assert_with_git_commit_id_ref_or(
+        v: &TestGitCommit,
+        exp_commit_len: usize,
+        exp_fallback_calls: usize,
+    ) {
+        let commit_len =
+            with_git_commit_id_ref_or(v, str::len, |src| src.get_git_commit_id().len());
         assert_eq!(commit_len, exp_commit_len);
         assert_fallback_calls(v, exp_fallback_calls);
     }
@@ -369,6 +368,16 @@ mod tests {
     fn with_git_commit_id_prefers_borrowed_ref_when_available() {
         let test_git_commit = mk_borrowed_test_git_commit("cafebabe");
         assert_commit_len_and_fallback_calls(&test_git_commit, "cafebabe".len(), 0);
+    }
+    #[test]
+    fn with_git_commit_id_ref_or_prefers_borrowed_ref_when_available() {
+        let test_git_commit = mk_borrowed_test_git_commit("cafebabe");
+        assert_with_git_commit_id_ref_or(&test_git_commit, "cafebabe".len(), 0);
+    }
+    #[test]
+    fn with_git_commit_id_ref_or_uses_fallback_without_ref() {
+        let test_git_commit = mk_owned_test_git_commit("cafebabe");
+        assert_with_git_commit_id_ref_or(&test_git_commit, "cafebabe".len(), 1);
     }
     #[test]
     fn base_git_commit_link_len_matches_expected_prefix_len() {

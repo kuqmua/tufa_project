@@ -476,12 +476,20 @@ mod tests {
             collect_missing_items(lints_vec_from_cargo_toml, &lints_to_check_set);
         assert!(outdated_lints_in_file.is_empty(), "93787d2d");
     }
+    #[allow(clippy::single_call_fn)] // shared parser keeps .env line-to-key extraction reusable and test behavior centralized
+    fn parse_env_key_line(line: &str) -> Option<&str> {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            return None;
+        }
+        trimmed.split_once('=').map(|(key, _)| key)
+    }
     fn env_keys_from_file(path: &str) -> Vec<String> {
         read_to_string(path)
             .expect("b3a7c1e4")
             .lines()
-            .filter(|line| !line.starts_with('#') && line.contains('='))
-            .filter_map(|line| line.split_once('=').map(|(key, _)| key.to_owned()))
+            .filter_map(parse_env_key_line)
+            .map(str::to_owned)
             .collect()
     }
     #[test]
@@ -647,6 +655,7 @@ mod tests {
         });
         assert_joined_ers_empty_with_ctx(&ers, exp_id, ctx);
     }
+    #[allow(clippy::single_call_fn)] // shared parser keeps Cargo.toml read+parse behavior centralized for policy collectors
     fn read_toml_table(path: &Path) -> Option<TomlTable> {
         let v = read_to_string(path).ok()?;
         v.parse::<TomlTable>().ok()
@@ -842,26 +851,25 @@ mod tests {
     }
     #[test]
     fn workspace_crates_must_use_workspace_dependencies() {
-        let exceptions = [
-            "../Cargo.toml", //workspace
-        ];
-        let mut ers = Vec::new();
-        for_each_cargo_toml_project_file(&exceptions, |path| {
-            let Some(parsed) = read_toml_table(path) else {
-                ers.push(format!("{}: unable to parse Cargo.toml", path.display()));
-                return;
-            };
-            for dep_section in ["dependencies", "dev-dependencies", "build-dependencies"] {
-                if let Some(deps) = parsed.get(dep_section).and_then(Value::as_table) {
-                    for (dep_name, dep_value) in deps {
-                        if !workspace_dep_entry_is_valid(dep_value) {
-                            ers.push(workspace_dep_entry_er(path, dep_name, dep_section));
-                        }
+        assert_cargo_toml_ers_empty(
+            &[
+                "../Cargo.toml", //workspace
+            ],
+            "5f8a6d17",
+            collect_non_workspace_dep_ers,
+        );
+    }
+    #[allow(clippy::single_call_fn)] // shared collector keeps workspace-dependency policy checks reusable and centralized
+    fn collect_non_workspace_dep_ers(path: &Path, parsed: &TomlTable, ers: &mut Vec<String>) {
+        for dep_section in ["dependencies", "dev-dependencies", "build-dependencies"] {
+            if let Some(deps) = parsed.get(dep_section).and_then(Value::as_table) {
+                for (dep_name, dep_value) in deps {
+                    if !workspace_dep_entry_is_valid(dep_value) {
+                        ers.push(workspace_dep_entry_er(path, dep_name, dep_section));
                     }
                 }
             }
-        });
-        assert_joined_ers_empty(&ers, "5f8a6d17");
+        }
     }
     #[allow(clippy::single_call_fn)] // keeps dependency-policy validation centralized for dependencies/dev-dependencies/build-dependencies checks
     fn workspace_dep_entry_is_valid(dep_value: &Value) -> bool {

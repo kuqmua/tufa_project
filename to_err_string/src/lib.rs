@@ -45,7 +45,7 @@ macro_rules! impl_to_err_string_as_ref_str {
         })+
     };
 }
-impl_to_err_string_with!(i8, i16, i32, i64, u8, u16, u32, u64, f32, f64, bool, char => |v| v.to_string());
+impl_to_err_string_with!(i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, f32, f64, bool, char => |v| v.to_string());
 impl_to_err_string_with!(HeaderMap, SizeHint => |v| debug_alt_to_string(v));
 impl_to_err_string_with!(
     ToStrError,
@@ -87,7 +87,7 @@ where
     T: Debug,
 {
     fn to_err_string(&self) -> String {
-        format!("{self:?}")
+        debug_to_string(self)
     }
 }
 impl<T, E> ToErrString for Result<T, E>
@@ -96,7 +96,7 @@ where
     E: Debug,
 {
     fn to_err_string(&self) -> String {
-        format!("{self:?}")
+        debug_to_string(self)
     }
 }
 impl_to_err_string_as_ref_str!(String, str, Cow<'_, str>);
@@ -106,6 +106,9 @@ impl_to_err_string_const!(
 );
 fn debug_alt_to_string<T: Debug>(v: &T) -> String {
     format!("{v:#?}")
+}
+fn debug_to_string<T: Debug>(v: &T) -> String {
+    format!("{v:?}")
 }
 fn as_ref_str_to_owned<T>(v: &T) -> String
 where
@@ -125,6 +128,9 @@ mod tests {
     #[test]
     fn to_err_string_for_primitives_and_options() {
         assert_to_err_string(42i32, "42");
+        assert_to_err_string(42i128, "42");
+        assert_to_err_string(42isize, "42");
+        assert_to_err_string(42u128, "42");
         assert_to_err_string(Some(7u8), "Some(7)");
         assert_to_err_string(None::<u16>, "None");
         assert_to_err_string(true, "true");

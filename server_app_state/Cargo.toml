@@ -13,13 +13,16 @@ edition = "2024"
 [dependencies]
 chrono.workspace = true
 sqlx.workspace = true
-config_lib = {path = "../config_lib"}
-cmn_routes = {path = "../cmn_routes"}
-git_info = {path = "../git_info"}
-app_state = {path = "../app_state"}
-server_config = {path = "../server_config"}
+config_lib.workspace = true
+cmn_routes.workspace = true
+git_info.workspace = true
+app_state.workspace = true
+server_config.workspace = true
 pg_crud = {path = "../pg_crud", features = ["test-utils"]}
-optml = {path = "../optml"}
+optml.workspace = true
+[dev-dependencies]
+secrecy.workspace = true
+tokio.workspace = true
 
 [lints]
 workspace = true
