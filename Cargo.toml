@@ -94,7 +94,7 @@ secrecy = {version = "=0.10.3", features = ["serde"]}
 chrono = {version = "=0.4.42", features = ["serde"]}
 thiserror = {version = "=2.0.17"}
 strum = {version = "=0.27.2"}
-strum_macros = {version = "=0.27.2"}
+strum_macros = {version = "=0.28.0"}
 dotenv = {version = "=0.15.0"}
 time = {version = "=0.3.47", features = ["serde"]}
 quote = {version = "=1.0.42"}
