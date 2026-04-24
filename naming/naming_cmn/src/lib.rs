@@ -71,13 +71,16 @@ where
 {
     v.to_string().parse::<Ts2>().expect("753ce6dd")
 }
+fn case_from_string(v: &str, case: Case<'_>) -> String {
+    str_case(v, case)
+}
 fn display_case_str<T: Display>(v: &T, case: Case<'_>) -> String {
     let stringified = v.to_string();
-    str_case(&stringified, case)
+    case_from_string(&stringified, case)
 }
 fn tokenized_case_str<T: ToTokens>(v: &T, case: Case<'_>) -> String {
     let tokenized = quote! {#v}.to_string();
-    str_case(&tokenized, case)
+    case_from_string(&tokenized, case)
 }
 fn str_case(v: &str, case: Case<'_>) -> String {
     v.to_case(case)
@@ -91,64 +94,54 @@ mod tests {
         ToTokensToUccTs, ToTokensToUpperScStr, ToTokensToUpperScTs,
     };
     use quote::quote;
+    fn assert_case_triplet<S>(to_ucc: S, to_sc: S, to_upper_sc: S)
+    where
+        S: AsRef<str>,
+    {
+        assert_eq!(to_ucc.as_ref(), "HelloWorld");
+        assert_eq!(to_sc.as_ref(), "hello_world");
+        assert_eq!(to_upper_sc.as_ref(), "HELLO_WORLD");
+    }
     #[test]
     fn as_ref_case_conversions_are_expected() {
-        assert_eq!(AsRefStrToUccStr::case(&"hello_world"), "HelloWorld");
-        assert_eq!(AsRefStrToScStr::case(&"HelloWorld"), "hello_world");
-        assert_eq!(AsRefStrToUpperScStr::case(&"helloWorld"), "HELLO_WORLD");
+        assert_case_triplet(
+            AsRefStrToUccStr::case(&"hello_world"),
+            AsRefStrToScStr::case(&"HelloWorld"),
+            AsRefStrToUpperScStr::case(&"helloWorld"),
+        );
     }
     #[test]
     fn ts_case_conversions_are_expected() {
-        assert_eq!(
+        assert_case_triplet(
             AsRefStrToUccTs::case_or_panic(&"hello_world").to_string(),
-            "HelloWorld"
-        );
-        assert_eq!(
             AsRefStrToScTs::case_or_panic(&"HelloWorld").to_string(),
-            "hello_world"
-        );
-        assert_eq!(
             AsRefStrToUpperScTs::case_or_panic(&"helloWorld").to_string(),
-            "HELLO_WORLD"
         );
     }
     #[test]
     fn display_and_tokens_conversion_are_expected() {
-        assert_eq!(DisplayToUccStr::case(&"hello_world"), "HelloWorld");
-        assert_eq!(DisplayToScStr::case(&"HelloWorld"), "hello_world");
-        assert_eq!(DisplayToUpperScStr::case(&"helloWorld"), "HELLO_WORLD");
-        assert_eq!(ToTokensToUccStr::case(&quote! {hello_world}), "HelloWorld");
-        assert_eq!(ToTokensToScStr::case(&quote! {HelloWorld}), "hello_world");
-        assert_eq!(
+        assert_case_triplet(
+            DisplayToUccStr::case(&"hello_world"),
+            DisplayToScStr::case(&"HelloWorld"),
+            DisplayToUpperScStr::case(&"helloWorld"),
+        );
+        assert_case_triplet(
+            ToTokensToUccStr::case(&quote! {hello_world}),
+            ToTokensToScStr::case(&quote! {HelloWorld}),
             ToTokensToUpperScStr::case(&quote! {helloWorld}),
-            "HELLO_WORLD"
         );
     }
     #[test]
     fn display_and_tokens_ts_conversion_are_expected() {
-        assert_eq!(
+        assert_case_triplet(
             DisplayToUccTs::case_or_panic(&"hello_world").to_string(),
-            "HelloWorld"
-        );
-        assert_eq!(
             DisplayToScTs::case_or_panic(&"HelloWorld").to_string(),
-            "hello_world"
-        );
-        assert_eq!(
             DisplayToUpperScTs::case_or_panic(&"helloWorld").to_string(),
-            "HELLO_WORLD"
         );
-        assert_eq!(
+        assert_case_triplet(
             ToTokensToUccTs::case_or_panic(&quote! {hello_world}).to_string(),
-            "HelloWorld"
-        );
-        assert_eq!(
             ToTokensToScTs::case_or_panic(&quote! {HelloWorld}).to_string(),
-            "hello_world"
-        );
-        assert_eq!(
             ToTokensToUpperScTs::case_or_panic(&quote! {helloWorld}).to_string(),
-            "HELLO_WORLD"
         );
     }
 }

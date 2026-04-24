@@ -1,26 +1,30 @@
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use quote::{ToTokens, quote};
-macro_rules! tp {
-    ($name:ident, $($tt:tt)*) => {
+macro_rules! def_tp {
+    ($name:ident, |$tokens:ident| $body:block) => {
         #[derive(Debug, Clone, Copy, Optml)]
         pub struct $name;
         impl ToTokens for $name {
             fn to_tokens(&self, tokens: &mut Ts2) {
-                append_tokens(tokens, quote! {$($tt)*});
+                let $tokens = tokens;
+                $body
             }
         }
     };
 }
+macro_rules! tp {
+    ($name:ident, $($tt:tt)*) => {
+        def_tp!($name, |tokens| {
+                append_tokens(tokens, quote! {$($tt)*});
+        });
+    };
+}
 macro_rules! tp_parts {
     ($name:ident, $($part:expr),+) => {
-        #[derive(Debug, Clone, Copy, Optml)]
-        pub struct $name;
-        impl ToTokens for $name {
-            fn to_tokens(&self, tokens: &mut Ts2) {
+        def_tp!($name, |tokens| {
                 $(append_tokens(tokens, $part);)+
-            }
-        }
+        });
     };
 }
 macro_rules! ts_path_fn {
@@ -240,40 +244,40 @@ fn append_tokens(tokens: &mut Ts2, part: impl ToTokens) {
 #[cfg(test)]
 mod tests {
     use super::{
-        CrateDfltSomeOneEl, CrateDfltSomeOneElCall, DeriveDebugCloneCopy, SqlxAcquire,
-        path_dflt_some_one_el_call,
+        Bool, CrateDfltSomeOneEl, CrateDfltSomeOneElCall, DeriveDebugCloneCopy, SqlxAcquire,
+        path_dflt_some_one_el_call, pg_crud, pg_crud_cmn,
     };
     use quote::{ToTokens, quote};
-    fn as_ts_string(v: impl ToTokens) -> String {
-        quote! {#v}.to_string()
+    fn assert_tokens_eq(actual: impl ToTokens, expected: impl ToTokens) {
+        assert_eq!(quote! {#actual}.to_string(), quote! {#expected}.to_string());
     }
     #[test]
     fn tp_struct_outputs_expected_tokens() {
-        assert_eq!(
-            as_ts_string(SqlxAcquire),
-            quote! {sqlx::Acquire}.to_string()
-        );
-        assert_eq!(
-            as_ts_string(DeriveDebugCloneCopy),
-            quote! {#[derive(Debug, Clone, Copy, Optml)]}.to_string()
+        assert_tokens_eq(SqlxAcquire, quote! {sqlx::Acquire});
+        assert_tokens_eq(
+            DeriveDebugCloneCopy,
+            quote! {#[derive(Debug, Clone, Copy, Optml)]},
         );
     }
     #[test]
     fn tp_parts_struct_outputs_expected_tokens() {
-        assert_eq!(
-            as_ts_string(CrateDfltSomeOneEl),
-            quote! {crate::DfltSomeOneEl}.to_string()
-        );
-        assert_eq!(
-            as_ts_string(CrateDfltSomeOneElCall),
-            quote! {crate::DfltSomeOneEl::dflt_some_one_el()}.to_string()
+        assert_tokens_eq(CrateDfltSomeOneEl, quote! {crate::DfltSomeOneEl});
+        assert_tokens_eq(
+            CrateDfltSomeOneElCall,
+            quote! {crate::DfltSomeOneEl::dflt_some_one_el()},
         );
     }
     #[test]
+    fn tp_batch_struct_outputs_expected_tokens() {
+        assert_tokens_eq(Bool, quote! {bool});
+    }
+    #[test]
+    fn ts_path_fn_outputs_expected_tokens() {
+        assert_tokens_eq(pg_crud(), quote! {pg_crud::});
+        assert_tokens_eq(pg_crud_cmn(), quote! {pg_crud_cmn::});
+    }
+    #[test]
     fn path_helper_outputs_expected_tokens() {
-        assert_eq!(
-            path_dflt_some_one_el_call().to_string(),
-            quote! {::dflt_some_one_el()}.to_string()
-        );
+        assert_tokens_eq(path_dflt_some_one_el_call(), quote! {::dflt_some_one_el()});
     }
 }

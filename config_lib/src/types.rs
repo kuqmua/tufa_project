@@ -19,6 +19,7 @@ const TRACING_LEVEL_PARSE_PAIRS: [(&str, TracingLevel); 5] = [
 const SRC_PLACE_TYPE_PARSE_PAIRS: [(&str, SrcPlaceType); 2] =
     [("github", SrcPlaceType::Github), ("src", SrcPlaceType::Src)];
 const SRC_PLACE_TYPE_ENV_VAR: &str = "SRC_PLACE_TYPE";
+const SRC_PLACE_TYPE_PARSE_CTX: &str = "<SrcPlaceType as FromStr>::from_str(&v)";
 const SRC_PLACE_TYPE_FIX_MSG: &str =
     "You can set environment variable SRC_PLACE_TYPE to be eq \"src\" or \"github\"";
 static DOTENV_INIT: OnceLock<()> = OnceLock::new();
@@ -86,32 +87,79 @@ impl SrcPlaceType {
             }
         }
     }
-    #[allow(clippy::single_call_fn)] // parsing helper isolates context-rich error formatting and is reused by tests
-    fn parse_src_place_type_env_value(v: &str) -> Result<Self, String> {
-        <Self as FromStr>::from_str(v)
-            .map_err(|er| format!("<SrcPlaceType as FromStr>::from_str(&v): {er}"))
-    }
     #[allow(clippy::single_call_fn)] // helper keeps env-read error context centralized and deterministic for tests
     fn parse_src_place_type_from_env_var(v: Result<String, env::VarError>) -> Result<Self, String> {
-        let src_place_type_env_v =
-            v.map_err(|er| format!("env::var(\"{SRC_PLACE_TYPE_ENV_VAR}\"): {er}"))?;
-        Self::parse_src_place_type_env_value(&src_place_type_env_v)
+        parse_from_env_var_from_str(v, SRC_PLACE_TYPE_ENV_VAR, SRC_PLACE_TYPE_PARSE_CTX)
     }
+}
+#[allow(clippy::single_call_fn)] // helper centralizes env var context mapping for string parsers and is reused by enum parsing
+fn parse_from_env_var_with<T>(
+    env_v: Result<String, env::VarError>,
+    env_var_name: &str,
+    parse: impl FnOnce(&str) -> Result<T, String>,
+) -> Result<T, String> {
+    let raw_v = env_v.map_err(|er| format!("env::var(\"{env_var_name}\"): {er}"))?;
+    parse(&raw_v)
+}
+#[allow(clippy::single_call_fn)] // helper centralizes FromStr context formatting and keeps per-type parsing helpers minimal
+fn parse_from_str_with_ctx<T>(v: &str, parse_ctx: &'static str) -> Result<T, String>
+where
+    T: FromStr,
+    T::Err: Display,
+{
+    T::from_str(v).map_err(|er| format!("{parse_ctx}: {er}"))
+}
+#[allow(clippy::single_call_fn)] // helper composes env var read + FromStr context mapping for reuse across enum env parsers
+fn parse_from_env_var_from_str<T>(
+    env_v: Result<String, env::VarError>,
+    env_var_name: &str,
+    parse_ctx: &'static str,
+) -> Result<T, String>
+where
+    T: FromStr,
+    T::Err: Display,
+{
+    parse_from_env_var_with(env_v, env_var_name, |v| {
+        parse_from_str_with_ctx(v, parse_ctx)
+    })
 }
 #[cfg(test)]
 mod tests {
     use super::{
-        SRC_PLACE_TYPE_PARSE_PAIRS, SrcPlaceType, TRACING_LEVEL_PARSE_PAIRS, TracingLevel,
+        SRC_PLACE_TYPE_ENV_VAR, SRC_PLACE_TYPE_PARSE_CTX, SRC_PLACE_TYPE_PARSE_PAIRS, SrcPlaceType,
+        TRACING_LEVEL_PARSE_PAIRS, TracingLevel, parse_from_env_var_from_str,
+        parse_from_env_var_with, parse_from_str_with_ctx,
     };
     use std::env;
-    use std::str::FromStr as _;
+    use std::fmt::{Debug, Display};
+    use std::str::FromStr;
+    #[allow(clippy::single_call_fn)] // shared helper keeps parse-pair assertions centralized across enum parser tests
+    fn assert_from_str_matches_pairs<T>(pairs: &[(&str, T)])
+    where
+        T: Copy + Eq + Debug + FromStr<Err = String>,
+    {
+        for (name, value) in pairs {
+            assert_eq!(T::from_str(name), Ok(*value));
+        }
+    }
+    #[allow(clippy::single_call_fn)] // shared helper keeps tracing-level parse/display roundtrip assertions reusable across tests
+    fn assert_tracing_level_roundtrip(name: &str, level: TracingLevel) {
+        assert_eq!(TracingLevel::from_str(name), Ok(level));
+        assert_eq!(level.to_string(), name);
+    }
+    #[allow(clippy::single_call_fn)] // shared helper keeps parse+display roundtrip checks reusable for pair-based enum tests
+    fn assert_parse_display_roundtrip_pairs<T>(pairs: &[(&str, T)])
+    where
+        T: Copy + Eq + Debug + Display + FromStr<Err = String>,
+    {
+        for (name, value) in pairs {
+            assert_eq!(T::from_str(name), Ok(*value));
+            assert_eq!(value.to_string(), *name);
+        }
+    }
     #[test]
     fn tracing_level_display_is_stable() {
-        assert_eq!(TracingLevel::Trace.to_string(), "trace");
-        assert_eq!(TracingLevel::Debug.to_string(), "debug");
-        assert_eq!(TracingLevel::Info.to_string(), "info");
-        assert_eq!(TracingLevel::Warn.to_string(), "warn");
-        assert_eq!(TracingLevel::Er.to_string(), "er");
+        assert_parse_display_roundtrip_pairs(&TRACING_LEVEL_PARSE_PAIRS);
     }
     #[test]
     fn tracing_level_from_str_is_case_insensitive() {
@@ -122,15 +170,12 @@ mod tests {
     #[test]
     fn tracing_level_roundtrip_is_stable_for_all_variants() {
         for (name, level) in TRACING_LEVEL_PARSE_PAIRS {
-            assert_eq!(TracingLevel::from_str(name), Ok(level));
-            assert_eq!(level.to_string(), name);
+            assert_tracing_level_roundtrip(name, level);
         }
     }
     #[test]
     fn src_place_type_from_str_roundtrip_is_stable_for_all_variants() {
-        for (name, value) in SRC_PLACE_TYPE_PARSE_PAIRS {
-            assert_eq!(SrcPlaceType::from_str(name), Ok(value));
-        }
+        assert_from_str_matches_pairs(&SRC_PLACE_TYPE_PARSE_PAIRS);
     }
     #[test]
     fn src_place_type_from_str_accepts_src_value() {
@@ -152,14 +197,52 @@ mod tests {
     }
     #[test]
     fn parse_src_place_type_env_value_parses_case_insensitively() {
-        let parsed = SrcPlaceType::parse_src_place_type_env_value("GiThUb");
+        let parsed = parse_from_str_with_ctx::<SrcPlaceType>("GiThUb", SRC_PLACE_TYPE_PARSE_CTX);
         assert_eq!(parsed, Ok(SrcPlaceType::Github));
     }
     #[test]
     fn parse_src_place_type_env_value_wraps_parse_context() {
-        let er = SrcPlaceType::parse_src_place_type_env_value("bad").expect_err("8c9f2a17");
+        let er = parse_from_str_with_ctx::<SrcPlaceType>("bad", SRC_PLACE_TYPE_PARSE_CTX)
+            .expect_err("8c9f2a17");
         assert!(er.contains("<SrcPlaceType as FromStr>::from_str(&v):"));
         assert!(er.contains("Unknown value: bad"));
+    }
+    #[test]
+    fn parse_from_env_var_with_wraps_missing_var_context() {
+        let parsed = parse_from_env_var_with(
+            Err(env::VarError::NotPresent),
+            SRC_PLACE_TYPE_ENV_VAR,
+            |_v| Ok(()),
+        );
+        let er = parsed.expect_err("d2f3b74a");
+        assert!(er.contains("env::var(\"SRC_PLACE_TYPE\")"));
+    }
+    #[test]
+    fn parse_from_env_var_with_passes_value_into_parse_callback() {
+        let parsed =
+            parse_from_env_var_with(Ok(String::from("src")), SRC_PLACE_TYPE_ENV_VAR, |v| {
+                Ok(v.to_owned())
+            });
+        assert_eq!(parsed, Ok(String::from("src")));
+    }
+    #[test]
+    fn parse_from_env_var_from_str_parses_bool_when_input_is_valid() {
+        let parsed = parse_from_env_var_from_str::<bool>(
+            Ok(String::from("true")),
+            SRC_PLACE_TYPE_ENV_VAR,
+            "bool parse",
+        );
+        assert_eq!(parsed, Ok(true));
+    }
+    #[test]
+    fn parse_from_env_var_from_str_wraps_context_when_parse_fails() {
+        let er = parse_from_env_var_from_str::<bool>(
+            Ok(String::from("x")),
+            SRC_PLACE_TYPE_ENV_VAR,
+            "bool parse",
+        )
+        .expect_err("7e4b3f19");
+        assert!(er.contains("bool parse:"));
     }
     #[test]
     fn parse_src_place_type_from_env_var_wraps_missing_var_context() {
@@ -171,5 +254,15 @@ mod tests {
     fn parse_src_place_type_from_env_var_parses_ok_value() {
         let parsed = SrcPlaceType::parse_src_place_type_from_env_var(Ok(String::from("src")));
         assert_eq!(parsed, Ok(SrcPlaceType::Src));
+    }
+    #[test]
+    fn parse_from_str_with_ctx_parses_value_when_input_is_valid() {
+        let parsed = parse_from_str_with_ctx::<bool>("true", "bool parse");
+        assert_eq!(parsed, Ok(true));
+    }
+    #[test]
+    fn parse_from_str_with_ctx_wraps_context_when_parsing_fails() {
+        let er = parse_from_str_with_ctx::<bool>("x", "bool parse").expect_err("13fe8a6d");
+        assert!(er.contains("bool parse:"));
     }
 }

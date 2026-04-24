@@ -11,8 +11,8 @@ categories = ["category"]
 edition = "2024"
 
 [dependencies]
-gen_pg_tbl = {path = "./gen_pg_tbl"}
-app_state = {path = "../../app_state"}
+gen_pg_tbl.workspace = true
+app_state.workspace = true
 
 [lints]
 workspace = true

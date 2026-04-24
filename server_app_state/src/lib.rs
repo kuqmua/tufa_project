@@ -4,7 +4,7 @@ use app_state::{
 };
 use cmn_routes::CmnRoutesPrms;
 use config_lib::types::SrcPlaceType;
-use git_info::{GetGitCommitId, ProjectGitInfo};
+use git_info::ProjectGitInfo;
 use optml::Optml;
 use pg_crud::CombinationOfAppStateLogicTraits;
 use server_config::Config;
@@ -43,11 +43,8 @@ impl GetPgPool for ServerAppState<'_> {
         &self.pg_pool
     }
 }
-impl GetGitCommitId for ServerAppState<'_> {
-    fn get_git_commit_id(&self) -> String {
-        self.project_git_info.get_git_commit_id()
-    }
-    fn get_git_commit_id_ref(&self) -> Option<&str> {
-        self.project_git_info.get_git_commit_id_ref()
+impl AsRef<str> for ServerAppState<'_> {
+    fn as_ref(&self) -> &str {
+        self.project_git_info.commit
     }
 }

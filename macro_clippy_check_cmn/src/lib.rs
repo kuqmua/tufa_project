@@ -17,6 +17,17 @@ const CARGO_CLIPPY_ALL_TARGETS_ALL_FEATURES_ARGS: [&str; 6] = [
     "warnings",
 ];
 #[cfg(feature = "test-utils")]
+const CARGO_CHECK_STEPS: [CargoCheckStep<'static>; 2] = [
+    (&CARGO_FMT_ARGS, "8dc4f045", "2a1deb01"),
+    (
+        &CARGO_CLIPPY_ALL_TARGETS_ALL_FEATURES_ARGS,
+        "cd48b869",
+        "2c037283",
+    ),
+];
+#[cfg(feature = "test-utils")]
+type CargoCheckStep<'step_lt> = (&'step_lt [&'step_lt str], &'step_lt str, &'step_lt str);
+#[cfg(feature = "test-utils")]
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum FileSnapshot {
     Missing,
@@ -24,8 +35,8 @@ enum FileSnapshot {
 }
 #[cfg(feature = "test-utils")]
 struct RestoreToPrevious<'restore> {
-    cargo_toml_snapshot: &'restore FileSnapshot,
-    lib_rs_snapshot: &'restore FileSnapshot,
+    cargo_toml_snapshot: FileSnapshot,
+    lib_rs_snapshot: FileSnapshot,
     path_cargo_toml: &'restore Path,
     path_lib_rs: &'restore Path,
 }
@@ -34,13 +45,13 @@ impl Drop for RestoreToPrevious<'_> {
     fn drop(&mut self) {
         restore_snapshot(
             self.path_lib_rs,
-            self.lib_rs_snapshot,
+            &self.lib_rs_snapshot,
             "79231418",
             "e28698f2",
         );
         restore_snapshot(
             self.path_cargo_toml,
-            self.cargo_toml_snapshot,
+            &self.cargo_toml_snapshot,
             "ec801a87",
             "5fd52cd7",
         );
@@ -51,6 +62,7 @@ fn write_or_panic(path: &Path, cnt: &str, write_er_id: &str) {
     write(path, cnt).unwrap_or_else(|er| panic!("{write_er_id}: {er}"));
 }
 #[cfg(feature = "test-utils")]
+#[allow(clippy::single_call_fn)] // shared with tests; keep error-id based read behavior in one place
 fn capture_snapshot(path: &Path, read_er_id: &str) -> FileSnapshot {
     match read_to_string(path) {
         Ok(cnt) => FileSnapshot::Present(cnt),
@@ -72,6 +84,7 @@ fn restore_snapshot(path: &Path, snapshot: &FileSnapshot, write_er_id: &str, rm_
     }
 }
 #[cfg(feature = "test-utils")]
+#[allow(clippy::single_call_fn)] // split out intentionally to keep low-level cargo spawn/status check reusable from orchestration helper
 fn run_cargo_checked(
     target_crate_dir: &Path,
     args: &[&str],
@@ -84,6 +97,39 @@ fn run_cargo_checked(
         .status()
         .unwrap_or_else(|er| panic!("{cmd_spawn_er_id}: {er}"));
     assert!(status.success(), "{failed_id}: {status}");
+}
+#[cfg(feature = "test-utils")]
+#[allow(clippy::single_call_fn)] // centralizes ordered cargo check execution to keep command flow reusable and consistent
+fn run_cargo_check_steps(target_crate_dir: &Path, steps: &[CargoCheckStep<'_>]) {
+    for (args, cmd_spawn_er_id, failed_id) in steps {
+        run_cargo_checked(target_crate_dir, args, cmd_spawn_er_id, failed_id);
+    }
+}
+#[cfg(feature = "test-utils")]
+#[allow(clippy::single_call_fn)] // shared helper centralizes snapshot capture + restore guard construction for generated files
+fn mk_restore_to_previous<'restore>(
+    path_cargo_toml: &'restore Path,
+    path_lib_rs: &'restore Path,
+) -> RestoreToPrevious<'restore> {
+    let cargo_toml_snapshot = capture_snapshot(path_cargo_toml, "bf40d675");
+    let lib_rs_snapshot = capture_snapshot(path_lib_rs, "adf9f42b");
+    RestoreToPrevious {
+        cargo_toml_snapshot,
+        lib_rs_snapshot,
+        path_cargo_toml,
+        path_lib_rs,
+    }
+}
+#[cfg(feature = "test-utils")]
+#[allow(clippy::single_call_fn)] // shared helper keeps generated-file write flow consistent for clippy-check setup
+fn write_generated_files(
+    path_cargo_toml: &Path,
+    cargo_toml_full: &str,
+    path_lib_rs: &Path,
+    content_to_gen: &str,
+) {
+    write_or_panic(path_cargo_toml, cargo_toml_full, "3757da9b");
+    write_or_panic(path_lib_rs, content_to_gen, "55124f90");
 }
 #[cfg(feature = "test-utils")]
 pub fn clippy_check(crate_name: &str, cmd_path: &str, extra_cnt: &str, content_to_gen: &str) {
@@ -106,26 +152,17 @@ workspace = true"#
     );
     let path_lib_rs = crate_path.join("src/lib.rs");
     let path_cargo_toml = crate_path.join("Cargo.toml");
-    let cargo_toml_snapshot = capture_snapshot(&path_cargo_toml, "bf40d675");
-    let lib_rs_snapshot = capture_snapshot(&path_lib_rs, "adf9f42b");
     let cargo_toml_full = format!("{cargo_toml_cnt}\n{extra_cnt}");
-    write_or_panic(&path_cargo_toml, &cargo_toml_full, "3757da9b");
-    write_or_panic(&path_lib_rs, content_to_gen, "55124f90");
-    let _restore_to_previous = RestoreToPrevious {
-        cargo_toml_snapshot: &cargo_toml_snapshot,
-        lib_rs_snapshot: &lib_rs_snapshot,
-        path_cargo_toml: &path_cargo_toml,
-        path_lib_rs: &path_lib_rs,
-    };
+    let _restore_to_previous = mk_restore_to_previous(&path_cargo_toml, &path_lib_rs);
+    write_generated_files(
+        &path_cargo_toml,
+        &cargo_toml_full,
+        &path_lib_rs,
+        content_to_gen,
+    );
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let target_crate_dir = manifest_dir.join(PathBuf::from(cmd_path).join(crate_name));
-    run_cargo_checked(&target_crate_dir, &CARGO_FMT_ARGS, "8dc4f045", "2a1deb01");
-    run_cargo_checked(
-        &target_crate_dir,
-        &CARGO_CLIPPY_ALL_TARGETS_ALL_FEATURES_ARGS,
-        "cd48b869",
-        "2c037283",
-    );
+    run_cargo_check_steps(&target_crate_dir, &CARGO_CHECK_STEPS);
 }
 #[cfg(test)]
 #[cfg(feature = "test-utils")]

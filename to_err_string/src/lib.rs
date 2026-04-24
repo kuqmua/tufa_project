@@ -14,11 +14,7 @@ use sqlx::{
     types::uuid::Error as UuidEr,
     types::{BigDecimal, Decimal},
 };
-use std::{
-    borrow::Cow,
-    fmt::{Debug, Display},
-    io::Error as IoEr,
-};
+use std::{borrow::Cow, fmt::Debug, io::Error as IoEr};
 use time::error::ComponentRange;
 use tracing::{dispatcher::SetGlobalDefaultError, log::SetLoggerError};
 macro_rules! impl_to_err_string_with {
@@ -73,7 +69,7 @@ impl_to_err_string_with!(
     PrimitiveDateTime,
     Decimal,
     BigDecimal
-    => |v| display_to_string(v)
+    => |v| v.to_string()
 );
 pub trait ToErrString {
     fn to_err_string(&self) -> String;
@@ -91,7 +87,7 @@ where
     T: Debug,
 {
     fn to_err_string(&self) -> String {
-        debug_to_string(self)
+        format!("{self:?}")
     }
 }
 impl<T, E> ToErrString for Result<T, E>
@@ -100,7 +96,7 @@ where
     E: Debug,
 {
     fn to_err_string(&self) -> String {
-        debug_to_string(self)
+        format!("{self:?}")
     }
 }
 impl_to_err_string_as_ref_str!(String, str, Cow<'_, str>);
@@ -108,12 +104,6 @@ impl_to_err_string_const!(
     SetGlobalDefaultError => "tracing::dispatcher::SetGlobalDefaultEr",
     SetLoggerError => "tracing::log::SetLoggerError",
 );
-fn display_to_string<T: Display>(v: &T) -> String {
-    v.to_string()
-}
-fn debug_to_string<T: Debug>(v: &T) -> String {
-    format!("{v:?}")
-}
 fn debug_alt_to_string<T: Debug>(v: &T) -> String {
     format!("{v:#?}")
 }
@@ -128,35 +118,32 @@ fn static_str_to_owned(v: &'static str) -> String {
 }
 #[cfg(test)]
 mod tests {
-    use super::ToErrString as _;
+    #[allow(clippy::single_call_fn)] // shared assertion keeps ToErrString behavior checks concise and consistent
+    fn assert_to_err_string(v: impl super::ToErrString, exp: &str) {
+        assert_eq!(v.to_err_string(), exp);
+    }
     #[test]
     fn to_err_string_for_primitives_and_options() {
-        assert_eq!(42i32.to_err_string(), "42");
-        assert_eq!(Some(7u8).to_err_string(), "Some(7)");
-        assert_eq!(None::<u16>.to_err_string(), "None");
-        assert_eq!(true.to_err_string(), "true");
-        assert_eq!('x'.to_err_string(), "x");
-        assert_eq!(Some(String::from("abc")).to_err_string(), "Some(\"abc\")");
+        assert_to_err_string(42i32, "42");
+        assert_to_err_string(Some(7u8), "Some(7)");
+        assert_to_err_string(None::<u16>, "None");
+        assert_to_err_string(true, "true");
+        assert_to_err_string('x', "x");
+        assert_to_err_string(Some(String::from("abc")), "Some(\"abc\")");
     }
     #[test]
     fn to_err_string_for_strings_and_str_refs() {
         use std::borrow::Cow;
         let owned = String::from("abc");
-        assert_eq!(owned.to_err_string(), "abc");
-        assert_eq!("xyz".to_err_string(), "xyz");
-        assert_eq!((&"xyz").to_err_string(), "xyz");
-        assert_eq!(Cow::Borrowed("qwe").to_err_string(), "qwe");
-        assert_eq!(
-            Cow::<'_, str>::Owned(String::from("rty")).to_err_string(),
-            "rty"
-        );
+        let borrowed = "xyz";
+        assert_to_err_string(owned, "abc");
+        assert_to_err_string(borrowed, "xyz");
+        assert_to_err_string(Cow::Borrowed("qwe"), "qwe");
+        assert_to_err_string(Cow::<'_, str>::Owned(String::from("rty")), "rty");
     }
     #[test]
     fn to_err_string_for_result_values() {
-        assert_eq!(Result::<u8, u16>::Ok(5).to_err_string(), "Ok(5)");
-        assert_eq!(
-            Result::<u8, &'static str>::Err("er").to_err_string(),
-            "Err(\"er\")"
-        );
+        assert_to_err_string(Result::<u8, u16>::Ok(5), "Ok(5)");
+        assert_to_err_string(Result::<u8, &'static str>::Err("er"), "Err(\"er\")");
     }
 }

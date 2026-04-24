@@ -5,6 +5,7 @@ pub use gen_getter_traits_for_struct_fields::GenGetterTraitsForStructFields;
 use optml::Optml;
 use secrecy::SecretBox;
 use std::{
+    env,
     net::{AddrParseError, SocketAddr},
     num::ParseIntError,
     str::{FromStr, ParseBoolError},
@@ -28,8 +29,8 @@ macro_rules! impl_try_from_non_empty_string {
         }
     };
 }
-macro_rules! impl_try_from_parse {
-    ($name:ident, $er_name:ident, $inner:ty, $er_vrt:ident, $er_field:ident, $er_ty:ty, $($derive:ident),*) => {
+macro_rules! impl_try_from_parse_mapped {
+    ($name:ident, $er_name:ident, $inner:ty, $er_vrt:ident, $er_field:ident, $er_ty:ty, $map_parse_er:expr, $($derive:ident),*) => {
         #[derive(Debug, $($derive,)* gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
         pub struct $name(pub $inner);
         #[derive(Debug, Error, Optml)]
@@ -40,29 +41,38 @@ macro_rules! impl_try_from_parse {
         impl TryFromStdEnvVarOk for $name {
             type Error = $er_name;
             fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-                parse_from_str_with_er(&v, |$er_field| Self::Error::$er_vrt { $er_field })
-                    .map(Self)
+                parse_from_str_with_er(&v, $map_parse_er).map(Self)
             }
         }
     };
 }
+macro_rules! impl_try_from_parse {
+    ($name:ident, $er_name:ident, $inner:ty, $er_vrt:ident, $er_field:ident, $er_ty:ty, $($derive:ident),*) => {
+        impl_try_from_parse_mapped!(
+            $name,
+            $er_name,
+            $inner,
+            $er_vrt,
+            $er_field,
+            $er_ty,
+            |$er_field| Self::Error::$er_vrt { $er_field },
+            $($derive),*
+        );
+    };
+}
 macro_rules! impl_try_from_parse_string_er {
     ($name:ident, $er_name:ident, $inner:ty, $er_vrt:ident, $er_field:ident) => {
-        #[derive(
-            Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml,
-        )]
-        pub struct $name(pub $inner);
-        #[derive(Debug, Error, Optml)]
-        pub enum $er_name {
-            #[error("{:?}", .$er_field)]
-            $er_vrt { $er_field: String },
-        }
-        impl TryFromStdEnvVarOk for $name {
-            type Error = $er_name;
-            fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-                parse_from_str_with_er(&v, |$er_field| Self::Error::$er_vrt { $er_field }).map(Self)
-            }
-        }
+        impl_try_from_parse_mapped!(
+            $name,
+            $er_name,
+            $inner,
+            $er_vrt,
+            $er_field,
+            String,
+            |$er_field| Self::Error::$er_vrt { $er_field },
+            Clone,
+            Copy
+        );
     };
 }
 macro_rules! impl_try_from_secret_url {
@@ -126,22 +136,16 @@ impl_try_from_parse!(
     Copy
 );
 impl_try_from_secret_url!(RedisUrl, TryFromStdEnvVarOkRedisUrlEr);
-#[derive(Debug, Clone, Copy, gen_getter_traits_for_struct_fields::GenGetterTrait, Optml)]
-pub struct ServiceSocketAddress(pub SocketAddr);
-#[derive(Debug, Error, Optml)]
-pub enum TryFromStdEnvVarOkServiceSocketAddressEr {
-    #[error("{std_net_socket_addr:?}")]
-    StdNetSocketAddr { std_net_socket_addr: AddrParseError },
-}
-impl TryFromStdEnvVarOk for ServiceSocketAddress {
-    type Error = TryFromStdEnvVarOkServiceSocketAddressEr;
-    fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
-        parse_from_str_with_er(&v, |std_net_socket_addr| Self::Error::StdNetSocketAddr {
-            std_net_socket_addr,
-        })
-        .map(Self)
-    }
-}
+impl_try_from_parse!(
+    ServiceSocketAddress,
+    TryFromStdEnvVarOkServiceSocketAddressEr,
+    SocketAddr,
+    StdNetSocketAddr,
+    std_net_socket_addr,
+    AddrParseError,
+    Clone,
+    Copy
+);
 impl_try_from_parse_string_er!(
     SrcPlaceType,
     TryFromStdEnvVarOkSrcPlaceTypeEr,
@@ -164,12 +168,11 @@ impl TryFromStdEnvVarOk for Timezone {
     fn try_from_std_env_var_ok(v: String) -> Result<Self, Self::Error> {
         let i32_v =
             parse_from_str_with_er(&v, |i32_parsing| Self::Error::I32Parsing { i32_parsing })?;
-        let Some(fixed_offset) = FixedOffset::east_opt(i32_v) else {
-            return Err(Self::Error::ChronoFixedOffset {
-                chrono_fixed_offset: TIMEZONE_NOT_EAST_MSG,
-            });
-        };
-        Ok(Self(fixed_offset))
+        parse_east_fixed_offset(i32_v)
+            .map_err(|chrono_fixed_offset| Self::Error::ChronoFixedOffset {
+                chrono_fixed_offset,
+            })
+            .map(Self)
     }
 }
 impl_try_from_parse_string_er!(
@@ -179,6 +182,22 @@ impl_try_from_parse_string_er!(
     AppStateTracingLevelParsing,
     app_state_tracing_type_parsing
 );
+#[allow(clippy::single_call_fn)] // shared helper centralizes env var read + parse + error mapping for TryFromEnv derive output
+pub fn parse_required_env_var<T, ParseEr, Er, MapEnvVarEr, Parse, MapParseEr>(
+    env_var_name: &'static str,
+    map_env_var_er: MapEnvVarEr,
+    parse: Parse,
+    map_parse_er: MapParseEr,
+) -> Result<T, Er>
+where
+    MapEnvVarEr: FnOnce(env::VarError, String) -> Er,
+    Parse: FnOnce(String) -> Result<T, ParseEr>,
+    MapParseEr: FnOnce(ParseEr) -> Er,
+{
+    let v = env::var(env_var_name)
+        .map_err(|std_env_var_er| map_env_var_er(std_env_var_er, env_var_name.to_owned()))?;
+    parse(v).map_err(map_parse_er)
+}
 fn try_map_non_empty_env_value<T, Er>(
     v: String,
     mk_er: impl FnOnce(&'static str) -> Er,
@@ -198,14 +217,17 @@ where
 {
     v.parse::<T>().map_err(mk_er)
 }
+#[allow(clippy::single_call_fn)] // extracted timezone conversion keeps conversion + message mapping reusable and directly testable
+fn parse_east_fixed_offset(v: i32) -> Result<FixedOffset, &'static str> {
+    FixedOffset::east_opt(v).ok_or(TIMEZONE_NOT_EAST_MSG)
+}
 #[cfg(test)]
 mod tests {
     use super::{
         CorsAllowOrigin, DatabaseUrl, EnableApiGitCommitCheck, MaximumSizeOfHttpBodyInBytes,
         MongoUrl, PgPoolMaxConnections, RedisUrl, ServiceSocketAddress, SrcPlaceType,
-        StartingCheckLink, Timezone, TracingLevel, TryFromStdEnvVarOk as _,
-        TryFromStdEnvVarOkCorsAllowOriginEr, TryFromStdEnvVarOkDatabaseUrlEr,
-        TryFromStdEnvVarOkEnableApiGitCommitCheckEr,
+        StartingCheckLink, Timezone, TracingLevel, TryFromStdEnvVarOkCorsAllowOriginEr,
+        TryFromStdEnvVarOkDatabaseUrlEr, TryFromStdEnvVarOkEnableApiGitCommitCheckEr,
         TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesEr, TryFromStdEnvVarOkMongoUrlEr,
         TryFromStdEnvVarOkPgPoolMaxConnectionsEr, TryFromStdEnvVarOkRedisUrlEr,
         TryFromStdEnvVarOkServiceSocketAddressEr, TryFromStdEnvVarOkSrcPlaceTypeEr,
@@ -222,6 +244,16 @@ mod tests {
             assert!(matches!(parse_env::<$type0>($value), Err($pattern)));
         };
     }
+    macro_rules! assert_empty_parse_err_matches {
+        ($type0:ty, $pattern:pat) => {
+            assert!(matches!(parse_env::<$type0>(""), Err($pattern)));
+        };
+    }
+    #[derive(Debug, PartialEq, Eq)]
+    enum ParseRequiredEnvVarTestEr {
+        EnvVar { env_var_name: String },
+        Parse { parse: &'static str },
+    }
     fn parse_env<T>(v: &str) -> Result<T, T::Error>
     where
         T: super::TryFromStdEnvVarOk,
@@ -234,11 +266,10 @@ mod tests {
     }
     #[test]
     fn cors_allow_origin_parsing_returns_error_for_empty_string() {
-        let er = CorsAllowOrigin::try_from_std_env_var_ok(String::new());
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkCorsAllowOriginEr::IsEmpty { .. })
-        ));
+        assert_empty_parse_err_matches!(
+            CorsAllowOrigin,
+            TryFromStdEnvVarOkCorsAllowOriginEr::IsEmpty { .. }
+        );
     }
     #[test]
     fn database_url_parsing_returns_value_for_non_empty_input() {
@@ -246,11 +277,10 @@ mod tests {
     }
     #[test]
     fn database_url_parsing_returns_error_for_empty_string() {
-        let er = DatabaseUrl::try_from_std_env_var_ok(String::new());
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkDatabaseUrlEr::IsEmpty { .. })
-        ));
+        assert_empty_parse_err_matches!(
+            DatabaseUrl,
+            TryFromStdEnvVarOkDatabaseUrlEr::IsEmpty { .. }
+        );
     }
     #[test]
     fn mongo_url_parsing_returns_value_for_non_empty_input() {
@@ -258,11 +288,7 @@ mod tests {
     }
     #[test]
     fn mongo_url_parsing_returns_error_for_empty_string() {
-        let er = MongoUrl::try_from_std_env_var_ok(String::new());
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkMongoUrlEr::IsEmpty { .. })
-        ));
+        assert_empty_parse_err_matches!(MongoUrl, TryFromStdEnvVarOkMongoUrlEr::IsEmpty { .. });
     }
     #[test]
     fn redis_url_parsing_returns_value_for_non_empty_input() {
@@ -270,11 +296,7 @@ mod tests {
     }
     #[test]
     fn redis_url_parsing_returns_error_for_empty_string() {
-        let er = RedisUrl::try_from_std_env_var_ok(String::new());
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkRedisUrlEr::IsEmpty { .. })
-        ));
+        assert_empty_parse_err_matches!(RedisUrl, TryFromStdEnvVarOkRedisUrlEr::IsEmpty { .. });
     }
     #[test]
     fn src_place_type_parsing_is_case_insensitive() {
@@ -354,11 +376,10 @@ mod tests {
     }
     #[test]
     fn non_empty_string_parser_returns_error_for_empty_value() {
-        let er = parse_env::<StartingCheckLink>("");
-        assert!(matches!(
-            er,
-            Err(TryFromStdEnvVarOkStartingCheckLinkEr::IsEmpty { .. })
-        ));
+        assert_empty_parse_err_matches!(
+            StartingCheckLink,
+            TryFromStdEnvVarOkStartingCheckLinkEr::IsEmpty { .. }
+        );
     }
     #[test]
     fn non_empty_string_parser_returns_value_for_non_empty_value() {
@@ -397,6 +418,16 @@ mod tests {
         );
     }
     #[test]
+    fn parse_east_fixed_offset_returns_offset_for_valid_seconds() {
+        let parsed = super::parse_east_fixed_offset(3i32 * 3_600i32);
+        assert!(matches!(parsed, Ok(v) if v.local_minus_utc() == 3i32 * 3_600i32));
+    }
+    #[test]
+    fn parse_east_fixed_offset_returns_error_for_out_of_range_seconds() {
+        let parsed = super::parse_east_fixed_offset(i32::MAX);
+        assert_eq!(parsed, Err(super::TIMEZONE_NOT_EAST_MSG));
+    }
+    #[test]
     fn timezone_parsing_returns_offset_error_when_out_of_range() {
         let out_of_range = i32::MAX.to_string();
         let er = parse_env::<Timezone>(&out_of_range);
@@ -404,5 +435,45 @@ mod tests {
             er,
             Err(TryFromStdEnvVarOkTimezoneEr::ChronoFixedOffset { .. })
         ));
+    }
+    #[test]
+    fn parse_required_env_var_parses_value_when_env_var_exists() {
+        let parsed = super::parse_required_env_var(
+            "PATH",
+            |_std_env_var_er, env_var_name| ParseRequiredEnvVarTestEr::EnvVar { env_var_name },
+            |v| Ok::<_, &'static str>(v.len()),
+            |parse| ParseRequiredEnvVarTestEr::Parse { parse },
+        );
+        assert!(matches!(parsed, Ok(v) if v > 0));
+    }
+    #[test]
+    fn parse_required_env_var_maps_missing_env_var_error() {
+        let parsed = super::parse_required_env_var(
+            "CONFIG_LIB_TEST_ENV_VAR_4E8A7F21",
+            |_std_env_var_er, env_var_name| ParseRequiredEnvVarTestEr::EnvVar { env_var_name },
+            Ok::<_, &'static str>,
+            |parse| ParseRequiredEnvVarTestEr::Parse { parse },
+        );
+        assert_eq!(
+            parsed,
+            Err(ParseRequiredEnvVarTestEr::EnvVar {
+                env_var_name: "CONFIG_LIB_TEST_ENV_VAR_4E8A7F21".to_owned()
+            })
+        );
+    }
+    #[test]
+    fn parse_required_env_var_maps_parse_error() {
+        let parsed = super::parse_required_env_var(
+            "PATH",
+            |_std_env_var_er, env_var_name| ParseRequiredEnvVarTestEr::EnvVar { env_var_name },
+            |_v| Err::<(), _>("parse failed"),
+            |parse| ParseRequiredEnvVarTestEr::Parse { parse },
+        );
+        assert_eq!(
+            parsed,
+            Err(ParseRequiredEnvVarTestEr::Parse {
+                parse: "parse failed"
+            })
+        );
     }
 }

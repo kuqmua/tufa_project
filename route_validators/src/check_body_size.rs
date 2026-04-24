@@ -24,16 +24,6 @@ impl crate::GetAxumHttpStatusCode for BodySizeEr {
     const AXUM_HTTP_STATUS_CODE: StatusCode = StatusCode::PAYLOAD_TOO_LARGE;
 }
 impl BodySizeEr {
-    #[cfg(test)]
-    fn expect_reached_maximum_size(self) -> (usize, Option<u64>) {
-        match self {
-            Self::ReachedMaximumSizeOfBody {
-                maximum_size_of_body_limit_in_bytes,
-                size_hint,
-                ..
-            } => (maximum_size_of_body_limit_in_bytes, size_hint.upper()),
-        }
-    }
     #[allow(clippy::single_call_fn)] // keeps body-size error construction reusable and testable in one place
     fn reached_maximum_size_of_body(
         er: AxumEr,
@@ -48,31 +38,41 @@ impl BodySizeEr {
         }
     }
 }
-#[allow(clippy::single_call_fn)] // keeps conversion from axum body error to domain error reusable for future body validators
-fn map_body_size_er(er: AxumEr, limit: usize, size_hint: SizeHint) -> BodySizeEr {
-    BodySizeEr::reached_maximum_size_of_body(er, limit, size_hint)
-}
 pub async fn check_body_size(body: Body, limit: usize) -> Result<Bytes, BodySizeEr> {
     let size_hint = HttpBody::size_hint(&body);
     to_bytes(body, limit)
         .await
-        .map_err(|er: AxumEr| map_body_size_er(er, limit, size_hint))
+        .map_err(|er: AxumEr| BodySizeEr::reached_maximum_size_of_body(er, limit, size_hint))
 }
 #[cfg(test)]
 mod tests {
     use super::check_body_size;
-    use crate::test_hlp::{assert_err_status_code_only, block_on, expect_er, expect_ok};
+    use crate::test_hlp::{
+        assert_err_status_code_only, assert_err_status_code_variant_ref, assert_ok_eq, block_on,
+    };
     use axum::{body::Body, http::StatusCode};
     use bytes::Bytes;
-    fn check_body_size_ok(body: Body, limit: usize, exp_id: &'static str) -> Bytes {
-        expect_ok(block_on(check_body_size(body, limit)), exp_id)
-    }
     fn expect_reached_max_size(
         body: Body,
         limit: usize,
         exp_id: &'static str,
     ) -> (usize, Option<u64>) {
-        expect_er(block_on(check_body_size(body, limit)), exp_id).expect_reached_maximum_size()
+        assert_err_status_code_variant_ref(
+            block_on(check_body_size(body, limit)),
+            exp_id,
+            StatusCode::PAYLOAD_TOO_LARGE,
+            |v| Some(reached_max_size_fields(v)),
+        )
+    }
+    #[allow(clippy::single_call_fn)] // shared extractor keeps reached-max-size assertions reusable across tests
+    fn reached_max_size_fields(v: &super::BodySizeEr) -> (usize, Option<u64>) {
+        match v {
+            super::BodySizeEr::ReachedMaximumSizeOfBody {
+                maximum_size_of_body_limit_in_bytes,
+                size_hint,
+                ..
+            } => (*maximum_size_of_body_limit_in_bytes, size_hint.upper()),
+        }
     }
     fn assert_reached_max_size_limit(body: Body, limit: usize, exp_id: &'static str) {
         let (maximum_size_of_body_limit_in_bytes, _) = expect_reached_max_size(body, limit, exp_id);
@@ -80,18 +80,27 @@ mod tests {
     }
     #[test]
     fn check_body_size_returns_bytes_when_body_fits_limit() {
-        let bytes = check_body_size_ok(Body::from("ok"), 8, "2fb3e958");
-        assert_eq!(bytes, "ok");
+        assert_ok_eq(
+            block_on(check_body_size(Body::from("ok"), 8)),
+            "2fb3e958",
+            &Bytes::from_static(b"ok"),
+        );
     }
     #[test]
     fn check_body_size_returns_bytes_when_size_eq_limit() {
-        let bytes = check_body_size_ok(Body::from("ok"), 2, "1736f4db");
-        assert_eq!(bytes, "ok");
+        assert_ok_eq(
+            block_on(check_body_size(Body::from("ok"), 2)),
+            "1736f4db",
+            &Bytes::from_static(b"ok"),
+        );
     }
     #[test]
     fn check_body_size_returns_bytes_for_empty_body_with_zero_limit() {
-        let bytes = check_body_size_ok(Body::empty(), 0, "44c8ad59");
-        assert!(bytes.is_empty());
+        assert_ok_eq(
+            block_on(check_body_size(Body::empty(), 0)),
+            "44c8ad59",
+            &Bytes::from_static(b""),
+        );
     }
     #[test]
     fn check_body_size_returns_error_when_body_exceeds_limit() {

@@ -62,19 +62,16 @@ impl Loc {
     fn fmt_src_loc(f: &mut Formatter<'_>, file: &str, line: u32, col: u32) -> FmtResult {
         write!(f, "{file}:{line}:{col}")
     }
+    #[allow(clippy::single_call_fn)] // centralizes datetime + timezone composition so formatting can stay branch-light and tests can target conversion separately
+    fn datetime_with_tz(&self) -> Option<DateTime<FixedOffset>> {
+        let epoch = UNIX_EPOCH.checked_add(self.duration)?;
+        let offset = Self::loc_display_timezone()?;
+        Some(DateTime::<Utc>::from(epoch).with_timezone(offset))
+    }
     fn fmt_datetime(&self, f: &mut Formatter<'_>) -> FmtResult {
-        match (
-            UNIX_EPOCH.checked_add(self.duration),
-            Self::loc_display_timezone(),
-        ) {
-            (Some(epoch), Some(offset)) => write!(
-                f,
-                "{}",
-                DateTime::<Utc>::from(epoch)
-                    .with_timezone(offset)
-                    .format("%Y-%m-%d %H:%M:%S")
-            ),
-            _ => f.write_str(INCORRECT_DATETIME_MSG),
+        match self.datetime_with_tz() {
+            Some(v) => write!(f, "{}", v.format("%Y-%m-%d %H:%M:%S")),
+            None => f.write_str(INCORRECT_DATETIME_MSG),
         }
     }
     fn fmt_github_place(&self, f: &mut Formatter<'_>) -> FmtResult {
@@ -153,77 +150,58 @@ mod tests {
             self.loc.fmt_place(self.src_place_type, f)
         }
     }
-    fn test_loc(occr: Option<Occr>) -> Loc {
+    fn test_loc(duration: Duration, occr: Option<Occr>) -> Loc {
         Loc {
             file: String::from("src/lib.rs"),
             commit: String::from("abc123"),
-            duration: Duration::from_secs(0),
+            duration,
             occr,
             line: 10,
             col: 20,
         }
     }
-    #[test]
-    fn fmt_place_src_without_occr() {
-        let loc = test_loc(None);
-        assert_eq!(
-            format!(
-                "{}",
-                PlaceFmt {
-                    loc: &loc,
-                    src_place_type: SrcPlaceType::Src
-                }
-            ),
-            "src/lib.rs:10:20"
-        );
-    }
-    #[test]
-    fn fmt_place_src_with_occr() {
-        let loc = test_loc(Some(Occr {
+    fn test_occr() -> Occr {
+        Occr {
             file: String::from("src/er.rs"),
             line: 30,
             col: 40,
-        }));
+        }
+    }
+    fn fmt_place(loc: &Loc, src_place_type: SrcPlaceType) -> String {
+        format!(
+            "{:}",
+            PlaceFmt {
+                loc,
+                src_place_type
+            }
+        )
+    }
+    #[test]
+    fn fmt_place_src_without_occr() {
+        let loc = test_loc(Duration::from_secs(0), None);
+        assert_eq!(fmt_place(&loc, SrcPlaceType::Src), "src/lib.rs:10:20");
+    }
+    #[test]
+    fn fmt_place_src_with_occr() {
+        let loc = test_loc(Duration::from_secs(0), Some(test_occr()));
         assert_eq!(
-            format!(
-                "{}",
-                PlaceFmt {
-                    loc: &loc,
-                    src_place_type: SrcPlaceType::Src
-                }
-            ),
+            fmt_place(&loc, SrcPlaceType::Src),
             "src/lib.rs:10:20 (src/er.rs:30:40)"
         );
     }
     #[test]
     fn fmt_place_github_without_occr() {
-        let loc = test_loc(None);
+        let loc = test_loc(Duration::from_secs(0), None);
         assert_eq!(
-            format!(
-                "{}",
-                PlaceFmt {
-                    loc: &loc,
-                    src_place_type: SrcPlaceType::Github
-                }
-            ),
+            fmt_place(&loc, SrcPlaceType::Github),
             format!("{GITHUB_URL}/blob/abc123/src/lib.rs#L10")
         );
     }
     #[test]
     fn fmt_place_github_with_occr() {
-        let loc = test_loc(Some(Occr {
-            file: String::from("src/er.rs"),
-            line: 30,
-            col: 40,
-        }));
+        let loc = test_loc(Duration::from_secs(0), Some(test_occr()));
         assert_eq!(
-            format!(
-                "{}",
-                PlaceFmt {
-                    loc: &loc,
-                    src_place_type: SrcPlaceType::Github
-                }
-            ),
+            fmt_place(&loc, SrcPlaceType::Github),
             format!(
                 "{GITHUB_URL}/blob/abc123/src/lib.rs#L10 ({GITHUB_URL}/blob/abc123/src/er.rs#L30)"
             )
@@ -231,17 +209,19 @@ mod tests {
     }
     #[test]
     fn fmt_datetime_returns_fallback_for_overflowed_duration() {
-        let loc = Loc {
-            file: String::from("src/lib.rs"),
-            commit: String::from("abc123"),
-            duration: Duration::MAX,
-            occr: None,
-            line: 10,
-            col: 20,
-        };
+        let loc = test_loc(Duration::MAX, None);
         assert_eq!(
             format!("{}", DatetimeFmt { loc: &loc }),
             INCORRECT_DATETIME_MSG
+        );
+    }
+    #[test]
+    fn datetime_with_tz_returns_expected_epoch_time_for_zero_duration() {
+        let loc = test_loc(Duration::from_secs(0), None);
+        let date_time = loc.datetime_with_tz().expect("f5c41dd8");
+        assert_eq!(
+            date_time.format("%Y-%m-%d %H:%M:%S").to_string(),
+            "1970-01-01 03:00:00"
         );
     }
     #[test]

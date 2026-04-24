@@ -18,31 +18,28 @@ impl AsRef<str> for ProjectGitInfo<'_> {
     }
 }
 pub trait GetGitCommitLink {
-    fn get_git_commit_link(&self) -> String;
+    fn get_git_commit_link(&self) -> String {
+        self.get_git_commit_link_cow().into_owned()
+    }
     fn get_git_commit_link_cow(&self) -> Cow<'static, str>;
 }
 pub trait GetGitCommitId {
     fn get_git_commit_id(&self) -> String;
     fn get_git_commit_id_cow(&self) -> Cow<'_, str> {
-        self.git_commit_id_cow()
+        with_git_commit_id_ref(self, Cow::Borrowed, || owned_git_commit_id_cow(self))
     }
     fn get_git_commit_id_or_else<'commit_id_lt>(
         &'commit_id_lt self,
         fallback: &'commit_id_lt mut Option<String>,
     ) -> &'commit_id_lt str {
-        self.get_git_commit_id_ref().unwrap_or_else(|| {
-            fallback
-                .get_or_insert_with(|| self.get_git_commit_id())
-                .as_str()
-        })
+        with_git_commit_id_ref(
+            self,
+            |commit_id| commit_id,
+            || fallback_git_commit_id_ref(self, fallback),
+        )
     }
     fn get_git_commit_id_ref(&self) -> Option<&str> {
         None
-    }
-    #[allow(clippy::single_call_fn)] // single helper keeps borrowed/owned commit-id selection consistent
-    fn git_commit_id_cow(&self) -> Cow<'_, str> {
-        self.get_git_commit_id_ref()
-            .map_or_else(|| Cow::Owned(self.get_git_commit_id()), Cow::Borrowed)
     }
     fn with_git_commit_id<R>(&self, f: impl FnOnce(&str) -> R) -> R {
         let mut fallback = None;
@@ -58,12 +55,38 @@ impl<T: ?Sized + AsRef<str>> GetGitCommitId for T {
     }
 }
 impl<T: ?Sized + GetGitCommitId> GetGitCommitLink for T {
-    fn get_git_commit_link(&self) -> String {
-        self.get_git_commit_link_cow().into_owned()
-    }
     fn get_git_commit_link_cow(&self) -> Cow<'static, str> {
         self.with_git_commit_id(git_commit_link_cow)
     }
+}
+fn with_git_commit_id_ref<'src, T, R>(
+    src: &'src T,
+    on_ref: impl FnOnce(&'src str) -> R,
+    on_owned: impl FnOnce() -> R,
+) -> R
+where
+    T: ?Sized + GetGitCommitId,
+{
+    src.get_git_commit_id_ref().map_or_else(on_owned, on_ref)
+}
+#[allow(clippy::single_call_fn)] // shared helper keeps owned commit-id Cow construction reusable across GetGitCommitId defaults
+fn owned_git_commit_id_cow<T>(src: &T) -> Cow<'_, str>
+where
+    T: ?Sized + GetGitCommitId,
+{
+    Cow::Owned(src.get_git_commit_id())
+}
+#[allow(clippy::single_call_fn)] // shared helper keeps fallback storage wiring reusable across GetGitCommitId defaults
+fn fallback_git_commit_id_ref<'fallback, T>(
+    src: &T,
+    fallback: &'fallback mut Option<String>,
+) -> &'fallback str
+where
+    T: ?Sized + GetGitCommitId,
+{
+    fallback
+        .get_or_insert_with(|| src.get_git_commit_id())
+        .as_str()
 }
 const fn project_git_commit_id() -> &'static str {
     PROJECT_GIT_INFO.commit
@@ -73,9 +96,10 @@ pub fn is_project_commit(commit_id: &str) -> bool {
     commit_id == project_git_commit_id()
 }
 pub fn validate_project_commit(commit_id: &str) -> Result<(), &'static str> {
-    is_project_commit(commit_id)
-        .then_some(())
-        .ok_or_else(project_git_commit_link_ref)
+    if is_project_commit(commit_id) {
+        return Ok(());
+    }
+    Err(project_git_commit_link_ref())
 }
 #[must_use]
 pub fn project_git_commit_link() -> String {
@@ -89,7 +113,7 @@ pub fn project_git_commit_link_ref() -> &'static str {
 }
 #[must_use]
 pub fn git_commit_link(commit_id: &str) -> String {
-    build_git_commit_link(commit_id)
+    git_commit_link_cow(commit_id).into_owned()
 }
 #[must_use]
 pub fn git_commit_link_cow(commit_id: &str) -> Cow<'static, str> {
@@ -125,6 +149,7 @@ mod tests {
     use std::{borrow::Cow, cell::Cell, ptr};
     #[derive(Debug)]
     struct TestGitCommit {
+        borrow_commit_ref: bool,
         commit: &'static str,
         fallback_calls: Cell<usize>,
     }
@@ -134,33 +159,76 @@ mod tests {
             self.fallback_calls.set(calls);
             self.commit.to_owned()
         }
-    }
-    #[derive(Debug)]
-    struct BorrowedTestGitCommit {
-        commit: &'static str,
-        fallback_calls: Cell<usize>,
-    }
-    impl GetGitCommitId for BorrowedTestGitCommit {
-        fn get_git_commit_id(&self) -> String {
-            let calls = self.fallback_calls.get().saturating_add(1);
-            self.fallback_calls.set(calls);
-            self.commit.to_owned()
-        }
         fn get_git_commit_id_ref(&self) -> Option<&str> {
-            Some(self.commit)
+            self.borrow_commit_ref.then_some(self.commit)
         }
     }
-    fn mk_test_git_commit(commit: &'static str) -> TestGitCommit {
+    fn mk_test_git_commit(commit: &'static str, borrow_commit_ref: bool) -> TestGitCommit {
         TestGitCommit {
             commit,
+            borrow_commit_ref,
             fallback_calls: Cell::new(0),
         }
     }
-    fn mk_borrowed_test_git_commit(commit: &'static str) -> BorrowedTestGitCommit {
-        BorrowedTestGitCommit {
-            commit,
-            fallback_calls: Cell::new(0),
-        }
+    fn mk_owned_test_git_commit(commit: &'static str) -> TestGitCommit {
+        mk_test_git_commit(commit, false)
+    }
+    fn mk_borrowed_test_git_commit(commit: &'static str) -> TestGitCommit {
+        mk_test_git_commit(commit, true)
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps fallback-call expectations consistent across owned/borrowed commit-id tests
+    fn assert_fallback_calls(v: &TestGitCommit, exp: usize) {
+        assert_eq!(v.fallback_calls.get(), exp);
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps commit-link equality checks concise across tests
+    fn assert_expected_git_commit_link(actual: &str, exp_commit_id: &str) {
+        assert_eq!(actual, expected_git_commit_link(exp_commit_id));
+    }
+    #[allow(clippy::single_call_fn)] // shared helper keeps borrowed/owned Cow-kind assertions consistent across commit-id tests
+    fn assert_commit_id_cow_kind(
+        commit_id: &str,
+        is_borrowed: bool,
+        exp_commit_id: &str,
+        exp_is_borrowed: bool,
+    ) {
+        assert_eq!(commit_id, exp_commit_id);
+        assert_eq!(is_borrowed, exp_is_borrowed);
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps link-output and fallback-call expectations coupled for test clarity
+    fn assert_commit_link_and_fallback_calls(
+        v: &TestGitCommit,
+        exp_commit_id: &str,
+        exp_fallback_calls: usize,
+    ) {
+        let link = v.get_git_commit_link();
+        assert_expected_git_commit_link(&link, exp_commit_id);
+        assert_fallback_calls(v, exp_fallback_calls);
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps borrowed/owned Cow expectations concise across commit-id tests
+    fn assert_commit_id_cow_and_fallback_calls(
+        v: &TestGitCommit,
+        exp_commit_id: &str,
+        exp_is_borrowed: bool,
+        exp_fallback_calls: usize,
+    ) {
+        let commit_id = v.get_git_commit_id_cow();
+        assert_commit_id_cow_kind(
+            commit_id.as_ref(),
+            matches!(&commit_id, Cow::Borrowed(_)),
+            exp_commit_id,
+            exp_is_borrowed,
+        );
+        assert_fallback_calls(v, exp_fallback_calls);
+    }
+    #[allow(clippy::single_call_fn)] // shared assertion keeps commit-length and fallback-call checks coupled across borrowed/owned cases
+    fn assert_commit_len_and_fallback_calls(
+        v: &TestGitCommit,
+        exp_commit_len: usize,
+        exp_fallback_calls: usize,
+    ) {
+        let commit_len = v.with_git_commit_id(str::len);
+        assert_eq!(commit_len, exp_commit_len);
+        assert_fallback_calls(v, exp_fallback_calls);
     }
     fn expected_git_commit_link(commit_id: &str) -> String {
         let mut output = String::with_capacity(git_commit_link_capacity(commit_id));
@@ -169,20 +237,25 @@ mod tests {
     }
     #[test]
     fn git_commit_link_builds_expected_url() {
-        assert_eq!(
-            git_commit_link("abc123"),
-            expected_git_commit_link("abc123")
-        );
+        let link = git_commit_link("abc123");
+        assert_expected_git_commit_link(&link, "abc123");
     }
     #[test]
     fn git_commit_link_handles_empty_commit() {
-        assert_eq!(git_commit_link(""), expected_git_commit_link(""));
+        let link = git_commit_link("");
+        assert_expected_git_commit_link(&link, "");
     }
     #[test]
     fn git_commit_link_cow_borrows_cached_project_link_for_project_commit() {
         let project_commit = project_git_commit_id();
         let actual = git_commit_link_cow(project_commit);
         assert!(matches!(actual, Cow::Borrowed(v) if ptr::eq(v, project_git_commit_link_ref())));
+    }
+    #[test]
+    fn git_commit_link_uses_cached_project_link_for_project_commit() {
+        let project_commit = project_git_commit_id();
+        let actual = git_commit_link(project_commit);
+        assert_eq!(actual, project_git_commit_link_ref());
     }
     #[test]
     fn git_commit_link_cow_owns_link_for_non_project_commit() {
@@ -231,35 +304,29 @@ mod tests {
     #[test]
     fn project_git_info_returns_commit_link() {
         let git_info = ProjectGitInfo { commit: "deadbeef" };
-        assert_eq!(
-            git_info.get_git_commit_link(),
-            expected_git_commit_link("deadbeef")
-        );
+        let link = git_info.get_git_commit_link();
+        assert_expected_git_commit_link(&link, "deadbeef");
     }
     #[test]
     fn get_git_commit_link_uses_trait_based_commit_id() {
-        let test_git_commit = mk_test_git_commit("f00dbabe");
-        assert_eq!(
-            test_git_commit.get_git_commit_link(),
-            expected_git_commit_link("f00dbabe")
-        );
-        assert_eq!(test_git_commit.fallback_calls.get(), 1);
+        let test_git_commit = mk_owned_test_git_commit("f00dbabe");
+        assert_commit_link_and_fallback_calls(&test_git_commit, "f00dbabe", 1);
     }
     #[test]
     fn get_git_commit_link_calls_allocating_fallback_once_without_ref() {
-        let test_git_commit = mk_test_git_commit("f00dbabe");
+        let test_git_commit = mk_owned_test_git_commit("f00dbabe");
         drop(test_git_commit.get_git_commit_link());
-        assert_eq!(test_git_commit.fallback_calls.get(), 1);
+        assert_fallback_calls(&test_git_commit, 1);
     }
     #[test]
     fn get_git_commit_id_or_else_computes_fallback_once() {
-        let test_git_commit = mk_test_git_commit("f00dbabe");
+        let test_git_commit = mk_owned_test_git_commit("f00dbabe");
         let mut fallback = None;
         let first = test_git_commit.get_git_commit_id_or_else(&mut fallback);
         assert_eq!(first, "f00dbabe");
         let second = test_git_commit.get_git_commit_id_or_else(&mut fallback);
         assert_eq!(second, "f00dbabe");
-        assert_eq!(test_git_commit.fallback_calls.get(), 1);
+        assert_fallback_calls(&test_git_commit, 1);
     }
     #[test]
     fn get_git_commit_id_or_else_prefers_borrowed_ref_without_fallback() {
@@ -267,22 +334,18 @@ mod tests {
         let mut fallback = None;
         let commit = test_git_commit.get_git_commit_id_or_else(&mut fallback);
         assert_eq!(commit, "cafebabe");
-        assert_eq!(test_git_commit.fallback_calls.get(), 0);
+        assert_fallback_calls(&test_git_commit, 0);
         assert!(fallback.is_none());
     }
     #[test]
     fn get_git_commit_id_cow_returns_owned_without_ref() {
-        let test_git_commit = mk_test_git_commit("cafebabe");
-        let commit_id = test_git_commit.get_git_commit_id_cow();
-        assert!(matches!(commit_id, Cow::Owned(v) if v == "cafebabe"));
-        assert_eq!(test_git_commit.fallback_calls.get(), 1);
+        let test_git_commit = mk_owned_test_git_commit("cafebabe");
+        assert_commit_id_cow_and_fallback_calls(&test_git_commit, "cafebabe", false, 1);
     }
     #[test]
     fn get_git_commit_link_prefers_borrowed_commit_id() {
         let test_git_commit = mk_borrowed_test_git_commit("cafebabe");
-        let link = test_git_commit.get_git_commit_link();
-        assert_eq!(link, expected_git_commit_link("cafebabe"));
-        assert_eq!(test_git_commit.fallback_calls.get(), 0);
+        assert_commit_link_and_fallback_calls(&test_git_commit, "cafebabe", 0);
     }
     #[test]
     fn get_git_commit_link_cow_borrows_project_link_for_project_commit() {
@@ -295,23 +358,17 @@ mod tests {
     #[test]
     fn get_git_commit_id_cow_returns_borrowed_when_ref_is_available() {
         let test_git_commit = mk_borrowed_test_git_commit("cafebabe");
-        let commit_id = test_git_commit.get_git_commit_id_cow();
-        assert!(matches!(commit_id, Cow::Borrowed("cafebabe")));
-        assert_eq!(test_git_commit.fallback_calls.get(), 0);
+        assert_commit_id_cow_and_fallback_calls(&test_git_commit, "cafebabe", true, 0);
     }
     #[test]
     fn with_git_commit_id_uses_allocating_fallback_once_without_ref() {
-        let test_git_commit = mk_test_git_commit("cafebabe");
-        let commit_len = test_git_commit.with_git_commit_id(str::len);
-        assert_eq!(commit_len, "cafebabe".len());
-        assert_eq!(test_git_commit.fallback_calls.get(), 1);
+        let test_git_commit = mk_owned_test_git_commit("cafebabe");
+        assert_commit_len_and_fallback_calls(&test_git_commit, "cafebabe".len(), 1);
     }
     #[test]
     fn with_git_commit_id_prefers_borrowed_ref_when_available() {
         let test_git_commit = mk_borrowed_test_git_commit("cafebabe");
-        let commit_len = test_git_commit.with_git_commit_id(str::len);
-        assert_eq!(commit_len, "cafebabe".len());
-        assert_eq!(test_git_commit.fallback_calls.get(), 0);
+        assert_commit_len_and_fallback_calls(&test_git_commit, "cafebabe".len(), 0);
     }
     #[test]
     fn base_git_commit_link_len_matches_expected_prefix_len() {
@@ -320,44 +377,31 @@ mod tests {
         assert_eq!(git_commit_link_capacity(commit_id), expected);
     }
     #[test]
-    fn git_commit_link_capacity_handles_empty_commit() {
-        let expected = format!("{GITHUB_URL}{TREE_SEGMENT}").len();
-        assert_eq!(git_commit_link_capacity(""), expected);
-    }
-    #[test]
     fn get_git_commit_link_works_for_str_and_string() {
-        let commit_str = "1337beef";
-        assert_eq!(
-            commit_str.get_git_commit_link(),
-            expected_git_commit_link(commit_str)
-        );
-        let commit_string = String::from("c0ffee00");
-        assert_eq!(
-            commit_string.get_git_commit_link(),
-            expected_git_commit_link("c0ffee00")
-        );
-        let commit_string_ref = &commit_string;
-        assert_eq!(
-            commit_string_ref.get_git_commit_link(),
-            expected_git_commit_link("c0ffee00")
-        );
+        let str_link = "abc123".get_git_commit_link();
+        assert_expected_git_commit_link(&str_link, "abc123");
+        let string_link = String::from("abc123").get_git_commit_link();
+        assert_expected_git_commit_link(&string_link, "abc123");
     }
     #[test]
     fn get_git_commit_link_works_for_cow_str() {
-        let borrowed = Cow::Borrowed("abcddcba");
-        assert_eq!(
-            borrowed.get_git_commit_link(),
-            expected_git_commit_link("abcddcba")
-        );
-        let owned = Cow::<'_, str>::Owned(String::from("12344321"));
-        assert_eq!(
-            owned.get_git_commit_link(),
-            expected_git_commit_link("12344321")
+        let borrowed_link = Cow::Borrowed("abc123").get_git_commit_link();
+        assert_expected_git_commit_link(&borrowed_link, "abc123");
+        assert_expected_git_commit_link(
+            &Cow::<'_, str>::Owned("abc123".to_owned()).get_git_commit_link(),
+            "abc123",
         );
     }
     #[test]
     fn project_git_info_as_ref_returns_commit() {
-        let git_info = ProjectGitInfo { commit: "ab12cd34" };
-        assert_eq!(git_info.as_ref(), "ab12cd34");
+        let info = ProjectGitInfo { commit: "abc123" };
+        assert_eq!(info.as_ref(), "abc123");
+    }
+    #[test]
+    fn git_commit_link_capacity_handles_empty_commit() {
+        assert_eq!(
+            git_commit_link_capacity(""),
+            GITHUB_URL.len() + TREE_SEGMENT.len()
+        );
     }
 }

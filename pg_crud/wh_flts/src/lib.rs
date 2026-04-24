@@ -1,7 +1,8 @@
 use loc_lib::{Location, loc, loc::Loc};
 use optml::Optml;
 use pg_crud_cmn::{
-    DfltSomeOneEl, NotEmptyUnqVecTryNewEr, PgTypeWhFlt, QpEr, incr_checked_add_one_returning_incr,
+    DfltSomeOneEl, NotEmptyUnqVec, NotEmptyUnqVecTryNewEr, PgTypeWhFlt, QpEr,
+    incr_checked_add_one_returning_incr,
 };
 use regex::Regex;
 use schemars::{_private::alloc::borrow, JsonSchema, Schema, SchemaGenerator};
@@ -24,7 +25,7 @@ pub enum EncodeFormat {
 }
 impl Display for EncodeFormat {
     fn fmt(&self, f: &mut Formatter<'_>) -> StdFmtResult {
-        match &self {
+        match *self {
             Self::Base64 => write!(f, "base64"),
             Self::Escape => write!(f, "escape"),
             Self::Hex => write!(f, "hex"),
@@ -39,17 +40,33 @@ impl DfltSomeOneEl for EncodeFormat {
 //difference between NotEmptyUnqVec and PgJsonNotEmptyUnqVec only in pg_crud_cmn::DfltSomeOneEl impl with different generic requirement and PgTypeWhFlt
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgJsonNotEmptyUnqVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> PgJsonNotEmptyUnqVec<T> {
+impl<T> PgJsonNotEmptyUnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
+    }
+    pub fn qp_one_by_one(
+        &self,
+        incr: &mut u64,
+        _: &dyn Display,
+        _add_oprtr: bool,
+    ) -> Result<String, QpEr> {
+        let mut acc = String::with_capacity(self.0.len().saturating_mul(4));
+        for _ in self.to_vec() {
+            let v = incr_checked_add_one_returning_incr(incr)?;
+            if write!(acc, "${v},").is_err() {
+                return Err(QpEr::WriteIntoBuffer { loc: loc!() });
+            }
+        }
+        let _: Option<char> = acc.pop();
+        Ok(acc)
     }
     #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
 }
-impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
+impl<T: Serialize> PgJsonNotEmptyUnqVec<T> {
     pub fn qb_one_by_one<'query_lt>(
         self,
         mut query: Query<'query_lt, Postgres, PgArguments>,
@@ -64,33 +81,13 @@ impl<T: PartialEq + Clone + Serialize> PgJsonNotEmptyUnqVec<T> {
         }
         Ok(query)
     }
-    pub fn qp_one_by_one(
-        &self,
-        incr: &mut u64,
-        _: &dyn Display,
-        _add_oprtr: bool,
-    ) -> Result<String, QpEr> {
-        let mut acc = String::default();
-        for _ in self.to_vec() {
-            let v = match incr_checked_add_one_returning_incr(incr) {
-                Ok(v) => v,
-                Err(er) => {
-                    return Err(er);
-                }
-            };
-            if write!(acc, "${v},").is_err() {
-                return Err(QpEr::WriteIntoBuffer { loc: loc!() });
-            }
-        }
-        let _: Option<char> = acc.pop();
-        Ok(acc)
-    }
 }
-impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgJsonNotEmptyUnqVec<T> {
+impl<T: PartialEq> TryFrom<Vec<T>> for PgJsonNotEmptyUnqVec<T> {
     type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
-        chk_vec_ne_unq(v.as_slice())?;
-        Ok(Self(v))
+        NotEmptyUnqVec::try_new(v)
+            .map(NotEmptyUnqVec::into_vec)
+            .map(Self)
     }
 }
 #[allow(unused_qualifications)]
@@ -100,8 +97,8 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PgJsonNotEmptyUnqVec<T>
+    impl<'de, T: std::fmt::Debug + PartialEq + _serde::Deserialize<'de>> _serde::Deserialize<'de>
+        for PgJsonNotEmptyUnqVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -116,7 +113,7 @@ const _: () = {
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+            impl<'de, T: std::fmt::Debug + PartialEq + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = PgJsonNotEmptyUnqVec<T>;
@@ -221,7 +218,7 @@ impl From<RgxRgx> for String {
 impl PartialEq for RgxRgx {
     #[inline]
     fn eq(&self, other: &Self) -> bool {
-        self.0.to_string() == other.0.to_string()
+        self.0.as_str() == other.0.as_str()
     }
 }
 //todo add some logic? for regex validation?
@@ -530,7 +527,7 @@ impl<'lt, T: Send + Type<Postgres> + for<'__> Encode<'__, Postgres> + 'lt> PgTyp
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct PgTypeNotEmptyUnqVec<T>(Vec<T>);
 #[allow(clippy::arbitrary_source_item_ordering)]
-impl<T: PartialEq + Clone> PgTypeNotEmptyUnqVec<T> {
+impl<T> PgTypeNotEmptyUnqVec<T> {
     #[must_use]
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
@@ -540,11 +537,12 @@ impl<T: PartialEq + Clone> PgTypeNotEmptyUnqVec<T> {
         self.0
     }
 }
-impl<T: PartialEq + Clone> TryFrom<Vec<T>> for PgTypeNotEmptyUnqVec<T> {
+impl<T: PartialEq> TryFrom<Vec<T>> for PgTypeNotEmptyUnqVec<T> {
     type Error = NotEmptyUnqVecTryNewEr<T>;
     fn try_from(v: Vec<T>) -> Result<Self, Self::Error> {
-        chk_vec_ne_unq(v.as_slice())?;
-        Ok(Self(v))
+        NotEmptyUnqVec::try_new(v)
+            .map(NotEmptyUnqVec::into_vec)
+            .map(Self)
     }
 }
 #[allow(unused_qualifications)]
@@ -554,8 +552,8 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
-        _serde::Deserialize<'de> for PgTypeNotEmptyUnqVec<T>
+    impl<'de, T: std::fmt::Debug + PartialEq + _serde::Deserialize<'de>> _serde::Deserialize<'de>
+        for PgTypeNotEmptyUnqVec<T>
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -570,7 +568,7 @@ const _: () = {
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+            impl<'de, T: std::fmt::Debug + PartialEq + _serde::Deserialize<'de>>
                 _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = PgTypeNotEmptyUnqVec<T>;
@@ -777,26 +775,17 @@ impl<T: Clone + DfltSomeOneEl, const LENGTH: usize> DfltSomeOneEl for BoundedVec
         Self(vec![<T as DfltSomeOneEl>::dflt_some_one_el(); LENGTH])
     }
 }
-fn chk_vec_ne_unq<T: PartialEq + Clone>(v: &[T]) -> Result<(), NotEmptyUnqVecTryNewEr<T>> {
-    if v.is_empty() {
-        return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
-    }
-    for (idx, el) in v.iter().enumerate() {
-        if v.get(..idx)
-            .is_some_and(|prev| prev.iter().any(|el_prev| el_prev == el))
-        {
-            return Err(NotEmptyUnqVecTryNewEr::NotUnq {
-                v: el.clone(),
-                loc: loc!(),
-            });
-        }
-    }
-    Ok(())
-}
 #[cfg(test)]
 mod tests {
-    use super::{PgJsonNotEmptyUnqVec, PgTypeNotEmptyUnqVec};
-    use pg_crud_cmn::NotEmptyUnqVecTryNewEr;
+    use super::{EncodeFormat, PgJsonNotEmptyUnqVec, PgTypeNotEmptyUnqVec, RgxRgx};
+    use pg_crud_cmn::{NotEmptyUnqVecTryNewEr, PgTypeWhFlt};
+    use regex::Regex;
+    use std::fmt::Display;
+    #[derive(Debug, PartialEq, Eq)]
+    struct NonClone(u8);
+    fn d() -> &'static dyn Display {
+        &""
+    }
     #[test]
     fn pg_json_not_empty_unq_vec_try_from_ok() {
         let rslt = PgJsonNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32, 3i32]);
@@ -836,5 +825,53 @@ mod tests {
             rslt,
             Err(NotEmptyUnqVecTryNewEr::NotUnq { v: 1i32, .. })
         ));
+    }
+    #[test]
+    fn pg_json_not_empty_unq_vec_try_from_supports_non_clone_values() {
+        let rslt =
+            PgJsonNotEmptyUnqVec::<NonClone>::try_from(vec![NonClone(1), NonClone(2), NonClone(1)]);
+        assert!(matches!(
+            rslt,
+            Err(NotEmptyUnqVecTryNewEr::NotUnq { v: NonClone(1), .. })
+        ));
+    }
+    #[test]
+    fn pg_type_not_empty_unq_vec_try_from_supports_non_clone_values() {
+        let rslt =
+            PgTypeNotEmptyUnqVec::<NonClone>::try_from(vec![NonClone(1), NonClone(2), NonClone(1)]);
+        assert!(matches!(
+            rslt,
+            Err(NotEmptyUnqVecTryNewEr::NotUnq { v: NonClone(1), .. })
+        ));
+    }
+    #[test]
+    fn encode_format_display_is_stable() {
+        assert_eq!(EncodeFormat::Base64.to_string(), "base64");
+        assert_eq!(EncodeFormat::Escape.to_string(), "escape");
+        assert_eq!(EncodeFormat::Hex.to_string(), "hex");
+    }
+    #[test]
+    fn pg_json_not_empty_unq_vec_qp_one_by_one_formats_placeholders() {
+        let v = PgJsonNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32, 3i32]).expect("84cae0d1");
+        let mut incr = 0u64;
+        let qp = v.qp_one_by_one(&mut incr, d(), false).expect("927f68b4");
+        assert_eq!(qp, "$1,$2,$3");
+        assert_eq!(incr, 3);
+    }
+    #[test]
+    fn pg_json_not_empty_unq_vec_qp_uses_single_placeholder() {
+        let v = PgJsonNotEmptyUnqVec::<i32>::try_from(vec![1i32, 2i32]).expect("7f6dcead");
+        let mut incr = 0u64;
+        let qp = PgTypeWhFlt::qp(&v, &mut incr, d(), false).expect("72b1d2e8");
+        assert_eq!(qp, "$1");
+        assert_eq!(incr, 1);
+    }
+    #[test]
+    fn rgx_rgx_eq_compares_pattern_content() {
+        let left = RgxRgx(Regex::new(r"\d+").expect("8342ad27"));
+        let right = RgxRgx(Regex::new(r"\d+").expect("4d0fa8e3"));
+        let other = RgxRgx(Regex::new("[a-z]+").expect("abcc9a72"));
+        assert_eq!(left, right);
+        assert_ne!(left, other);
     }
 }

@@ -1,6 +1,6 @@
 use crate::panic_if_err::panic_if_err;
 use crate::rs_file_path::rs_file_path;
-use crate::write_string_into_file::try_write_string_into_path_with_outcome;
+use crate::write_string_into_file::{WritePathOutcome, try_write_string_into_path_with_outcome};
 use optml::Optml;
 use proc_macro2::TokenStream as Ts2;
 use serde::Deserialize;
@@ -27,6 +27,21 @@ fn try_run_rustfmt(path: &Path) -> io::Result<()> {
         )))
     }
 }
+#[allow(clippy::single_call_fn)] // keeps ShouldWriteTsIntoFile flag interpretation centralized
+const fn should_write_ts_flag(v: ShouldWriteTsIntoFile) -> bool {
+    matches!(v, ShouldWriteTsIntoFile::True)
+}
+#[allow(clippy::single_call_fn)] // centralizes token-to-file write mapping and outcome extraction
+fn try_write_ts_into_path(path: &Path, ts: &Ts2) -> io::Result<WritePathOutcome> {
+    try_write_string_into_path_with_outcome(path, &ts.to_string())
+}
+#[allow(clippy::single_call_fn)] // keeps rustfmt-trigger policy in one reusable decision helper
+const fn should_run_rustfmt(
+    format_with_cargofmt: FormatWithCargofmt,
+    wr_outcome: &WritePathOutcome,
+) -> bool {
+    wr_outcome.is_changed() && matches!(format_with_cargofmt, FormatWithCargofmt::True)
+}
 pub fn try_mb_write_ts_into_file<P>(
     should_write_ts_into_file: ShouldWriteTsIntoFile,
     file_name: P,
@@ -36,12 +51,12 @@ pub fn try_mb_write_ts_into_file<P>(
 where
     P: AsRef<Path>,
 {
-    if matches!(should_write_ts_into_file, ShouldWriteTsIntoFile::False) {
+    if !should_write_ts_flag(should_write_ts_into_file) {
         return Ok(());
     }
     let rs_path = rs_file_path(file_name);
-    let wr_outcome = try_write_string_into_path_with_outcome(rs_path, &ts.to_string())?;
-    if wr_outcome.is_changed() && matches!(format_with_cargofmt, FormatWithCargofmt::True) {
+    let wr_outcome = try_write_ts_into_path(rs_path.as_path(), ts)?;
+    if should_run_rustfmt(*format_with_cargofmt, &wr_outcome) {
         try_run_rustfmt(wr_outcome.path())?;
     }
     Ok(())
@@ -67,9 +82,11 @@ pub fn mb_write_ts_into_file<P>(
 #[cfg(test)]
 mod tests {
     use super::{
-        FormatWithCargofmt, ShouldWriteTsIntoFile, mb_write_ts_into_file, try_mb_write_ts_into_file,
+        FormatWithCargofmt, ShouldWriteTsIntoFile, mb_write_ts_into_file, should_write_ts_flag,
+        try_mb_write_ts_into_file,
     };
-    use crate::test_hlp::{assert_file_content, cleanup_test_file, rs_file_path, test_path};
+    use crate::rs_file_path::rs_file_path;
+    use crate::test_hlp::{assert_file_content, cleanup_test_file, test_path};
     use proc_macro2::TokenStream as Ts2;
     use std::fs::{metadata, write};
     #[test]
@@ -99,6 +116,11 @@ mod tests {
         );
         assert_file_content(&path, &expected);
         cleanup_test_file(path);
+    }
+    #[test]
+    fn should_write_ts_flag_maps_true_and_false_flags() {
+        assert!(!should_write_ts_flag(ShouldWriteTsIntoFile::False));
+        assert!(should_write_ts_flag(ShouldWriteTsIntoFile::True));
     }
     #[test]
     fn try_mb_write_ts_into_file_writes_tokens_when_enabled() {

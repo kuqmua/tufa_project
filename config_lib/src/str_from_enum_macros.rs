@@ -21,23 +21,26 @@ fn mk_allowed_values<T>(vrts: &[(&str, T)]) -> String {
     }
     allowed_values
 }
+#[allow(clippy::single_call_fn)] // extracted lookup keeps case-insensitive enum-pair search reusable and testable
+fn find_case_insensitive_pair<T>(v: &str, vrts: &[(&str, T)]) -> Option<T>
+where
+    T: Copy,
+{
+    vrts.iter()
+        .find_map(|(str_vrt, enum_vrt)| v.eq_ignore_ascii_case(str_vrt).then_some(*enum_vrt))
+}
 pub fn impl_from_str_for_enum_helper<T>(v: &str, vrts: &[(&str, T)]) -> Result<T, String>
 where
     T: Copy,
 {
-    for &(str_vrt, enum_vrt) in vrts {
-        if v.eq_ignore_ascii_case(str_vrt) {
-            return Ok(enum_vrt);
-        }
-    }
-    let allowed_values = mk_allowed_values(vrts);
-    Err(format!(
-        "Unknown value: {v}. Allowed values: {allowed_values}"
-    ))
+    find_case_insensitive_pair(v, vrts).ok_or_else(|| {
+        let allowed_values = mk_allowed_values(vrts);
+        format!("Unknown value: {v}. Allowed values: {allowed_values}")
+    })
 }
 #[cfg(test)]
 mod tests {
-    use super::{impl_from_str_for_enum_helper, mk_allowed_values};
+    use super::{find_case_insensitive_pair, impl_from_str_for_enum_helper, mk_allowed_values};
     const PAIRS: [(&str, V); 2] = [("a", V::A), ("b", V::B)];
     #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     enum V {
@@ -48,6 +51,10 @@ mod tests {
     fn helper_parses_values_case_insensitively() {
         assert_eq!(impl_from_str_for_enum_helper("A", &PAIRS), Ok(V::A));
         assert_eq!(impl_from_str_for_enum_helper("b", &PAIRS), Ok(V::B));
+    }
+    #[test]
+    fn find_case_insensitive_pair_returns_none_for_unknown_value() {
+        assert_eq!(find_case_insensitive_pair("x", &PAIRS), None);
     }
     #[test]
     fn helper_error_mentions_allowed_values() {

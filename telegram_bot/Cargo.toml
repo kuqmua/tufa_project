@@ -12,11 +12,11 @@ categories = ["category"]
 
 
 [dependencies]
-git_info = {path = "../git_info"}
+git_info.workspace = true
 log.workspace = true
 teloxide.workspace = true
 tokio.workspace = true
-optml = {path = "../optml"}
+optml.workspace = true
 
 [lints]
 workspace = true

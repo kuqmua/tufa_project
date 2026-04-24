@@ -16,7 +16,7 @@ use sqlx::{
 use std::{
     error::Error as StdErEr,
     fmt::{
-        Formatter, Result as StdFmtResult, {Debug, Display},
+        Formatter, Result as StdFmtResult, Write as _, {Debug, Display},
     },
 };
 use strum_macros::EnumString;
@@ -64,22 +64,44 @@ impl Display for Oprtr {
 impl Oprtr {
     #[must_use]
     pub fn to_qp(&self, add_oprtr: bool) -> String {
-        let not_space = format!("{NotSc} ");
+        const SPACE: &str = " ";
+        let mut qp = String::with_capacity(8);
         if add_oprtr {
-            let and_space = format!("{AndSc} ");
-            let or_space = format!("{OrSc} ");
-            match *self {
-                Self::And => and_space,
-                Self::Or => or_space,
-                Self::AndNot => format!("{and_space}{not_space}"),
-                Self::OrNot => format!("{or_space}{not_space}"),
-            }
-        } else {
-            match *self {
-                Self::And | Self::Or => String::default(),
-                Self::AndNot | Self::OrNot => not_space,
+            let write_res = match *self {
+                Self::And | Self::AndNot => write!(&mut qp, "{AndSc}{SPACE}"),
+                Self::Or | Self::OrNot => write!(&mut qp, "{OrSc}{SPACE}"),
+            };
+            if write_res.is_err() {
+                return String::default();
             }
         }
+        if matches!(*self, Self::AndNot | Self::OrNot) && write!(&mut qp, "{NotSc}{SPACE}").is_err()
+        {
+            return String::default();
+        }
+        qp
+    }
+}
+#[cfg(test)]
+mod tests_oprtr_to_qp {
+    use super::Oprtr;
+    use naming::{AndSc, NotSc, OrSc};
+    #[test]
+    fn to_qp_includes_oprtr_when_requested() {
+        assert_eq!(Oprtr::And.to_qp(true), format!("{AndSc} "));
+        assert_eq!(Oprtr::Or.to_qp(true), format!("{OrSc} "));
+    }
+    #[test]
+    fn to_qp_includes_not_suffix_for_negative_variants() {
+        assert_eq!(Oprtr::AndNot.to_qp(true), format!("{AndSc} {NotSc} "));
+        assert_eq!(Oprtr::OrNot.to_qp(true), format!("{OrSc} {NotSc} "));
+    }
+    #[test]
+    fn to_qp_omits_oprtr_when_disabled_and_keeps_not_only_for_negative_variants() {
+        assert_eq!(Oprtr::And.to_qp(false), "");
+        assert_eq!(Oprtr::Or.to_qp(false), "");
+        assert_eq!(Oprtr::AndNot.to_qp(false), format!("{NotSc} "));
+        assert_eq!(Oprtr::OrNot.to_qp(false), format!("{NotSc} "));
     }
 }
 impl ToTokens for Oprtr {
@@ -1090,7 +1112,7 @@ pub enum NotEmptyUnqVecTryNewEr<T> {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, ToSchema, JsonSchema, Optml)]
 pub struct NotEmptyUnqVec<T>(Vec<T>);
-impl<T: PartialEq + Clone> NotEmptyUnqVec<T> {
+impl<T> NotEmptyUnqVec<T> {
     #[must_use]
     pub fn into_vec(self) -> Vec<T> {
         self.0
@@ -1099,23 +1121,20 @@ impl<T: PartialEq + Clone> NotEmptyUnqVec<T> {
     pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn try_new(v: Vec<T>) -> Result<Self, NotEmptyUnqVecTryNewEr<T>> {
-        if v.is_empty() {
+}
+impl<T: PartialEq> NotEmptyUnqVec<T> {
+    pub fn try_new(mut values: Vec<T>) -> Result<Self, NotEmptyUnqVecTryNewEr<T>> {
+        if values.is_empty() {
             return Err(NotEmptyUnqVecTryNewEr::IsEmpty { loc: loc!() });
         }
-        {
-            let mut acc = Vec::new();
-            for el in &v {
-                if acc.contains(&el) {
-                    return Err(NotEmptyUnqVecTryNewEr::NotUnq {
-                        v: el.clone(),
-                        loc: loc!(),
-                    });
-                }
-                acc.push(el);
-            }
+        if let Some(duplicate_idx) = first_duplicate_idx(&values) {
+            let duplicate = values.remove(duplicate_idx);
+            return Err(NotEmptyUnqVecTryNewEr::NotUnq {
+                v: duplicate,
+                loc: loc!(),
+            });
         }
-        Ok(Self(v))
+        Ok(Self(values))
     }
 }
 #[allow(unused_qualifications)]
@@ -1125,7 +1144,7 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> Deserialize<'de> for NotEmptyUnqVec<T> {
+    impl<'de, T: Debug + PartialEq + Deserialize<'de>> Deserialize<'de> for NotEmptyUnqVec<T> {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: Deserializer<'de>,
@@ -1139,9 +1158,7 @@ const _: () = {
                 lt: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: Debug + PartialEq + Clone + Deserialize<'de>> _serde::de::Visitor<'de>
-                for __Visitor<'de, T>
-            {
+            impl<'de, T: Debug + PartialEq + Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
                 type Value = NotEmptyUnqVec<T>;
                 fn expecting(&self, __f: &mut Formatter<'_>) -> _serde::__private228::fmt::Result {
                     Formatter::write_str(__f, "tuple struct NotEmptyUnqVec")
@@ -1206,6 +1223,36 @@ impl<T> From<NotEmptyUnqVec<T>> for Vec<T> {
 impl<T1> NotEmptyUnqVec<T1> {
     pub fn from_t1_impl_from_t2<T2: From<T1>>(v: Self) -> NotEmptyUnqVec<T2> {
         NotEmptyUnqVec(v.0.into_iter().map(T2::from).collect::<Vec<T2>>())
+    }
+}
+#[cfg(test)]
+mod tests_not_empty_unq_vec {
+    use super::{NotEmptyUnqVec, NotEmptyUnqVecTryNewEr, first_duplicate_idx};
+    #[derive(Debug, PartialEq, Eq)]
+    struct NonClone(u8);
+    #[test]
+    fn not_empty_unq_vec_try_new_supports_non_clone_values() {
+        let er = NotEmptyUnqVec::try_new(vec![NonClone(1), NonClone(2), NonClone(1)])
+            .expect_err("adf2b8c1");
+        match er {
+            NotEmptyUnqVecTryNewEr::NotUnq { v, .. } => assert_eq!(v, NonClone(1)),
+            NotEmptyUnqVecTryNewEr::IsEmpty { .. } => panic!("9f5e2a34"),
+        }
+    }
+    #[test]
+    fn not_empty_unq_vec_try_new_returns_is_empty_for_empty_vec() {
+        let er = NotEmptyUnqVec::<u8>::try_new(Vec::new()).expect_err("3b41de7f");
+        assert!(matches!(er, NotEmptyUnqVecTryNewEr::IsEmpty { .. }));
+    }
+    #[test]
+    fn first_duplicate_idx_returns_none_for_unq_input() {
+        let values = vec![1u8, 2u8, 3u8];
+        assert!(first_duplicate_idx(&values).is_none());
+    }
+    #[test]
+    fn first_duplicate_idx_returns_first_repeated_value_index() {
+        let values = vec![7u8, 8u8, 8u8, 7u8];
+        assert_eq!(first_duplicate_idx(&values), Some(2usize));
     }
 }
 impl<'query_lt, T> PgTypeWhFlt<'query_lt> for NotEmptyUnqVec<T>
@@ -1568,4 +1615,13 @@ pub fn string_test_cases_vec() -> [String; 12] {
 #[must_use]
 pub fn uuid_uuid_test_cases_vec() -> [Uuid; 1] {
     [Uuid::new_v4()]
+}
+#[must_use]
+pub fn first_duplicate_idx<T: PartialEq>(values: &[T]) -> Option<usize> {
+    for (idx, el) in values.iter().enumerate() {
+        if values.iter().take(idx).any(|seen| seen == el) {
+            return Some(idx);
+        }
+    }
+    None
 }

@@ -34,20 +34,37 @@ fn should_write_string_into_file(path: &Path, string_cnt: &str) -> io::Result<bo
         Err(er) => Err(er),
     }
 }
-#[allow(clippy::single_call_fn)] // preserves write/no-write state so callers can skip extra work (e.g. formatting) on unchanged files
-pub(crate) fn try_write_string_into_path_with_outcome(
-    path: PathBuf,
-    string_cnt: &str,
-) -> io::Result<WritePathOutcome> {
-    if should_write_string_into_file(&path, string_cnt)? {
-        write(&path, string_cnt)?;
-        Ok(WritePathOutcome::Changed(path))
+#[allow(clippy::single_call_fn)] // central mapping keeps changed/unchanged outcome construction consistent
+const fn mk_write_path_outcome(path: PathBuf, is_changed: bool) -> WritePathOutcome {
+    if is_changed {
+        WritePathOutcome::Changed(path)
     } else {
-        Ok(WritePathOutcome::Unchanged(path))
+        WritePathOutcome::Unchanged(path)
     }
 }
+#[allow(clippy::single_call_fn)] // extracted side-effect helper keeps write/no-write branching reusable and test-focused
+fn write_string_if_needed(path: &Path, string_cnt: &str) -> io::Result<bool> {
+    let should_write = should_write_string_into_file(path, string_cnt)?;
+    if should_write {
+        write(path, string_cnt)?;
+    }
+    Ok(should_write)
+}
+#[allow(clippy::single_call_fn)] // preserves write/no-write state so callers can skip extra work (e.g. formatting) on unchanged files
+pub(crate) fn try_write_string_into_path_with_outcome(
+    path: impl AsRef<Path>,
+    string_cnt: &str,
+) -> io::Result<WritePathOutcome> {
+    let path_ref = path.as_ref();
+    let should_write = write_string_if_needed(path_ref, string_cnt)?;
+    let path_buf = path_ref.to_path_buf();
+    Ok(mk_write_path_outcome(path_buf, should_write))
+}
 #[allow(clippy::single_call_fn)] // shared write helper retains simple path-returning API used by file-level wrappers and tests
-pub(crate) fn try_write_string_into_path(path: PathBuf, string_cnt: &str) -> io::Result<PathBuf> {
+pub(crate) fn try_write_string_into_path(
+    path: impl AsRef<Path>,
+    string_cnt: &str,
+) -> io::Result<PathBuf> {
     try_write_string_into_path_with_outcome(path, string_cnt).map(WritePathOutcome::into_path)
 }
 pub fn try_write_string_into_file<P>(file_name: P, string_cnt: &str) -> io::Result<PathBuf>
@@ -69,47 +86,53 @@ mod tests {
     use super::{
         WritePathOutcome, should_write_string_into_file, try_write_string_into_file,
         try_write_string_into_path, try_write_string_into_path_with_outcome,
-        write_string_into_file,
+        write_string_if_needed, write_string_into_file,
     };
-    use crate::test_hlp::{assert_file_content, cleanup_test_file, rs_file_path, test_path};
+    use crate::rs_file_path::rs_file_path;
+    use crate::test_hlp::{assert_file_content, cleanup_test_file, test_path};
     use std::fs::{metadata, write};
-    use std::path::PathBuf;
+    use std::path::{Path, PathBuf};
     fn txt_path(name: &str) -> PathBuf {
         test_path(name).with_extension("txt")
     }
-    fn cleanup(path: &PathBuf) {
+    fn cleanup(path: &Path) {
         cleanup_test_file(path);
+    }
+    fn assert_content_and_cleanup(path: &Path, expected: &str) {
+        assert_file_content(path, expected);
+        cleanup(path);
+    }
+    fn assert_outcome_and_cleanup(path: &Path, outcome: &WritePathOutcome, expected_changed: bool) {
+        assert_eq!(outcome.path(), path);
+        assert_eq!(outcome.is_changed(), expected_changed);
+        cleanup(path);
     }
     #[test]
     fn try_write_string_into_path_writes_exact_content() {
         let path = txt_path("macros_helpers_write_path");
-        let result_path = try_write_string_into_path(path.clone(), "abc").expect("dcb22948");
+        let result_path = try_write_string_into_path(&path, "abc").expect("dcb22948");
         assert_eq!(result_path, path);
-        assert_file_content(&path, "abc");
-        cleanup(&path);
+        assert_content_and_cleanup(path.as_path(), "abc");
     }
     #[test]
     fn write_string_into_file_adds_rs_extension() {
         let base = test_path("macros_helpers_write_file");
         let path = rs_file_path(&base);
         write_string_into_file(&base, "xyz");
-        assert_file_content(&path, "xyz");
-        cleanup(&path);
+        assert_content_and_cleanup(path.as_path(), "xyz");
     }
     #[test]
     fn try_write_string_into_file_returns_path() {
         let base = test_path("macros_helpers_try_write_file");
         let path = try_write_string_into_file(&base, "qwe").expect("6676e082");
-        assert_file_content(&path, "qwe");
-        cleanup(&path);
+        assert_content_and_cleanup(path.as_path(), "qwe");
     }
     #[test]
     fn try_write_string_into_path_writes_exact_path_without_extension_rewrite() {
         let path = txt_path("macros_helpers_try_write_path_passthrough");
-        let result_path = try_write_string_into_path(path.clone(), "abc").expect("b6b47a2c");
+        let result_path = try_write_string_into_path(&path, "abc").expect("b6b47a2c");
         assert_eq!(result_path, path);
-        assert_file_content(&path, "abc");
-        cleanup(&path);
+        assert_content_and_cleanup(path.as_path(), "abc");
     }
     #[test]
     fn should_write_string_into_file_returns_true_for_missing_file() {
@@ -123,7 +146,7 @@ mod tests {
         write(&path, "same").expect("68e4f52d");
         let should_write = should_write_string_into_file(&path, "same").expect("3e7adf2f");
         assert!(!should_write);
-        cleanup(&path);
+        cleanup(path.as_path());
     }
     #[test]
     fn should_write_string_into_file_returns_true_when_content_differs() {
@@ -131,7 +154,23 @@ mod tests {
         write(&path, "old").expect("a2fd8473");
         let should_write = should_write_string_into_file(&path, "new").expect("52c9a1db");
         assert!(should_write);
-        cleanup(&path);
+        cleanup(path.as_path());
+    }
+    #[test]
+    fn write_string_if_needed_returns_false_without_rewrite_for_eq_content() {
+        let path = txt_path("macros_helpers_write_if_needed_eq");
+        write(&path, "same").expect("924bdc58");
+        let wrote = write_string_if_needed(&path, "same").expect("9f27b9cb");
+        assert!(!wrote);
+        assert_content_and_cleanup(path.as_path(), "same");
+    }
+    #[test]
+    fn write_string_if_needed_returns_true_and_writes_for_diff_content() {
+        let path = txt_path("macros_helpers_write_if_needed_diff");
+        write(&path, "old").expect("9b4ab8ad");
+        let wrote = write_string_if_needed(&path, "new").expect("4e4ce16d");
+        assert!(wrote);
+        assert_content_and_cleanup(path.as_path(), "new");
     }
     #[test]
     fn path_with_rs_extension_accepts_path_input() {
@@ -147,8 +186,7 @@ mod tests {
         let _path = try_write_string_into_file(&base, "same").expect("07d9fd90");
         let metadata_after = metadata(&path).expect("83087942");
         assert_eq!(metadata_before.len(), metadata_after.len());
-        assert_file_content(&path, "same");
-        cleanup(&path);
+        assert_content_and_cleanup(path.as_path(), "same");
     }
     #[test]
     fn try_write_string_into_file_writes_when_cnt_differs() {
@@ -156,38 +194,29 @@ mod tests {
         let path = rs_file_path(&base);
         write(&path, "old").expect("d870b82e");
         let _path = try_write_string_into_file(&base, "new").expect("c6fd2bc8");
-        assert_file_content(&path, "new");
-        cleanup(&path);
+        assert_content_and_cleanup(path.as_path(), "new");
     }
     #[test]
     fn try_write_string_into_path_with_outcome_returns_changed_for_new_content() {
         let path = txt_path("macros_helpers_write_outcome_changed");
-        let outcome =
-            try_write_string_into_path_with_outcome(path.clone(), "abc").expect("947faed1");
-        assert_eq!(outcome, WritePathOutcome::Changed(path.clone()));
-        assert_eq!(outcome.path(), path.as_path());
-        assert!(outcome.is_changed());
+        let outcome = try_write_string_into_path_with_outcome(&path, "abc").expect("947faed1");
         assert_file_content(&path, "abc");
-        cleanup(&path);
+        assert_outcome_and_cleanup(path.as_path(), &outcome, true);
     }
     #[test]
     fn try_write_string_into_path_with_outcome_returns_unchanged_for_same_content() {
         let path = txt_path("macros_helpers_write_outcome_unchanged");
         write(&path, "abc").expect("d293f783");
-        let outcome =
-            try_write_string_into_path_with_outcome(path.clone(), "abc").expect("b8f8eaf1");
-        assert_eq!(outcome, WritePathOutcome::Unchanged(path.clone()));
-        assert_eq!(outcome.path(), path.as_path());
-        assert!(!outcome.is_changed());
-        cleanup(&path);
+        let outcome = try_write_string_into_path_with_outcome(&path, "abc").expect("b8f8eaf1");
+        assert_outcome_and_cleanup(path.as_path(), &outcome, false);
     }
     #[test]
     fn write_path_outcome_into_path_returns_owned_path() {
-        let path = txt_path("macros_helpers_write_outcome_into_path");
-        let exp = path.clone();
-        let changed = WritePathOutcome::Changed(path.clone());
-        let unchanged = WritePathOutcome::Unchanged(path.clone());
-        assert_eq!(changed.into_path(), exp);
-        assert_eq!(unchanged.into_path(), path);
+        let changed_path = txt_path("macros_helpers_write_outcome_into_path_changed");
+        let changed = WritePathOutcome::Changed(changed_path.clone());
+        assert_eq!(changed.into_path(), changed_path);
+        let unchanged_path = txt_path("macros_helpers_write_outcome_into_path_unchanged");
+        let unchanged = WritePathOutcome::Unchanged(unchanged_path.clone());
+        assert_eq!(unchanged.into_path(), unchanged_path);
     }
 }

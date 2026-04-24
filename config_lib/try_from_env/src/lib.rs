@@ -7,7 +7,11 @@ use naming::{
 use proc_macro::TokenStream as Ts;
 use proc_macro2::TokenStream as Ts2;
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, LitStr, parse};
+use syn::{Data, DeriveInput, Field, Fields, Ident, LitStr, parse};
+#[allow(clippy::missing_const_for_fn)] // syn::Field access path is used for macro parsing only; const form is not useful here
+fn field_ident<'field_lt>(field: &'field_lt Field, exp_id: &'static str) -> &'field_lt Ident {
+    field.ident.as_ref().unwrap_or_else(|| panic!("{exp_id}"))
+}
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(v: Ts) -> Ts {
     panic_loc::panic_loc();
@@ -24,7 +28,7 @@ pub fn try_from_env(v: Ts) -> Ts {
     };
     let er_ts = {
         let vrts_ts = fields_named.iter().map(|el| {
-            let el_ident = &el.ident.as_ref().expect("2ecb63c1");
+            let el_ident = field_ident(el, "2ecb63c1");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             let try_from_std_env_var_ok_self_er_ucc =
                 TryFromStdEnvVarOkSelfErUcc::from_tokens(&el_ident);
@@ -50,7 +54,7 @@ pub fn try_from_env(v: Ts) -> Ts {
     };
     let display_er_ts = {
         let vrts_ts = fields_named.iter().map(|el| {
-            let el_ident = &el.ident.as_ref().expect("8b79a379");
+            let el_ident = field_ident(el, "8b79a379");
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
                 Self::#el_ident_ucc_ts { #el_ident } => write!(f, "{}", #el_ident)
@@ -76,34 +80,25 @@ pub fn try_from_env(v: Ts) -> Ts {
     };
     let try_from_env_ts = {
         let fields_init_ts = fields_named.iter().map(|el| {
-            let el_ident = &el.ident.as_ref().expect("ebf4e1b2");
+            let el_ident = field_ident(el, "ebf4e1b2");
             let el_ident_quotes_upper_sc_string =
-                LitStr::new(&ToTokensToUpperScStr::case(&el_ident), ident.span());
+                LitStr::new(&ToTokensToUpperScStr::case(el_ident), ident.span());
             let el_ident_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
-            let el_ident_w_ucc_ts = ToTokensToUccTs::case_or_panic(&el_ident);
             quote! {
-                let #el_ident = {
-                    let env_var_name = String::from(#el_ident_quotes_upper_sc_string);
-                    match std::env::var(&env_var_name) {
-                        Err(er) => {
-                            return Err(#ident_try_from_env_er_ucc::#StdEnvVarErUcc {
-                                #StdEnvVarErSc: er,
-                                #EnvVarNameSc,
-                            });
-                        }
-                        Ok(v) => match <
-                            config_lib::#el_ident_w_ucc_ts as
-                            config_lib::#TryFromStdEnvVarOkUcc
-                        >::try_from_std_env_var_ok(v) {
-                            Err(er) => {
-                                return Err(#ident_try_from_env_er_ucc::#el_ident_ucc_ts {
-                                    #el_ident: er,
-                                });
-                            }
-                            Ok(v) => v.0,
-                        },
-                    }
-                };
+                let #el_ident = config_lib::parse_required_env_var(
+                    #el_ident_quotes_upper_sc_string,
+                    |#StdEnvVarErSc, #EnvVarNameSc| #ident_try_from_env_er_ucc::#StdEnvVarErUcc {
+                        #StdEnvVarErSc,
+                        #EnvVarNameSc,
+                    },
+                    |v| <
+                        config_lib::#el_ident_ucc_ts as
+                        config_lib::#TryFromStdEnvVarOkUcc
+                    >::try_from_std_env_var_ok(v),
+                    |#el_ident| #ident_try_from_env_er_ucc::#el_ident_ucc_ts {
+                        #el_ident,
+                    },
+                )?.0;
             }
         });
         let fields_ts = fields_named.iter().map(|el| &el.ident);
