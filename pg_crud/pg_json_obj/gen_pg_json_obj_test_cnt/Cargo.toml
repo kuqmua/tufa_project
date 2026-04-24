@@ -11,3 +11,16 @@ keywords = ["keyword"]
 categories = ["category"]
 [lints]
 workspace = true
+[dependencies]
+sqlx.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+schemars.workspace = true
+utoipa.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+loc_lib = {path = "../../../loc_lib"}
+pg_crud = {path = "../../../pg_crud", features = ["test-utils"]}
+optml = {path = "../../../optml"}
+[features]
+test-utils = []
